@@ -9,7 +9,7 @@ import {EdCoursesComponent} from './view/prof/learn-teacher/parcours/ed-courses.
 import {SalaryComponent} from './view/prof/salary-teacher/salary/salary.component';
 import {HomeComponent} from './view/prof/home/home.component';
 import {InscriptionsComponent} from './view/admin/validate-inscriptions/inscriptions.component';
-import {ScheduleComponent} from './view/prof/schedule/schedule.component';
+import {ScheduleLocalComponent} from './view/prof/schedule/schedule.component';
 import {QuizPreviewComponent} from './view/admin/quiz/quiz-preview/quiz-preview.component';
 import {ClassRoomListComponent} from './view/prof/Classes/profclasses/class-room-list/class-room-list.component';
 import {FaqAnswerComponent} from './view/admin/faq-admin/faq-answer/faq-answer.component';
@@ -87,7 +87,7 @@ import {EtudiantsComponent} from "./view/admin/etudiants/etudiants.component";
                     {path: 'salary', component: SalaryComponent},
                     {path: 'classes', component: ClassRoomListComponent},
                     {path: 'synthese', component: SyntheseSessionComponent},
-                    {path: 'schedule', component: ScheduleComponent},
+                    {path: 'schedule', component: ScheduleLocalComponent},
                     {path: 'news-teacher', component: NewsTeacherListComponent},
                     {path: 'faq-teacher', component: FaqListComponent},
                     {path: 'faq-teacher-answer', component: FaqContactListComponent},
