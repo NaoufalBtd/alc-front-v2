@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ConfirmationService, MessageService} from 'primeng/api';
+import {ConfirmationService, MenuItem, MessageService} from 'primeng/api';
 import {LoginService} from '../../../controller/service/login.service';
 import {Prof} from '../../../controller/model/prof.model';
 import {Admin} from '../../../controller/model/admin.model';
@@ -58,11 +58,11 @@ export class LoginAdminComponent implements OnInit {
         this._correct = value;
     }
 
-    get model(): any[] {
+    get model(): MenuItem[] {
         return this.service.model;
     }
 
-    set model(value: any[]) {
+    set model(value: MenuItem[]) {
         this.service.model = value;
     }
 
@@ -99,7 +99,7 @@ export class LoginAdminComponent implements OnInit {
                 console.log(this.admin);
                 this.correct = true;
                 this.model = [
-                    {label: 'Manage Parcours', icon: 'pi pi-fw pi-table', routerLink: ['/admin/parcours']},
+                    { label: 'Manage Parcours', icon: 'pi pi-fw pi-table', routerLink: ['/admin/parcours']},
                     {label: 'Inscriptions List', icon: 'pi pi-fw pi-check-square', routerLink: ['/admin/inscription']},
                     {label: 'Students List', icon: 'pi pi-fw pi-list', routerLink: ['/admin/students-List']},
                     {label: 'Professor', icon: 'pi pi-fw pi-user', routerLink: ['/admin/teacher-lists']},

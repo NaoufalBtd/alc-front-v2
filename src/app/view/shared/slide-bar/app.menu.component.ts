@@ -10,6 +10,7 @@ import {PublicComponent} from '../../public/public.component';
 @Component({
     selector: 'app-menu',
     templateUrl: './app.menu.component.html',
+    styleUrls: ['./app.menu.component.css'],
     animations: [
         trigger('inline', [
             state('hidden', style({
@@ -69,8 +70,8 @@ export class AppMenuComponent implements OnInit {
     set etudiant(value: Etudiant) {
         this.service.etudiant = value;
     }
-
     ngOnInit() {
+
 
         /*this.model = [
             {

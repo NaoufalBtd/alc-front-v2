@@ -8,7 +8,8 @@ import {CalendrierProf} from '../model/schedule-prof.model';
 import {CalendrierVo} from '../model/calendrier-vo.model';
 import {Prof} from '../model/prof.model';
 import {LoginService} from './login.service';
-import {environment} from "../../../environments/environment";
+import {environment} from '../../../environments/environment';
+import {ScheduleProf} from '../model/calendrier-prof.model';
 
 @Injectable({
     providedIn: 'root'
@@ -16,12 +17,37 @@ import {environment} from "../../../environments/environment";
 export class ScheduleService {
 
     private adminUrl = environment.adminUrl;
+    private _scheduleProf: ScheduleProf = new ScheduleProf();
+    private _scheduleProfs: Array<ScheduleProf> = new Array<ScheduleProf>();
 
 
     constructor(private http: HttpClient, private user: LoginService) {
     }
 
-    private _selected: CalendrierProf;
+
+    get scheduleProf(): ScheduleProf {
+        if (!this._scheduleProf) {
+            this._scheduleProf = new ScheduleProf();
+        }
+        return this._scheduleProf;
+    }
+
+    set scheduleProf(value: ScheduleProf) {
+        this._scheduleProf = value;
+    }
+
+    get scheduleProfs(): Array<ScheduleProf> {
+        if (!this._scheduleProfs) {
+            this._scheduleProfs = new Array<ScheduleProf>();
+        }
+        return this._scheduleProfs;
+    }
+
+    set scheduleProfs(value: Array<ScheduleProf>) {
+        this._scheduleProfs = value;
+    }
+
+    private _selected: CalendrierProf = new CalendrierProf();
 
     get selected(): CalendrierProf {
         if (this._selected == null) {
@@ -222,11 +248,18 @@ export class ScheduleService {
         this._professors = value;
     }
 
-    public findAll() {
+    public findSchedule() {
         return this.http.get<Array<CalendrierVo>>(this.adminUrl + 'calendrierProf/vo/').subscribe(data => {
-            this.itemsVo = data;
-            console.log(this.itemsVo);
-        });
+                this.itemsVo = data;
+                console.log(this.itemsVo);
+            }, error => {
+                console.log(error);
+            }
+        );
+    }
+
+    public findAll() {
+        return this.http.get<Array<ScheduleProf>>(this.adminUrl + 'scheduleProf/');
     }
 
     public findByStudent() {
@@ -253,18 +286,15 @@ export class ScheduleService {
     }
 
     save() {
-        this.eventDialog = false;
-        this.selected.etudiant.nom = this.changedEvent.title;
-        this.selected.startTime = this.changedEvent.startTime;
-        this.selected.endTime = this.changedEvent.endTime;
-        this.http.post<CalendrierProf>(this.adminUrl + 'calendrierProf/', this.selected).subscribe(
+        console.log(this.scheduleProf);
+        this.http.post<ScheduleProf>(this.adminUrl + 'scheduleProf/', this.scheduleProf).subscribe(
             data => {
-                this.items.push({...data});
+                this.scheduleProfs.push(data);
             }, error => {
-                console.log('erreuuur');
+                console.log(error);
             }
         );
-        this.findByProf();
+        this.findAll();
     }
 
     public edit(): Observable<CalendrierProf> {

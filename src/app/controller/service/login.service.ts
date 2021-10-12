@@ -5,6 +5,7 @@ import {Etudiant} from '../model/etudiant.model';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {environment} from '../../../environments/environment';
+import {MenuItem} from 'primeng/api';
 
 @Injectable({
     providedIn: 'root'
@@ -51,13 +52,13 @@ export class LoginService {
         this._etudiant = value;
     }
 
-    private _model: any[];
+    private _model: MenuItem[];
 
-    get model(): any[] {
+    get model(): MenuItem[] {
         return this._model;
     }
 
-    set model(value: any[]) {
+    set model(value: MenuItem[]) {
         this._model = value;
     }
 
