@@ -36,6 +36,7 @@
 </p-dialog>
 
 -->
+<!--
 <p>Select a professor</p>
 <p-dropdown [(ngModel)]="prof" [options]="profs" optionLabel="nom"></p-dropdown>
 <button (click)="showModalDialog()" icon="pi pi-check" id="button" label="Paye" pButton style="margin-left: 100px"
@@ -84,3 +85,191 @@
         <p-button (click)="displayModal=false" icon="pi pi-check" label="Exit" styleClass="p-button-text"></p-button>
     </ng-template>
 </p-dialog>
+-->
+<!--
+<div class="row"><p>Liste Session Cours</p></div>
+<div class="row">
+
+    <div class="col-md-2">
+        <input type="number" pInputText placeholder="Search By Year">
+    </div>
+    <div class="col-md-2">
+        <input type="number" pInputText placeholder="Search By Month">
+
+    </div>
+    <div class="col-md-2">
+        <input type="number" pInputText placeholder="Search By Day">
+    </div>
+
+
+</div>
+<table class="table">
+    <thead>
+    <tr>
+        <th><input type="text" pInputText placeholder="Search By Reference" ></th>
+        <th><input type="text" pInputText placeholder="Search By Professor Name" ></th>
+        <th><input type="text" pInputText placeholder="Search By Student Name"></th>
+        <th><p-calendar  [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030" inputId="navigators" placeholder="Search By Date Debut"></p-calendar></th>
+        <th><p-calendar  [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030" inputId="navigators" placeholder="Search By Date Fin"></p-calendar></th>
+        <th></th>
+        <th></th>
+    </tr>
+
+    </thead>
+    <thead>
+    <tr>
+        <th>Reference</th>
+        <th>Prof</th>
+        <th>Student</th>
+        <th>Date Debut</th>
+        <th>Date Fin</th>
+        <th>Duree</th>
+        <th>Payer</th>
+    </tr>
+
+    </thead>
+    <tbody>
+    <tr *ngFor="let c of allsessioncours">
+        <td>{{c.reference}}</td>
+        <td>{{c.prof.nom}} {{c.prof.prenom}}</td>
+        <td>{{c.etudiant.nom}} {{c.etudiant.prenom}}</td>
+        <td>{{c.dateDebut}}</td>
+        <td>{{c.dateFin}}</td>
+        <td>{{c.duree}}</td>
+        <td>{{c.payer}}</td>
+    </tr>
+    </tbody>
+</table>
+-->
+
+<!--
+<p-table #dt [(selection)]="allsessioncoursbyprofid" [filterDelay]="0" [globalFilterFields]="['name','country.name','representative.name','status']" [paginator]="true"
+         [rowHover]="true"
+         [rowsPerPageOptions]="[10,25,50]" [rows]="10" [showCurrentPageReport]="true"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+         dataKey="id" styleClass="p-datatable-customers">
+    <ng-template pTemplate="header">
+        <tr>
+            <th style="width: 3rem">
+                <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+            </th>
+            <th>Reference</th>
+            <th>Prof</th>
+            <th>Student</th>
+            <th>Date Debut</th>
+            <th>Date Fin</th>
+            <th>Duree</th>
+            <th>Payer</th>
+        </tr>
+    </ng-template>
+    <ng-template  pTemplate="body">
+        <tr class="p-selectable-row" *ngFor="let c of allsessioncoursbyprofid">
+            <p-tableCheckbox  style="margin-left: 15px"></p-tableCheckbox>
+            <td>{{c.reference}}</td>
+            <td>{{c.prof.nom}}</td>
+            <td>{{c.etudiant.nom}}</td>
+            <td>{{c.dateDebut}}</td>
+            <td>{{c.dateFin}}</td>
+            <td>{{c.duree}}</td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+        <tr>
+
+        </tr>
+    </ng-template>
+</p-table>
+-->
+<p-table #dt [value]="listsessioncours"  dataKey="id" styleClass="p-datatable-customers" [rowHover]="true"
+         [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]"
+         [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+         [filterDelay]="0" >
+    <ng-template pTemplate="caption">
+        <div class="table-header">
+            <div class="row">
+                <div class="col-md-2">List of Session Course</div>
+                <div class="col-md-2">     <span class="p-input-icon-left">
+                        <i class="pi pi-search"></i>
+                        <input pInputText type="text"  placeholder="Global Search" />
+                    </span></div>
+
+
+            </div>
+
+
+        </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+        <tr>
+            <th style="width: 3rem"></th>
+            <th >Reference</th>
+            <th >Prof Name</th>
+            <th >Student Name</th>
+            <th >Date</th>
+            <th >Etat de Payement</th>
+            <th >Payee</th>
+<!--            <th></th>-->
+<!--            <th></th>-->
+        </tr>
+        <tr>
+            <th>
+                <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+            </th>
+            <th>
+                <input pInputText type="text"  placeholder="Search by Reference" class="p-column-filter">
+            </th>
+            <th>
+                <input pInputText type="text"  placeholder="Search by Prof Name" class="p-column-filter">
+            </th>
+            <th>
+                <input pInputText type="text"  placeholder="Search by Student Name" class="p-column-filter">
+            </th>
+            <th>
+                <p-calendar   [showButtonBar]="true" styleClass="p-column-filter" placeholder="Search by Date" [readonlyInput]="true" dateFormat="yy-mm-dd"></p-calendar>
+            </th>
+            <th>
+                <p-cascadeSelect
+                                 [optionGroupChildren]="['true', 'false']" [style]="{'minWidth': '14rem'}" placeholder="Select ">
+                 </p-cascadeSelect>
+            </th>
+            <th>
+
+            </th>
+<!--            <th></th>-->
+<!--            <th></th>-->
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-c>
+        <tr class="p-selectable-row">
+            <td>
+                <p-tableCheckbox [value]="c"></p-tableCheckbox>
+            </td>
+            <td>
+                {{c.reference}}
+            </td>
+            <td>
+                {{c.prof.nom}}
+            </td>
+            <td>
+                {{c.etudiant.nom}}
+            </td>
+            <td>
+                {{c.dateFin}}
+            </td>
+            <td>
+                {{c.payer}}
+            </td>
+            <td>
+                <button pButton pRipple type="button" label="Payer" class="p-button-success" (click)="savepaiement(c.id)"></button>
+
+            </td>
+<!--<td></td>-->
+<!--<td></td>-->
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+        <tr>
+            <td colspan="8">No customers found.</td>
+        </tr>
+    </ng-template>
+</p-table>

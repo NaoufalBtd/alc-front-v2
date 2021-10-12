@@ -25,6 +25,7 @@
         "@fullcalendar/daygrid": "^4.1.0",
         "@fullcalendar/interaction": "4.1.0",
         "@fullcalendar/timegrid": "4.1.0",
+        "bootstrap": "^5.1.1",
         "chart.js": "2.7.3",
         "hover.css": "^2.3.2",
         "html2canvas": "^1.0.0-rc.7",

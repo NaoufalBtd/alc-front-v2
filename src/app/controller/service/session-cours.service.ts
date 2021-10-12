@@ -7,19 +7,108 @@ import {environment} from '../../../environments/environment';
 import {Etudiant} from '../model/etudiant.model';
 import {Prof} from '../model/prof.model';
 import {EtudiantCours} from '../model/etudiant-cours.model';
+import {MessageService} from "primeng/api";
+import {Router} from "@angular/router";
+import {EtudiantReviewService} from "./etudiant-review.service";
 
 @Injectable({
     providedIn: 'root'
 })
 export class SessionCoursService {
 
-
     private adminUrl = environment.adminUrl;
 
     private url = environment.baseUrl + 'etudiantCours/';
+    private _allprof: Array<Prof>;
+    private _allstudent: Array<Etudiant>;
+    private _profselected: Prof;
+    private _allsessioncoursbyprofid: Array<SessionCours>;
+    private _allsessioncours: Array<SessionCours>;
+    private _searchbyprofname: Prof;
+    private _searchbystudentname: Etudiant;
+    private i: number;
+    private nom: string;
+    private id: number;
 
-    // }
-    constructor(private http: HttpClient) {
+    get searchbyprofname(): Prof {
+        if (this._searchbyprofname == null) {
+            this._searchbyprofname = new Prof();
+        }
+        return this._searchbyprofname;
+    }
+
+    set searchbyprofname(value: Prof) {
+        this._searchbyprofname = value;
+    }
+
+    get searchbystudentname(): Etudiant {
+        if (this._searchbystudentname == null) {
+            this._searchbystudentname = new Etudiant();
+        }
+        return this._searchbystudentname;
+    }
+
+    set searchbystudentname(value: Etudiant) {
+        this._searchbystudentname = value;
+    }
+
+    get allstudent(): Array<Etudiant> {
+        if (this._allstudent == null) {
+            this._allstudent = new Array<Etudiant>();
+        }
+        return this._allstudent;
+    }
+
+    set allstudent(value: Array<Etudiant>) {
+        this._allstudent = value;
+    }
+
+    get allsessioncours(): Array<SessionCours> {
+        if (this._allsessioncours == null) {
+            this._allsessioncours = new Array<SessionCours>();
+        }
+
+        return this._allsessioncours;
+    }
+
+    set allsessioncours(value: Array<SessionCours>) {
+        this._allsessioncours = value;
+    }
+
+    get profselected(): Prof {
+        if (this._profselected == null) {
+            this._profselected = new Prof();
+        }
+        return this._profselected;
+    }
+
+    set profselected(value: Prof) {
+        this._profselected = value;
+    }
+
+    get allprof(): Array<Prof> {
+        if (this._allprof == null) {
+            this._allprof = new Array<Prof>();
+        }
+        return this._allprof;
+    }
+
+    set allprof(value: Array<Prof>) {
+        this._allprof = value;
+    }
+
+    get allsessioncoursbyprofid(): Array<SessionCours> {
+        if (this._allsessioncoursbyprofid == null) {
+            this._allsessioncoursbyprofid = new Array<SessionCours>();
+        }
+        return this._allsessioncoursbyprofid;
+    }
+
+    set allsessioncoursbyprofid(value: Array<SessionCours>) {
+        this._allsessioncoursbyprofid = value;
+    }
+
+    constructor(private http: HttpClient, private messageService: MessageService, private router: Router, private review: EtudiantReviewService) {
     }
 
     private _items: Array<EtudiantCours>;
@@ -200,5 +289,121 @@ export class SessionCoursService {
         for (const item of this.selectes) {
             this.deleteIndexById(item.id);
         }
+    }
+
+    public findallprof() {
+        this.http.get<Array<Prof>>(this.adminUrl + 'prof/').subscribe(
+            data => {
+                if (data != null) {
+                    this.allprof = data;
+                }
+            }
+        );
+    }
+
+    public findallstudent() {
+        this.http.get<Array<Etudiant>>(this.adminUrl + 'etudiant/').subscribe(
+            data => {
+                if (data != null) {
+                    this.allstudent = data;
+                }
+            }
+        );
+    }
+
+    public findallsessionscoursbyprofid(id: number) {
+        this.http.get<Array<SessionCours>>(this.adminUrl + 'session/prof/id/' + id).subscribe(
+            data => {
+                if (data != null) {
+                    this.allsessioncours = data;
+
+
+                }
+            }
+        );
+    }
+
+    public findallsessionscoursbystudentid(id: number) {
+        this.http.get<Array<SessionCours>>(this.adminUrl + 'session/etudiant/id/' + id).subscribe(
+            data => {
+                if (data != null) {
+                    this.allsessioncours = data;
+                }
+            }
+        );
+    }
+
+    public findallsession() {
+        this.http.get<Array<SessionCours>>(this.adminUrl + 'session/').subscribe(
+            data => {
+                if (data != null) {
+                    this.allsessioncours = data;
+                }
+            }
+        );
+    }
+
+    // @ts-ignore
+    /*
+        public findprofbynom(nom: string): number {
+            this.http.get<Prof>('http://localhost:8036/prof/prof/nom/' + nom).subscribe(
+                data => {
+                    if (data != null) {
+                        console.log(data.id);
+                        return data.id;
+                    }
+                }
+            );
+        }
+    */
+
+    getselectedvalueprof(event: any) {
+        this.http.get<Prof>('http://localhost:8036/prof/prof/nom/' + event.target.value).subscribe(
+            data => {
+                if (data != null) {
+                    this.findallsessionscoursbyprofid(data.id);
+                }
+            }
+        );
+    }
+
+    getselectedvaluestudent(event: any) {
+        this.http.get<Prof>('http://localhost:8036/etudiant/etudiant/nom/' + event.target.value).subscribe(
+            data => {
+                if (data != null) {
+                    this.findallsessionscoursbystudentid(data.id);
+                }
+            }
+        );
+    }
+
+    public savesession(idprof: number, idetudiant: number) {
+        // @ts-ignore
+        this.http.post('http://localhost:8036/etudiant/session/' + idprof + '/' + idetudiant).subscribe(
+            data => {
+                // @ts-ignore
+                if (data > 0) {
+
+
+                }
+
+            }
+        );
+    }
+
+
+    // @ts-ignore
+    public findprof(idetu: number, idcours: number): number {
+        // @ts-ignore
+        this.http.get<EtudiantCours>('http://localhost:8036/prof/prof/' + idetu + '/' + idcours).subscribe(
+            data => {
+                console.log(data);
+                this.savesession(data.prof.id, idetu);
+                // tslint:disable-next-line:no-unused-expression
+                return data.id;
+            }, error => {
+                alert(error);
+            }
+        );
     }
 }

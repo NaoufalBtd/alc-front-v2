@@ -12,6 +12,8 @@ import {QuizEtudiantService} from '../../../../controller/service/quiz-etudiant.
 import {EtudiantReview} from '../../../../controller/model/etudiant-review.model';
 import {EtudiantReviewService} from '../../../../controller/service/etudiant-review.service';
 import {SectionItemService} from "../../../../controller/service/section-item.service";
+import {HttpClient} from "@angular/common/http";
+import {error} from "protractor";
 
 @Component({
     selector: 'app-etudiant-courses',
@@ -21,6 +23,7 @@ import {SectionItemService} from "../../../../controller/service/section-item.se
 export class EtudiantCoursesComponent implements OnInit {
     sortKey: any[];
     cols: any[];
+    public _finishcours: boolean;
 
     // tslint:disable-next-line:max-line-length
     constructor(private messageService: MessageService,
@@ -29,9 +32,11 @@ export class EtudiantCoursesComponent implements OnInit {
                 private review: EtudiantReviewService,
                 private confirmationService: ConfirmationService,
                 private service: ParcoursService,
+                private http: HttpClient,
                 private sectionItemService: SectionItemService
     ) {
     }
+
 
     get selectedReview(): EtudiantReview {
         return this.review.selected;
@@ -114,6 +119,46 @@ export class EtudiantCoursesComponent implements OnInit {
                 );
             });
     }
+
+    get hasfinish(): boolean {
+        return this.review.hasfinish;
+    }
+
+    set hasfinish(value: boolean) {
+        this.review.hasfinish = value;
+    }
+
+    public saveetudiantcours(idprof: number, idetudiant: number, idcours: number) {
+
+
+
+        // @ts-ignore
+        this.http.post('http://localhost:8036/etudiant/etudiantCours/' + idprof + '/' + idetudiant + '/' + idcours).subscribe(
+            data => {
+                // @ts-ignore
+                if (data > 0) {
+                    this.messageService.add({
+                        severity: 'info',
+                        summary: 'Info',
+                        detail: 'You Start This Course',
+                        life: 3000
+                    });
+                }else {
+                    this.hasfinish=true;
+                }
+            }
+        );
+    }
+
+/*    findEtudiantCoursByProfIdAndEtudiantIdAndCoursId(idprof: number, idstudent: number, idcours: number) {
+        this.http.get<EtudiantCours>('http://localhost:8036/etudiant/etudiantCours/prof/id/' + idprof + '/etudiant/id/' + idstudent + '/cours/idc/' + idcours).subscribe(
+            data => {
+                if (data != null) {
+                    this.hasfinish = false;
+                }
+            }
+        );
+    }*/
 
     get itemsEtudiantCours(): Array<EtudiantCours> {
         return this.service.itemsEtudiantCours;

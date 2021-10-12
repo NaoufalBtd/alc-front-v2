@@ -8,7 +8,7 @@ $gutter: 1rem; //for primeflex grid system
 @import "../node_modules/@fullcalendar/daygrid/main.min.css";
 @import "../node_modules/@fullcalendar/timegrid/main.min.css";
 @import "assets/demo/flags/flags.css";
-
+@import "~bootstrap/dist/css/bootstrap.min.css";
 :host ::ng-deep {
   .p-paginator {
     .p-paginator-current {
