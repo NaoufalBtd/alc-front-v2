@@ -52,6 +52,7 @@ import {EtudiantComponent} from './view/etudiant/etudiant.component';
 import {SyntheseSessionComponent} from './view/prof/synthese-session/synthese-session.component';
 import {QuizPreviewProfComponent} from './view/prof/quiz-preview-prof/quiz-preview.component';
 import {EtudiantsComponent} from "./view/admin/etudiants/etudiants.component";
+import {CommentReviewComponent} from "./view/prof/comment-review/comment-review.component";
 
 
 @NgModule({
@@ -95,6 +96,7 @@ import {EtudiantsComponent} from "./view/admin/etudiants/etudiants.component";
                     {path: 'sections', component: SectionsComponent},
                     {path: 'cours', component: CoursesComponent},
                     {path: 'quiz-preview-teacher', component: QuizPreviewProfComponent},
+                    {path: 'comment-review', component: CommentReviewComponent},
                 ]
             },
             {path:'etudiant',component: EtudiantComponent,

@@ -32,9 +32,9 @@
     </ng-template>
 
     <ng-template pTemplate="footer">
-        <p-button (click)="save()" icon="pi pi-check" iconPos="right" label="Submit"></p-button>
+        <p-button (click)="save(loginService.etudiant.prof.id,loginService.etudiant.id,selectedcours.id,this.comment)" (click)="hideViewDialog()" icon="pi pi-check" iconPos="right" label="Submit"></p-button>
 
-        <button (click)="hideViewDialog()" class="p-button-text" icon="pi pi-times" label="Fermer" pButton
-                pRipple></button>
+<!--        <button (click)="hideViewDialog()" class="p-button-text" icon="pi pi-times" label="Fermer" pButton-->
+<!--                pRipple></button>-->
     </ng-template>
 </p-dialog>
