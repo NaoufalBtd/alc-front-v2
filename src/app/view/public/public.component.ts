@@ -175,7 +175,7 @@ export class PublicComponent {
 
 
   isHorizontal() {
-    return this.app.layoutMode === 'horizontal';
+    return this.app.layoutMode === 'vertical';
   }
 
   isSlim() {

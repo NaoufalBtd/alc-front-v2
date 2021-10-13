@@ -65,6 +65,7 @@ export class ProfService {
         return this.http.get<Prof>(this.adminUrl + 'prof/id/' + num);
     }
 
+
     public findAllCategorieProf(): Observable<Array<CategorieProf>> {
         return this.http.get<Array<CategorieProf>>(this.adminUrl + 'categorieprof/');
     }

@@ -9,5 +9,5 @@ export class SessionCours {
     public dateDebut: string;
     public dateFin: string;
     public duree: number;
-    public payer: string;
+    public payer: boolean;
 }
