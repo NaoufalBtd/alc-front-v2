@@ -1,0 +1,56 @@
+
+<p-dialog [(visible)]="createDialogEtud" [modal]="true" [style]="{width: '450px'}"
+          header="Etudiant Create" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <div class="p-field">
+            <label > Group</label>
+            <input [(ngModel)]="groupeEtude.libelle" autofocus id="nom" pInputText required type="text"/>
+       <!--     <small *ngIf="submitted && !groupeEtude.libelle" class="p-invalid">FirstName is required.</small>
+       -->
+        </div>
+        <div class="p-field">
+            <label for="prenom">Number of students</label>
+            <input [(ngModel)]="groupeEtude.nombreEtudiant" autofocus id="nombreEtudiant" pInputText required type="text"/>
+      <!--      <small *ngIf="submitted && !selected.prenom" class="p-invalid">LastName is required.</small>
+      -->
+        </div>
+        <div class="p-field">
+            <label >Group Label</label>
+            <input [(ngModel)]="groupeEtudeDetail.groupeEtude.libelle" autofocus id="libelle1" pInputText required type="text"/>
+           <!-- <small *ngIf="submitted && !selected.login" class="p-invalid">nombre etudiant</small>
+           -->
+        </div>
+        <div class="p-field">
+            <label >Level</label><br>
+            <input [(ngModel)]="groupeEtudeDetail.groupeEtudiant.niveau" autofocus id="niveau" pInputText required type="text"/>
+        </div>
+        <div class="p-field">
+            <label >Group Satrt Date</label><br>
+            <input [(ngModel)]="groupeEtudeDetail.groupeEtudiant.dateDebut" autofocus id="dateDebut" pInputText required type="text"/>
+
+
+        </div>
+        <div class="p-field">
+            <label >Group End Date</label><br>
+            <input [(ngModel)]="groupeEtudeDetail.groupeEtudiant.dateFin" autofocus id="dateFin" pInputText required type="text"/>
+        </div>
+
+
+        <div class="p-field">
+            <label >Number of empty places</label><br>
+            <input [(ngModel)]="groupeEtudeDetail.groupeEtudiant.nombrePlaceVide" autofocus id="nombrePlaceVide" pInputText required type="text"/>
+
+
+        </div>
+        <div class="p-field">
+            <label >Occupied places</label><br>
+            <input [(ngModel)]="groupeEtudeDetail.groupeEtudiant.nombrePlaceNonVide" autofocus id="prenom" pInputText required type="text"/>
+        </div>
+        <button (click)="save()" class="p-button-text" icon="pi pi-check" label="Save" pButton pRipple>hhhh</button>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+
+        <button (click)="save()" class="p-button-text" icon="pi pi-check" label="Save" pButton pRipple>hhhh</button>
+    </ng-template>
+</p-dialog>
