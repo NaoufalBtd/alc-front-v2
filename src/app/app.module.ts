@@ -237,6 +237,8 @@ import {
 } from '@syncfusion/ej2-angular-schedule';
 import {DropDownListModule} from '@syncfusion/ej2-angular-dropdowns';
 import {DateTimePickerModule} from '@syncfusion/ej2-angular-calendars';
+import {GroupeEtudeCreateComponent} from './view/admin/groupe-etude/groupe-etude-create/groupe-etude-create.component';
+import {GroupeEtudeListeComponent} from './view/admin/groupe-etude/groupe-etude-liste/groupe-etude-liste.component';
 
 
 @NgModule({
@@ -470,12 +472,16 @@ import {DateTimePickerModule} from '@syncfusion/ej2-angular-calendars';
         SessionCoursCreateComponent,
         SessionCoursListComponent,
         SessionCoursViewComponent,
-        QuizPreviewProfComponent
+        QuizPreviewProfComponent,
+        GroupeEtudeCreateComponent,
+        GroupeEtudeListeComponent,
+        GroupeEtudeListeComponent,
     ],
     providers: [
         {provide: LocationStrategy, useClass: HashLocationStrategy},
         MenuService, MessageService, ConfirmationService,
-        WeekService, MonthService, DayService, WeekService, WorkWeekService, MonthService, AgendaService, MonthAgendaService, TimelineViewsService,
+        WeekService, MonthService, DayService, WeekService, WorkWeekService, MonthService,
+        AgendaService, MonthAgendaService, TimelineViewsService,
         TimelineMonthService
     ],
     bootstrap: [AppComponent]
