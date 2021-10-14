@@ -19,8 +19,6 @@ import {
     PopupOpenEventArgs
 } from '@syncfusion/ej2-angular-schedule';
 import {Prof} from '../../../controller/model/prof.model';
-import {isNullOrUndefined} from 'util';
-import {ScheduleVo} from '../../../controller/model/schedule-vo.model';
 
 L10n.load({
     'en-US': {
