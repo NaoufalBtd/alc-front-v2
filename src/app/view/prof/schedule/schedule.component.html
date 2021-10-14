@@ -14,135 +14,50 @@
     </p-dialog>
 </div>
 
-
-<!--<ejs-schedule #scheduleObj width='100%' height='550px' [selectedDate]="selectedDate" [eventSettings]="{dataSource: this.dataSource }"-->
-<!--              (popupOpen)="onPopupOpen($event)">-->
-
-
-<!--<ejs-schedule #scheduleObj width='100%' height='550px' [selectedDate]="selectedDate"-->
-<!--              [eventSettings]="{dataSource: this.dataSource }"-->
-<!--              (popupOpen)="onPopupOpen($event)">-->
-
-<!--    &lt;!&ndash; Header template &ndash;&gt;-->
-<!--    <ng-template #quickInfoTemplatesHeader let-data>-->
-<!--        <div *ngIf="data.elementType == 'cell' || data.elementType == 'event'">-->
-<!--            <div class="e-popup-header">-->
-<!--                <div class="e-header-icon-wrapper">-->
-<!--                    <div *ngIf="data.elementType == 'event'" class="subject">{{data.Subject}}</div>-->
-<!--                    <button class="e-edit e-control e-btn e-lib e-flat e-round e-small e-icon-btn"-->
-<!--                            title="Edit"></button>-->
-<!--                    <button class="e-delete e-control e-btn e-lib e-flat e-round e-small e-icon-btn" title="Delete"-->
-<!--                            (click)="onDeleteClick($event)"></button>-->
-<!--                    <button class="e-close e-control e-btn e-lib e-flat e-round e-small e-icon-btn" title="Close"-->
-<!--                            (click)="onCloseClick()"></button>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </ng-template>-->
-
-<!--    &lt;!&ndash; Content Template &ndash;&gt;-->
-<!--    <ng-template #quickInfoTemplatesContent let-data>-->
-<!--        <div *ngIf="data.elementType == 'cell'" class="e-cell-content">-->
-<!--            <form class="e-schedule-form">-->
-<!--                <div style="padding:10px">-->
-<!--                    <input class="subject e-field e-input" type="text" name="Subject" placeholder="Title"-->
-<!--                           style="width:100%">-->
-<!--                </div>-->
-<!--                <div style="padding:10px">-->
-<!--                    <input class="location e-field e-input" type="text" name="Location" placeholder="Location"-->
-<!--                           style="width:100%">-->
-<!--                </div>-->
-<!--            </form>-->
-<!--        </div>-->
-<!--        <div *ngIf="data.elementType == 'event'" class="e-event-content">-->
-<!--            <div class="start-time">Start: {{data.StartTime.toLocaleString()}}</div>-->
-<!--            <div class="end-time">End: {{data.EndTime.toLocaleString()}}</div>-->
-<!--            <div *ngIf="data.Location != undefined && data.Location != ''" class="location">-->
-<!--                Location: {{data.Location}}</div>-->
-<!--        </div>-->
-<!--    </ng-template>-->
-
-<!--    &lt;!&ndash; Footer Template &ndash;&gt;-->
-<!--    <ng-template #quickInfoTemplatesFooter let-data>-->
-<!--        <div *ngIf="data.elementType == 'cell'" class="e-cell-footer">-->
-<!--            <div class="left-button">-->
-<!--                <button class="e-event-details" title="Extra Details" (click)="onDetailsClick()">More Details-->
-<!--                </button>-->
-<!--            </div>-->
-<!--            <div class="right-button">-->
-<!--                <button class="e-event-create" title="Add" (click)="onAddClick()">Add</button>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div *ngIf="data.elementType == 'event'" class="e-event-footer">-->
-<!--            <div class="left-button">-->
-<!--                <button class="e-delete" title="Delete" (click)="onDeleteClick($event)">Delete</button>-->
-<!--                <button *ngIf="data.RecurrenceRule != undefined && data.RecurrenceRule != ''" class="e-delete-series"-->
-<!--                        title="Delete" (click)="onDeleteClick($event)">Delete Series-->
-<!--                </button>-->
-<!--            </div>-->
-<!--            <div class="right-button">-->
-<!--                <button class="e-edit" title="Edit" (click)="onEditClick($event)">Edit</button>-->
-<!--                <button *ngIf="data.RecurrenceRule != undefined && data.RecurrenceRule != ''" class="e-edit-series"-->
-<!--                        title="Edit" (click)="onEditClick($event)">Edit Series-->
-<!--                </button>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </ng-template>-->
-
-
-<!--    <ng-template #editorTemplate>-->
-<!--        <table class="custom-event-editor" width="100%" cellpadding="5">-->
-<!--            <tbody>-->
-<!--            <tr>-->
-<!--                <td class="e-textlabel">Summary</td>-->
-<!--                <td colspan="4">-->
-<!--                    <input id="Subject" class="e-field e-input" type="text" value="" name="Subject"-->
-<!--                           style="width: 100%"/>-->
-<!--                </td>-->
-<!--            </tr>-->
-<!--            <tr>-->
-<!--                <td class="e-textlabel">From</td>-->
-<!--                <td colspan="4">-->
-<!--                    <input id="StartTime" class="e-field" type="datetime-local" name="StartTime"/>-->
-<!--                </td>-->
-<!--            </tr>-->
-<!--            <tr>-->
-<!--                <td class="e-textlabel">To</td>-->
-<!--                <td colspan="4">-->
-<!--                    <input id="EndTime" class="e-field" type="datetime-local" name="EndTime"/>-->
-<!--                </td>-->
-<!--            </tr>-->
-<!--            <tr>-->
-<!--                <td colspan="4">-->
-<!--                    <div id='RecurrenceEditor'></div>-->
-<!--                </td>-->
-<!--            </tr>-->
-<!--            <tr>-->
-<!--                <td class="e-textlabel">Reason</td>-->
-<!--                <td colspan="4">-->
-<!--                    <textarea id="Description" class="e-field e-input" name="Description" rows="3" cols="50"-->
-<!--                              style="width: 100%; height: 60px !important; resize: vertical"></textarea>-->
-<!--                </td>-->
-<!--            </tr>-->
-<!--            </tbody>-->
-<!--        </table>-->
-<!--    </ng-template>-->
-<!--</ejs-schedule>-->
-
 <ejs-schedule #scheduleObj width='100%' height='550px' [selectedDate]="selectedDate" [readonly]="false"
-              [eventSettings]="{
-dataSource: this.dataSource }">
+              [eventSettings]="eventSettings " (popupOpen)="onPopupOpen($event)">
     <e-views>
         <e-view option="Week" startHour="07:00"></e-view>
         <e-view option="WorkWeek" startHour="07:00"></e-view>
         <e-view option="Month" [showWeekend]="showWeekend"></e-view>
         <e-view option="Month" [showWeekend]="showWeekend"></e-view>
     </e-views>
+    <!--     Header template -->
+    <ng-template #quickInfoTemplatesHeader>
+        <div>
+            <div class="e-popup-header">
+                <div class="e-header-icon-wrapper">
+                    <button class="e-edit e-control e-btn e-lib e-flat e-round e-small e-icon-btn" title="Edit"
+                            (click)="onEditClick($event)">
+                    </button>
+                    <button class=" e-control e-btn e-lib e-flat e-round delete-btn e-small e-icon-btn" title="Delete"
+                            (click)="showDialog()">
+                        <span class="e-btn-icon e-icons e-delete-icon"></span>
+                    </button>
+                    <button class="e-close e-control e-btn e-lib e-flat e-round e-small e-icon-btn" title="Close"
+                            (click)="onCloseClick()">
+                    </button>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+
+
+    <ng-template #quickInfoTemplatesFooter let-data>
+        <div *ngIf="data.elementType == 'cell'" class="e-cell-footer">
+            <div class="left-button">
+                <button class="e-event-details" title="Extra Details" (click)="onDetailsClick()">More Details</button>
+            </div>
+        </div>
+    </ng-template>
+
+
     <ng-template #editorTemplate pTemplate="content">
 
         <div class="p-field">
             <label>Subject </label>
-            <input id="Subject" class="e-field e-input" type="text" [(ngModel)]="scheduleProf.ref" data-name="Subject"
+            <input id="Subject" class="e-field e-input" type="text" [(ngModel)]="scheduleProf.subject"
+                   data-name="subject"
                    style="width: 100%"/>
         </div>
 
@@ -177,25 +92,45 @@ dataSource: this.dataSource }">
         </div>
         <div class="p-field">
             <label for="start">Debut Date</label>
-            <p-calendar id="start" [(ngModel)]="scheduleProf.dateDebut" [showTime]="true" name="StartTime"
+            <p-calendar id="start" [(ngModel)]="scheduleProf.startTime" [showTime]="true" name="StartTime"
                         class="e-field"
-                        data-name="StartTime"
+                        data-name="startTime"
                         inputId="start"></p-calendar>
-            <small *ngIf="submitted && !scheduleProf.dateDebut" class="p-invalid">start date is required.</small>
+            <small *ngIf="submitted && !scheduleProf.startTime" class="p-invalid">start date is required.</small>
         </div>
 
         <div class="p-field">
             <label for="end">Finish Date </label>
-            <p-calendar id="end" [(ngModel)]="scheduleProf.dateFin" [showTime]="true" name="EndTime" class="e-field"
+            <p-calendar id="end" [(ngModel)]="scheduleProf.endTime" [showTime]="true" name="endTime" class="e-field"
                         data-name="EndTime"
                         inputId="basic"></p-calendar>
-            <small *ngIf="submitted && !scheduleProf.dateFin" class="p-invalid">end date is required.</small>
+            <small *ngIf="submitted && !scheduleProf.endTime" class="p-invalid">end date is required.</small>
         </div>
         <div class="p-field">
-            <button class="e-event-create e-text-ellipsis e-control e-btn e-lib e-flat e-primary" title="Save" (click)="onCloseClick() ; save()">
+            <button class="e-event-create e-text-ellipsis e-control e-btn e-lib e-flat e-primary" title="Save"
+                    (click)="onCloseClick() ; save()">
                 Save
             </button>
         </div>
 
     </ng-template>
 </ejs-schedule>
+
+
+<p-dialog header="Delete event" [(visible)]="display">
+
+    <div class="e-dlg-content" id="QuickDialog_dialog-content">Are you sure you want to delete this event?</div>
+
+
+    <div class="e-footer-content" style="margin:8% 0 0 22px ">
+        <button type="button" class="e-control e-btn e-lib e-quick-alertok e-flat e-primary e-quick-dialog-delete" style="margin-right: 5em"
+                aria-label="Delete" (click)="onDeleteClick()"
+        >Delete
+        </button>
+        <button type="button" class="e-control e-btn e-lib e-quick-alertcancel e-flat e-quick-dialog-cancel"
+                (click)="hideDialog()"
+                aria-label="Cancel">Cancel
+        </button>
+    </div>
+
+</p-dialog>

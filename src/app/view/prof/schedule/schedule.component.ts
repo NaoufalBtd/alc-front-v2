@@ -1,6 +1,4 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-
-import {FullCalendar} from 'primeng/fullcalendar';
 import {ScheduleService} from '../../../controller/service/schedule.service';
 import {ConfirmationService, MessageService} from 'primeng/api';
 import {Etudiant} from '../../../controller/model/etudiant.model';
@@ -8,9 +6,7 @@ import {EtatEtudiantSchedule} from '../../../controller/model/etat-etudiant-sche
 import {CalendrierProf} from '../../../controller/model/schedule-prof.model';
 import {CalendrierVo} from '../../../controller/model/calendrier-vo.model';
 import {LoginService} from '../../../controller/service/login.service';
-import {DataManager, UrlAdaptor} from '@syncfusion/ej2-data';
 import {ScheduleProf} from '../../../controller/model/calendrier-prof.model';
-import {ScheduleTemplateVO} from '../../../controller/vo/schedule-template-vo.model';
 import {L10n} from '@syncfusion/ej2-base';
 import {
     EventSettingsModel,
@@ -24,6 +20,7 @@ import {
 } from '@syncfusion/ej2-angular-schedule';
 import {Prof} from '../../../controller/model/prof.model';
 import {isNullOrUndefined} from 'util';
+import {ScheduleVo} from '../../../controller/model/schedule-vo.model';
 
 L10n.load({
     'en-US': {
@@ -44,14 +41,23 @@ L10n.load({
 
 })
 export class ScheduleLocalComponent implements OnInit {
-    dataSource: Array<ScheduleTemplateVO> = new Array<ScheduleTemplateVO>();
     @ViewChild('scheduleObj')
     public scheduleObj: ScheduleComponent;
-    public eventSettings: EventSettingsModel = {};
+    display = false;
     private selectionTarget: Element;
     // public selectedDate: Date = new Date(2021, 4, 18);
     public selectedDate: Date = new Date();
     public showWeekend = false;
+    public eventSettings: EventSettingsModel = {
+        dataSource: this.scheduleProfs,
+        fields: {
+            id: 'Id',
+            subject: {name: 'subject', title: 'subject'},
+            startTime: {name: 'startTime', title: 'startTime'},
+            endTime: {name: 'endTime', title: 'endTime'}
+        }
+    };
+
 
     constructor(private scheduleService: ScheduleService, private messageService: MessageService,
                 private confirmationService: ConfirmationService, private user: LoginService) {
@@ -68,6 +74,10 @@ export class ScheduleLocalComponent implements OnInit {
 
     get scheduleProf(): ScheduleProf {
         return this.scheduleService.scheduleProf;
+    }
+
+    set scheduleProf(value: ScheduleProf) {
+        this.scheduleService.scheduleProf = value;
     }
 
     get professors(): Array<Prof> {
@@ -135,34 +145,18 @@ export class ScheduleLocalComponent implements OnInit {
 
 
     ngOnInit() {
-        this.scheduleService.findAll().subscribe(data => this.scheduleProfs = data);
+        this.scheduleService.findAll();
         this.getData();
         this.scheduleService.getAllStudents().subscribe(data => this.students = data);
         this.scheduleService.getProf().subscribe(data => this.professors = data);
         this.scheduleService.findEtat().subscribe(data => this.scheduleService.etatEtudiantSchedule = data);
-
+        console.log(this.scheduleProfs);
     }
 
 
     save() {
-        alert('clicked');
-        console.log(this.scheduleProf);
         this.scheduleService.save();
-        this.scheduleService.findAll().subscribe(data => this.scheduleProfs = data);
         window.location.reload();
-        this.getData();
-    }
-
-    getData() {
-        this.dataSource = new Array<ScheduleTemplateVO>();
-        for (const item of this.scheduleProfs) {
-            const schedule: ScheduleTemplateVO = new ScheduleTemplateVO();
-            schedule.Id = item.id;
-            schedule.Subject = item.ref;
-            schedule.StartTime = item.dateDebut;
-            schedule.EndTime = item.dateFin;
-            this.dataSource.push(schedule);
-        }
     }
 
 
@@ -172,49 +166,43 @@ export class ScheduleLocalComponent implements OnInit {
     }
 
     public onDetailsClick(): void {
-        this.onCloseClick();
         const data: Object = this.scheduleObj.getCellDetails(this.scheduleObj.getSelectedElements()) as Object;
         this.scheduleObj.openEditor(data, 'Add');
     }
 
-    public onAddClick(): void {
-        this.onCloseClick();
-        const data: Object = this.scheduleObj.getCellDetails(this.scheduleObj.getSelectedElements()) as Object;
-        const eventData: { [key: string]: Object } = this.scheduleObj.eventWindow.getObjectFromFormData('e-quick-popup-wrapper');
-        this.scheduleObj.eventWindow.convertToEventData(data as { [key: string]: Object }, eventData);
-        eventData.Id = this.scheduleObj.eventBase.getEventMaxID() as number + 1;
-        this.scheduleObj.addEvent(eventData);
+    public onEditClick(): void {
+        const scheduleProf = this.scheduleObj.getEventDetails(this.selectionTarget) as ScheduleProf;
+        this.scheduleService.update(scheduleProf);
     }
 
-    public onEditClick(args: any): void {
-        if (this.selectionTarget) {
-            let eventData: { [key: string]: Object } = this.scheduleObj.getEventDetails(this.selectionTarget) as { [key: string]: Object };
-            let currentAction: CurrentAction = 'Save';
-            if (!isNullOrUndefined(eventData.RecurrenceRule) && eventData.RecurrenceRule !== '') {
-                if (args.target.classList.contains('e-edit-series')) {
-                    currentAction = 'EditSeries';
-                    eventData = this.scheduleObj.eventBase.getParentEvent(eventData, true);
-                } else {
-                    currentAction = 'EditOccurrence';
-                }
-            }
-            this.scheduleObj.openEditor(eventData, currentAction);
-        }
-    }
-
-    public onDeleteClick(args: any): void {
-        this.onCloseClick();
-        if (this.selectionTarget) {
-            const eventData: { [key: string]: Object } = this.scheduleObj.getEventDetails(this.selectionTarget) as { [key: string]: Object };
-            let currentAction: CurrentAction;
-            if (!isNullOrUndefined(eventData.RecurrenceRule) && eventData.RecurrenceRule !== '') {
-                currentAction = args.target.classList.contains('e-delete-series') ? 'DeleteSeries' : 'DeleteOccurrence';
-            }
-            this.scheduleObj.deleteEvent(eventData, currentAction);
-        }
+    public onDeleteClick(): void {
+        const scheduleProf = this.scheduleObj.getEventDetails(this.selectionTarget) as ScheduleProf;
+        this.scheduleService.deleteByRef(scheduleProf.ref);
+        window.location.reload();
     }
 
     public onCloseClick(): void {
         this.scheduleObj?.closeEditor();
+    }
+
+    public getData() {
+        this.eventSettings = {
+            dataSource: this.scheduleProfs,
+            fields: {
+                id: 'Id',
+                subject: {name: 'subject', title: 'subject'},
+                startTime: {name: 'startTime', title: 'startTime'},
+                endTime: {name: 'endTime', title: 'endTime'}
+            }
+        };
+    }
+
+
+    showDialog() {
+        this.display = true;
+    }
+
+    hideDialog() {
+        this.display = false;
     }
 }
