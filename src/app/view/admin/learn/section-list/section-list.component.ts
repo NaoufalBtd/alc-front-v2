@@ -9,6 +9,7 @@ import {QuizEtudiantService} from '../../../../controller/service/quiz-etudiant.
 import {Quiz} from '../../../../controller/model/quiz.model';
 import {Cours} from '../../../../controller/model/cours.model';
 import {SectionItemService} from '../../../../controller/service/section-item.service';
+import {HomeworkService} from "../../../../controller/service/homework.service";
 
 
 @Component({
@@ -22,7 +23,7 @@ export class SectionListComponent implements OnInit {
     cols: any[];
 
     // tslint:disable-next-line:max-line-length no-shadowed-variable
-    constructor(private serviceQuiz: QuizService, private quizService: QuizEtudiantService, private messageService: MessageService, private confirmationService: ConfirmationService, private service: ParcoursService, private router: Router, private VocabularyService: VocabularyService, private sectionItemService: SectionItemService) {
+    constructor(private homeworkService: HomeworkService, private serviceQuiz: QuizService, private quizService: QuizEtudiantService, private messageService: MessageService, private confirmationService: ConfirmationService, private service: ParcoursService, private router: Router, private VocabularyService: VocabularyService, private sectionItemService: SectionItemService) {
     }
 
     get selectedQuiz(): Quiz {
@@ -244,5 +245,10 @@ export class SectionListComponent implements OnInit {
             {field: 'url', header: 'Url'},
             {field: 'superCategorieSection', header: 'SuperCategorieSection'}
         ];
+    }
+
+    showme(section: Section) {
+        this.homeworkService.section = section;
+        this.router.navigate(['admin/homeWork']);
     }
 }

@@ -21,6 +21,8 @@ export class ParcoursService {
     private _index: number;
     private _contenuSection: Array<string>;
     private adminUrl = environment.adminUrl;
+    private _sectionStandard: Array<Section>;
+    private _sectionAdditional: Array<Section>;
 
 
     public afficheCoursStudent(): Observable<Array<Cours>> {
@@ -298,6 +300,24 @@ export class ParcoursService {
 
     set itemssection2(value: Array<Section>) {
         this._itemssection2 = value;
+    }
+    get sectionStandard(): Array<Section>{
+        if (this._sectionStandard == null){
+            this._sectionStandard = new Array<Section>();
+        }
+        return this._sectionStandard;
+    }
+    set sectionStandard(sections){
+        this._sectionStandard = sections;
+    }
+    get sectionAdditional(): Array<Section> {
+        if (this._sectionAdditional == null){
+            this._sectionAdditional = new Array<Section>();
+        }
+        return this._sectionAdditional;
+    }
+    set sectionAdditional(sections){
+        this._sectionAdditional = sections ;
     }
 
     private _selectedcentre: Centre;

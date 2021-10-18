@@ -22,6 +22,8 @@ export class EtudiantCoursesComponent implements OnInit {
     sortKey: any[];
     cols: any[];
 
+
+
     // tslint:disable-next-line:max-line-length
     constructor(private messageService: MessageService,
                 private quizService: QuizEtudiantService,
@@ -32,7 +34,6 @@ export class EtudiantCoursesComponent implements OnInit {
                 private sectionItemService: SectionItemService
     ) {
     }
-
     get selectedReview(): EtudiantReview {
         return this.review.selected;
     }
@@ -63,11 +64,21 @@ export class EtudiantCoursesComponent implements OnInit {
     public FindSectionOneByOne(cour: Cours) {
         this.service.selectedEtudiantCours.dateDebut = new Date();
         this.selectedcours = cour;
+        this.sectionItemService.coursofsection = cour;
         let i = 0;
         i = i + 1;
         this.service.affichelistSection().subscribe(
             data => {
+                this.service.sectionAdditional = [];
+                this.service.sectionStandard = [];
                 this.itemssection2 = data;
+                for (let _i = 0 ; _i < data.length; _i++){
+                    if (data[_i].categorieSection.superCategorieSection.libelle === 'Obligatory'){
+                        this.service.sectionStandard.push(data[_i]);
+                    } else if (data[_i].categorieSection.superCategorieSection.libelle === 'Additional'){
+                        this.service.sectionAdditional.push(data[_i]);
+                    }
+                }
                 // tslint:disable-next-line:no-shadowed-variable
             });
         this.service.image = '';

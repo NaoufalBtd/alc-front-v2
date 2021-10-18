@@ -570,11 +570,6 @@ export class QuizEtudiantViewComponent implements OnInit {
                 this.service.findCorrectAnswers(this.selected.id).subscribe(
                     data => {
                         this.correctAnswers = data;
-
-
-
-
-
                         if (this.selected.typeDeQuestion.ref == 't1') {
                             this.service.findMyAnswerEtudiant(this.quizEtudiant, this.selected).subscribe(
                                 data => {

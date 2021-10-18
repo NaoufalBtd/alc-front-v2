@@ -20,6 +20,9 @@ import {SectionItemService} from '../../../../controller/service/section-item.se
 import {Inscription} from '../../../../controller/model/inscription.model';
 import {EtudiantReview} from '../../../../controller/model/etudiant-review.model';
 import {EtudiantReviewService} from '../../../../controller/service/etudiant-review.service';
+import {HomeworkService} from "../../../../controller/service/homework.service";
+import {HomeWork} from "../../../../controller/model/home-work.model";
+import {HomeWorkEtudiantServiceService} from "../../../../controller/service/home-work-etudiant-service.service";
 
 @Pipe({name: 'safe'})
 export class SafePipe implements PipeTransform {
@@ -62,7 +65,9 @@ export class StudentSimulateSectionComponent implements OnInit {
                 private loginService: LoginService,
                 private vocab: VocabularyService,
                 private review: EtudiantReviewService,
-                private sectionItemService: SectionItemService) {
+                private sectionItemService: SectionItemService,
+                private homeWorkService: HomeworkService,
+                private homeWorkEtudiantService: HomeWorkEtudiantServiceService) {
     }
     get viewDialog(): boolean {
         return this.review.viewDialog;
@@ -249,17 +254,34 @@ export class StudentSimulateSectionComponent implements OnInit {
     get itemssection2(): Array<Section> {
         return this.service.itemssection2;
     }
-
     set itemssection2(value: Array<Section>) {
         this.service.itemssection2 = value;
     }
-
+    get sectionStandard(): Array<Section> {
+        return this.service.sectionStandard;
+    }
+    set sectionStandard(value: Array<Section>) {
+        this.service.sectionStandard = value;
+    }
+    get sectionAdditional(): Array<Section> {
+        return this.service.sectionAdditional;
+    }
+    set sectionAdditional(value: Array<Section>) {
+        this.service.sectionAdditional = value;
+    }
     get selectessection(): Array<Section> {
         return this.service.selectessection;
     }
 
     set selectessection(value: Array<Section>) {
         this.service.selectessection = value;
+    }
+
+    get homeWorkList(): Array<HomeWork> {
+        return this.homeWorkService.homeWorkList;
+    }
+    set homeWOrkList(homeWorklist: Array<HomeWork>){
+        this.homeWorkService.homeWorkList = homeWorklist;
     }
 
     public findByWord() {
@@ -381,6 +403,7 @@ export class StudentSimulateSectionComponent implements OnInit {
                             // tslint:disable-next-line:no-shadowed-variable
                         });
                     document.getElementById('word').style.visibility = 'hidden';
+                    document.getElementById('homeWork').style.visibility = 'hidden';
                     document.getElementById('word').style.height = '0px';
 
                     document.getElementById('categoriess').style.visibility = 'visible';
@@ -393,6 +416,7 @@ export class StudentSimulateSectionComponent implements OnInit {
             }, {
                 icon: 'pi pi-fw pi-comments', command: (event) => {
                     document.getElementById('categoriess').style.visibility = 'hidden';
+                    document.getElementById('homeWork').style.visibility = 'hidden';
                     document.getElementById('categoriess').style.height = '0px';
                     document.getElementById('word').style.visibility = 'hidden';
                     document.getElementById('word').style.height = '0px';
@@ -406,6 +430,7 @@ export class StudentSimulateSectionComponent implements OnInit {
                             this.itemsDict = data;
                         });
                     document.getElementById('categoriess').style.visibility = 'hidden';
+                    document.getElementById('homeWork').style.visibility = 'hidden';
                     document.getElementById('categoriess').style.height = '0px';
                     document.getElementById('word').style.visibility = 'visible';
                     document.getElementById('word').style.width = '100%';
@@ -413,8 +438,26 @@ export class StudentSimulateSectionComponent implements OnInit {
                     document.getElementById('wrd').style.height = '100%';
                     document.getElementById('chat').style.visibility = 'hidden';
                 }
+            }, {
+                icon: 'pi pi-sliders-h', style: {width: '50%'}, command: (event) => {
+                    document.getElementById('categoriess').style.visibility = 'hidden';
+                    document.getElementById('categoriess').style.height = '0px';
+                    document.getElementById('homeWork').style.visibility = 'visible';
+                    document.getElementById('chat').style.visibility = 'hidden';
+                    document.getElementById('word').style.visibility = 'hidden';
+                }
             },
         ];
+        this.findhomeworkbycours(this.sectionItemService.coursofsection);
+    }
+    public findhomeworkbycours(cours: Cours){
+        this.homeWorkService.findhomeworkbysection(cours).subscribe(
+            data =>{
+                this.homeWorkService.homeWorkList = data ;
+            }, error =>{
+                console.log("orsinakh");
+            }
+        );
     }
 
     public findCoursEtudiant(cours: Cours) {
@@ -676,7 +719,14 @@ export class StudentSimulateSectionComponent implements OnInit {
     }
 
     return($event: string) {
-        this.showVocabulary=false
+        this.showVocabulary=false;
     }
 
+    sendhomeWork(homeWork: HomeWork) {
+        console.log(homeWork);
+        this.homeWorkEtudiantService.homeWork = homeWork;
+        this.homeWorkEtudiantService.homeWork.questions = homeWork.questions;
+      //  this.homeWorkEtudiantService.homeWorkQuestion = ;
+        this.router.navigate(['etudiant/homeWorkEtudiant']);
+    }
 }

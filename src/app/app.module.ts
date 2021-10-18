@@ -220,6 +220,9 @@ import {SyntheseSessionComponent} from "./view/prof/synthese-session/synthese-se
 import {SyntheseSessionCoursCreateComponent} from "./view/prof/synthese-session/synthese-session-cours-create/synthese-session-cours-create.component";
 import {ProfReviewViewComponent} from "./view/prof/learn-teacher/prof-review-view/prof-review-view.component";
 import {QuizPreviewProfComponent} from './view/prof/quiz-preview-prof/quiz-preview.component';
+import { HomeWorkComponentComponent } from './view/admin/home-work-component/home-work-component.component';
+import { HomeWorkTakeComponent } from './view/etudiant/homeWork/home-work-take/home-work-take.component';
+import {HomeWorkEtudiantComponent} from "./view/etudiant/homeWork/home-work-etudiant/home-work-etudiant.component";
 
 
 @NgModule({
@@ -446,7 +449,10 @@ import {QuizPreviewProfComponent} from './view/prof/quiz-preview-prof/quiz-previ
         SessionCoursCreateComponent,
         SessionCoursListComponent,
         SessionCoursViewComponent,
-        QuizPreviewProfComponent
+        QuizPreviewProfComponent,
+        HomeWorkComponentComponent,
+        HomeWorkTakeComponent,
+        HomeWorkEtudiantComponent
     ],
     providers: [
         {provide: LocationStrategy, useClass: HashLocationStrategy},

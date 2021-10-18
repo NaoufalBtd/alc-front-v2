@@ -51,14 +51,17 @@ import {ProfComponent} from './view/prof/prof.component';
 import {EtudiantComponent} from './view/etudiant/etudiant.component';
 import {SyntheseSessionComponent} from './view/prof/synthese-session/synthese-session.component';
 import {QuizPreviewProfComponent} from './view/prof/quiz-preview-prof/quiz-preview.component';
-import {EtudiantsComponent} from "./view/admin/etudiants/etudiants.component";
+import {EtudiantsComponent} from './view/admin/etudiants/etudiants.component';
+import {HomeWorkComponentComponent} from './view/admin/home-work-component/home-work-component.component';
+import {HomeWOrkEtudiant} from "./controller/model/home-work-etudiant.model";
+import {HomeWorkEtudiantComponent} from "./view/etudiant/homeWork/home-work-etudiant/home-work-etudiant.component";
 
 
 @NgModule({
     imports: [
         RouterModule.forRoot([
-            {path:'admin',component: AdminComponent,
-                children:[
+            {path: 'admin', component: AdminComponent,
+                children: [
                     {path: 'parcours', component: LearnComponent},
                     {path: 'create-section-items', component: SectionItemComponent},
                     {path: 'preview-section-items', component: SectionItemPreviewComponent},
@@ -76,6 +79,7 @@ import {EtudiantsComponent} from "./view/admin/etudiants/etudiants.component";
                     {path: 'schedule', component: ScheduleAdminComponent},
                     {path: 'faq-create', component: FaqCreateComponent},
                     {path: 'students-List', component: EtudiantsComponent},
+                    {path: 'homeWork', component: HomeWorkComponentComponent}
                 ]
             },
             {path:'prof',component: ProfComponent,
@@ -95,6 +99,7 @@ import {EtudiantsComponent} from "./view/admin/etudiants/etudiants.component";
                     {path: 'sections', component: SectionsComponent},
                     {path: 'cours', component: CoursesComponent},
                     {path: 'quiz-preview-teacher', component: QuizPreviewProfComponent},
+
                 ]
             },
             {path:'etudiant',component: EtudiantComponent,
@@ -107,6 +112,7 @@ import {EtudiantsComponent} from "./view/admin/etudiants/etudiants.component";
                     {path: 'etudiant-cours', component: EtudiantCoursesComponent},
                     {path: 'quiz-view', component: QuizEtudiantViewComponent},
                     {path: 'quiz-take', component: QuizTakeComponent},
+                    {path: 'homeWorkEtudiant', component: HomeWorkEtudiantComponent},
                 ]
             },
             {path:'',component: PublicComponent,
