@@ -367,43 +367,19 @@ export class SessionCoursService {
         );
     }
 
-    getselectedvaluestudent(event: any) {
-        this.http.get<Prof>('http://localhost:8036/etudiant/etudiant/nom/' + event.target.value).subscribe(
-            data => {
-                if (data != null) {
-                    this.findallsessionscoursbystudentid(data.id);
-                }
-            }
-        );
-    }
 
-    public savesession(idprof: number, idetudiant: number) {
+    public savesession(idprof: number, idetudiant: number, idcours: number) {
         // @ts-ignore
-        this.http.post('http://localhost:8036/etudiant/session/' + idprof + '/' + idetudiant).subscribe(
+        this.http.post('http://localhost:8036/etudiant/session/' + idprof + '/' + idetudiant + '/' + idcours).subscribe(
             data => {
                 // @ts-ignore
                 if (data > 0) {
 
-
                 }
-
             }
         );
     }
 
 
-    // @ts-ignore
-    public findprof(idetu: number, idcours: number): number {
-        // @ts-ignore
-        this.http.get<EtudiantCours>('http://localhost:8036/prof/prof/' + idetu + '/' + idcours).subscribe(
-            data => {
-                console.log(data);
-                this.savesession(data.prof.id, idetu);
-                // tslint:disable-next-line:no-unused-expression
-                return data.id;
-            }, error => {
-                alert(error);
-            }
-        );
-    }
+
 }

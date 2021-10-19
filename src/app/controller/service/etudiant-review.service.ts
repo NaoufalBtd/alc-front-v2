@@ -7,7 +7,7 @@ import {LoginService} from './login.service';
 import {ParcoursService} from './parcours.service';
 import {Etudiant} from '../model/etudiant.model';
 import {ProfReview} from '../model/ProfReview.model';
-import {environment} from "../../../environments/environment";
+import {environment} from '../../../environments/environment';
 
 @Injectable({
     providedIn: 'root'
@@ -29,6 +29,15 @@ export class EtudiantReviewService {
     private _students: Array<Etudiant>;
     private _hasfinish: boolean = false;
 
+    private _coursfinish:boolean=false;
+
+    get coursfinish(): boolean {
+        return this._coursfinish;
+    }
+
+    set coursfinish(value: boolean) {
+        this._coursfinish = value;
+    }
 
     get hasfinish(): boolean {
         return this._hasfinish;

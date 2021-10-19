@@ -7,13 +7,16 @@ import {SessionCours} from '../../../../controller/model/session-cours.model';
 import {EtudiantCours} from '../../../../controller/model/etudiant-cours.model';
 import {HttpClient} from '@angular/common/http';
 import {Etudiant} from '../../../../controller/model/etudiant.model';
-import {PaiementService} from "../../../../controller/service/paiement.service";
+import {PaiementService} from '../../../../controller/service/paiement.service';
+import {MessageService, SelectItem} from "primeng/api";
 
 @Component({
     selector: 'app-paiement-list',
     templateUrl: './paiement-list.component.html',
     styleUrls: ['./paiement-list.component.scss']
 })
+
+
 export class PaiementListComponent implements OnInit {
     displayModal = false;
     val: number;
@@ -21,9 +24,18 @@ export class PaiementListComponent implements OnInit {
     prof: Prof;
     duree = 0;
     private i: number;
+    // @ts-ignore
+    public etat: string['fe'];
+    items: SelectItem[];
 
-    constructor(private service: ProfessorService, private sessionService: SessionCoursService, private http: HttpClient, private paiement: PaiementService) {
+    item: string;
+
+    // tslint:disable-next-line:max-line-length
+    constructor(private service: ProfessorService, private messageService: MessageService, private sessionService: SessionCoursService, private http: HttpClient, private paiement: PaiementService) {
+        this.items = [];
+        this.items.push({label: 'true', value: 'true'}, {label: 'false', value: 'false'});
     }
+
 
     get sessioncours(): SessionCours {
         return this.paiement.sessioncours;
@@ -154,6 +166,7 @@ export class PaiementListComponent implements OnInit {
           }
       }
   */
+    namecours: string;
 
 
     ngOnInit(): void {
@@ -188,6 +201,41 @@ export class PaiementListComponent implements OnInit {
 
     savepaiement(id: number) {
         this.paiement.savepaiement(id);
+        this.messageService.add({
+            severity: 'success',
+            summary: 'Successful',
+            detail: 'Quiz Created',
+            life: 3000
+        });
+    }
+
+    public findByCriteriaCoursName(namecourse: string) {
+        this.paiement.findByCriteriaCoursName(namecourse);
+    }
+
+    get searchsession(): SessionCours {
+        return this.paiement.searchsession;
+    }
+
+    set searchsession(value: SessionCours) {
+        this.paiement.searchsession = value;
+    }
+
+    public findByCriteriaProfName(profname: string) {
+
+        this.paiement.findByCriteriaProfName(profname);
+    }
+
+    public findByCriteriaStudentName(student: string) {
+        this.paiement.findByCriteriaStudentName(student);
+    }
+
+    public findByCriteriaReference(reference: string) {
+        this.paiement.findByCriteriaReference(reference);
+    }
+
+    public findByCriteriaDate(date: Date) {
+        this.paiement.findByCriteriaDate(date);
     }
 
 }

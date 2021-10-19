@@ -52,6 +52,8 @@ export class StudentSimulateSectionComponent implements OnInit {
     word: string;
     wordDict: any;
     j: number;
+    private _finishcours: boolean = false;
+
 
     // tslint:disable-next-line:max-line-lengthg max-line-length
     constructor(private messageService: MessageService,
@@ -67,7 +69,15 @@ export class StudentSimulateSectionComponent implements OnInit {
                 private review: EtudiantReviewService,
                 private sectionItemService: SectionItemService,
                 private sessioncoursservice: SessionCoursService,
-                 ) {
+    ) {
+    }
+
+    get finishcours(): boolean {
+        return this._finishcours;
+    }
+
+    set finishcours(value: boolean) {
+        this._finishcours = value;
     }
 
     get hasfinish(): boolean {
@@ -373,17 +383,17 @@ export class StudentSimulateSectionComponent implements OnInit {
         this.review.selected = value;
     }
 
-    ngOnInit(): void {
-       // this.hasfinish = false;
-       //      this.http.get<EtudiantCours>('http://localhost:8036/etudiant/etudiantCours/prof/id/' + this.loginService.etudiant.prof.id + '/etudiant/id/' +  this.loginService.etudiant.id + '/cours/idc/' + this.).subscribe(
-       //          data => {
-       //              if (data != null) {
-       //                  this.hasfinish = false;
-       //              }
-       //          }
-       //      );
-        this.hasfinish = false;
+    get coursfinish(): boolean {
+        return this.review.coursfinish;
+    }
 
+    set coursfinish(value: boolean) {
+        this.review.coursfinish = value;
+    }
+
+
+    ngOnInit(): void {
+        this.hasfinish = false;
         this.review.findReview(this.selectedcours.id).subscribe(
             data => {
                 this.selectedReview = data;
@@ -724,4 +734,5 @@ export class StudentSimulateSectionComponent implements OnInit {
     navigate() {
         this.router.navigate(['etudiant/etudiant-cours']);
     }
+
 }

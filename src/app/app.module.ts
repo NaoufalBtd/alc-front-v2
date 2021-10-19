@@ -237,6 +237,7 @@ import {
 } from '@syncfusion/ej2-angular-schedule';
 import {DropDownListModule} from '@syncfusion/ej2-angular-dropdowns';
 import {DateTimePickerModule} from '@syncfusion/ej2-angular-calendars';
+import {CommentReviewComponent} from "./view/prof/comment-review/comment-review.component";
 
 
 @NgModule({
@@ -335,6 +336,7 @@ import {DateTimePickerModule} from '@syncfusion/ej2-angular-calendars';
 
     ],
     declarations: [
+        CommentReviewComponent,
         AppComponent,
         DashboardDemoComponent,
         AppMenuComponent,
@@ -475,6 +477,7 @@ import {DateTimePickerModule} from '@syncfusion/ej2-angular-calendars';
     providers: [
         {provide: LocationStrategy, useClass: HashLocationStrategy},
         MenuService, MessageService, ConfirmationService,
+        // tslint:disable-next-line:max-line-length
         WeekService, MonthService, DayService, WeekService, WorkWeekService, MonthService, AgendaService, MonthAgendaService, TimelineViewsService,
         TimelineMonthService
     ],

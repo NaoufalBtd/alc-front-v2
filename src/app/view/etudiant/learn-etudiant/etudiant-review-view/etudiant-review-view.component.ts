@@ -18,9 +18,16 @@ import {SessionCoursService} from "../../../../controller/service/session-cours.
 })
 export class EtudiantReviewViewComponent implements OnInit {
     comment: string;
-
-    // tslint:disable-next-line:max-line-length
+     // tslint:disable-next-line:max-line-length
     constructor(private sessioncoursservice: SessionCoursService, private messageService: MessageService, private review: EtudiantReviewService, private serviceParcours: ParcoursService, private router: Router, private loginService: LoginService, private service: EtudiantReviewService, private serviceCours: ParcoursService, private http: HttpClient) {
+    }
+
+    get coursfinish(): boolean {
+        return this.review.coursfinish;
+    }
+
+    set coursfinish(value: boolean) {
+        this.review.coursfinish = value;
     }
 
     get selectedcours(): Cours {
@@ -109,23 +116,21 @@ export class EtudiantReviewViewComponent implements OnInit {
         // @ts-ignore
         // tslint:disable-next-line:max-line-length
 
+        // tslint:disable-next-line:max-line-length
         this.http.post('http://localhost:8036/etudiant/etudiantReview/' + idprof + '/' + idstudent + '/' + idcours + '/' + comment).subscribe(
             data => {
                 // @ts-ignore
                 if (data > 0) {
-                    this.hasfinish = true;
+                  this.hasfinish = true;
+
                 }
             }
         );
-        this.sessioncoursservice.findprof(idstudent, idcours);
         this.messageService.add({
             severity: 'info',
             summary: 'Info',
-            detail: 'Lah i7fdaak 3la comment',
-            life: 3000
-        });
-
-
+            detail: 'Thank You For Your Comment',
+            life: 3000   });
     }
 
     show() {

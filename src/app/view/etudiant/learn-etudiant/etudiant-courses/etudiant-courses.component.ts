@@ -23,7 +23,6 @@ import {error} from "protractor";
 export class EtudiantCoursesComponent implements OnInit {
     sortKey: any[];
     cols: any[];
-    public _finishcours: boolean;
 
     // tslint:disable-next-line:max-line-length
     constructor(private messageService: MessageService,
@@ -129,12 +128,11 @@ export class EtudiantCoursesComponent implements OnInit {
     }
 
     public saveetudiantcours(idprof: number, idetudiant: number, idcours: number) {
-
-
-
         // @ts-ignore
         this.http.post('http://localhost:8036/etudiant/etudiantCours/' + idprof + '/' + idetudiant + '/' + idcours).subscribe(
             data => {
+                // @ts-ignore
+                this.findprof(idetudiant, idcours);
                 // @ts-ignore
                 if (data > 0) {
                     this.messageService.add({
@@ -143,22 +141,45 @@ export class EtudiantCoursesComponent implements OnInit {
                         detail: 'You Start This Course',
                         life: 3000
                     });
-                }else {
-                    this.hasfinish=true;
+                }
+            }
+        );
+
+
+    }
+
+    public savesession(idprof: number, idetudiant: number, idcours: number) {
+        // @ts-ignore
+        this.http.post('http://localhost:8036/etudiant/session/' + idprof + '/' + idetudiant + '/' + idcours).subscribe(
+            data => {
+                // @ts-ignore
+                if (data === 1) {
+                    this.hasfinish = false;
+                }
+                // @ts-ignore
+                if (data === 2) {
+                    this.hasfinish = true;
                 }
             }
         );
     }
 
-/*    findEtudiantCoursByProfIdAndEtudiantIdAndCoursId(idprof: number, idstudent: number, idcours: number) {
-        this.http.get<EtudiantCours>('http://localhost:8036/etudiant/etudiantCours/prof/id/' + idprof + '/etudiant/id/' + idstudent + '/cours/idc/' + idcours).subscribe(
+    // @ts-ignore
+    public findprof(idetu: number, idcours: number): number {
+        // @ts-ignore
+        this.http.get<EtudiantCours>('http://localhost:8036/prof/prof/' + idetu + '/' + idcours).subscribe(
             data => {
-                if (data != null) {
-                    this.hasfinish = false;
-                }
+                console.log(data);
+                this.savesession(data.prof.id, idetu, idcours);
+                // tslint:disable-next-line:no-unused-expression
+                return data.id;
+                // tslint:disable-next-line:no-shadowed-variable
+            }, error => {
+                alert(error);
             }
         );
-    }*/
+    }
+
 
     get itemsEtudiantCours(): Array<EtudiantCours> {
         return this.service.itemsEtudiantCours;
