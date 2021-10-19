@@ -1,23 +1,62 @@
-#schedule {
-  height: 850px;
-  width: 2250px;
+.instruction-button {
+  float: right;
+  margin: 0 1% 1% 0;
 }
 
-.container {
+ejs-schedule {
+  -webkit-box-shadow: -8px -5px 27px -6px rgba(92, 83, 92, 1);
+  -moz-box-shadow: -8px -5px 27px -6px rgba(92, 83, 92, 1);
+  box-shadow: -8px -5px 27px -6px rgba(92, 83, 92, 1);
+}
+
+.p-field {
+  width: 100%;
+}
+
+.e-quick-popup-wrapper .e-popup-header {
+  height: 30px;
+}
+
+.e-quick-popup-wrapper .e-header-icon-wrapper {
+  height: inherit;
+}
+
+.e-quick-popup-wrapper .e-header-icon-wrapper .subject {
+  left: 0;
+  position: absolute;
+  font-size: 14px;
+  font-weight: 500;
+  color: #fff;
+  padding: 2px 5px;
+}
+
+.e-quick-popup-wrapper .e-cell-footer,
+.e-quick-popup-wrapper .e-event-footer {
   display: flex;
-  justify-content: center;
-  flex-direction: row;
 }
 
-.titleS {
-
-  font-weight: bold;
+.e-quick-popup-wrapper .e-cell-footer .right-button,
+.e-quick-popup-wrapper .e-event-footer .right-button {
+  position: absolute;
+  right: 0;
 }
 
-#scheduleTitre {
-  font-size: 55px;
-  font-family: Algerian, serif;
-
-  color: black;
+.e-quick-popup-wrapper .e-cell-footer button,
+.e-quick-popup-wrapper .e-event-footer button {
+  margin: 10px;
+  padding: 4px;
 }
 
+.e-quick-popup-wrapper .e-event-content .start-time,
+.e-quick-popup-wrapper .e-event-content .end-time,
+.e-quick-popup-wrapper .e-event-content .location {
+  padding: 8px;
+}
+
+.e-event-create{
+  float: right;
+}
+
+.delete-btn{
+  color: floralwhite !important;
+}

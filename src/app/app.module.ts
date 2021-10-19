@@ -4,7 +4,7 @@ import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {HashLocationStrategy, LocationStrategy} from '@angular/common';
+import {CommonModule, HashLocationStrategy, LocationStrategy} from '@angular/common';
 import {AppRoutingModule} from './app-routing.module';
 
 import {AccordionModule} from 'primeng/accordion';
@@ -128,7 +128,7 @@ import {SafePipe2, SectionsComponent} from './view/prof/learn-teacher/sections/s
 import {EtudiantsComponent} from './view/admin/etudiants/etudiants.component';
 import {QuizPreviewComponent} from './view/admin/quiz/quiz-preview/quiz-preview.component';
 import {QuizConfigComponent} from './view/admin/quiz/quiz-config/quiz-config.component';
-import {ScheduleComponent} from './view/prof/schedule/schedule.component';
+import {ScheduleLocalComponent} from './view/prof/schedule/schedule.component';
 import {FaqAnswerComponent} from './view/admin/faq-admin/faq-answer/faq-answer.component';
 import {NewsAdminListComponent} from './view/admin/news-admin/news-admin-list/news-admin-list.component';
 import {NewsAdminViewComponent} from './view/admin/news-admin/news-admin-view/news-admin-view.component';
@@ -200,34 +200,53 @@ import {DictionaryEditComponent} from './view/etudiant/learn-etudiant/Dictionnar
 import {ViewQuizEtudiantComponent} from './view/admin/view-quiz-etudiant/view-quiz-etudiant.component';
 import {SectionItemPreviewComponent} from './view/admin/learn/section-item-preview/section-item-preview.component';
 import {ImageItemComponent} from './view/admin/learn/section-item-preview/image-item/image-item.component';
-import { TranslateComponent } from './view/etudiant/learn-etudiant/Dictionnary/translate/translate.component';
-import { EtudiantReviewViewComponent } from './view/etudiant/learn-etudiant/etudiant-review-view/etudiant-review-view.component';
+import {TranslateComponent} from './view/etudiant/learn-etudiant/Dictionnary/translate/translate.component';
+import {EtudiantReviewViewComponent} from './view/etudiant/learn-etudiant/etudiant-review-view/etudiant-review-view.component';
 // tslint:disable-next-line:max-line-length
 import {SyntheseSessionHistoryComponent} from './view/prof/synthese-session/synthese-session-history/synthese-session-history.component';
 
-import { RecommendationTeacherComponent } from './view/prof/recommendation-teacher/recommendation-teacher.component';
-import { VocabularySectionComponent } from './view/etudiant/learn-etudiant/vocabulary-section/vocabulary-section.component';
-import { VocabularySectionItemComponent } from './view/etudiant/learn-etudiant/vocabulary-section/vocabulary-section-item/vocabulary-section-item.component';
+import {RecommendationTeacherComponent} from './view/prof/recommendation-teacher/recommendation-teacher.component';
+import {VocabularySectionComponent} from './view/etudiant/learn-etudiant/vocabulary-section/vocabulary-section.component';
+import {VocabularySectionItemComponent} from './view/etudiant/learn-etudiant/vocabulary-section/vocabulary-section-item/vocabulary-section-item.component';
 import {ScrollingModule} from '@angular/cdk/scrolling';
 import {DashboardDemoComponent} from './view/public/landing/dashboarddemo.component';
-import { AdminComponent } from './view/admin/admin.component';
-import { EtudiantComponent } from './view/etudiant/etudiant.component';
-import { ProfComponent } from './view/prof/prof.component';
-import { PublicComponent } from './view/public/public.component';
-import { VocabularySectionProfComponent } from './view/prof/learn-teacher/vocabulary-section-prof/vocabulary-section-prof.component';
-import { VocabularySectionItemProfComponent } from './view/prof/learn-teacher/vocabulary-section-prof/vocabulary-section-item-prof/vocabulary-section-item-prof.component';
-import {SyntheseSessionComponent} from "./view/prof/synthese-session/synthese-session.component";
-import {SyntheseSessionCoursCreateComponent} from "./view/prof/synthese-session/synthese-session-cours-create/synthese-session-cours-create.component";
-import {ProfReviewViewComponent} from "./view/prof/learn-teacher/prof-review-view/prof-review-view.component";
+import {AdminComponent} from './view/admin/admin.component';
+import {EtudiantComponent} from './view/etudiant/etudiant.component';
+import {ProfComponent} from './view/prof/prof.component';
+import {PublicComponent} from './view/public/public.component';
+import {VocabularySectionProfComponent} from './view/prof/learn-teacher/vocabulary-section-prof/vocabulary-section-prof.component';
+import {VocabularySectionItemProfComponent} from './view/prof/learn-teacher/vocabulary-section-prof/vocabulary-section-item-prof/vocabulary-section-item-prof.component';
+import {SyntheseSessionComponent} from './view/prof/synthese-session/synthese-session.component';
+import {SyntheseSessionCoursCreateComponent} from './view/prof/synthese-session/synthese-session-cours-create/synthese-session-cours-create.component';
+import {ProfReviewViewComponent} from './view/prof/learn-teacher/prof-review-view/prof-review-view.component';
 import {QuizPreviewProfComponent} from './view/prof/quiz-preview-prof/quiz-preview.component';
-import { HomeWorkComponentComponent } from './view/admin/home-work-component/home-work-component.component';
-import { HomeWorkTakeComponent } from './view/etudiant/homeWork/home-work-take/home-work-take.component';
-import {HomeWorkEtudiantComponent} from "./view/etudiant/homeWork/home-work-etudiant/home-work-etudiant.component";
+import {
+    MonthService,
+    RecurrenceEditorAllModule, RecurrenceEditorModule,
+    ScheduleAllModule,
+    WeekService
+} from '@syncfusion/ej2-angular-schedule';
+import {
+    AgendaService,
+    EventSettingsModel,
+    DayService,
+    MonthAgendaService,
+    TimelineMonthService,
+    TimelineViewsService,
+    WorkWeekService
+} from '@syncfusion/ej2-angular-schedule';
+import {DropDownListModule} from '@syncfusion/ej2-angular-dropdowns';
+import {DateTimePickerModule} from '@syncfusion/ej2-angular-calendars';
+import {GroupeEtudeCreateComponent} from './view/admin/groupe-etude/groupe-etude-create/groupe-etude-create.component';
+import {GroupeEtudeListeComponent} from './view/admin/groupe-etude/groupe-etude-liste/groupe-etude-liste.component';
 
 
 @NgModule({
     imports: [
         BrowserModule,
+        CommonModule,
+        ScheduleAllModule,
+        RecurrenceEditorAllModule,
         FormsModule,
         AppRoutingModule,
         HttpClientModule,
@@ -311,7 +330,11 @@ import {HomeWorkEtudiantComponent} from "./view/etudiant/homeWork/home-work-etud
         TreeModule,
         TreeTableModule,
         VirtualScrollerModule,
-        ScrollingModule
+        ScrollingModule,
+        RecurrenceEditorModule,
+        DropDownListModule,
+        DateTimePickerModule
+
     ],
     declarations: [
         AppComponent,
@@ -355,7 +378,7 @@ import {HomeWorkEtudiantComponent} from "./view/etudiant/homeWork/home-work-etud
         ProfclassesComponent,
         QuizPreviewComponent,
         QuizConfigComponent,
-        ScheduleComponent,
+        ScheduleLocalComponent,
         FaqAnswerComponent,
         NewsAdminListComponent,
         NewsAdminViewComponent,
@@ -450,13 +473,16 @@ import {HomeWorkEtudiantComponent} from "./view/etudiant/homeWork/home-work-etud
         SessionCoursListComponent,
         SessionCoursViewComponent,
         QuizPreviewProfComponent,
-        HomeWorkComponentComponent,
-        HomeWorkTakeComponent,
-        HomeWorkEtudiantComponent
+        GroupeEtudeCreateComponent,
+        GroupeEtudeListeComponent,
+        GroupeEtudeListeComponent,
     ],
     providers: [
         {provide: LocationStrategy, useClass: HashLocationStrategy},
-         MenuService, MessageService, ConfirmationService
+        MenuService, MessageService, ConfirmationService,
+        WeekService, MonthService, DayService, WeekService, WorkWeekService, MonthService,
+        AgendaService, MonthAgendaService, TimelineViewsService,
+        TimelineMonthService
     ],
     bootstrap: [AppComponent]
 })

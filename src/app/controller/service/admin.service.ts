@@ -15,11 +15,16 @@ export class AdminService {
     private adminUrl = environment.adminUrl;
 
     private url = environment.baseUrl + 'admin/';
+    private _selected: Admin;
 
     constructor(private http: HttpClient) {
     }
 
-    private _selected: Admin;
+
+
+    public save(): Observable<number> {
+        return this.http.post<number>(this.adminUrl + 'admin/', this.selected);
+    }
 
     get selected(): Admin {
         if (this._selected == null) {
@@ -62,7 +67,4 @@ export class AdminService {
         this._submitted = value;
     }
 
-    public save(): Observable<number> {
-        return this.http.post<number>(this.adminUrl + 'admin/', this.selected);
-    }
 }

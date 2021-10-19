@@ -16,13 +16,54 @@ import {environment} from '../../../environments/environment';
 export class ClassRoomService {
 
     private adminUrl = environment.adminUrl;
-
+    private adminUrlProf = this.adminUrl + 'prof/';
+    private _selectedclassRoom: ClassRoom;
 
     constructor(private http: HttpClient) {
     }
 
-    private _selectedclassRoom: ClassRoom;
 
+    public findAllProf(): Observable<Array<Prof>> {
+        return this.http.get<Array<Prof>>(this.adminUrlProf);
+    }
+
+    public findAllClass(): Observable<Array<ClassRoom>> {
+        return this.http.get<Array<ClassRoom>>(this.adminUrl + 'classRoom/');
+
+    }
+
+    public afficheClass(): Observable<Array<ClassRoom>> {
+        return this.http.get<Array<ClassRoom>>(this.adminUrl + 'classRoom/Prof/id/' + this.selectedprof.id);
+    }
+
+    public afficheEtudiant(): Observable<Array<EtudiantClassRoom>> {
+        return this.http.get<Array<EtudiantClassRoom>>(this.adminUrl + 'etudiant-classRoom/id/' + this.selectedclassRoom.id);
+    }
+
+    public afficheQuiz(): Observable<Array<QuizClassRoom>> {
+        return this.http.get<Array<QuizClassRoom>>(this.adminUrl + 'quiz-classRoom/id/' + this.selectedclassRoom.id);
+    }
+
+    public findAllCategorieProf(): Observable<Array<CategorieProf>> {
+        return this.http.get<Array<CategorieProf>>(this.adminUrl + 'categorieprof/');
+
+    }
+
+    public findSalary(): Observable<SalaryVo> {
+        return this.http.get<SalaryVo>(this.adminUrl + 'salary/prof/id/' + this.selectedsalaryVo.prof.id);
+    }
+
+    public findSalaryByDate(): Observable<SalaryVo> {
+        // tslint:disable-next-line:max-line-length
+        return this.http.get<SalaryVo>(this.adminUrl + 'salary/mois/{mois}/annee/{annee}/prof/id/{id}?annee=' + this.selectedsalaryVo.annee + '&id=' + this.selectedsalaryVo.prof.id + '&mois=' + this.selectedsalaryVo.mois);
+    }
+
+    public findSalaryByDateAndProf(): Observable<SalaryVo> {
+        console.log((new Date().getMonth() + 1).toString());
+        console.log((new Date().getFullYear().toString()));
+        // tslint:disable-next-line:max-line-length
+        return this.http.get<SalaryVo>(this.adminUrl + 'salary/mois/{mois}/annee/{annee}/prof/id/{id}?annee=' + new Date().getFullYear().toString() + '&id=' + this.selectedsalaryVo.prof.id + '&mois=' + (new Date().getMonth() + 1).toString());
+    }
     get selectedclassRoom(): ClassRoom {
         if (this._selectedclassRoom == null) {
             this._selectedclassRoom = new ClassRoom();
@@ -293,47 +334,5 @@ export class ClassRoomService {
 
     set viewDialogCategorie(value: boolean) {
         this._viewDialogCategorie = value;
-    }
-
-    public findAllProf(): Observable<Array<Prof>> {
-        return this.http.get<Array<Prof>>(this.adminUrl + 'prof/');
-    }
-
-    public findAllClass(): Observable<Array<ClassRoom>> {
-        return this.http.get<Array<ClassRoom>>(this.adminUrl + 'classRoom/');
-
-    }
-
-    public afficheClass(): Observable<Array<ClassRoom>> {
-        return this.http.get<Array<ClassRoom>>(this.adminUrl + 'classRoom/Prof/id/' + this.selectedprof.id);
-    }
-
-    public afficheEtudiant(): Observable<Array<EtudiantClassRoom>> {
-        return this.http.get<Array<EtudiantClassRoom>>(this.adminUrl + 'etudiant-classRoom/id/' + this.selectedclassRoom.id);
-    }
-
-    public afficheQuiz(): Observable<Array<QuizClassRoom>> {
-        return this.http.get<Array<QuizClassRoom>>(this.adminUrl + 'quiz-classRoom/id/' + this.selectedclassRoom.id);
-    }
-
-    public findAllCategorieProf(): Observable<Array<CategorieProf>> {
-        return this.http.get<Array<CategorieProf>>(this.adminUrl + 'categorieprof/');
-
-    }
-
-    public findSalary(): Observable<SalaryVo> {
-        return this.http.get<SalaryVo>(this.adminUrl + 'salary/prof/id/' + this.selectedsalaryVo.prof.id);
-    }
-
-    public findSalaryByDate(): Observable<SalaryVo> {
-        // tslint:disable-next-line:max-line-length
-        return this.http.get<SalaryVo>(this.adminUrl + 'salary/mois/{mois}/annee/{annee}/prof/id/{id}?annee=' + this.selectedsalaryVo.annee + '&id=' + this.selectedsalaryVo.prof.id + '&mois=' + this.selectedsalaryVo.mois);
-    }
-
-    public findSalaryByDateAndProf(): Observable<SalaryVo> {
-        console.log((new Date().getMonth() + 1).toString());
-        console.log((new Date().getFullYear().toString()));
-        // tslint:disable-next-line:max-line-length
-        return this.http.get<SalaryVo>(this.adminUrl + 'salary/mois/{mois}/annee/{annee}/prof/id/{id}?annee=' + new Date().getFullYear().toString() + '&id=' + this.selectedsalaryVo.prof.id + '&mois=' + (new Date().getMonth() + 1).toString());
     }
 }

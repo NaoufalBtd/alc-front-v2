@@ -1,8 +1,4 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import dayGridPlugin from '@fullcalendar/daygrid';
-import timeGridPlugin from '@fullcalendar/timegrid';
-import interactionPlugin from '@fullcalendar/interaction';
-import {FullCalendar} from 'primeng/fullcalendar';
 import {ScheduleService} from '../../../controller/service/schedule.service';
 import {ConfirmationService, MessageService} from 'primeng/api';
 import {Etudiant} from '../../../controller/model/etudiant.model';
@@ -10,6 +6,30 @@ import {EtatEtudiantSchedule} from '../../../controller/model/etat-etudiant-sche
 import {CalendrierProf} from '../../../controller/model/schedule-prof.model';
 import {CalendrierVo} from '../../../controller/model/calendrier-vo.model';
 import {LoginService} from '../../../controller/service/login.service';
+import {ScheduleProf} from '../../../controller/model/calendrier-prof.model';
+import {L10n} from '@syncfusion/ej2-base';
+import {
+    EventSettingsModel,
+    CurrentAction,
+    ScheduleComponent,
+    DayService,
+    WeekService,
+    WorkWeekService,
+    MonthService,
+    PopupOpenEventArgs
+} from '@syncfusion/ej2-angular-schedule';
+import {Prof} from '../../../controller/model/prof.model';
+
+L10n.load({
+    'en-US': {
+        schedule: {
+            saveButton: '',
+            cancelButton: '',
+            deleteButton: '',
+            newEvent: 'Add event',
+        },
+    }
+});
 
 @Component({
     selector: 'app-schedule',
@@ -18,240 +38,73 @@ import {LoginService} from '../../../controller/service/login.service';
     providers: [MessageService, ConfirmationService]
 
 })
-export class ScheduleComponent implements OnInit {
-    @ViewChild('fm') calendar: FullCalendar;
+export class ScheduleLocalComponent implements OnInit {
+    @ViewChild('scheduleObj')
+    public scheduleObj: ScheduleComponent;
+    display = false;
+    private selectionTarget: Element;
+    // public selectedDate: Date = new Date(2021, 4, 18);
+    public selectedDate: Date = new Date();
+    public showWeekend = false;
+    public eventSettings: EventSettingsModel = {
+        dataSource: this.scheduleProfs,
+        fields: {
+            id: 'Id',
+            subject: {name: 'subject', title: 'subject'},
+            startTime: {name: 'startTime', title: 'startTime'},
+            endTime: {name: 'endTime', title: 'endTime'}
+        }
+    };
 
-    constructor(private service: ScheduleService, private messageService: MessageService, private confirmationService: ConfirmationService, private user: LoginService) {
+
+    constructor(private scheduleService: ScheduleService, private messageService: MessageService,
+                private confirmationService: ConfirmationService, private user: LoginService) {
     }
 
-    get selectedVo(): CalendrierVo {
-        return this.service.selectedVo;
+
+    get scheduleProfs(): Array<ScheduleProf> {
+        return this.scheduleService.scheduleProfs;
     }
 
-    set selectedVo(value: CalendrierVo) {
-        this.service.selectedVo = value;
+    set scheduleProfs(value: Array<ScheduleProf>) {
+        this.scheduleService.scheduleProfs = value;
     }
 
-    get itemsVo(): Array<CalendrierVo> {
-        return this.service.itemsVo;
+    get scheduleProf(): ScheduleProf {
+        return this.scheduleService.scheduleProf;
     }
 
-    set itemsVo(value: Array<CalendrierVo>) {
-        this.service.itemsVo = value;
+    set scheduleProf(value: ScheduleProf) {
+        this.scheduleService.scheduleProf = value;
     }
 
-    get selected(): CalendrierProf {
-        return this.service.selected;
+    get professors(): Array<Prof> {
+
+        return this.scheduleService.professors;
     }
 
-    set selected(value: CalendrierProf) {
-        this.service.selected = value;
-    }
-
-    get items(): Array<CalendrierProf> {
-        return this.service.items;
-    }
-
-    set items(value: Array<CalendrierProf>) {
-        this.service.items = value;
-    }
-
-    get createDialog(): boolean {
-        return this.service.createDialog;
-    }
-
-    set createDialog(value: boolean) {
-        this.service.createDialog = value;
-    }
-
-    get submitted(): boolean {
-        return this.service.submitted;
-    }
-
-    set submitted(value: boolean) {
-        this.service.submitted = value;
+    set professors(value: Array<Prof>) {
+        this.scheduleService.professors = value;
     }
 
     get displayBasic(): boolean {
-        return this.service.displayBasic;
+        return this.scheduleService.displayBasic;
     }
 
     set displayBasic(value: boolean) {
-        this.service.displayBasic = value;
-    }
-
-    get events(): any[] {
-        return this.service.events;
-    }
-
-    set events(value: any[]) {
-        this.service.events = value;
-    }
-
-    get options(): any {
-        return this.service.options;
-    }
-
-    set options(value: any) {
-        this.service.options = value;
-    }
-
-    get header(): any {
-        return this.service.header;
-    }
-
-    set header(value: any) {
-        this.service.header = value;
-    }
-
-    get eventDialog(): boolean {
-        return this.service.eventDialog;
-    }
-
-    set eventDialog(value: boolean) {
-        this.service.eventDialog = value;
-    }
-
-    get etatEtudiantSchedule(): Array<EtatEtudiantSchedule> {
-        return this.service.etatEtudiantSchedule;
-    }
-
-    get changedEvent(): any {
-        return this.service.changedEvent;
-    }
-
-    set changedEvent(value: any) {
-        this.service.changedEvent = value;
-    }
-
-    get clickedEvent(): any {
-        return this.service.clickedEvent;
-    }
-
-    set clickedEvent(value: any) {
-        this.service.clickedEvent = value;
-    }
-
-    get etudiant(): Etudiant {
-        return this.service.etudiant;
-    }
-
-    set etudiant(value: Etudiant) {
-        this.service.etudiant = value;
-    }
-
-
-    get schedule(): CalendrierProf {
-        return this.service.selected;
-    }
-
-    set schedule(value: CalendrierProf) {
-        this.service.selected = value;
-    }
-
-    get schedules(): Array<CalendrierProf> {
-        return this.service.items;
-    }
-
-    set schedules(value: Array<CalendrierProf>) {
-        this.service.items = value;
-    }
-
-    get scheduleVo(): CalendrierVo {
-        return this.service.selectedVo;
-    }
-
-    get students(): Array<Etudiant> {
-        return this.service.students;
-    }
-
-    set students(value: Array<Etudiant>) {
-        this.service.students = value;
-    }
-
-    ngOnInit() {
-
-        this.selected.prof.id = this.user.prof.id;
-        this.service.getStudents().subscribe(data => this.students = data);
-        this.service.findByProf();
-        this.service.findEtat().subscribe(data => this.service.etatEtudiantSchedule = data);
-        this.changedEvent = {title: '', etat: '', titleProf: '', start: null, end: '', allDay: null};
-
-        this.options = {
-            plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
-            defaultDate: new Date(),
-            header: {
-                left: 'prev,next',
-                center: 'title ,addEventButton',
-                right: 'dayGridMonth,timeGridWeek,timeGridDay',
-            },
-            allDaySlot: false,
-            editable: true,
-            selectable: true,
-            defaultView: 'timeGridWeek',
-            events: {
-                rendering: 'background'
-            },
-            eventClick: (e) => {
-                // this.editEvent(e.event);
-                this.eventDialog = true;
-
-                this.clickedEvent = e.event;
-
-                this.changedEvent.title = this.clickedEvent.title;
-                this.changedEvent.start = this.clickedEvent.start;
-                this.changedEvent.end = this.clickedEvent.end;
-                this.changedEvent.teacher = this.clickedEvent.teacher;
-            }
-        };
-    }
-
-    public editEvent(selectedVo: CalendrierVo) {
-        this.selectedVo = {...selectedVo};
-        this.eventDialog = true;
-    }
-
-    public edit() {
-        this.submitted = true;
-        this.service.edit().subscribe(data => {
-            this.selected.startTime = this.changedEvent.startTime;
-            this.selected.endTime = this.changedEvent.endTime;
-            this.selected.prof.prenom = this.changedEvent.teacher;
-            this.selected = data;
-            this.messageService.add({
-                severity: 'success',
-                summary: 'Successful',
-                detail: 'EVENT Updated',
-                life: 3000
-            });
-        });
-        this.eventDialog = false;
-        this.selected = new CalendrierProf();
-        this.selectedVo = new CalendrierVo();
-
-    }
-
-    public findIndexById(id: number): number {
-        let index = -1;
-        for (let i = 0; i < this.items.length; i++) {
-            if (this.items[i].id === id) {
-                index = i;
-                break;
-            }
-        }
-        return index;
-    }
-
-    save() {
-        return this.service.save();
-    }
-
-    reset() {
-        return this.service.reset();
+        this.scheduleService.displayBasic = value;
     }
 
     showBasicDialog() {
         this.displayBasic = true;
+    }
+
+    get createDialog(): boolean {
+        return this.scheduleService.createDialog;
+    }
+
+    set createDialog(value: boolean) {
+        this.scheduleService.createDialog = value;
     }
 
     public openCreate() {
@@ -264,47 +117,92 @@ export class ScheduleComponent implements OnInit {
         this.submitted = false;
     }
 
-    public addStudent() {
-        this.service.addStudent().subscribe(data => {
-            this.items.push({...data});
-            console.log(this.selected);
-            this.selected.prof.id = this.user.prof.id;
-            this.service.getStudents().subscribe(data => this.students = data);
-            this.service.findByProf();
-            this.service.findEtat().subscribe(data => this.service.etatEtudiantSchedule = data);
-            this.messageService.add({
-                severity: 'success',
-                summary: 'Successful',
-                detail: 'Student Created',
-                life: 3000
-            });
-        });
-        this.createDialog = false;
-        this.selected = new CalendrierProf();
+    get students(): Array<Etudiant> {
+        return this.scheduleService.students;
     }
 
-    public delete(selected: CalendrierProf) {
-        this.selected = selected;
-        this.confirmationService.confirm({
-            message: 'Are you sure you want to delete ' + selected.ref + '?',
-            header: 'Confirm',
-            icon: 'pi pi-exclamation-triangle',
-            accept: () => {
-                this.service.delete().subscribe(data => {
-                    this.items = this.items.filter(val => val.id !== this.selected.id);
-                    this.itemsVo = this.itemsVo.filter(val => val.id !== this.selected.id);
-                    this.selected = new CalendrierProf();
-                    this.messageService.add({
-                        severity: 'success',
-                        summary: 'Successful',
-                        detail: 'Student Deleted',
-                        life: 3000
-                    });
-                });
+    set students(value: Array<Etudiant>) {
+        this.scheduleService.students = value;
+    }
+
+    public getProf() {
+        this.scheduleService.getProf().subscribe(data => this.professors = data);
+    }
+
+    get etatEtudiantSchedule(): Array<EtatEtudiantSchedule> {
+        return this.scheduleService.etatEtudiantSchedule;
+    }
+
+    get submitted(): boolean {
+        return this.scheduleService.submitted;
+    }
+
+    set submitted(value: boolean) {
+        this.scheduleService.submitted = value;
+    }
+
+
+    ngOnInit() {
+        this.scheduleService.findAll();
+        this.getData();
+        this.scheduleService.getAllStudents().subscribe(data => this.students = data);
+        this.scheduleService.getProf().subscribe(data => this.professors = data);
+        this.scheduleService.findEtat().subscribe(data => this.scheduleService.etatEtudiantSchedule = data);
+        console.log(this.scheduleProfs);
+    }
+
+
+    save() {
+        this.scheduleService.save();
+        window.location.reload();
+    }
+
+
+    public onPopupOpen(args: PopupOpenEventArgs): void {
+        this.selectionTarget = null;
+        this.selectionTarget = args.target;
+    }
+
+    public onDetailsClick(): void {
+        this.scheduleProf = new ScheduleProf();
+        const data: Object = this.scheduleObj.getCellDetails(this.scheduleObj.getSelectedElements()) as Object;
+        this.scheduleObj.openEditor(data, 'Add');
+    }
+
+    public onEditClick(): void {
+        const scheduleProf = this.scheduleObj.getEventDetails(this.selectionTarget) as ScheduleProf;
+        this.scheduleService.update(scheduleProf);
+        this.scheduleObj.openEditor(scheduleProf, 'Add');
+    }
+
+    public onDeleteClick(): void {
+        const scheduleProf = this.scheduleObj.getEventDetails(this.selectionTarget) as ScheduleProf;
+        this.scheduleService.deleteByRef(scheduleProf.ref);
+        window.location.reload();
+    }
+
+    public onCloseClick(): void {
+        this.scheduleObj?.closeEditor();
+    }
+
+    public getData() {
+        this.eventSettings = {
+            dataSource: this.scheduleProfs,
+            fields: {
+                id: 'Id',
+                subject: {name: 'subject', title: 'subject'},
+                startTime: {name: 'startTime', title: 'startTime'},
+                endTime: {name: 'endTime', title: 'endTime'}
             }
-        });
-        this.calendar.getCalendar().getEvents().forEach(event => event.remove());
-        this.eventDialog = false;
+        };
     }
 
+
+    showDialog() {
+        this.display = true;
+    }
+
+    hideDialog() {
+        this.display = false;
+    }
 }

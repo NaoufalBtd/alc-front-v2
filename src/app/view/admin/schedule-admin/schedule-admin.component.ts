@@ -12,16 +12,18 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import {Prof} from '../../../controller/model/prof.model';
 
+
 @Component({
     selector: 'app-schedule-admin',
     templateUrl: './schedule-admin.component.html',
-    styleUrls: ['./schedule-admin.component.scss']
+    styleUrls: ['./schedule-admin.component.scss'],
 })
 export class ScheduleAdminComponent implements OnInit {
 
     @ViewChild('fc') fc: FullCalendar;
 
-    constructor(private service: ScheduleService, private messageService: MessageService, private confirmationService: ConfirmationService, private user: LoginService) {
+    constructor(private service: ScheduleService, private messageService: MessageService,
+                private confirmationService: ConfirmationService, private user: LoginService) {
     }
 
     get selectedVo(): CalendrierVo {
@@ -184,7 +186,7 @@ export class ScheduleAdminComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.service.findAll();
+        this.service.findSchedule();
         this.service.getAllStudents().subscribe(data => this.students = data);
         this.service.getProf().subscribe(data => this.professors = data);
         this.service.findEtat().subscribe(data => this.service.etatEtudiantSchedule = data);
@@ -283,7 +285,7 @@ export class ScheduleAdminComponent implements OnInit {
         this.service.addStudent().subscribe(data => {
             this.items.push({...data});
             console.log(this.selected);
-            this.service.findAll();
+            this.service.findSchedule();
             this.service.findEtat().subscribe(data => this.service.etatEtudiantSchedule = data);
             this.messageService.add({
                 severity: 'success',
@@ -319,5 +321,6 @@ export class ScheduleAdminComponent implements OnInit {
         this.fc.getCalendar().getEvents().forEach(event => event.remove());
         this.eventDialog = false;
     }
+
 
 }

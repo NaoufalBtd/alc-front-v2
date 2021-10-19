@@ -1,5 +1,8 @@
 <p-toast></p-toast>
-<div class="p-col" style=" float: left">
+<button class="instruction-button" (click)="showBasicDialog()" icon="pi pi-question" label="Instruction" pButton
+        pRipple></button>
+<button class="e-btn1" (click)="getData()" icon="pi pi-refresh" pButton pRipple></button>
+<div class="p-col">
 
     <p-dialog [(visible)]="displayBasic" [baseZIndex]="10000" [style]="{width: '30vw'}">
         <p>This is the schedule of your part of teaching , the students how are in color green are the students that
@@ -10,40 +13,15 @@
         </ng-template>
     </p-dialog>
 </div>
-<p-card [style]="{width: '1400px'}" class="container" styleClass="p-card-shadow">
-    <button (click)="showBasicDialog()" icon="pi pi-question" label="Instruction" pButton pRipple></button>
-    <div class="p-grid container" style="text-align:center; margin: 0 auto">
-        <div class="p-col-12">
-            <div class="card ">
-                <p-fullCalendar #fr [events]="itemsVo" [options]="options"></p-fullCalendar>
-
-                <p-dialog [(visible)]="eventDialog" [closable]="true" [modal]="true" [style]="{width: '450px'}"
-                          header="Event Details">
-                    <ng-template pTemplate="content">
-                        <div class="p-fluid">
-                            <div class="p-field">
-                                <label for="name">Teacher name</label>
-                                <input *ngIf="clickedEvent" [(ngModel)]="changedEvent.titleProf" [required]="true" disabled
-                                       id="name" pInputText type="text">
-                            </div>
-
-                            <div class="p-field">
-                                <label for="start">From</label>
-                                <p-calendar *ngIf="clickedEvent" [(ngModel)]="changedEvent.start" [showTime]="true"
-                                            appendTo="body" disabled id="start"></p-calendar>
-                            </div>
-                            <div class="p-field">
-                                <label for="end">To</label>
-                                <p-calendar *ngIf="clickedEvent" [(ngModel)]="changedEvent.end" [showTime]="true"
-                                            appendTo="body" disabled id="end"></p-calendar>
-                            </div>
-
-                        </div>
-                    </ng-template>
 
 
-                </p-dialog>
-            </div>
-        </div>
-    </div>
-</p-card>
+<ejs-schedule #scheduleObj width='100%' height='600px' [selectedDate]="selectedDate" [readonly]="true"
+              [eventSettings]="eventSettings ">
+    <e-views>
+        <e-view option="Week" startHour="07:00"></e-view>
+        <e-view option="WorkWeek" startHour="07:00"></e-view>
+        <e-view option="Month" [showWeekend]="showWeekend"></e-view>
+        <e-view option="Month" [showWeekend]="showWeekend"></e-view>
+    </e-views>
+</ejs-schedule>
+

@@ -20,6 +20,9 @@ import {SectionItemService} from '../../../../controller/service/section-item.se
 import {Inscription} from '../../../../controller/model/inscription.model';
 import {EtudiantReview} from '../../../../controller/model/etudiant-review.model';
 import {EtudiantReviewService} from '../../../../controller/service/etudiant-review.service';
+import {SessionCours} from "../../../../controller/model/session-cours.model";
+import {SessionCoursService} from "../../../../controller/service/session-cours.service";
+import {logging} from "protractor";
 import {HomeworkService} from "../../../../controller/service/homework.service";
 import {HomeWork} from "../../../../controller/model/home-work.model";
 import {HomeWorkEtudiantServiceService} from "../../../../controller/service/home-work-etudiant-service.service";
@@ -66,9 +69,21 @@ export class StudentSimulateSectionComponent implements OnInit {
                 private vocab: VocabularyService,
                 private review: EtudiantReviewService,
                 private sectionItemService: SectionItemService,
+                private sessioncoursservice: SessionCoursService,
+                 ) {
+    }
+
+    get hasfinish(): boolean {
+        return this.review.hasfinish;
+                private sectionItemService: SectionItemService,
                 private homeWorkService: HomeworkService,
                 private homeWorkEtudiantService: HomeWorkEtudiantServiceService) {
     }
+
+    set hasfinish(value: boolean) {
+        this.review.hasfinish = value;
+    }
+
     get viewDialog(): boolean {
         return this.review.viewDialog;
     }
@@ -305,7 +320,7 @@ export class StudentSimulateSectionComponent implements OnInit {
                 if (data.categorieSection.libelle === 'Vocabulary') {
                     this.Vocab(data);
                 } else {
-                    this.showVocabulary=false
+                    this.showVocabulary = false;
                 }
                 this.quizService.findQuizBySectionId(this.selectedsection).subscribe(
                     data => {
@@ -378,6 +393,15 @@ export class StudentSimulateSectionComponent implements OnInit {
         this.review.selected = value;
     }
     ngOnInit(): void {
+       // this.hasfinish = false;
+       //      this.http.get<EtudiantCours>('http://localhost:8036/etudiant/etudiantCours/prof/id/' + this.loginService.etudiant.prof.id + '/etudiant/id/' +  this.loginService.etudiant.id + '/cours/idc/' + this.).subscribe(
+       //          data => {
+       //              if (data != null) {
+       //                  this.hasfinish = false;
+       //              }
+       //          }
+       //      );
+        this.hasfinish = false;
 
         this.review.findReview(this.selectedcours.id).subscribe(
             data => {

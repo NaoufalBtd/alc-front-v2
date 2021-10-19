@@ -2,13 +2,13 @@
     <div class="p-field p-col-4 p-md-4 ">
         <p-card [style]="{width: '100%'}" header="Professor" styleClass="p-card-shadow">
             <ng-template pTemplate="header" style="  height: 50%;width: 100%">
-                <img alt="Card" src="{{this.serviceUser.prof.image}}" style=" height: 400px;width: 100%">
+                <img alt="Card" src="../../../../assets/images/Course.png" style=" height: 400px;width: 100%">
             </ng-template>
             <p>Hello!! {{this.serviceUser.prof.nom}} you can add A student </p>
             <ng-template pTemplate="footer">
 
                 <button (click)="openCreateEtud()" class="p-button-help" label="Add Student" pButton pRipple
-                        style="background-color: #0C8990" type="button"></button>
+                        style="background-color: orange" type="button"></button>
 
             </ng-template>
         </p-card>
@@ -16,11 +16,11 @@
 
 
     <div class="p-field p-col-4 p-md-4">
-        <p-card [style]="{'width': '100%', 'margin-bottom': '2em','height' : '100%','backgroundColor':'white'}">
+        <p-card [style]="{'width': '100%', 'height' : '100%','backgroundColor':'white'}">
             <ng-template pTemplate="header">
-                <img [style]="{'height': '15rem'}"
+                <img [style]="{'height': '20rem'}"
                      alt="Card"
-                     src="https://www.webmarketing-com.com/wp-content/uploads/2020/04/plateforme-formation-en-ligne-e1586212685849.jpg">
+                     src="../../../../assets/images/imgHome2.png">
             </ng-template>
             <ul style=" background-color: white ">
                 <li style=" background-color: white ">

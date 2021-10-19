@@ -8,7 +8,8 @@ import {CalendrierProf} from '../model/schedule-prof.model';
 import {CalendrierVo} from '../model/calendrier-vo.model';
 import {Prof} from '../model/prof.model';
 import {LoginService} from './login.service';
-import {environment} from "../../../environments/environment";
+import {environment} from '../../../environments/environment';
+import {ScheduleProf} from '../model/calendrier-prof.model';
 
 @Injectable({
     providedIn: 'root'
@@ -16,12 +17,39 @@ import {environment} from "../../../environments/environment";
 export class ScheduleService {
 
     private adminUrl = environment.adminUrl;
+    private _scheduleProf: ScheduleProf = new ScheduleProf();
+    private _scheduleProfs: Array<ScheduleProf> = new Array<ScheduleProf>();
+    private index: any;
+
 
 
     constructor(private http: HttpClient, private user: LoginService) {
     }
 
-    private _selected: CalendrierProf;
+
+    get scheduleProf(): ScheduleProf {
+        if (!this._scheduleProf) {
+            this._scheduleProf = new ScheduleProf();
+        }
+        return this._scheduleProf;
+    }
+
+    set scheduleProf(value: ScheduleProf) {
+        this._scheduleProf = value;
+    }
+
+    get scheduleProfs(): Array<ScheduleProf> {
+        if (!this._scheduleProfs) {
+            this._scheduleProfs = new Array<ScheduleProf>();
+        }
+        return this._scheduleProfs;
+    }
+
+    set scheduleProfs(value: Array<ScheduleProf>) {
+        this._scheduleProfs = value;
+    }
+
+    private _selected: CalendrierProf = new CalendrierProf();
 
     get selected(): CalendrierProf {
         if (this._selected == null) {
@@ -222,11 +250,24 @@ export class ScheduleService {
         this._professors = value;
     }
 
-    public findAll() {
+    public findSchedule() {
         return this.http.get<Array<CalendrierVo>>(this.adminUrl + 'calendrierProf/vo/').subscribe(data => {
-            this.itemsVo = data;
-            console.log(this.itemsVo);
-        });
+                this.itemsVo = data;
+                console.log(this.itemsVo);
+            }, error => {
+                console.log(error);
+            }
+        );
+    }
+
+    public findAll() {
+        return this.http.get<Array<ScheduleProf>>(this.adminUrl + 'scheduleProf/').subscribe(data => {
+                this.scheduleProfs = data;
+                console.log(this.scheduleProfs);
+            }, error => {
+                console.log(error);
+            }
+        );;
     }
 
     public findByStudent() {
@@ -248,24 +289,46 @@ export class ScheduleService {
         this.clickedEvent.remove();
     }
 
+    public update(scheduleProf: ScheduleProf) {
+        this.scheduleProf = this.clone(scheduleProf);
+    }
+
     public delete(): Observable<number> {
         return this.http.delete<number>(this.adminUrl + 'calendrierProf/id' + this.selected.id);
     }
 
     save() {
-        this.eventDialog = false;
-        this.selected.etudiant.nom = this.changedEvent.title;
-        this.selected.startTime = this.changedEvent.startTime;
-        this.selected.endTime = this.changedEvent.endTime;
-        this.http.post<CalendrierProf>(this.adminUrl + 'calendrierProf/', this.selected).subscribe(
+        if (this.scheduleProf.id === null || this.scheduleProf.id === 0){
+            this.http.post<ScheduleProf>(this.adminUrl + 'scheduleProf/', this.scheduleProf).subscribe(
+                data => {
+                    this.scheduleProfs.push(this.clone(this.scheduleProf));
+                }, error => {
+                    console.log(error);
+                }
+            );
+        } else{
+            this.http.post<ScheduleProf>(this.adminUrl + 'scheduleProf/', this.scheduleProf).subscribe(
+                data => {
+                    this.scheduleProfs[this.index] = this.clone(this.scheduleProf);
+                }, error => {
+                    console.log(error);
+                }
+            );
+        }
+
+        this.findAll();
+        this.scheduleProf = new ScheduleProf();
+    }
+
+    public deleteByRef(ref: string){
+        this.http.delete<ScheduleProf>(this.adminUrl + 'scheduleProf/ref/' +  ref ).subscribe(
             data => {
-                this.items.push({...data});
             }, error => {
-                console.log('erreuuur');
+                console.log(error);
             }
         );
-        this.findByProf();
     }
+
 
     public edit(): Observable<CalendrierProf> {
         return this.http.put<CalendrierProf>(this.adminUrl + 'calendrierProf/', this.selected);
@@ -311,5 +374,16 @@ export class ScheduleService {
         return index;
     }
 
+    public clone(scheduleProf: ScheduleProf): ScheduleProf {
+        const  myClone: ScheduleProf = new ScheduleProf();
+        myClone.id = scheduleProf.id;
+        myClone.startTime = scheduleProf.startTime;
+        myClone.ref = scheduleProf.ref;
+        myClone.subject = scheduleProf.subject;
+        myClone.endTime = scheduleProf.endTime;
+        myClone.etudiant = scheduleProf.etudiant;
+        myClone.prof = scheduleProf.prof;
+        return myClone;
+    }
 
 }
