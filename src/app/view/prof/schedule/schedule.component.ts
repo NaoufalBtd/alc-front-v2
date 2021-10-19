@@ -19,8 +19,6 @@ import {
     PopupOpenEventArgs
 } from '@syncfusion/ej2-angular-schedule';
 import {Prof} from '../../../controller/model/prof.model';
-import {isNullOrUndefined} from 'util';
-import {ScheduleVo} from '../../../controller/model/schedule-vo.model';
 
 L10n.load({
     'en-US': {
@@ -166,6 +164,7 @@ export class ScheduleLocalComponent implements OnInit {
     }
 
     public onDetailsClick(): void {
+        this.scheduleProf = new ScheduleProf();
         const data: Object = this.scheduleObj.getCellDetails(this.scheduleObj.getSelectedElements()) as Object;
         this.scheduleObj.openEditor(data, 'Add');
     }
@@ -173,6 +172,7 @@ export class ScheduleLocalComponent implements OnInit {
     public onEditClick(): void {
         const scheduleProf = this.scheduleObj.getEventDetails(this.selectionTarget) as ScheduleProf;
         this.scheduleService.update(scheduleProf);
+        this.scheduleObj.openEditor(scheduleProf, 'Add');
     }
 
     public onDeleteClick(): void {

@@ -12,8 +12,6 @@ import {QuizEtudiantService} from '../../../../controller/service/quiz-etudiant.
 import {EtudiantReview} from '../../../../controller/model/etudiant-review.model';
 import {EtudiantReviewService} from '../../../../controller/service/etudiant-review.service';
 import {SectionItemService} from "../../../../controller/service/section-item.service";
-import {HttpClient} from "@angular/common/http";
-import {error} from "protractor";
 
 @Component({
     selector: 'app-etudiant-courses',
@@ -23,6 +21,8 @@ import {error} from "protractor";
 export class EtudiantCoursesComponent implements OnInit {
     sortKey: any[];
     cols: any[];
+
+
 
     // tslint:disable-next-line:max-line-length
     constructor(private messageService: MessageService,
@@ -67,11 +67,21 @@ export class EtudiantCoursesComponent implements OnInit {
     public FindSectionOneByOne(cour: Cours) {
         this.service.selectedEtudiantCours.dateDebut = new Date();
         this.selectedcours = cour;
+        this.sectionItemService.coursofsection = cour;
         let i = 0;
         i = i + 1;
         this.service.affichelistSection().subscribe(
             data => {
+                this.service.sectionAdditional = [];
+                this.service.sectionStandard = [];
                 this.itemssection2 = data;
+                for (let _i = 0 ; _i < data.length; _i++){
+                    if (data[_i].categorieSection.superCategorieSection.libelle === 'Obligatory'){
+                        this.service.sectionStandard.push(data[_i]);
+                    } else if (data[_i].categorieSection.superCategorieSection.libelle === 'Additional'){
+                        this.service.sectionAdditional.push(data[_i]);
+                    }
+                }
                 // tslint:disable-next-line:no-shadowed-variable
             });
         this.service.image = '';
@@ -128,6 +138,9 @@ export class EtudiantCoursesComponent implements OnInit {
     }
 
     public saveetudiantcours(idprof: number, idetudiant: number, idcours: number) {
+
+
+
         // @ts-ignore
         this.http.post('http://localhost:8036/etudiant/etudiantCours/' + idprof + '/' + idetudiant + '/' + idcours).subscribe(
             data => {

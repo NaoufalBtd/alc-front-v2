@@ -20,9 +20,12 @@ import {SectionItemService} from '../../../../controller/service/section-item.se
 import {Inscription} from '../../../../controller/model/inscription.model';
 import {EtudiantReview} from '../../../../controller/model/etudiant-review.model';
 import {EtudiantReviewService} from '../../../../controller/service/etudiant-review.service';
-import {SessionCours} from "../../../../controller/model/session-cours.model";
-import {SessionCoursService} from "../../../../controller/service/session-cours.service";
-import {logging} from "protractor";
+import {SessionCours} from '../../../../controller/model/session-cours.model';
+import {SessionCoursService} from '../../../../controller/service/session-cours.service';
+import {logging} from 'protractor';
+import {HomeworkService} from '../../../../controller/service/homework.service';
+import {HomeWork} from '../../../../controller/model/home-work.model';
+import {HomeWorkEtudiantServiceService} from '../../../../controller/service/home-work-etudiant-service.service';
 
 @Pipe({name: 'safe'})
 export class SafePipe implements PipeTransform {
@@ -70,6 +73,9 @@ export class StudentSimulateSectionComponent implements OnInit {
                 private sectionItemService: SectionItemService,
                 private sessioncoursservice: SessionCoursService,
     ) {
+                private homeWorkService: HomeworkService,
+                private homeWorkEtudiantService: HomeWorkEtudiantServiceService
+    ) {
     }
 
     get finishcours(): boolean {
@@ -83,10 +89,12 @@ export class StudentSimulateSectionComponent implements OnInit {
     get hasfinish(): boolean {
         return this.review.hasfinish;
     }
-
     set hasfinish(value: boolean) {
         this.review.hasfinish = value;
     }
+
+
+
 
     get viewDialog(): boolean {
         return this.review.viewDialog;
@@ -284,6 +292,22 @@ export class StudentSimulateSectionComponent implements OnInit {
         this.service.itemssection2 = value;
     }
 
+    get sectionStandard(): Array<Section> {
+        return this.service.sectionStandard;
+    }
+
+    set sectionStandard(value: Array<Section>) {
+        this.service.sectionStandard = value;
+    }
+
+    get sectionAdditional(): Array<Section> {
+        return this.service.sectionAdditional;
+    }
+
+    set sectionAdditional(value: Array<Section>) {
+        this.service.sectionAdditional = value;
+    }
+
     get selectessection(): Array<Section> {
         return this.service.selectessection;
     }
@@ -292,6 +316,17 @@ export class StudentSimulateSectionComponent implements OnInit {
         this.service.selectessection = value;
     }
 
+    get homeWorkList(): Array<HomeWork> {
+        return this.homeWorkService.homeWorkList;
+    }
+
+    set homeWorkList(homeWorklist: Array<HomeWork>) {
+        this.homeWorkService.homeWorkList = homeWorklist;
+    }
+
+    navigate() {
+        this.router.navigate(['etudiant/etudiant-cours']);
+    }
     public findByWord() {
         this.dictionnaryService.FindByWord(this.word).subscribe(
             data => {
@@ -350,6 +385,10 @@ export class StudentSimulateSectionComponent implements OnInit {
             });
     }
 
+    public finish() {
+        this.viewDialog = true;
+    }
+
     public openCreateDict() {
         document.getElementById('dictionnair').style.visibility = 'hidden';
         document.getElementById('dictionnair').style.width = '0px';
@@ -393,7 +432,16 @@ export class StudentSimulateSectionComponent implements OnInit {
 
 
     ngOnInit(): void {
+        // this.hasfinish = false;
+        //      this.http.get<EtudiantCours>('http://localhost:8036/etudiant/etudiantCours/prof/id/' + this.loginService.etudiant.prof.id + '/etudiant/id/' +  this.loginService.etudiant.id + '/cours/idc/' + this.).subscribe(
+        //          data => {
+        //              if (data != null) {
+        //                  this.hasfinish = false;
+        //              }
+        //          }
+        //      );
         this.hasfinish = false;
+
         this.review.findReview(this.selectedcours.id).subscribe(
             data => {
                 this.selectedReview = data;
@@ -418,6 +466,7 @@ export class StudentSimulateSectionComponent implements OnInit {
                             // tslint:disable-next-line:no-shadowed-variable
                         });
                     document.getElementById('word').style.visibility = 'hidden';
+                    document.getElementById('homeWork').style.visibility = 'hidden';
                     document.getElementById('word').style.height = '0px';
 
                     document.getElementById('categoriess').style.visibility = 'visible';
@@ -430,6 +479,7 @@ export class StudentSimulateSectionComponent implements OnInit {
             }, {
                 icon: 'pi pi-fw pi-comments', command: (event) => {
                     document.getElementById('categoriess').style.visibility = 'hidden';
+                    document.getElementById('homeWork').style.visibility = 'hidden';
                     document.getElementById('categoriess').style.height = '0px';
                     document.getElementById('word').style.visibility = 'hidden';
                     document.getElementById('word').style.height = '0px';
@@ -443,6 +493,7 @@ export class StudentSimulateSectionComponent implements OnInit {
                             this.itemsDict = data;
                         });
                     document.getElementById('categoriess').style.visibility = 'hidden';
+                    document.getElementById('homeWork').style.visibility = 'hidden';
                     document.getElementById('categoriess').style.height = '0px';
                     document.getElementById('word').style.visibility = 'visible';
                     document.getElementById('word').style.width = '100%';
@@ -450,8 +501,29 @@ export class StudentSimulateSectionComponent implements OnInit {
                     document.getElementById('wrd').style.height = '100%';
                     document.getElementById('chat').style.visibility = 'hidden';
                 }
+            }, {
+                icon: 'pi pi-sliders-h', style: {width: '50%'}, command: (event) => {
+                    document.getElementById('categoriess').style.visibility = 'hidden';
+                    document.getElementById('categoriess').style.height = '0px';
+                    document.getElementById('homeWork').style.visibility = 'visible';
+                    document.getElementById('chat').style.visibility = 'hidden';
+                    document.getElementById('word').style.visibility = 'hidden';
+                }
             },
         ];
+        this.findhomeworkbycours(this.sectionItemService.coursofsection);
+    }
+
+    public findhomeworkbycours(cours: Cours) {
+        console.log(cours);
+        this.homeWorkService.findhomeworkbysection(cours).subscribe(
+            data => {
+                console.log(data);
+                this.homeWorkService.homeWorkList = data;
+            }, error => {
+                console.log('orsinakh');
+            }
+        );
     }
 
     public findCoursEtudiant(cours: Cours) {
@@ -535,7 +607,7 @@ export class StudentSimulateSectionComponent implements OnInit {
                     this.selected.word = this.textSeleted;
                     this.submittedDictEdit = false;
                     this.editDialogDict = true;
-                    //console.log(this.selected.word);
+                    // console.log(this.selected.word);
                 }
             });
     }
@@ -692,7 +764,7 @@ export class StudentSimulateSectionComponent implements OnInit {
 
 
     async showVocabularyComponent() {
-        console.log("hadi kaat3yeett: " + this.selectedsection.categorieSection.libelle);
+        console.log('hadi kaat3yeett: ' + this.selectedsection.categorieSection.libelle);
         if (this.selectedsection.categorieSection.libelle === 'Vocabulary') {
             this.Vocab(this.selectedsection);
             this.showVocabulary = true;
@@ -717,22 +789,11 @@ export class StudentSimulateSectionComponent implements OnInit {
         this.showVocabulary = false;
     }
 
-
-    /*
-        public savesession(idprof: number, idetudiant: number) {
-
-            this.sessioncoursservice.savesession(idprof,idetudiant);
-        }
-
-
-        // @ts-ignore
-        public findprof(idetu: number, idcours: number): number {
-            this.sessioncoursservice.findprof(idetu,idcours);
-        }
-    */
-
-    navigate() {
-        this.router.navigate(['etudiant/etudiant-cours']);
+    sendhomeWork(homeWork: HomeWork) {
+        console.log(homeWork);
+        this.homeWorkEtudiantService.homeWork = homeWork;
+        this.homeWorkEtudiantService.homeWork.questions = homeWork.questions;
+        //  this.homeWorkEtudiantService.homeWorkQuestion = ;
+        this.router.navigate(['etudiant/homeWorkEtudiant']);
     }
-
 }

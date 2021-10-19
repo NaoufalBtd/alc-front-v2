@@ -9,7 +9,6 @@ import {EdCoursesComponent} from './view/prof/learn-teacher/parcours/ed-courses.
 import {SalaryComponent} from './view/prof/salary-teacher/salary/salary.component';
 import {HomeComponent} from './view/prof/home/home.component';
 import {InscriptionsComponent} from './view/admin/validate-inscriptions/inscriptions.component';
-import {ScheduleLocalComponent} from './view/prof/schedule/schedule.component';
 import {QuizPreviewComponent} from './view/admin/quiz/quiz-preview/quiz-preview.component';
 import {ClassRoomListComponent} from './view/prof/Classes/profclasses/class-room-list/class-room-list.component';
 import {FaqAnswerComponent} from './view/admin/faq-admin/faq-answer/faq-answer.component';
@@ -51,15 +50,18 @@ import {ProfComponent} from './view/prof/prof.component';
 import {EtudiantComponent} from './view/etudiant/etudiant.component';
 import {SyntheseSessionComponent} from './view/prof/synthese-session/synthese-session.component';
 import {QuizPreviewProfComponent} from './view/prof/quiz-preview-prof/quiz-preview.component';
-import {EtudiantsComponent} from "./view/admin/etudiants/etudiants.component";
-import {CommentReviewComponent} from "./view/prof/comment-review/comment-review.component";
+import {EtudiantsComponent} from './view/admin/etudiants/etudiants.component';
+import {HomeWorkComponentComponent} from './view/admin/home-work-component/home-work-component.component';
+import {HomeWOrkEtudiant} from './controller/model/home-work-etudiant.model';
+import {HomeWorkEtudiantComponent} from './view/etudiant/homeWork/home-work-etudiant/home-work-etudiant.component';
+import {ScheduleComponent} from '@syncfusion/ej2-angular-schedule';
 
 
 @NgModule({
     imports: [
         RouterModule.forRoot([
-            {path:'admin',component: AdminComponent,
-                children:[
+            {path: 'admin', component: AdminComponent,
+                children: [
                     {path: 'parcours', component: LearnComponent},
                     {path: 'create-section-items', component: SectionItemComponent},
                     {path: 'preview-section-items', component: SectionItemPreviewComponent},
@@ -77,10 +79,11 @@ import {CommentReviewComponent} from "./view/prof/comment-review/comment-review.
                     {path: 'schedule', component: ScheduleAdminComponent},
                     {path: 'faq-create', component: FaqCreateComponent},
                     {path: 'students-List', component: EtudiantsComponent},
+                    {path: 'homeWork', component: HomeWorkComponentComponent}
                 ]
             },
-            {path:'prof',component: ProfComponent,
-                children:[
+            {path: 'prof', component: ProfComponent,
+                children: [
                     {path: 'home', component: HomeComponent},
                     {path: 'quiz-preview-prof', component: QuizPreviewComponent},
                     {path: 'courses', component: EdCoursesComponent},
@@ -88,7 +91,7 @@ import {CommentReviewComponent} from "./view/prof/comment-review/comment-review.
                     {path: 'salary', component: SalaryComponent},
                     {path: 'classes', component: ClassRoomListComponent},
                     {path: 'synthese', component: SyntheseSessionComponent},
-                    {path: 'schedule', component: ScheduleLocalComponent},
+                    {path: 'schedule', component: ScheduleComponent},
                     {path: 'news-teacher', component: NewsTeacherListComponent},
                     {path: 'faq-teacher', component: FaqListComponent},
                     {path: 'faq-teacher-answer', component: FaqContactListComponent},
@@ -96,11 +99,11 @@ import {CommentReviewComponent} from "./view/prof/comment-review/comment-review.
                     {path: 'sections', component: SectionsComponent},
                     {path: 'cours', component: CoursesComponent},
                     {path: 'quiz-preview-teacher', component: QuizPreviewProfComponent},
-                    {path: 'comment-review', component: CommentReviewComponent},
+
                 ]
             },
-            {path:'etudiant',component: EtudiantComponent,
-                children:[
+            {path: 'etudiant', component: EtudiantComponent,
+                children: [
                     {path: 'faq-student', component: FaqStudentListComponent},
                     {path: 'news-student', component: NewsEtudiantListComponent},
                     {path: 'schedule-student', component: ScheduleStudentComponent},
@@ -109,10 +112,11 @@ import {CommentReviewComponent} from "./view/prof/comment-review/comment-review.
                     {path: 'etudiant-cours', component: EtudiantCoursesComponent},
                     {path: 'quiz-view', component: QuizEtudiantViewComponent},
                     {path: 'quiz-take', component: QuizTakeComponent},
+                    {path: 'homeWorkEtudiant', component: HomeWorkEtudiantComponent},
                 ]
             },
-            {path:'',component: PublicComponent,
-                children:[
+            {path: '', component: PublicComponent,
+                children: [
                     {path: '', component: DashboardDemoComponent},
                     {path: 'public/login-admin', component: LoginAdminComponent},
                     {path: 'public/login-prof', component: LoginProfComponent},
