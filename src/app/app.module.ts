@@ -239,7 +239,8 @@ import {DropDownListModule} from '@syncfusion/ej2-angular-dropdowns';
 import {DateTimePickerModule} from '@syncfusion/ej2-angular-calendars';
 import {GroupeEtudeCreateComponent} from './view/admin/groupe-etude/groupe-etude-create/groupe-etude-create.component';
 import {GroupeEtudeListeComponent} from './view/admin/groupe-etude/groupe-etude-liste/groupe-etude-liste.component';
-
+import {HomeWorkComponentComponent} from "./view/admin/home-work-component/home-work-component.component";
+import {HomeWorkEtudiantComponent} from "./view/etudiant/homeWork/home-work-etudiant/home-work-etudiant.component";
 
 @NgModule({
     imports: [
@@ -476,6 +477,8 @@ import {GroupeEtudeListeComponent} from './view/admin/groupe-etude/groupe-etude-
         GroupeEtudeCreateComponent,
         GroupeEtudeListeComponent,
         GroupeEtudeListeComponent,
+        HomeWorkComponentComponent,
+        HomeWorkEtudiantComponent,
     ],
     providers: [
         {provide: LocationStrategy, useClass: HashLocationStrategy},

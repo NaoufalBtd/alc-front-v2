@@ -7,8 +7,8 @@ import {HomeWorkReponse} from '../model/home-work-reponse.model';
 import {Observable} from 'rxjs';
 import {environment} from '../../../environments/environment';
 import {TypeDeQuestion} from '../model/type-de-question.model';
-import {Section} from "../model/section.model";
-import {Cours} from "../model/cours.model";
+import {Section} from '../model/section.model';
+import {Cours} from '../model/cours.model';
 
 @Injectable({
   providedIn: 'root'

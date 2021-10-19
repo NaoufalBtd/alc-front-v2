@@ -9,7 +9,6 @@ import {EdCoursesComponent} from './view/prof/learn-teacher/parcours/ed-courses.
 import {SalaryComponent} from './view/prof/salary-teacher/salary/salary.component';
 import {HomeComponent} from './view/prof/home/home.component';
 import {InscriptionsComponent} from './view/admin/validate-inscriptions/inscriptions.component';
-import {ScheduleComponent} from './view/prof/schedule/schedule.component';
 import {QuizPreviewComponent} from './view/admin/quiz/quiz-preview/quiz-preview.component';
 import {ClassRoomListComponent} from './view/prof/Classes/profclasses/class-room-list/class-room-list.component';
 import {FaqAnswerComponent} from './view/admin/faq-admin/faq-answer/faq-answer.component';
@@ -53,8 +52,9 @@ import {SyntheseSessionComponent} from './view/prof/synthese-session/synthese-se
 import {QuizPreviewProfComponent} from './view/prof/quiz-preview-prof/quiz-preview.component';
 import {EtudiantsComponent} from './view/admin/etudiants/etudiants.component';
 import {HomeWorkComponentComponent} from './view/admin/home-work-component/home-work-component.component';
-import {HomeWOrkEtudiant} from "./controller/model/home-work-etudiant.model";
-import {HomeWorkEtudiantComponent} from "./view/etudiant/homeWork/home-work-etudiant/home-work-etudiant.component";
+import {HomeWOrkEtudiant} from './controller/model/home-work-etudiant.model';
+import {HomeWorkEtudiantComponent} from './view/etudiant/homeWork/home-work-etudiant/home-work-etudiant.component';
+import {ScheduleComponent} from '@syncfusion/ej2-angular-schedule';
 
 
 @NgModule({
@@ -82,8 +82,8 @@ import {HomeWorkEtudiantComponent} from "./view/etudiant/homeWork/home-work-etud
                     {path: 'homeWork', component: HomeWorkComponentComponent}
                 ]
             },
-            {path:'prof',component: ProfComponent,
-                children:[
+            {path: 'prof', component: ProfComponent,
+                children: [
                     {path: 'home', component: HomeComponent},
                     {path: 'quiz-preview-prof', component: QuizPreviewComponent},
                     {path: 'courses', component: EdCoursesComponent},
@@ -102,8 +102,8 @@ import {HomeWorkEtudiantComponent} from "./view/etudiant/homeWork/home-work-etud
 
                 ]
             },
-            {path:'etudiant',component: EtudiantComponent,
-                children:[
+            {path: 'etudiant', component: EtudiantComponent,
+                children: [
                     {path: 'faq-student', component: FaqStudentListComponent},
                     {path: 'news-student', component: NewsEtudiantListComponent},
                     {path: 'schedule-student', component: ScheduleStudentComponent},
@@ -115,8 +115,8 @@ import {HomeWorkEtudiantComponent} from "./view/etudiant/homeWork/home-work-etud
                     {path: 'homeWorkEtudiant', component: HomeWorkEtudiantComponent},
                 ]
             },
-            {path:'',component: PublicComponent,
-                children:[
+            {path: '', component: PublicComponent,
+                children: [
                     {path: '', component: DashboardDemoComponent},
                     {path: 'public/login-admin', component: LoginAdminComponent},
                     {path: 'public/login-prof', component: LoginProfComponent},

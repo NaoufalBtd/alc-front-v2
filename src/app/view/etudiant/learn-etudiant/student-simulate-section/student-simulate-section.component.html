@@ -60,12 +60,18 @@
                         pButton pRipple
                         style=" width: 120px; background-color: orange; position: absolute;right: 15px;"
                         type="button"></button>
-                <button  *ngIf="this.selectedReview.review == null"
-                         (click)="finish()"
-                         [style.visibility]="(this.selectedsection.numeroOrder < this.sectionStandard.length)? 'hidden':'visible'"
-                         class="p-button-rounded" icon="pi pi-check" label="Finish" pButton pRipple
-                         style=" width: 130px; background-color: orange; position: absolute;right: 15px;"
-                         type="button"></button>
+                <button *ngIf="!this.hasfinish"
+                        (click)="finish()"
+                        [style.visibility]="(this.selectedsection.numeroOrder < this.itemssection2.length)? 'hidden':'visible'"
+                        class="p-button-rounded" icon="pi pi-check" label="Finish" pButton pRipple
+                        style=" width: 130px; background-color: orange; position: absolute;right: 15px;"
+                        type="button"></button>
+                <button *ngIf="this.hasfinish"
+                        (click)="navigate()"
+                        [style.visibility]="(this.selectedsection.numeroOrder < this.itemssection2.length)? 'hidden':'visible'"
+                        class="p-button-rounded" icon="pi pi-check" label="Bach to All Course" pButton pRipple
+                        style=" width: 160px; background-color: orange; position: absolute;right: 15px;"
+                        type="button"></button>
             </div>
         </div>
 

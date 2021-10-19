@@ -20,12 +20,12 @@ import {SectionItemService} from '../../../../controller/service/section-item.se
 import {Inscription} from '../../../../controller/model/inscription.model';
 import {EtudiantReview} from '../../../../controller/model/etudiant-review.model';
 import {EtudiantReviewService} from '../../../../controller/service/etudiant-review.service';
-import {SessionCours} from "../../../../controller/model/session-cours.model";
-import {SessionCoursService} from "../../../../controller/service/session-cours.service";
-import {logging} from "protractor";
-import {HomeworkService} from "../../../../controller/service/homework.service";
-import {HomeWork} from "../../../../controller/model/home-work.model";
-import {HomeWorkEtudiantServiceService} from "../../../../controller/service/home-work-etudiant-service.service";
+import {SessionCours} from '../../../../controller/model/session-cours.model';
+import {SessionCoursService} from '../../../../controller/service/session-cours.service';
+import {logging} from 'protractor';
+import {HomeworkService} from '../../../../controller/service/homework.service';
+import {HomeWork} from '../../../../controller/model/home-work.model';
+import {HomeWorkEtudiantServiceService} from '../../../../controller/service/home-work-etudiant-service.service';
 
 @Pipe({name: 'safe'})
 export class SafePipe implements PipeTransform {
@@ -70,19 +70,20 @@ export class StudentSimulateSectionComponent implements OnInit {
                 private review: EtudiantReviewService,
                 private sectionItemService: SectionItemService,
                 private sessioncoursservice: SessionCoursService,
-                 ) {
+                private homeWorkService: HomeworkService,
+                private homeWorkEtudiantService: HomeWorkEtudiantServiceService
+    ) {
     }
 
     get hasfinish(): boolean {
         return this.review.hasfinish;
-                private sectionItemService: SectionItemService,
-                private homeWorkService: HomeworkService,
-                private homeWorkEtudiantService: HomeWorkEtudiantServiceService) {
     }
-
     set hasfinish(value: boolean) {
         this.review.hasfinish = value;
     }
+
+
+
 
     get viewDialog(): boolean {
         return this.review.viewDialog;
@@ -105,6 +106,7 @@ export class StudentSimulateSectionComponent implements OnInit {
         this.review.selected = {...EtudiantReview};
         this.viewDialog = true;
     }
+
     get contenuSection(): Array<string> {
         return this.service.contenuSection;
     }
@@ -112,6 +114,7 @@ export class StudentSimulateSectionComponent implements OnInit {
     set contenuSection(value: Array<string>) {
         this.service.contenuSection = value;
     }
+
     get selected(): Dictionary {
         return this.dictionnaryService.selected;
     }
@@ -269,21 +272,27 @@ export class StudentSimulateSectionComponent implements OnInit {
     get itemssection2(): Array<Section> {
         return this.service.itemssection2;
     }
+
     set itemssection2(value: Array<Section>) {
         this.service.itemssection2 = value;
     }
+
     get sectionStandard(): Array<Section> {
         return this.service.sectionStandard;
     }
+
     set sectionStandard(value: Array<Section>) {
         this.service.sectionStandard = value;
     }
+
     get sectionAdditional(): Array<Section> {
         return this.service.sectionAdditional;
     }
+
     set sectionAdditional(value: Array<Section>) {
         this.service.sectionAdditional = value;
     }
+
     get selectessection(): Array<Section> {
         return this.service.selectessection;
     }
@@ -295,10 +304,14 @@ export class StudentSimulateSectionComponent implements OnInit {
     get homeWorkList(): Array<HomeWork> {
         return this.homeWorkService.homeWorkList;
     }
-    set homeWOrkList(homeWorklist: Array<HomeWork>){
+
+    set homeWorkList(homeWorklist: Array<HomeWork>) {
         this.homeWorkService.homeWorkList = homeWorklist;
     }
 
+    navigate() {
+        this.router.navigate(['etudiant/etudiant-cours']);
+    }
     public findByWord() {
         this.dictionnaryService.FindByWord(this.word).subscribe(
             data => {
@@ -306,7 +319,7 @@ export class StudentSimulateSectionComponent implements OnInit {
                 document.getElementById('dictionnair').style.visibility = 'visible';
                 document.getElementById('dictionnair').style.width = '90%';
                 document.getElementById('dictionnair').style.height = '100%';
-                this.word ='';
+                this.word = '';
             }, error => console.log('erreeeeeeeeeeeeeeeeur'));
         document.getElementById('dictionnair').style.visibility = 'hidden';
         document.getElementById('dictionnair').style.width = '0px';
@@ -331,18 +344,16 @@ export class StudentSimulateSectionComponent implements OnInit {
                                 console.log(this.quizEtudiantList);
                                 this.quizService.findAllQuestions(this.selectedQuiz.ref).subscribe(
                                     dataQuestions => {
-                                        if(data.questionCurrent > dataQuestions.length){
+                                        if (data.questionCurrent > dataQuestions.length) {
                                             this.passerQuiz = 'View Quiz';
                                             this.quizView = true;
-                                        }
-                                        else {
+                                        } else {
                                             this.passerQuiz = 'Continue Quiz';
                                             this.quizView = false;
                                         }
                                     }
                                 );
-                            },error =>
-                            {
+                            }, error => {
                                 this.passerQuiz = 'Take Quiz';
                                 this.quizView = false;
                             }
@@ -351,14 +362,16 @@ export class StudentSimulateSectionComponent implements OnInit {
                 );
             }, error => console.log('erreeeeeeeeeeeeeeeeur'));
     }
-    public ReviewExist(){
+
+    public ReviewExist() {
         this.review.findReview(this.selectedcours.id).subscribe(
             data => {
                 this.selectedReview = data;
             });
     }
+
     public finish() {
-            this.viewDialog = true;
+        this.viewDialog = true;
     }
 
     public openCreateDict() {
@@ -385,6 +398,7 @@ export class StudentSimulateSectionComponent implements OnInit {
 
         this.filteredDict = filtered;
     }
+
     get selectedReview(): EtudiantReview {
         return this.review.selected;
     }
@@ -392,15 +406,16 @@ export class StudentSimulateSectionComponent implements OnInit {
     set selectedReview(value: EtudiantReview) {
         this.review.selected = value;
     }
+
     ngOnInit(): void {
-       // this.hasfinish = false;
-       //      this.http.get<EtudiantCours>('http://localhost:8036/etudiant/etudiantCours/prof/id/' + this.loginService.etudiant.prof.id + '/etudiant/id/' +  this.loginService.etudiant.id + '/cours/idc/' + this.).subscribe(
-       //          data => {
-       //              if (data != null) {
-       //                  this.hasfinish = false;
-       //              }
-       //          }
-       //      );
+        // this.hasfinish = false;
+        //      this.http.get<EtudiantCours>('http://localhost:8036/etudiant/etudiantCours/prof/id/' + this.loginService.etudiant.prof.id + '/etudiant/id/' +  this.loginService.etudiant.id + '/cours/idc/' + this.).subscribe(
+        //          data => {
+        //              if (data != null) {
+        //                  this.hasfinish = false;
+        //              }
+        //          }
+        //      );
         this.hasfinish = false;
 
         this.review.findReview(this.selectedcours.id).subscribe(
@@ -474,12 +489,15 @@ export class StudentSimulateSectionComponent implements OnInit {
         ];
         this.findhomeworkbycours(this.sectionItemService.coursofsection);
     }
-    public findhomeworkbycours(cours: Cours){
+
+    public findhomeworkbycours(cours: Cours) {
+        console.log(cours);
         this.homeWorkService.findhomeworkbysection(cours).subscribe(
-            data =>{
-                this.homeWorkService.homeWorkList = data ;
-            }, error =>{
-                console.log("orsinakh");
+            data => {
+                console.log(data);
+                this.homeWorkService.homeWorkList = data;
+            }, error => {
+                console.log('orsinakh');
             }
         );
     }
@@ -498,6 +516,7 @@ export class StudentSimulateSectionComponent implements OnInit {
             this.editDialogDict = true;
         }
     }
+
     get listSynonymes(): Array<any> {
         return this.dictionnaryService.listSynonymes;
     }
@@ -505,6 +524,7 @@ export class StudentSimulateSectionComponent implements OnInit {
     set listSynonymes(value: Array<any>) {
         this.dictionnaryService.listSynonymes = value;
     }
+
     get Synonymes(): Array<any> {
         return this.dictionnaryService.Synonymes;
     }
@@ -512,6 +532,7 @@ export class StudentSimulateSectionComponent implements OnInit {
     set Synonymes(value: Array<any>) {
         this.dictionnaryService.Synonymes = value;
     }
+
     public dict() {
         const selection = window.getSelection();
         this.textSeleted = selection.toString();
@@ -531,21 +552,20 @@ export class StudentSimulateSectionComponent implements OnInit {
                             this.wordDict = '';
                             this.j = 0;
                             this.listSynonymes = new Array<any>();
-                            for ( let i=this.j; i < this.Synonymes.length ; i++){
+                            for (let i = this.j; i < this.Synonymes.length; i++) {
                                 // tslint:disable-next-line:triple-equals
-                                if(this.Synonymes[i] == '\"'){
+                                if (this.Synonymes[i] == '\"') {
                                     this.j = i;
                                     // @ts-ignore
-                                    for ( let k=this.j + 1; k < this.Synonymes.length ; k++){
+                                    for (let k = this.j + 1; k < this.Synonymes.length; k++) {
                                         // tslint:disable-next-line:triple-equals
-                                        if(this.Synonymes[k] != '\"' && this.Synonymes[k] != ','){
+                                        if (this.Synonymes[k] != '\"' && this.Synonymes[k] != ',') {
                                             this.wordDict = this.wordDict + this.Synonymes[k];
-                                        }else if (this.Synonymes[k] == ',') {
+                                        } else if (this.Synonymes[k] == ',') {
                                             break;
-                                        } else
-                                        {
+                                        } else {
                                             this.listSynonymes.push(this.wordDict);
-                                            this.wordDict ='';
+                                            this.wordDict = '';
                                             this.j = k + 1;
                                             break;
                                         }
@@ -563,10 +583,11 @@ export class StudentSimulateSectionComponent implements OnInit {
                     this.selected.word = this.textSeleted;
                     this.submittedDictEdit = false;
                     this.editDialogDict = true;
-                    //console.log(this.selected.word);
+                    // console.log(this.selected.word);
                 }
             });
     }
+
     get TranslateSynonymeDialog(): boolean {
         return this.dictionnaryService.TranslateSynonymeDialog;
     }
@@ -589,9 +610,9 @@ export class StudentSimulateSectionComponent implements OnInit {
                 data => {
                     this.selectedsection = data;
                     if (data.categorieSection.libelle === 'Vocabulary') {
-                        this.Vocab(data)
-                    }else {
-                        this.showVocabulary=false
+                        this.Vocab(data);
+                    } else {
+                        this.showVocabulary = false;
                     }
                     this.quizService.findQuizBySectionId(this.selectedsection).subscribe(
                         data => {
@@ -602,18 +623,16 @@ export class StudentSimulateSectionComponent implements OnInit {
                                     console.log(this.quizEtudiantList);
                                     this.quizService.findAllQuestions(this.selectedQuiz.ref).subscribe(
                                         dataQuestions => {
-                                            if(data.questionCurrent > dataQuestions.length){
+                                            if (data.questionCurrent > dataQuestions.length) {
                                                 this.passerQuiz = 'View Quiz';
                                                 this.quizView = true;
-                                            }
-                                            else {
+                                            } else {
                                                 this.passerQuiz = 'Continue Quiz';
                                                 this.quizView = false;
                                             }
                                         }
                                     );
-                                },error =>
-                                {
+                                }, error => {
                                     this.passerQuiz = 'Take Quiz';
                                     this.quizView = false;
                                 }
@@ -680,9 +699,9 @@ export class StudentSimulateSectionComponent implements OnInit {
                 async data => {
                     this.selectedsection = data;
                     if (data.categorieSection.libelle === 'Vocabulary') {
-                        this.Vocab(data)
-                    }else {
-                        this.showVocabulary=false
+                        this.Vocab(data);
+                    } else {
+                        this.showVocabulary = false;
                     }
 
                     this.quizService.findQuizBySectionId(this.selectedsection).subscribe(
@@ -721,9 +740,9 @@ export class StudentSimulateSectionComponent implements OnInit {
 
 
     async showVocabularyComponent() {
-        console.log("hadi kaat3yeett: "+this.selectedsection.categorieSection.libelle);
+        console.log('hadi kaat3yeett: ' + this.selectedsection.categorieSection.libelle);
         if (this.selectedsection.categorieSection.libelle === 'Vocabulary') {
-            this.Vocab(this.selectedsection)
+            this.Vocab(this.selectedsection);
             this.showVocabulary = true;
         } else {
             this.showVocabulary = false;
@@ -737,20 +756,20 @@ export class StudentSimulateSectionComponent implements OnInit {
         this.sectionItemService.getSectionItems().subscribe(data => {
             this.sectionItemService.sectionSelected.sectionItems = data;
             console.log(data);
-            this.showVocabulary=true
+            this.showVocabulary = true;
         });
 
     }
 
     return($event: string) {
-        this.showVocabulary=false;
+        this.showVocabulary = false;
     }
 
     sendhomeWork(homeWork: HomeWork) {
         console.log(homeWork);
         this.homeWorkEtudiantService.homeWork = homeWork;
         this.homeWorkEtudiantService.homeWork.questions = homeWork.questions;
-      //  this.homeWorkEtudiantService.homeWorkQuestion = ;
+        //  this.homeWorkEtudiantService.homeWorkQuestion = ;
         this.router.navigate(['etudiant/homeWorkEtudiant']);
     }
 }
