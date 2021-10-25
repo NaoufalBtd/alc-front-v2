@@ -6,7 +6,6 @@ import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {CommonModule, HashLocationStrategy, LocationStrategy} from '@angular/common';
 import {AppRoutingModule} from './app-routing.module';
-
 import {AccordionModule} from 'primeng/accordion';
 import {AutoCompleteModule} from 'primeng/autocomplete';
 import {AvatarModule} from 'primeng/avatar';
@@ -239,6 +238,16 @@ import {DropDownListModule} from '@syncfusion/ej2-angular-dropdowns';
 import {DateTimePickerModule} from '@syncfusion/ej2-angular-calendars';
 import {GroupeEtudeCreateComponent} from './view/admin/groupe-etude/groupe-etude-create/groupe-etude-create.component';
 import {GroupeEtudeListeComponent} from './view/admin/groupe-etude/groupe-etude-liste/groupe-etude-liste.component';
+import {GroupeEtudeComponent} from './view/admin/groupe-etude/groupe-etude.component';
+import {GroupeEtudeEditComponent} from './view/admin/groupe-etude/groupe-etude-edit/groupe-etude-edit.component';
+import { GroupeEtudiantComponent } from './view/admin/groupe-etudiant/groupe-etudiant.component';
+import {GroupeEtudiantListComponent} from './view/admin/groupe-etudiant/groupe-etudiant-list/groupe-etudiant-list.component';
+import { GroupeEtudiantCreateComponent } from './view/admin/groupe-etudiant/groupe-etudiant-create/groupe-etudiant-create.component';
+
+import { GroupeEtudiantDetailListComponent } from './view/admin/groupe-etudiant/groupe-etudiant-detail-list/groupe-etudiant-detail-list.component';
+
+
+
 
 
 @NgModule({
@@ -334,7 +343,6 @@ import {GroupeEtudeListeComponent} from './view/admin/groupe-etude/groupe-etude-
         RecurrenceEditorModule,
         DropDownListModule,
         DateTimePickerModule
-
     ],
     declarations: [
         AppComponent,
@@ -473,9 +481,16 @@ import {GroupeEtudeListeComponent} from './view/admin/groupe-etude/groupe-etude-
         SessionCoursListComponent,
         SessionCoursViewComponent,
         QuizPreviewProfComponent,
+        GroupeEtudeComponent,
         GroupeEtudeCreateComponent,
         GroupeEtudeListeComponent,
         GroupeEtudeListeComponent,
+        GroupeEtudeEditComponent,
+        GroupeEtudiantComponent,
+        GroupeEtudeListeComponent,
+        GroupeEtudiantListComponent,
+        GroupeEtudiantCreateComponent,
+        GroupeEtudiantDetailListComponent,
     ],
     providers: [
         {provide: LocationStrategy, useClass: HashLocationStrategy},

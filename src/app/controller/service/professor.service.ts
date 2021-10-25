@@ -14,157 +14,19 @@ import {EtudiantCours} from '../model/etudiant-cours.model';
     providedIn: 'root'
 })
 export class ProfessorService {
-    private adminUrl = environment.adminUrl;
-
-    constructor(private http: HttpClient, private user: LoginService) {
-    }
-
-    private _items: Array<Prof>;
-
-    get items(): Array<Prof> {
-        if (this._items == null) {
-            this._items = new Array<Prof>();
-        }
-        return this._items;
-    }
-
-    set items(value: Array<Prof>) {
-        this._items = value;
-    }
-
-    private _itemsSession: Array<EtudiantCours>;
-
-    get itemsSession(): Array<EtudiantCours> {
-        if (this._itemsSession == null){
-            this._itemsSession = new Array<EtudiantCours>();
-        }
-        return this._itemsSession;
-    }
-
-    set itemsSession(value: Array<EtudiantCours>) {
-        this._itemsSession = value;
-    }
-
-    private _selected: Prof;
-
-    get selected(): Prof {
-        if (this._selected == null) {
-            this._selected = new Prof();
-        }
-        return this._selected;
-    }
-
-    set selected(value: Prof) {
-        this._selected = value;
-    }
-
-    private _selectes: Array<Prof>;
-
-    get selectes(): Array<Prof> {
-        if (this._selectes == null) {
-            this._selectes = new Array<Prof>();
-        }
-        return this._selectes;
-    }
-
-    set selectes(value: Array<Prof>) {
-        this._selectes = value;
-    }
-
-    private _createDialog: boolean;
-
-    get createDialog(): boolean {
-        return this._createDialog;
-    }
-
-    set createDialog(value: boolean) {
-        this._createDialog = value;
-    }
-
-    private _editDialog: boolean;
-
-    get editDialog(): boolean {
-        return this._editDialog;
-    }
-
-    set editDialog(value: boolean) {
-        this._editDialog = value;
-    }
-
-    private _viewDialog: boolean;
-
-    get viewDialog(): boolean {
-        return this._viewDialog;
-    }
-
-    set viewDialog(value: boolean) {
-        this._viewDialog = value;
-    }
-
     private _submitted: boolean;
-
-    get submitted(): boolean {
-        return this._submitted;
-    }
-
-
-    // constructor(private messageService: MessageService,
-    //             private confirmationService: ConfirmationService, private http: HttpClient) {
-
-    set submitted(value: boolean) {
-        this._submitted = value;
-    }
-
-    private _itemsPaiement: Array<Paiement>;
-
-    get itemsPaiement(): Array<Paiement> {
-        if (this._itemsPaiement == null) {
-            this._itemsPaiement = new Array<Paiement>();
-        }
-        return this._itemsPaiement;
-    }
-
-    set itemsPaiement(value: Array<Paiement>) {
-        this._itemsPaiement = value;
-    }
-
-    private _selectedPaiement: Paiement;
-
-    get selectedPaiement(): Paiement {
-        if (this._selectedPaiement == null) {
-            this._selectedPaiement = new Paiement();
-        }
-        return this._selectedPaiement;
-    }
-
-    set selectedPaiement(value: Paiement) {
-        this._selectedPaiement = value;
-    }
-
-    private _viewDialogProf: boolean;
-
-    get viewDialogProf(): boolean {
-        return this._viewDialogProf;
-    }
-
-    set viewDialogProf(value: boolean) {
-        this._viewDialogProf = value;
-    }
-
+    private _editDialog: boolean;
+    private _createDialog: boolean;
+    private _selectes: Array<Prof>;
     private _paiement: Paiement;
-
-    get paiement(): Paiement {
-        if (this._paiement == null) {
-            this._paiement = new Paiement();
-        }
-        return this._paiement;
-    }
-
-    // tslint:disable-next-line:adjacent-overload-signatures
-    set paiement(value: Paiement) {
-        this._paiement = value;
-    }
-
+    private _viewDialogProf: boolean;
+    private _itemsPaiement: Array<Paiement>;
+    private _viewDialog: boolean;
+    private _selectedPaiement: Paiement;
+    private _itemsSession: Array<EtudiantCours>;
+    private _items: Array<Prof>;
+    private _selected: Prof;
+    private adminUrl = environment.adminUrl;
     public afficheSession(id: number): Observable<Array<EtudiantCours>> {
         return this.http.get<Array<EtudiantCours>>(this.adminUrl + 'etudiantCours/prof/id/' + id);
     }
@@ -232,4 +94,143 @@ export class ProfessorService {
             this.deleteIndexById(item.id);
         }
     }
+    constructor(private http: HttpClient, private user: LoginService) {
+    }
+
+
+    get items(): Array<Prof> {
+        if (this._items == null) {
+            this._items = new Array<Prof>();
+        }
+        return this._items;
+    }
+
+    set items(value: Array<Prof>) {
+        this._items = value;
+    }
+
+
+
+    get itemsSession(): Array<EtudiantCours> {
+        if (this._itemsSession == null){
+            this._itemsSession = new Array<EtudiantCours>();
+        }
+        return this._itemsSession;
+    }
+
+    set itemsSession(value: Array<EtudiantCours>) {
+        this._itemsSession = value;
+    }
+
+    get selected(): Prof {
+        if (this._selected == null) {
+            this._selected = new Prof();
+        }
+        return this._selected;
+    }
+
+    set selected(value: Prof) {
+        this._selected = value;
+    }
+
+
+    get selectes(): Array<Prof> {
+        if (this._selectes == null) {
+            this._selectes = new Array<Prof>();
+        }
+        return this._selectes;
+    }
+
+    set selectes(value: Array<Prof>) {
+        this._selectes = value;
+    }
+
+
+    get createDialog(): boolean {
+        return this._createDialog;
+    }
+
+    set createDialog(value: boolean) {
+        this._createDialog = value;
+    }
+
+
+    get editDialog(): boolean {
+        return this._editDialog;
+    }
+
+    set editDialog(value: boolean) {
+        this._editDialog = value;
+    }
+
+
+    get viewDialog(): boolean {
+        return this._viewDialog;
+    }
+
+    set viewDialog(value: boolean) {
+        this._viewDialog = value;
+    }
+
+
+    get submitted(): boolean {
+        return this._submitted;
+    }
+
+
+    // constructor(private messageService: MessageService,
+    //             private confirmationService: ConfirmationService, private http: HttpClient) {
+
+    set submitted(value: boolean) {
+        this._submitted = value;
+    }
+
+
+
+    get itemsPaiement(): Array<Paiement> {
+        if (this._itemsPaiement == null) {
+            this._itemsPaiement = new Array<Paiement>();
+        }
+        return this._itemsPaiement;
+    }
+
+    set itemsPaiement(value: Array<Paiement>) {
+        this._itemsPaiement = value;
+    }
+
+    get selectedPaiement(): Paiement {
+        if (this._selectedPaiement == null) {
+            this._selectedPaiement = new Paiement();
+        }
+        return this._selectedPaiement;
+    }
+
+    set selectedPaiement(value: Paiement) {
+        this._selectedPaiement = value;
+    }
+
+
+
+    get viewDialogProf(): boolean {
+        return this._viewDialogProf;
+    }
+
+    set viewDialogProf(value: boolean) {
+        this._viewDialogProf = value;
+    }
+
+
+    get paiement(): Paiement {
+        if (this._paiement == null) {
+            this._paiement = new Paiement();
+        }
+        return this._paiement;
+    }
+
+    // tslint:disable-next-line:adjacent-overload-signatures
+    set paiement(value: Paiement) {
+        this._paiement = value;
+    }
+
+
 }

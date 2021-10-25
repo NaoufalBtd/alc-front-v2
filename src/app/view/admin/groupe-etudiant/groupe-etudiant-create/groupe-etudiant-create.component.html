@@ -1,0 +1,73 @@
+<p-dialog [(visible)]="createDialogEtud" [modal]="true" [style]="{width: '450px'}"
+          header="Group Create" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+
+        <div class="p-field">
+            <label for="parcours">Group</label><br>
+            <select (click)="findAllGroupeEtude()" [(ngModel)]="selected.groupeEtude.id"
+
+                     class="btn btn-block btn-outline-light form-control" id="parcours"
+                    name="Parcours" pInputText style=" background-color: gainsboro;margin-left: 5px"
+                    type="text">
+                <option *ngFor="let p of groupeEtudeList" [ngValue]="p.id" selected="selected"> {{p.libelle}}
+
+                </option>
+
+          </select>
+
+        </div>
+      
+        <!--
+        (change)="selectOption($event)"
+        <div class="p-field">
+            <label >{{selected.groupeEtude.id}} </label>
+        </div>
+        -->
+        <div class="p-field">
+            <label > Group Label</label>
+            <input [(ngModel)]="selected.libelle" autofocus id="nombreNonPlacevide" pInputText required type="text"/>
+
+        </div>
+        <div class="p-field">
+            <label > Date Debut</label>
+            <input [(ngModel)]="selected.dateDebut" autofocus id="libelle" pInputText required type="date"/>
+
+        </div>
+        <div class="p-field">
+            <label > Date Fin</label>
+            <input [(ngModel)]="selected.dateFin" autofocus id="dateDebut" pInputText required type="date"/>
+
+        </div>
+        <div class="p-field">
+            <label > Nombre de place vide </label>
+            <input [(ngModel)]="selected.nombrePlacevide" autofocus id="dateFin" pInputText required type="number"/>
+
+        </div>
+        <div class="p-field">
+            <label > Nombre de place non vide </label>
+            <input [(ngModel)]="selected.nombrePlaceNonVide" autofocus id="nombrePlacevide" pInputText required type="number"/>
+
+        </div>
+
+
+        <div class="p-field">
+            <label for="parcours">Group</label><br>
+            <select (click)="findAllEtudiant()" [(ngModel)]="groupeEtudiantDetail.etudiant.id" class="btn btn-block btn-outline-light form-control" id="parcours"
+                    name="Parcours" pInputText style=" background-color: gainsboro;margin-left: 5px"
+                    type="text">
+                <option *ngFor="let e of etudiantList" [ngValue]="e.id" selected="selected"> {{e.nom}} {{e.prenom}}</option>
+            </select>
+        </div>
+        <button (click)="addEtudiant()" class="p-button-text" icon="pi pi-check" label="Add sudent" pButton
+                pRipple></button>
+
+    </ng-template>
+    <ng-template pTemplate="footer">
+
+        <button (click)="save()" class="p-button-text" icon="pi pi-times" label="Save" pButton
+                pRipple></button>
+        <button (click)="hideCreateDialog()" class="p-button-text" icon="pi pi-times" label="Cancel" pButton
+                pRipple></button>
+    </ng-template>
+</p-dialog>
+

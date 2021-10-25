@@ -7,11 +7,10 @@
         <div class="card" style="background-color: gainsboro;">
             <p-toolbar styleClass="p-mb-4">
                 <ng-template pTemplate="left">
-                    <button  (click)="openCreateEtud()" class="p-button-success p-mr-2 p-mb-2" icon="pi pi-plus" label="New" pButton
+                    <button   (click)="openCreateEtud()" class="p-button-success p-mr-2 p-mb-2" icon="pi pi-plus" label="New" pButton
                             pRipple style="width: 90px"></button>
 
-                    <button  class="p-button-danger p-mb-2" icon="pi pi-trash" label="Delete"
-                            pButton pRipple></button>
+
                 </ng-template>
 
                 <ng-template pTemplate="right">
@@ -22,25 +21,15 @@
                 </ng-template>
             </p-toolbar>
 
-            <p-table
+            <p-table #dt [(selection)]="selectes" [columns]="cols" [globalFilterFields]="['libelle','nombreEtudiant']" [paginator]="true"
+                     [rowHover]="true"
+                     [rows]="8" [showCurrentPageReport]="true" [value]="items"
                      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
                      dataKey="id"
                      styleClass="p-datatable-customers">
                 <ng-template pTemplate="caption">
                     <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
-                     <!--   <div class="p-col"><h5 class="p-m-0">Manage Students</h5><br>
-                            <span>
-                        <input  pInputText placeholder="Search by LastName" style="margin-right: 10px;width: 200px"
-                               type="text"/>
-                        <input  pInputText placeholder="Search by FirstName"
-                               style="margin-right: 10px;width: 200px" type="text"/>
-                        <input  pInputText placeholder="Search by UserName" style="margin-right: 10px;width: 200px"
-                               type="text"/>
 
-             <i  class="pi pi-search"></i>
-                                <!-- search
-
-                    </span></div> -->
                     </div>
                 </ng-template>
                 <ng-template pTemplate="header">
@@ -48,54 +37,46 @@
                         <th style="width: 3rem">
                             <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                         </th>
-                        <th pSortableColumn="nom">Groupe
-                            <p-sortIcon field="nom"></p-sortIcon>
+                        <th pSortableColumn="libelle">Group
+                            <p-sortIcon field="libelle"></p-sortIcon>
                         </th>
-                        <th pSortableColumn="prenom">Libelle
+                        <th pSortableColumn="prenom"> Number of students
+                            <p-sortIcon field="prenom"></p-sortIcon>
+                         </th>
+                        <th pSortableColumn="prenom"> Description
                             <p-sortIcon field="prenom"></p-sortIcon>
                         </th>
-                        <th pSortableColumn="prenom">Nombre de place
-                            <p-sortIcon field="prenom"></p-sortIcon>
-                        </th>
-                        <th pSortableColumn="prenom">Nombre de place vide
-                            <p-sortIcon field="prenom"></p-sortIcon>
-                        </th>
-                        <th pSortableColumn="prenom">Nombre de place non vide
-                            <p-sortIcon field="prenom"></p-sortIcon>
-                        </th>
-                        <th pSortableColumn="login">Date Début
-                            <p-sortIcon field="login"></p-sortIcon>
-                        </th>
-                        <th pSortableColumn="prenom">Date Fin
-                            <p-sortIcon field="prenom"></p-sortIcon>
-                        </th>
-
-                        <th pSortableColumn="centre">Niveau
-                            <p-sortIcon field="centre"></p-sortIcon>
-                        </th>
-                        <th></th>
+                    
                     </tr>
                 </ng-template>
-                <ng-template let-etudiant pTemplate="body">
+                <ng-template let-groupeEtude pTemplate="body">
                     <tr>
                         <td>
-                            <p-tableCheckbox [value]="etudiant"></p-tableCheckbox>
+                            <p-tableCheckbox [value]="groupeEtude"></p-tableCheckbox>
                         </td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>{{groupeEtude.libelle}}</td>
+                        <td>{{groupeEtude.nombreEtudiant}}</td>
+                        <td>{{groupeEtude.description}}</td>
                         <td></td>
 
+
                         <td>
-                            <button ( class="p-button-rounded p-button-success p-mr-2" icon="pi pi-pencil" pButton
+                        <td>
+
+                            <button (click)="delete(groupeEtude)" class="p-button-rounded p-button-danger" icon="pi pi-trash" pButton
                                     pRipple></button>
-                            <button  class="p-button-rounded p-button-info p-mr-2" icon="pi pi-list" pButton
-                                    pRipple></button>
-                            <button  class="p-button-rounded p-button-danger" icon="pi pi-trash" pButton
-                                    pRipple></button>
+                        &nbsp;
+                        <button (click)="edit(groupeEtude)" class="p-button-rounded p-button-success p-mr-2" icon="pi pi-pencil" pButton
+                                pRipple></button>
                         </td>
+
+                            <!--
+                          <button  class="p-button-rounded p-button-info p-mr-2" icon="pi pi-list" pButton
+                                  pRipple></button>
+                          <button  class="p-button-rounded p-button-danger" icon="pi pi-trash" pButton
+                                  pRipple></button>
+                                  -->
+
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="summary">
@@ -107,7 +88,7 @@
         </div>
 
         <app-groupe-etude-create></app-groupe-etude-create>
-
+<app-groupe-etude-edit></app-groupe-etude-edit>
         <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
     </div>
 </div>

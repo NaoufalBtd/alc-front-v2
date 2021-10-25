@@ -1,18 +1,20 @@
 
-<p-dialog [(visible)]="createDialogEtud" [modal]="true" [style]="{width: '450px'}"
+
+
+<p-dialog [(visible)]="editDialog" [modal]="true" [style]="{width: '450px'}"
           header="Etudiant Create" styleClass="p-fluid">
     <ng-template pTemplate="content">
         <div class="p-field">
             <label > Group</label>
             <input [(ngModel)]="groupeEtude.libelle" autofocus id="nom" pInputText required type="text"/>
-       <!--     <small *ngIf="submitted && !groupeEtude.libelle" class="p-invalid">FirstName is required.</small>
-       -->
+            <!--     <small *ngIf="submitted && !groupeEtude.libelle" class="p-invalid">FirstName is required.</small>
+            -->
         </div>
         <div class="p-field">
             <label >Number of students</label>
             <input [(ngModel)]="groupeEtude.nombreEtudiant" autofocus id="nombreEtudiant" pInputText required type="number"/>
-      <!--      <small *ngIf="submitted && !selected.prenom" class="p-invalid">LastName is required.</small>
-      -->
+            <!--      <small *ngIf="submitted && !selected.prenom" class="p-invalid">LastName is required.</small>
+            -->
         </div>
         <div class="p-field">
             <label >Description</label>
@@ -23,9 +25,10 @@
 
     </ng-template>
     <ng-template pTemplate="footer">
-        <button (click)="hideCreateDialog()" class="p-button-text" icon="pi pi-times" label="Cancel" pButton
-                pRipple></button>
-        <button (click)="save()" class="p-button-text" icon="pi pi-check" label="Save" pButton pRipple></button>
+
+        <button (click)="edit()" class="p-button-text" icon="pi pi-check" label="Edit" pButton pRipple></button>
+
+
     </ng-template>
 
 </p-dialog>

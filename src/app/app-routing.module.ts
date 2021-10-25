@@ -53,6 +53,10 @@ import {SyntheseSessionComponent} from './view/prof/synthese-session/synthese-se
 import {QuizPreviewProfComponent} from './view/prof/quiz-preview-prof/quiz-preview.component';
 import {EtudiantsComponent} from "./view/admin/etudiants/etudiants.component";
 import {CommentReviewComponent} from "./view/prof/comment-review/comment-review.component";
+import {GroupeEtude} from './controller/model/groupe-etude.model';
+import {GroupeEtudeComponent} from './view/admin/groupe-etude/groupe-etude.component';
+import {GroupeEtudeCreateComponent} from './view/admin/groupe-etude/groupe-etude-create/groupe-etude-create.component';
+import {GroupeEtudiantComponent} from './view/admin/groupe-etudiant/groupe-etudiant.component';
 
 
 @NgModule({
@@ -77,6 +81,9 @@ import {CommentReviewComponent} from "./view/prof/comment-review/comment-review.
                     {path: 'schedule', component: ScheduleAdminComponent},
                     {path: 'faq-create', component: FaqCreateComponent},
                     {path: 'students-List', component: EtudiantsComponent},
+                    {path: 'groups-List', component:  GroupeEtudeComponent},
+                    {path: 'groups-students', component:  GroupeEtudiantComponent},
+
                 ]
             },
             {path:'prof',component: ProfComponent,
