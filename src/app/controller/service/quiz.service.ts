@@ -8,7 +8,10 @@ import {Observable} from 'rxjs';
 import {QuizConfig} from '../model/quiz-config.model';
 import {Section} from '../model/section.model';
 import {MessageService} from 'primeng/api';
-import {environment} from "../../../environments/environment";
+import {environment} from '../../../environments/environment';
+import {HomeWork} from '../model/home-work.model';
+import {HomeWorkQST} from '../model/home-work-qst.model';
+import {HomeWorkReponse} from '../model/home-work-reponse.model';
 
 
 @Injectable({
@@ -19,13 +22,42 @@ export class QuizService {
 
     private adminUrl = environment.adminUrl;
     private _typeDeQuestion: TypeDeQuestion;
-    private nombreReponseJuste: number = 0;
+    private nombreReponseJuste = 0;
     private _viewOnOffDialog: boolean;
     private _viewOnOffUpdateDialog: boolean;
-
-    constructor(private http: HttpClient, private messageService: MessageService,) {
+    private _homeWork: HomeWork;
+    private _homeworkQST: HomeWorkQST;
+    private _homeworkReponse: HomeWorkReponse;
+    constructor(private http: HttpClient, private messageService: MessageService, ) {
     }
 
+    get homeworkReponse(): HomeWorkReponse{
+        if (this._homeworkReponse == null){
+            this._homeworkReponse = new HomeWorkReponse();
+        }
+        return this._homeworkReponse;
+    }
+    set homeworkReponse(homeWorkReponse){
+        this._homeworkReponse = homeWorkReponse;
+    }
+    get HomeWorkQST(): HomeWorkQST {
+        if (this._homeworkQST == null){
+            this._homeworkQST = new HomeWorkQST();
+        }
+        return this._homeworkQST;
+    }
+    set HomeWorkQST(homeWorkQST){
+        this._homeworkQST = homeWorkQST;
+    }
+    get HomeWork(): HomeWork {
+        if (this._homeWork == null){
+            this._homeWork = new HomeWork();
+        }
+        return this._homeWork;
+    }
+    set HomeWork(homeWork){
+        this._homeWork = homeWork;
+    }
 
     get viewOnOffDialog(): boolean {
         return this._viewOnOffDialog;
@@ -345,7 +377,7 @@ export class QuizService {
         this._idQst = value;
     }
 
-    private _questionNumero: number = 1;
+    private _questionNumero = 1;
 
     get questionNumero(): number {
         return this._questionNumero;
@@ -355,7 +387,7 @@ export class QuizService {
         this._questionNumero = value;
     }
 
-    private _reponseNumero: number = 1;
+    private _reponseNumero = 1;
 
     get reponseNumero(): number {
         return this._reponseNumero;
@@ -408,7 +440,7 @@ export class QuizService {
         return questions;
     }
 
- 
+
     public saveConfig(): Observable<QuizConfig> {
         return this.http.post<QuizConfig>(this.adminUrl + 'quizConfig/', this.configuration);
     }
@@ -430,6 +462,10 @@ export class QuizService {
 
     public save(): Observable<Quiz> {
         return this.http.post<Quiz>(this.adminUrl + 'quiz/save/', this.selected);
+    }
+
+    public saveHomeWork(): Observable<HomeWork> {
+        return this.http.post<HomeWork>(this.adminUrl + 'homeWork/', this.HomeWork);
     }
 
     public edit(): Observable<Question> {

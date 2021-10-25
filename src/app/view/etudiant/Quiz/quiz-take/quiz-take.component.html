@@ -24,7 +24,7 @@
             <div style="background-color: white; width: 100%" id="mistake">
                 <!--<h3 style="margin-top: 100px;margin-bottom: 20px; text-align: center">{{this.selected.libelle}} </h3>-->
                 <span class="p-float-label" style="margin-left: 10%; margin-bottom: 20px">
-                    <textarea id="float-input-correct-mistake" [disabled]="disable? true: null" [(ngModel)]="this.selected.libelle" (keyup)="correctMistake()" pInputTextarea></textarea>
+                    <textarea id="fuloat-inpt-correct-mistake" [disabled]="disable? true: null" [(ngModel)]="this.selected.libelle" (keyup)="correctMistake()" pInputTextarea></textarea>
                     <div id="div-output">
                         <output *ngFor="let i of numberofword" id="output-correct-mistake"> <span id="span-output-{{i}}" [style.visibility]="isChecked? 'visible' : 'hidden'"> {{this.myanswers[i]}} </span> <span id="span-correct-{{i}}" class="span-correct" [style.visibility]="answerCorrectOrFalse[i]? 'hidden' : 'visible'"> {{this.correctanswers[i]}} </span> </output>
                     </div>

@@ -1,11 +1,10 @@
-<div class=" card" style="background-color: transparent">
+<div class=" card" style="background-color: transparent" >
     <div class="p-grid">
         <p-toast></p-toast>
-        <div class="p-col" (mouseup)="dict()">
-            <div class="product-grid-item " style="background-color: white">
-                <div *ngIf="showVocabulary===false" class="product-grid-item-content">
-                    <div class="product-name" style="margin-bottom: 15px; background-color: orange; color: white">
-                        <h1>{{this.selectedsection.libelle}}</h1>
+        <div  class="p-col" (mouseup)="dict()">
+            <div  class="product-grid-item "  style="background-color: white">
+                <div *ngIf="showVocabulary===false" class="product-grid-item-content" >
+                    <div class="product-name" style="margin-bottom: 15px; background-color: orange; color: white"><h1>{{this.selectedsection.libelle}}</h1>
                     </div>
                     <!-- <iframe *ngIf=" this.selectedsection.libelle != 'Watch the video' && this.selectedsection.urlImage != null"
                                [src]='photoURL() | safe' loading="lazy" width="400" height="200" ></iframe> -->
@@ -29,8 +28,7 @@
                              src="../../../../../assets/notfound.jpg" style="width: 100%">
 
 
-                        <div *ngIf=" this.selectedsection.contenu != null && this.selectedsection.urlVideo == null"
-                             style="box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)">
+                        <div *ngIf=" this.selectedsection.contenu != null && this.selectedsection.urlVideo == null" style="box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)">
                             <h3 (mouseup)="dict()"
                                 style=" background-color: white;white-space: pre-wrap; font-family: Great Vibes, cursive; font-size: 200%;line-height: 60px; text-align: left ;margin-left: 50px ;">{{this.selectedsection.contenu}}</h3>
                         </div>
@@ -57,12 +55,11 @@
                         style="background-color: orange; position: absolute;margin: 0;left: 50%; -ms-transform: translate(-50%, -50%); transform: translate(-50%, -50%);top: 50%;  width: 120px"
                         type="button"></button>
                 <button (click)="NextSection()"
-                        [style.visibility]="(this.selectedsection.numeroOrder < this.itemssection2.length)? 'visible':'hidden'"
+                        [style.visibility]="(this.selectedsection.numeroOrder < this.sectionStandard.length)? 'visible':'hidden'"
                         class="p-button-rounded" icon="pi pi-caret-right" id="next" label="Next"
                         pButton pRipple
                         style=" width: 120px; background-color: orange; position: absolute;right: 15px;"
                         type="button"></button>
-
                 <button *ngIf="!this.hasfinish"
                         (click)="finish()"
                         [style.visibility]="(this.selectedsection.numeroOrder < this.itemssection2.length)? 'hidden':'visible'"
@@ -75,7 +72,6 @@
                         class="p-button-rounded" icon="pi pi-check" label="Bach to All Course" pButton pRipple
                         style=" width: 160px; background-color: orange; position: absolute;right: 15px;"
                         type="button"></button>
-
             </div>
         </div>
 
@@ -92,22 +88,17 @@
         <div class="p-col-3 product-grid-item">
             <div class="product-grid-item-content" style="margin-top: 0">
                 <div style="margin-top: 0px">
-                    <div id="dictionnair" class="p-inputgroup"
-                         style="width: 0%; height: 0px; visibility: hidden; margin-bottom: 10px">
-                        <h5 style="margin-left: 5px; font-size: 25px; text-align: center"><b
-                                style="font-size: 20px; color: orange;">+</b>
-                            <u style="color: #8b8b90; margin-left: 10px">{{this.selectedDict.word}}</u>
-                            :  {{this.selectedDict.definition}}
+                    <div id="dictionnair"  class="p-inputgroup" style="width: 0%; height: 0px; visibility: hidden; margin-bottom: 10px">
+                        <h5 style="margin-left: 5px; font-size: 25px; text-align: center"><b style="font-size: 20px; color: orange;" >+</b>
+                            <u style="color: #8b8b90; margin-left: 10px">{{this.selectedDict.word}}</u> :  {{this.selectedDict.definition}}
                         </h5>
                     </div>
                     <div class="p-inputgroup" style="width: 100%; align-content: center">
                         <p-autoComplete (completeMethod)="filterDict($event)" [(ngModel)]="word"
                                         [minLength]="1" [suggestions]="filteredDict"
-                                        field="word"></p-autoComplete>
-                        <button (click)="findByWord()" style="background-color: orange" icon="pi pi-search" pButton
-                                pRipple type="button"></button>
-                        <button (click)="openCreateDict()" icon="pi pi-plus" pButton pRipple
-                                style="background-color: #8b8b90"
+                                        field="word" ></p-autoComplete>
+                        <button (click)="findByWord()" style="background-color: orange" icon="pi pi-search" pButton pRipple type="button"></button>
+                        <button (click)="openCreateDict()" icon="pi pi-plus" pButton pRipple style="background-color: #8b8b90"
                                 type="button"></button>
                     </div>
                     <!-- <input  [(ngModel)]="word" pInputText placeholder="Search" style="width: 180px;" type="text"/>
@@ -116,16 +107,32 @@
                      <p-button (click)="openCreateDict()" icon="pi pi-plus" style="margin-left: 2px;" ></p-button>
               -->
                 </div>
-                <div class="card" style="margin-top: 15px">
-                    <p-tabMenu [activeItem]="menu[0]" [model]="menu"
-                               style="width: 100%;background-color: orange"></p-tabMenu>
-
-
+               <div class="card" style="margin-top: 15px">
+                   <p-tabMenu [activeItem]="menu[0]" [model]="menu" style="width: 100%;background-color: orange"></p-tabMenu>
                     <div id="categoriess" style="width: 100%;margin-top: 15px">
-                        <p-table [value]="itemssection2" id="categ" style="margin-top: 20px; margin-right: 30px;">
+                        <div style="background-color: orange"><h6 style="color: black ">Obligatory</h6></div>
+                        <p-table [value]="sectionStandard" id="categ" style="margin-top: 20px; margin-right: 30px;">
 
                             <ng-template let-section pTemplate="body">
+
                                 <tr class="timeline">
+
+                                    <li>
+                                        <td (click)="Section(section.categorieSection.libelle)"
+                                            [style.color]="(section.categorieSection.libelle) == (this.selectedsection.categorieSection.libelle)? 'orange' :'black' "
+                                            style="cursor: pointer; font-weight: 600;margin-left: 5px; font-size: 15px">
+                                            <u>{{section.categorieSection.libelle}}</u></td>
+                                    </li>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                       <div style="background-color: orange"><h6 style="color: black ">Additional</h6></div>
+                        <p-table [value]="sectionAdditional" id="cate" style="margin-top: 20px; margin-right: 30px;">
+
+                            <ng-template let-section pTemplate="body">
+
+                                <tr class="timeline">
+
                                     <li>
                                         <td (click)="Section(section.categorieSection.libelle)"
                                             [style.color]="(section.categorieSection.libelle) == (this.selectedsection.categorieSection.libelle)? 'orange' :'black' "
@@ -145,15 +152,28 @@
                                 <tr>
 
                                     <td (click)="dictEdit(dict)"
-                                        style="font-weight: 800; text-align: center; cursor: pointer"><b
-                                            style="font-size: 20px; color: black;">{{dict.word}}</b> : <b
-                                            style="font-size: 20px; color: orange;">{{dict.definition}}</b></td>
+                                        style="font-weight: 800; text-align: center; cursor: pointer"><b style="font-size: 20px; color: black;">{{dict.word}}</b> : <b style="font-size: 20px; color: orange;">{{dict.definition}}</b></td>
                                 </tr>
                             </ng-template>
 
                         </p-table>
                     </div>
                     <app-chat1 [style.visibility]="'hidden'" id="chat"></app-chat1>
+                   <div class="card" [style.visibility]="'hidden'"  id="homeWork">
+                       <p-table *ngIf="this.homeWorkList.length!==0" [value]="homeWorkList" style="margin-top: 20px; margin-right: 30px;">
+                           <ng-template let-homeWork pTemplate="body">
+                               <tr class="timeline">
+                                   <li>
+                                       <td
+                                           (click)="sendhomeWork(homeWork)"
+                                           style="cursor: pointer; font-weight: 600;margin-left: 5px; font-size: 15px">
+                                           <u>{{homeWork.section.libelle}}</u></td>
+                                   </li>
+                               </tr>
+                           </ng-template>
+                       </p-table>
+                       <b *ngIf="this.homeWorkList.length == 0">No HomeWork found </b>
+                   </div>
 
                 </div>
                 <!-- <div class="card" style="margin-top: 15px">

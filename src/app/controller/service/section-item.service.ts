@@ -4,6 +4,7 @@ import {environment} from '../../../environments/environment';
 import {Section} from '../model/section.model';
 import {SectionItemModel} from '../model/section-item.model';
 import {Observable} from 'rxjs';
+import {Cours} from "../model/cours.model";
 
 @Injectable({
     providedIn: 'root'
@@ -14,11 +15,24 @@ export class SectionItemService {
     }
 
     private adminUrl = environment.adminUrl;
-    private _showVocabulary:boolean
+    private _showVocabulary:boolean;
+    private _coursofsection: Cours;
 
 
     get showVocabulary(): boolean {
         return this._showVocabulary;
+    }
+
+
+    get coursofsection(): Cours {
+        if (this._coursofsection == null){
+            this._coursofsection = new Cours();
+        }
+        return this._coursofsection;
+    }
+
+    set coursofsection(value: Cours) {
+        this._coursofsection = value;
     }
 
     set showVocabulary(value: boolean) {
