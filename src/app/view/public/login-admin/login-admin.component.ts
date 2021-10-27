@@ -102,6 +102,8 @@ export class LoginAdminComponent implements OnInit {
                     { label: 'Manage Parcours', icon: 'pi pi-fw pi-table', routerLink: ['/admin/parcours']},
                     {label: 'Inscriptions List', icon: 'pi pi-fw pi-check-square', routerLink: ['/admin/inscription']},
                     {label: 'Students List', icon: 'pi pi-fw pi-list', routerLink: ['/admin/students-List']},
+                    {label: 'Groups List', icon: 'pi pi-fw pi-list', routerLink: ['/admin/groups-List']},
+                    {label: 'Groups of Students', icon: 'pi pi-fw pi-list', routerLink: ['/admin/groups-students']},
                     {label: 'Professor', icon: 'pi pi-fw pi-user', routerLink: ['/admin/teacher-lists']},
                     {label: 'Professor Recommendation', icon: 'pi pi-fw pi-user-plus', routerLink: ['/admin/recommend-admin']},
                     {label: 'List of Payments', icon: 'pi pi-fw pi-wallet', routerLink: ['/admin/paiement']},

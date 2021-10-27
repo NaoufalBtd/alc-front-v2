@@ -1,6 +1,7 @@
 import {RouterModule} from '@angular/router';
 import {NgModule} from '@angular/core';
 import {FormLayoutDemoComponent} from './view/public/Inscription-student/formlayoutdemo.component';
+
 import {LearnComponent} from './view/admin/learn/learn.component';
 import {SectionsComponent} from './view/prof/learn-teacher/sections/sections.component';
 import {CoursesComponent} from './view/prof/learn-teacher/courses/courses.component';
@@ -48,6 +49,12 @@ import {ProfComponent} from './view/prof/prof.component';
 import {EtudiantComponent} from './view/etudiant/etudiant.component';
 import {SyntheseSessionComponent} from './view/prof/synthese-session/synthese-session.component';
 import {QuizPreviewProfComponent} from './view/prof/quiz-preview-prof/quiz-preview.component';
+import {EtudiantsComponent} from "./view/admin/etudiants/etudiants.component";
+import {CommentReviewComponent} from "./view/prof/comment-review/comment-review.component";
+import {GroupeEtude} from './controller/model/groupe-etude.model';
+import {GroupeEtudeComponent} from './view/admin/groupe-etude/groupe-etude.component';
+import {GroupeEtudeCreateComponent} from './view/admin/groupe-etude/groupe-etude-create/groupe-etude-create.component';
+import {GroupeEtudiantComponent} from './view/admin/groupe-etudiant/groupe-etudiant.component';
 import {EtudiantsComponent} from './view/admin/etudiants/etudiants.component';
 import {HomeWorkComponentComponent} from './view/admin/home-work-component/home-work-component.component';
 import {HomeWorkEtudiantComponent} from './view/etudiant/homeWork/home-work-etudiant/home-work-etudiant.component';
@@ -80,11 +87,16 @@ import {EtudiantcommentreviewComponent} from "./view/prof/etudiantcommentreview/
                     {path: 'faq-create', component: FaqCreateComponent},
                     {path: 'students-List', component: EtudiantsComponent},
                     {path: 'homeWork', component: HomeWorkComponentComponent},
+                    {path: 'groups-List', component:  GroupeEtudeComponent},
+                    {path: 'groups-students', component:  GroupeEtudiantComponent},
+
                 ]
             },
             {
                 path: 'prof', component: ProfComponent,
                 children: [
+            {path:'prof',component: ProfComponent,
+                children:[
                     {path: 'home', component: HomeComponent},
                     {path: 'quiz-preview-prof', component: QuizPreviewComponent},
                     {path: 'courses', component: EdCoursesComponent},
@@ -92,7 +104,7 @@ import {EtudiantcommentreviewComponent} from "./view/prof/etudiantcommentreview/
                     {path: 'salary', component: SalaryComponent},
                     {path: 'classes', component: ClassRoomListComponent},
                     {path: 'synthese', component: SyntheseSessionComponent},
-                    {path: 'schedule', component: ScheduleComponent},
+                    {path: 'schedule', component: ScheduleLocalComponent},
                     {path: 'news-teacher', component: NewsTeacherListComponent},
                     {path: 'faq-teacher', component: FaqListComponent},
                     {path: 'faq-teacher-answer', component: FaqContactListComponent},
@@ -100,11 +112,14 @@ import {EtudiantcommentreviewComponent} from "./view/prof/etudiantcommentreview/
                     {path: 'sections', component: SectionsComponent},
                     {path: 'cours', component: CoursesComponent},
                     {path: 'quiz-preview-teacher', component: QuizPreviewProfComponent},
+                    {path: 'comment-review', component: CommentReviewComponent},
                     {path: 'etudiantReviewcomment', component: EtudiantcommentreviewComponent},
                     {path: 'paiementlist', component: PaiementlistComponent},
 
                 ]
             },
+            {path:'etudiant',component: EtudiantComponent,
+                children:[
             {
                 path: 'etudiant', component: EtudiantComponent,
                 children: [
@@ -117,8 +132,11 @@ import {EtudiantcommentreviewComponent} from "./view/prof/etudiantcommentreview/
                     {path: 'quiz-view', component: QuizEtudiantViewComponent},
                     {path: 'quiz-take', component: QuizTakeComponent},
                     {path: 'homeWorkEtudiant', component: HomeWorkEtudiantComponent},
+                    {path: 'homeWorkEtudiantResult', component: HomeWorkResultComponent},
                 ]
             },
+            {path:'', component: PublicComponent,
+                children:[
             {
                 path: '', component: PublicComponent,
                 children: [

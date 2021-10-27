@@ -774,6 +774,12 @@ export class StudentSimulateSectionComponent implements OnInit {
     sendhomeWork(homeWork: HomeWork) {
         console.log(homeWork);
         this.homeWorkEtudiantService.homeWork = homeWork;
+        this.homeWorkEtudiantService.findbyetudiantIdAndHomeWorkID().subscribe(
+            data => {
+                this.homeWorkEtudiantService.isUpdate = true;
+                this.homeWorkEtudiantService.homeWorkEtudiant = data ;
+            }
+        );
         this.homeWorkEtudiantService.homeWork.questions = homeWork.questions;
         //  this.homeWorkEtudiantService.homeWorkQuestion = ;
         this.router.navigate(['etudiant/homeWorkEtudiant']);

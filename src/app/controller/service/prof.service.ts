@@ -16,43 +16,10 @@ export class ProfService {
 
     constructor(private http: HttpClient) {
     }
-
-    private _selectedProf: Prof;
-
-    get selectedProf(): Prof {
-        if (this._selectedProf == null) {
-            this._selectedProf = new Prof();
-        }
-        return this._selectedProf;
-    }
-
-    set selectedProf(value: Prof) {
-        this._selectedProf = value;
-    }
-
     private _itemsCategorieProf: Array<CategorieProf>;
 
-    get itemsCategorieProf(): Array<CategorieProf> {
-        if (this._itemsCategorieProf == null) {
-            this._itemsCategorieProf = new Array<CategorieProf>();
-        }
-        return this._itemsCategorieProf;
-    }
-
-    set itemsCategorieProf(value: Array<CategorieProf>) {
-        this._itemsCategorieProf = value;
-    }
-
     private _submitted: boolean;
-
-    get submitted(): boolean {
-        return this._submitted;
-    }
-
-    set submitted(value: boolean) {
-        this._submitted = value;
-    }
-
+    private _selectedProf: Prof;
     public save(): Observable<number> {
         return this.http.post<number>(this.adminUrl + 'prof/', this.selectedProf);
     }
@@ -69,6 +36,39 @@ export class ProfService {
     public findAllCategorieProf(): Observable<Array<CategorieProf>> {
         return this.http.get<Array<CategorieProf>>(this.adminUrl + 'categorieprof/');
     }
+    get selectedProf(): Prof {
+        if (this._selectedProf == null) {
+            this._selectedProf = new Prof();
+        }
+        return this._selectedProf;
+    }
+
+    set selectedProf(value: Prof) {
+        this._selectedProf = value;
+    }
+
+
+    get itemsCategorieProf(): Array<CategorieProf> {
+        if (this._itemsCategorieProf == null) {
+            this._itemsCategorieProf = new Array<CategorieProf>();
+        }
+        return this._itemsCategorieProf;
+    }
+
+    set itemsCategorieProf(value: Array<CategorieProf>) {
+        this._itemsCategorieProf = value;
+    }
+
+
+    get submitted(): boolean {
+        return this._submitted;
+    }
+
+    set submitted(value: boolean) {
+        this._submitted = value;
+    }
+
+
 
 
 }
