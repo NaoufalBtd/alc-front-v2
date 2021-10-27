@@ -241,6 +241,7 @@ import {GroupeEtudeCreateComponent} from './view/admin/groupe-etude/groupe-etude
 import {GroupeEtudeListeComponent} from './view/admin/groupe-etude/groupe-etude-liste/groupe-etude-liste.component';
 import {HomeWorkComponentComponent} from "./view/admin/home-work-component/home-work-component.component";
 import {HomeWorkEtudiantComponent} from "./view/etudiant/homeWork/home-work-etudiant/home-work-etudiant.component";
+import { HomeWorkResultComponent } from './view/etudiant/homeWork/home-work-result/home-work-result.component';
 
 @NgModule({
     imports: [
@@ -479,6 +480,7 @@ import {HomeWorkEtudiantComponent} from "./view/etudiant/homeWork/home-work-etud
         GroupeEtudeListeComponent,
         HomeWorkComponentComponent,
         HomeWorkEtudiantComponent,
+        HomeWorkResultComponent,
     ],
     providers: [
         {provide: LocationStrategy, useClass: HashLocationStrategy},

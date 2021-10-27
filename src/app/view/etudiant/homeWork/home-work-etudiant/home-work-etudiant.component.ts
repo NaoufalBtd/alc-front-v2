@@ -16,6 +16,7 @@ import {HomeworkService} from "../../../../controller/service/homework.service";
 import {HomeWorkReponse} from "../../../../controller/model/home-work-reponse.model";
 import {newArray} from "@angular/compiler/src/util";
 import {LoginService} from "../../../../controller/service/login.service";
+import {Router, RouterModule} from "@angular/router";
 
 @Component({
   selector: 'app-home-work-etudiant',
@@ -32,9 +33,9 @@ export class HomeWorkEtudiantComponent implements OnInit {
   wordDict: any;
   selectedsection = new Section();
    hasprevious = false;
-  private etudiantreponseList: ReponseEtudiantHomeWork[];
+  private etudiantreponseList = new Array<ReponseEtudiantHomeWork>();
 
-  constructor(private loginservice: LoginService, private homeworkservice: HomeworkService,private quizService: QuizEtudiantService,private parcoursservice: ParcoursService, private homeworkEtudiantservice: HomeWorkEtudiantServiceService,private dictionnaryService: DictionaryService) { }
+  constructor(private router: Router, private loginservice: LoginService, private homeworkservice: HomeworkService,private quizService: QuizEtudiantService,private parcoursservice: ParcoursService, private homeworkEtudiantservice: HomeWorkEtudiantServiceService,private dictionnaryService: DictionaryService) { }
   private selectedValue: number;
   private _selectedValueCheckbox: Array<Reponse>;
   private _type: string;
@@ -95,6 +96,9 @@ export class HomeWorkEtudiantComponent implements OnInit {
 
   ngOnInit(): void {
     console.log(this.homeWorkList);
+    this.findbyetudiantIdAndHomeWorkID();
+    console.log(this.homeworkEtudiantservice.isUpdate);
+    console.log(this.homeWorkEtudiant);
     this.homeworkEtudiantservice.findQuestions().subscribe(
         data => {
           if (data.length > 1) {
@@ -340,10 +344,15 @@ export class HomeWorkEtudiantComponent implements OnInit {
           document.getElementById('myAnswer').style.visibility = 'hidden';
         }
     );
+    this.findbyetudiantIdAndHomeWorkID();
     //  this.homeWorkEtudiantService.homeWorkQuestion = ;
   }
   public save() {
-    this.homeworkEtudiantservice.save().subscribe();
+    console.log('hani f save');
+    this.homeworkEtudiantservice.save().subscribe(
+        data => {
+        }
+    );
   }
 
   public findReponseByQuestion(){
@@ -398,6 +407,14 @@ export class HomeWorkEtudiantComponent implements OnInit {
       this.submittedDictEdit = false;
       this.editDialogDict = true;
     }
+  }
+  public findbyetudiantIdAndHomeWorkID(){
+    return this.homeworkEtudiantservice.findbyetudiantIdAndHomeWorkID().subscribe(
+        data => {
+          this.homeworkEtudiantservice.isUpdate = true;
+          this.homeWorkEtudiant = data ;
+        }
+    );
   }
 
   findquestion(quetions: any) {
@@ -575,19 +592,22 @@ export class HomeWorkEtudiantComponent implements OnInit {
     this._myanswers.push(r.lib);
   }
 
-  nextQuestion() {
+  nextQuestion(){
+
     this.homeWorkQuestion = this.homeWork.questions[this.i + 1];
     this.findReponseByQuestion();
     this.i++;
     this.etudiantReponse = new HoweWorkQSTReponse();
     this.reponseInput = '';
     this.disable = false;
-    document.getElementById('myAnswer').style.visibility = 'hidden';
-    document.getElementById('tooltiptext').style.visibility = 'hidden';
+
+/*    document.getElementById('myAnswer').style.visibility = 'hidden';
+    document.getElementById('tooltiptext').style.visibility = 'hidden';*/
     this.hasprevious = true;
     if (this.i === this.homeWork.questions.length - 1){
       this.hasNext = false;
     }
+    console.log(this.hasNext);
   }
 
   previousQuestion() {
@@ -598,8 +618,8 @@ export class HomeWorkEtudiantComponent implements OnInit {
     this.disable = false;
     this.etudiantReponse = new HoweWorkQSTReponse();
     this.reponseInput = '';
-    document.getElementById('myAnswer').style.visibility = 'hidden';
-    document.getElementById('tooltiptext').style.visibility = 'hidden';
+/*    document.getElementById('myAnswer').style.visibility = 'hidden';
+    document.getElementById('tooltiptext').style.visibility = 'hidden';*/
     this.i--;
     }
     if (this.i === 0){
@@ -608,10 +628,43 @@ export class HomeWorkEtudiantComponent implements OnInit {
 
   }
 
+  sauvegarderReponse(r: HomeWorkReponse){
+    const etudiantreponse = new ReponseEtudiantHomeWork();
+    etudiantreponse.answer = r.lib;
+    etudiantreponse.question = this.homeWorkQuestion;
+    this.etudiantreponseList.push(etudiantreponse);
+  }
+
   submithomeWork(){
     this.homeWorkEtudiant.homeWork = this.homeWork;
     this.homeWorkEtudiant.etudiant = this.loginservice.etudiant;
     this.homeWorkEtudiant.reponseEtudiantHomeWork = this.etudiantreponseList;
-    console.log(this.homeWorkEtudiant);
+    if (this.homeworkEtudiantservice.isUpdate === false){
+      this.save();
+    }else {
+      console.log('hani ghandir lik update');
+      this.homeworkEtudiantservice.update();
+    }
+
+    for (let _i = 0 ; _i < this.homeWorkEtudiant.reponseEtudiantHomeWork.length ; _i++){
+      for (let _j = 0 ; _j < this.homeWorkQstReponses.length ; _j++){
+        if (this.homeWorkEtudiant.reponseEtudiantHomeWork[_i].answer === this.homeWorkQstReponses[_j].lib){
+           if (this.homeWorkQstReponses[_j].etatReponse === 'true'){
+             this.homeworkEtudiantservice.result++;
+           }
+         }
+      }
+    }
+    this.router.navigate(['etudiant/homeWorkEtudiantResult']);
+  }
+
+  valider() {
+    this.disable = true ;
+    const etudiantreponse = new ReponseEtudiantHomeWork();
+    etudiantreponse.answer = this.etudiantReponse.lib;
+    etudiantreponse.question = this.homeWorkQuestion;
+    this.etudiantreponseList.push(etudiantreponse);
+    this.homeworkEtudiantservice.QstReponseetudiant = this.etudiantreponseList;
+    console.log(this.homeworkEtudiantservice.QstReponseetudiant);
   }
 }

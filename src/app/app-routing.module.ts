@@ -55,6 +55,7 @@ import {HomeWorkComponentComponent} from './view/admin/home-work-component/home-
 import {HomeWOrkEtudiant} from './controller/model/home-work-etudiant.model';
 import {HomeWorkEtudiantComponent} from './view/etudiant/homeWork/home-work-etudiant/home-work-etudiant.component';
 import {ScheduleComponent} from '@syncfusion/ej2-angular-schedule';
+import {HomeWorkResultComponent} from "./view/etudiant/homeWork/home-work-result/home-work-result.component";
 
 
 @NgModule({
@@ -113,6 +114,7 @@ import {ScheduleComponent} from '@syncfusion/ej2-angular-schedule';
                     {path: 'quiz-view', component: QuizEtudiantViewComponent},
                     {path: 'quiz-take', component: QuizTakeComponent},
                     {path: 'homeWorkEtudiant', component: HomeWorkEtudiantComponent},
+                    {path: 'homeWorkEtudiantResult', component: HomeWorkResultComponent},
                 ]
             },
             {path: '', component: PublicComponent,

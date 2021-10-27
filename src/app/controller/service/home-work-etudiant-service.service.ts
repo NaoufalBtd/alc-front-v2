@@ -6,6 +6,8 @@ import {ReponseEtudiantHomeWork} from '../model/reponse-etudiant-home-work.model
 import {Observable} from 'rxjs';
 import {HomeWorkQST} from '../model/home-work-qst.model';
 import {HoweWorkQSTReponse} from '../model/howe-work-qstreponse.model';
+import {TreeNode} from 'primeng/api';
+import {LoginService} from './login.service';
 
 
 @Injectable({
@@ -20,8 +22,31 @@ export class HomeWorkEtudiantServiceService {
   private _homeWorkQuestionList: Array<HomeWorkQST>;
   private _homeWorkQstReponses: Array<HoweWorkQSTReponse>;
   private _etudiantReponse: HoweWorkQSTReponse;
-  constructor(private http: HttpClient) { }
+  private _QstReponseetudiant: Array<ReponseEtudiantHomeWork>;
+  private _nodes: TreeNode[];
+  public result: number = 0;
+  public isUpdate = false ;
+  constructor(private http: HttpClient, private loginservice: LoginService) { }
 
+
+  get nodes(): TreeNode[] {
+    return this._nodes;
+  }
+
+  set nodes(value: TreeNode[]) {
+    this._nodes = value;
+  }
+
+  get QstReponseetudiant(): Array<ReponseEtudiantHomeWork> {
+    if (this._QstReponseetudiant == null){
+      this._QstReponseetudiant = new Array<ReponseEtudiantHomeWork>();
+    }
+    return this._QstReponseetudiant;
+  }
+
+  set QstReponseetudiant(value: Array<ReponseEtudiantHomeWork>) {
+    this._QstReponseetudiant = value;
+  }
 
   get etudiantReponse(): HoweWorkQSTReponse {
     if (this._etudiantReponse == null){
@@ -105,11 +130,26 @@ export class HomeWorkEtudiantServiceService {
     return this.http.get<Array<HomeWorkQST>>('http://localhost:8036/etudiant/homeWorkQST/homework/' + this.homeWork.id);
   }
 
-  public save(): Observable<HomeWOrkEtudiant>{
-    return this.http.post<HomeWOrkEtudiant>('http://localhost:8036/etudiant/homeWork/', this.homeWorkEtudiant);
+  public save(): Observable<number>{
+    console.log('hani f save t service');
+    return this.http.post<number>('http://localhost:8036/etudiant/homeWorkEtudiant/', this.homeWorkEtudiant);
+  }
+  public update(): Observable<number>{
+    return this.http.post<number>('http://localhost:8036/etudiant/homeWorkEtudiant/update', this.homeWorkEtudiant);
   }
 
+  public findbyetudiantIdAndHomeWorkID(): Observable<HomeWOrkEtudiant>{
+   return this.http.get<HomeWOrkEtudiant>('http://localhost:8036/etudiant/homeWorkEtudiant/etudiant/id/' + this.loginservice.etudiant.id + '/homeWork/id/' +  this.homeWork.id  );
+  }
   public findReponsesByQuestionId(): Observable<Array<HoweWorkQSTReponse>> {
   return this.http.get<Array<HoweWorkQSTReponse>>('http://localhost:8036/etudiant/homeWorkqstReponse/question/' + this.homeWorkQuestion.id);
+  }
+
+  public findByQuestionId(id: number){
+      this.http.get<Array<ReponseEtudiantHomeWork>>('http://localhost:8036/etudiant/reponseEtudiantHomeWork/QuestionId/' + id).subscribe(
+          data => {
+            this.QstReponseetudiant = data ;
+          }
+      );
   }
 }
