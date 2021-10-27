@@ -5,7 +5,7 @@ import {GroupeEtudeService} from '../../../../controller/service/groupe-etude.se
 import {Etudiant} from '../../../../controller/model/etudiant.model';
 import {GroupeEtude} from '../../../../controller/model/groupe-etude.model';
 import {GroupeEtudiant} from '../../../../controller/model/groupe-etudiant.model';
-import {GroupeEtudeDetail} from '../../../../controller/model/groupe-etude-detail.model';
+
 import {Prof} from '../../../../controller/model/prof.model';
 
 @Component({
@@ -53,20 +53,8 @@ export class GroupeEtudeCreateComponent implements OnInit {
   set groupeEtudiant(value: GroupeEtudiant) {
     this.groupeEtudeService.groupeEtudiant = value;
   }
-  get groupeEtudeDetails(): Array<GroupeEtudeDetail>{
-    return this.groupeEtudeService.groupeEtudeDetails;
-  }
 
-  set groupeEtudeDetails(value: Array<GroupeEtudeDetail>) {
-    this.groupeEtudeService.groupeEtudeDetails = value;
-  }
-  get groupeEtudeDetail(): GroupeEtudeDetail{
-    return this.groupeEtudeService.groupeEtudeDetail;
-  }
 
-  set groupeEtudeDetail(value: GroupeEtudeDetail) {
-    this.groupeEtudeService.groupeEtudeDetail = value;
-  }
   get submitted(): boolean {
     return this.groupeEtudeService.submitted;
   }
@@ -97,8 +85,31 @@ export class GroupeEtudeCreateComponent implements OnInit {
     this.createDialog = false;
     this.groupeEtude = new GroupeEtude();
   }
-  public addGroupeEtudeDetail(){
-    this.groupeEtude.groupeEtudeDetails.push({...this.groupeEtudeDetail});
-    this.groupeEtudeDetail = null;
+
+
+  public hideCreateDialog() {
+    this.createDialogEtud = false;
+    this.submitted = false;
   }
+
+  public findIndexById(id: number): number {
+    let index = -1;
+    for (let i = 0; i < this.items.length; i++) {
+      if (this.items[i].id === id) {
+        index = i;
+        break;
+      }
+    }
+    return index;
+  }
+
+
+  get items(): Array<GroupeEtude>{
+    return this.groupeEtudeService.items;
+  }
+
+  set items(value: Array<GroupeEtude>) {
+    this.groupeEtudeService.items = value;
+  }
+
 }

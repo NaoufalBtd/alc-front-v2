@@ -8,7 +8,6 @@ import {AppComponent} from '../../app.component';
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.scss']
 })
-
 export class AdminComponent {
 
   overlayMenuActive: boolean;
@@ -98,7 +97,6 @@ export class AdminComponent {
     this.menuClick = false;
     this.profileClick = false;
   }
-
   onMenuButtonClick(event) {
     this.menuClick = true;
     this.topbarUserMenuActive = false;

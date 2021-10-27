@@ -11,17 +11,15 @@ import {environment} from '../../../environments/environment';
     providedIn: 'root'
 })
 export class AdminService {
-
+    private _items: Array<Admin>;
+    private _submitted: boolean;
     private adminUrl = environment.adminUrl;
 
     private url = environment.baseUrl + 'admin/';
     private _selected: Admin;
-
+    private _createDialog: boolean;
     constructor(private http: HttpClient) {
     }
-
-
-
     public save(): Observable<number> {
         return this.http.post<number>(this.adminUrl + 'admin/', this.selected);
     }
@@ -36,28 +34,18 @@ export class AdminService {
     set selected(value: Admin) {
         this._selected = value;
     }
-
-    private _items: Array<Admin>;
-
     get items(): Array<Admin> {
         return this._items;
     }
-
     set items(value: Array<Admin>) {
         this._items = value;
     }
-
-    private _createDialog: boolean;
-
     get createDialog(): boolean {
         return this._createDialog;
     }
-
     set createDialog(value: boolean) {
         this._createDialog = value;
     }
-
-    private _submitted: boolean;
 
     get submitted(): boolean {
         return this._submitted;

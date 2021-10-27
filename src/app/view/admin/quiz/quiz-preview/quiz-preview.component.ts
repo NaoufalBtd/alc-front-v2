@@ -24,11 +24,8 @@ import {Section} from '../../../../controller/model/section.model';
     templateUrl: './quiz-preview.component.html',
     styleUrls: ['./quiz-preview.component.scss']
 })
-export class QuizPreviewComponent implements OnInit {
-
-    constructor(private service: QuizEtudiantService, private login: LoginService, private messageService: MessageService, private router: Router, private dictionnaryService: DictionaryService, private sanitizer: DomSanitizer, private confirmationService: ConfirmationService, private parcoursservice: ParcoursService, private http: HttpClient, private  vocab: VocabularyService) {
+export class QuizPreviewComponent implements OnInit {constructor(private service: QuizEtudiantService, private login: LoginService, private messageService: MessageService, private router: Router, private dictionnaryService: DictionaryService, private sanitizer: DomSanitizer, private confirmationService: ConfirmationService, private parcoursservice: ParcoursService, private http: HttpClient, private  vocab: VocabularyService) {
     }
-
     private selectedValue: number;
     private _selectedValueCheckbox: Array<Reponse>;
     private _type: string;

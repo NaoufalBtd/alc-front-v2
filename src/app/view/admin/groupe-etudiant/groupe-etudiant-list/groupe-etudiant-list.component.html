@@ -1,0 +1,104 @@
+
+<div class="p-grid">
+    <div class="p-col-12">
+
+        <p-toast></p-toast>
+
+        <div class="card" style="background-color: gainsboro;">
+            <p-toolbar styleClass="p-mb-4">
+                <ng-template pTemplate="left">
+            <button  (click)="openCreateEtud()" class="p-button-success p-mr-2 p-mb-2" icon="pi pi-plus" label="New" pButton
+                             pRipple style="width: 90px"></button>
+
+                </ng-template>
+
+                <ng-template pTemplate="right">
+                    <p-fileUpload [maxFileSize]="1000000" accept="image/*" chooseLabel="Import" class="p-mr-2 p-mb-2 p-d-inline-block"
+                                  label="Import" mode="basic"></p-fileUpload>
+                    <button  class="p-button-info p-mb-2" icon="pi pi-upload" label="Export" pButton
+                             pRipple></button>
+                </ng-template>
+            </p-toolbar>
+
+            <p-table #dt [(selection)]="selectes" [columns]="cols" [globalFilterFields]="['libelle','nombreEtudiant']" [paginator]="true"
+                     [rowHover]="true"
+                     [rows]="8" [showCurrentPageReport]="true" [value]="groupeEtudiants"
+                     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                     dataKey="id"
+                     styleClass="p-datatable-customers">
+                <ng-template pTemplate="caption">
+                    <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
+
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 3rem">
+                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                        </th>
+
+                        <th pSortableColumn="libelle"> Group Label
+                            <p-sortIcon field="liebelle"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="dateDebut">Date Début
+                            <p-sortIcon field="dateDebut"> </p-sortIcon>
+                        </th>
+                        <th pSortableColumn="dateFin">Date Fin
+                            <p-sortIcon field="dateFin"> </p-sortIcon>
+                        </th>
+                        <th pSortableColumn="nombrePlace">Nombre de place vide
+                            <p-sortIcon field="nombrePlace">  </p-sortIcon>
+                        </th>
+                        <th pSortableColumn="nombrePlaceVide">Nombre de place non vide
+                            <p-sortIcon field="nombrePlaceVide">  </p-sortIcon>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template let-groupeEtudiant pTemplate="body">
+                    <tr>
+                        <td>
+                            <p-tableCheckbox [value]="groupeEtudiant"></p-tableCheckbox>
+                        </td>
+
+                        <td>{{groupeEtudiant.libelle}}</td>
+                        <td>{{groupeEtudiant.dateDebut}}</td>
+                        <td>{{groupeEtudiant.dateFin}}</td>
+                        <td>{{groupeEtudiant.nombrePlacevide}}</td>
+                        <td>{{groupeEtudiant.nombrePlaceNonVide}}</td>
+                        <td>
+
+                            <button (click)="delete(groupeEtudiant)" class="p-button-rounded p-button-danger" icon="pi pi-trash" pButton
+                                    pRipple></button>
+                            &nbsp;
+                            <button  class="p-button-rounded p-button-success p-mr-2" icon="pi pi-pencil" pButton
+                                    pRipple></button>
+
+                        <button   (click)=" findAllGroupeEtudiantDetail(groupeEtudiant); openGroupeEtudiantDetail()"   class="p-button-rounded p-button-info p-mr-2" icon="pi pi-list" pButton
+                                 pRipple></button>
+                        </td>
+
+                        <!--
+                      <button  class="p-button-rounded p-button-info p-mr-2" icon="pi pi-list" pButton
+                              pRipple></button>
+                      <button  class="p-button-rounded p-button-danger" icon="pi pi-trash" pButton
+                              pRipple></button>
+                              -->
+
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="summary">
+                    <div class="p-d-flex p-ai-center p-jc-between">
+                        In total there are  items.
+                    </div>
+                </ng-template>
+            </p-table>
+        </div>
+
+        <app-groupe-etudiant-create></app-groupe-etudiant-create>
+        <app-groupe-etudiant-detail-list></app-groupe-etudiant-detail-list>
+
+
+        <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+    </div>
+</div>
+

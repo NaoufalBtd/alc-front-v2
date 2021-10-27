@@ -17,6 +17,35 @@ export class PaiementService {
     private _listsessioncours: Array<SessionCours>;
     private adminurl = environment.adminUrl;
 
+    public findallsessioncours() {
+        this.http.get<Array<SessionCours>>(this.adminurl + 'session/').subscribe(
+            data => {
+                if (data != null) {
+                    this.listsessioncours = data;
+                }
+            }
+        );
+    }
+
+    public savepaiement(id: number): Observable<number> {
+        // @ts-ignore
+        return   this.http.post(this.adminurl + 'paiement/' + id).subscribe(
+            data => {
+                // @ts-ignore
+                if (data > 0) {
+                    console.log('3a');
+                    this.findallsessioncours();
+                    this.messageService.add({
+                        severity: 'success',
+                        summary: 'Successful',
+                        detail: 'Quiz Created',
+                        life: 3000
+                    });
+                }
+
+            }
+        );
+    }
     get sessioncours(): SessionCours {
         if (this._sessioncours == null) {
             this._sessioncours = new SessionCours();
@@ -39,33 +68,4 @@ export class PaiementService {
         this._listsessioncours = value;
     }
 
-    public findallsessioncours() {
-        this.http.get<Array<SessionCours>>(this.adminurl + 'session/').subscribe(
-            data => {
-                if (data != null) {
-                    this.listsessioncours = data;
-                }
-            }
-        );
-    }
-
-    public savepaiement(id: number): Observable<number> {
-        // @ts-ignore
-      return   this.http.post(this.adminurl + 'paiement/' + id).subscribe(
-            data => {
-                // @ts-ignore
-                if (data > 0) {
-                    console.log('3a');
-                    this.findallsessioncours();
-                    this.messageService.add({
-                        severity: 'success',
-                        summary: 'Successful',
-                        detail: 'Quiz Created',
-                        life: 3000
-                    });
-                }
-
-            }
-        );
-    }
 }
