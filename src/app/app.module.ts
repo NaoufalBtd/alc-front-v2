@@ -254,6 +254,7 @@ import {SessioncoursComponent} from './view/admin/sessioncours/sessioncours.comp
 import {PaiementlistComponent} from './view/prof/paiementlist/paiementlist.component';
 import {EtudiantcommentreviewComponent} from "./view/prof/etudiantcommentreview/etudiantcommentreview.component";
 import {FocusTrapModule} from "primeng/focustrap";
+import {HomeWorkResultComponent} from "./view/etudiant/homeWork/home-work-result/home-work-result.component";
 
 @NgModule({
     imports: [
@@ -487,7 +488,7 @@ import {FocusTrapModule} from "primeng/focustrap";
         HomeWorkEtudiantComponent,
         SessioncoursComponent,
         PaiementlistComponent,
-        EtudiantcommentreviewComponent
+        EtudiantcommentreviewComponent,
         HomeWorkResultComponent,
         GroupeEtudeEditComponent,
         GroupeEtudiantComponent,
