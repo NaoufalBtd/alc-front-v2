@@ -140,7 +140,10 @@ import {FaqContactComponent} from './view/prof/faq/faq-contact/faq-contact.compo
 import {LoginEtudiantComponent} from './view/public/login-etudiant/login-etudiant.component';
 import {LoginProfComponent} from './view/public/login-prof/login-prof.component';
 import {LoginAdminComponent} from './view/public/login-admin/login-admin.component';
-import {SafePipe1, SectionSimulateComponent} from './view/prof/learn-teacher/section-simulate/section-simulate.component';
+import {
+    SafePipe1,
+    SectionSimulateComponent
+} from './view/prof/learn-teacher/section-simulate/section-simulate.component';
 import {ChooseViewComponent} from './view/prof/learn-teacher/choose-view/choose-view.component';
 import {InscriptionAdminComponent} from './view/public/inscription-admin/inscription-admin.component';
 import {ParcoursCreateComponent} from './view/admin/learn/parcours-create/parcours-create.component';
@@ -158,10 +161,6 @@ import {RecommendListComponent} from './view/prof/recommend/recommend-list/recom
 import {RecommendViewComponent} from './view/prof/recommend/recommend-view/recommend-view.component';
 import {QuizCreateComponent} from './view/admin/quiz/quiz-create/quiz-create.component';
 import {QuizEtudiantViewComponent} from './view/etudiant/Quiz/quiz-etudiant-view/quiz-etudiant-view.component';
-import {SessionCoursEditComponent} from './view/prof/session-cours/session-cours-edit/session-cours-edit.component';
-import {SessionCoursCreateComponent} from './view/prof/session-cours/session-cours-create/session-cours-create.component';
-import {SessionCoursViewComponent} from './view/prof/session-cours/session-cours-view/session-cours-view.component';
-import {SessionCoursListComponent} from './view/prof/session-cours/session-cours-list/session-cours-list.component';
 import {SyntheseSessionCoursListComponent} from './view/prof/synthese-session/synthese-session-cours-list/synthese-session-cours-list.component';
 import {SyntheseSessionCoursEditComponent} from './view/prof/synthese-session/synthese-session-cours-edit/synthese-session-cours-edit.component';
 import {ProfesseurListComponent} from './view/admin/professeur/professeur-list/professeur-list.component';
@@ -187,7 +186,6 @@ import {NewsEtudiantViewComponent} from './view/etudiant/news-etudiant/news-etud
 import {NewsAdminEditComponent} from './view/admin/news-admin/news-admin-edit/news-admin-edit.component';
 import {NewsAdminDeleteComponent} from './view/admin/news-admin/news-admin-delete/news-admin-delete.component';
 import {PaiementComponent} from './view/admin/paiement/paiement.component';
-import {PaiementListComponent} from './view/admin/paiement/paiement-list/paiement-list.component';
 import {ScheduleAdminComponent} from './view/admin/schedule-admin/schedule-admin.component';
 import {ScheduleStudentComponent} from './view/etudiant/schedule-student/schedule-student.component';
 import {QuizUpdateComponent} from './view/admin/quiz/quiz-update/quiz-update.component';
@@ -237,12 +235,14 @@ import {
 } from '@syncfusion/ej2-angular-schedule';
 import {DropDownListModule} from '@syncfusion/ej2-angular-dropdowns';
 import {DateTimePickerModule} from '@syncfusion/ej2-angular-calendars';
-import {CommentReviewComponent} from "./view/prof/comment-review/comment-review.component";
-
 import {GroupeEtudeCreateComponent} from './view/admin/groupe-etude/groupe-etude-create/groupe-etude-create.component';
 import {GroupeEtudeListeComponent} from './view/admin/groupe-etude/groupe-etude-liste/groupe-etude-liste.component';
 import {HomeWorkComponentComponent} from "./view/admin/home-work-component/home-work-component.component";
 import {HomeWorkEtudiantComponent} from "./view/etudiant/homeWork/home-work-etudiant/home-work-etudiant.component";
+import {SessioncoursComponent} from './view/admin/sessioncours/sessioncours.component';
+import {PaiementlistComponent} from './view/prof/paiementlist/paiementlist.component';
+import {EtudiantcommentreviewComponent} from "./view/prof/etudiantcommentreview/etudiantcommentreview.component";
+import {FocusTrapModule} from "primeng/focustrap";
 
 @NgModule({
     imports: [
@@ -336,11 +336,12 @@ import {HomeWorkEtudiantComponent} from "./view/etudiant/homeWork/home-work-etud
         ScrollingModule,
         RecurrenceEditorModule,
         DropDownListModule,
-        DateTimePickerModule
+        DateTimePickerModule,
+        FocusTrapModule,
+
 
     ],
     declarations: [
-        CommentReviewComponent,
         AppComponent,
         DashboardDemoComponent,
         AppMenuComponent,
@@ -412,15 +413,10 @@ import {HomeWorkEtudiantComponent} from "./view/etudiant/homeWork/home-work-etud
         QuizCreateComponent,
         InscriptionProfComponent,
         QuizEtudiantViewComponent,
-        SessionCoursEditComponent,
-        SessionCoursCreateComponent,
-        SessionCoursViewComponent,
-        SessionCoursListComponent,
         SyntheseSessionComponent,
         SyntheseSessionCoursCreateComponent,
         SyntheseSessionCoursEditComponent,
         SyntheseSessionCoursListComponent,
-        // ProfesseurComponent,
         ProfesseurListComponent,
         ProfesseurCreateComponent,
         ProfesseurEditComponent,
@@ -442,7 +438,6 @@ import {HomeWorkEtudiantComponent} from "./view/etudiant/homeWork/home-work-etud
         NewsAdminEditComponent,
         NewsAdminDeleteComponent,
         PaiementComponent,
-        PaiementListComponent,
         ScheduleAdminComponent,
         ScheduleStudentComponent,
         QuizUpdateComponent,
@@ -471,17 +466,16 @@ import {HomeWorkEtudiantComponent} from "./view/etudiant/homeWork/home-work-etud
         PublicComponent,
         VocabularySectionProfComponent,
         VocabularySectionItemProfComponent,
-        SessionCoursEditComponent,
         ProfReviewViewComponent,
-        SessionCoursCreateComponent,
-        SessionCoursListComponent,
-        SessionCoursViewComponent,
         QuizPreviewProfComponent,
         GroupeEtudeCreateComponent,
         GroupeEtudeListeComponent,
         GroupeEtudeListeComponent,
         HomeWorkComponentComponent,
         HomeWorkEtudiantComponent,
+        SessioncoursComponent,
+        PaiementlistComponent,
+        EtudiantcommentreviewComponent
     ],
     providers: [
         {provide: LocationStrategy, useClass: HashLocationStrategy},

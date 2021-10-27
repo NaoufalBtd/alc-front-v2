@@ -9,8 +9,8 @@ export class SessionCours {
     public prof = new Prof();
     public cours = new Cours();
     public dateDebut: string;
-    public dateFin: Date;
+    public dateFin: string;
     public duree: number;
     public payer: boolean;
-    public totalheure : number;
+    public totalheure: number;
 }

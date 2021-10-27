@@ -104,7 +104,8 @@ export class LoginAdminComponent implements OnInit {
                     {label: 'Students List', icon: 'pi pi-fw pi-list', routerLink: ['/admin/students-List']},
                     {label: 'Professor', icon: 'pi pi-fw pi-user', routerLink: ['/admin/teacher-lists']},
                     {label: 'Professor Recommendation', icon: 'pi pi-fw pi-user-plus', routerLink: ['/admin/recommend-admin']},
-                    {label: 'Paiement', icon: 'pi pi-fw pi-wallet', routerLink: ['/admin/paiement']},
+                    {label: 'List of Payments', icon: 'pi pi-fw pi-wallet', routerLink: ['/admin/paiement']},
+                    {label: 'List of Course Sessions', icon: 'pi pi-fw pi-book', routerLink: ['/admin/sessioncours']},
                     {label: 'FAQ ANSWER', icon: 'pi pi-fw pi-reply', routerLink: ['/admin/faq-admin']},
                     {label: 'FAQ List', icon: 'pi pi-fw pi-info-circle', routerLink: ['/admin/faq-admin-list']},
                     {label: 'CREATE NEWS', icon: 'pi pi-fw pi-calendar-times', routerLink: ['/admin/news-admin']},
@@ -112,7 +113,6 @@ export class LoginAdminComponent implements OnInit {
                     {label: 'LogOut ', icon: 'pi pi-fw pi-sign-out', routerLink: ['']},
                 ];
                 this.router.navigate(['admin/parcours']);
-                //  document.getElementById('log-pass').style.visibility = 'hidden';
             }, error => {
                 document.getElementById('log-pass').style.visibility = 'visible';
                 this.correct = false;

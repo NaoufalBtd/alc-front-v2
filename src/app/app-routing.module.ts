@@ -1,7 +1,6 @@
 import {RouterModule} from '@angular/router';
 import {NgModule} from '@angular/core';
 import {FormLayoutDemoComponent} from './view/public/Inscription-student/formlayoutdemo.component';
-
 import {LearnComponent} from './view/admin/learn/learn.component';
 import {SectionsComponent} from './view/prof/learn-teacher/sections/sections.component';
 import {CoursesComponent} from './view/prof/learn-teacher/courses/courses.component';
@@ -24,7 +23,6 @@ import {InscriptionProfComponent} from './view/public/inscription-prof/inscripti
 import {QuizCreateComponent} from './view/admin/quiz/quiz-create/quiz-create.component';
 import {QuizEtudiantViewComponent} from './view/etudiant/Quiz/quiz-etudiant-view/quiz-etudiant-view.component';
 import {ProfesseurListComponent} from './view/admin/professeur/professeur-list/professeur-list.component';
-import {EtudiantParcoursComponent} from './view/etudiant/learn-etudiant/etudiant-parcours/etudiant-parcours.component';
 import {EtudiantCoursesComponent} from './view/etudiant/learn-etudiant/etudiant-courses/etudiant-courses.component';
 import {StudentSimulateSectionComponent} from './view/etudiant/learn-etudiant/student-simulate-section/student-simulate-section.component';
 import {RecommendAdminComponent} from './view/admin/recommend-admin/recommend-admin.component';
@@ -52,15 +50,16 @@ import {SyntheseSessionComponent} from './view/prof/synthese-session/synthese-se
 import {QuizPreviewProfComponent} from './view/prof/quiz-preview-prof/quiz-preview.component';
 import {EtudiantsComponent} from './view/admin/etudiants/etudiants.component';
 import {HomeWorkComponentComponent} from './view/admin/home-work-component/home-work-component.component';
-import {HomeWOrkEtudiant} from './controller/model/home-work-etudiant.model';
 import {HomeWorkEtudiantComponent} from './view/etudiant/homeWork/home-work-etudiant/home-work-etudiant.component';
 import {ScheduleComponent} from '@syncfusion/ej2-angular-schedule';
-
-
+import {SessioncoursComponent} from './view/admin/sessioncours/sessioncours.component';
+import {PaiementlistComponent} from "./view/prof/paiementlist/paiementlist.component";
+import {EtudiantcommentreviewComponent} from "./view/prof/etudiantcommentreview/etudiantcommentreview.component";
 @NgModule({
     imports: [
         RouterModule.forRoot([
-            {path: 'admin', component: AdminComponent,
+            {
+                path: 'admin', component: AdminComponent,
                 children: [
                     {path: 'parcours', component: LearnComponent},
                     {path: 'create-section-items', component: SectionItemComponent},
@@ -73,16 +72,18 @@ import {ScheduleComponent} from '@syncfusion/ej2-angular-schedule';
                     {path: 'teacher-lists', component: ProfesseurListComponent},
                     {path: 'recommend-admin', component: RecommendAdminComponent},
                     {path: 'paiement', component: PaiementComponent},
+                    {path: 'sessioncours', component: SessioncoursComponent},
                     {path: 'faq-admin', component: FaqAnswerComponent},
                     {path: 'faq-admin-list', component: FaqAdminListComponent},
                     {path: 'news-admin', component: NewsAdminListComponent},
                     {path: 'schedule', component: ScheduleAdminComponent},
                     {path: 'faq-create', component: FaqCreateComponent},
                     {path: 'students-List', component: EtudiantsComponent},
-                    {path: 'homeWork', component: HomeWorkComponentComponent}
+                    {path: 'homeWork', component: HomeWorkComponentComponent},
                 ]
             },
-            {path: 'prof', component: ProfComponent,
+            {
+                path: 'prof', component: ProfComponent,
                 children: [
                     {path: 'home', component: HomeComponent},
                     {path: 'quiz-preview-prof', component: QuizPreviewComponent},
@@ -99,10 +100,13 @@ import {ScheduleComponent} from '@syncfusion/ej2-angular-schedule';
                     {path: 'sections', component: SectionsComponent},
                     {path: 'cours', component: CoursesComponent},
                     {path: 'quiz-preview-teacher', component: QuizPreviewProfComponent},
+                    {path: 'etudiantReviewcomment', component: EtudiantcommentreviewComponent},
+                    {path: 'paiementlist', component: PaiementlistComponent},
 
                 ]
             },
-            {path: 'etudiant', component: EtudiantComponent,
+            {
+                path: 'etudiant', component: EtudiantComponent,
                 children: [
                     {path: 'faq-student', component: FaqStudentListComponent},
                     {path: 'news-student', component: NewsEtudiantListComponent},
@@ -115,7 +119,8 @@ import {ScheduleComponent} from '@syncfusion/ej2-angular-schedule';
                     {path: 'homeWorkEtudiant', component: HomeWorkEtudiantComponent},
                 ]
             },
-            {path: '', component: PublicComponent,
+            {
+                path: '', component: PublicComponent,
                 children: [
                     {path: '', component: DashboardDemoComponent},
                     {path: 'public/login-admin', component: LoginAdminComponent},

@@ -55,9 +55,6 @@ export class StudentSimulateSectionComponent implements OnInit {
     word: string;
     wordDict: any;
     j: number;
-    private _finishcours: boolean = false;
-
-
     // tslint:disable-next-line:max-line-lengthg max-line-length
     constructor(private messageService: MessageService,
                 private router: Router,
@@ -72,26 +69,20 @@ export class StudentSimulateSectionComponent implements OnInit {
                 private review: EtudiantReviewService,
                 private sectionItemService: SectionItemService,
                 private sessioncoursservice: SessionCoursService,
-    ) {
                 private homeWorkService: HomeworkService,
                 private homeWorkEtudiantService: HomeWorkEtudiantServiceService
     ) {
     }
 
-    get finishcours(): boolean {
-        return this._finishcours;
+    get coursecomplited(): boolean {
+        return this.review.coursecomplited;
     }
 
-    set finishcours(value: boolean) {
-        this._finishcours = value;
+    set coursecomplited(value: boolean) {
+         this.review.coursecomplited = value;
+
     }
 
-    get hasfinish(): boolean {
-        return this.review.hasfinish;
-    }
-    set hasfinish(value: boolean) {
-        this.review.hasfinish = value;
-    }
 
 
 
@@ -327,6 +318,7 @@ export class StudentSimulateSectionComponent implements OnInit {
     navigate() {
         this.router.navigate(['etudiant/etudiant-cours']);
     }
+
     public findByWord() {
         this.dictionnaryService.FindByWord(this.word).subscribe(
             data => {
@@ -385,9 +377,6 @@ export class StudentSimulateSectionComponent implements OnInit {
             });
     }
 
-    public finish() {
-        this.viewDialog = true;
-    }
 
     public openCreateDict() {
         document.getElementById('dictionnair').style.visibility = 'hidden';
@@ -422,13 +411,7 @@ export class StudentSimulateSectionComponent implements OnInit {
         this.review.selected = value;
     }
 
-    get coursfinish(): boolean {
-        return this.review.coursfinish;
-    }
 
-    set coursfinish(value: boolean) {
-        this.review.coursfinish = value;
-    }
 
 
     ngOnInit(): void {
@@ -440,7 +423,6 @@ export class StudentSimulateSectionComponent implements OnInit {
         //              }
         //          }
         //      );
-        this.hasfinish = false;
 
         this.review.findReview(this.selectedcours.id).subscribe(
             data => {

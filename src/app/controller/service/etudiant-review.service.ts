@@ -8,6 +8,8 @@ import {ParcoursService} from './parcours.service';
 import {Etudiant} from '../model/etudiant.model';
 import {ProfReview} from '../model/ProfReview.model';
 import {environment} from '../../../environments/environment';
+import {Message, MessageService} from 'primeng/api';
+import {PaiementService} from './paiement.service';
 
 @Injectable({
     providedIn: 'root'
@@ -15,9 +17,15 @@ import {environment} from '../../../environments/environment';
 export class EtudiantReviewService {
 
     private adminUrl = environment.adminUrl;
+    private etudiant = environment.etudiantUrl + 'etudiantReview/';
+    private profEtudiantReview = environment.profUrl + 'etudiantReview/';
 
-
-    constructor(private http: HttpClient, private user: LoginService, private service: ParcoursService) {
+    // tslint:disable-next-line:max-line-length
+    constructor(private http: HttpClient,
+                private user: LoginService,
+                private service: ParcoursService,
+                private messageService: MessageService,
+    ) {
     }
 
     private _viewDialog: boolean;
@@ -27,24 +35,50 @@ export class EtudiantReviewService {
     private _selectedReview: EtudiantReview;
     private _selectedProfReview: ProfReview;
     private _students: Array<Etudiant>;
-    private _hasfinish: boolean = false;
+    private _coursecomplited: boolean = false;
+    private _etudiantreview: EtudiantReview;
+    private _etudiantreviewsearch: EtudiantReview;
+    private _listetudiantreview: Array<EtudiantReview>;
 
-    private _coursfinish:boolean=false;
-
-    get coursfinish(): boolean {
-        return this._coursfinish;
+    get etudiantreviewsearch(): EtudiantReview {
+        if (this._etudiantreviewsearch == null) {
+            this._etudiantreviewsearch = new EtudiantReview();
+        }
+        return this._etudiantreviewsearch;
     }
 
-    set coursfinish(value: boolean) {
-        this._coursfinish = value;
+    set etudiantreviewsearch(value: EtudiantReview) {
+        this._etudiantreviewsearch = value;
     }
 
-    get hasfinish(): boolean {
-        return this._hasfinish;
+    get etudiantreview(): EtudiantReview {
+        if (this._etudiantreview == null) {
+            this._etudiantreview = new EtudiantReview();
+        }
+        return this._etudiantreview;
     }
 
-    set hasfinish(value: boolean) {
-        this._hasfinish = value;
+    set etudiantreview(value: EtudiantReview) {
+        this._etudiantreview = value;
+    }
+
+    get listetudiantreview(): Array<EtudiantReview> {
+        if (this._listetudiantreview == null) {
+            this._listetudiantreview = new Array<EtudiantReview>();
+        }
+        return this._listetudiantreview;
+    }
+
+    set listetudiantreview(value: Array<EtudiantReview>) {
+        this._listetudiantreview = value;
+    }
+
+    get coursecomplited(): boolean {
+        return this._coursecomplited;
+    }
+
+    set coursecomplited(value: boolean) {
+        this._coursecomplited = value;
     }
 
     get students(): Array<Etudiant> {
@@ -99,6 +133,7 @@ export class EtudiantReviewService {
         this._selectedReview = value;
     }
 
+
     public Save(): Observable<EtudiantReview> {
 
         return this.http.post<EtudiantReview>(this.adminUrl + 'etudiantReview/', this.selected);
@@ -109,12 +144,51 @@ export class EtudiantReviewService {
         return this.http.post<ProfReview>(this.adminUrl + 'profReview/', this.selectedProfReview);
     }
 
+    public save(idprof: number, idstudent: number, idcours: number, comment: string) {
+        this.http.get(this.etudiant + idprof + '/' + idstudent + '/' + idcours + '/' + comment).subscribe(
+            data => {
+                if (data > 0) {
+                    this.coursecomplited = true;
+                    this.messageService.add({
+                        severity: 'info',
+                        summary: 'Info',
+                        detail: 'Thank You For Your Comment',
+                        life: 3000
+                    });
+                }
+            }
+        );
+    }
+
+
+    public findAllEtudiantReviewByProfId(idprof: number) {
+        this.http.get<Array<EtudiantReview>>(this.profEtudiantReview + idprof).subscribe(
+            data => {
+                if (data != null) {
+                    this.listetudiantreview = data;
+                }
+            }
+        );
+    }
+
+    public findByCriteria() {
+        this.http.post<Array<EtudiantReview>>(this.profEtudiantReview + '/ByCriteria', this.etudiantreviewsearch).subscribe(
+            data => {
+                if (data != null) {
+                    this.listetudiantreview = data;
+                }
+            }
+        );
+    }
+
+
     public findReview(id: number): Observable<EtudiantReview> {
         // tslint:disable-next-line:max-line-length
         return this.http.get<EtudiantReview>(this.adminUrl + 'etudiantReview/etudiant/id/' + this.user.etudiant.id + '/cours/id/' + this.service.selectedcours.id);
     }
 
     public findReviewProf(id: number): Observable<ProfReview> {
+        // tslint:disable-next-line:max-line-length
         return this.http.get<ProfReview>(this.adminUrl + 'profReview/etudiant/id/' + this.selectedProfReview.etudiant.id + '/cours/id/' + this.service.selectedcours.id + '/prof/id/' + this.user.prof.id);
     }
 

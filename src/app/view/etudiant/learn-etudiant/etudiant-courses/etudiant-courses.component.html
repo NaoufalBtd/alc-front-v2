@@ -22,7 +22,7 @@
                 </ng-template>
                 <ng-template let-cours pTemplate="body">
                     <tr>
-                        <td (click)="FindSectionOneByOne(cours)" (click)="saveetudiantcours(loginService.etudiant.prof.id,loginService.etudiant.id,cours.id)" routerLink="/etudiant/etudiant-simulate-sections"
+                        <td (click)="FindSectionOneByOne(cours)" (click)="saveetudiantcours(loginService.etudiant.prof.id,loginService.etudiant.id,cours.id)"
                             [style.color]="(this.selectedReview.review != null)? 'green':'black'"><u style="cursor: pointer">{{cours.libelle}}</u></td>
                         <td>{{cours.nombreSectionFinalise + cours.nombreSectionEnCours}}</td>
 
@@ -40,3 +40,8 @@
 </div>
 
 
+<p-dialog header="Header" [(visible)]="this.sessioncoursservice._testsessioncours" [style]="{width: '50vw'}"
+          [baseZIndex]="10000">
+    <p>You need to contact your admin in order to start this cours again</p>
+
+</p-dialog>
