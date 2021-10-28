@@ -4,7 +4,7 @@ import {GroupeEtude} from '../model/groupe-etude.model';
 import {Admin} from '../model/admin.model';
 import {environment} from '../../../environments/environment';
 import {Observable} from 'rxjs';
-import {GroupeEtudeDetail} from '../model/groupe-etude-detail.model';
+
 import {GroupeEtudiant} from '../model/groupe-etudiant.model';
 import {Etudiant} from '../model/etudiant.model';
 
@@ -12,7 +12,9 @@ import {Etudiant} from '../model/etudiant.model';
   providedIn: 'root'
 })
 export class GroupeEtudeService {
-  private urlBase = 'http//localhost:8030';
+  constructor(private http: HttpClient) {
+  }
+  private urlBase = 'http//:localhost:8036';
   private urlGroupeEtude = '/admin/groupeEtude/';
 
   // tslint:disable-next-line:variable-name
@@ -25,18 +27,39 @@ export class GroupeEtudeService {
   // tslint:disable-next-line:variable-name
   private _viewDialog: boolean;
   // tslint:disable-next-line:variable-name
-   private _groupeEtudeDetails: Array<GroupeEtudeDetail>;
-  private _groupeEtudeDetail: GroupeEtudeDetail;
-   private _groupeEtudiant: GroupeEtudiant;
+  private _editDialog: boolean;
+  private _groupeEtudiant: GroupeEtudiant;
+  // tslint:disable-next-line:variable-name
+  private _items: Array<GroupeEtude>;
+  private _selectes: Array<GroupeEtude>;
 
-  constructor(private http: HttpClient) {
-  }
+
 
   public save(): Observable<number> {
-    return this.http.post<number>(this.urlBase + this.urlGroupeEtude, this.groupeEtude);
+    console.log(this.groupeEtude);
+
+    return this.http.post<number>('http://localhost:8036/admin/groupeEtude/', this.groupeEtude);
   }
+
   public findAll(): Observable<Array<GroupeEtude>> {
-    return this.http.get<Array<GroupeEtude>>(this.urlBase + this.urlGroupeEtude);
+    return this.http.get<Array<GroupeEtude>>('http://localhost:8036/admin/groupeEtude/');
+  }
+
+  public deleteByLibelle(): Observable<number> {
+    return this.http.delete<number>('http://localhost:8036/admin/groupeEtude/libelle/' + this.groupeEtude.libelle);
+  }
+  public edit(): Observable<GroupeEtude> {
+    return this.http.put<GroupeEtude>('http://localhost:8036/admin/groupeEtude/', this.groupeEtude);
+  }
+  public findIndexById(id: number): number {
+    let index = -1;
+    for (let i = 0; i < this.items.length; i++) {
+      if (this.items[i].id === id) {
+        index = i;
+        break;
+      }
+    }
+    return index;
   }
   get viewDialog(): boolean {
     return this._viewDialog;
@@ -57,6 +80,9 @@ export class GroupeEtudeService {
 
 
   get groupeEtude(): GroupeEtude {
+    if (this._groupeEtude == null) {
+      this._groupeEtude = new GroupeEtude();
+    }
     return this._groupeEtude;
   }
 
@@ -64,49 +90,51 @@ export class GroupeEtudeService {
     this._groupeEtude = value;
   }
 
+
   set groupeEtudiant(value: GroupeEtudiant) {
     this._groupeEtudiant = value;
   }
+
   get groupeEtudiant(): GroupeEtudiant {
     if (this._groupeEtudiant == null) {
-      this._groupeEtudiant = new GroupeEtudiant () ;
+      this._groupeEtudiant = new GroupeEtudiant();
     }
     return this._groupeEtudiant;
   }
+
   set groupeEtudes(value: Array<GroupeEtude>) {
     this._groupeEtudes = value;
   }
+
   get groupeEtudes(): Array<GroupeEtude> {
     if (this._groupeEtudes == null) {
-      this._groupeEtudes = new Array<GroupeEtude> () ;
+      this._groupeEtudes = new Array<GroupeEtude>();
     }
     return this._groupeEtudes;
   }
-  set groupeEtudeDetails(value: Array <GroupeEtudeDetail>) {
-    this._groupeEtudeDetails = value;
-  }
-  get groupeEtudeDetails(): Array <GroupeEtudeDetail> {
-    if (this._groupeEtudeDetails == null) {
-      this._groupeEtudeDetails = new Array <GroupeEtudeDetail> () ;
+
+  get items(): Array<GroupeEtude> {
+    if (this._items == null) {
+      this._items = new Array<GroupeEtude>();
     }
-    return this._groupeEtudeDetails;
+    return this._items;
   }
-  set groupeEtudeDetail(value: GroupeEtudeDetail) {
-    this._groupeEtudeDetail = value;
-  }
-  get groupeEtudeDetail(): GroupeEtudeDetail {
-    if (this._groupeEtudeDetail == null) {
-      this._groupeEtudeDetail = new GroupeEtudeDetail () ;
-    }
-    return this._groupeEtudeDetail;
-  }
-
-
-
 
   set items(value: Array<GroupeEtude>) {
-    this._groupeEtudes = value;
+    this._items = value;
   }
+
+  get selectes(): Array<GroupeEtude> {
+    if (this._selectes == null) {
+      this._selectes = new Array<GroupeEtude>();
+    }
+    return this._selectes;
+  }
+
+  set selectes(value: Array<GroupeEtude>) {
+    this._selectes = value;
+  }
+
 
   get submitted(): boolean {
     return this._submitted;
@@ -116,5 +144,11 @@ export class GroupeEtudeService {
     this._submitted = value;
   }
 
+  get editDialog(): boolean {
+    return this._editDialog;
+  }
 
+  set editDialog(value: boolean) {
+    this._editDialog = value;
+  }
 }

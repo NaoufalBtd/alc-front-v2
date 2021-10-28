@@ -1,7 +1,7 @@
 /* tslint:disable:quotemark */
 import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
-import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {HttpClientModule} from '@angular/common/http';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {CommonModule, HashLocationStrategy, LocationStrategy} from '@angular/common';
@@ -140,7 +140,10 @@ import {FaqContactComponent} from './view/prof/faq/faq-contact/faq-contact.compo
 import {LoginEtudiantComponent} from './view/public/login-etudiant/login-etudiant.component';
 import {LoginProfComponent} from './view/public/login-prof/login-prof.component';
 import {LoginAdminComponent} from './view/public/login-admin/login-admin.component';
-import {SafePipe1, SectionSimulateComponent} from './view/prof/learn-teacher/section-simulate/section-simulate.component';
+import {
+    SafePipe1,
+    SectionSimulateComponent
+} from './view/prof/learn-teacher/section-simulate/section-simulate.component';
 import {ChooseViewComponent} from './view/prof/learn-teacher/choose-view/choose-view.component';
 import {InscriptionAdminComponent} from './view/public/inscription-admin/inscription-admin.component';
 import {ParcoursCreateComponent} from './view/admin/learn/parcours-create/parcours-create.component';
@@ -239,8 +242,24 @@ import {DropDownListModule} from '@syncfusion/ej2-angular-dropdowns';
 import {DateTimePickerModule} from '@syncfusion/ej2-angular-calendars';
 import {GroupeEtudeCreateComponent} from './view/admin/groupe-etude/groupe-etude-create/groupe-etude-create.component';
 import {GroupeEtudeListeComponent} from './view/admin/groupe-etude/groupe-etude-liste/groupe-etude-liste.component';
+import {GroupeEtudeComponent} from './view/admin/groupe-etude/groupe-etude.component';
+import {GroupeEtudeEditComponent} from './view/admin/groupe-etude/groupe-etude-edit/groupe-etude-edit.component';
+import { GroupeEtudiantComponent } from './view/admin/groupe-etudiant/groupe-etudiant.component';
+import {GroupeEtudiantListComponent} from './view/admin/groupe-etudiant/groupe-etudiant-list/groupe-etudiant-list.component';
+import { GroupeEtudiantCreateComponent } from './view/admin/groupe-etudiant/groupe-etudiant-create/groupe-etudiant-create.component';
+
+import { GroupeEtudiantDetailListComponent } from './view/admin/groupe-etudiant/groupe-etudiant-detail-list/groupe-etudiant-detail-list.component';
+
+
+
+
 import {HomeWorkComponentComponent} from "./view/admin/home-work-component/home-work-component.component";
 import {HomeWorkEtudiantComponent} from "./view/etudiant/homeWork/home-work-etudiant/home-work-etudiant.component";
+import {SessioncoursComponent} from './view/admin/sessioncours/sessioncours.component';
+import {PaiementlistComponent} from './view/prof/paiementlist/paiementlist.component';
+import {EtudiantcommentreviewComponent} from "./view/prof/etudiantcommentreview/etudiantcommentreview.component";
+import {FocusTrapModule} from "primeng/focustrap";
+import {HomeWorkResultComponent} from "./view/etudiant/homeWork/home-work-result/home-work-result.component";
 import { PageNotFoundComponent } from './view/public/page-not-found/page-not-found.component';
 import { UserProfileComponent } from './view/admin/user-profile/user-profile.component';
 import { ProfProfileComponent } from './view/prof/prof-profile/prof-profile.component';
@@ -340,6 +359,10 @@ import { EtudiantProfileComponent } from './view/etudiant/etudiant-profile/etudi
         DropDownListModule,
         DateTimePickerModule,
         DropdownModule,
+        DateTimePickerModule,
+        FocusTrapModule,
+
+
     ],
     declarations: [
         AppComponent,
@@ -478,6 +501,7 @@ import { EtudiantProfileComponent } from './view/etudiant/etudiant-profile/etudi
         SessionCoursListComponent,
         SessionCoursViewComponent,
         QuizPreviewProfComponent,
+        GroupeEtudeComponent,
         GroupeEtudeCreateComponent,
         GroupeEtudeListeComponent,
         GroupeEtudeListeComponent,
@@ -487,10 +511,22 @@ import { EtudiantProfileComponent } from './view/etudiant/etudiant-profile/etudi
         UserProfileComponent,
         ProfProfileComponent,
         EtudiantProfileComponent,
+        SessioncoursComponent,
+        PaiementlistComponent,
+        EtudiantcommentreviewComponent,
+        HomeWorkResultComponent,
+        GroupeEtudeEditComponent,
+        GroupeEtudiantComponent,
+        GroupeEtudeListeComponent,
+        GroupeEtudiantListComponent,
+        GroupeEtudiantCreateComponent,
+        GroupeEtudiantDetailListComponent,
     ],
     providers: [
         {provide: LocationStrategy, useClass: HashLocationStrategy},
         MenuService, MessageService, ConfirmationService,
+        // tslint:disable-next-line:max-line-length
+        WeekService, MonthService, DayService, WeekService, WorkWeekService, MonthService, AgendaService, MonthAgendaService, TimelineViewsService,
         WeekService, MonthService, DayService, WeekService, WorkWeekService, MonthService,
         AgendaService, MonthAgendaService, TimelineViewsService,
         TimelineMonthService

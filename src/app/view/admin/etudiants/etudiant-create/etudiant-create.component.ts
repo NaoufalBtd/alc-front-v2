@@ -101,6 +101,7 @@ export class EtudiantCreateComponent implements OnInit {
         }
     }
 
+
     public findAllProf() {
         this.service.findAllProf().subscribe(data => this.itemsprof = data);
     }

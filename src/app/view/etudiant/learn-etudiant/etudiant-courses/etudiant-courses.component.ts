@@ -11,7 +11,9 @@ import {QuizEtudiant} from '../../../../controller/model/quiz-etudiant.model';
 import {QuizEtudiantService} from '../../../../controller/service/quiz-etudiant.service';
 import {EtudiantReview} from '../../../../controller/model/etudiant-review.model';
 import {EtudiantReviewService} from '../../../../controller/service/etudiant-review.service';
-import {SectionItemService} from "../../../../controller/service/section-item.service";
+import {SectionItemService} from '../../../../controller/service/section-item.service';
+import {HttpClient} from '@angular/common/http';
+import {SessionCoursService} from "../../../../controller/service/session-cours.service";
 
 @Component({
     selector: 'app-etudiant-courses',
@@ -23,7 +25,6 @@ export class EtudiantCoursesComponent implements OnInit {
     cols: any[];
 
 
-
     // tslint:disable-next-line:max-line-length
     constructor(private messageService: MessageService,
                 private quizService: QuizEtudiantService,
@@ -31,9 +32,12 @@ export class EtudiantCoursesComponent implements OnInit {
                 private review: EtudiantReviewService,
                 private confirmationService: ConfirmationService,
                 private service: ParcoursService,
-                private sectionItemService: SectionItemService
+                private http: HttpClient,
+                private sectionItemService: SectionItemService,
+                private sessioncoursservice: SessionCoursService
     ) {
     }
+
 
     get selectedReview(): EtudiantReview {
         return this.review.selected;
@@ -73,10 +77,10 @@ export class EtudiantCoursesComponent implements OnInit {
                 this.service.sectionAdditional = [];
                 this.service.sectionStandard = [];
                 this.itemssection2 = data;
-                for (let _i = 0 ; _i < data.length; _i++){
-                    if (data[_i].categorieSection.superCategorieSection.libelle === 'Obligatory'){
+                for (let _i = 0; _i < data.length; _i++) {
+                    if (data[_i].categorieSection.superCategorieSection.libelle === 'Obligatory') {
                         this.service.sectionStandard.push(data[_i]);
-                    } else if (data[_i].categorieSection.superCategorieSection.libelle === 'Additional'){
+                    } else if (data[_i].categorieSection.superCategorieSection.libelle === 'Additional') {
                         this.service.sectionAdditional.push(data[_i]);
                     }
                 }
@@ -127,45 +131,10 @@ export class EtudiantCoursesComponent implements OnInit {
             });
     }
 
-    get hasfinish(): boolean {
-        return this.review.hasfinish;
-    }
-
-    set hasfinish(value: boolean) {
-        this.review.hasfinish = value;
-    }
 
     public saveetudiantcours(idprof: number, idetudiant: number, idcours: number) {
-
-
-
-        // @ts-ignore
-        this.http.post('http://localhost:8036/etudiant/etudiantCours/' + idprof + '/' + idetudiant + '/' + idcours).subscribe(
-            data => {
-                // @ts-ignore
-                if (data > 0) {
-                    this.messageService.add({
-                        severity: 'info',
-                        summary: 'Info',
-                        detail: 'You Start This Course',
-                        life: 3000
-                    });
-                }else {
-                    this.hasfinish=true;
-                }
-            }
-        );
+        this.sessioncoursservice.saveetudiantcours(idprof, idetudiant, idcours);
     }
-
-/*    findEtudiantCoursByProfIdAndEtudiantIdAndCoursId(idprof: number, idstudent: number, idcours: number) {
-        this.http.get<EtudiantCours>('http://localhost:8036/etudiant/etudiantCours/prof/id/' + idprof + '/etudiant/id/' + idstudent + '/cours/idc/' + idcours).subscribe(
-            data => {
-                if (data != null) {
-                    this.hasfinish = false;
-                }
-            }
-        );
-    }*/
 
     get itemsEtudiantCours(): Array<EtudiantCours> {
         return this.service.itemsEtudiantCours;

@@ -1,12 +1,11 @@
 import {Prof} from './prof.model';
+import {Etudiant} from './etudiant.model';
 
 export class Paiement {
     public id: number;
-    public prof = new Prof();
-    public nonPaye: number;
-    public montant: number;
     public totalHeure: number;
-    public nbrSeceance: number;
-    public dateDebut: Date = new Date();
-    public dateFin: Date = new Date();
+    public montant: number;
+    public prof = new Prof();
+    public etudiant = new Etudiant();
+    public datePaiement: string ;
 }

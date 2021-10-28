@@ -9,5 +9,6 @@ export class EtudiantReview {
     public prof = new Prof();
     public review: number;
     public comment: string;
-    public dateReview = new Date();
+    public dateReview: string;
+
 }

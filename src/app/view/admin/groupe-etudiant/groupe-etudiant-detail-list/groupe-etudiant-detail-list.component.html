@@ -1,0 +1,63 @@
+<p-dialog [(visible)]="createDialogGroupeEtudiantDetail" [modal]="true" [style]="{width: '450px'}"
+          header="Group Create" styleClass="p-fluid">
+
+    <div class="p-grid">
+        <div class="p-col-12">
+
+            <p-toast></p-toast>
+
+            <div class="card" style="background-color: gainsboro;">
+
+
+                <p-table #dt  [columns]="cols" [globalFilterFields]="['libelle','nombreEtudiant']" [paginator]="true"
+                         [rowHover]="true"
+                         [rows]="8" [showCurrentPageReport]="true" [value]="groupeEtudiant.groupeEtudiantDetails"
+                         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                         dataKey="id"
+                         styleClass="p-datatable-customers">
+                    <ng-template pTemplate="caption">
+                        <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
+
+                        </div>
+                    </ng-template>
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th style="width: 3rem">
+                                <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                            </th>
+
+                            <th pSortableColumn="libelle"> Nom
+                                <p-sortIcon field="liebelle"></p-sortIcon>
+                            </th>
+                            <th pSortableColumn="dateDebut">Prenom
+                                <p-sortIcon field="dateDebut"> </p-sortIcon>
+                            </th>
+
+                        </tr>
+                    </ng-template>
+                    <ng-template let-groupeEtudiantDetail pTemplate="body">
+                        <tr>
+                            <td>
+                                <p-tableCheckbox [value]="groupeEtudiantDetail"></p-tableCheckbox>
+                            </td>
+                            <td>{{groupeEtudiantDetail.etudiant.nom}}</td>
+                            <td>{{groupeEtudiantDetail.etudiant.prenom}}</td>
+                            <td>
+
+
+
+                        </tr>
+                    </ng-template>
+
+                </p-table>
+            </div>
+
+
+
+            <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+        </div>
+    </div>
+
+</p-dialog>
+
+

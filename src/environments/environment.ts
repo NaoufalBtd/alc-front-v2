@@ -13,6 +13,7 @@ export const environment = {
   etudiantUrl: 'http://localhost:8036/etudiant/',
   publicUrl: 'http://localhost:8036/public/',
   socketUrl: 'ws://localhost:8036/chat',
+
 };
 
 /*

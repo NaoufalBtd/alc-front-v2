@@ -1,1 +1,66 @@
-<app-paiement-list></app-paiement-list>
+
+<p-card>
+    <p-card-header>
+        <h3>Search</h3>
+        <div class="p-grid">
+            <div class="p-col-4">
+                <input pInputText type="text" placeholder="Search by Reference"
+                     style="width: 80%" [(ngModel)]="paiementsearch.prof.nom">
+            </div>
+            <div class="p-col-4"><input pInputText type="text" placeholder="Search by Course Name"
+                                style="width: 80%" [(ngModel)]="paiementsearch.etudiant.nom">
+            </div>
+            <div class="p-col-4">
+                <input pInputText type="text" placeholder="yyyy-mm-dd"
+                       style="width: 80%" [(ngModel)]="paiementsearch.datePaiement">
+            </div>
+        </div>
+        <div class="p-grid">
+            <div class="p-col-4">
+                <button pButton pRipple type="button" label="Search" class="p-button-rounded p-button-success"
+                        style="margin-left:4px;background-color: #F48C76;border-color: #F48C76;"
+                        (click)="findAllByCriteria()"></button>
+            </div>
+        </div>
+    </p-card-header>
+</p-card>
+
+<p-table style="margin-top: 10px" #dt [value]="paiementlist"  dataKey="id" styleClass="p-datatable-customers" [rowHover]="true"
+         [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]"
+         [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+         [filterDelay]="0" [globalFilterFields]="['prof.nom','etudiant.nom','totalHeure','montant','datePaiement']">
+    <ng-template pTemplate="caption">
+        <div class="table-header">
+            List of Payments
+        </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+        <tr >
+            <th pSortableColumn="prof.nom">Prof Name </th>
+            <th pSortableColumn="etudiant.nom">Student Name </th>
+            <th pSortableColumn="totalHeure">Total Hour </th>
+            <th pSortableColumn="montant">Fare </th>
+            <th pSortableColumn="datePaiement">Date </th>
+
+        </tr>
+
+    </ng-template>
+    <ng-template pTemplate="body" let-c>
+        <tr class="p-selectable-row">
+            <td>{{c.prof.nom}}</td>
+            <td>{{c.etudiant.nom}}</td>
+            <td>{{c.totalHeure}}</td>
+            <td>{{c.montant}}</td>
+            <td>{{c.datePaiement}}</td>
+          <!--      <span class="p-column-title">Date</span>
+                {{customer.date}}-->
+
+
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+        <tr>
+            <td colspan="5">No customers found.</td>
+        </tr>
+    </ng-template>
+</p-table>

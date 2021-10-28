@@ -9,6 +9,7 @@ import {EdCoursesComponent} from './view/prof/learn-teacher/parcours/ed-courses.
 import {SalaryComponent} from './view/prof/salary-teacher/salary/salary.component';
 import {HomeComponent} from './view/prof/home/home.component';
 import {InscriptionsComponent} from './view/admin/validate-inscriptions/inscriptions.component';
+import {ScheduleLocalComponent} from './view/prof/schedule/schedule.component';
 import {QuizPreviewComponent} from './view/admin/quiz/quiz-preview/quiz-preview.component';
 import {ClassRoomListComponent} from './view/prof/Classes/profclasses/class-room-list/class-room-list.component';
 import {FaqAnswerComponent} from './view/admin/faq-admin/faq-answer/faq-answer.component';
@@ -50,6 +51,10 @@ import {ProfComponent} from './view/prof/prof.component';
 import {EtudiantComponent} from './view/etudiant/etudiant.component';
 import {SyntheseSessionComponent} from './view/prof/synthese-session/synthese-session.component';
 import {QuizPreviewProfComponent} from './view/prof/quiz-preview-prof/quiz-preview.component';
+import {GroupeEtude} from './controller/model/groupe-etude.model';
+import {GroupeEtudeComponent} from './view/admin/groupe-etude/groupe-etude.component';
+import {GroupeEtudeCreateComponent} from './view/admin/groupe-etude/groupe-etude-create/groupe-etude-create.component';
+import {GroupeEtudiantComponent} from './view/admin/groupe-etudiant/groupe-etudiant.component';
 import {EtudiantsComponent} from './view/admin/etudiants/etudiants.component';
 import {HomeWorkComponentComponent} from './view/admin/home-work-component/home-work-component.component';
 import {HomeWOrkEtudiant} from './controller/model/home-work-etudiant.model';
@@ -61,13 +66,17 @@ import {PageNotFoundComponent} from './view/public/page-not-found/page-not-found
 import {UserProfileComponent} from './view/admin/user-profile/user-profile.component';
 import {ProfProfileComponent} from './view/prof/prof-profile/prof-profile.component';
 import {EtudiantProfileComponent} from './view/etudiant/etudiant-profile/etudiant-profile.component';
+import {HomeWorkResultComponent} from './view/etudiant/homeWork/home-work-result/home-work-result.component';
+import {SessioncoursComponent} from './view/admin/sessioncours/sessioncours.component';
+import {EtudiantcommentreviewComponent} from './view/prof/etudiantcommentreview/etudiantcommentreview.component';
+import {PaiementlistComponent} from './view/prof/paiementlist/paiementlist.component';
 
 
 @NgModule({
     imports: [
         RouterModule.forRoot([
-
-            {path: 'admin', component: AdminComponent,
+            {
+                {path: 'admin', component: AdminComponent,
                 children: [
                     {path: 'parcours', component: LearnComponent},
                     {path: 'create-section-items', component: SectionItemComponent},
@@ -81,16 +90,20 @@ import {EtudiantProfileComponent} from './view/etudiant/etudiant-profile/etudian
                     {path: 'teacher-lists', component: ProfesseurListComponent},
                     {path: 'recommend-admin', component: RecommendAdminComponent},
                     {path: 'paiement', component: PaiementComponent},
+                    {path: 'sessioncours', component: SessioncoursComponent},
                     {path: 'faq-admin', component: FaqAnswerComponent},
                     {path: 'faq-admin-list', component: FaqAdminListComponent},
                     {path: 'news-admin', component: NewsAdminListComponent},
                     {path: 'schedule', component: ScheduleAdminComponent},
                     {path: 'faq-create', component: FaqCreateComponent},
                     {path: 'students-List', component: EtudiantsComponent},
-                    {path: 'homeWork', component: HomeWorkComponentComponent}
+                    {path: 'groups-List', component: GroupeEtudeComponent},
+                    {path: 'groups-students', component: GroupeEtudiantComponent},
+
                 ]
             },
-            {path: 'prof', component: ProfComponent,
+            {
+                path: 'prof', component: ProfComponent,
                 children: [
                     {path: 'home', component: HomeComponent},
                     {path: 'quiz-preview-prof', component: QuizPreviewComponent},
@@ -108,10 +121,13 @@ import {EtudiantProfileComponent} from './view/etudiant/etudiant-profile/etudian
                     {path: 'cours', component: CoursesComponent},
                     {path: 'quiz-preview-teacher', component: QuizPreviewProfComponent},
                     {path: 'profile', component: ProfProfileComponent},
+                    {path: 'etudiantReviewcomment', component: EtudiantcommentreviewComponent},
 
+                    {path: 'paiementlist', component: PaiementlistComponent}
                 ]
             },
-            {path: 'etudiant', component: EtudiantComponent,
+            {
+                path: 'etudiant', component: EtudiantComponent,
                 children: [
                     {path: 'faq-student', component: FaqStudentListComponent},
                     {path: 'news-student', component: NewsEtudiantListComponent},
@@ -122,6 +138,7 @@ import {EtudiantProfileComponent} from './view/etudiant/etudiant-profile/etudian
                     {path: 'quiz-view', component: QuizEtudiantViewComponent},
                     {path: 'quiz-take', component: QuizTakeComponent},
                     {path: 'homeWorkEtudiant', component: HomeWorkEtudiantComponent},
+                    {path: 'homeWorkEtudiantResult', component: HomeWorkResultComponent},
                     {path: 'profile', component: EtudiantProfileComponent},
 
                 ]

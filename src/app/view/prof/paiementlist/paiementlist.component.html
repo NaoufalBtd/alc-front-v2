@@ -1,0 +1,69 @@
+<p-card>
+    <p-card-header>
+        <h3>Search</h3>
+        <div class="p-grid">
+            <div class="p-col-6">
+
+                <input pInputText type="text" placeholder="Search by Student Name"
+                       style="width: 80%" [(ngModel)]="paiementsearch.etudiant.nom" >
+            </div>
+
+            <div class="p-col-6">
+                <input pInputText type="text" placeholder="yyyy-mm-dd"
+                       style="width: 80%" [(ngModel)]="paiementsearch.datePaiement">
+
+            </div>
+            </div>
+
+
+            <div class="p-grid">
+                <div class="p-col-3">
+                    <button pButton pRipple type="button" label="Search" class="p-button-rounded p-button-success"
+                            style="margin-left:4px;background-color: #F48C76;border-color: #F48C76;"
+                            (click)="findAllByCriteria()"></button>
+
+                </div>
+            </div>
+     </p-card-header>
+</p-card>
+<p-table #dt [value]="paiementlist" dataKey="id" styleClass="p-datatable-customers" [rowHover]="true"
+         [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]"
+         [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+         [filterDelay]="0"
+         [globalFilterFields]="['etudiant.nom','dateFin','totalheure','fare']">>
+    <ng-template pTemplate="caption">
+        <div class="table-header">
+            <div class="row">
+                <div class="col-md-2">List of my Paiements</div>
+                <div class="col-md-2"></div>
+
+
+            </div>
+
+
+        </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Student Name</th>
+            <th>Date</th>
+            <th>Total Sessions</th>
+            <th>Fare</th>
+        </tr>
+
+    </ng-template>
+    <ng-template pTemplate="body" let-c>
+        <tr class="p-selectable-row">
+            <td>{{c.etudiant.nom}}</td>
+            <td>{{c.datePaiement}}</td>
+            <td>{{c.totalHeure}}</td>
+            <td>{{c.montant}}</td>
+
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+        <tr>
+            <td colspan="4">No customers found.</td>
+        </tr>
+    </ng-template>
+</p-table>
