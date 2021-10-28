@@ -60,7 +60,6 @@ import {HomeWorkComponentComponent} from './view/admin/home-work-component/home-
 import {HomeWOrkEtudiant} from './controller/model/home-work-etudiant.model';
 import {HomeWorkEtudiantComponent} from './view/etudiant/homeWork/home-work-etudiant/home-work-etudiant.component';
 import {ScheduleComponent} from '@syncfusion/ej2-angular-schedule';
-import {ScheduleLocalComponent} from './view/prof/schedule/schedule.component';
 import {AppComponent} from './app.component';
 import {PageNotFoundComponent} from './view/public/page-not-found/page-not-found.component';
 import {UserProfileComponent} from './view/admin/user-profile/user-profile.component';
@@ -76,7 +75,7 @@ import {PaiementlistComponent} from './view/prof/paiementlist/paiementlist.compo
     imports: [
         RouterModule.forRoot([
             {
-                {path: 'admin', component: AdminComponent,
+                path: 'admin', component: AdminComponent,
                 children: [
                     {path: 'parcours', component: LearnComponent},
                     {path: 'create-section-items', component: SectionItemComponent},
@@ -143,7 +142,8 @@ import {PaiementlistComponent} from './view/prof/paiementlist/paiementlist.compo
 
                 ]
             },
-            {path: '', component: PublicComponent,
+            {
+                path: '', component: PublicComponent,
                 children: [
                     {path: '', component: DashboardDemoComponent},
                     {path: 'public/login-admin', component: LoginAdminComponent},
@@ -154,7 +154,7 @@ import {PaiementlistComponent} from './view/prof/paiementlist/paiementlist.compo
                     {path: 'public/inscriptionEtudiant', component: FormLayoutDemoComponent},
                 ]
             },
-            {path: '**', component:  PageNotFoundComponent},
+            {path: '**', component: PageNotFoundComponent},
         ], {scrollPositionRestoration: 'enabled'})
     ],
     exports: [RouterModule]

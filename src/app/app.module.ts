@@ -6,7 +6,6 @@ import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {CommonModule, HashLocationStrategy, LocationStrategy} from '@angular/common';
 import {AppRoutingModule} from './app-routing.module';
-
 import {AccordionModule} from 'primeng/accordion';
 import {AutoCompleteModule} from 'primeng/autocomplete';
 import {AvatarModule} from 'primeng/avatar';
@@ -161,10 +160,6 @@ import {RecommendListComponent} from './view/prof/recommend/recommend-list/recom
 import {RecommendViewComponent} from './view/prof/recommend/recommend-view/recommend-view.component';
 import {QuizCreateComponent} from './view/admin/quiz/quiz-create/quiz-create.component';
 import {QuizEtudiantViewComponent} from './view/etudiant/Quiz/quiz-etudiant-view/quiz-etudiant-view.component';
-import {SessionCoursEditComponent} from './view/prof/session-cours/session-cours-edit/session-cours-edit.component';
-import {SessionCoursCreateComponent} from './view/prof/session-cours/session-cours-create/session-cours-create.component';
-import {SessionCoursViewComponent} from './view/prof/session-cours/session-cours-view/session-cours-view.component';
-import {SessionCoursListComponent} from './view/prof/session-cours/session-cours-list/session-cours-list.component';
 import {SyntheseSessionCoursListComponent} from './view/prof/synthese-session/synthese-session-cours-list/synthese-session-cours-list.component';
 import {SyntheseSessionCoursEditComponent} from './view/prof/synthese-session/synthese-session-cours-edit/synthese-session-cours-edit.component';
 import {ProfesseurListComponent} from './view/admin/professeur/professeur-list/professeur-list.component';
@@ -190,7 +185,7 @@ import {NewsEtudiantViewComponent} from './view/etudiant/news-etudiant/news-etud
 import {NewsAdminEditComponent} from './view/admin/news-admin/news-admin-edit/news-admin-edit.component';
 import {NewsAdminDeleteComponent} from './view/admin/news-admin/news-admin-delete/news-admin-delete.component';
 import {PaiementComponent} from './view/admin/paiement/paiement.component';
-import {PaiementListComponent} from './view/admin/paiement/paiement-list/paiement-list.component';
+// import {PaiementListComponent} from './view/admin/paiement/paiement-list/paiement-list.component';
 import {ScheduleAdminComponent} from './view/admin/schedule-admin/schedule-admin.component';
 import {ScheduleStudentComponent} from './view/etudiant/schedule-student/schedule-student.component';
 import {QuizUpdateComponent} from './view/admin/quiz/quiz-update/quiz-update.component';
@@ -205,9 +200,7 @@ import {SectionItemPreviewComponent} from './view/admin/learn/section-item-previ
 import {ImageItemComponent} from './view/admin/learn/section-item-preview/image-item/image-item.component';
 import {TranslateComponent} from './view/etudiant/learn-etudiant/Dictionnary/translate/translate.component';
 import {EtudiantReviewViewComponent} from './view/etudiant/learn-etudiant/etudiant-review-view/etudiant-review-view.component';
-// tslint:disable-next-line:max-line-length
 import {SyntheseSessionHistoryComponent} from './view/prof/synthese-session/synthese-session-history/synthese-session-history.component';
-
 import {RecommendationTeacherComponent} from './view/prof/recommendation-teacher/recommendation-teacher.component';
 import {VocabularySectionComponent} from './view/etudiant/learn-etudiant/vocabulary-section/vocabulary-section.component';
 import {VocabularySectionItemComponent} from './view/etudiant/learn-etudiant/vocabulary-section/vocabulary-section-item/vocabulary-section-item.component';
@@ -231,7 +224,6 @@ import {
 } from '@syncfusion/ej2-angular-schedule';
 import {
     AgendaService,
-    EventSettingsModel,
     DayService,
     MonthAgendaService,
     TimelineMonthService,
@@ -436,10 +428,6 @@ import { EtudiantProfileComponent } from './view/etudiant/etudiant-profile/etudi
         QuizCreateComponent,
         InscriptionProfComponent,
         QuizEtudiantViewComponent,
-        SessionCoursEditComponent,
-        SessionCoursCreateComponent,
-        SessionCoursViewComponent,
-        SessionCoursListComponent,
         SyntheseSessionComponent,
         SyntheseSessionCoursCreateComponent,
         SyntheseSessionCoursEditComponent,
@@ -466,7 +454,6 @@ import { EtudiantProfileComponent } from './view/etudiant/etudiant-profile/etudi
         NewsAdminEditComponent,
         NewsAdminDeleteComponent,
         PaiementComponent,
-        PaiementListComponent,
         ScheduleAdminComponent,
         ScheduleStudentComponent,
         QuizUpdateComponent,
@@ -495,11 +482,7 @@ import { EtudiantProfileComponent } from './view/etudiant/etudiant-profile/etudi
         PublicComponent,
         VocabularySectionProfComponent,
         VocabularySectionItemProfComponent,
-        SessionCoursEditComponent,
         ProfReviewViewComponent,
-        SessionCoursCreateComponent,
-        SessionCoursListComponent,
-        SessionCoursViewComponent,
         QuizPreviewProfComponent,
         GroupeEtudeComponent,
         GroupeEtudeCreateComponent,
@@ -525,8 +508,6 @@ import { EtudiantProfileComponent } from './view/etudiant/etudiant-profile/etudi
     providers: [
         {provide: LocationStrategy, useClass: HashLocationStrategy},
         MenuService, MessageService, ConfirmationService,
-        // tslint:disable-next-line:max-line-length
-        WeekService, MonthService, DayService, WeekService, WorkWeekService, MonthService, AgendaService, MonthAgendaService, TimelineViewsService,
         WeekService, MonthService, DayService, WeekService, WorkWeekService, MonthService,
         AgendaService, MonthAgendaService, TimelineViewsService,
         TimelineMonthService
