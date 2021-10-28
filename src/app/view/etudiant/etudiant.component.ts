@@ -133,7 +133,7 @@ export class EtudiantComponent implements OnInit{
       // @ts-ignore
       if (this.user.authorities[0].authority === Role.ADMIN || this.user.authorities[0].authority === Role.PROF
           || this.user.authorities.length === 0) {
-        this.router.navigate(['**']);
+        this.router.navigate([' ']);
       }
     }
   }

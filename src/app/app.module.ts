@@ -243,6 +243,8 @@ import {HomeWorkComponentComponent} from "./view/admin/home-work-component/home-
 import {HomeWorkEtudiantComponent} from "./view/etudiant/homeWork/home-work-etudiant/home-work-etudiant.component";
 import { PageNotFoundComponent } from './view/public/page-not-found/page-not-found.component';
 import { UserProfileComponent } from './view/admin/user-profile/user-profile.component';
+import { ProfProfileComponent } from './view/prof/prof-profile/prof-profile.component';
+import { EtudiantProfileComponent } from './view/etudiant/etudiant-profile/etudiant-profile.component';
 
 @NgModule({
     imports: [
@@ -483,6 +485,8 @@ import { UserProfileComponent } from './view/admin/user-profile/user-profile.com
         HomeWorkEtudiantComponent,
         PageNotFoundComponent,
         UserProfileComponent,
+        ProfProfileComponent,
+        EtudiantProfileComponent,
     ],
     providers: [
         {provide: LocationStrategy, useClass: HashLocationStrategy},

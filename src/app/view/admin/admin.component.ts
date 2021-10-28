@@ -243,7 +243,7 @@ export class AdminComponent implements OnInit {
             // @ts-ignore
             if (this.user.authorities[0].authority === Role.PROF || this.user.authorities[0].authority === Role.STUDENT
                 || this.user.authorities.length === 0) {
-                this.router.navigate(['**']);
+                this.router.navigate([' ']);
             }
         }
 

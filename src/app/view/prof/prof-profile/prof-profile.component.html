@@ -1,0 +1,91 @@
+<div class="p-grid p-shadow-5">
+
+
+    <div class="p-col-2" style="text-align: center;">
+        <img [src]="user?.image" alt="Image" width="250">
+    </div>
+    <div class="p-col-6">
+        <h3>{{ user?.nom}} {{ user?.prenom}}</h3>         <!---- pi-user -->
+        <h5>Teacher</h5>
+        <button pButton pRipple type="button" icon="pi pi-image " class="p-button-rounded p-button-secondary"
+                (click)="updateProfileImage()"
+        ></button>
+
+
+        <!-- profile image change form -->
+        <form enctype="multipart/form-data" style="display:none;">
+            <input type="file"
+                   (change)="onProfileImageChange($event); onUpdateProfileImage()"
+                   name="profile-image-input" id="profile-image-input" placeholder="file" accept="image/*"/>
+        </form>
+
+    </div>
+
+    <div class="p-col-12">
+        <div class="p-grid">
+
+            <div class="p-col-4">
+            <span class="p-float-label">
+                 <input id="float-input" type="text" pInputText [(ngModel)]="user.prenom"><label for="float-input">First name</label>
+            </span>
+            </div>
+
+            <div class="p-col-4">
+            <span class="p-float-label">
+                 <input id="float-input" type="text" pInputText [(ngModel)]="user.nom"><label for="float-input">Last name</label>
+            </span>
+            </div>
+
+
+            <div class="p-col-4">
+            <span class="p-float-label">
+                 <input id="float-input" disabled type="text" pInputText [(ngModel)]="user.username"><label
+                    for="float-input">Username</label>
+            </span>
+            </div>
+
+
+            <div class="p-col-4">
+            <span class="p-float-label">
+                 <input id="float-input" type="number" pInputText [(ngModel)]="user.age"><label
+                    for="float-input">Age</label>
+            </span>
+            </div>
+
+
+            <div class="p-col-4">
+            <span class="p-float-label">
+                 <input id="float-input" type="text" pInputText [(ngModel)]="user.addresse"><label for="float-input">Address</label>
+            </span>
+            </div>
+
+
+            <div class="p-col-4">
+            <span class="p-float-label">
+                 <input id="float-input" type="text" pInputText [(ngModel)]="user.numero"><label
+                    for="float-input">Phone</label>
+            </span>
+            </div>
+
+            <div class="p-col-4">
+            <span class="p-float-label">
+                 <input id="float-input" type="text" pInputText [(ngModel)]="user.ville"><label
+                    for="float-input">City</label>
+            </span>
+            </div>
+
+            <div class="p-col-4">
+            </div>
+
+            <div class="p-col-4">
+                <button pButton pRipple type="button" icon="pi pi-save" label="save changes"
+                        (click)="updateUser(user)"
+                        class="p-button-raised-primary"></button>
+
+            </div>
+
+
+        </div>
+    </div>
+
+</div>

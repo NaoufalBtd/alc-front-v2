@@ -59,6 +59,8 @@ import {ScheduleLocalComponent} from './view/prof/schedule/schedule.component';
 import {AppComponent} from './app.component';
 import {PageNotFoundComponent} from './view/public/page-not-found/page-not-found.component';
 import {UserProfileComponent} from './view/admin/user-profile/user-profile.component';
+import {ProfProfileComponent} from './view/prof/prof-profile/prof-profile.component';
+import {EtudiantProfileComponent} from './view/etudiant/etudiant-profile/etudiant-profile.component';
 
 
 @NgModule({
@@ -105,6 +107,7 @@ import {UserProfileComponent} from './view/admin/user-profile/user-profile.compo
                     {path: 'sections', component: SectionsComponent},
                     {path: 'cours', component: CoursesComponent},
                     {path: 'quiz-preview-teacher', component: QuizPreviewProfComponent},
+                    {path: 'profile', component: ProfProfileComponent},
 
                 ]
             },
@@ -119,6 +122,8 @@ import {UserProfileComponent} from './view/admin/user-profile/user-profile.compo
                     {path: 'quiz-view', component: QuizEtudiantViewComponent},
                     {path: 'quiz-take', component: QuizTakeComponent},
                     {path: 'homeWorkEtudiant', component: HomeWorkEtudiantComponent},
+                    {path: 'profile', component: EtudiantProfileComponent},
+
                 ]
             },
             {path: '', component: PublicComponent,
