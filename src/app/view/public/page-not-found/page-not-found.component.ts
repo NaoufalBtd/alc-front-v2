@@ -1,23 +1,18 @@
-import {Component, Injectable, OnInit} from '@angular/core';
-import {MenuService} from '../shared/slide-bar/app.menu.service';
+import { Component, OnInit } from '@angular/core';
+import {MenuService} from '../../shared/slide-bar/app.menu.service';
 import {PrimeNGConfig} from 'primeng/api';
-import {AppComponent} from '../../app.component';
-import {User} from '../../controller/model/user.model';
-import {AuthenticationService} from '../../controller/service/authentication.service';
-import {Role} from '../../enum/role.enum';
-import {LoginService} from '../../controller/service/login.service';
+import {AppComponent} from '../../../app.component';
+import {AuthenticationService} from '../../../controller/service/authentication.service';
+import {User} from '../../../controller/model/user.model';
 
 @Component({
-  selector: 'app-public',
-  templateUrl: './public.component.html',
-  styleUrls: ['./public.component.scss']
+  selector: 'app-page-not-found',
+  templateUrl: './page-not-found.component.html',
+  styleUrls: ['./page-not-found.component.scss']
 })
-@Injectable({
-  providedIn: 'root' // just before your class
-})
-export class PublicComponent implements  OnInit{
-user: User = new User();
+export class PageNotFoundComponent implements OnInit {
 
+  user: User = new User();
   overlayMenuActive: boolean;
   overlayMenuActive2: boolean;
 
@@ -58,16 +53,7 @@ user: User = new User();
 
   inlineUserMenuActive = false;
 
-  get model(): any[] {
-    return this.service.model;
-  }
-
-  set model(value: any[]) {
-    this.service.model = value;
-  }
-
   constructor(private menuService: MenuService,
-              private service: LoginService,
               private authenticationService: AuthenticationService,
               private primengConfig: PrimeNGConfig, public app: AppComponent) {
   }
@@ -249,7 +235,5 @@ user: User = new User();
   ngOnInit(): void {
     this.user = this.authenticationService.getUserFromLocalCache();
   }
+
 }
-
-
-

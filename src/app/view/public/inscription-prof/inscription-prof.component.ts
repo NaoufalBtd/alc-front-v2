@@ -48,6 +48,7 @@ export class InscriptionProfComponent implements OnInit {
     public save() {
         this.selectedProf.categorieProf.id = 1;
         this.submitted = true;
+        console.log(this.selectedProf);
         this.service.save().subscribe(
             data => {
                 this.selectedProf = new Prof();
@@ -55,10 +56,7 @@ export class InscriptionProfComponent implements OnInit {
                 severity: 'success',
                 summary: 'Successful',
                 detail: 'Registration added',
-                life: 3000,
-
-            });
-                console.log('meryem');
+                life: 3000});
             }, error => {
                 this.messageService.add({
                     severity: 'error',
@@ -66,7 +64,7 @@ export class InscriptionProfComponent implements OnInit {
                     detail: 'Registration canceled',
                     life: 3000
                 });
-                console.log('erreur');
+                console.log(error);
             });
         this.selectedProf = new Prof();
     }

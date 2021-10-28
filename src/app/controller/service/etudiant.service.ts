@@ -18,6 +18,7 @@ import {LoginService} from './login.service';
 export class EtudiantService {
 
     private adminUrl = environment.adminUrl;
+    private etudiantUrl = environment.etudiantUrl;
     private url = environment.baseUrl + 'etudiant/';
 
     constructor(private http: HttpClient, public serviceUser: LoginService) {
@@ -278,6 +279,10 @@ export class EtudiantService {
 
     public save(): Observable<Etudiant> {
         return this.http.post<Etudiant>(this.adminUrl + 'etudiant/', this.selected);
+    }
+
+    public create(): Observable<Etudiant> {
+        return this.http.post<Etudiant>(this.etudiantUrl + 'etudiant/save/', this.selected);
     }
 
     public findIndexById(id: number): number {

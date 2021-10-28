@@ -1,15 +1,19 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {MenuService} from '../shared/slide-bar/app.menu.service';
 import {PrimeNGConfig} from 'primeng/api';
 import {AppComponent} from '../../app.component';
+import {Role} from '../../enum/role.enum';
+import {User} from '../../controller/model/user.model';
+import {Router} from '@angular/router';
+import {AuthenticationService} from '../../controller/service/authentication.service';
 
 @Component({
   selector: 'app-prof',
   templateUrl: './prof.component.html',
   styleUrls: ['./prof.component.scss']
 })
-export class ProfComponent  {
-
+export class ProfComponent implements OnInit  {
+user:User = new User();
   overlayMenuActive: boolean;
 
 
@@ -43,8 +47,23 @@ export class ProfComponent  {
 
   inlineUserMenuActive = false;
 
-  constructor(private menuService: MenuService, public app: AppComponent) {
+  constructor(private menuService: MenuService,
+              private router: Router,
+              private authenticationService: AuthenticationService,
+              public app: AppComponent) {
   }
+
+  ngOnInit(): void {
+    this.user = this.authenticationService.getUserFromLocalCache();
+    if (this.user === null) {
+      this.router.navigate(['#/']);
+    } else {
+      // @ts-ignore
+      if (this.user.authorities[0].authority === Role.ADMIN || this.user.authorities[0].authority === Role.STUDENT
+          || this.user.authorities.length === 0) {
+        this.router.navigate(['**']);
+      }
+    }    }
 
   onLayoutClick() {
     if (!this.userMenuClick) {

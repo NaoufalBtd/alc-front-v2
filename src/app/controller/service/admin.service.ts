@@ -6,6 +6,7 @@ import {Observable} from 'rxjs';
 
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
+import {User} from '../model/user.model';
 
 @Injectable({
     providedIn: 'root'
@@ -21,12 +22,7 @@ export class AdminService {
     }
 
 
-
-    public save(): Observable<number> {
-        return this.http.post<number>(this.adminUrl + 'admin/', this.selected);
-    }
-
-    get selected(): Admin {
+    get selected(): User {
         if (this._selected == null) {
             this._selected = new Admin();
         }
@@ -65,6 +61,11 @@ export class AdminService {
 
     set submitted(value: boolean) {
         this._submitted = value;
+    }
+
+    public save(): Observable<number> {
+        console.log(this.selected);
+        return this.http.post<number>(this.adminUrl + 'admin/', this.selected);
     }
 
 }

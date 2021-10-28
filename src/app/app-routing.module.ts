@@ -55,11 +55,16 @@ import {HomeWorkComponentComponent} from './view/admin/home-work-component/home-
 import {HomeWOrkEtudiant} from './controller/model/home-work-etudiant.model';
 import {HomeWorkEtudiantComponent} from './view/etudiant/homeWork/home-work-etudiant/home-work-etudiant.component';
 import {ScheduleComponent} from '@syncfusion/ej2-angular-schedule';
+import {ScheduleLocalComponent} from './view/prof/schedule/schedule.component';
+import {AppComponent} from './app.component';
+import {PageNotFoundComponent} from './view/public/page-not-found/page-not-found.component';
+import {UserProfileComponent} from './view/admin/user-profile/user-profile.component';
 
 
 @NgModule({
     imports: [
         RouterModule.forRoot([
+
             {path: 'admin', component: AdminComponent,
                 children: [
                     {path: 'parcours', component: LearnComponent},
@@ -67,6 +72,7 @@ import {ScheduleComponent} from '@syncfusion/ej2-angular-schedule';
                     {path: 'preview-section-items', component: SectionItemPreviewComponent},
                     {path: 'quiz-preview-prof', component: QuizPreviewComponent},
                     {path: 'quiz-create', component: QuizCreateComponent},
+                    {path: 'profile', component: UserProfileComponent},
                     {path: 'quiz-update', component: QuizUpdateComponent},
                     {path: 'view-quiz-etudiant', component: ViewQuizEtudiantComponent},
                     {path: 'inscription', component: InscriptionsComponent},
@@ -91,7 +97,7 @@ import {ScheduleComponent} from '@syncfusion/ej2-angular-schedule';
                     {path: 'salary', component: SalaryComponent},
                     {path: 'classes', component: ClassRoomListComponent},
                     {path: 'synthese', component: SyntheseSessionComponent},
-                    {path: 'schedule', component: ScheduleComponent},
+                    {path: 'schedule', component: ScheduleLocalComponent},
                     {path: 'news-teacher', component: NewsTeacherListComponent},
                     {path: 'faq-teacher', component: FaqListComponent},
                     {path: 'faq-teacher-answer', component: FaqContactListComponent},
@@ -126,7 +132,7 @@ import {ScheduleComponent} from '@syncfusion/ej2-angular-schedule';
                     {path: 'public/inscriptionEtudiant', component: FormLayoutDemoComponent},
                 ]
             },
-            {path: '**', redirectTo: '/404'},
+            {path: '**', component:  PageNotFoundComponent},
         ], {scrollPositionRestoration: 'enabled'})
     ],
     exports: [RouterModule]

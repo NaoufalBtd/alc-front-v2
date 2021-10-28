@@ -1,0 +1,30 @@
+img {
+    width: 50px;
+    height: 50px !important;
+    background-color: #607d8b !important;
+    /*margin-top: -11%;*/
+    /*margin-right: -23px;*/
+    border-radius: 50%;
+    cursor: pointer;
+}
+.profile-label{
+ color: #fff!important;
+    font-weight: bold;
+
+}
+
+.user-profile-drop-dawn {
+    height: 52px;
+    /*background-color: #252529;*/
+    font-weight: bold;
+   /*width:20px;*/
+    /*font-size:medium;*/
+}
+.user-profile-drop-dawn-text{
+    color: #607d8b!important;
+}
+
+.layout-profile-userinfo >span{
+    cursor: pointer;
+    text-align: center!important
+}

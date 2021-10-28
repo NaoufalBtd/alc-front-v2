@@ -6,6 +6,9 @@ import {Prof} from '../../../controller/model/prof.model';
 import {Admin} from '../../../controller/model/admin.model';
 import {Etudiant} from '../../../controller/model/etudiant.model';
 import {PublicComponent} from '../../public/public.component';
+import {User} from '../../../controller/model/user.model';
+import {AuthenticationService} from '../../../controller/service/authentication.service';
+import {Role} from '../../../enum/role.enum';
 
 @Component({
     selector: 'app-menu',
@@ -33,10 +36,13 @@ import {PublicComponent} from '../../public/public.component';
     ]
 })
 export class AppMenuComponent implements OnInit {
+    user: User = new User();
 
     // model: any[];
 
-    constructor(public app: AppComponent, public appMain: PublicComponent, private service: LoginService) {
+    constructor(public app: AppComponent,
+                private authService: AuthenticationService,
+                public appMain: PublicComponent, private service: LoginService) {
     }
 
     get model(): any[] {
@@ -70,161 +76,55 @@ export class AppMenuComponent implements OnInit {
     set etudiant(value: Etudiant) {
         this.service.etudiant = value;
     }
+
     ngOnInit() {
+        this.user = this.authService.getUserFromLocalCache();
+
+        if (this.user === null) {
+            return;
+        } else {
 
 
-        /*this.model = [
-            {
-                label: 'Favorites', icon: 'pi pi-fw pi-home',
-                items: [
-                    {label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/']}
-                ]
-            },
-            {
-                label: 'UI Kit', icon: 'pi pi-fw pi-star', routerLink: ['/uikit'],
-                items: [
-                    {label: 'Form Layout', icon: 'pi pi-fw pi-id-card', routerLink: ['/uikit/formlayout']},
-                    {label: 'Input', icon: 'pi pi-fw pi-check-square', routerLink: ['/uikit/input']},
-                    {label: 'Float Label', icon: 'pi pi-bookmark', routerLink: ['/uikit/floatlabel']},
-                    {label: 'Invalid State', icon: 'pi pi-exclamation-circle', routerLink: ['/uikit/invalidstate']},
-                    {label: 'Button', icon: 'pi pi-fw pi-mobile', routerLink: ['/uikit/button'], class: 'rotated-icon'},
-                    {label: 'Table', icon: 'pi pi-fw pi-table', routerLink: ['/uikit/table']},
-                    {label: 'List', icon: 'pi pi-fw pi-list', routerLink: ['/uikit/list']},
-                    {label: 'Tree', icon: 'pi pi-fw pi-share-alt', routerLink: ['/uikit/tree']},
-                    {label: 'Panel', icon: 'pi pi-fw pi-tablet', routerLink: ['/uikit/panel']},
-                    {label: 'Overlay', icon: 'pi pi-fw pi-clone', routerLink: ['/uikit/overlay']},
-                    {label: 'Media', icon: 'pi pi-fw pi-image', routerLink: ['/uikit/media']},
-                    {label: 'Menu', icon: 'pi pi-fw pi-bars', routerLink: ['/uikit/menu']},
-                    {label: 'Message', icon: 'pi pi-fw pi-comment', routerLink: ['/uikit/message']},
-                    {label: 'File', icon: 'pi pi-fw pi-file', routerLink: ['/uikit/file']},
-                    {label: 'Chart', icon: 'pi pi-fw pi-chart-bar', routerLink: ['/uikit/charts']},
-                    {label: 'Misc', icon: 'pi pi-fw pi-circle-off', routerLink: ['/uikit/misc']}
-                ]
-            },
-            {
-                label: 'Utilities', icon: 'pi pi-fw pi-compass', routerLink: ['utilities'],
-                items: [
-                    {label: 'Display', icon: 'pi pi-fw pi-desktop', routerLink: ['utilities/display']},
-                    {label: 'Elevation', icon: 'pi pi-fw pi-external-link', routerLink: ['utilities/elevation']},
-                    {label: 'FlexBox', icon: 'pi pi-fw pi-directions', routerLink: ['utilities/flexbox']},
-                    {label: 'Icons', icon: 'pi pi-fw pi-search', routerLink: ['utilities/icons']},
-                    {label: 'Text', icon: 'pi pi-fw pi-pencil', routerLink: ['utilities/text']},
-                    {label: 'Widgets', icon: 'pi pi-fw pi-star-o', routerLink: ['utilities/widgets']},
-                    {label: 'Grid System', icon: 'pi pi-fw pi-th-large', routerLink: ['utilities/grid']},
-                    {label: 'Spacing', icon: 'pi pi-fw pi-arrow-right', routerLink: ['utilities/spacing']},
-                    {label: 'Typography', icon: 'pi pi-fw pi-align-center', routerLink: ['utilities/typography']}
-                ]
-            },
-            {
-                label: 'Pages', icon: 'pi pi-fw pi-copy', routerLink: ['/pages'],
-                items: [
-                    {label: 'Login', icon: 'pi pi-fw pi-sign-in', routerLink: ['/login'], target: '_blank'},
-                    {label: 'Inscription', icon: 'pi pi-fw pi-pencil', routerLink: ['/view/inscription']},
-                    {label: 'Etudiants', icon: 'pi pi-fw pi-pencil', routerLink: ['/pages/etudiant']},
-                    {label: 'Recommend A teacher', icon: 'pi pi-fw pi-pencil', routerLink: ['/pages/recommend']},
-                    {label: 'Home', icon: 'pi pi-fw pi-pencil', routerLink: ['/pages/home']},
-                    {label: 'List Inscrit', icon: 'pi pi-fw pi-pencil', routerLink: ['/pages/Inscrit']},
-                    {label: 'Salary', icon: 'pi pi-fw pi-pencil', routerLink: ['/pages/salary']},
-                    {label: 'Courses', icon: 'pi pi-fw pi-pencil', routerLink: ['/pages/courses']},
-                    {label: 'Parcours', icon: 'pi pi-fw pi-pencil', routerLink: ['/pages/parcours']},
-                    {label: 'Classes', icon: 'pi pi-fw pi-pencil', routerLink: ['/pages/classes']},
-                    {label: 'Commande', icon: 'pi pi-fw pi-pencil', routerLink: ['/pages/commande']},
-                    {label: 'Quiz-Create', icon: 'pi pi-fw pi-pencil', routerLink: ['/pages/quiz-create']},
-                    {label: 'Schedule', icon: 'pi pi-fw pi-calendar-times', routerLink: ['/view/schedule']},
-                    {label: 'FAQ ANSWER', icon: 'pi pi-fw pi-calendar-times', routerLink: ['/pages/faq-admin']},
-                    {label: 'CREATE NEWS', icon: 'pi pi-fw pi-calendar-times', routerLink: ['/pages/news-admin']},
-                    {label: 'Crud', icon: 'pi pi-fw pi-pencil', routerLink: ['/pages/crud']},
-                    {label: 'Calendar', icon: 'pi pi-fw pi-calendar-plus', routerLink: ['/pages/calendar']},
-                    {label: 'Timeline', icon: 'pi pi-fw pi-calendar', routerLink: ['/pages/timeline']},
-                    {label: 'Landing', icon: 'pi pi-fw pi-globe', url: 'assets/pages/landing.html', target: '_blank'},
+            // @ts-ignore
+            if (this.user.authorities[0].authority === Role.ADMIN) {
+                this.model = [
+                    {label: 'Manage Parcours', icon: 'pi pi-fw pi-table', routerLink: ['/admin/parcours']},
+                    {label: 'Inscriptions List', icon: 'pi pi-fw pi-check-square', routerLink: ['/admin/inscription']},
+                    {label: 'Students List', icon: 'pi pi-fw pi-list', routerLink: ['/admin/students-List']},
+                    {label: 'Professor', icon: 'pi pi-fw pi-user', routerLink: ['/admin/teacher-lists']},
+                    {label: 'Recommendation', icon: 'pi pi-fw pi-user-plus', routerLink: ['/admin/recommend-admin']},
+                    {label: 'Paiement', icon: 'pi pi-fw pi-wallet', routerLink: ['/admin/paiement']},
+                    {label: 'FAQ ANSWER', icon: 'pi pi-fw pi-reply', routerLink: ['/admin/faq-admin']},
+                    {label: 'FAQ List', icon: 'pi pi-fw pi-info-circle', routerLink: ['/admin/faq-admin-list']},
+                    {label: 'CREATE NEWS', icon: 'pi pi-fw pi-calendar-times', routerLink: ['/admin/news-admin']},
+                    {label: 'Schedule', icon: 'pi pi-fw pi-calendar-times', routerLink: ['/admin/schedule']},
+                ];
+            } // @ts-ignore
+            else if (this.user.authorities[0].authority === Role.PROF) {
+                this.model = [
+                    {label: 'HomeTeacher', icon: 'pi pi-fw pi-home', routerLink: ['/prof/home']},
+                    {label: 'Recommend A teacher', icon: 'pi pi-fw pi-comment', routerLink: ['/prof/recommendation-teacher']},
+                    {label: 'Salary', icon: 'pi pi-fw pi-money-bill', routerLink: ['/prof/salary']},
+                    {label: 'Parcours', icon: 'pi pi-fw pi-list', routerLink: ['/prof/courses']},
+                    {label: 'Classes', icon: 'pi pi-fw pi-table', routerLink: ['/prof/classes']},
+                    {label: 'Synthese-Session-Cours', icon: 'pi pi-fw pi-briefcase', routerLink: ['/prof/synthese']},
+                    {label: 'Schedule', icon: 'pi pi-fw pi-calendar-times', routerLink: ['/prof/schedule']},
+                    {label: 'News', icon: 'pi pi-fw pi-clock', routerLink: ['/prof/news-teacher']},
+                    {label: 'Student Review', icon: 'pi pi-fw pi-comments', routerLink: ['/prof/comment-review']},
+                    {label: 'FAQ', icon: 'pi pi-fw pi-question-circle', routerLink: ['/prof/faq-teacher']},
+                ];
+            } else {
+                this.model = [
+                    {label: 'Courses ', icon: 'pi pi-fw pi-briefcase', routerLink: ['/etudiant/etudiant-cours']},
+                    {label: 'FAQ ', icon: 'pi pi-fw pi-question-circle', routerLink: ['/etudiant/faq-student']},
+                    {label: 'News ', icon: 'pi pi-fw pi-clock', routerLink: ['/etudiant/news-student']},
+                    {label: 'Schedule', icon: 'pi pi-fw pi-calendar-times', routerLink: ['/etudiant/schedule-student']},
 
-                    {label: 'Error', icon: 'pi pi-fw pi-exclamation-triangle', routerLink: ['/error'], target: '_blank'},
-                    {label: '404', icon: 'pi pi-fw pi-times', routerLink: ['/404'], target: '_blank'},
-                    {label: 'Access Denied', icon: 'pi pi-fw pi-ban', routerLink: ['/accessdenied'], target: '_blank'},
-                    {label: 'Empty', icon: 'pi pi-fw pi-clone', routerLink: ['/pages/empty']},
-                ]
-            },
-            { label: 'Admin', icon: 'pi pi-fw pi-folder', routerLink: ['/admin'],
-                items: [
-                    {label: 'Formular Inscriptions', icon: 'pi pi-fw pi-pencil', routerLink: ['/pages/Inscrit']},
-                    {label: 'Inscriptions List', icon: 'pi pi-fw pi-pencil', routerLink: ['/view/inscription']},
-                    {label: 'Student List', icon: 'pi pi-fw pi-pencil', routerLink: ['/pages/etudiant']},
-                    {label: 'Manage Parcours', icon: 'pi pi-fw pi-pencil', routerLink: ['/pages/parcours']},
-                    {label: 'FAQ ANSWER', icon: 'pi pi-fw pi-calendar-times', routerLink: ['/pages/faq-admin']},
-                    {label: 'CREATE NEWS', icon: 'pi pi-fw pi-calendar-times', routerLink: ['/pages/news-admin']},
-                ]
-            },
-            { label: 'Student', icon: 'pi pi-fw pi-folder', routerLink: ['/student'],
-                items: [
-                    {label: 'Courses ', icon: 'pi pi-fw pi-pencil', routerLink: ['/pages/etudiantcours']},
-                ]
-            },
-            { label: 'Teacher', icon: 'pi pi-fw pi-folder', routerLink: ['/teacher'],
-                items: [
-                    {label: 'Home', icon: 'pi pi-fw pi-pencil', routerLink: ['/pages/home']},
-                    {label: 'Recommend A teacher', icon: 'pi pi-fw pi-pencil', routerLink: ['/pages/recommend']},
-                    {label: 'Salary', icon: 'pi pi-fw pi-pencil', routerLink: ['/pages/salary']},
-                    {label: 'Parcours', icon: 'pi pi-fw pi-pencil', routerLink: ['/pages/parcours']},
-                    {label: 'Classes', icon: 'pi pi-fw pi-pencil', routerLink: ['/pages/classes']},
-                    {label: 'Schedule', icon: 'pi pi-fw pi-calendar-times', routerLink: ['/view/schedule']},
-                ]
-            },
-            {
-                label: 'Hierarchy', icon: 'pi pi-fw pi-sitemap',
-                items: [
-                    {
-                        label: 'Submenu 1', icon: 'pi pi-fw pi-sign-in',
-                        items: [
-                            {
-                                label: 'Submenu 1.1', icon: 'pi pi-fw pi-sign-in',
-                                items: [
-                                    { label: 'Submenu 1.1.1', icon: 'pi pi-fw pi-sign-in' },
-                                    { label: 'Submenu 1.1.2', icon: 'pi pi-fw pi-sign-in' },
-                                    { label: 'Submenu 1.1.3', icon: 'pi pi-fw pi-sign-in' },
-                                ]
-                            },
-                            {
-                                label: 'Submenu 1.2', icon: 'pi pi-fw pi-sign-in',
-                                items: [
-                                    { label: 'Submenu 1.2.1', icon: 'pi pi-fw pi-sign-in' }
-                                ]
-                            },
-                        ]
-                    },
-                    {
-                        label: 'Submenu 2', icon: 'pi pi-fw pi-sign-in',
-                        items: [
-                            {
-                                label: 'Submenu 2.1', icon: 'pi pi-fw pi-sign-in',
-                                items: [
-                                    { label: 'Submenu 2.1.1', icon: 'pi pi-fw pi-sign-in' },
-                                    { label: 'Submenu 2.1.2', icon: 'pi pi-fw pi-sign-in' },
-                                ]
-                            },
-                            {
-                                label: 'Submenu 2.2', icon: 'pi pi-fw pi-sign-in',
-                                items: [
-                                    { label: 'Submenu 2.2.1', icon: 'pi pi-fw pi-sign-in' },
-                                ]
-                            },
-                        ]
-                    }
-                ]
-            },
-            {
-                label: 'Start', icon: 'pi pi-fw pi-download',
-                items: [
-                    {
-                        label: 'Buy Now', icon: 'pi pi-fw pi-shopping-cart', url: ['https://www.primefaces.org/store']
-                    },
-                    {
-                        label: 'Documentation', icon: 'pi pi-fw pi-info-circle', routerLink: ['/documentation']
-                    }
-                ]
+                ];
             }
-        ];*/
-
+        }
     }
+
 
     onMenuClick(event) {
         this.appMain.onMenuClick(event);

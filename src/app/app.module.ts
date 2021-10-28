@@ -1,7 +1,7 @@
 /* tslint:disable:quotemark */
 import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {CommonModule, HashLocationStrategy, LocationStrategy} from '@angular/common';
@@ -241,6 +241,8 @@ import {GroupeEtudeCreateComponent} from './view/admin/groupe-etude/groupe-etude
 import {GroupeEtudeListeComponent} from './view/admin/groupe-etude/groupe-etude-liste/groupe-etude-liste.component';
 import {HomeWorkComponentComponent} from "./view/admin/home-work-component/home-work-component.component";
 import {HomeWorkEtudiantComponent} from "./view/etudiant/homeWork/home-work-etudiant/home-work-etudiant.component";
+import { PageNotFoundComponent } from './view/public/page-not-found/page-not-found.component';
+import { UserProfileComponent } from './view/admin/user-profile/user-profile.component';
 
 @NgModule({
     imports: [
@@ -334,8 +336,8 @@ import {HomeWorkEtudiantComponent} from "./view/etudiant/homeWork/home-work-etud
         ScrollingModule,
         RecurrenceEditorModule,
         DropDownListModule,
-        DateTimePickerModule
-
+        DateTimePickerModule,
+        DropdownModule,
     ],
     declarations: [
         AppComponent,
@@ -479,6 +481,8 @@ import {HomeWorkEtudiantComponent} from "./view/etudiant/homeWork/home-work-etud
         GroupeEtudeListeComponent,
         HomeWorkComponentComponent,
         HomeWorkEtudiantComponent,
+        PageNotFoundComponent,
+        UserProfileComponent,
     ],
     providers: [
         {provide: LocationStrategy, useClass: HashLocationStrategy},

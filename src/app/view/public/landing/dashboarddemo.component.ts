@@ -55,7 +55,7 @@ export class DashboardDemoComponent implements OnInit {
         this.login.etudiant = null;
         this.login.admin = null;
         this.login.prof = null;
-        this.model = [];
+        // this.model = [];
         this.fullcalendarOptions = {
             plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
             defaultDate: '2017-02-12',

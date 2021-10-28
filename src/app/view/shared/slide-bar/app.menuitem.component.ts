@@ -42,7 +42,7 @@ import {PublicComponent} from '../../public/public.component';
         ])
     ]
 })
-export class AppMenuitemComponent implements OnInit, OnDestroy {
+export class AppMenuitemComponent implements OnInit {
 
     @Input() item: any;
 
@@ -167,13 +167,4 @@ export class AppMenuitemComponent implements OnInit, OnDestroy {
         }
     }
 
-    ngOnDestroy() {
-        if (this.menuSourceSubscription) {
-            this.menuSourceSubscription.unsubscribe();
-        }
-
-        if (this.menuResetSubscription) {
-            this.menuResetSubscription.unsubscribe();
-        }
-    }
 }

@@ -1047,7 +1047,7 @@ a {
   vertical-align: middle;
 }
 .layout-wrapper .layout-topbar .topbar-menu .user-profile ul {
-  width: 250px;
+  width: 150px;
 }
 .layout-wrapper .layout-topbar .topbar-menu .user-profile .layout-profile-name, .layout-wrapper .layout-topbar .topbar-menu .user-profile .layout-profile-role, .layout-wrapper .layout-topbar .topbar-menu .user-profile .layout-profile-icon {
   -moz-transition: color 0.2s;
@@ -1093,10 +1093,6 @@ a {
   font-size: 12px;
   margin-top: 2px;
   display: block;
-}
-.layout-wrapper .layout-topbar .topbar-menu > li > a > img {
-  width: 36px;
-  margin-top: 4px;
 }
 .layout-wrapper .layout-topbar .topbar-menu > li > ul {
   position: absolute;
