@@ -4,24 +4,14 @@ import {Prof} from './prof.model';
 import {EtatEtudiantSchedule} from './etat-etudiant-schedule.model';
 import {ChatMessageDto} from './chatMessageDto';
 import {GroupeEtudiantDetail} from './groupe-etudiant-detail.model';
+import {User} from './user.model';
 
-export class Etudiant {
-    public id: number;
+export class Etudiant extends User {
     public ref: string;
-    public nom: string;
-    public numero: string;
-    public prenom: string;
-    public age: number;
-    public login: string;
-    public ville: string;
-    public address: string;
-    public gmail: string;
-    public password: string;
     public parcours = new Parcours();
     public quizEtudiant = new Array<QuizEtudiant>();
     public etatEtudiantSchedule = new EtatEtudiantSchedule();
     public prof = new Prof();
-    public image: string;
     public chatMessageDto = new Array<ChatMessageDto>();
     public groupeEtudiantDetails = new  Array< GroupeEtudiantDetail>();
 }

@@ -11,7 +11,7 @@
     'p-input-filled': app.inputStyle === 'filled',
     'p-ripple-disabled': !app.ripple}" class="layout-wrapper">
     <app-topbar></app-topbar>
-<!--    <app-menu></app-menu>-->
+    <app-menu [hidden]="user == null"></app-menu>
     <div class="layout-main">
         <div class="layout-content">
             <router-outlet></router-outlet>

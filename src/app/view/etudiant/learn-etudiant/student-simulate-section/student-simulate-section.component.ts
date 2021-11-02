@@ -55,7 +55,6 @@ export class StudentSimulateSectionComponent implements OnInit {
     word: string;
     wordDict: any;
     j: number;
-
     // tslint:disable-next-line:max-line-lengthg max-line-length
     constructor(private messageService: MessageService,
                 private router: Router,
@@ -75,12 +74,15 @@ export class StudentSimulateSectionComponent implements OnInit {
     ) {
     }
 
-    get hasfinish(): boolean {
-        return this.review.hasfinish;
+    get coursecomplited(): boolean {
+        return this.review.coursecomplited;
     }
-    set hasfinish(value: boolean) {
-        this.review.hasfinish = value;
+
+    set coursecomplited(value: boolean) {
+         this.review.coursecomplited = value;
+
     }
+
 
 
 
@@ -91,6 +93,10 @@ export class StudentSimulateSectionComponent implements OnInit {
 
     set viewDialog(value: boolean) {
         this.review.viewDialog = value;
+    }
+
+    public finish() {
+        this.viewDialog = true;
     }
 
 
@@ -312,6 +318,7 @@ export class StudentSimulateSectionComponent implements OnInit {
     navigate() {
         this.router.navigate(['etudiant/etudiant-cours']);
     }
+
     public findByWord() {
         this.dictionnaryService.FindByWord(this.word).subscribe(
             data => {
@@ -370,9 +377,6 @@ export class StudentSimulateSectionComponent implements OnInit {
             });
     }
 
-    public finish() {
-        this.viewDialog = true;
-    }
 
     public openCreateDict() {
         document.getElementById('dictionnair').style.visibility = 'hidden';
@@ -407,6 +411,9 @@ export class StudentSimulateSectionComponent implements OnInit {
         this.review.selected = value;
     }
 
+
+
+
     ngOnInit(): void {
         // this.hasfinish = false;
         //      this.http.get<EtudiantCours>('http://localhost:8036/etudiant/etudiantCours/prof/id/' + this.loginService.etudiant.prof.id + '/etudiant/id/' +  this.loginService.etudiant.id + '/cours/idc/' + this.).subscribe(
@@ -416,7 +423,6 @@ export class StudentSimulateSectionComponent implements OnInit {
         //              }
         //          }
         //      );
-        this.hasfinish = false;
 
         this.review.findReview(this.selectedcours.id).subscribe(
             data => {
@@ -768,6 +774,12 @@ export class StudentSimulateSectionComponent implements OnInit {
     sendhomeWork(homeWork: HomeWork) {
         console.log(homeWork);
         this.homeWorkEtudiantService.homeWork = homeWork;
+        this.homeWorkEtudiantService.findbyetudiantIdAndHomeWorkID().subscribe(
+            data => {
+                this.homeWorkEtudiantService.isUpdate = true;
+                this.homeWorkEtudiantService.homeWorkEtudiant = data ;
+            }
+        );
         this.homeWorkEtudiantService.homeWork.questions = homeWork.questions;
         //  this.homeWorkEtudiantService.homeWorkQuestion = ;
         this.router.navigate(['etudiant/homeWorkEtudiant']);

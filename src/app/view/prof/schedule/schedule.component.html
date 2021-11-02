@@ -46,7 +46,7 @@
     <ng-template #quickInfoTemplatesFooter let-data>
         <div *ngIf="data.elementType == 'cell'" class="e-cell-footer">
             <div class="left-button">
-                <button class="e-event-details" title="Extra Details" (click)="onDetailsClick()">More Details</button>
+                <button class="e-event-details" title="Extra Details" (click)="onDetailsClick(editorTemplate)">More Details</button>
             </div>
         </div>
     </ng-template>

@@ -51,12 +51,13 @@ export class InscriptionAdminComponent implements OnInit {
     ngOnInit(): void {
         this.selected = new Admin();
         // tslint:disable-next-line:no-unused-expression
-        this.selected.login = '';
+        this.selected.username = '';
         this.selected.password = '';
     }
 
     public save() {
         this.submitted = true;
+        console.log(this.selected);
         this.service.save().subscribe(
             data => {
                 this.selected = new Admin();

@@ -2,6 +2,10 @@ import {Component, Injectable, OnInit} from '@angular/core';
 import {MenuService} from '../shared/slide-bar/app.menu.service';
 import {PrimeNGConfig} from 'primeng/api';
 import {AppComponent} from '../../app.component';
+import {User} from '../../controller/model/user.model';
+import {AuthenticationService} from '../../controller/service/authentication.service';
+import {Role} from '../../enum/role.enum';
+import {LoginService} from '../../controller/service/login.service';
 
 @Component({
   selector: 'app-public',
@@ -11,7 +15,8 @@ import {AppComponent} from '../../app.component';
 @Injectable({
   providedIn: 'root' // just before your class
 })
-export class PublicComponent {
+export class PublicComponent implements  OnInit{
+user: User = new User();
 
   overlayMenuActive: boolean;
   overlayMenuActive2: boolean;
@@ -53,7 +58,18 @@ export class PublicComponent {
 
   inlineUserMenuActive = false;
 
-  constructor(private menuService: MenuService, private primengConfig: PrimeNGConfig, public app: AppComponent) {
+  get model(): any[] {
+    return this.service.model;
+  }
+
+  set model(value: any[]) {
+    this.service.model = value;
+  }
+
+  constructor(private menuService: MenuService,
+              private service: LoginService,
+              private authenticationService: AuthenticationService,
+              private primengConfig: PrimeNGConfig, public app: AppComponent) {
   }
 
   onLayoutClick() {
@@ -228,6 +244,10 @@ export class PublicComponent {
       document.body.className = document.body.className.replace(new RegExp('(^|\\b)' +
           'blocked-scroll'.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
     }
+  }
+
+  ngOnInit(): void {
+    this.user = this.authenticationService.getUserFromLocalCache();
   }
 }
 

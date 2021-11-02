@@ -17,6 +17,7 @@ export class EtudiantService {
     constructor(private http: HttpClient, public serviceUser: LoginService) {
     }
     private adminUrl = environment.adminUrl;
+    private etudiantUrl = environment.etudiantUrl;
     private url = environment.baseUrl + 'etudiant/';
     private _selected: Etudiant;
     private _submitted: boolean;
@@ -269,6 +270,10 @@ export class EtudiantService {
 
     set parcoursList(value: Array<Parcours>) {
         this._parcoursList = value;
+    }
+
+    public create(): Observable<Etudiant> {
+        return this.http.post<Etudiant>(this.etudiantUrl + 'etudiant/save/', this.selected);
     }
 
 

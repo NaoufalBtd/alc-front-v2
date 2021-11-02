@@ -163,7 +163,7 @@ export class ScheduleLocalComponent implements OnInit {
         this.selectionTarget = args.target;
     }
 
-    public onDetailsClick(): void {
+    public onDetailsClick(event: any): void {
         this.scheduleProf = new ScheduleProf();
         const data: Object = this.scheduleObj.getCellDetails(this.scheduleObj.getSelectedElements()) as Object;
         this.scheduleObj.openEditor(data, 'Add');

@@ -6,25 +6,23 @@ import {Observable} from 'rxjs';
 
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
+import {User} from '../model/user.model';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AdminService {
-    private _items: Array<Admin>;
-    private _submitted: boolean;
+
     private adminUrl = environment.adminUrl;
 
     private url = environment.baseUrl + 'admin/';
     private _selected: Admin;
-    private _createDialog: boolean;
+
     constructor(private http: HttpClient) {
     }
-    public save(): Observable<number> {
-        return this.http.post<number>(this.adminUrl + 'admin/', this.selected);
-    }
 
-    get selected(): Admin {
+
+    get selected(): User {
         if (this._selected == null) {
             this._selected = new Admin();
         }
@@ -34,18 +32,28 @@ export class AdminService {
     set selected(value: Admin) {
         this._selected = value;
     }
+
+    private _items: Array<Admin>;
+
     get items(): Array<Admin> {
         return this._items;
     }
+
     set items(value: Array<Admin>) {
         this._items = value;
     }
+
+    private _createDialog: boolean;
+
     get createDialog(): boolean {
         return this._createDialog;
     }
+
     set createDialog(value: boolean) {
         this._createDialog = value;
     }
+
+    private _submitted: boolean;
 
     get submitted(): boolean {
         return this._submitted;
@@ -53,6 +61,11 @@ export class AdminService {
 
     set submitted(value: boolean) {
         this._submitted = value;
+    }
+
+    public save(): Observable<number> {
+        console.log(this.selected);
+        return this.http.post<number>(this.adminUrl + 'admin/', this.selected);
     }
 
 }

@@ -1,15 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import {MenuService} from '../shared/slide-bar/app.menu.service';
 import {AppComponent} from '../../app.component';
+import {Role} from '../../enum/role.enum';
+import {User} from '../../controller/model/user.model';
+import {Router} from '@angular/router';
+import {AuthenticationService} from '../../controller/service/authentication.service';
 
 @Component({
   selector: 'app-etudiant',
   templateUrl: './etudiant.component.html',
   styleUrls: ['./etudiant.component.scss']
 })
-export class EtudiantComponent{
+export class EtudiantComponent implements OnInit{
   overlayMenuActive: boolean;
-
+  private user: User = new User();
 
   staticMenuDesktopInactive: boolean;
 
@@ -41,7 +45,11 @@ export class EtudiantComponent{
 
   inlineUserMenuActive = false;
 
-  constructor(private menuService: MenuService, public app: AppComponent) {
+
+  constructor(private menuService: MenuService,
+              private router: Router,
+              private authenticationService: AuthenticationService,
+              public app: AppComponent) {
   }
 
   onLayoutClick() {
@@ -114,6 +122,19 @@ export class EtudiantComponent{
     } else {
       document.body.className = document.body.className.replace(new RegExp('(^|\\b)' +
           'blocked-scroll'.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
+    }
+  }
+
+  ngOnInit(): void {
+    this.user = this.authenticationService.getUserFromLocalCache();
+    if (this.user === null) {
+      this.router.navigate(['#/']);
+    } else {
+      // @ts-ignore
+      if (this.user.authorities[0].authority === Role.ADMIN || this.user.authorities[0].authority === Role.PROF
+          || this.user.authorities.length === 0) {
+        this.router.navigate([' ']);
+      }
     }
   }
 }

@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   baseUrl: 'http://localhost:8036/learn/',
+  baseApi: 'http://localhost:8036',
   sectionItemUrl: 'http://localhost:8036/learn/sectionItem/',
   translationHost: 'http://localhost:8036/learn/TranslateEnAr/text/translationFeatures/',
   adminUrl: 'http://localhost:8036/admin/',

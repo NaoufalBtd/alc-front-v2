@@ -3,17 +3,9 @@ import {CategorieProf} from './categorie-prof.model';
 import {ClassRoom} from './class-room.model';
 import {Etudiant} from './etudiant.model';
 import {ChatMessageDto} from './chatMessageDto';
+import {User} from './user.model';
 
-export class Prof {
-    public id: number;
-    public numero: string;
-    public nom: string;
-    public image: string;
-    public prenom: string;
-    public login: string;
-    public password: string;
-    public addresse: string;
-    public email: string;
+export class Prof extends User {
     public ref: string;
     public classRoomList = new Array<ClassRoom>();
     public categorieProf = new CategorieProf();

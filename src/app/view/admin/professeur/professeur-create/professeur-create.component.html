@@ -15,13 +15,13 @@
         </div>
         <div class="p-field">
             <label for="login">Username</label>
-            <input [(ngModel)]="selected.login" autofocus id="login" pInputText required type="text"/>
-            <small *ngIf="submitted && !selected.login" class="p-invalid">UserName is required.</small>
+            <input [(ngModel)]="selected.username" autofocus id="login" pInputText required type="text"/>
+            <small *ngIf="submitted && !selected.username" class="p-invalid">UserName is required.</small>
         </div>
         <div class="p-field">
             <label for="pass">Password</label>
             <input [(ngModel)]="selected.password" autofocus id="pass" pInputText required type="text"/>
-            <small *ngIf="submitted && !selected.login" class="p-invalid">Password is required.</small>
+            <small *ngIf="submitted && !selected.username" class="p-invalid">Password is required.</small>
         </div>
         <div class="p-field">
             <label for="phoneNumber">Phone Number</label>

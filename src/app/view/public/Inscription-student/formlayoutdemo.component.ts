@@ -6,13 +6,16 @@ import {Etudiant} from '../../../controller/model/etudiant.model';
 import {Parcours} from '../../../controller/model/parcours.model';
 import {Centre} from '../../../controller/model/centre.model';
 import {Router} from '@angular/router';
+import {EtudiantService} from '../../../controller/service/etudiant.service';
 
 @Component({
     templateUrl: './formlayoutdemo.component.html',
     styleUrls: ['./formlayoutdemo.css']
 })
 export class FormLayoutDemoComponent implements OnInit {
-    constructor(private messageService: MessageService, private confirmationService: ConfirmationService,
+    constructor(private messageService: MessageService,
+                private etudiantService: EtudiantService,
+                private confirmationService: ConfirmationService,
                 private service: InscriptionService, private router: Router) {
     }
 
@@ -58,11 +61,16 @@ export class FormLayoutDemoComponent implements OnInit {
 
     // tslint:disable-next-line:adjacent-overload-signatures
     get etudiant(): Etudiant {
-        return this.service.etudiant;
+        return this.etudiantService.selected;
+    }
+
+    // tslint:disable-next-line:adjacent-overload-signatures
+    get etudiants(): Array<Etudiant> {
+        return this.etudiantService.selectes;
     }
 
     set etudiant(value: Etudiant) {
-        this.service.etudiant = value;
+        this.etudiantService.selected = value;
     }
 
     get parcours(): Parcours {
@@ -98,11 +106,12 @@ export class FormLayoutDemoComponent implements OnInit {
 
     // tslint:disable-next-line:typedef
     public save() {
+        console.log(this.etudiant);
         this.submitted = true;
         this.selected.datefininscription = new Date();
         console.log(this.selected.parcours.id);
-        this.service.save().subscribe(data => {
-            this.selectes.push({...data});
+        this.etudiantService.create().subscribe(data => {
+            this.etudiants.push({...data});
             this.messageService.add({
                 severity: 'success',
                 summary: 'Successful',
@@ -116,6 +125,7 @@ export class FormLayoutDemoComponent implements OnInit {
                 detail: 'Registration canceled',
                 life: 3000
             });
+            console.log(error);
         });
         this.selected = new Inscription();
     }
