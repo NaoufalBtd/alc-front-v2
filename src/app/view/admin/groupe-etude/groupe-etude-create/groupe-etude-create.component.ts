@@ -54,6 +54,13 @@ export class GroupeEtudeCreateComponent implements OnInit {
     this.groupeEtudeService.groupeEtudiant = value;
   }
 
+  get selected(): GroupeEtude{
+    return this.groupeEtudeService.selected;
+  }
+
+  set selected(value: GroupeEtude) {
+    this.groupeEtudeService.selected = value;
+  }
 
   get submitted(): boolean {
     return this.groupeEtudeService.submitted;
@@ -68,11 +75,12 @@ export class GroupeEtudeCreateComponent implements OnInit {
   set groupeEtudes(value: Array<GroupeEtude>) {
     this.groupeEtudeService.groupeEtudes = value;
   }
+  /*
   public save() {
     this.submitted = true;
-    this.groupeEtude.id = 1;
+    this.selected.id = 1;
     this.groupeEtudeService.save().subscribe(data => {
-      this.groupeEtudes.push({...this.groupeEtude});
+      this.groupeEtudes.push({...this.selected});
       // tslint:disable-next-line:no-shadowed-variable
       this.groupeEtudeService.findAll().subscribe(data => this.groupeEtudes = data);
       this.messageService.add({
@@ -82,11 +90,28 @@ export class GroupeEtudeCreateComponent implements OnInit {
         life: 3000
       });
     });
-    this.createDialog = false;
-    this.groupeEtude = new GroupeEtude();
+    this.createDialogEtud = false;
+    this.selected = new GroupeEtude();
   }
-
-
+*/
+  public save() {
+    this.submitted = true;
+    if (this.selected.libelle.trim()) {
+      this.groupeEtudeService.save().subscribe(data => {
+        // tslint:disable-next-line:no-shadowed-variable
+        this.groupeEtudeService.findAll().subscribe(data => this.items = data);
+        this.items.push({...this.selected});
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Successful',
+          detail: 'Etudiant Created',
+          life: 3000
+        });
+      });
+      this.createDialogEtud = false;
+      this.selected = new GroupeEtude();
+    }
+  }
   public hideCreateDialog() {
     this.createDialogEtud = false;
     this.submitted = false;

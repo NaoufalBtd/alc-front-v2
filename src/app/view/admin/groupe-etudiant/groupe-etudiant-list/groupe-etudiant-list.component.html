@@ -40,16 +40,19 @@
                         <th pSortableColumn="libelle"> Group Label
                             <p-sortIcon field="liebelle"></p-sortIcon>
                         </th>
-                        <th pSortableColumn="dateDebut">Date Début
+                        <th pSortableColumn="dateDebut">Start date
                             <p-sortIcon field="dateDebut"> </p-sortIcon>
                         </th>
-                        <th pSortableColumn="dateFin">Date Fin
+                        <th pSortableColumn="dateFin">End date
                             <p-sortIcon field="dateFin"> </p-sortIcon>
                         </th>
-                        <th pSortableColumn="nombrePlace">Nombre de place vide
+                        <th pSortableColumn="nombrePlace">Empty places
                             <p-sortIcon field="nombrePlace">  </p-sortIcon>
                         </th>
-                        <th pSortableColumn="nombrePlaceVide">Nombre de place non vide
+                        <th pSortableColumn="nombrePlaceVide">Occupied places
+                            <p-sortIcon field="nombrePlaceVide">  </p-sortIcon>
+                        </th>
+                        <th pSortableColumn="nombrePlaceVide">Actions
                             <p-sortIcon field="nombrePlaceVide">  </p-sortIcon>
                         </th>
                     </tr>
@@ -59,7 +62,6 @@
                         <td>
                             <p-tableCheckbox [value]="groupeEtudiant"></p-tableCheckbox>
                         </td>
-
                         <td>{{groupeEtudiant.libelle}}</td>
                         <td>{{groupeEtudiant.dateDebut}}</td>
                         <td>{{groupeEtudiant.dateFin}}</td>

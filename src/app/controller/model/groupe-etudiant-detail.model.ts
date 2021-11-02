@@ -5,6 +5,6 @@ import {Etudiant} from './etudiant.model';
 export class GroupeEtudiantDetail {
     public id: number;
     public groupeEtudiant = new GroupeEtudiant();
-    public etudiant = new Etudiant();
+    public etudiant: Etudiant = new Etudiant();
 
 }

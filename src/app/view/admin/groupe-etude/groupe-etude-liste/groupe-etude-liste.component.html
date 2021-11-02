@@ -10,6 +10,9 @@
                     <button   (click)="openCreateEtud()" class="p-button-success p-mr-2 p-mb-2" icon="pi pi-plus" label="New" pButton
                             pRipple style="width: 90px"></button>
 
+                    <button (click)="deleteMultiple()" [disabled]="!selectes || !selectes.length" class="p-button-danger p-mb-2" icon="pi pi-trash" label="Delete"
+                            pButton pRipple></button>
+
 
                 </ng-template>
 
@@ -46,6 +49,9 @@
                         <th pSortableColumn="prenom"> Description
                             <p-sortIcon field="prenom"></p-sortIcon>
                         </th>
+                        <th pSortableColumn="prenom"> Actions
+                            <p-sortIcon field="prenom"></p-sortIcon>
+                        </th>
                     
                     </tr>
                 </ng-template>
@@ -57,10 +63,7 @@
                         <td>{{groupeEtude.libelle}}</td>
                         <td>{{groupeEtude.nombreEtudiant}}</td>
                         <td>{{groupeEtude.description}}</td>
-                        <td></td>
 
-
-                        <td>
                         <td>
 
                             <button (click)="delete(groupeEtude)" class="p-button-rounded p-button-danger" icon="pi pi-trash" pButton
