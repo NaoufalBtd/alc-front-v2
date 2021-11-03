@@ -12,6 +12,8 @@ import {Vocabulary} from '../model/vocabulary.model';
 import {EtudiantCours} from '../model/etudiant-cours.model';
 import {LoginService} from './login.service';
 import {environment} from "../../../environments/environment";
+import {AuthenticationService} from './authentication.service';
+import {User} from '../model/user.model';
 
 
 @Injectable({
@@ -24,9 +26,13 @@ export class ParcoursService {
     private _sectionStandard: Array<Section>;
     private _sectionAdditional: Array<Section>;
 
-
+user1:User = new User();
     public afficheCoursStudent(): Observable<Array<Cours>> {
-        return this.http.get<Array<Cours>>(this.adminUrl + 'cours/order/id/' + this.user.etudiant.parcours.id);
+          this.user1 = this.authenticationService.getUserFromLocalCache();
+          console.log(this.user1);
+          // @ts-ignore
+        const id = this.user1.parcours.id;
+          return this.http.get<Array<Cours>>(this.adminUrl + 'cours/order/id/' + id);
     }
     get contenuSection(): Array<string> {
         return this._contenuSection;
@@ -44,7 +50,8 @@ export class ParcoursService {
         this._index = value;
     }
 
-    constructor(private http: HttpClient, private user: LoginService ) {
+    constructor(private http: HttpClient, private user: LoginService ,
+                private authenticationService: AuthenticationService) {
     }
 
 

@@ -31,20 +31,9 @@ export class EtudiantProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.authenticationService.getUserFromLocalCache();
-    this.findAll();
   }
 
-  findAll() {
-    this.userService.getUsers().subscribe(
-        data => {
-          this.users = data;
-          this.allUsers = data;
-          console.log(this.users);
-        }, error => {
-          console.log(error);
-        }
-    );
-  }
+
 
   public onProfileImageChange(event: any): void {
     const target = event.target as HTMLInputElement;

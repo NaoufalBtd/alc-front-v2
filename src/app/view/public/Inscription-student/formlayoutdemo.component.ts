@@ -13,6 +13,10 @@ import {EtudiantService} from '../../../controller/service/etudiant.service';
     styleUrls: ['./formlayoutdemo.css']
 })
 export class FormLayoutDemoComponent implements OnInit {
+    locality = [
+        {name: 'native'},
+        {name: 'non-native'},
+    ];
     constructor(private messageService: MessageService,
                 private etudiantService: EtudiantService,
                 private confirmationService: ConfirmationService,
@@ -103,8 +107,6 @@ export class FormLayoutDemoComponent implements OnInit {
         this.selected.datedebutinscription = new Date();
         this.service.findAllParcours().subscribe(data => this.parcoursList = data);
     }
-
-    // tslint:disable-next-line:typedef
     public save() {
         console.log(this.etudiant);
         this.submitted = true;

@@ -69,6 +69,7 @@ import {HomeWorkResultComponent} from './view/etudiant/homeWork/home-work-result
 import {SessioncoursComponent} from './view/admin/sessioncours/sessioncours.component';
 import {EtudiantcommentreviewComponent} from './view/prof/etudiantcommentreview/etudiantcommentreview.component';
 import {PaiementlistComponent} from './view/prof/paiementlist/paiementlist.component';
+import {ResetPasswordComponent} from './view/public/reset-password/reset-password.component';
 
 
 @NgModule({
@@ -152,6 +153,7 @@ import {PaiementlistComponent} from './view/prof/paiementlist/paiementlist.compo
                     {path: 'public/inscriptionAdmin', component: InscriptionAdminComponent},
                     {path: 'public/inscriptionTeacher', component: InscriptionProfComponent},
                     {path: 'public/inscriptionEtudiant', component: FormLayoutDemoComponent},
+                    {path: 'resetPassword', component: ResetPasswordComponent},
                 ]
             },
             {path: '**', component: PageNotFoundComponent},

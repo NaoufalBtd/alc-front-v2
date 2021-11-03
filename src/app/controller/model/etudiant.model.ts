@@ -8,6 +8,8 @@ import {User} from './user.model';
 
 export class Etudiant extends User {
     public ref: string;
+    public  teacherLocality: string = String(' '); //  native || non-native
+    public  groupOption: string;
     public parcours = new Parcours();
     public quizEtudiant = new Array<QuizEtudiant>();
     public etatEtudiantSchedule = new EtatEtudiantSchedule();

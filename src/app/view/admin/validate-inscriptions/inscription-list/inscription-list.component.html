@@ -31,11 +31,11 @@
                     <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
                         <div class="p-col"><h5 class="p-m-0">Manage Inscriptions</h5><br>
                             <span>
-                        <input [(ngModel)]="selected.nom  " pInputText placeholder="Search by LastName" style="margin-right: 10px;width: 200px"
+                        <input [(ngModel)]="selected.etudiant.nom  " pInputText placeholder="Search by LastName" style="margin-right: 10px;width: 200px"
                                type="text"/>
-                        <input [(ngModel)]="selected.prenom  " pInputText placeholder="Search by FirstName" style="margin-right: 10px;width: 200px"
+                        <input [(ngModel)]="selected.etudiant.prenom  " pInputText placeholder="Search by FirstName" style="margin-right: 10px;width: 200px"
                                type="text"/>
-                        <input [(ngModel)]="selected.login  " pInputText placeholder="Search by UserName" style="margin-right: 10px;width: 200px"
+                        <input [(ngModel)]="selected.etudiant.username " pInputText placeholder="Search by UserName" style="margin-right: 10px;width: 200px"
                                type="text"/>
 
              <i (click)="findByCriteria()" class="pi pi-search"></i>
@@ -71,10 +71,10 @@
                         <td>
                             <p-tableCheckbox [value]="inscription"></p-tableCheckbox>
                         </td>
-                        <td>{{inscription.nom}}</td>
-                        <td>{{inscription.prenom}}</td>
-                        <td>{{inscription.address}}</td>
-                        <td>{{inscription.login}}</td>
+                        <td>{{inscription.etudiant.nom}}</td>
+                        <td>{{inscription.etudiant.prenom}}</td>
+                        <td>{{inscription.etudiant.addresse}}</td>
+                        <td>{{inscription.etudiant.username}}</td>
                         <td>
                             <button (click)="edit(inscription)"  [style.visibility]="(inscription.etatInscription.libelle) == 'Validated'?'hidden':'visible'" class=" p-button-success " label="Validate" pButton
                                     pRipple></button></td>
