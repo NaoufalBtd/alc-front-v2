@@ -3,19 +3,19 @@
     <ng-template pTemplate="content">
         <div class="p-field">
             <label for="nom">LastName</label>
-            <input [(ngModel)]="selected.nom" disabled id="nom" pInputText type="text"/>
+            <input [(ngModel)]="selected.etudiant.nom" disabled id="nom" pInputText type="text"/>
         </div>
         <div class="p-field">
             <label for="prenom">FirstName</label>
-            <input [(ngModel)]="selected.prenom" disabled id="prenom" pInputText type="text"/>
+            <input [(ngModel)]="selected.etudiant.prenom" disabled id="prenom" pInputText type="text"/>
         </div>
         <div class="p-field">
             <label for="age">Age</label>
-            <input [(ngModel)]="selected.age" disabled id="age" pInputText type="text"/>
+            <input [(ngModel)]="selected.etudiant.age" disabled id="age" pInputText type="text"/>
         </div>
         <div class="p-field">
             <label for="gmail">Email</label>
-            <input [(ngModel)]="selected.login" disabled id="gmail" pInputText
+            <input [(ngModel)]="selected.etudiant.username" disabled id="gmail" pInputText
                     ="text"/>
         </div>
         <div class="p-field">

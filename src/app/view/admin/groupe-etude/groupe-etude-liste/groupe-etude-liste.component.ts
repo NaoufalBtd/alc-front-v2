@@ -94,6 +94,24 @@ export class GroupeEtudeListeComponent implements OnInit {
       }
     });
   }
-
+  public deleteMultiple() {
+    this.confirmationService.confirm({
+      message: 'Are you sure you want to delete the selected groups?',
+      header: 'Confirm',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.groupeEtudeService.deleteMultipleByLibelle().subscribe(data => {
+          this.groupeEtudeService.deleteMultipleIndexById();
+          this.selectes = null;
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Successful',
+            detail: 'Groups  Deleted',
+            life: 3000
+          });
+        });
+      }
+    });
+  }
 }
 

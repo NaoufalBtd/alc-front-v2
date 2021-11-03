@@ -2,9 +2,9 @@
           header="Etudiant Create" styleClass="p-fluid">
     <ng-template pTemplate="content">
         <div class="p-field">
-            <label for="nom">LastName</label>
+            <label for="nom">Last Name</label>
             <input [(ngModel)]="selected.nom" autofocus id="nom" pInputText required type="text"/>
-            <small *ngIf="submitted && !selected.nom" class="p-invalid">FirstName is required.</small>
+            <small *ngIf="submitted && !selected.nom"   class="p-invalid"> FirstName is required.</small>
         </div>
         <div class="p-field">
             <label for="prenom">FirstName</label>

@@ -7,6 +7,7 @@ import {GroupeEtude} from '../model/groupe-etude.model';
 import {Etudiant} from '../model/etudiant.model';
 import {GroupeEtudiantDetail} from '../model/groupe-etudiant-detail.model';
 import {Quiz} from '../model/quiz.model';
+import {Parcours} from '../model/parcours.model';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,7 @@ export class GroupeEtudiantService {
   constructor(private http: HttpClient) {
   }
   private urlBase = 'http://localhost:8036';
+  private urlParcours = '/admin/parcours/';
   private urlGroupeEtude = '/admin/groupeEtude/';
   private urlGroupeEtudiant = '/admin/groupeEtudiant/';
   private urlGroupeEtudiantDetail = '/admin/groupeEtudiant/id/' ;
@@ -35,10 +37,13 @@ export class GroupeEtudiantService {
   private _groupeEtudiantDetail: GroupeEtudiantDetail;
   // tslint:disable-next-line:variable-name
   private _groupeEtudiantDetails: Array<GroupeEtudiantDetail>;
-  private _etudiantList: Array<Etudiant>;
+  private _etudiantList: Array<Etudiant>
+  private _etudiantList2: Array<Etudiant>;
+  private _parcoursList: Array<Parcours>;
+  private _parcours : Parcours;
   // tslint:disable-next-line:variable-name
   private _etudiant: Etudiant;
-
+  private _etudiant2: Etudiant;
   public save(): Observable<number>{
     return this.http.post<number>(this.urlBase + this.urlGroupeEtudiant, this.groupeEtudiant);
   }
@@ -55,23 +60,23 @@ export class GroupeEtudiantService {
   public findAllGroupeEtudiantDetail(id: number): Observable<Array<GroupeEtudiantDetail>> {
     return this.http.get<Array<GroupeEtudiantDetail>>(this.urlBase + this.urlGroupeEtudiantDetail + id);
   }
-
-
-
-
-  /*
-  public findQuizSection(section: number): Observable<Quiz> {
-    return this.http.get<Quiz>(this.adminUrl + 'quiz/section/id/' + section);
+  // tslint:disable-next-line:ban-types
+  public findEtudiantListByParcoursLibelle(libelle: string): Observable<Array<Etudiant>> {
+    return this.http.get<Array<Etudiant>>(this.urlBase + '/admin/etudiant/libelle/' + libelle);
   }
 
-   */
   public findAllEtudiant(): Observable<Array<Etudiant>> {
     return this.http.get<Array<Etudiant>>(this.urlBase + '/admin/' + 'etudiant/');
+  }
+
+  public findAllParcours(): Observable<Array<Parcours>> {
+    return this.http.get<Array<Parcours>>(this.urlBase + this.urlParcours);
   }
 public addEtudiant(){
     this.groupeEtudiant.groupeEtudiantDetails.push({...this._groupeEtudiantDetail});
     this.groupeEtudiantDetail = null ;
 }
+
   get etudiantList(): Array<Etudiant> {
     if (this._etudiantList == null) {
       this._etudiantList = new  Array<Etudiant>();
@@ -82,6 +87,17 @@ public addEtudiant(){
   set etudiantList(value: Array<Etudiant>) {
     this._etudiantList = value;
   }
+
+  get etudiantList2(): Array<Etudiant> {
+    if (this._etudiantList2 == null) {
+      this._etudiantList2 = new  Array<Etudiant>();
+    }
+    return this._etudiantList2;
+  }
+
+  set etudiantList2(value: Array<Etudiant>) {
+    this._etudiantList2 = value;
+  }
   get groupeEtudeList(): Array<GroupeEtude> {
     if (this._groupeEtudeList == null)
     {
@@ -90,21 +106,55 @@ public addEtudiant(){
     return this._groupeEtudeList;
   }
 
+
+  get parcoursList(): Array<Parcours> {
+    if (this._parcoursList == null)
+    {
+      this.parcoursList = new Array<Parcours>();
+    }
+    return this._parcoursList;
+  }
+
+  set parcoursList(value: Array<Parcours>) {
+    this._parcoursList = value;
+  }
+
+  get parcours(): Parcours {
+    if (this._parcours == null)
+    {
+      this._parcours = new Parcours();
+    }
+    return this._parcours;
+  }
+
+  set parcours(value: Parcours) {
+    this._parcours = value;
+  }
+
   set groupeEtudeList(value: Array<GroupeEtude>) {
     this._groupeEtudeList = value;
   }
 
   get etudiant(): Etudiant {
-    if (this.etudiant == null) {
-      this.etudiant = new  Etudiant();
+    if (this._etudiant == null) {
+      this._etudiant = new  Etudiant();
     }
     return this._etudiant;
+  }
+
+  set etudiant2(value: Etudiant) {
+    this._etudiant2 = value;
+  }
+  get etudiant2(): Etudiant {
+    if (this._etudiant2 == null) {
+      this._etudiant2 = new  Etudiant();
+    }
+    return this._etudiant2;
   }
 
   set etudiant(value: Etudiant) {
     this._etudiant = value;
   }
-
 
   get groupeEtudiantDetail(): GroupeEtudiantDetail {
     if (this._groupeEtudiantDetail == null) {

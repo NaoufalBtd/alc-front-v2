@@ -16,8 +16,6 @@ import {HttpErrorResponse, HttpEvent, HttpEventType} from '@angular/common/http'
 export class ProfProfileComponent implements OnInit {
 
   user: User = new User();
-  public users: User[];
-  allUsers: User[];
   public fileName: string;
   public profileImage: File;
   public fileStatus = new FileUploadStatus();
@@ -33,19 +31,6 @@ export class ProfProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.authenticationService.getUserFromLocalCache();
-    this.findAll();
-  }
-
-  findAll() {
-    this.userService.getUsers().subscribe(
-        data => {
-          this.users = data;
-          this.allUsers = data;
-          console.log(this.users);
-        }, error => {
-          console.log(error);
-        }
-    );
   }
 
   public onProfileImageChange(event: any): void {

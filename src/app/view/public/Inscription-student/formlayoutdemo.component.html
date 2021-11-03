@@ -82,13 +82,35 @@
         <form method="POST" class="appointment-form" id="appointment-form">
             <h2>Registration form</h2>
             <div class="form-group-1">
-                <input type="text" name="prenom" id="Firstname" placeholder="Firstname" [(ngModel)]="etudiant.prenom" required />
-                <input type="text" name="nom" id="Lastname" placeholder="Lastname" [(ngModel)]="etudiant.nom" required />
-                <input type="email" name="username" id="gmail" placeholder="email" required [(ngModel)]="etudiant.username"/>
-                <input type="tel" name="phone_number" id="phone_number" placeholder="phone number" required [(ngModel)]="etudiant.numero"/>
+                <input type="text" name="prenom" id="Firstname" placeholder="Firstname" [(ngModel)]="etudiant.prenom"
+                       required/>
+                <input type="text" name="nom" id="Lastname" placeholder="Lastname" [(ngModel)]="etudiant.nom" required/>
+                <input type="email" name="username" id="gmail" placeholder="email" required
+                       [(ngModel)]="etudiant.username"/>
+                <input type="tel" name="phone_number" id="phone_number" placeholder="phone number" required
+                       [(ngModel)]="etudiant.numero"/>
+                <input type="number" name="phone_number" id="age" placeholder="Age" required
+                       [(ngModel)]="etudiant.age"/>
+                <input type="text" name="phone_number" id="address" placeholder="Your address" required
+                       [(ngModel)]="etudiant.addresse"/>
+                <input type="text" name="phone_number" id="city" placeholder="Your city" required
+                       [(ngModel)]="etudiant.ville"/>
+<!--                &lt;!&ndash;                <input type="number" name="phone_number" id="city" placeholder="Your city" required [(ngModel)]="etudiant."/>&ndash;&gt;-->
+<!--                <p-dropdown [options]="locality" [(ngModel)]="etudiant.teacherLocality" optionLabel="name" style="width: 100% !important;-->
+<!--                             margin-bottom: 2%;" placeholder="">-->
+<!--                </p-dropdown>-->
+
+
+                <select required name="role" id="" [(ngModel)]="etudiant.teacherLocality" >
+                    <option selected value=" ">Select your favorite teacher locality</option>
+                    <option value="native">Native</option>
+                    <option value="non-native">Non-native</option>
+                </select>
             </div>
-            <div class="form-submit" >
-                <button type="button" name="submit" style="background-color: orange; float: right" id="submit" class="submit"  (click)="save()">Submit</button>
+            <div class="form-submit">
+                <button type="button" name="submit" style="background-color: orange; float: right" id="submit"
+                        class="submit" (click)="save()">Submit
+                </button>
             </div>
         </form>
     </div>
