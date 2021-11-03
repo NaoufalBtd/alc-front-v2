@@ -3,20 +3,19 @@
           header="Etudiant Create" styleClass="p-fluid">
     <ng-template pTemplate="content">
         <div class="p-field">
-            <label > Group</label>
-            <input [(ngModel)]="groupeEtude.libelle" autofocus id="nom" pInputText required type="text"/>
-       <!--     <small *ngIf="submitted && !groupeEtude.libelle" class="p-invalid">FirstName is required.</small>
-       -->
+            <label for="libelle">Group Label</label>
+            <input [(ngModel)]="selected.libelle" autofocus id="libelle" pInputText required type="text"/>
+            <small  *ngIf="submitted && !selected.libelle" style="color: red ;font-family:verdana,bold ;font-size:12px"  class="p-invalid">Group Label is required.</small>
         </div>
         <div class="p-field">
-            <label >Number of students</label>
-            <input [(ngModel)]="groupeEtude.nombreEtudiant" autofocus id="nombreEtudiant" pInputText required type="number"/>
-      <!--      <small *ngIf="submitted && !selected.prenom" class="p-invalid">LastName is required.</small>
-      -->
+            <label  for="nombreEtudiant">Number of students</label>
+            <input [(ngModel)]="selected.nombreEtudiant" autofocus id="nombreEtudiant" pInputText required type="number"/>
+      <small *ngIf="submitted && !selected.nombreEtudiant"  style="color: red ;font-family:verdana,bold ;font-size:12px" class="p-invalid">LastName is required.</small>
+
         </div>
         <div class="p-field">
             <label >Description</label>
-            <input [(ngModel)]="groupeEtude.description" autofocus id="description" pInputText required type="text"/>
+            <input [(ngModel)]="selected.description" autofocus id="description" pInputText required type="text"/>
             <!--      <small *ngIf="submitted && !selected.prenom" class="p-invalid">LastName is required.</small>
             -->
         </div>

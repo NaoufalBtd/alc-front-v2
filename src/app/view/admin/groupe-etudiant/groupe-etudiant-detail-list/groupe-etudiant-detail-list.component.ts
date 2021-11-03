@@ -16,9 +16,9 @@ export class GroupeEtudiantDetailListComponent implements OnInit {
   constructor( private groupeEtudiantService: GroupeEtudiantService,private messageService: MessageService) { }
   private _createDialog: boolean;
 
-  ngOnInit(): void {
 
-this.groupeEtudiantService.findAllGroupeEtudiantDetail(this.groupeEtudiant.id).subscribe(
+  ngOnInit(): void {
+    this.groupeEtudiantService.findAllGroupeEtudiantDetail(this.groupeEtudiant.id).subscribe(
         data =>  this.groupeEtudiant.groupeEtudiantDetails = data);
     /*
     this.groupeEtudiantService.findAllGroupeEtudiantDetail().subscribe(data => {

@@ -1,28 +1,36 @@
-<p-dialog [(visible)]="createDialogEtud" [modal]="true" [style]="{width: '450px'}"
+<p-dialog [(visible)]="createDialogEtud" [modal]="true" [style]="{width: '500px'}"
           header="Group Create" styleClass="p-fluid">
+    <!--
     <ng-template pTemplate="content">
 
         <div class="p-field">
             <label for="parcours">Group</label><br>
             <select (click)="findAllGroupeEtude()" [(ngModel)]="selected.groupeEtude.id"
 
-                     class="btn btn-block btn-outline-light form-control" id="parcours"
-                    name="Parcours" pInputText style=" background-color: gainsboro;margin-left: 5px"
+                     class="btn btn-block btn-outline-light form-control" id="groupeEtude"
+                    name="roupe Etude" pInputText style=" background-color: gainsboro;margin-left: 5px"
                     type="text">
-                <option *ngFor="let p of groupeEtudeList" [ngValue]="p.id" selected="selected"> {{p.libelle}}
+                <option *ngFor="let p of groupeEtudeList" [ngValue]="p.id" selected="selected">{{p.libelle}}
+                </option>
+          </select>
+        </div>
 
+        <div class="p-field">
+            <label for="parcours">Parcours</label><br>
+            <select  (click)="findAllParcours()" [(ngModel)]="selected.parcours.libelle"
+                     #cricket  (change)="selectChangeHandler($event)"
+                    class="btn btn-block btn-outline-light form-control"
+                   pInputText style=" background-color: gainsboro;margin-left: 5px"
+                    type="text">
+
+                <option *ngFor="let p of parcoursList "   [ngValue]="p.libelle"  selected="selected"  >{{p.libelle}}
                 </option>
 
-          </select>
+            </select>
+        </div>
 
-        </div>
-      
-        <!--
-        (change)="selectOption($event)"
-        <div class="p-field">
-            <label >{{selected.groupeEtude.id}} </label>
-        </div>
-        -->
+
+
         <div class="p-field">
             <label > Group Label</label>
             <input [(ngModel)]="selected.libelle" autofocus id="nombreNonPlacevide" pInputText required type="text"/>
@@ -51,19 +59,168 @@
 
 
         <div class="p-field">
-            <label for="parcours">Group</label><br>
-            <select (click)="findAllEtudiant()" [(ngModel)]="groupeEtudiantDetail.etudiant.id" class="btn btn-block btn-outline-light form-control" id="parcours"
+            <label for="parcours">Students</label><br>
+            <select (click)="findEtudiantListByParcoursLibelle(libelle1.split(': ')[1]) ;
+            "
+                    (change)="selectChangeHandler2($event)"
+                    [(ngModel)]="groupeEtudiantDetail.etudiant.id"
+
+
+                    class="btn btn-block btn-outline-light form-control" id="parcours"
                     name="Parcours" pInputText style=" background-color: gainsboro;margin-left: 5px"
                     type="text">
-                <option *ngFor="let e of etudiantList" [ngValue]="e.id" selected="selected"> {{e.nom}} {{e.prenom}}</option>
+
+                <option  *ngFor="let e of etudiantList" [ngValue]="e.id" selected="selected"> {{e.nom}} {{e.prenom}}</option>
             </select>
         </div>
-        <button (click)="addEtudiant()" class="p-button-text" icon="pi pi-check" label="Add sudent" pButton
+
+        <button (click)=" exit(id2)" class="p-button-text" icon="pi pi-check" label="Add sudent" pButton
                 pRipple></button>
 
+
+     <p-table [value]="groupeEtudiant.groupeEtudiantDetails">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="libelle"> Nom
+                    </th>
+                    <th pSortableColumn="dateDebut">Prenom
+                    </th>
+                    <th pSortableColumn="dateDebut">Parcours
+                    </th>
+                    <th pSortableColumn="dateDebut">Actions
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template let-e pTemplate="body">
+                <tr>
+                    <td>{{e.etudiant.nom}}</td>
+                    <td>{{e.etudiant.prenom}}</td>
+
+
+
+                    <td>
+                        <button (click)="deleteFromView(e)" class="p-button-rounded p-button-danger" icon="pi pi-trash" pButton
+                                pRipple></button>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
     </ng-template>
     <ng-template pTemplate="footer">
 
+        <button (click)="save()" class="p-button-text" icon="pi pi-times" label="Save" pButton
+                pRipple></button>
+        <button (click)="hideCreateDialog()" class="p-button-text" icon="pi pi-times" label="Cancel" pButton
+                pRipple></button>
+    </ng-template>
+    -->
+    <ng-template pTemplate="content">
+    <p-tabView>
+        <p-tabPanel header="Group information">
+            <div class="p-field">
+                <label for="groupeEtude">Group</label><br>
+                <select (click)="findAllGroupeEtude()" [(ngModel)]="selected.groupeEtude.id"
+
+                        class="btn btn-block btn-outline-light form-control" id="groupeEtude"
+                        name="roupe Etude" pInputText style=" background-color: gainsboro;margin-left: 5px"
+                        type="text">
+                    <option *ngFor="let p of groupeEtudeList" [ngValue]="p.id" selected="selected">{{p.libelle}}
+                    </option>
+                </select>
+            </div>
+
+            <div class="p-field">
+                <label for="parcours">Level</label><br>
+                <select  (click)="findAllParcours()" [(ngModel)]="selected.parcours.libelle"
+                         #cricket  (change)="selectChangeHandler($event)"
+                         class="btn btn-block btn-outline-light form-control"
+                         pInputText style=" background-color: gainsboro;margin-left: 5px"
+                         type="text">
+
+                    <option *ngFor="let p of parcoursList "   [ngValue]="p.libelle"  selected="selected"  >{{p.libelle}}
+                    </option>
+
+                </select>
+            </div>
+
+
+
+            <div class="p-field">
+                <label > Group Label</label>
+                <input [(ngModel)]="selected.libelle" autofocus id="nombreNonPlacevide" pInputText required type="text"/>
+
+            </div>
+            <div class="p-field">
+                <label> Start date </label>
+                <input [(ngModel)]="selected.dateDebut" autofocus id="libelle" pInputText required type="date"/>
+
+            </div>
+            <div class="p-field">
+                <label > End date </label>
+                <input [(ngModel)]="selected.dateFin" autofocus id="dateDebut" pInputText required type="date"/>
+
+            </div>
+            <div class="p-field">
+                <label >Empty places </label>
+                <input [(ngModel)]="selected.nombrePlacevide" autofocus id="dateFin" pInputText required type="number"/>
+
+            </div>
+            <div class="p-field">
+                <label > Occupied places </label>
+                <input [(ngModel)]="selected.nombrePlaceNonVide" autofocus id="nombrePlacevide" pInputText required type="number"/>
+
+            </div>
+
+        </p-tabPanel>
+        <p-tabPanel header="Students information ">
+            <div class="p-field">
+                <label for="parcours">Students</label><br>
+                <select (click)="findEtudiantListByParcoursLibelle(libelle1.split(': ')[1]) "
+                        (change)="selectChangeHandler2($event)"
+                        [(ngModel)]="groupeEtudiantDetail.etudiant.id"
+
+
+                        class="btn btn-block btn-outline-light form-control" id="parcours"
+                        name="Parcours" pInputText style=" background-color: gainsboro;margin-left: 5px"
+                        type="text">
+
+                    <option  *ngFor="let e of etudiantList" [ngValue]="e.id" selected="selected"> {{e.nom}} {{e.prenom}}</option>
+                </select>
+            </div>
+
+            <button (click)=" exit(id2)" class="p-button-text table1" icon="pi pi-check" label="Add student" pButton
+                    pRipple></button>
+
+            <p-table [value]="groupeEtudiant.groupeEtudiantDetails" >
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pSortableColumn="libelle"> First Name
+                        </th>
+                        <th pSortableColumn="dateDebut">Last Name
+                        </th>
+                        <th pSortableColumn="dateDebut">Level
+                        </th>
+                        <th pSortableColumn="dateDebut">Actions
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template let-e pTemplate="body">
+                    <tr>
+                        <td>{{e.etudiant.nom}}</td>
+                        <td>{{e.etudiant.prenom}}</td>
+                        <td>{{e.etudiant.parcours.libelle}}</td>
+                        <td>
+                            <button (click)="deleteFromView(e)" class="p-button-rounded p-button-danger" icon="pi pi-trash" pButton
+                                    pRipple></button>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </p-tabPanel>
+
+    </p-tabView>
+    </ng-template>
+    <ng-template pTemplate="footer">
         <button (click)="save()" class="p-button-text" icon="pi pi-times" label="Save" pButton
                 pRipple></button>
         <button (click)="hideCreateDialog()" class="p-button-text" icon="pi pi-times" label="Cancel" pButton

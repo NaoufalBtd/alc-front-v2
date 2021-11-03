@@ -21,6 +21,7 @@ export class GroupeEtudeService {
   private _submitted: boolean;
   // tslint:disable-next-line:variable-name
   private _groupeEtude: GroupeEtude;
+  private _selected: GroupeEtude;
   private _groupeEtudes: Array<GroupeEtude>;
   // tslint:disable-next-line:variable-name
   private _createDialog: boolean;
@@ -38,7 +39,7 @@ export class GroupeEtudeService {
   public save(): Observable<number> {
     console.log(this.groupeEtude);
 
-    return this.http.post<number>('http://localhost:8036/admin/groupeEtude/', this.groupeEtude);
+    return this.http.post<number>('http://localhost:8036/admin/groupeEtude/', this.selected);
   }
 
   public findAll(): Observable<Array<GroupeEtude>> {
@@ -47,6 +48,17 @@ export class GroupeEtudeService {
 
   public deleteByLibelle(): Observable<number> {
     return this.http.delete<number>('http://localhost:8036/admin/groupeEtude/libelle/' + this.groupeEtude.libelle);
+  }
+  public deleteMultipleByLibelle(): Observable<number> {
+    return this.http.post<number>('http://localhost:8036/admin/groupeEtude' + '/delete-multiple-by-id', this.selectes);
+  }
+  public deleteMultipleIndexById() {
+    for (const item of this.selectes) {
+      this.deleteIndexById(item.id);
+    }
+  }
+  public deleteIndexById(id: number) {
+    this.items.splice(this.findIndexById(id), 1);
   }
   public edit(): Observable<GroupeEtude> {
     return this.http.put<GroupeEtude>('http://localhost:8036/admin/groupeEtude/', this.groupeEtude);
@@ -101,7 +113,16 @@ export class GroupeEtudeService {
     }
     return this._groupeEtudiant;
   }
+  set selected(value: GroupeEtude) {
+    this._selected = value;
+  }
 
+  get selected(): GroupeEtude {
+    if (this._selected == null) {
+      this._selected = new GroupeEtude();
+    }
+    return this._selected;
+  }
   set groupeEtudes(value: Array<GroupeEtude>) {
     this._groupeEtudes = value;
   }
