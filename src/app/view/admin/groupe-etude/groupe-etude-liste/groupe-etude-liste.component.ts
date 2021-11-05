@@ -23,6 +23,55 @@ export class GroupeEtudeListeComponent implements OnInit {
     this.submitted = false;
     this.createDialogEtud = true;
   }
+  public edit(groupeEtude1: GroupeEtude) {
+    this.selected = {...groupeEtude1};
+    this.editDialog = true;
+  }
+  public delete(selected: GroupeEtude) {
+    this.selected = selected;
+    this.confirmationService.confirm({
+      message: 'Are you sure you want to delete ' + selected.libelle + '?',
+      header: 'Confirm',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.groupeEtudeService.deleteByLibelle().subscribe(data => {
+          this.items = this.items.filter(val => val.id !== this.selected.id);
+          this.selected = new GroupeEtude();
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Successful',
+            detail: 'Group Deleted',
+            life: 3000
+          });
+        });
+      }
+    });
+  }
+  public deleteMultiple() {
+    this.confirmationService.confirm({
+      message: 'Are you sure you want to delete the selected groups?',
+      header: 'Confirm',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.groupeEtudeService.deleteMultipleByLibelle().subscribe(data => {
+          this.groupeEtudeService.deleteMultipleIndexById();
+          this.selectes = null;
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Successful',
+            detail: 'Groups  Deleted',
+            life: 3000
+          });
+        });
+      }
+    });
+  }
+
+  public findAllByCriteria() {
+    this.groupeEtudeService.findAllByCriteria();
+
+  }
+
   get selected(): GroupeEtude {
     return this.groupeEtudeService.groupeEtude;
   }
@@ -70,48 +119,12 @@ export class GroupeEtudeListeComponent implements OnInit {
 
     ];
   }
-  public edit(groupeEtude1: GroupeEtude) {
-    this.selected = {...groupeEtude1};
-    this.editDialog = true;
+  get groupeEtudeVo(): GroupeEtude {
+    return this.groupeEtudeService.groupeEtudeVo;
   }
-  public delete(selected: GroupeEtude) {
-    this.selected = selected;
-    this.confirmationService.confirm({
-      message: 'Are you sure you want to delete ' + selected.libelle + '?',
-      header: 'Confirm',
-      icon: 'pi pi-exclamation-triangle',
-      accept: () => {
-        this.groupeEtudeService.deleteByLibelle().subscribe(data => {
-          this.items = this.items.filter(val => val.id !== this.selected.id);
-          this.selected = new GroupeEtude();
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Successful',
-            detail: 'Group Deleted',
-            life: 3000
-          });
-        });
-      }
-    });
-  }
-  public deleteMultiple() {
-    this.confirmationService.confirm({
-      message: 'Are you sure you want to delete the selected groups?',
-      header: 'Confirm',
-      icon: 'pi pi-exclamation-triangle',
-      accept: () => {
-        this.groupeEtudeService.deleteMultipleByLibelle().subscribe(data => {
-          this.groupeEtudeService.deleteMultipleIndexById();
-          this.selectes = null;
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Successful',
-            detail: 'Groups  Deleted',
-            life: 3000
-          });
-        });
-      }
-    });
+
+  set groupeEtudeVo(value: GroupeEtude) {
+    this.groupeEtudeService.groupeEtudeVo = value;
   }
 }
 

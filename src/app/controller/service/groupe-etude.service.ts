@@ -7,6 +7,7 @@ import {Observable} from 'rxjs';
 
 import {GroupeEtudiant} from '../model/groupe-etudiant.model';
 import {Etudiant} from '../model/etudiant.model';
+import {SessionCours} from '../model/session-cours.model';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,7 @@ export class GroupeEtudeService {
   private _submitted: boolean;
   // tslint:disable-next-line:variable-name
   private _groupeEtude: GroupeEtude;
+  private _groupeEtudeVo: GroupeEtude;
   private _selected: GroupeEtude;
   private _groupeEtudes: Array<GroupeEtude>;
   // tslint:disable-next-line:variable-name
@@ -56,6 +58,15 @@ export class GroupeEtudeService {
     for (const item of this.selectes) {
       this.deleteIndexById(item.id);
     }
+  }
+  public findAllByCriteria() {
+    this.http.post<Array<GroupeEtude>>('http://localhost:8036/admin/groupeEtude/' + 'allByCriteria', this.groupeEtudeVo).subscribe(
+        data => {
+          if (data != null) {
+            this.items = data;
+          }
+        }
+    );
   }
   public deleteIndexById(id: number) {
     this.items.splice(this.findIndexById(id), 1);
@@ -171,5 +182,15 @@ export class GroupeEtudeService {
 
   set editDialog(value: boolean) {
     this._editDialog = value;
+  }
+  get groupeEtudeVo(): GroupeEtude {
+    if (this._groupeEtudeVo == null) {
+      this._groupeEtudeVo = new GroupeEtude();
+    }
+    return this._groupeEtude;
+  }
+
+  set groupeEtudeVo(value: GroupeEtude) {
+    this._groupeEtudeVo = value;
   }
 }
