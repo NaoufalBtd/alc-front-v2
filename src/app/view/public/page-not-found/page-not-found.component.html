@@ -11,7 +11,7 @@
     'p-input-filled': app.inputStyle === 'filled',
     'p-ripple-disabled': !app.ripple}" class="layout-wrapper">
     <app-topbar></app-topbar>
-<!--    <app-menu [hidden]="user == null"></app-menu>-->
+    <!--    <app-menu [hidden]="user == null"></app-menu>-->
     <div class="layout-main">
         <div class="layout-content" style="text-align: center">
             <!--            <p>page not found works!</p>-->
@@ -20,6 +20,12 @@
                     <div class="exception-content"><img src="assets/layout/images/pages/icon-404.svg">
                         <h1>Page Not Found</h1>
                         <p>Requested resource is not available.</p>
+                        <button type="button" pbutton="" icon="pi pi-arrow-left" [routerLink]="['/']"
+                                label="Go to Dashboard" tabindex="0"
+                                class="p-button p-component"><span
+                                class="p-button-icon p-button-icon-left pi pi-arrow-left"
+                                aria-hidden="true"></span><span class="p-button-label">Go to Dashboard</span>
+                        </button>
                     </div>
                 </div>
             </div>

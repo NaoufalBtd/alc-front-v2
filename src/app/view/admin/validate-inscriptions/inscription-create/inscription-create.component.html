@@ -6,7 +6,7 @@
         <div class="p-field">
             <label for="prof">Teacher</label>
             <input [(ngModel)]="selected.prof.numero" autofocus id="prof" pInputText required type="text"/>
-            <small *ngIf="submitted && !selected.prof.numero" class="p-invalid">prof is required.</small>
+            <small *ngIf="submitted && !selected.prof.numero" class="p-invalid">Teacher is required.</small>
         </div>
         <div class="p-field">
             <label for="etat">Registration status</label>
@@ -17,8 +17,8 @@
 
         <div class="p-field">
             <label for="etudiant">Student</label>
-            <input [(ngModel)]="selected.nom" autofocus id="etudiant" pInputText required type="text"/>
-            <small *ngIf="submitted && !selected.nom" class="p-invalid">etudiant LastNme is required.</small>
+            <input [(ngModel)]="selected.etudiant.nom" autofocus id="etudiant" pInputText required type="text"/>
+            <small *ngIf="submitted && !selected.etudiant.nom" class="p-invalid">Student last name is required.</small>
         </div>
 
         <div class="p-formgrid p-grid">

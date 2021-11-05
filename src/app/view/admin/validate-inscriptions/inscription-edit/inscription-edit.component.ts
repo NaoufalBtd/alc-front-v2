@@ -14,7 +14,10 @@ import {Prof} from '../../../../controller/model/prof.model';
 export class InscriptionEditComponent implements OnInit {
 
     // tslint:disable-next-line:max-line-length
-    constructor(private messageService: MessageService, private service: InscriptionService, private confirmationService: ConfirmationService,) {
+    sel =' ';
+    constructor(private messageService: MessageService,
+                private service: InscriptionService,
+                private confirmationService: ConfirmationService) {
     }
     public view(inscription: Inscription) {
         this.selected = {...inscription};
@@ -93,18 +96,30 @@ export class InscriptionEditComponent implements OnInit {
     ngOnInit(): void {
         this.service.findAllProf().subscribe(
             data => {
-                this.prof = data;
-            }, error => {
-                console.log(error);
-            }
-        );;
-        this.service.findAllEtat().subscribe(
-            data => {
-                this.etatinscriptionslist = data;
+                this.profList = data;
+                console.log(data);
             }, error => {
                 console.log(error);
             }
         );
+        this.service.findAllEtat().subscribe(
+            data => {
+                this.etatinscriptionslist = data;
+                console.log(data);
+
+            }, error => {
+                console.log(error);
+            }
+        );
+
+        this.service.findAllParcours().subscribe(
+            data => {
+                console.log(data);
+                this.parcoursList = data;
+            },error => {
+                 console.log(error);
+            }
+        )
     }
 
     findAllProf(): void {
@@ -125,7 +140,7 @@ export class InscriptionEditComponent implements OnInit {
 
     public edit() {
         this.service.findAll().subscribe(data => this.items = data);
-        console.log(this.service.selected.id);
+        console.log(this.selected);
         this.submitted = true;
         this.items[this.service.findIndexById(this.service.selected.id)] = this.selected;
         this.service.valider().subscribe(data => {
@@ -138,7 +153,7 @@ export class InscriptionEditComponent implements OnInit {
                 detail: 'InscriptionUpdated',
                 life: 3000
             });
-            this.service.findAll().subscribe(data => this.items = data);
+            this.service.findAll().subscribe(  data => this.items = data);
         });
         this.editDialog = false;
         this.selected = new Inscription();
@@ -147,7 +162,7 @@ export class InscriptionEditComponent implements OnInit {
     public delete(selected: Inscription) {
         this.selected = selected;
         this.confirmationService.confirm({
-            message: 'Are you sure you want to delete ' + selected.nom + '?',
+            message: 'Are you sure you want to delete ' + selected.etudiant.nom + '?',
             header: 'Confirm',
             icon: 'pi pi-exclamation-triangle',
             accept: () => {

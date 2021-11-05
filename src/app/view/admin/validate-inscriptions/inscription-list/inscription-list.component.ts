@@ -114,7 +114,7 @@ export class InscriptionListComponent implements OnInit {
     public delete(selected: Inscription) {
         this.selected = selected;
         this.confirmationService.confirm({
-            message: 'Are you sure you want to delete ' + selected.nom + '?',
+            message: 'Are you sure you want to delete ' + selected.etudiant.nom + '?',
             header: 'Confirm',
             icon: 'pi pi-exclamation-triangle',
             accept: () => {

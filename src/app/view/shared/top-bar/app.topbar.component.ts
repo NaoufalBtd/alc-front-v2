@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AppComponent} from '../../../app.component';
 import {MenuItem} from 'primeng/api';
 import {LoginService} from '../../../controller/service/login.service';
@@ -8,13 +8,15 @@ import {AuthenticationService} from '../../../controller/service/authentication.
 import {User} from '../../../controller/model/user.model';
 import {Router} from '@angular/router';
 import {Role} from '../../../enum/role.enum';
+import {Subscription} from 'rxjs';
 
 @Component({
     selector: 'app-topbar',
     templateUrl: './app.topbar.component.html',
     styleUrls: ['./app-topbar.component.css'],
 })
-export class AppTopBarComponent implements OnInit {
+export class AppTopBarComponent implements OnInit, OnDestroy {
+    private subscriptions: Subscription[] = [];
     role: Role;
     items: MenuItem[];
     user: User = new User();
@@ -42,6 +44,7 @@ export class AppTopBarComponent implements OnInit {
 
     public logOut() {
         this.authenticationService.logOut();
+        this.router.navigate(['/']);
     }
 
     public isAdmin(): boolean {
@@ -69,5 +72,9 @@ export class AppTopBarComponent implements OnInit {
             return this.user.authorities[0].authority === Role.STUDENT;
 
         }
+    }
+
+    ngOnDestroy(): void {
+        this.subscriptions.forEach(sub => sub.unsubscribe());
     }
 }

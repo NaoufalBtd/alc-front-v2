@@ -3447,6 +3447,7 @@ p-togglebutton.ng-dirty.ng-invalid > .p-togglebutton.p-button {
   background: #ffffff;
   color: #495057;
   padding: 0 1.5rem 2rem 1.5rem;
+  height:100%
 }
 .p-dialog .p-dialog-footer {
   border-top: 0 none;
