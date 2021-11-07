@@ -46,31 +46,20 @@ export class LoginService {
     }
 
     get prof(): Prof {
-        if (this._prof == null) {
-            this._prof = new Prof();
-        }
-        return this._prof;
+        return this.getConnectedProf();
     }
 
-    set prof(value: Prof) {
-        this._prof = value;
-    }
 
     get admin(): Admin {
-        return this._admin;
+        return this.getConnectedAdmin();
     }
 
-    set admin(value: Admin) {
-        this._admin = value;
-    }
+
 
     get etudiant(): Etudiant {
-        return this._etudiant;
+        return this.getConnectedStudent();
     }
 
-    set etudiant(value: Etudiant) {
-        this._etudiant = value;
-    }
 
     get model(): MenuItem[] {
         return this._model;

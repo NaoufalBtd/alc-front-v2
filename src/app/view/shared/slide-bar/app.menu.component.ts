@@ -57,25 +57,16 @@ export class AppMenuComponent implements OnInit {
         return this.service.prof;
     }
 
-    set prof(value: Prof) {
-        this.service.prof = value;
-    }
 
     get admin(): Admin {
         return this.service.admin;
     }
 
-    set admin(value: Admin) {
-        this.service.admin = value;
-    }
 
     get etudiant(): Etudiant {
-        return this.service.etudiant;
+        return this.service.getConnectedStudent();
     }
 
-    set etudiant(value: Etudiant) {
-        this.service.etudiant = value;
-    }
 
     ngOnInit() {
         this.user = this.authService.getUserFromLocalCache();

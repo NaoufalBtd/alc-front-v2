@@ -51,10 +51,6 @@ export class DashboardDemoComponent implements OnInit {
 
     ngOnInit() {
 
-
-        this.login.etudiant = null;
-        this.login.admin = null;
-        this.login.prof = null;
         // this.model = [];
         this.fullcalendarOptions = {
             plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],

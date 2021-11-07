@@ -239,9 +239,7 @@ export class StudentSimulateSectionComponent implements OnInit {
         return this.loginService.etudiant;
     }
 
-    set etudiant(value: Etudiant) {
-        this.loginService.etudiant = value;
-    }
+
 
     get quizEtudiantList(): QuizEtudiant {
         return this.quizService.quizEtudiantList;
