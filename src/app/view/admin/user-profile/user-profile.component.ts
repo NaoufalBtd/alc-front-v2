@@ -52,6 +52,8 @@ export class UserProfileComponent implements OnInit {
     ngOnInit(): void {
         this.user = this.authenticationService.getUserFromLocalCache();
         this.findAll();
+        // @ts-ignore
+        this.user.parcours;
     }
 
     findAll() {

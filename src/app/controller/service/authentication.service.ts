@@ -4,6 +4,9 @@ import {environment} from '../../../environments/environment';
 import {Observable} from 'rxjs';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {User} from '../model/user.model';
+import {Etudiant} from '../model/etudiant.model';
+import {Prof} from '../model/prof.model';
+import {Admin} from '../model/admin.model';
 
 
 @Injectable({providedIn: 'root'})
@@ -19,7 +22,7 @@ export class AuthenticationService {
     }
 
     public login(user: User): Observable<HttpResponse<User>> {
-        return this.http.post<User>(`${this.host}/user/login`, user, { observe: 'response' });
+        return this.http.post<User>(`${this.host}/user/login`, user, {observe: 'response'});
     }
 
     public register(user: User): Observable<User> {
@@ -46,6 +49,18 @@ export class AuthenticationService {
     }
 
     public getUserFromLocalCache(): User {
+        return JSON.parse(localStorage.getItem('user'));
+    }
+
+    public getConnectedStudent(): Etudiant {
+        return JSON.parse(localStorage.getItem('user'));
+    }
+
+    public getConnectedProf(): Prof {
+        return JSON.parse(localStorage.getItem('user'));
+    }
+
+    public getConnectedAdmin(): Admin {
         return JSON.parse(localStorage.getItem('user'));
     }
 

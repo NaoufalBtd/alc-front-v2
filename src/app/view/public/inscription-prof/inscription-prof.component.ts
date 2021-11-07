@@ -55,7 +55,7 @@ export class InscriptionProfComponent implements OnInit {
                 this.messageService.add({
                 severity: 'success',
                 summary: 'Successful',
-                detail: 'Registration added',
+                detail: 'Registration added, please check your email to get your password.',
                 life: 3000});
             }, error => {
                 this.messageService.add({

@@ -7,6 +7,7 @@ import {EventSettingsModel, PopupOpenEventArgs, ScheduleComponent} from '@syncfu
 import {ScheduleProf} from '../../../controller/model/calendrier-prof.model';
 import {Prof} from '../../../controller/model/prof.model';
 import {Etudiant} from '../../../controller/model/etudiant.model';
+import {AuthenticationService} from '../../../controller/service/authentication.service';
 
 
 L10n.load({
@@ -26,6 +27,7 @@ L10n.load({
     styleUrls: ['./schedule-student.component.scss']
 })
 export class ScheduleStudentComponent implements OnInit {
+    private etudiant: Etudiant = new Etudiant();
     @ViewChild('scheduleObj')
     public scheduleObj: ScheduleComponent;
     display = false;
@@ -45,7 +47,7 @@ export class ScheduleStudentComponent implements OnInit {
 
     constructor(private scheduleService: ScheduleService, private messageService: MessageService,
                 private confirmationService: ConfirmationService,
-                private user: LoginService) {
+                private authenticationService: AuthenticationService) {
     }
 
 
@@ -53,6 +55,10 @@ export class ScheduleStudentComponent implements OnInit {
         return this.scheduleService.scheduleProfs;
     }
 
+
+    set scheduleProfs(value: Array<ScheduleProf>) {
+        this.scheduleService.scheduleProfs = value;
+    }
 
     get displayBasic(): boolean {
         return this.scheduleService.displayBasic;
@@ -74,12 +80,23 @@ export class ScheduleStudentComponent implements OnInit {
 
 
     ngOnInit() {
-        this.scheduleService.findAll();
+        this.etudiant = this.authenticationService.getConnectedStudent();
+        console.log(this.etudiant);
+        this.scheduleService.findByStudent(this.etudiant).subscribe(
+            data => {
+                this.scheduleProfs = data;
+                this.eventSettings = {
+                    dataSource: this.scheduleProfs,
+                    fields: {
+                        id: 'Id',
+                        subject: {name: 'subject', title: 'subject'},
+                        startTime: {name: 'startTime', title: 'startTime'},
+                        endTime: {name: 'endTime', title: 'endTime'}
+                    }
+                };
+            }
+        );
         this.getData();
-        this.scheduleService.getAllStudents().subscribe(data => this.students = data);
-        this.scheduleService.getProf().subscribe(data => this.professors = data);
-        this.scheduleService.findEtat().subscribe(data => this.scheduleService.etatEtudiantSchedule = data);
-        console.log(this.scheduleProfs);
     }
 
     showBasicDialog() {
