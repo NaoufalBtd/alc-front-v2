@@ -20,17 +20,17 @@ export class GroupeEtudiantService {
   private urlParcours = '/admin/parcours/';
   private urlGroupeEtude = '/admin/groupeEtude/';
   private urlGroupeEtudiant = '/admin/groupeEtudiant/';
-  private urlGroupeEtudiantDetail = '/admin/groupeEtudiant/id/' ;
+  private urlGroupeEtudiantDetail = '/admin/groupeEtudiantDetail/' ;
   private _groupeEtudiant: GroupeEtudiant;
   private _groupeEtudiants: Array<GroupeEtudiant>;
   private _selectes: Array<GroupeEtudiant>;
   private _createDialog: boolean;
   private _createDialog2: boolean;
-
+  private _editDialog: boolean;
   // tslint:disable-next-line:variable-name
   private _viewDialog: boolean;
   // tslint:disable-next-line:variable-name
-  private _editDialog: boolean;
+
   // tslint:disable-next-line:variable-name
   private _groupeEtudeList: Array<GroupeEtude>;
   // tslint:disable-next-line:variable-name
@@ -57,8 +57,11 @@ export class GroupeEtudiantService {
   public deleteByLibelle(): Observable<number> {
     return this.http.delete<number>(this.urlBase + this.urlGroupeEtudiant + 'id/' + this.groupeEtudiant.id);
   }
+  public deleteGroupeEtudiantDetailById(): Observable<number> {
+    return this.http.delete<number>(this.urlBase + this.urlGroupeEtudiantDetail + 'id/' + this.groupeEtudiantDetail.id);
+  }
   public findAllGroupeEtudiantDetail(id: number): Observable<Array<GroupeEtudiantDetail>> {
-    return this.http.get<Array<GroupeEtudiantDetail>>(this.urlBase + this.urlGroupeEtudiantDetail + id);
+    return this.http.get<Array<GroupeEtudiantDetail>>(this.urlBase + this.urlGroupeEtudiant +'id/' + id);
   }
   // tslint:disable-next-line:ban-types
   public findEtudiantListByParcoursLibelle(libelle: string): Observable<Array<Etudiant>> {
@@ -76,6 +79,31 @@ public addEtudiant(){
     this.groupeEtudiant.groupeEtudiantDetails.push({...this._groupeEtudiantDetail});
     this.groupeEtudiantDetail = null ;
 }
+
+  public edit(): Observable<GroupeEtudiant> {
+    return this.http.put<GroupeEtudiant>(this.urlBase + this.urlGroupeEtudiant, this.groupeEtudiant);
+  }
+  public deleteMultipleByLibelle(): Observable<number> {
+    return this.http.post<number>(this.urlBase + this.urlGroupeEtudiant + 'delete-multiple-by-id', this.groupeEtudiants);
+  }
+  public deleteMultipleIndexById() {
+    for (const item of this.selectes) {
+      this.deleteIndexById(item.id);
+    }
+  }
+  public deleteIndexById(id: number) {
+    this.groupeEtudiants.splice(this.findIndexById(id), 1);
+  }
+  public findIndexById(id: number): number {
+    let index = -1;
+    for (let i = 0; i < this.groupeEtudiants.length; i++) {
+      if (this.groupeEtudiants[i].id === id) {
+        index = i;
+        break;
+      }
+    }
+    return index;
+  }
 
   get etudiantList(): Array<Etudiant> {
     if (this._etudiantList == null) {

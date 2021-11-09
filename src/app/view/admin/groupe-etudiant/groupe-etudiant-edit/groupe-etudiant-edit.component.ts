@@ -1,24 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import {GroupeEtudiantService} from '../../../../controller/service/groupe-etudiant-service';
-import {GroupeEtude} from '../../../../controller/model/groupe-etude.model';
+import {ConfirmationService, MessageService} from 'primeng/api';
 import {GroupeEtudiant} from '../../../../controller/model/groupe-etudiant.model';
-import {MessageService} from 'primeng/api';
-import {Etudiant} from '../../../../controller/model/etudiant.model';
-import { GroupeEtudiantDetail} from '../../../../controller/model/groupe-etudiant-detail.model';
+import {GroupeEtude} from '../../../../controller/model/groupe-etude.model';
 import {Parcours} from '../../../../controller/model/parcours.model';
+import {GroupeEtudiantDetail} from '../../../../controller/model/groupe-etudiant-detail.model';
+import {Etudiant} from '../../../../controller/model/etudiant.model';
 
 @Component({
-  selector: 'app-groupe-etudiant-create',
-  templateUrl: './groupe-etudiant-create.component.html',
-  styleUrls: ['./groupe-etudiant-create.component.scss']
+  selector: 'app-groupe-etudiant-edit',
+  templateUrl: './groupe-etudiant-edit.component.html',
+  styleUrls: ['./groupe-etudiant-edit.component.scss']
 })
-export class GroupeEtudiantCreateComponent implements OnInit {
-  constructor( private groupeEtudiantService: GroupeEtudiantService, private messageService: MessageService) { }
-  get createDialogEtud(): boolean {
-    return this.groupeEtudiantService.createDialog;
-  }
-  set createDialogEtud(value: boolean) {
-    this.groupeEtudiantService.createDialog = value;
+export class GroupeEtudiantEditComponent implements OnInit {
+
+
+  constructor(private messageService: MessageService, private groupeEtudiantService: GroupeEtudiantService, private confirmationService: ConfirmationService) {
   }
 
   get groupeEtudeList(): Array<GroupeEtude> {
@@ -104,13 +101,15 @@ export class GroupeEtudiantCreateComponent implements OnInit {
   private submitted: boolean;
   private _createDialog: boolean;
   public  libelle1 = '';
-  public  libelle2 = '';
   public id1 = '';
   public id2 = Number(this.id1);
-  public id3 = Number(this.libelle2);
-  cols: any[];
-  public full:boolean = false;
-  ngOnInit(): void {
+  cols: any[]; ngOnInit(): void {
+    this.groupeEtudiantService.findAllGroupeEtudiantDetail(this.groupeEtudiant.id).subscribe(
+        data =>  this.groupeEtudiant.groupeEtudiantDetails = data);
+    this.groupeEtudiantService.findAllParcours().subscribe(
+        data => this.parcoursList = data);
+    this.groupeEtudiantService.findAllGroupeEtude().subscribe(
+        data => this.groupeEtudeList = data);
   }
   public findAllGroupeEtude() {
     this.groupeEtudiantService.findAllGroupeEtude().subscribe(data => this.groupeEtudeList = data);
@@ -128,10 +127,7 @@ export class GroupeEtudiantCreateComponent implements OnInit {
   public findAllParcours() {
     this.groupeEtudiantService.findAllParcours().subscribe(data => this.parcoursList = data);
   }
-  public hideCreateDialog() {
-    this.createDialogEtud = false;
-    this.submitted = false;
-  }
+
   public save() {
     console.log(this.groupeEtudiant);
     this.submitted = true;
@@ -139,7 +135,6 @@ export class GroupeEtudiantCreateComponent implements OnInit {
       this.groupeEtudiants.push({...this.groupeEtudiant});
       // tslint:disable-next-line:no-shadowed-variable
       this.groupeEtudiantService.findAll().subscribe(data => this.groupeEtudiants = data);
-
       this.messageService.add({
         severity: 'success',
         summary: 'Successful',
@@ -160,38 +155,22 @@ export class GroupeEtudiantCreateComponent implements OnInit {
     this.id2 = event.target.value.split(': ')[1];
 
   }
-  selectChangeGroupeEtude(event) {
-    this.id3 = event.target.value.split(': ')[1];
-  }
- public addEtudiant(){
+  public addEtudiant(){
     this.groupeEtudiant.groupeEtudiantDetails.push({...this.groupeEtudiantDetail});
     this.groupeEtudiantDetail = null ;
   }
-public trouver(id: number){
-    for (let i = 0 ; i<this.groupeEtudeList.length ; i++){
-      if( id == this.groupeEtudeList[i].id){
 
-        console.log('ha l groupe etude ' + this.groupeEtudeList[i].nombreEtudiant);
-        this.selected.groupeEtude.nombreEtudiant = this.groupeEtudeList[i].nombreEtudiant;
-        console.log('ha le nombre ' +this.selected.groupeEtude.nombreEtudiant );
-        this.selected.nombrePlacevide =   this.selected.groupeEtude.nombreEtudiant ;
-        this.selected.nombrePlaceNonVide=0;
-      }
-    }
-}
 
   public exit(id: number){
+
     for ( let i = 0 ; i < this.etudiantList.length ; i++){
       if (id == this.etudiantList[i].id)
       {
         console.log( this.etudiantList[i]);
         //this.etudiantList2.push(this.etudiantList[i]);
         this.groupeEtudiantDetail.etudiant = this.etudiantList[i];
-        this.selected.nombrePlacevide=    this.selected.nombrePlacevide-1;
-        this.selected.nombrePlaceNonVide=  this.selected.groupeEtude.nombreEtudiant- this.selected.nombrePlacevide;
         this.groupeEtudiant.groupeEtudiantDetails.push({...this.groupeEtudiantDetail});
         this.groupeEtudiantDetail = null;
-        this.isfull();
         return 0;
       }
     }
@@ -201,23 +180,52 @@ public trouver(id: number){
     const index = this.groupeEtudiant.groupeEtudiantDetails.findIndex(c => c.etudiant.nom === groupeEtudiantDetail.etudiant.nom);
     if (index !== -1 ) {
       this.groupeEtudiant.groupeEtudiantDetails.splice(index, 1);
-      this.selected.nombrePlaceNonVide --;
-      this.selected.nombrePlacevide++;
-      this.isfull();
     }
   }
-  public validateSave(): boolean {
-    return this.selected.libelle != null &&   this.groupeEtudiant.groupeEtudiantDetails.length > 0;
+  public edit() {
 
+    this.groupeEtudiants[this.groupeEtudiantService.findIndexById(this.groupeEtudiant.id)] = this.groupeEtudiant;
+    this.groupeEtudiantService.edit().subscribe(data => {
+      this.groupeEtudiant = data;
+      this.groupeEtudiantService.findAll();
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Successful',
+        detail: 'Etudiant Updated',
+        life: 3000
+      });
+    });
+    this.editDialog = false;
+    this.groupeEtudiant = new GroupeEtudiant();
   }
-  public isfull(){
-    if ((this.groupeEtudiant.groupeEtudiantDetails.length - this.selected.groupeEtude.nombreEtudiant)=== 0){
-      this.full = true;
+  get editDialog(): boolean {
 
-    }
-    else {
-      this.full = false ;
-    }
+    return this.groupeEtudiantService.editDialog;
   }
+  public delete(groupeEtudiantDetail: GroupeEtudiantDetail) {
+    this.groupeEtudiantDetail = groupeEtudiantDetail;
+    this.confirmationService.confirm({
+      message: 'Are you sure you want to delete ' + groupeEtudiantDetail.id + '?',
+      header: 'Confirm',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.groupeEtudiantService.deleteGroupeEtudiantDetailById().subscribe(data => {
+          this.groupeEtudiantDetails = this.groupeEtudiantDetails.filter(val => val.id !== this.groupeEtudiantDetail.id);
+          this.groupeEtudiantDetail = new GroupeEtudiantDetail();
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Successful',
+            detail: 'Student Deleted',
+            life: 3000
+          });
+        });
+      }
+    });
+  }
+  set editDialog(value: boolean) {
+    this.groupeEtudiantService.editDialog = value;
+  }
+
+
+
 }
-
