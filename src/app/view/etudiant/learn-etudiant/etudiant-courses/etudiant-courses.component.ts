@@ -106,7 +106,7 @@ export class EtudiantCoursesComponent implements OnInit {
                         // document.getElementById('dict1').style.visibility = 'hidden';
                         // document.getElementById('quiz').style.visibility = 'visible';
                         console.log('teeeeeeeeest');
-                        this.quizService.findQuizEtudiant(this.loginService.etudiant, this.selectedQuiz).subscribe(
+                        this.quizService.findQuizEtudiant(this.loginService.getConnectedStudent(), this.selectedQuiz).subscribe(
                             data => {
                                 this.quizEtudiantList = data;
                                 console.log(this.quizEtudiantList);
@@ -275,7 +275,7 @@ export class EtudiantCoursesComponent implements OnInit {
         // tslint:disable-next-line:prefer-for-of
         for (let j = 0; j < this.itemsEtudiantCours.length; j++) {
             // tslint:disable-next-line:triple-equals
-            if (cours.id == this.itemsEtudiantCours[j].cours.id && this.itemsEtudiantCours[j].etudiant.id == this.loginService.etudiant.id) {
+            if (cours.id == this.itemsEtudiantCours[j].cours.id && this.itemsEtudiantCours[j].etudiant.id == this.loginService.getConnectedStudent().id) {
                 return 1;
             } else {
                 return null;
@@ -300,12 +300,9 @@ export class EtudiantCoursesComponent implements OnInit {
     }
 
     get etudiant(): Etudiant {
-        return this.loginService.etudiant;
+        return this.loginService.getConnectedStudent();
     }
 
-    set etudiant(value: Etudiant) {
-        this.loginService.etudiant = value;
-    }
 
     get quizEtudiantList(): QuizEtudiant {
         return this.quizService.quizEtudiantList;

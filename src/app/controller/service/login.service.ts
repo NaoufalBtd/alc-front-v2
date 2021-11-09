@@ -19,6 +19,20 @@ export class LoginService {
 
     constructor(private http: HttpClient) {
     }
+
+    public getConnectedStudent(): Etudiant {
+        return JSON.parse(localStorage.getItem('user'));
+    }
+
+    public getConnectedProf(): Prof {
+        return JSON.parse(localStorage.getItem('user'));
+    }
+
+    public getConnectedAdmin(): Admin {
+        return JSON.parse(localStorage.getItem('user'));
+    }
+
+
     public findProf(username: string, password: string): Observable<Prof> {
         return this.http.get<Prof>(this.adminUrl + 'prof/login/' + username + '/password/' + password);
     }
@@ -30,30 +44,27 @@ export class LoginService {
     public findAdmin(username: string, password: string): Observable<Admin> {
         return this.http.get<Admin>(this.adminUrl + 'admin/login/' + username + '/password/' + password);
     }
+
     get prof(): Prof {
-        if (this._prof == null) {
-            this._prof = new Prof();
-        }
-        return this._prof;
+        return this.getConnectedProf();
     }
-    set prof(value: Prof) {
-        this._prof = value;
-    }
+
+
     get admin(): Admin {
-        return this._admin;
+        return this.getConnectedAdmin();
     }
-    set admin(value: Admin) {
-        this._admin = value;
-    }
+
+
+
     get etudiant(): Etudiant {
-        return this._etudiant;
+        return this.getConnectedStudent();
     }
-    set etudiant(value: Etudiant) {
-        this._etudiant = value;
-    }
+
+
     get model(): MenuItem[] {
         return this._model;
     }
+
     set model(value: MenuItem[]) {
         this._model = value;
     }

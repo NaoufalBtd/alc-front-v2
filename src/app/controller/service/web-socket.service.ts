@@ -74,7 +74,7 @@ export class WebSocketService {
             data => {
                 console.log('data dlprof' + data);
                 // this.loginservice.etudiant.prof.chatMessageDto = data.chatMessageDto;
-                this.loginservice.prof = data;
+                // this.loginservice.prof = data;
             },
             error => {
                 console.log('erreur achrif');

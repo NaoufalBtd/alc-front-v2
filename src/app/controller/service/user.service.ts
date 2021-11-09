@@ -35,7 +35,7 @@ export class UserService {
 
     public resetPassword(username: string): Observable<number>
     {
-        return this.http.post<number>(this.host + '/user/resetPassword/username/', username);
+        return this.http.get<number>(this.host + '/user/resetpassword/username/' + username);
     }
 
 

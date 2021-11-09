@@ -47,11 +47,6 @@ export class HomeComponent implements OnInit {
     get prof(): Prof {
         return this.serviceUser.prof;
     }
-
-    set prof(value: Prof) {
-        this.serviceUser.prof = value;
-    }
-
     get items(): Array<Etudiant> {
         return this.serviceetudiant.items;
     }

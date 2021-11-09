@@ -1,38 +1,42 @@
-
-
-
-
-<p-dialog [(visible)]="editDialog" [modal]="true" [resizable]="true" [style]="{width: '900px',height:'500px', color: 'red'}"
+<p-dialog [(visible)]="editDialog" [modal]="true" [resizable]="true"
+          [style]="{width: '900px',height:'500px', color: 'red'}"
           header="Validate Registration"
           styleClass="p-fluid">
     <ng-template pTemplate="content">
+        <div class="p-grid user-info">
+            <div class="p-col-12 p-md-6 p-lg-4"><label class="label" >{{selected?.etudiant?.nom }} {{ selected?.etudiant?.prenom}}</label></div>
+            <div class="p-col-12 p-md-6 p-lg-4"><label class="label">Teacher locality:</label>  {{ selected?.etudiant?.teacherLocality}}</div>
+            <div class="p-col-12 p-md-6 p-lg-4"><label  class="label">Group option:</label>  {{ selected?.etudiant?.groupOption}}</div>
+        </div>
+
+
         <div class="p-grid">
-            <div class="p-col-12 p-md-6 p-lg-4">{{selected?.etudiant?.nom }} {{ selected?.etudiant?.prenom}}</div>
-            <div class="p-col-12 p-md-6 p-lg-4">Teacher locality:  {{ selected?.etudiant?.teacherLocality}}</div>
-            <div class="p-col-12 p-md-6 p-lg-4">Group option:  {{ selected?.etudiant?.groupOption}}</div>
             <div class="p-col-12 p-md-6 p-lg-4">
-                <p-dropdown [options]="parcoursList" placeholder="Select Item" [(ngModel)]="selected.parcours"
-                            optionLabel="libelle"  [itemSize]="3" ></p-dropdown>
+                <p-dropdown [options]="parcoursList" placeholder="Select  course" [(ngModel)]="selected.parcours"
+                            optionLabel="libelle" [itemSize]="3"></p-dropdown>
 
             </div>
             <div class="p-col-12 p-md-6 p-lg-4">
-                <p-dropdown [options]="profList"  placeholder="Select Item" [(ngModel)]="selected.prof"
-                            optionLabel="nom"     [itemSize]="3" ></p-dropdown>
+                <p-dropdown [options]="profList" placeholder="Select teacher" [(ngModel)]="selected.prof"
+                            optionLabel="nom" [itemSize]="3"></p-dropdown>
 
             </div>
             <div class="p-col-12 p-md-6 p-lg-4">
-                <p-dropdown [options]="etatinscriptionslist"  placeholder="Select Item" [(ngModel)]="selected.etatInscription"
-                            optionLabel="libelle"    [itemSize]="5" ></p-dropdown>
+                <p-dropdown [options]="etatinscriptionslist" placeholder="Select Option"
+                            [(ngModel)]="selected.etatInscription"
+                            optionLabel="libelle" [itemSize]="5"></p-dropdown>
             </div>
 
             <div class=" p-col-12 p-md-6  p-lg-4">
                 <label for="dateformat">Started date</label>
-                <p-calendar [(ngModel)]="selected.datedebutinscription" dateFormat="mm-dd-yy" [showIcon]="true" id="dateformat"></p-calendar>
+                <p-calendar [(ngModel)]="selected.datedebutinscription" dateFormat="mm-dd-yy" [showIcon]="true"
+                            id="dateformat"></p-calendar>
             </div>
 
             <div class=" p-col-12 p-md-6  p-lg-4">
                 <label for="dateformat1">Finished date</label>
-                <p-calendar [(ngModel)]="selected.datefininscription" dateFormat="mm-dd-yy" [showIcon]="true" id="dateformat1"></p-calendar>
+                <p-calendar [(ngModel)]="selected.datefininscription" dateFormat="mm-dd-yy" [showIcon]="true"
+                            id="dateformat1"></p-calendar>
             </div>
         </div>
     </ng-template>
