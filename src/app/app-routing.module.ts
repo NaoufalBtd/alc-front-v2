@@ -70,6 +70,7 @@ import {SessioncoursComponent} from './view/admin/sessioncours/sessioncours.comp
 import {EtudiantcommentreviewComponent} from './view/prof/etudiantcommentreview/etudiantcommentreview.component';
 import {PaiementlistComponent} from './view/prof/paiementlist/paiementlist.component';
 import {ResetPasswordComponent} from './view/public/reset-password/reset-password.component';
+import {ConnectedStudentComponent} from './view/prof/connected-student/connected-student.component';
 
 
 @NgModule({
@@ -122,8 +123,8 @@ import {ResetPasswordComponent} from './view/public/reset-password/reset-passwor
                     {path: 'quiz-preview-teacher', component: QuizPreviewProfComponent},
                     {path: 'profile', component: ProfProfileComponent},
                     {path: 'etudiantReviewcomment', component: EtudiantcommentreviewComponent},
-
-                    {path: 'paiementlist', component: PaiementlistComponent}
+                    {path: 'paiementlist', component: PaiementlistComponent},
+                    {path: 'connected-student', component: ConnectedStudentComponent}
                 ]
             },
             {

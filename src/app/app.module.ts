@@ -257,6 +257,7 @@ import { UserProfileComponent } from './view/admin/user-profile/user-profile.com
 import { ProfProfileComponent } from './view/prof/prof-profile/prof-profile.component';
 import { EtudiantProfileComponent } from './view/etudiant/etudiant-profile/etudiant-profile.component';
 import {ResetPasswordComponent} from './view/public/reset-password/reset-password.component';
+import { ConnectedStudentComponent } from './view/prof/connected-student/connected-student.component';
 
 @NgModule({
     imports: [
@@ -505,7 +506,8 @@ import {ResetPasswordComponent} from './view/public/reset-password/reset-passwor
         GroupeEtudiantListComponent,
         GroupeEtudiantCreateComponent,
         GroupeEtudiantDetailListComponent,
-        ResetPasswordComponent
+        ResetPasswordComponent,
+        ConnectedStudentComponent
     ],
     providers: [
         {provide: LocationStrategy, useClass: HashLocationStrategy},

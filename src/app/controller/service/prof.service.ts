@@ -5,6 +5,9 @@ import {Prof} from '../model/prof.model';
 import {CategorieProf} from '../model/categorie-prof.model';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
+import {Etudiant} from '../model/etudiant.model';
+import {User} from '../model/user.model';
+import {LoginService} from './login.service';
 
 @Injectable({
     providedIn: 'root'
@@ -12,14 +15,19 @@ import {Observable} from 'rxjs';
 export class ProfService {
 
     private adminUrl = environment.adminUrl;
+    private profUrl = environment.profUrl;
+    prof: Prof = this.loginService.getConnectedProf();
 
-
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient,
+                private loginService: LoginService) {
     }
+
     private _itemsCategorieProf: Array<CategorieProf>;
+    private _listStudent: Array<Etudiant> = new Array<Etudiant>();
 
     private _submitted: boolean;
     private _selectedProf: Prof;
+
     public save(): Observable<number> {
         return this.http.post<number>(this.adminUrl + 'prof/', this.selectedProf);
     }
@@ -36,6 +44,16 @@ export class ProfService {
     public findAllCategorieProf(): Observable<Array<CategorieProf>> {
         return this.http.get<Array<CategorieProf>>(this.adminUrl + 'categorieprof/');
     }
+
+
+    get listStudent(): Array<Etudiant> {
+        return this._listStudent;
+    }
+
+    set listStudent(value: Array<Etudiant>) {
+        this._listStudent = value;
+    }
+
     get selectedProf(): Prof {
         if (this._selectedProf == null) {
             this._selectedProf = new Prof();
@@ -68,9 +86,40 @@ export class ProfService {
         this._submitted = value;
     }
 
+    public getConnectedStudent() {
+        this.prof = this.loginService.getConnectedProf();
+        this.http.get<Map<number, Etudiant>>(this.profUrl + 'prof/connected-student').subscribe(
+            data => {
+                this.listStudent.splice(0, this.listStudent.length);
+                for (const item of Object.entries(data)) {
+                    if (this.prof.id === Number(item[1].prof.id)) {
+                        this.listStudent.push({...item[1]});
+                    }
+                }
+                console.log(data);
+                console.log(this.listStudent);
+            }, error => {
+                console.log(error);
+            }
+        );
+    }
 
 
-
+    removeConnectedStudent(id: number) {
+        console.log(id);
+        this.http.get<Map<number, Etudiant>>(this.profUrl + 'prof/remove-student/' + id).subscribe(
+            data => {
+                this.listStudent.splice(0, this.listStudent.length);
+                for (const item of Object.values(data)) {
+                    if (this.prof.id === item.id) {
+                        this.listStudent.push({...item[1]});
+                    }
+                }
+            }, error => {
+                console.log(error);
+            }
+        );
+    }
 }
 
 
