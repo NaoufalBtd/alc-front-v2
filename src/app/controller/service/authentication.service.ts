@@ -11,7 +11,7 @@ import {Admin} from '../model/admin.model';
 
 @Injectable({providedIn: 'root'})
 export class AuthenticationService {
-    public host = 'http://localhost:8036';
+    public host = environment.baseApi;
     // @ts-ignore
     private token: string;
     // @ts-ignore
