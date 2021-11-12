@@ -34,7 +34,7 @@ export class EtudiantCoursesComponent implements OnInit {
                 private service: ParcoursService,
                 private http: HttpClient,
                 private sectionItemService: SectionItemService,
-                private sessioncoursservice: SessionCoursService
+                public sessioncoursservice: SessionCoursService
     ) {
     }
 
