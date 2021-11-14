@@ -508,7 +508,7 @@ import {SyntheseSessionCours} from './controller/model/synthese-session-cours.mo
         GroupeEtudiantCreateComponent,
         GroupeEtudiantDetailListComponent,
         StudentsHomeworkComponent,
-        ResetPasswordComponent
+        ResetPasswordComponent,
         ResetPasswordComponent,
         ConnectedStudentComponent,
         SyntheseSessionCoursEditComponent,
