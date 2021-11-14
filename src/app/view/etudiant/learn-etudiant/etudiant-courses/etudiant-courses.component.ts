@@ -77,6 +77,7 @@ export class EtudiantCoursesComponent implements OnInit {
                 this.service.sectionAdditional = [];
                 this.service.sectionStandard = [];
                 this.itemssection2 = data;
+                console.log(this.itemssection2);
                 for (let _i = 0; _i < data.length; _i++) {
                     if (data[_i].categorieSection.superCategorieSection.libelle === 'Obligatory') {
                         this.service.sectionStandard.push(data[_i]);

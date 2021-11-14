@@ -108,7 +108,10 @@ export class InscriptionListComponent implements OnInit {
 
     ngOnInit(): void {
         this.initCol();
-        this.service.findAll().subscribe(data => this.items = data);
+        this.service.findAll().subscribe(data => {
+            this.items = data;
+            console.log(this.items);
+        } );
     }
 
     public delete(selected: Inscription) {

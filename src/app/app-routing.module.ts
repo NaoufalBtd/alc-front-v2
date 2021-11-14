@@ -100,6 +100,7 @@ import {ResetPasswordComponent} from './view/public/reset-password/reset-passwor
                     {path: 'students-List', component: EtudiantsComponent},
                     {path: 'groups-List', component: GroupeEtudeComponent},
                     {path: 'groups-students', component: GroupeEtudiantComponent},
+                    {path: 'homeWork', component: HomeWorkComponentComponent}
 
                 ]
             },

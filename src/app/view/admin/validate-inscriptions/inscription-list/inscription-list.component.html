@@ -23,7 +23,7 @@
 
             <p-table #dt [(selection)]="selectes" [columns]="cols" [globalFilterFields]="['numeroInscription','datedebutinscription','datefininscription' , 'nom', 'prenom' , 'prof' , 'etatInscription']" [paginator]="true"
                      [rowHover]="true"
-                     [rows]="6" [showCurrentPageReport]="true" [value]="items"
+                     [rows]="6" [showCurrentPageReport]="true" [value]="this.items"
                      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
                      dataKey="id"
                      styleClass="p-datatable-customers">
