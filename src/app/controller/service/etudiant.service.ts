@@ -10,6 +10,7 @@ import {Prof} from '../model/prof.model';
 import {Centre} from '../model/centre.model';
 import {Parcours} from '../model/parcours.model';
 import {LoginService} from './login.service';
+import {User} from '../model/user.model';
 @Injectable({
     providedIn: 'root'
 })
@@ -31,6 +32,10 @@ export class EtudiantService {
     private _selectedProf: Prof;
     private _etudiantVo: EtudiantVo;
     private _parcoursList: Array<Parcours>;
+    private _connectedStudent: Map<number, User> = new Map<number, User>();
+
+
+
 
     public findAllCentre(): Observable<Array<Centre>> {
         return this.http.get<Array<Centre>>(this.adminUrl + 'centre/');
@@ -277,4 +282,11 @@ export class EtudiantService {
     }
 
 
+    get connectedStudent(): Map<number, User> {
+        return this._connectedStudent;
+    }
+
+    set connectedStudent(value: Map<number, User>) {
+        this._connectedStudent = value;
+    }
 }

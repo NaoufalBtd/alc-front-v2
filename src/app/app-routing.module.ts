@@ -69,8 +69,10 @@ import {HomeWorkResultComponent} from './view/etudiant/homeWork/home-work-result
 import {SessioncoursComponent} from './view/admin/sessioncours/sessioncours.component';
 import {EtudiantcommentreviewComponent} from './view/prof/etudiantcommentreview/etudiantcommentreview.component';
 import {PaiementlistComponent} from './view/prof/paiementlist/paiementlist.component';
+import {StudentsHomeworkComponent} from "./view/prof/students-homework/students-homework.component";
 import {ResetPasswordComponent} from './view/public/reset-password/reset-password.component';
 import {LoginComponent} from './view/public/login/login.component';
+import {ConnectedStudentComponent} from './view/prof/connected-student/connected-student.component';
 
 
 @NgModule({
@@ -100,6 +102,7 @@ import {LoginComponent} from './view/public/login/login.component';
                     {path: 'students-List', component: EtudiantsComponent},
                     {path: 'groups-List', component: GroupeEtudeComponent},
                     {path: 'groups-students', component: GroupeEtudiantComponent},
+                    {path: 'homeWork', component: HomeWorkComponentComponent}
 
                 ]
             },
@@ -123,8 +126,10 @@ import {LoginComponent} from './view/public/login/login.component';
                     {path: 'quiz-preview-teacher', component: QuizPreviewProfComponent},
                     {path: 'profile', component: ProfProfileComponent},
                     {path: 'etudiantReviewcomment', component: EtudiantcommentreviewComponent},
-
+                    {path: 'sudents-homework', component: StudentsHomeworkComponent},
                     {path: 'paiementlist', component: PaiementlistComponent}
+                    {path: 'paiementlist', component: PaiementlistComponent},
+                    {path: 'connected-student', component: ConnectedStudentComponent}
                 ]
             },
             {
@@ -140,7 +145,7 @@ import {LoginComponent} from './view/public/login/login.component';
                     {path: 'quiz-take', component: QuizTakeComponent},
                     {path: 'homeWorkEtudiant', component: HomeWorkEtudiantComponent},
                     {path: 'homeWorkEtudiantResult', component: HomeWorkResultComponent},
-                    {path: 'profile', component: EtudiantProfileComponent},
+                    {path: 'profile', component: EtudiantProfileComponent}
 
                 ]
             },

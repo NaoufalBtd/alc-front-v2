@@ -9,8 +9,9 @@ import {Router} from '@angular/router';
 import {EtudiantService} from '../../../controller/service/etudiant.service';
 
 @Component({
+    selector: 'app-formlayoutdemo',
     templateUrl: './formlayoutdemo.component.html',
-    styleUrls: ['./formlayoutdemo.css']
+    styleUrls: ['./formlayoutdemo.component.css']
 })
 export class FormLayoutDemoComponent implements OnInit {
     locality = [

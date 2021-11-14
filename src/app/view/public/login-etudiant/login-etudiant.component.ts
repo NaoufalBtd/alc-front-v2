@@ -10,6 +10,8 @@ import {Subscription} from 'rxjs';
 import {User} from '../../../controller/model/user.model';
 import {HttpErrorResponse, HttpResponse} from '@angular/common/http';
 import {HeaderType} from '../../../enum/header-type.enum';
+import {EtudiantService} from '../../../controller/service/etudiant.service';
+import {ProfService} from '../../../controller/service/prof.service';
 
 @Component({
     selector: 'app-login-etudiant',
@@ -22,6 +24,8 @@ export class LoginEtudiantComponent implements OnInit {
 
     constructor(private messageService: MessageService, private confirmationService: ConfirmationService,
                 private service: LoginService, private router: Router,
+                private profService: ProfService,
+                private studentService: EtudiantService,
                 private authenticationService: AuthenticationService,
     ) {
 
@@ -43,6 +47,7 @@ export class LoginEtudiantComponent implements OnInit {
                     const token = response.headers.get(HeaderType.JWT_TOKEN);
                     this.authenticationService.saveToken(token);
                     this.authenticationService.addUserToLocalCache(response.body);
+                    this.studentService.connectedStudent.set(response.body.id, response.body);
                     this.model = [
                         {label: 'Courses ', icon: 'pi pi-fw pi-briefcase', routerLink: ['/etudiant/etudiant-cours']},
                         {label: 'FAQ ', icon: 'pi pi-fw pi-question-circle', routerLink: ['/etudiant/faq-student']},

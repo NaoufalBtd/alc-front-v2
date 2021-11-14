@@ -104,7 +104,7 @@ import {SectionViewComponent} from './view/admin/learn/section-view/section-view
 import {SectionEditComponent} from './view/admin/learn/section-edit/section-edit.component';
 import {LearnComponent} from './view/admin/learn/learn.component';
 import {ParcoursListComponent} from './view/admin/learn/parcours-list/parcours-list.component';
-import {ConfirmationService, MessageService} from 'primeng/api';
+import {ConfirmationService, MessageService, SharedModule} from 'primeng/api';
 import {QuizViewComponent} from './view/prof/Classes/profclasses/quiz-view/quiz-view.component';
 import {EtudiantssViewComponent} from './view/admin/etudiants/etudiantss-view/etudiantss-view.component';
 import {ClassRoomListComponent} from './view/prof/Classes/profclasses/class-room-list/class-room-list.component';
@@ -236,17 +236,15 @@ import {GroupeEtudeCreateComponent} from './view/admin/groupe-etude/groupe-etude
 import {GroupeEtudeListeComponent} from './view/admin/groupe-etude/groupe-etude-liste/groupe-etude-liste.component';
 import {GroupeEtudeComponent} from './view/admin/groupe-etude/groupe-etude.component';
 import {GroupeEtudeEditComponent} from './view/admin/groupe-etude/groupe-etude-edit/groupe-etude-edit.component';
-import { GroupeEtudiantComponent } from './view/admin/groupe-etudiant/groupe-etudiant.component';
+import {GroupeEtudiantComponent} from './view/admin/groupe-etudiant/groupe-etudiant.component';
 import {GroupeEtudiantListComponent} from './view/admin/groupe-etudiant/groupe-etudiant-list/groupe-etudiant-list.component';
-import { GroupeEtudiantCreateComponent } from './view/admin/groupe-etudiant/groupe-etudiant-create/groupe-etudiant-create.component';
+import {GroupeEtudiantCreateComponent} from './view/admin/groupe-etudiant/groupe-etudiant-create/groupe-etudiant-create.component';
 
-import { GroupeEtudiantDetailListComponent } from './view/admin/groupe-etudiant/groupe-etudiant-detail-list/groupe-etudiant-detail-list.component';
-
-
+import {GroupeEtudiantDetailListComponent} from './view/admin/groupe-etudiant/groupe-etudiant-detail-list/groupe-etudiant-detail-list.component';
 
 
-import {HomeWorkComponentComponent} from "./view/admin/home-work-component/home-work-component.component";
-import {HomeWorkEtudiantComponent} from "./view/etudiant/homeWork/home-work-etudiant/home-work-etudiant.component";
+import {HomeWorkComponentComponent} from './view/admin/home-work-component/home-work-component.component';
+import {HomeWorkEtudiantComponent} from './view/etudiant/homeWork/home-work-etudiant/home-work-etudiant.component';
 import {SessioncoursComponent} from './view/admin/sessioncours/sessioncours.component';
 import {PaiementlistComponent} from './view/prof/paiementlist/paiementlist.component';
 import {EtudiantcommentreviewComponent} from "./view/prof/etudiantcommentreview/etudiantcommentreview.component";
@@ -256,9 +254,12 @@ import { PageNotFoundComponent } from './view/public/page-not-found/page-not-fou
 import { UserProfileComponent } from './view/admin/user-profile/user-profile.component';
 import { ProfProfileComponent } from './view/prof/prof-profile/prof-profile.component';
 import { EtudiantProfileComponent } from './view/etudiant/etudiant-profile/etudiant-profile.component';
+import { StudentsHomeworkComponent } from './view/prof/students-homework/students-homework.component';
 import {ResetPasswordComponent} from './view/public/reset-password/reset-password.component';
 import { LoginComponent } from './view/public/login/login.component';
 
+import {ConnectedStudentComponent} from './view/prof/connected-student/connected-student.component';
+import {SyntheseSessionCours} from './controller/model/synthese-session-cours.model';
 @NgModule({
     imports: [
         BrowserModule,
@@ -506,6 +507,15 @@ import { LoginComponent } from './view/public/login/login.component';
         GroupeEtudiantListComponent,
         GroupeEtudiantCreateComponent,
         GroupeEtudiantDetailListComponent,
+        StudentsHomeworkComponent,
+        ResetPasswordComponent
+        ResetPasswordComponent,
+        ConnectedStudentComponent,
+        SyntheseSessionCoursEditComponent,
+        SyntheseSessionCoursCreateComponent,
+        SyntheseSessionCoursEditComponent,
+        SyntheseSessionCoursListComponent,
+        ProfesseurListComponent,
         ResetPasswordComponent,
         LoginComponent
     ],

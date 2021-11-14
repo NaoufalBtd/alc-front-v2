@@ -28,7 +28,7 @@ export class HomeWorkResultComponent implements OnInit {
   hasprevious = false;
   hasNext = false;
 
-  constructor(private router: Router, private homeworkEtudiantservice: HomeWorkEtudiantServiceService, private homeworkservice: HomeworkService, private homeWorkEtudiantservice: HomeWorkEtudiantServiceService , private parcoursservice: ParcoursService, private dictionnaryService: DictionaryService) {
+  constructor(private router: Router, public homeworkEtudiantservice: HomeWorkEtudiantServiceService, public homeworkservice: HomeworkService, public homeWorkEtudiantservice: HomeWorkEtudiantServiceService , private parcoursservice: ParcoursService, private dictionnaryService: DictionaryService) {
   }
   get QstReponseetudiant(): Array<ReponseEtudiantHomeWork> {
     return this.homeWorkEtudiantservice.QstReponseetudiant;

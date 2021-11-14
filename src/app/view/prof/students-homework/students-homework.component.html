@@ -1,0 +1,75 @@
+<p-card>
+    <p-card-header>
+        <h3>Search</h3>
+        <div class="p-grid">
+
+            <div class="p-col-3"><input pInputText type="text" placeholder="Student Name"
+                                     [ngModel]="HomeWorkEtudiantVo.etudiant.username" >
+
+            </div>
+            <div class="p-col-3">
+                <input pInputText type="text" placeholder="Course"
+                       style="width: 80%" >
+
+            </div>
+            <div class="p-col-3">
+
+                <!--   <p-calendar [showButtonBar]="true" dateFormat="yy-mm-dd"
+                               styleClass="p-column-filter" placeholder="Search by Date" [readonlyInput]="true"
+                               style="width: 70%;" [(ngModel)]="etudiantreviewsearch.dateReview"></p-calendar>-->
+                <input pInputText type="text" placeholder="HomeWork"
+                [ngModel]="HomeWorkEtudiantVo.homeWork.libelle"   style="width: 80%"
+                >
+
+            </div>
+            <div class="p-col-3">
+
+                <!--   <p-calendar [showButtonBar]="true" dateFormat="yy-mm-dd"
+                               styleClass="p-column-filter" placeholder="Search by Date" [readonlyInput]="true"
+                               style="width: 70%;" [(ngModel)]="etudiantreviewsearch.dateReview"></p-calendar>-->
+                <input pInputText type="text" placeholder="Result"
+                      [ngModel]="HomeWorkEtudiantVo.note" style="width: 80%" >
+
+            </div>
+            <div class="p-grid">
+                <div class="p-col-3">
+                    <button pButton pRipple type="button" label="Search" class="p-button-rounded p-button-success"
+                            style="margin-left:4px;background-color: #F48C76;border-color: #F48C76;"
+                            (click)="findByVo()"
+                    ></button>
+
+                </div>
+            </div>
+        </div>
+    </p-card-header>
+</p-card>
+<p-table #dt [value]="this.studentHomeWorkList"  dataKey="id" styleClass="p-datatable-customers" [rowHover]="true"
+         [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]"
+         [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+         [filterDelay]="0" [globalFilterFields]="['etudiant.nom','cours.libelle','comment','datePaiement']">
+    <ng-template pTemplate="caption">
+        <div class="table-header">
+            List of Students HomeWork
+        </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+        <tr>
+            <th pSortableColumn="etudiant.nom">Student Name</th>
+            <th pSortableColumn="comment">HomeWork</th>
+            <th pSortableColumn="datefin">Result</th>
+        </tr>
+
+    </ng-template>
+    <ng-template pTemplate="body" let-c>
+        <tr class="p-selectable-row">
+           <td>{{c.etudiant.nom}}</td>
+            <td>{{c.homeWork.libelle}}</td>
+            <td>{{c.note}}</td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+        <tr>
+            <td colspan="4">No customers found.</td>
+        </tr>
+    </ng-template>
+</p-table>

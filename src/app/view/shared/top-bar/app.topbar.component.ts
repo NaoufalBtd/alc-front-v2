@@ -23,7 +23,9 @@ export class AppTopBarComponent implements OnInit, OnDestroy {
 
     constructor(public app: AppComponent, public appMain: PublicComponent,
                 private router: Router,
-                private authenticationService: AuthenticationService, private loginservice: LoginService) {
+                private authenticationService: AuthenticationService, private loginservice: LoginService ,
+                private profService: ProfService,
+                private authenticationService: AuthenticationService) {
     }
 
 
@@ -44,6 +46,9 @@ export class AppTopBarComponent implements OnInit, OnDestroy {
 
     public logOut() {
         this.loginservice.hasloged = false;
+        if (this.isStudent()){
+            this.profService.removeConnectedStudent(this.user.id);
+        }
         this.authenticationService.logOut();
         this.router.navigate(['/']);
     }
