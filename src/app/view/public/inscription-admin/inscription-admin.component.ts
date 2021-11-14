@@ -76,5 +76,6 @@ export class InscriptionAdminComponent implements OnInit {
                     life: 3000
                 });
             });
+        this.selected = new Admin();
     }
 }

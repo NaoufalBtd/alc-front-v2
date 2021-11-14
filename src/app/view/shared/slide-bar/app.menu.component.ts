@@ -57,25 +57,16 @@ export class AppMenuComponent implements OnInit {
         return this.service.prof;
     }
 
-    set prof(value: Prof) {
-        this.service.prof = value;
-    }
 
     get admin(): Admin {
         return this.service.admin;
     }
 
-    set admin(value: Admin) {
-        this.service.admin = value;
-    }
 
     get etudiant(): Etudiant {
-        return this.service.etudiant;
+        return this.service.getConnectedStudent();
     }
 
-    set etudiant(value: Etudiant) {
-        this.service.etudiant = value;
-    }
 
     ngOnInit() {
         this.user = this.authService.getUserFromLocalCache();
@@ -109,6 +100,7 @@ export class AppMenuComponent implements OnInit {
                     {label: 'Classes', icon: 'pi pi-fw pi-table', routerLink: ['/prof/classes']},
                     {label: 'Synthese-Session-Cours', icon: 'pi pi-fw pi-briefcase', routerLink: ['/prof/synthese']},
                     {label: 'Schedule', icon: 'pi pi-fw pi-calendar-times', routerLink: ['/prof/schedule']},
+                    {label: 'Student connected', icon: 'pi pi-fw pi-calendar-times', routerLink: ['/prof/connected-student']},
                     {label: 'News', icon: 'pi pi-fw pi-clock', routerLink: ['/prof/news-teacher']},
                     {label: 'Student Review', icon: 'pi pi-fw pi-comments', routerLink: ['/prof/comment-review']},
                     {label: 'Student HomeWork', icon: 'pi pi-sliders-h', routerLink: ['/prof/sudents-homework']},

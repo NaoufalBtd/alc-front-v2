@@ -22,7 +22,7 @@ export class EtudiantReviewService {
 
     // tslint:disable-next-line:max-line-length
     constructor(private http: HttpClient,
-                private user: LoginService,
+                private loginService: LoginService,
                 private service: ParcoursService,
                 private messageService: MessageService,
     ) {
@@ -184,12 +184,12 @@ export class EtudiantReviewService {
 
     public findReview(id: number): Observable<EtudiantReview> {
         // tslint:disable-next-line:max-line-length
-        return this.http.get<EtudiantReview>(this.adminUrl + 'etudiantReview/etudiant/id/' + this.user.etudiant.id + '/cours/id/' + this.service.selectedcours.id);
+        return this.http.get<EtudiantReview>(this.adminUrl + 'etudiantReview/etudiant/id/' + this.loginService.getConnectedStudent().id + '/cours/id/' + this.service.selectedcours.id);
     }
 
     public findReviewProf(id: number): Observable<ProfReview> {
         // tslint:disable-next-line:max-line-length
-        return this.http.get<ProfReview>(this.adminUrl + 'profReview/etudiant/id/' + this.selectedProfReview.etudiant.id + '/cours/id/' + this.service.selectedcours.id + '/prof/id/' + this.user.prof.id);
+        return this.http.get<ProfReview>(this.adminUrl + 'profReview/etudiant/id/' + this.selectedProfReview.etudiant.id + '/cours/id/' + this.service.selectedcours.id + '/prof/id/' + this.loginService.getConnectedStudent().prof.id);
     }
 
     get selected(): EtudiantReview {
@@ -208,7 +208,7 @@ export class EtudiantReviewService {
     }
 
     public getStudents(): Observable<Array<Etudiant>> {
-        return this.http.get<Array<Etudiant>>(this.adminUrl + 'etudiant/prof/id/' + this.user.prof.id);
+        return this.http.get<Array<Etudiant>>(this.adminUrl + 'etudiant/prof/id/' + this.loginService.getConnectedStudent().prof.id);
     }
 
     // tslint:disable-next-line:adjacent-overload-signatures

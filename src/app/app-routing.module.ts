@@ -71,6 +71,7 @@ import {EtudiantcommentreviewComponent} from './view/prof/etudiantcommentreview/
 import {PaiementlistComponent} from './view/prof/paiementlist/paiementlist.component';
 import {StudentsHomeworkComponent} from "./view/prof/students-homework/students-homework.component";
 import {ResetPasswordComponent} from './view/public/reset-password/reset-password.component';
+import {ConnectedStudentComponent} from './view/prof/connected-student/connected-student.component';
 
 
 @NgModule({
@@ -126,6 +127,8 @@ import {ResetPasswordComponent} from './view/public/reset-password/reset-passwor
                     {path: 'etudiantReviewcomment', component: EtudiantcommentreviewComponent},
                     {path: 'sudents-homework', component: StudentsHomeworkComponent},
                     {path: 'paiementlist', component: PaiementlistComponent}
+                    {path: 'paiementlist', component: PaiementlistComponent},
+                    {path: 'connected-student', component: ConnectedStudentComponent}
                 ]
             },
             {

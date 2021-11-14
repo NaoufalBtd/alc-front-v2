@@ -9,14 +9,16 @@ import {Router} from '@angular/router';
 import {EtudiantService} from '../../../controller/service/etudiant.service';
 
 @Component({
+    selector: 'app-formlayoutdemo',
     templateUrl: './formlayoutdemo.component.html',
-    styleUrls: ['./formlayoutdemo.css']
+    styleUrls: ['./formlayoutdemo.component.css']
 })
 export class FormLayoutDemoComponent implements OnInit {
     locality = [
         {name: 'native'},
         {name: 'non-native'},
     ];
+
     constructor(private messageService: MessageService,
                 private etudiantService: EtudiantService,
                 private confirmationService: ConfirmationService,
@@ -107,6 +109,7 @@ export class FormLayoutDemoComponent implements OnInit {
         this.selected.datedebutinscription = new Date();
         this.service.findAllParcours().subscribe(data => this.parcoursList = data);
     }
+
     public save() {
         console.log(this.etudiant);
         this.submitted = true;
@@ -117,8 +120,8 @@ export class FormLayoutDemoComponent implements OnInit {
             this.messageService.add({
                 severity: 'success',
                 summary: 'Successful',
-                detail: 'Registration added',
-                life: 3000
+                detail: 'Registration added, please check your email to get your password.',
+                life: 4000
             });
         }, error => {
             this.messageService.add({
@@ -129,7 +132,7 @@ export class FormLayoutDemoComponent implements OnInit {
             });
             console.log(error);
         });
-        this.selected = new Inscription();
+        this.etudiant = new Etudiant();
     }
 
     public findAllCentre() {

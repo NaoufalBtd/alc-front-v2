@@ -304,7 +304,6 @@ li.init:after {
     -webkit-transform: translateY(-50%);
     -o-transform: translateY(-50%);
     -ms-transform: translateY(-50%);
-    font-size: 20px;
     color: #999;
     font-family: Georgia, Serif;
     font-size: larger;

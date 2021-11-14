@@ -9,6 +9,7 @@ import {User} from '../../../controller/model/user.model';
 import {Router} from '@angular/router';
 import {Role} from '../../../enum/role.enum';
 import {Subscription} from 'rxjs';
+import {ProfService} from '../../../controller/service/prof.service';
 
 @Component({
     selector: 'app-topbar',
@@ -23,6 +24,7 @@ export class AppTopBarComponent implements OnInit, OnDestroy {
 
     constructor(public app: AppComponent, public appMain: PublicComponent,
                 private router: Router,
+                private profService: ProfService,
                 private authenticationService: AuthenticationService) {
     }
 
@@ -43,6 +45,9 @@ export class AppTopBarComponent implements OnInit, OnDestroy {
     }
 
     public logOut() {
+        if (this.isStudent()){
+            this.profService.removeConnectedStudent(this.user.id);
+        }
         this.authenticationService.logOut();
         this.router.navigate(['/']);
     }

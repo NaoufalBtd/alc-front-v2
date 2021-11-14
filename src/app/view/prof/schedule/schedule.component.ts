@@ -39,6 +39,7 @@ L10n.load({
 
 })
 export class ScheduleLocalComponent implements OnInit {
+    private prof: Prof = new Prof();
     @ViewChild('scheduleObj')
     public scheduleObj: ScheduleComponent;
     display = false;
@@ -58,7 +59,7 @@ export class ScheduleLocalComponent implements OnInit {
 
 
     constructor(private scheduleService: ScheduleService, private messageService: MessageService,
-                private confirmationService: ConfirmationService, private user: LoginService) {
+                private confirmationService: ConfirmationService, private loginService: LoginService) {
     }
 
 
@@ -143,7 +144,9 @@ export class ScheduleLocalComponent implements OnInit {
 
 
     ngOnInit() {
-        this.scheduleService.findAll();
+        this.prof = this.loginService.getConnectedProf();
+        console.log(this.prof);
+        this.findByProf();
         this.getData();
         this.scheduleService.getAllStudents().subscribe(data => this.students = data);
         this.scheduleService.getProf().subscribe(data => this.professors = data);
@@ -151,10 +154,59 @@ export class ScheduleLocalComponent implements OnInit {
         console.log(this.scheduleProfs);
     }
 
+    findByProf(){
+        this.scheduleService.findByProf(this.prof).subscribe(
+            data => {
+                this.scheduleProfs = data;
+                this.eventSettings = {
+                    dataSource: this.scheduleProfs,
+                    fields: {
+                        id: 'Id',
+                        subject: {name: 'subject', title: 'subject'},
+                        startTime: {name: 'startTime', title: 'startTime'},
+                        endTime: {name: 'endTime', title: 'endTime'}
+                    }
+                };
+            } , error => {
+                console.log(error);
+            }
+        );
+    }
 
     save() {
-        this.scheduleService.save();
-        window.location.reload();
+        this.scheduleProf.prof = this.prof;
+        console.log(this.scheduleProf);
+        this.scheduleService.saveScheduleProf().subscribe(
+            data => {
+                this.scheduleProfs.push({...this.scheduleProf});
+                this.messageService.add({
+                    severity: 'success',
+                    summary: 'Successful',
+                    detail: 'Schedule added.',
+                    life: 3000
+                });
+                this.eventSettings = {
+                    dataSource: this.scheduleProfs,
+                    fields: {
+                        id: 'Id',
+                        subject: {name: 'subject', title: 'subject'},
+                        startTime: {name: 'startTime', title: 'startTime'},
+                        endTime: {name: 'endTime', title: 'endTime'}
+                    }
+                };
+                console.log(this.scheduleProfs);
+            }, error => {
+                console.log(error);
+                this.messageService.add({
+                    severity: 'error',
+                    summary: 'Warning',
+                    detail: 'Registration canceled',
+                    life: 3000
+                });
+            }
+        );
+        this.scheduleProf = new ScheduleProf();
+        this.findByProf();
     }
 
 
