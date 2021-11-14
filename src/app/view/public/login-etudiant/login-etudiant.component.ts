@@ -50,6 +50,8 @@ export class LoginEtudiantComponent implements OnInit {
                         {label: 'Schedule', icon: 'pi pi-fw pi-calendar-times', routerLink: ['/etudiant/schedule-student']},
                         {label: 'LogOut ', icon: 'pi pi-fw pi-sign-out', routerLink: ['']},
                     ];
+                    this.service.hasloged = true;
+
                     this.router.navigate(['/etudiant/etudiant-cours']);
                 },
                 (errorResponse: HttpErrorResponse) => {

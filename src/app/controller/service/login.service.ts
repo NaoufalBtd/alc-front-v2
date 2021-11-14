@@ -16,6 +16,7 @@ export class LoginService {
     private _etudiant: Etudiant;
     private _model: MenuItem[];
     private _admin: Admin;
+    public hasloged: boolean=false;
 
     constructor(private http: HttpClient) {
     }
