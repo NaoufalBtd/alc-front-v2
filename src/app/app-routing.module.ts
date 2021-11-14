@@ -69,7 +69,7 @@ import {HomeWorkResultComponent} from './view/etudiant/homeWork/home-work-result
 import {SessioncoursComponent} from './view/admin/sessioncours/sessioncours.component';
 import {EtudiantcommentreviewComponent} from './view/prof/etudiantcommentreview/etudiantcommentreview.component';
 import {PaiementlistComponent} from './view/prof/paiementlist/paiementlist.component';
-import {StudentsHomeworkComponent} from "./view/prof/students-homework/students-homework.component";
+import {StudentsHomeworkComponent} from './view/prof/students-homework/students-homework.component';
 import {ResetPasswordComponent} from './view/public/reset-password/reset-password.component';
 import {ConnectedStudentComponent} from './view/prof/connected-student/connected-student.component';
 
@@ -126,7 +126,7 @@ import {ConnectedStudentComponent} from './view/prof/connected-student/connected
                     {path: 'profile', component: ProfProfileComponent},
                     {path: 'etudiantReviewcomment', component: EtudiantcommentreviewComponent},
                     {path: 'sudents-homework', component: StudentsHomeworkComponent},
-                    {path: 'paiementlist', component: PaiementlistComponent}
+                    {path: 'paiementlist', component: PaiementlistComponent},
                     {path: 'paiementlist', component: PaiementlistComponent},
                     {path: 'connected-student', component: ConnectedStudentComponent}
                 ]
