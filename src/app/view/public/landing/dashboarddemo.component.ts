@@ -41,8 +41,8 @@ export class DashboardDemoComponent implements OnInit {
         }
     ];
 
-    constructor(private login: LoginService, private profservice: ProfService, private studentservice: EtudiantService, private parcoursService: ParcoursService) {
-    }
+    // tslint:disable-next-line:max-line-length
+    constructor(private login: LoginService, public profservice: ProfService, public studentservice: EtudiantService, public parcoursService: ParcoursService) {}
 
     get model(): any[] {
         return this.login.model;
