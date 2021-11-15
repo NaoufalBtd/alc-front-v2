@@ -10,6 +10,7 @@ import {EtudiantVo} from '../model/etudiant-vo.model';
 import {Centre} from '../model/centre.model';
 import {Parcours} from '../model/parcours.model';
 import {Etudiant} from '../model/etudiant.model';
+import {GroupeEtude} from '../model/groupe-etude.model';
 
 @Injectable({
     providedIn: 'root'
@@ -36,6 +37,7 @@ export class InscriptionService {
     private _prof: Array<Prof>;
     private _centreList: Array<Centre>;
     private _parcoursList: Array<Parcours>;
+    private _groupeEtudeList: Array<GroupeEtude>;
     findByCriteria(): Observable<Array<Inscription>> {
         return this.http.post<Array<Inscription>>(this.adminUrl + 'inscription/search', this.selected);
     }
@@ -282,5 +284,17 @@ export class InscriptionService {
     }
 
 
+    get groupeEtudeList(): Array<GroupeEtude> {
+        if (this._groupeEtudeList == null)
+        {
+            this._groupeEtudeList = new Array<GroupeEtude>();
+        }
+        return this._groupeEtudeList;
+    }
+
+
+    set groupeEtudeList(value: Array<GroupeEtude>) {
+        this._groupeEtudeList = value;
+    }
 }
 

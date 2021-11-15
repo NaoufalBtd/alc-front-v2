@@ -115,6 +115,9 @@ export class GroupeEtudiantCreateComponent implements OnInit {
   public findAllGroupeEtude() {
     this.groupeEtudiantService.findAllGroupeEtude().subscribe(data => this.groupeEtudeList = data);
   }
+  public findAllParcours() {
+    this.groupeEtudiantService.findAllParcours().subscribe(data => this.parcoursList = data);
+  }
   public findAllEtudiant() {
     this.groupeEtudiantService.findAllEtudiant().subscribe(data => this.etudiantList = data);
   }
@@ -125,9 +128,7 @@ export class GroupeEtudiantCreateComponent implements OnInit {
     this.groupeEtudiantService.findEtudiantListByParcoursLibelle(libelle2)
         .subscribe(data => this.etudiantList = data);
   }
-  public findAllParcours() {
-    this.groupeEtudiantService.findAllParcours().subscribe(data => this.parcoursList = data);
-  }
+
   public hideCreateDialog() {
     this.createDialogEtud = false;
     this.submitted = false;

@@ -60,7 +60,7 @@
             <p-tabPanel header="Students information ">
                 <div class="p-field">
                     <label for="parcours">Students</label><br>
-                    <select (click)="findEtudiantListByParcoursLibelle(libelle1.split(': ')[1]) "
+                    <select (click)="findEtudiantListByParcoursLibelle(groupeEtudiant.parcours.libelle) "
                             (change)="selectChangeHandler2($event)"
                             [(ngModel)]="groupeEtudiantDetail.etudiant.id"
 

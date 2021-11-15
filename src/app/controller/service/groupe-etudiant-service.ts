@@ -37,13 +37,15 @@ export class GroupeEtudiantService {
   private _groupeEtudiantDetail: GroupeEtudiantDetail;
   // tslint:disable-next-line:variable-name
   private _groupeEtudiantDetails: Array<GroupeEtudiantDetail>;
-  private _etudiantList: Array<Etudiant>
+  private _etudiantList: Array<Etudiant>;
   private _etudiantList2: Array<Etudiant>;
   private _parcoursList: Array<Parcours>;
   private _parcours : Parcours;
   // tslint:disable-next-line:variable-name
   private _etudiant: Etudiant;
   private _etudiant2: Etudiant;
+
+
   public save(): Observable<number>{
     return this.http.post<number>(this.urlBase + this.urlGroupeEtudiant, this.groupeEtudiant);
   }

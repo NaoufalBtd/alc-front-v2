@@ -106,7 +106,50 @@
                     <option value="native">Native</option>
                     <option value="non-native">Non-native</option>
                 </select>
+                <div class="p-field">
+                    <label for="parcours">Parcours</label><br>
+                    <select (click)="findAllParcoursList() ; " [(ngModel)]="etudiant.parcours.id"
+                            class="btn btn-block btn-outline-light form-control" id="parcours"
+                            name="parcours" pInputText style=" margin-left: 5px"
+                            type="text">
+                        <option *ngFor="let  p of parcoursList" [ngValue]="p.id" selected="selected">{{p.libelle}}
+                        </option>
+                    </select>
+                </div>
+                <div class="p-field">
+                    <label for="groupeEtude">Group</label><br>
+                    <select (click)="findAllGroupeEtude() ; " [(ngModel)]="etudiant.groupeEtude.id"
+
+
+                            class="btn btn-block btn-outline-light form-control" id="groupeEtude"
+                            name="roupe Etude" pInputText style=" margin-left: 5px"
+                            type="text">
+                        <option *ngFor="let p of groupeEtudeList" [ngValue]="p.id" selected="selected">{{p.libelle}}
+                        </option>
+                    </select>
+                </div>
+
+                <!--
+                <div class="p-field">
+                    <label >Level</label><br>
+                    <select name="level" (click)="findAllParcours()"
+                           (change)="affecterParcours($event)"
+                             class="btn btn-block btn-outline-light form-control"
+                             pInputText style=" margin-left: 5px"
+                             type="text">
+                        <option *ngFor="let p of parcoursList "     selected="selected"  >{{p.id}}
+                        </option>
+
+                    </select>
+                </div>
+                -->
+                <!--
+
+                <p-dropdown [options]="parcoursList"  name="level" [(ngModel)]="etudiant.parcours.id" optionLabel="id"
+                            optionDisabled="inactive"></p-dropdown>
+                            -->
             </div>
+
             <div class="form-submit">
                 <button type="button" name="submit" style="background-color: orange; float: right" id="submit"
                         class="submit" (click)="save()">Submit

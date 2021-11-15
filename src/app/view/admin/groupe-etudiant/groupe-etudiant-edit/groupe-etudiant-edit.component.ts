@@ -205,12 +205,12 @@ export class GroupeEtudiantEditComponent implements OnInit {
   public delete(groupeEtudiantDetail: GroupeEtudiantDetail) {
     this.groupeEtudiantDetail = groupeEtudiantDetail;
     this.confirmationService.confirm({
-      message: 'Are you sure you want to delete ' + groupeEtudiantDetail.id + '?',
+      message: 'Are you sure you want to delete ' + groupeEtudiantDetail.etudiant.nom + '?',
       header: 'Confirm',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.groupeEtudiantService.deleteGroupeEtudiantDetailById().subscribe(data => {
-          this.groupeEtudiantDetails = this.groupeEtudiantDetails.filter(val => val.id !== this.groupeEtudiantDetail.id);
+          this.groupeEtudiant.groupeEtudiantDetails = this.groupeEtudiant.groupeEtudiantDetails.filter(val => val.id !== this.groupeEtudiantDetail.id);
           this.groupeEtudiantDetail = new GroupeEtudiantDetail();
           this.messageService.add({
             severity: 'success',

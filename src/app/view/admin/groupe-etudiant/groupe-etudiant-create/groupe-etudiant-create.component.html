@@ -131,7 +131,7 @@
             </div>
             <div class="p-field">
                 <label for="parcours">Level</label><br>
-                <select  (click)="findAllParcours()" [(ngModel)]="selected.parcours.id"
+                <select  (click)="findAllParcours()" [(ngModel)]="selected.parcours.libelle"
                          #cricket  (change)="selectChangeHandler($event)"
                          class="btn btn-block btn-outline-light form-control"
                          pInputText style=" margin-left: 5px"
