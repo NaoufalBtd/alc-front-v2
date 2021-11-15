@@ -128,7 +128,6 @@ import {ConnectedStudentComponent} from './view/prof/connected-student/connected
                     {path: 'etudiantReviewcomment', component: EtudiantcommentreviewComponent},
                     {path: 'sudents-homework', component: StudentsHomeworkComponent},
                     {path: 'paiementlist', component: PaiementlistComponent},
-                    {path: 'paiementlist', component: PaiementlistComponent},
                     {path: 'connected-student', component: ConnectedStudentComponent}
                 ]
             },

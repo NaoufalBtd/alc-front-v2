@@ -4,6 +4,12 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import {LoginService} from '../../../controller/service/login.service';
+import {ProfService} from '../../../controller/service/prof.service';
+import {EtudiantService} from '../../../controller/service/etudiant.service';
+import {Etudiant} from '../../../controller/model/etudiant.model';
+import {Prof} from '../../../controller/model/prof.model';
+import {ParcoursService} from '../../../controller/service/parcours.service';
+import {Cours} from '../../../controller/model/cours.model';
 
 
 @Component({
@@ -13,9 +19,6 @@ import {LoginService} from '../../../controller/service/login.service';
 export class DashboardDemoComponent implements OnInit {
 
     products: any[];
-
-    items: MenuItem[];
-
 
 
     events: any[];
@@ -38,7 +41,7 @@ export class DashboardDemoComponent implements OnInit {
         }
     ];
 
-    constructor( private login: LoginService) {
+    constructor(private login: LoginService, private profservice: ProfService, private studentservice: EtudiantService, private parcoursService: ParcoursService) {
     }
 
     get model(): any[] {
@@ -49,8 +52,37 @@ export class DashboardDemoComponent implements OnInit {
         this.login.model = value;
     }
 
-    ngOnInit() {
+    get items(): Array<Etudiant> {
+        return this.studentservice.items;
+    }
 
+    set items(value: Array<Etudiant>) {
+        this.studentservice.items = value;
+    }
+
+    get listprof(): Array<Prof> {
+        return this.profservice.listprof;
+
+    }
+
+    set listprof(value: Array<Prof>) {
+        this.profservice.listprof = value;
+    }
+
+    get listcours(): Array<Cours> {
+        return this.parcoursService.listcours;
+    }
+
+    set listcours(value: Array<Cours>) {
+        this.parcoursService.listcours = value;
+    }
+
+    ngOnInit() {
+        console.log('nbr of student');
+        console.log(this.studentservice.items);
+        this.studentservice.findAll().subscribe(data => this.items = data);
+        this.profservice.findAll().subscribe(data => this.listprof = data);
+        this.parcoursService.findAll().subscribe(data => this.listcours = data);
         // this.model = [];
         this.fullcalendarOptions = {
             plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
