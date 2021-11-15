@@ -25,7 +25,7 @@ export class AppTopBarComponent implements OnInit, OnDestroy {
 
     constructor(public app: AppComponent, public appMain: PublicComponent,
                 private router: Router,
-                private authenticationService: AuthenticationService, private loginservice: LoginService,
+                private authenticationService: AuthenticationService, public loginservice: LoginService,
                 private profService: ProfService, private studentservice: EtudiantService) {
     }
 
