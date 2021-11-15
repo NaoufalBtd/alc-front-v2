@@ -11,6 +11,7 @@ import {Centre} from '../model/centre.model';
 import {Parcours} from '../model/parcours.model';
 import {LoginService} from './login.service';
 import {GroupeEtude} from '../model/groupe-etude.model';
+import {User} from '../model/user.model';
 @Injectable({
     providedIn: 'root'
 })
@@ -36,6 +37,10 @@ export class EtudiantService {
     private _selectedProf: Prof;
     private _etudiantVo: EtudiantVo;
     private _parcoursList: Array<Parcours>;
+    private _connectedStudent: Map<number, User> = new Map<number, User>();
+
+
+
 
     private _groupeEtudeList: Array<GroupeEtude>;
 
@@ -304,4 +309,11 @@ export class EtudiantService {
         this._groupeEtudeList = value;
     }
 
+    get connectedStudent(): Map<number, User> {
+        return this._connectedStudent;
+    }
+
+    set connectedStudent(value: Map<number, User>) {
+        this._connectedStudent = value;
+    }
 }

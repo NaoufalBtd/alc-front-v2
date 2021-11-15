@@ -10,8 +10,9 @@ import {EtudiantService} from '../../../controller/service/etudiant.service';
 import {GroupeEtude} from '../../../controller/model/groupe-etude.model';
 
 @Component({
+    selector: 'app-formlayoutdemo',
     templateUrl: './formlayoutdemo.component.html',
-    styleUrls: ['./formlayoutdemo.css']
+    styleUrls: ['./formlayoutdemo.component.css']
 })
 export class FormLayoutDemoComponent implements OnInit {
     locality = [

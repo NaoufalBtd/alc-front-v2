@@ -101,6 +101,8 @@ export class SessionCoursService {
     }
 
     public saveetudiantcours(idprof: number, idetudiant: number, idcours: number) {
+        console.log(this.adminUrletudiantCours + idprof + '/' + idetudiant + '/' + idcours);
+
         this.http.get(this.adminUrletudiantCours + idprof + '/' + idetudiant + '/' + idcours).subscribe(
             data => {
                 if (data > 0) {
@@ -148,12 +150,12 @@ export class SessionCoursService {
         this.http.get<SessionCours>(this.adminUrletudiant + 'idc/' + idcours + '/ids/' + idetudiant + '/idp/' + idprof).subscribe(
             data => {
                 if (data.payer) {
-                 /*   this.messageService.add({
-                        severity: 'info',
-                        summary: 'Info',
-                        detail: 'You need to contact your admin in order to start this cours again',
-                        life: 3000
-                    });*/
+                    /*   this.messageService.add({
+                           severity: 'info',
+                           summary: 'Info',
+                           detail: 'You need to contact your admin in order to start this cours again',
+                           life: 3000
+                       });*/
                     /*
                     <p-dialog header="Header" [(visible)]="displayBasic" [style]="{width: '50vw'}" [baseZIndex]="10000">
     <p>You need to contact your admin in order to start this cours again</p>

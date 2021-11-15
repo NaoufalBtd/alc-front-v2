@@ -69,6 +69,7 @@ export class LoginAdminComponent implements OnInit {
                         {label: 'Schedule', icon: 'pi pi-fw pi-calendar-times', routerLink: ['/admin/schedule']},
                         {label: 'LogOut ', icon: 'pi pi-fw pi-sign-out', routerLink: ['']},
                     ];
+                    this.service.hasloged = true;
                     this.router.navigate(['admin/parcours']);
                     this.showLoading = false;
                 },
@@ -79,8 +80,6 @@ export class LoginAdminComponent implements OnInit {
             )
         );
     }
-
-
 
 
     ngOnInit(): void {

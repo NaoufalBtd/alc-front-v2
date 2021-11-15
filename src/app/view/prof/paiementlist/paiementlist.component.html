@@ -1,11 +1,11 @@
 <p-card>
-    <p-card-header>
+    <p-header>
         <h3>Search</h3>
         <div class="p-grid">
             <div class="p-col-6">
 
                 <input pInputText type="text" placeholder="Search by Student Name"
-                       style="width: 80%" [(ngModel)]="paiementsearch.etudiant.nom" >
+                       style="width: 80%" [(ngModel)]="paiementsearch.etudiant.nom">
             </div>
 
             <div class="p-col-6">
@@ -13,18 +13,18 @@
                        style="width: 80%" [(ngModel)]="paiementsearch.datePaiement">
 
             </div>
+        </div>
+
+
+        <div class="p-grid">
+            <div class="p-col-3">
+                <button pButton pRipple type="button" label="Search" class="p-button-rounded p-button-success"
+                        style="margin-left:4px;background-color: #F48C76;border-color: #F48C76;"
+                        (click)="findAllByCriteria()"></button>
+
             </div>
-
-
-            <div class="p-grid">
-                <div class="p-col-3">
-                    <button pButton pRipple type="button" label="Search" class="p-button-rounded p-button-success"
-                            style="margin-left:4px;background-color: #F48C76;border-color: #F48C76;"
-                            (click)="findAllByCriteria()"></button>
-
-                </div>
-            </div>
-     </p-card-header>
+        </div>
+    </p-header>
 </p-card>
 <p-table #dt [value]="paiementlist" dataKey="id" styleClass="p-datatable-customers" [rowHover]="true"
          [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]"

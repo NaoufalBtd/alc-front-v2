@@ -60,6 +60,8 @@ user: User = new User();
                         {label: 'FAQ', icon: 'pi pi-fw pi-question-circle', routerLink: ['/prof/faq-teacher']},
                         {label: 'LogOut ', icon: 'pi pi-fw pi-sign-out', routerLink: ['']},
                     ];
+                    this.service.hasloged = true;
+
                     this.router.navigate(['prof/home']);
                     this.showLoading = false;
                 },
