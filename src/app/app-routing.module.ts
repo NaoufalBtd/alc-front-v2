@@ -71,6 +71,7 @@ import {EtudiantcommentreviewComponent} from './view/prof/etudiantcommentreview/
 import {PaiementlistComponent} from './view/prof/paiementlist/paiementlist.component';
 import {StudentsHomeworkComponent} from './view/prof/students-homework/students-homework.component';
 import {ResetPasswordComponent} from './view/public/reset-password/reset-password.component';
+import {LoginComponent} from './view/public/login/login.component';
 import {ConnectedStudentComponent} from './view/prof/connected-student/connected-student.component';
 
 
@@ -127,7 +128,6 @@ import {ConnectedStudentComponent} from './view/prof/connected-student/connected
                     {path: 'etudiantReviewcomment', component: EtudiantcommentreviewComponent},
                     {path: 'sudents-homework', component: StudentsHomeworkComponent},
                     {path: 'paiementlist', component: PaiementlistComponent},
-                    {path: 'paiementlist', component: PaiementlistComponent},
                     {path: 'connected-student', component: ConnectedStudentComponent}
                 ]
             },
@@ -159,6 +159,8 @@ import {ConnectedStudentComponent} from './view/prof/connected-student/connected
                     {path: 'public/inscriptionTeacher', component: InscriptionProfComponent},
                     {path: 'public/inscriptionEtudiant', component: FormLayoutDemoComponent},
                     {path: 'resetPassword', component: ResetPasswordComponent},
+                    {path: 'login', component: LoginComponent},
+
                 ]
             },
             {path: '**', component: PageNotFoundComponent},

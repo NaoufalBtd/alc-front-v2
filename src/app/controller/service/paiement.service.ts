@@ -5,6 +5,7 @@ import {Paiement} from '../model/paiement.model';
 import {Observable} from 'rxjs';
 import {environment} from '../../../environments/environment';
 import {SessionCoursService} from './session-cours.service';
+import {Cours} from '../model/cours.model';
 
 @Injectable({
     providedIn: 'root'

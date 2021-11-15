@@ -27,6 +27,19 @@ export class ProfService {
 
     private _submitted: boolean;
     private _selectedProf: Prof;
+    private _listprof: Array<Prof>;
+
+
+    get listprof(): Array<Prof> {
+        if (this._listprof == null) {
+            this._listprof = new Array<Prof>();
+        }
+        return this._listprof;
+    }
+
+    set listprof(value: Array<Prof>) {
+        this._listprof = value;
+    }
 
     public save(): Observable<number> {
         return this.http.post<number>(this.adminUrl + 'prof/', this.selectedProf);
@@ -43,6 +56,10 @@ export class ProfService {
 
     public findAllCategorieProf(): Observable<Array<CategorieProf>> {
         return this.http.get<Array<CategorieProf>>(this.adminUrl + 'categorieprof/');
+    }
+
+    public findAll(): Observable<Array<Prof>> {
+        return this.http.get<Array<Prof>>(this.adminUrl + 'prof/');
     }
 
 

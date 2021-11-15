@@ -11,9 +11,10 @@ import {Observable} from 'rxjs';
 import {Vocabulary} from '../model/vocabulary.model';
 import {EtudiantCours} from '../model/etudiant-cours.model';
 import {LoginService} from './login.service';
-import {environment} from "../../../environments/environment";
+import {environment} from '../../../environments/environment';
 import {AuthenticationService} from './authentication.service';
 import {User} from '../model/user.model';
+import {Prof} from '../model/prof.model';
 
 
 @Injectable({
@@ -25,15 +26,29 @@ export class ParcoursService {
     private adminUrl = environment.adminUrl;
     private _sectionStandard: Array<Section>;
     private _sectionAdditional: Array<Section>;
+    private _listcours: Array<Cours>;
 
-user1:User = new User();
-    public afficheCoursStudent(): Observable<Array<Cours>> {
-          this.user1 = this.authenticationService.getUserFromLocalCache();
-          console.log(this.user1);
-          // @ts-ignore
-        const id = this.user1.parcours.id;
-          return this.http.get<Array<Cours>>(this.adminUrl + 'cours/order/id/' + id);
+    user1: User = new User();
+
+    get listcours(): Array<Cours> {
+        if (this._listcours == null) {
+            this._listcours = new Array<Cours>();
+        }
+        return this._listcours;
     }
+
+    set listcours(value: Array<Cours>) {
+        this._listcours = value;
+    }
+
+    public afficheCoursStudent(): Observable<Array<Cours>> {
+        this.user1 = this.authenticationService.getUserFromLocalCache();
+        console.log(this.user1);
+        // @ts-ignore
+        const id = this.user1.parcours.id;
+        return this.http.get<Array<Cours>>(this.adminUrl + 'cours/order/id/' + id);
+    }
+
     get contenuSection(): Array<string> {
         return this._contenuSection;
     }
@@ -50,7 +65,7 @@ user1:User = new User();
         this._index = value;
     }
 
-    constructor(private http: HttpClient, private user: LoginService ,
+    constructor(private http: HttpClient, private user: LoginService,
                 private authenticationService: AuthenticationService) {
     }
 
@@ -308,23 +323,27 @@ user1:User = new User();
     set itemssection2(value: Array<Section>) {
         this._itemssection2 = value;
     }
-    get sectionStandard(): Array<Section>{
-        if (this._sectionStandard == null){
+
+    get sectionStandard(): Array<Section> {
+        if (this._sectionStandard == null) {
             this._sectionStandard = new Array<Section>();
         }
         return this._sectionStandard;
     }
-    set sectionStandard(sections){
+
+    set sectionStandard(sections) {
         this._sectionStandard = sections;
     }
+
     get sectionAdditional(): Array<Section> {
-        if (this._sectionAdditional == null){
+        if (this._sectionAdditional == null) {
             this._sectionAdditional = new Array<Section>();
         }
         return this._sectionAdditional;
     }
-    set sectionAdditional(sections){
-        this._sectionAdditional = sections ;
+
+    set sectionAdditional(sections) {
+        this._sectionAdditional = sections;
     }
 
     private _selectedcentre: Centre;
@@ -863,6 +882,10 @@ user1:User = new User();
 
     public findSectionByid(id: number): Observable<Section> {
         return this.http.get<Section>(this.adminUrl + 'section/section/id/' + id);
+    }
+
+    public findAll(): Observable<Array<Cours>> {
+        return this.http.get<Array<Cours>>(this.adminUrl + 'cours/');
     }
 
 }

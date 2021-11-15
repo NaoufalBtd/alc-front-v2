@@ -1,4 +1,4 @@
-<div class="layout-topbar">
+<div class="layout-topbar" *ngIf="this.loginservice.hasloged">
 
     <a class="layout-topbar-logo" href="#">
         <span id="topbar-logo" style="color: white; font-family: 'Lucida Bright'"><h1>American Center</h1></span>
@@ -15,7 +15,7 @@
                     <span *ngIf="isProf() == true" class="layout-profile-role">Teacher</span>
                     <span *ngIf="isStudent() == true" class="layout-profile-role">Student</span>
                 </div>
-            </a><!---->
+            </a>
 
             <ul class="fadeInDown">
 
@@ -35,24 +35,10 @@
                     </a>
                 </li>
             </ul>
-<!--            <ul class="fadeInDown">-->
-<!--                <li><a href="#"><i class="pi pi-fw pi-user"></i><span>Profile</span></a></li>-->
-<!--                <li><a href="#"><i class="pi pi-fw pi-cog"></i><span>Settings</span></a></li>-->
-<!--                <li><a href="#"><i class="pi pi-fw pi-envelope"></i><span>Messages</span></a></li>-->
-<!--                <li><a href="#"><i class="pi pi-fw pi-bell"></i><span>Notifications</span></a></li>-->
-<!--            </ul>-->
+
         </li>
 
-        <!--        <li [ngClass]="{'active-topmenuitem fadeInDown': appMain.topbarUserMenuActive}" class="user-profile">-->
-        <!--            <a (click)="appMain.onTopbarUserMenuButtonClick($event)" *ngIf="!app.inlineUser">-->
-        <!--                <img src="{{this.user?.image}}"/>-->
-        <!--                <div>-->
-        <!--                    {{user?.prenom}}-->
-        <!--                </div>-->
 
-        <!--            </a>-->
-
-        <!--        </li>-->
     </ul>
 
 
@@ -133,3 +119,19 @@
     </ul>
 </div>
 
+
+<nav *ngIf="!this.loginservice.hasloged">
+    <div class="logo"><img src="assets/picture/icon/logo.png" alt="logo"></div>
+    <ul>
+        <li><a class="active" href="">Home</a></li>
+        <li><a >Portfolio</a></li>
+        <li><a >Team</a></li>
+        <li><a >Services</a></li>
+        <li><a >Contact</a></li>
+    </ul>
+    <a class="get-started"  routerLink="login" >Get Started</a>
+    <img src="assets/picture/icon/menu.png" class="menu" onclick="sideMenu(0)" alt="menu">
+</nav>
+
+<script type="text/javascript" src="src/script.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.js"></script>

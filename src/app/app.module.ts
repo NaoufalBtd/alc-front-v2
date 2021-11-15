@@ -256,6 +256,8 @@ import { ProfProfileComponent } from './view/prof/prof-profile/prof-profile.comp
 import { EtudiantProfileComponent } from './view/etudiant/etudiant-profile/etudiant-profile.component';
 import { StudentsHomeworkComponent } from './view/prof/students-homework/students-homework.component';
 import {ResetPasswordComponent} from './view/public/reset-password/reset-password.component';
+import { LoginComponent } from './view/public/login/login.component';
+
 import {ConnectedStudentComponent} from './view/prof/connected-student/connected-student.component';
 import {SyntheseSessionCours} from './controller/model/synthese-session-cours.model';
 @NgModule({
@@ -514,6 +516,8 @@ import {SyntheseSessionCours} from './controller/model/synthese-session-cours.mo
         SyntheseSessionCoursEditComponent,
         SyntheseSessionCoursListComponent,
         ProfesseurListComponent,
+        ResetPasswordComponent,
+        LoginComponent
     ],
     providers: [
         {provide: LocationStrategy, useClass: HashLocationStrategy},

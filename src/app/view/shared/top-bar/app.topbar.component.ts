@@ -10,6 +10,7 @@ import {Router} from '@angular/router';
 import {Role} from '../../../enum/role.enum';
 import {Subscription} from 'rxjs';
 import {ProfService} from '../../../controller/service/prof.service';
+import {EtudiantService} from '../../../controller/service/etudiant.service';
 
 @Component({
     selector: 'app-topbar',
@@ -24,8 +25,8 @@ export class AppTopBarComponent implements OnInit, OnDestroy {
 
     constructor(public app: AppComponent, public appMain: PublicComponent,
                 private router: Router,
-                private profService: ProfService,
-                private authenticationService: AuthenticationService) {
+                private authenticationService: AuthenticationService, public loginservice: LoginService,
+                private profService: ProfService, private studentservice: EtudiantService) {
     }
 
 
@@ -45,7 +46,8 @@ export class AppTopBarComponent implements OnInit, OnDestroy {
     }
 
     public logOut() {
-        if (this.isStudent()){
+        this.loginservice.hasloged = false;
+        if (this.isStudent()) {
             this.profService.removeConnectedStudent(this.user.id);
         }
         this.authenticationService.logOut();
@@ -61,6 +63,7 @@ export class AppTopBarComponent implements OnInit, OnDestroy {
 
         }
     }
+
     public isProf(): boolean {
         if (this.user == null) {
             return false;
@@ -69,7 +72,9 @@ export class AppTopBarComponent implements OnInit, OnDestroy {
             return this.user.authorities[0].authority === Role.PROF;
 
         }
-    }  public isStudent(): boolean {
+    }
+
+    public isStudent(): boolean {
         if (this.user == null) {
             return false;
         } else {
