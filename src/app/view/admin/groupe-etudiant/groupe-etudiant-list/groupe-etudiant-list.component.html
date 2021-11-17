@@ -9,7 +9,8 @@
                 <ng-template pTemplate="left">
             <button  (click)="openCreateEtud()" class="p-button-success p-mr-2 p-mb-2" icon="pi pi-plus" label="New" pButton
                              pRipple style="width: 90px"></button>
-
+                    <button (click)="deleteMultiple()" [disabled]="!selectes || !selectes.length" class="p-button-danger p-mb-2" icon="pi pi-trash" label="Delete"
+                            pButton pRipple></button>
                 </ng-template>
 
                 <ng-template pTemplate="right">
@@ -46,10 +47,14 @@
                         <th pSortableColumn="dateFin">End date
                             <p-sortIcon field="dateFin"> </p-sortIcon>
                         </th>
+
                         <th pSortableColumn="nombrePlace">Empty places
                             <p-sortIcon field="nombrePlace">  </p-sortIcon>
                         </th>
                         <th pSortableColumn="nombrePlaceVide">Occupied places
+                            <p-sortIcon field="nombrePlaceVide">  </p-sortIcon>
+                        </th>
+                        <th pSortableColumn="nombrePlaceVide">Parcours
                             <p-sortIcon field="nombrePlaceVide">  </p-sortIcon>
                         </th>
                         <th pSortableColumn="nombrePlaceVide">Actions
@@ -67,16 +72,19 @@
                         <td>{{groupeEtudiant.dateFin}}</td>
                         <td>{{groupeEtudiant.nombrePlacevide}}</td>
                         <td>{{groupeEtudiant.nombrePlaceNonVide}}</td>
+                        <td>{{groupeEtudiant.parcours.code}}</td>
+                        <td>{{groupeEtudiant.groupeEtude.libelle}}</td>
+
                         <td>
 
                             <button (click)="delete(groupeEtudiant)" class="p-button-rounded p-button-danger" icon="pi pi-trash" pButton
                                     pRipple></button>
                             &nbsp;
-                            <button  class="p-button-rounded p-button-success p-mr-2" icon="pi pi-pencil" pButton
+                            <button (click)="edit(groupeEtudiant) ;findAllGroupeEtudiantDetail(groupeEtudiant)" class="p-button-rounded p-button-success p-mr-2" icon="pi pi-pencil" pButton
                                     pRipple></button>
-
                         <button   (click)=" findAllGroupeEtudiantDetail(groupeEtudiant); openGroupeEtudiantDetail()"   class="p-button-rounded p-button-info p-mr-2" icon="pi pi-list" pButton
                                  pRipple></button>
+
                         </td>
 
                         <!--
@@ -98,6 +106,7 @@
 
         <app-groupe-etudiant-create></app-groupe-etudiant-create>
         <app-groupe-etudiant-detail-list></app-groupe-etudiant-detail-list>
+        <app-groupe-etudiant-edit></app-groupe-etudiant-edit>
 
 
         <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>

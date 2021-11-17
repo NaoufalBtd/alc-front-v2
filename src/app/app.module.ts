@@ -257,6 +257,8 @@ import { EtudiantProfileComponent } from './view/etudiant/etudiant-profile/etudi
 import { StudentsHomeworkComponent } from './view/prof/students-homework/students-homework.component';
 import {ResetPasswordComponent} from './view/public/reset-password/reset-password.component';
 import { LoginComponent } from './view/public/login/login.component';
+import { GroupeEtudiantEditComponent } from './view/admin/groupe-etudiant/groupe-etudiant-edit/groupe-etudiant-edit.component';
+
 
 import {ConnectedStudentComponent} from './view/prof/connected-student/connected-student.component';
 import {SyntheseSessionCours} from './controller/model/synthese-session-cours.model';
@@ -507,6 +509,9 @@ import {SyntheseSessionCours} from './controller/model/synthese-session-cours.mo
         GroupeEtudiantListComponent,
         GroupeEtudiantCreateComponent,
         GroupeEtudiantDetailListComponent,
+        ResetPasswordComponent,
+        GroupeEtudiantEditComponent,
+
         StudentsHomeworkComponent,
         ResetPasswordComponent,
         ResetPasswordComponent,

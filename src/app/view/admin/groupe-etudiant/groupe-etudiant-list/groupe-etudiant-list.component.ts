@@ -55,7 +55,25 @@ export class GroupeEtudiantListComponent implements OnInit {
       }
     });
   }
-
+  public deleteMultiple() {
+    this.confirmationService.confirm({
+      message: 'Are you sure you want to delete the selected groups?',
+      header: 'Confirm',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.groupeEtudiantService.deleteMultipleByLibelle().subscribe(data => {
+          this.groupeEtudiantService.deleteMultipleIndexById();
+          this.selectes = null;
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Successful',
+            detail: 'Groups  Deleted',
+            life: 3000
+          });
+        });
+      }
+    });
+  }
 
   private initCol() {
     this.cols = [
@@ -67,7 +85,11 @@ export class GroupeEtudiantListComponent implements OnInit {
     ];
     }
 
-
+  public edit(groupeEtduiant1: GroupeEtudiant) {
+    this.groupeEtudiant = {...groupeEtduiant1};
+    this.editDialog = true;
+    console.log(groupeEtduiant1);
+  }
 
   public openCreateEtud() {
     this.selected = new GroupeEtudiant();
@@ -109,6 +131,13 @@ export class GroupeEtudiantListComponent implements OnInit {
 
   set selectes(value: Array<GroupeEtudiant>) {
     this.groupeEtudiantService.selectes = value;
+  }
+  get editDialog(): boolean {
+    return this.groupeEtudiantService.editDialog;
+  }
+
+  set editDialog(value: boolean) {
+    this.groupeEtudiantService.editDialog = value;
   }
 
 

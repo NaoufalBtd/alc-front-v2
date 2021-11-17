@@ -10,6 +10,7 @@ import {Prof} from '../model/prof.model';
 import {Centre} from '../model/centre.model';
 import {Parcours} from '../model/parcours.model';
 import {LoginService} from './login.service';
+import {GroupeEtude} from '../model/groupe-etude.model';
 import {User} from '../model/user.model';
 @Injectable({
     providedIn: 'root'
@@ -18,8 +19,12 @@ export class EtudiantService {
     constructor(private http: HttpClient, public serviceUser: LoginService) {
     }
     private adminUrl = environment.adminUrl;
+
     private etudiantUrl = environment.etudiantUrl;
     private url = environment.baseUrl + 'etudiant/';
+    private urlBase = 'http://localhost:8036';
+    private urlParcours = '/admin/parcours/';
+    private urlGroupeEtude = '/admin/groupeEtude/';
     private _selected: Etudiant;
     private _submitted: boolean;
     private _items: Array<Etudiant>;
@@ -37,20 +42,30 @@ export class EtudiantService {
 
 
 
+    private _groupeEtudeList: Array<GroupeEtude>;
+
     public findAllCentre(): Observable<Array<Centre>> {
         return this.http.get<Array<Centre>>(this.adminUrl + 'centre/');
     }
+
 
     public findAllParcours(): Observable<Array<Parcours>> {
         return this.http.get<Array<Parcours>>(this.adminUrl + 'parcours/');
 
     }
 
+
+
     public findAllProf(): Observable<Array<Prof>> {
         return this.http.get<Array<Prof>>(this.adminUrl + 'prof/');
 
     }
-
+    public findAllParcoursList(): Observable<Array<Parcours>> {
+        return this.http.get<Array<Parcours>>(this.urlBase + this.urlParcours);
+    }
+    public findAllGroupeEtude(): Observable<Array<GroupeEtude>> {
+        return this.http.get<Array<GroupeEtude>>(this.urlBase + this.urlGroupeEtude);
+    }
     public findetudiantProf(): Observable<Array<Etudiant>> {
         return this.http.get<Array<Etudiant>>(this.adminUrl + 'etudiant/prof/id/' + this.selectedProf.id);
     }
@@ -281,6 +296,18 @@ export class EtudiantService {
         return this.http.post<Etudiant>(this.etudiantUrl + 'etudiant/save/', this.selected);
     }
 
+    get groupeEtudeList(): Array<GroupeEtude> {
+        if (this._groupeEtudeList == null)
+        {
+            this._groupeEtudeList = new Array<GroupeEtude>();
+        }
+        return this._groupeEtudeList;
+    }
+
+
+    set groupeEtudeList(value: Array<GroupeEtude>) {
+        this._groupeEtudeList = value;
+    }
 
     get connectedStudent(): Map<number, User> {
         return this._connectedStudent;

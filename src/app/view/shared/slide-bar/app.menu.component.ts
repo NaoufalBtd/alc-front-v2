@@ -9,6 +9,8 @@ import {PublicComponent} from '../../public/public.component';
 import {User} from '../../../controller/model/user.model';
 import {AuthenticationService} from '../../../controller/service/authentication.service';
 import {Role} from '../../../enum/role.enum';
+import {GroupeEtudeComponent} from '../../admin/groupe-etude/groupe-etude.component';
+import {GroupeEtudiantComponent} from '../../admin/groupe-etudiant/groupe-etudiant.component';
 
 @Component({
     selector: 'app-menu',
@@ -75,13 +77,14 @@ export class AppMenuComponent implements OnInit {
             return;
         } else {
 
-
             // @ts-ignore
             if (this.user.authorities[0].authority === Role.ADMIN) {
                 this.model = [
                     {label: 'Manage Parcours', icon: 'pi pi-fw pi-table', routerLink: ['/admin/parcours']},
                     {label: 'Inscriptions List', icon: 'pi pi-fw pi-check-square', routerLink: ['/admin/inscription']},
                     {label: 'Students List', icon: 'pi pi-fw pi-list', routerLink: ['/admin/students-List']},
+                    {label: 'Groups List', icon: 'pi pi-fw pi-list', routerLink: ['/admin/groups-List']},
+                    {label: 'Students Grpoups List', icon: 'pi pi-fw pi-list', routerLink: ['/admin/groups-students']},
                     {label: 'Professor', icon: 'pi pi-fw pi-user', routerLink: ['/admin/teacher-lists']},
                     {label: 'Recommendation', icon: 'pi pi-fw pi-user-plus', routerLink: ['/admin/recommend-admin']},
                     {label: 'List of Payment', icon: 'pi pi-fw pi-wallet', routerLink: ['/admin/paiement']},
