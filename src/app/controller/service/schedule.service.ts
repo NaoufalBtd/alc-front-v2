@@ -24,7 +24,6 @@ export class ScheduleService {
     private index: any;
 
 
-
     constructor(private http: HttpClient, private user: LoginService) {
     }
 
@@ -267,9 +266,10 @@ export class ScheduleService {
     }
 
 
-    public findAllByStudent(schedule: ScheduleProf): Observable<Array<ScheduleProf>>{
-        return this.http.post<Array<ScheduleProf>>(this.adminUrl + 'scheduleProf/all/', schedule );
+    public findAllByStudent(schedule: ScheduleProf): Observable<Array<ScheduleProf>> {
+        return this.http.post<Array<ScheduleProf>>(this.adminUrl + 'scheduleProf/all/', schedule);
     }
+
     public findByStudent(student: Etudiant): Observable<Array<ScheduleProf>> {
         return this.http.get<Array<ScheduleProf>>(this.studentUrl + 'scheduleProf/etudiant/id/' + student.id);
     }
@@ -291,16 +291,24 @@ export class ScheduleService {
         return this.http.delete<number>(this.adminUrl + 'calendrierProf/id' + this.selected.id);
     }
 
-    save(): Observable<number> {
-            return this.http.post<number>(this.adminUrl + 'scheduleProf/', this.scheduleProf);
+    save(): Observable<ScheduleProf> {
+        return this.http.post<ScheduleProf>(this.adminUrl + 'scheduleProf/', this.scheduleProf);
+    }
+
+    saveByProf(): Observable<ScheduleProf> {
+        return this.http.post<ScheduleProf>(this.profUrl + 'scheduleProf/', this.scheduleProf);
+    }
+
+    saveByStudent(): Observable<ScheduleProf> {
+        return this.http.post<ScheduleProf>(this.studentUrl + 'scheduleProf/', this.scheduleProf);
     }
 
     saveScheduleProf(): Observable<number> {
         return this.http.post<number>(this.profUrl + 'scheduleProf/', this.scheduleProf);
     }
 
-    public deleteByRef(ref: string){
-        this.http.delete<ScheduleProf>(this.adminUrl + 'scheduleProf/ref/' +  ref ).subscribe(
+    public deleteByRef(ref: string) {
+        this.http.delete<ScheduleProf>(this.adminUrl + 'scheduleProf/ref/' + ref).subscribe(
             data => {
             }, error => {
                 console.log(error);
@@ -354,7 +362,7 @@ export class ScheduleService {
     }
 
     public clone(scheduleProf: ScheduleProf): ScheduleProf {
-        const  myClone: ScheduleProf = new ScheduleProf();
+        const myClone: ScheduleProf = new ScheduleProf();
         myClone.id = scheduleProf.id;
         myClone.startTime = scheduleProf.startTime;
         myClone.ref = scheduleProf.ref;

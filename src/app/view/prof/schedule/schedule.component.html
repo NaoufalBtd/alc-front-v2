@@ -39,7 +39,11 @@
                             (click)="onCloseClick()">
                     </button>
                 </div>
+                <div class="e-subject-wrap">
+                    <div class="e-subject e-text-ellipsis" value="Subject" title="subject">{{data.subject}}</div>
+                </div>
             </div>
+
         </div>
     </ng-template>
 
@@ -47,7 +51,9 @@
     <ng-template #quickInfoTemplatesFooter let-data>
         <div *ngIf="data.elementType == 'cell'" class="e-cell-footer">
             <div class="left-button">
-                <button class="e-event-details" title="Extra Details" (click)="onDetailsClick(editorTemplate)">More Details</button>
+                <button class="e-event-details" title="Extra Details" (click)="onDetailsClick(editorTemplate)">More
+                    Details
+                </button>
             </div>
         </div>
     </ng-template>
@@ -70,12 +76,12 @@
         </div>
 
 
-<!--        <div class="p-field">-->
-<!--            <label>Teacher Name </label>-->
-<!--            <p-dropdown (click)="getProf()" [(ngModel)]="scheduleProf.prof" [options]="professors" class="e-field"-->
-<!--                        data-name="teacher"-->
-<!--                        optionLabel="nom" placeholder="Name of Teacher"></p-dropdown>-->
-<!--        </div>-->
+        <!--        <div class="p-field">-->
+        <!--            <label>Teacher Name </label>-->
+        <!--            <p-dropdown (click)="getProf()" [(ngModel)]="scheduleProf.prof" [options]="professors" class="e-field"-->
+        <!--                        data-name="teacher"-->
+        <!--                        optionLabel="nom" placeholder="Name of Teacher"></p-dropdown>-->
+        <!--        </div>-->
 
 
         <div class="p-field">
@@ -124,7 +130,8 @@
 
 
     <div class="e-footer-content" style="margin:8% 0 0 22px ">
-        <button type="button" class="e-control e-btn e-lib e-quick-alertok e-flat e-primary e-quick-dialog-delete" style="margin-right: 5em"
+        <button type="button" class="e-control e-btn e-lib e-quick-alertok e-flat e-primary e-quick-dialog-delete"
+                style="margin-right: 5em"
                 aria-label="Delete" (click)="onDeleteClick()"
         >Delete
         </button>

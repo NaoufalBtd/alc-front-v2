@@ -54,7 +54,7 @@
                         pRipple
                         style="background-color: orange; position: absolute;margin: 0;left: 50%; -ms-transform: translate(-50%, -50%); transform: translate(-50%, -50%);top: 50%;  width: 120px"
                         type="button"></button>
-                <button (click)="NextSection()"
+                <button  (click)="NextSection()"
                         [style.visibility]="(this.selectedsection.numeroOrder < this.sectionStandard.length)? 'visible':'hidden'"
                         class="p-button-rounded" icon="pi pi-caret-right" id="next" label="Next"
                         pButton pRipple
@@ -173,6 +173,22 @@
                             </ng-template>
                         </p-table>
                         <b *ngIf="this.homeWorkList.length == 0">No HomeWork found </b>
+                    </div>
+                    <div id="connectedStudent" [style.visibility]="'hidden'">
+                        <p-table [value]="this.webSocketService.connectedUsers"  responsiveLayout="scroll">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th>Connected Student</th>
+
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-student >
+                                <tr>
+                                    <td>{{student.nom }} {{ student.prenom}}</td>
+
+                                </tr>
+                            </ng-template>
+                        </p-table>
                     </div>
 
                 </div>

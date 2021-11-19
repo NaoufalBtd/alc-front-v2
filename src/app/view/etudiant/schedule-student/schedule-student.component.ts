@@ -96,7 +96,6 @@ export class ScheduleStudentComponent implements OnInit {
                 };
             }
         );
-        this.getData();
     }
 
     showBasicDialog() {
@@ -105,14 +104,20 @@ export class ScheduleStudentComponent implements OnInit {
 
 
     public getData() {
-        this.eventSettings = {
-            dataSource: this.scheduleProfs,
-            fields: {
-                id: 'Id',
-                subject: {name: 'subject', title: 'subject'},
-                startTime: {name: 'startTime', title: 'startTime'},
-                endTime: {name: 'endTime', title: 'endTime'}
+        this.scheduleObj.eventSettings.dataSource = null;
+        this.scheduleService.findByStudent(this.etudiant).subscribe(
+            data => {
+                this.scheduleProfs = data;
+                this.eventSettings = {
+                    dataSource: this.scheduleProfs,
+                    fields: {
+                        id: 'Id',
+                        subject: {name: 'subject', title: 'subject'},
+                        startTime: {name: 'startTime', title: 'startTime'},
+                        endTime: {name: 'endTime', title: 'endTime'}
+                    }
+                };
             }
-        };
+        );
     }
 }

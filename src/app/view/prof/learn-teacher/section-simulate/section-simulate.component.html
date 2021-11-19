@@ -105,9 +105,24 @@
                             </ng-template>
 
                         </p-table>
-
                     </div>
+
                     <app-chat [style.visibility]="'hidden'" id="chat"></app-chat>
+
+                    <div id="connectedStudent" [style.visibility]="'hidden'">
+                        <p-table [value]="this.webSocketService.connectedUsers"  responsiveLayout="scroll">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th>Connected Student</th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-student >
+                                <tr>
+                                    <td>{{student.nom }} {{ student.prenom}}</td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
 
                 </div>
 

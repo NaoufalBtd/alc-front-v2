@@ -23,16 +23,18 @@ export class Chat1Component implements OnInit, OnDestroy {
         // this.servicelogin.etudiant.prof.students[0] = null;
         // this.servicelogin.etudiant.prof.students[0].chatMessageDto = null;
         // this.webSocketService.findstudentlist(this.servicelogin.etudiant.prof.id);
-        this.webSocketService.openWebSocket();
+        this.webSocketService.openWebSocket(this.servicelogin.etudiant);
     }
 
     ngOnDestroy(): void {
-        this.webSocketService.closeWebSocket();
+        this.webSocketService.closeWebSocket(this.servicelogin.etudiant);
     }
 
     sendMessage(sendForm: NgForm) {
         const chatMessageDto = new ChatMessageDto(this.servicelogin.etudiant.nom, sendForm.value.message, true);
         console.log(this.servicelogin.etudiant.prof.chatMessageDto);
+        chatMessageDto.prof = this.servicelogin.etudiant.prof;
+        chatMessageDto.type = 'message';
         console.log(chatMessageDto);
         this.webSocketService.sendMessage(chatMessageDto);
         sendForm.controls.message.reset();

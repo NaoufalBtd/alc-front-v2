@@ -6,33 +6,72 @@ import {LoginService} from './login.service';
 import {ProfService} from './prof.service';
 import {Prof} from '../model/prof.model';
 import {environment} from '../../../environments/environment';
+import {StudentSimulateSectionComponent} from '../../view/etudiant/learn-etudiant/student-simulate-section/student-simulate-section.component';
+import {ConfirmationService, MessageService} from 'primeng/api';
+import {Router} from '@angular/router';
+import {DictionaryService} from './dictionary.service';
+import {DomSanitizer} from '@angular/platform-browser';
+import {ParcoursService} from './parcours.service';
+import {HttpClient} from '@angular/common/http';
+import {QuizEtudiantService} from './quiz-etudiant.service';
+import {VocabularyService} from './vocabulary.service';
+import {EtudiantReviewService} from './etudiant-review.service';
+import {SectionItemService} from './section-item.service';
+import {SessionCoursService} from './session-cours.service';
+import {HomeworkService} from './homework.service';
+import {HomeWorkEtudiantServiceService} from './home-work-etudiant-service.service';
+import {User} from '../model/user.model';
 
 @Injectable({
     providedIn: 'root'
 })
 export class WebSocketService {
 
+    publicUrl = environment.publicUrl;
     private socketUrl = environment.socketUrl;
-
     webSocket: WebSocket;
     chatMessages: ChatMessageDto[] = [];
+    private _connectedUsers: any[] = [];
+    actionType: Array<string> = new Array<string>();
     students: Etudiant[];
     idprof: number;
 
 
-    constructor(private serviceetudiant: EtudiantService, private loginservice: LoginService, public serviceprof: ProfService) {
+    constructor(private serviceetudiant: EtudiantService,
+                private http: HttpClient,
+                private loginservice: LoginService, public serviceprof: ProfService) {
     }
 
-    public openWebSocket() {
+    public openWebSocket(user: User) {
         this.webSocket = new WebSocket(this.socketUrl);
         this.webSocket.onopen = (event) => {
-            console.log('Open: ', event);
+            this.webSocket.send(JSON.stringify(user));
+            // this.connectedUsers.push(this.webSocket.)
         };
         // this.findbynumero(this.loginservice.prof.id);
         this.webSocket.onmessage = (event) => {
-            const chatMessageDto = JSON.parse(event.data);
-            this.chatMessages.push(chatMessageDto);
+            console.log(event);
+            const data = JSON.parse(event.data);
+            if (data.type === 'message') {
+                this.chatMessages.push(data);
+                console.log(data);
+            }
+            else if  (data.type === 'NEXT') {
+                // this.studentSimulateSection.ngOnInit();
+                // this.studentSimulateSection.NextSection();
+            }
+           else if (data.type === 'PREVIOUS') {
+                // this.studentSimulateSection.ngOnInit();
+                // this.studentSimulateSection.PreviousSection();
+            }
+            else {
+                console.log(this.connectedUsers);
+                this.connectedUsers.push(data);
+                console.log(this.connectedUsers);
+
+            }
         };
+
 
         this.webSocket.onclose = (event) => {
             console.log('Close: ', event);
@@ -48,9 +87,7 @@ export class WebSocketService {
             data => {
                 console.log(data);
                 this.students = data;
-                console.log('listetudiant ana kayn');
             }, error => {
-                console.log('la fonction ne fonctionne pas');
             }
         );
         this.idprof = idprof;
@@ -61,9 +98,7 @@ export class WebSocketService {
     public savechat(prof: Prof) {
         this.serviceprof.savechatmsgs(prof).subscribe(
             data => {
-                console.log('chat tsavat mn 3nd prof');
             }, error => {
-                console.log('madaztch');
             }
         );
     }
@@ -72,19 +107,27 @@ export class WebSocketService {
     public findbynumero(num: number) {
         this.serviceprof.findbyid(num).subscribe(
             data => {
-                console.log('data dlprof' + data);
                 // this.loginservice.etudiant.prof.chatMessageDto = data.chatMessageDto;
                 // this.loginservice.prof = data;
             },
             error => {
-                console.log('erreur achrif');
             }
         );
-        console.log('hahowa prof : ' + this.loginservice.prof);
     }
 
 
-    public closeWebSocket() {
+    public closeWebSocket(user: any) {
+
+        alert(user.nom);
         this.webSocket.close();
+    }
+
+
+    get connectedUsers(): any[] {
+        return this._connectedUsers;
+    }
+
+    set connectedUsers(value: any[]) {
+        this._connectedUsers = value;
     }
 }

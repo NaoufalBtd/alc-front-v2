@@ -26,6 +26,7 @@ import {logging} from 'protractor';
 import {HomeworkService} from '../../../../controller/service/homework.service';
 import {HomeWork} from '../../../../controller/model/home-work.model';
 import {HomeWorkEtudiantServiceService} from '../../../../controller/service/home-work-etudiant-service.service';
+import {WebSocketService} from '../../../../controller/service/web-socket.service';
 
 @Pipe({name: 'safe'})
 export class SafePipe implements PipeTransform {
@@ -58,6 +59,7 @@ export class StudentSimulateSectionComponent implements OnInit {
     // tslint:disable-next-line:max-line-lengthg max-line-length
     constructor(private messageService: MessageService,
                 private router: Router,
+                public webSocketService: WebSocketService,
                 private dictionnaryService: DictionaryService,
                 private sanitizer: DomSanitizer,
                 private confirmationService: ConfirmationService,
@@ -450,6 +452,7 @@ export class StudentSimulateSectionComponent implements OnInit {
                     document.getElementById('word').style.height = '0px';
 
                     document.getElementById('categoriess').style.visibility = 'visible';
+                    document.getElementById('connectedStudent').style.visibility = 'hidden';
 
                     document.getElementById('categoriess').style.width = '100%';
                     document.getElementById('categoriess').style.height = '100%';
@@ -464,6 +467,8 @@ export class StudentSimulateSectionComponent implements OnInit {
                     document.getElementById('word').style.visibility = 'hidden';
                     document.getElementById('word').style.height = '0px';
                     document.getElementById('chat').style.visibility = 'visible';
+                    document.getElementById('connectedStudent').style.visibility = 'hidden';
+
                 }
             },
             {
@@ -480,6 +485,8 @@ export class StudentSimulateSectionComponent implements OnInit {
                     document.getElementById('word').style.height = '100%';
                     document.getElementById('wrd').style.height = '100%';
                     document.getElementById('chat').style.visibility = 'hidden';
+                    document.getElementById('connectedStudent').style.visibility = 'hidden';
+
                 }
             }, {
                 icon: 'pi pi-sliders-h', style: {width: '50%'}, command: (event) => {
@@ -488,8 +495,21 @@ export class StudentSimulateSectionComponent implements OnInit {
                     document.getElementById('homeWork').style.visibility = 'visible';
                     document.getElementById('chat').style.visibility = 'hidden';
                     document.getElementById('word').style.visibility = 'hidden';
+                    document.getElementById('connectedStudent').style.visibility = 'hidden';
+
                 }
             },
+            {
+                icon: 'pi pi-fw pi-users', command: (event) => {
+                    document.getElementById('categoriess').style.visibility = 'hidden';
+                    document.getElementById('chat').style.visibility = 'hidden';
+                    document.getElementById('categoriess').style.height = '0px';
+                    document.getElementById('categ').style.height = '0px';
+                    //   document.getElementById('word').style.visibility = 'hidden';
+                    //   document.getElementById('word').style.height = '0px';
+                    document.getElementById('connectedStudent').style.visibility = 'visible';
+                }
+            }
         ];
         this.findhomeworkbycours(this.sectionItemService.coursofsection);
     }
@@ -602,6 +622,8 @@ export class StudentSimulateSectionComponent implements OnInit {
 
 
     PreviousSection() {
+        alert('previous clicked');
+
         this.service.affichelistSection().subscribe(
             data => {
                 this.itemssection2 = data;
@@ -690,7 +712,8 @@ export class StudentSimulateSectionComponent implements OnInit {
 
     }
 
-    NextSection() {
+    public NextSection() {
+        alert('next clicked');
         this.service.affichelistSection().subscribe(
             data => {
                 this.itemssection2 = data;
@@ -739,6 +762,8 @@ export class StudentSimulateSectionComponent implements OnInit {
             this.selectedsection.numeroOrder = 0;
             this.PreviousSection();
         }
+
+
 
     }
 
