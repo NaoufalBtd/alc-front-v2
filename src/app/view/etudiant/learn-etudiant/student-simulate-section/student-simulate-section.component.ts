@@ -799,9 +799,14 @@ export class StudentSimulateSectionComponent implements OnInit {
         this.homeWorkEtudiantService.homeWork = homeWork;
         this.homeWorkEtudiantService.findbyetudiantIdAndHomeWorkID().subscribe(
             data => {
-                this.homeWorkEtudiantService.isUpdate = true;
-                this.homeWorkEtudiantService.homeWorkEtudiant = data ;
-            }
+                if (data!=null){
+                    this.homeWorkEtudiantService.isUpdate = true;
+                    this.homeWorkEtudiantService.homeWorkEtudiant = data ;
+                }
+
+            },error =>{
+                console.log('makayn tachi homeWork');
+        }
         );
         this.homeWorkEtudiantService.homeWork.questions = homeWork.questions;
         //  this.homeWorkEtudiantService.homeWorkQuestion = ;

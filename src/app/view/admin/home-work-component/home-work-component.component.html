@@ -108,10 +108,11 @@
                         </ng-template>
                         <ng-template let-node pTemplate="default">
                             <b>{{node.label}}</b>
-                            <button  class="p-button-rounded p-button-success" icon="pi pi-undo" pButton
+                            <button  class="p-button-rounded p-button-success" icon="pi pi-undo" pButton (click)="updateQuestion(node.key)"
                                     pRipple type="button"></button>
                             <button  class="p-button-rounded p-button-danger" icon="pi pi-times" pButton
                                     pRipple
+                                     (click)="deleteQuestion(node.key)"
                                     type="button"></button>
 
                         </ng-template>
