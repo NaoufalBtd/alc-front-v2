@@ -10,6 +10,7 @@ import {HttpClient} from '@angular/common/http';
 
 import {User} from '../model/user.model';
 import {SimulateSectionService} from './simulate-section.service';
+import {AuthenticationService} from './authentication.service';
 
 @Injectable({
     providedIn: 'root'
@@ -56,16 +57,6 @@ export class WebSocketService {
            else if (data.type === 'PREVIOUS') {
                console.log('hani ghandir previous l student');
                this.simulatesectionService.PreviousSection();
-            }
-            else {
-                this.connectedUsers.push(data);
-                console.log(this.connectedUsers);
-            } else if (data.type === 'NEXT') {
-                // this.studentSimulateSection.ngOnInit();
-                // this.studentSimulateSection.NextSection();
-            } else if (data.type === 'PREVIOUS') {
-                // this.studentSimulateSection.ngOnInit();
-                // this.studentSimulateSection.PreviousSection();
             } else {
                 console.log(data);
                 console.log(this.connectedUsers);
@@ -84,8 +75,6 @@ export class WebSocketService {
                     // console.log(this.webSocket.readyState);
                     console.log(this.connectedUsers);
                 }
-
-
             }
         };
 
