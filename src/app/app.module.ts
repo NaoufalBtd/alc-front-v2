@@ -529,8 +529,7 @@ import {SyntheseSessionCours} from './controller/model/synthese-session-cours.mo
         MenuService, MessageService, ConfirmationService,
         WeekService, MonthService, DayService, WeekService, WorkWeekService, MonthService,
         AgendaService, MonthAgendaService, TimelineViewsService,
-        TimelineMonthService,
-        StudentSimulateSectionComponent
+        TimelineMonthService
     ],
     bootstrap: [AppComponent]
 })

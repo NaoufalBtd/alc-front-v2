@@ -6,22 +6,10 @@ import {LoginService} from './login.service';
 import {ProfService} from './prof.service';
 import {Prof} from '../model/prof.model';
 import {environment} from '../../../environments/environment';
-import {StudentSimulateSectionComponent} from '../../view/etudiant/learn-etudiant/student-simulate-section/student-simulate-section.component';
-import {ConfirmationService, MessageService} from 'primeng/api';
-import {Router} from '@angular/router';
-import {DictionaryService} from './dictionary.service';
-import {DomSanitizer} from '@angular/platform-browser';
-import {ParcoursService} from './parcours.service';
 import {HttpClient} from '@angular/common/http';
-import {QuizEtudiantService} from './quiz-etudiant.service';
-import {VocabularyService} from './vocabulary.service';
-import {EtudiantReviewService} from './etudiant-review.service';
-import {SectionItemService} from './section-item.service';
-import {SessionCoursService} from './session-cours.service';
-import {HomeworkService} from './homework.service';
-import {HomeWorkEtudiantServiceService} from './home-work-etudiant-service.service';
+
 import {User} from '../model/user.model';
-import {AuthenticationService} from './authentication.service';
+import {SimulateSectionService} from './simulate-section.service';
 
 @Injectable({
     providedIn: 'root'
@@ -42,7 +30,9 @@ export class WebSocketService {
     constructor(private serviceetudiant: EtudiantService,
                 private authService: AuthenticationService,
                 private http: HttpClient,
-                private loginservice: LoginService, public serviceprof: ProfService) {
+                private loginservice: LoginService, public serviceprof: ProfService,
+                private simulatesectionService: SimulateSectionService
+                ) {
     }
 
     public openWebSocket(user: User) {
@@ -53,10 +43,23 @@ export class WebSocketService {
         };
         // this.findbynumero(this.loginservice.prof.id);
         this.webSocket.onmessage = (event) => {
+            console.log(event);
             const data = JSON.parse(event.data);
             if (data.type === 'message') {
                 this.chatMessages.push(data);
                 console.log(data);
+            }
+            else if  (data.type === 'NEXT') {
+                console.log('hani ghandir next l student');
+                this.simulatesectionService.nextSection();
+            }
+           else if (data.type === 'PREVIOUS') {
+               console.log('hani ghandir previous l student');
+               this.simulatesectionService.PreviousSection();
+            }
+            else {
+                this.connectedUsers.push(data);
+                console.log(this.connectedUsers);
             } else if (data.type === 'NEXT') {
                 // this.studentSimulateSection.ngOnInit();
                 // this.studentSimulateSection.NextSection();
@@ -141,6 +144,9 @@ export class WebSocketService {
 
 
     get connectedUsers(): any[] {
+        if (this._connectedUsers == null){
+            this._connectedUsers = [];
+        }
         return this._connectedUsers;
     }
 
