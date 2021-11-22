@@ -411,9 +411,6 @@ export class StudentSimulateSectionComponent implements OnInit {
         this.review.selected = value;
     }
 
-
-
-
     ngOnInit(): void {
         // this.hasfinish = false;
         //      this.http.get<EtudiantCours>('http://localhost:8036/etudiant/etudiantCours/prof/id/' + this.loginService.etudiant.prof.id + '/etudiant/id/' +  this.loginService.etudiant.id + '/cours/idc/' + this.).subscribe(
@@ -622,7 +619,7 @@ export class StudentSimulateSectionComponent implements OnInit {
 
 
     PreviousSection() {
-        alert('previous clicked');
+
 
         this.service.affichelistSection().subscribe(
             data => {
@@ -713,7 +710,6 @@ export class StudentSimulateSectionComponent implements OnInit {
     }
 
     public NextSection() {
-        alert('next clicked');
         this.service.affichelistSection().subscribe(
             data => {
                 this.itemssection2 = data;

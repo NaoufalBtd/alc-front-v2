@@ -40,7 +40,7 @@
             </div>
 
             <div style="position: relative;margin-top: 50px">
-                <button (click)="PreviousSection()"
+                <button (click)="goToSection('PREVIOUS', 'previous')"
                         [style.visibility]="(this.selectedsection.numeroOrder != 1)? 'visible':'hidden'"
                         class="p-button-rounded" icon="pi pi-caret-left" id="previous"
                         label="Previous" pButton pRipple
@@ -53,7 +53,7 @@
                         pButton
                         pRipple
                         style="position: absolute;margin: 0; background-color: orange ;left: 50%; -ms-transform: translate(-50%, -50%); transform: translate(-50%, -50%);top: 50%;  width: 120px" type="button"></button>
-                <button (click)="NextSection()"
+                <button (click)="goToSection('NEXT', 'next')"
                         [style.visibility]="(this.selectedsection.numeroOrder < this.itemssection2.length)? 'visible':'hidden'"
                         class="p-button-rounded" icon="pi pi-caret-right" id="next" label="Next"
                         pButton pRipple

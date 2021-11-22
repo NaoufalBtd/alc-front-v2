@@ -6,21 +6,10 @@ import {LoginService} from './login.service';
 import {ProfService} from './prof.service';
 import {Prof} from '../model/prof.model';
 import {environment} from '../../../environments/environment';
-import {StudentSimulateSectionComponent} from '../../view/etudiant/learn-etudiant/student-simulate-section/student-simulate-section.component';
-import {ConfirmationService, MessageService} from 'primeng/api';
-import {Router} from '@angular/router';
-import {DictionaryService} from './dictionary.service';
-import {DomSanitizer} from '@angular/platform-browser';
-import {ParcoursService} from './parcours.service';
 import {HttpClient} from '@angular/common/http';
-import {QuizEtudiantService} from './quiz-etudiant.service';
-import {VocabularyService} from './vocabulary.service';
-import {EtudiantReviewService} from './etudiant-review.service';
-import {SectionItemService} from './section-item.service';
-import {SessionCoursService} from './session-cours.service';
-import {HomeworkService} from './homework.service';
-import {HomeWorkEtudiantServiceService} from './home-work-etudiant-service.service';
+
 import {User} from '../model/user.model';
+import {SimulateSectionService} from './simulate-section.service';
 
 @Injectable({
     providedIn: 'root'
@@ -31,7 +20,7 @@ export class WebSocketService {
     private socketUrl = environment.socketUrl;
     webSocket: WebSocket;
     chatMessages: ChatMessageDto[] = [];
-    private _connectedUsers: any[] = [];
+    private _connectedUsers: any[];
     actionType: Array<string> = new Array<string>();
     students: Etudiant[];
     idprof: number;
@@ -39,7 +28,9 @@ export class WebSocketService {
 
     constructor(private serviceetudiant: EtudiantService,
                 private http: HttpClient,
-                private loginservice: LoginService, public serviceprof: ProfService) {
+                private loginservice: LoginService, public serviceprof: ProfService,
+                private simulatesectionService: SimulateSectionService
+                ) {
     }
 
     public openWebSocket(user: User) {
@@ -57,22 +48,19 @@ export class WebSocketService {
                 console.log(data);
             }
             else if  (data.type === 'NEXT') {
-                // this.studentSimulateSection.ngOnInit();
-                // this.studentSimulateSection.NextSection();
+                console.log('hani ghandir next l student');
+                this.simulatesectionService.nextSection();
             }
            else if (data.type === 'PREVIOUS') {
-                // this.studentSimulateSection.ngOnInit();
-                // this.studentSimulateSection.PreviousSection();
+               console.log('hani ghandir previous l student');
+               this.simulatesectionService.PreviousSection();
             }
             else {
-                console.log(this.connectedUsers);
                 this.connectedUsers.push(data);
                 console.log(this.connectedUsers);
 
             }
         };
-
-
         this.webSocket.onclose = (event) => {
             console.log('Close: ', event);
         };
@@ -124,6 +112,9 @@ export class WebSocketService {
 
 
     get connectedUsers(): any[] {
+        if (this._connectedUsers == null){
+            this._connectedUsers = [];
+        }
         return this._connectedUsers;
     }
 
