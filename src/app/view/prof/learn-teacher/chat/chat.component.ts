@@ -29,7 +29,6 @@ export class ChatComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        this.webSocketService.closeWebSocket(this.service.prof);
     }
 
 
