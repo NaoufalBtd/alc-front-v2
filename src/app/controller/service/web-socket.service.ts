@@ -21,6 +21,7 @@ import {SessionCoursService} from './session-cours.service';
 import {HomeworkService} from './homework.service';
 import {HomeWorkEtudiantServiceService} from './home-work-etudiant-service.service';
 import {User} from '../model/user.model';
+import {AuthenticationService} from './authentication.service';
 
 @Injectable({
     providedIn: 'root'
@@ -29,7 +30,8 @@ export class WebSocketService {
 
     publicUrl = environment.publicUrl;
     private socketUrl = environment.socketUrl;
-    webSocket: WebSocket;
+    index = 0;
+    webSocket: WebSocket ;
     chatMessages: ChatMessageDto[] = [];
     private _connectedUsers: any[] = [];
     actionType: Array<string> = new Array<string>();
@@ -38,6 +40,7 @@ export class WebSocketService {
 
 
     constructor(private serviceetudiant: EtudiantService,
+                private authService: AuthenticationService,
                 private http: HttpClient,
                 private loginservice: LoginService, public serviceprof: ProfService) {
     }
@@ -50,24 +53,35 @@ export class WebSocketService {
         };
         // this.findbynumero(this.loginservice.prof.id);
         this.webSocket.onmessage = (event) => {
-            console.log(event);
             const data = JSON.parse(event.data);
             if (data.type === 'message') {
                 this.chatMessages.push(data);
                 console.log(data);
-            }
-            else if  (data.type === 'NEXT') {
+            } else if (data.type === 'NEXT') {
                 // this.studentSimulateSection.ngOnInit();
                 // this.studentSimulateSection.NextSection();
-            }
-           else if (data.type === 'PREVIOUS') {
+            } else if (data.type === 'PREVIOUS') {
                 // this.studentSimulateSection.ngOnInit();
                 // this.studentSimulateSection.PreviousSection();
-            }
-            else {
+            } else {
+                console.log(data);
                 console.log(this.connectedUsers);
-                this.connectedUsers.push(data);
-                console.log(this.connectedUsers);
+                if (this.connectedUsers.length > 0) {
+                    for (let user of this.connectedUsers) {
+                        if (user.id === data.id) {
+                            return;
+                        }
+                    }
+                    this.connectedUsers.push({...data});
+
+                } else {
+                    console.log(this.connectedUsers);
+                    this.connectedUsers.push({...data});
+                    // this.connectedUsers = this.connectedUsers;
+                    // console.log(this.webSocket.readyState);
+                    console.log(this.connectedUsers);
+                }
+
 
             }
         };
@@ -75,6 +89,7 @@ export class WebSocketService {
 
         this.webSocket.onclose = (event) => {
             console.log('Close: ', event);
+            this.webSocket.close();
         };
     }
 
@@ -117,9 +132,11 @@ export class WebSocketService {
 
 
     public closeWebSocket(user: any) {
-
-        alert(user.nom);
-        this.webSocket.close();
+        this.webSocket.onclose = (event) => {
+            console.log('Close: ', event);
+            this.webSocket.close();
+        };
+        // this.webSocket.close();
     }
 
 

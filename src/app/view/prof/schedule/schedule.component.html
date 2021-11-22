@@ -23,40 +23,44 @@
         <e-view option="Month" [showWeekend]="showWeekend"></e-view>
         <e-view option="Month" [showWeekend]="showWeekend"></e-view>
     </e-views>
+
     <!--     Header template -->
-    <ng-template #quickInfoTemplatesHeader>
-        <div>
-            <div class="e-popup-header">
-                <div class="e-header-icon-wrapper">
-                    <button class="e-edit e-control e-btn e-lib e-flat e-round e-small e-icon-btn" title="Edit"
-                            (click)="onEditClick($event)">
-                    </button>
-                    <button class=" e-control e-btn e-lib e-flat e-round delete-btn e-small e-icon-btn" title="Delete"
-                            (click)="showDialog()">
-                        <span class="e-btn-icon e-icons e-delete-icon"></span>
-                    </button>
-                    <button class="e-close e-control e-btn e-lib e-flat e-round e-small e-icon-btn" title="Close"
-                            (click)="onCloseClick()">
+        <ng-template #quickInfoTemplatesHeader>
+            <div>
+                <div class="e-popup-header">
+                    <div class="e-header-icon-wrapper">
+                        <button class="e-edit e-control e-btn e-lib e-flat e-round e-small e-icon-btn" title="Edit"
+                                (click)="onEditClick()">
+                        </button>
+                        <button class=" e-control e-btn e-lib e-flat e-round delete-btn e-small e-icon-btn" title="Delete"
+                                (click)="showDialog()">
+                            <span class="e-btn-icon e-icons e-delete-icon"></span>
+                        </button>
+                        <button class="e-close e-control e-btn e-lib e-flat e-round e-small e-icon-btn" title="Close"
+                                (click)="onCloseClick()">
+                        </button>
+                    </div>
+                    <div [hidden]="data.subject === undefined" style="margin-top: 2%" class="e-subject-wrap">
+                        <div style="display: inline-block" class="e-subject e-text-ellipsis"  title="subject">{{data?.subject}}</div>
+                        <button [disabled]="data?.startTime !== currentDate" style="float:right" pButton pRipple type="button" label="Start" class="p-button-rounded p-button-lg p-button-success"></button>
+
+                    </div>
+                </div>
+
+            </div>
+        </ng-template>
+
+
+        <ng-template #quickInfoTemplatesFooter let-data>
+            <div *ngIf="data.elementType == 'cell'" class="e-cell-footer">
+                <div class="left-button">
+                    <button style="color: #22C55E" class="e-event-details " title="Extra Details" (click)="onDetailsClick(editorTemplate)">More
+                        Details
                     </button>
                 </div>
-                <div class="e-subject-wrap">
-                    <div class="e-subject e-text-ellipsis" value="Subject" title="subject">{{data.subject}}</div>
-                </div>
             </div>
+        </ng-template>
 
-        </div>
-    </ng-template>
-
-
-    <ng-template #quickInfoTemplatesFooter let-data>
-        <div *ngIf="data.elementType == 'cell'" class="e-cell-footer">
-            <div class="left-button">
-                <button class="e-event-details" title="Extra Details" (click)="onDetailsClick(editorTemplate)">More
-                    Details
-                </button>
-            </div>
-        </div>
-    </ng-template>
 
 
     <ng-template #editorTemplate pTemplate="content">
@@ -74,14 +78,6 @@
                         data-name="Student"
                         placeholder="Name of student"></p-dropdown>
         </div>
-
-
-        <!--        <div class="p-field">-->
-        <!--            <label>Teacher Name </label>-->
-        <!--            <p-dropdown (click)="getProf()" [(ngModel)]="scheduleProf.prof" [options]="professors" class="e-field"-->
-        <!--                        data-name="teacher"-->
-        <!--                        optionLabel="nom" placeholder="Name of Teacher"></p-dropdown>-->
-        <!--        </div>-->
 
 
         <div class="p-field">
@@ -121,6 +117,7 @@
         </div>
 
     </ng-template>
+
 </ejs-schedule>
 
 

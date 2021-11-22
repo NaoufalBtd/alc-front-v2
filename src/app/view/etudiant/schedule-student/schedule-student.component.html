@@ -23,5 +23,26 @@
         <e-view option="Month" [showWeekend]="showWeekend"></e-view>
         <e-view option="Month" [showWeekend]="showWeekend"></e-view>
     </e-views>
+
+    <ng-template #quickInfoTemplatesHeader>
+        <div>
+            <div class="e-popup-header">
+                <div class="e-header-icon-wrapper">
+                    <button disabled class="e-edit e-control e-btn e-lib e-flat e-round e-small e-icon-btn" title="Edit">
+                    </button>
+                    <button [disabled]="true" class=" e-control e-btn e-lib e-flat e-round delete-btn e-small e-icon-btn" title="Delete">
+                        <span class="e-btn-icon e-icons e-delete-icon"></span>
+                    </button>
+                    <button class="e-close e-control e-btn e-lib e-flat e-round e-small e-icon-btn" title="Close">
+                    </button>
+                </div>
+                <div  class="e-subject-wrap">
+                    <button  style="float:right; background-color:#3f51b5 ;   margin: 12% -7% 0 0;" pButton pRipple type="button" label="Participate" class="p-button-rounded p-button-lg "></button>
+
+                </div>
+            </div>
+
+        </div>
+    </ng-template>
 </ejs-schedule>
 
