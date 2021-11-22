@@ -13,6 +13,8 @@ export const environment = {
   etudiantUrl: 'http://localhost:8036/etudiant/',
   publicUrl: 'http://localhost:8036/public/',
   socketUrl: 'ws://localhost:8036/chat',
+
+
   // baseUrl: 'https://alc-back-v1.herokuapp.com/learn/',
   // baseApi: 'https://alc-back-v1.herokuapp.com',
   // sectionItemUrl: 'https://alc-back-v1.herokuapp.com/learn/sectionItem/',
@@ -21,7 +23,7 @@ export const environment = {
   // profUrl: 'https://alc-back-v1.herokuapp.com/prof/',
   // etudiantUrl: 'https://alc-back-v1.herokuapp.com/etudiant/',
   // publicUrl: 'https://alc-back-v1.herokuapp.com/public/',
-  // socketUrl: 'ws://https://alc-back-v1.herokuapp.com/chat',
+  // socketUrl: 'ws://alc-back-v1.herokuapp.com/chat',
 };
 
 /*
