@@ -7,6 +7,7 @@ import {Parcours} from '../../../controller/model/parcours.model';
 import {Centre} from '../../../controller/model/centre.model';
 import {Router} from '@angular/router';
 import {EtudiantService} from '../../../controller/service/etudiant.service';
+import {GroupeEtude} from '../../../controller/model/groupe-etude.model';
 
 @Component({
     selector: 'app-formlayoutdemo',
@@ -18,7 +19,7 @@ export class FormLayoutDemoComponent implements OnInit {
         {name: 'native'},
         {name: 'non-native'},
     ];
-
+id :number;
     constructor(private messageService: MessageService,
                 private etudiantService: EtudiantService,
                 private confirmationService: ConfirmationService,
@@ -69,7 +70,6 @@ export class FormLayoutDemoComponent implements OnInit {
     get etudiant(): Etudiant {
         return this.etudiantService.selected;
     }
-
     // tslint:disable-next-line:adjacent-overload-signatures
     get etudiants(): Array<Etudiant> {
         return this.etudiantService.selectes;
@@ -107,14 +107,16 @@ export class FormLayoutDemoComponent implements OnInit {
     ngOnInit(): void {
         this.selected = new Inscription();
         this.selected.datedebutinscription = new Date();
-        this.service.findAllParcours().subscribe(data => this.parcoursList = data);
+
     }
 
     public save() {
         console.log(this.etudiant);
         this.submitted = true;
-        this.selected.datefininscription = new Date();
-        console.log(this.selected.parcours.id);
+  /*      this.selected.datefininscription = new Date();
+
+   */
+        console.log(this.etudiant.parcours.id);
         this.etudiantService.create().subscribe(data => {
             this.etudiants.push({...data});
             this.messageService.add({
@@ -137,5 +139,26 @@ export class FormLayoutDemoComponent implements OnInit {
 
     public findAllCentre() {
         this.service.findAllCentre().subscribe(data => this.centreList = data);
+    }
+    public findAllGroupeEtude() {
+        this.etudiantService.findAllGroupeEtude().subscribe(data => this.groupeEtudeList = data);
+    }
+    public findAllParcoursList() {
+        this.etudiantService.findAllParcoursList().subscribe(data => {
+                this.parcoursList = data;
+                console.log(this.parcoursList);
+            }
+        );
+
+    }
+    get groupeEtudeList(): Array<GroupeEtude> {
+        return this.etudiantService.groupeEtudeList;
+    }
+    set groupeEtudeList(value: Array<GroupeEtude>) {
+        this.etudiantService.groupeEtudeList = value;
+    }
+    affecterParcours(idParcours: any) {
+this.etudiant.parcours.id = idParcours.target.value;
+console.log(idParcours.target.value);
     }
 }

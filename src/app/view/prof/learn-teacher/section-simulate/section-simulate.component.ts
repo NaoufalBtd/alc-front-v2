@@ -12,7 +12,11 @@ import {Router} from '@angular/router';
 import {Dictionary} from '../../../../controller/model/dictionary.model';
 import {DictionaryService} from '../../../../controller/service/dictionary.service';
 import {EtudiantReviewService} from '../../../../controller/service/etudiant-review.service';
-import {SectionItemService} from "../../../../controller/service/section-item.service";
+import {SectionItemService} from '../../../../controller/service/section-item.service';
+import {ChatMessageDto} from '../../../../controller/model/chatMessageDto';
+import {LoginService} from '../../../../controller/service/login.service';
+import {Prof} from '../../../../controller/model/prof.model';
+import {WebSocketService} from '../../../../controller/service/web-socket.service';
 
 @Pipe({name: 'safe'})
 export class SafePipe1 implements PipeTransform {
@@ -30,6 +34,7 @@ export class SafePipe1 implements PipeTransform {
     styleUrls: ['./section-simulate.component.scss']
 })
 export class SectionSimulateComponent implements OnInit {
+    prof: Prof = new Prof();
     nodes: TreeNode[];
     menu: MenuItem[];
     textSeleted: string;
@@ -38,7 +43,10 @@ export class SectionSimulateComponent implements OnInit {
     word: string;
 
     // tslint:disable-next-line:max-line-length
-    constructor(private sectionItemService: SectionItemService , private messageService: MessageService, private dictionnaryService: DictionaryService, private router: Router, private serviceQuiz: QuizService, private sanitizer: DomSanitizer, private quizService: QuizEtudiantService, private confirmationService: ConfirmationService, private service: ParcoursService, private http: HttpClient, private review: EtudiantReviewService) {
+    constructor(private sectionItemService: SectionItemService,
+                private loginService: LoginService,
+                public webSocketService: WebSocketService,
+                private messageService: MessageService, private dictionnaryService: DictionaryService, private router: Router, private serviceQuiz: QuizService, private sanitizer: DomSanitizer, private quizService: QuizEtudiantService, private confirmationService: ConfirmationService, private service: ParcoursService, private http: HttpClient, private review: EtudiantReviewService) {
     }
 
     get image(): string {
@@ -49,6 +57,7 @@ export class SectionSimulateComponent implements OnInit {
     set image(value: string) {
         this.service.image = value;
     }
+
     public Review() {
         this.review.viewDialogProf = true;
     }
@@ -159,7 +168,7 @@ export class SectionSimulateComponent implements OnInit {
                 if (data.categorieSection.libelle === 'Vocabulary') {
                     this.Vocab(data);
                 } else {
-                    this.showVocabulary=false
+                    this.showVocabulary = false;
                 }
                 this.quizService.findQuizBySection(this.selectedsection.id).subscribe(
                     data => {
@@ -206,6 +215,9 @@ export class SectionSimulateComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.prof = this.loginService.getConnectedProf();
+        // this.webSocketService.openWebSocket();
+
         // this.service.image = '';
         //  for (let j = 0; j < 76 ; j++)
         //  {
@@ -245,11 +257,24 @@ export class SectionSimulateComponent implements OnInit {
             {
                 icon: 'pi pi-fw pi-comments', command: (event) => {
                     document.getElementById('categoriess').style.visibility = 'hidden';
+                    document.getElementById('connectedStudent').style.visibility = 'hidden';
+
                     document.getElementById('categoriess').style.height = '0px';
                     document.getElementById('categ').style.height = '0px';
                     //   document.getElementById('word').style.visibility = 'hidden';
                     //   document.getElementById('word').style.height = '0px';
                     document.getElementById('chat').style.visibility = 'visible';
+                }
+            },
+            {
+                icon: 'pi pi-fw pi-users', command: (event) => {
+                    document.getElementById('categoriess').style.visibility = 'hidden';
+                    document.getElementById('chat').style.visibility = 'hidden';
+                    document.getElementById('categoriess').style.height = '0px';
+                    document.getElementById('categ').style.height = '0px';
+                    //   document.getElementById('word').style.visibility = 'hidden';
+                    //   document.getElementById('word').style.height = '0px';
+                    document.getElementById('connectedStudent').style.visibility = 'visible';
                 }
             }
         ];
@@ -271,7 +296,7 @@ export class SectionSimulateComponent implements OnInit {
                 if (data.categorieSection.libelle === 'Vocabulary') {
                     this.Vocab(data);
                 } else {
-                    this.showVocabulary=false
+                    this.showVocabulary = false;
                 }
                 this.quizService.findQuizBySection(this.selectedsection.id).subscribe(
                     data => {
@@ -282,6 +307,8 @@ export class SectionSimulateComponent implements OnInit {
             this.selectedsection.numeroOrder = this.itemssection2.length + 1;
             this.NextSection();
         }
+        this.goToSection('PREVIOUS', 'previous');
+
     }
 
     URLVideo() {
@@ -351,7 +378,7 @@ export class SectionSimulateComponent implements OnInit {
                     if (data.categorieSection.libelle === 'Vocabulary') {
                         this.Vocab(data);
                     } else {
-                        this.showVocabulary=false
+                        this.showVocabulary = false;
                     }
                     this.quizService.findQuizBySection(this.selectedsection.id).subscribe(
                         data => {
@@ -362,6 +389,15 @@ export class SectionSimulateComponent implements OnInit {
             this.selectedsection.numeroOrder = 0;
             this.PreviousSection();
         }
+        this.goToSection('NEXT', 'next');
+    }
+
+    public goToSection(type: string, message: string) {
+        const chatMessageDto = new ChatMessageDto(this.prof.nom, message, false);
+        chatMessageDto.student = this.prof.students;
+        chatMessageDto.prof = this.prof;
+        chatMessageDto.type = type;
+        this.webSocketService.sendMessage(chatMessageDto);
     }
 
     get showVocabulary(): boolean {
@@ -378,12 +414,13 @@ export class SectionSimulateComponent implements OnInit {
         this.sectionItemService.getSectionItems().subscribe(data => {
             this.sectionItemService.sectionSelected.sectionItems = data;
             console.log(data);
-            this.showVocabulary=true
+            this.showVocabulary = true;
         });
 
     }
+
     return($event: string) {
-        this.showVocabulary=false
+        this.showVocabulary = false;
     }
 
 }

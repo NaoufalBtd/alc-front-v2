@@ -4,6 +4,7 @@ import {WebSocketService} from '../../../../controller/service/web-socket.servic
 import {ChatMessageDto} from '../../../../controller/model/chatMessageDto';
 import {LoginService} from '../../../../controller/service/login.service';
 import {ProfService} from '../../../../controller/service/prof.service';
+import {Etudiant} from '../../../../controller/model/etudiant.model';
 
 @Component({
     selector: 'app-chat',
@@ -13,24 +14,31 @@ import {ProfService} from '../../../../controller/service/prof.service';
 export class ChatComponent implements OnInit, OnDestroy {
     today = Date.now();
 
-    constructor(public webSocketService: WebSocketService, public service: LoginService, public serviceprof: ProfService) {
+    constructor(public webSocketService: WebSocketService,
+                public service: LoginService, public serviceprof: ProfService) {
     }
 
     ngOnInit(): void {
+        this.serviceprof.getConnectedStudent();
         this.webSocketService.findbynumero(this.service.prof.id);
         this.webSocketService.findstudentlist(this.service.prof.id);
-        this.webSocketService.openWebSocket();
+        this.webSocketService.openWebSocket(this.service.prof);
+    }
+    get listStudent(): Array<Etudiant> {
+        return this.serviceprof.listStudent;
     }
 
     ngOnDestroy(): void {
-        this.webSocketService.closeWebSocket();
     }
 
 
     sendMessage(sendForm: NgForm) {
         const chatMessageDto = new ChatMessageDto(this.service.prof.nom, sendForm.value.message, false);
+        chatMessageDto.student = this.listStudent;
+        chatMessageDto.prof = this.service.prof;
+        chatMessageDto.type = 'message';
         this.webSocketService.sendMessage(chatMessageDto);
-        console.log(this.service.prof.chatMessageDto);
+        console.log(chatMessageDto);
         sendForm.controls.message.reset();
     }
 }

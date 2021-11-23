@@ -8,5 +8,5 @@ export const environment = {
   profUrl: 'https://alc-back-v1.herokuapp.com/prof/',
   etudiantUrl: 'https://alc-back-v1.herokuapp.com/etudiant/',
   publicUrl: 'https://alc-back-v1.herokuapp.com/public/',
-  socketUrl: 'ws://https://alc-back-v1.herokuapp.com/chat',
+  socketUrl: 'wss://alc-back-v1.herokuapp.com/chat',
 };

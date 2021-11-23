@@ -5,6 +5,7 @@ import {EtatEtudiantSchedule} from './etat-etudiant-schedule.model';
 import {ChatMessageDto} from './chatMessageDto';
 import {GroupeEtudiantDetail} from './groupe-etudiant-detail.model';
 import {User} from './user.model';
+import {GroupeEtude} from './groupe-etude.model';
 
 export class Etudiant extends User {
     public ref: string;
@@ -12,6 +13,7 @@ export class Etudiant extends User {
     public  groupOption: string;
     public parcours = new Parcours();
     public quizEtudiant = new Array<QuizEtudiant>();
+    public groupeEtude = new GroupeEtude();
     public etatEtudiantSchedule = new EtatEtudiantSchedule();
     public prof = new Prof();
     public chatMessageDto = new Array<ChatMessageDto>();

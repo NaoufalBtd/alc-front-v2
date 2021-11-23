@@ -16,7 +16,6 @@ export class GroupeEtudeEditComponent implements OnInit {
   ngOnInit(): void {
   }
   get editDialog(): boolean {
-
     return this.groupeEtudeService.editDialog;
   }
 
@@ -40,10 +39,8 @@ export class GroupeEtudeEditComponent implements OnInit {
   set items(value: Array<GroupeEtude>) {
     this.groupeEtudeService.items = value;
   }
-
   public edit() {
     this.submitted = true;
-
     this.items[this.groupeEtudeService.findIndexById(this.groupeEtude.id)] = this.groupeEtude;
     this.groupeEtudeService.edit().subscribe(data => {
       this.groupeEtude = data;
@@ -58,4 +55,5 @@ export class GroupeEtudeEditComponent implements OnInit {
     this.editDialog = false;
     this.groupeEtude = new GroupeEtude();
   }
+
 }

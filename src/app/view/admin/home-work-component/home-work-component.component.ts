@@ -23,8 +23,10 @@ export class HomeWorkComponentComponent implements OnInit {
   ngOnInit(): void {
     this.questionTypes();
     this.homeworkQST.reponses = new Array<HomeWorkReponse>();
+    this.homeworkQST.numero = 1;
     this.homeWork.questions = new Array<HomeWorkQST>();
     this.homeWork.section = this.service.section;
+    this.homeworkReponse.numero = 1;
     console.log(this.homeWork.section);
   }
   get reponses(): Array<HomeWorkReponse>{
@@ -81,6 +83,8 @@ export class HomeWorkComponentComponent implements OnInit {
     return myclone;
   }
   public addQuestion(){
+
+    this.homeworkQST.reponses = this.reponses;
     this.homeWork.questions.push(this.clonequestion(this.homeworkQST));
     this.nodes = [];
     for (let i = 0; i < this.homeWork.questions.length ; i++) {
@@ -105,12 +109,14 @@ export class HomeWorkComponentComponent implements OnInit {
     }
 
     this.homeworkQST = new HomeWorkQST() ;
+    this.homeworkQST.numero = this.homeWork.questions.length + 1;
     this.homeworkQST.reponses = new Array<HomeWorkReponse>();
+    this.homeworkReponse.numero = 1;
   }
   public addAnswer(){
-    this.homeworkQST.reponses.push(this.cloneReponse(this.homeworkReponse));
     this.reponses.push(this.cloneReponse(this.homeworkReponse));
-    this.homeworkReponse = null;
+    this.homeworkReponse = new HomeWorkReponse();
+    this.homeworkReponse.numero = this.reponses.length + 1;
   }
   public save(){
     this.service.saveHomeWork().subscribe(
@@ -133,6 +139,36 @@ export class HomeWorkComponentComponent implements OnInit {
   }
 
   deleteReponse(reponse: any) {
+       this.reponses.splice(this.reponses.indexOf(reponse), 1);
+  }
+  deleteQuestion(key: string){
+    const deleteNumber = Number(key);
+    this.homeWork.questions.splice(deleteNumber, 1);
+    this.nodes = [];
+    for (let i = 0; i < this.homeWork.questions.length; i++) {
+      const list = [];
 
+      for (let j = 0; j < this.homeWork.questions[i].reponses.length; j++) {
+        const item = {
+          label: this.homeWork.questions[i].reponses[j].lib + '\t (' + this.homeWork.questions[i].reponses[j].etatReponse + ' )',
+          type: 'url'
+        };
+        list.push(item);
+      }
+
+      this.nodes.push(
+          {
+            key: i.toString(),
+            label: 'Question ' + this.homeWork.questions[i].numero + ' : ' + this.homeWork.questions[i].libelle + ' ( ' + this.homeWork.questions[i].typeDeQuestion.lib + ' ) ',
+            children: list
+          },
+      );
+    }
+  }
+  updateQuestion(key: string){
+    const updateNumber = Number(key);
+    this.homeworkQST = this.homeWork.questions[updateNumber];
+    this.reponses = this.homeworkQST.reponses;
+    this.deleteQuestion(key);
   }
 }

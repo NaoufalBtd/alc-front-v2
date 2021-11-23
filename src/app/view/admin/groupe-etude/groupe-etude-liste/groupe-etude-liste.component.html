@@ -1,8 +1,23 @@
+<!--
+<div class="p-grid">
+    <div class="p-col-4">
+        <input pInputText type="text" placeholder="Search by Prof Name"
+               [(ngModel)]="groupeEtudeVo.libelle">
+    </div>
+    <div class="p-col-4">
+        <input pInputText type="number" placeholder="Search by Prof Name"
+               [(ngModel)]="groupeEtudeVo.nombreEtudiant">
+    </div>
+    <div class="p-col-4">
+        <button pButton pRipple type="button" label="Search" class="p-button-rounded p-button-success"
+                style="margin-left:4px;background-color: #F48C76;border-color: #F48C76;"
+                (click)="findAllByCriteria()"></button>
+    </div>
 
+</div>
+    -->
 <div class="p-grid">
     <div class="p-col-12">
-
-        <p-toast></p-toast>
 
         <div class="card" style="background-color: gainsboro;">
             <p-toolbar styleClass="p-mb-4">
@@ -12,8 +27,6 @@
 
                     <button (click)="deleteMultiple()" [disabled]="!selectes || !selectes.length" class="p-button-danger p-mb-2" icon="pi pi-trash" label="Delete"
                             pButton pRipple></button>
-
-
                 </ng-template>
 
                 <ng-template pTemplate="right">
@@ -24,17 +37,16 @@
                 </ng-template>
             </p-toolbar>
 
+
+
+
             <p-table #dt [(selection)]="selectes" [columns]="cols" [globalFilterFields]="['libelle','nombreEtudiant']" [paginator]="true"
                      [rowHover]="true"
                      [rows]="8" [showCurrentPageReport]="true" [value]="items"
                      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
                      dataKey="id"
                      styleClass="p-datatable-customers">
-                <ng-template pTemplate="caption">
-                    <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
 
-                    </div>
-                </ng-template>
                 <ng-template pTemplate="header">
                     <tr>
                         <th style="width: 3rem">
