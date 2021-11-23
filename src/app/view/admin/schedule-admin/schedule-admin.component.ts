@@ -33,6 +33,7 @@ export class ScheduleAdminComponent implements OnInit {
     public schedule: ScheduleProf = new ScheduleProf();
     @ViewChild('scheduleObj') public scheduleObj: ScheduleComponent;
     display = false;
+    public data: ScheduleProf = new ScheduleProf();
     private selectionTarget: Element;
     // public selectedDate: Date = new Date(2021, 4, 18);
     public selectedDate: Date = new Date();
@@ -230,8 +231,12 @@ export class ScheduleAdminComponent implements OnInit {
 
     }
 
-
     public onPopupOpen(args: PopupOpenEventArgs): void {
+        this.data.subject = args.data.subject;
+        this.data.startTime = args.data.startTime;
+        this.data.endTime = args.data.endTime;
+        this.scheduleProf.startTime = args.data.startTime;
+        this.scheduleProf.endTime = args.data.endTime;
         this.selectionTarget = null;
         this.selectionTarget = args.target;
     }
@@ -251,10 +256,16 @@ export class ScheduleAdminComponent implements OnInit {
     public onDeleteClick(): void {
         const scheduleProf = this.scheduleObj.getEventDetails(this.selectionTarget) as ScheduleProf;
         this.scheduleService.deleteByRef(scheduleProf.ref);
+        const index = this.scheduleProfs.indexOf(scheduleProf);
+        alert(index);
+        if (index !== -1) {
+            this.scheduleProfs.splice(index, 1);
+        }
+        this.getData();
     }
 
     public onCloseClick(): void {
-        this.scheduleObj?.closeEditor();
+        this.scheduleObj.closeEditor();
     }
 
     public getData() {
@@ -270,6 +281,7 @@ export class ScheduleAdminComponent implements OnInit {
     hideDialog() {
         this.display = false;
     }
+
 
 
 }
