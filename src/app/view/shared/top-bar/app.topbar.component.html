@@ -123,13 +123,11 @@
 <nav *ngIf="!this.loginservice.hasloged">
     <div class="logo"><img src="assets/picture/icon/logo.png" alt="logo"></div>
     <ul>
-        <li><a class="active" href="">Home</a></li>
-        <li><a >Portfolio</a></li>
-        <li><a >Team</a></li>
-        <li><a >Services</a></li>
-        <li><a >Contact</a></li>
+        <li><a class="active" routerLink="">Home</a></li>
+         <li routerLink="public/inscriptionTeacher" ><a >Sign Up Prof</a></li>
+        <li routerLink="public/inscriptionEtudiant"><a >Sign Up Student</a></li>
     </ul>
-    <a class="get-started"  routerLink="login" >Get Started</a>
+    <a class="get-started"  routerLink="login" >Sign in</a>
     <img src="assets/picture/icon/menu.png" class="menu" onclick="sideMenu(0)" alt="menu">
 </nav>
 
