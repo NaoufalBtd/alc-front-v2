@@ -118,7 +118,7 @@
 </div>
 
 
-<nav *ngIf="!this.loginservice.hasloged">
+<nav *ngIf="user === null">
     <div class="logo"><img src="assets/picture/icon/logo.png" alt="logo"></div>
     <ul>
         <li><a class="active" routerLink="">Home</a></li>
