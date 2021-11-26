@@ -1,4 +1,4 @@
-<div class="layout-topbar" *ngIf="this.loginservice.hasloged">
+<div class="layout-topbar">
 
     <a class="layout-topbar-logo" href="#">
         <span id="topbar-logo" style="color: white; font-family: 'Lucida Bright'"><h1>American Center</h1></span>
@@ -8,7 +8,7 @@
     <ul [hidden]="user == null" class="topbar-menu">
         <li [ngClass]="{'active-topmenuitem fadeInDown': appMain.topbarUserMenuActive}"  class="user-profile">
             <a class="ng-star-inserted" (click)="appMain.onTopbarUserMenuButtonClick($event)" *ngIf="!app.inlineUser">
-                <img [src]="user?.image">
+                <img class="img" [src]="user?.image">
                 <div class="layout-profile-userinfo">
                     <span class="layout-profile-name profile-label">{{user?.nom}} {{ user?.prenom}}</span>
                     <span *ngIf="isAdmin() == true" class="layout-profile-role">Admin</span>
@@ -37,8 +37,6 @@
             </ul>
 
         </li>
-
-
     </ul>
 
 
@@ -120,18 +118,30 @@
 </div>
 
 
-<nav *ngIf="!this.loginservice.hasloged">
+<nav *ngIf="user === null">
     <div class="logo"><img src="assets/picture/icon/logo.png" alt="logo"></div>
     <ul>
-        <li><a class="active" href="">Home</a></li>
-        <li><a >Portfolio</a></li>
-        <li><a >Team</a></li>
-        <li><a >Services</a></li>
-        <li><a >Contact</a></li>
+        <li><a class="active" routerLink="">Home</a></li>
+         <li routerLink="public/inscriptionTeacher" ><a >Sign Up Prof</a></li>
+        <li routerLink="public/inscriptionEtudiant"><a >Sign Up Student</a></li>
     </ul>
-    <a class="get-started"  routerLink="login" >Get Started</a>
+    <a class="get-started"  routerLink="login" >Sign in</a>
     <img src="assets/picture/icon/menu.png" class="menu" onclick="sideMenu(0)" alt="menu">
 </nav>
+<div [hidden]="user != null">
+    <nav >
+        <div class="logo"><img src="assets/picture/icon/logo.png" alt="logo"></div>
+        <ul>
+            <li><a class="active" routerLink="">Home</a></li>
+            <li routerLink="public/inscriptionTeacher"><a >Sign Up Prof</a></li>
+            <li routerLink="public/inscriptionEtudiant"><a >Sign Up Student</a></li>
+
+        </ul>
+        <a class="get-started"  routerLink="login" >Sign in</a>
+        <img src="assets/picture/icon/menu.png" class="menu" onclick="sideMenu(0)" alt="menu">
+    </nav>
+
+</div>
 
 <script type="text/javascript" src="src/script.js"></script>
 <script src="https://code.jquery.com/jquery-3.2.1.js"></script>

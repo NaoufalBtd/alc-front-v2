@@ -1,10 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {ScheduleService} from '../../../controller/service/schedule.service';
 import {ConfirmationService, MessageService} from 'primeng/api';
-import {LoginService} from '../../../controller/service/login.service';
-import {FullCalendar} from 'primeng/fullcalendar';
-import {CalendrierVo} from '../../../controller/model/calendrier-vo.model';
-import {CalendrierProf} from '../../../controller/model/schedule-prof.model';
 import {EtatEtudiantSchedule} from '../../../controller/model/etat-etudiant-schedule.model';
 import {Etudiant} from '../../../controller/model/etudiant.model';
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -37,6 +33,7 @@ export class ScheduleAdminComponent implements OnInit {
     public schedule: ScheduleProf = new ScheduleProf();
     @ViewChild('scheduleObj') public scheduleObj: ScheduleComponent;
     display = false;
+    public data: ScheduleProf = new ScheduleProf();
     private selectionTarget: Element;
     // public selectedDate: Date = new Date(2021, 4, 18);
     public selectedDate: Date = new Date();
@@ -158,38 +155,6 @@ export class ScheduleAdminComponent implements OnInit {
     findAllByStudent() {
         const scheduleObj = this.scheduleObj;
         scheduleObj.eventSettings.dataSource = null;
-        // const results: ScheduleProf[] = [];
-        // for (const schedule of this.scheduleProfs) {
-        //     if (schedule.etudiant.nom.toLowerCase().indexOf(value.toLowerCase()) !== -1 ||
-        //         schedule.etudiant.prenom.toLowerCase().indexOf(value.toLowerCase()) !== -1 ||
-        //         schedule.etudiant.username.toLowerCase().indexOf(value.toLowerCase()) !== -1 ||
-        //         schedule.prof.nom.toLowerCase().indexOf(value.toLowerCase()) !== -1 ||
-        //         schedule.prof.prenom.toLowerCase().indexOf(value.toLowerCase()) !== -1 ||
-        //         schedule.prof.username.toLowerCase().indexOf(value.toLowerCase()) !== -1 ||
-        //         schedule.ref.toLowerCase().indexOf(value.toLowerCase()) !== -1 ||
-        //         schedule.subject.toLowerCase().indexOf(value.toLowerCase()) !== -1) {
-        //         results.push(schedule);
-        //     }
-        // }
-        // if (results.length === 0 || !value) {
-        //     this.findAll();
-        // } else {
-        //     this.scheduleProfs.splice(0, this.scheduleProfs.length);
-        //     for (const item of results) {
-        //         this.scheduleProfs.push(item);
-        //     }
-        // }
-        // console.log(this.scheduleProfs);
-        // this.eventSettings = {
-        //     dataSource: this.scheduleProfs,
-        //     fields: {
-        //         id: 'Id',
-        //         subject: {name: 'subject', title: 'subject'},
-        //         startTime: {name: 'startTime', title: 'startTime'},
-        //         endTime: {name: 'endTime', title: 'endTime'}
-        //     }
-        // };
-
         this.scheduleService.findAllByStudent(this.schedule).subscribe(
             data => {
                 console.log(data);
@@ -210,49 +175,108 @@ export class ScheduleAdminComponent implements OnInit {
 
     save() {
         console.log(this.scheduleProf);
-        this.scheduleService.save().subscribe(
-            data => {
-                this.scheduleProfs.push({...this.scheduleProf});
-                this.messageService.add({
-                    severity: 'success',
-                    summary: 'Successful',
-                    detail: 'Schedule added.',
-                    life: 3000
-                });
-                this.eventSettings = {
-                    dataSource: this.scheduleProfs,
-                    fields: {
-                        id: 'Id',
-                        subject: {name: 'subject', title: 'subject'},
-                        startTime: {name: 'startTime', title: 'startTime'},
-                        endTime: {name: 'endTime', title: 'endTime'}
+        const scheduleObj = this.scheduleObj;
+        scheduleObj.eventSettings.dataSource = null;
+        console.log(scheduleObj.eventSettings.dataSource);
+        if (this.scheduleProf.id === 0 || this.scheduleProf.id === null) {
+            this.scheduleService.save().subscribe
+            (
+                data => {
+                    if (data === null) {
+                        this.messageService.add({
+                            severity: 'error',
+                            summary: 'Warning',
+                            detail: 'Registration canceled, please try again.',
+                            life: 3000
+                        });
+                    } else {
+                        this.scheduleProfs.push({...data});
+                        this.messageService.add({
+                            severity: 'success',
+                            summary: 'Successful',
+                            detail: 'Schedule added.',
+                            life: 3000
+                        });
+                        console.log(this.scheduleProfs);
+                        scheduleObj.eventSettings.dataSource = this.scheduleProfs;
+                        this.eventSettings = {
+                            dataSource: this.scheduleProfs,
+                            fields: {
+                                id: 'Id',
+                                subject: {name: 'subject', title: 'subject'},
+                                startTime: {name: 'startTime', title: 'startTime'},
+                                endTime: {name: 'endTime', title: 'endTime'}
+                            }
+                        };
+                        console.log(scheduleObj.eventSettings.dataSource);
                     }
-                };
-                console.log(this.scheduleProfs);
-            }, error => {
-                console.log(error);
-                this.messageService.add({
-                    severity: 'error',
-                    summary: 'Warning',
-                    detail: 'Registration canceled',
-                    life: 3000
-                });
-            }
-        );
+
+                }, error => {
+                    console.log(error);
+                    this.messageService.add({
+                        severity: 'error',
+                        summary: 'Warning',
+                        detail: 'Registration canceled',
+                        life: 3000
+                    });
+                    scheduleObj.eventSettings.dataSource = this.scheduleProfs;
+                    this.eventSettings = {
+                        dataSource: this.scheduleProfs,
+                        fields: {
+                            id: 'Id',
+                            subject: {name: 'subject', title: 'subject'},
+                            startTime: {name: 'startTime', title: 'startTime'},
+                            endTime: {name: 'endTime', title: 'endTime'}
+                        }
+                    };
+                }
+            );
+        } else {
+            this.scheduleService.save().subscribe(
+                data => {
+                    for (let i = 0; i < this.scheduleProfs.length; i++) {
+                        if (this.scheduleProfs[i].id === data.id) {
+                            this.scheduleProfs.splice(i, 1);
+                            this.scheduleProfs[i] = data;
+                        }
+                    }
+                }
+            );
+            console.log(this.scheduleProfs);
+            scheduleObj.eventSettings.dataSource = this.scheduleProfs;
+            console.log(scheduleObj.eventSettings.dataSource);
+            this.eventSettings = {
+                dataSource: this.scheduleProfs,
+                fields: {
+                    id: 'Id',
+                    subject: {name: 'subject', title: 'subject'},
+                    startTime: {name: 'startTime', title: 'startTime'},
+                    endTime: {name: 'endTime', title: 'endTime'}
+                }
+            };
+        }
+
+
         this.scheduleProf = new ScheduleProf();
 
     }
 
-
     public onPopupOpen(args: PopupOpenEventArgs): void {
+        this.data.subject = args.data.subject;
+        this.data.startTime = args.data.startTime;
+        this.data.endTime = args.data.endTime;
         this.selectionTarget = null;
         this.selectionTarget = args.target;
     }
 
     public onDetailsClick(event: any): void {
         this.scheduleProf = new ScheduleProf();
-        const data: Object = this.scheduleObj.getCellDetails(this.scheduleObj.getSelectedElements()) as Object;
+        const data = this.scheduleObj.getCellDetails(this.scheduleObj.getSelectedElements()) ;
+        console.log(data);
+        this.scheduleProf.startTime = data.startTime;
+        this.scheduleProf.endTime = data.endTime;
         this.scheduleObj.openEditor(data, 'Add');
+        console.log(this.scheduleProf);
     }
 
     public onEditClick(): void {
@@ -262,17 +286,36 @@ export class ScheduleAdminComponent implements OnInit {
     }
 
     public onDeleteClick(): void {
+        const scheduleObj = this.scheduleObj;
+        this.scheduleObj.eventSettings.dataSource = null;
         const scheduleProf = this.scheduleObj.getEventDetails(this.selectionTarget) as ScheduleProf;
         this.scheduleService.deleteByRef(scheduleProf.ref);
-        window.location.reload();
+        for (let i = 0; i < this.scheduleProfs.length; i++){
+            if (this.scheduleProfs[i].id === scheduleProf.id){
+                this.scheduleProfs.splice(i, 1);
+            }
+        }
+        scheduleObj.eventSettings.dataSource = this.scheduleProfs;
+        console.log(scheduleObj.eventSettings.dataSource);
+        this.eventSettings = {
+            dataSource: this.scheduleProfs,
+            fields: {
+                id: 'Id',
+                subject: {name: 'subject', title: 'subject'},
+                startTime: {name: 'startTime', title: 'startTime'},
+                endTime: {name: 'endTime', title: 'endTime'}
+            }
+        };
+        this.hideDialog();
     }
 
     public onCloseClick(): void {
-        this.scheduleObj?.closeEditor();
+        this.scheduleObj.closeEditor();
     }
 
     public getData() {
         this.scheduleObj.eventSettings.dataSource = null;
+        this.findAll();
     }
 
 
@@ -282,6 +325,9 @@ export class ScheduleAdminComponent implements OnInit {
 
     hideDialog() {
         this.display = false;
+    }
+
+    onAddClick($event: MouseEvent) {
     }
 
 

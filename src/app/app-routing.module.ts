@@ -73,6 +73,8 @@ import {StudentsHomeworkComponent} from './view/prof/students-homework/students-
 import {ResetPasswordComponent} from './view/public/reset-password/reset-password.component';
 import {LoginComponent} from './view/public/login/login.component';
 import {ConnectedStudentComponent} from './view/prof/connected-student/connected-student.component';
+import {EtudiantinscriptionComponent} from './view/public/etudiantinscription/etudiantinscription.component';
+import {ProfinscriptionComponent} from './view/public/profinscription/profinscription.component';
 
 
 @NgModule({
@@ -157,6 +159,8 @@ import {ConnectedStudentComponent} from './view/prof/connected-student/connected
                     {path: 'public/login-etudiant', component: LoginEtudiantComponent},
                     {path: 'public/inscriptionAdmin', component: InscriptionAdminComponent},
                     {path: 'public/inscriptionTeacher', component: InscriptionProfComponent},
+                    {path: 'public/etudiantinscriptionComponent', component: EtudiantinscriptionComponent},
+                    {path: 'public/profinscriptionComponent', component: ProfinscriptionComponent},
                     {path: 'public/inscriptionEtudiant', component: FormLayoutDemoComponent},
                     {path: 'resetPassword', component: ResetPasswordComponent},
                     {path: 'login', component: LoginComponent},
