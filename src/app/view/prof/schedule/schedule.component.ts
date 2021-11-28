@@ -24,8 +24,8 @@ L10n.load({
     'en-US': {
         schedule: {
             saveButton: '',
-            cancelButton: '',
-            deleteButton: '',
+            cancelButton: 'Close',
+            deleteButton: 'Delete',
             newEvent: 'Add event',
         },
     }
@@ -259,6 +259,7 @@ export class ScheduleLocalComponent implements OnInit {
 
 
         this.scheduleProf = new ScheduleProf();
+        this.scheduleObj.eventWindow.refresh();
 
     }
 
