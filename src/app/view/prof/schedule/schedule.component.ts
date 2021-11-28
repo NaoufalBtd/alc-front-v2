@@ -341,7 +341,7 @@ export class ScheduleLocalComponent implements OnInit {
     public onEditClick(): void {
         const scheduleProf = this.scheduleObj.getEventDetails(this.selectionTarget) as ScheduleProf;
         this.scheduleService.update(scheduleProf);
-        this.scheduleObj.openEditor(scheduleProf, 'Add');
+        this.scheduleObj.openEditor(scheduleProf, 'EditFollowingEvents');
     }
 
 

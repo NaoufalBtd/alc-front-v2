@@ -258,7 +258,7 @@ export class ScheduleAdminComponent implements OnInit {
 
 
         this.scheduleProf = new ScheduleProf();
-
+        this.scheduleObj.eventWindow.refresh();
     }
 
     public onPopupOpen(args: PopupOpenEventArgs): void {
@@ -279,10 +279,10 @@ export class ScheduleAdminComponent implements OnInit {
         console.log(this.scheduleProf);
     }
 
-    public onEditClick(): void {
+    public onEditClick(data: any): void {
         const scheduleProf = this.scheduleObj.getEventDetails(this.selectionTarget) as ScheduleProf;
         this.scheduleService.update(scheduleProf);
-        this.scheduleObj.openEditor(scheduleProf, 'Add');
+        this.scheduleObj.openEditor(scheduleProf, 'EditFollowingEvents');
     }
 
     public onDeleteClick(): void {
