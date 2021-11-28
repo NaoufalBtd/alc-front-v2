@@ -17,7 +17,7 @@ export class GroupeEtudiantEditComponent implements OnInit {
 
   constructor(private messageService: MessageService, private groupeEtudiantService: GroupeEtudiantService, private confirmationService: ConfirmationService) {
   }
-
+  public full:boolean = false;
   get groupeEtudeList(): Array<GroupeEtude> {
     return this.groupeEtudiantService.groupeEtudeList;
   }
@@ -162,32 +162,51 @@ export class GroupeEtudiantEditComponent implements OnInit {
 
 
   public exit(id: number){
-
     for ( let i = 0 ; i < this.etudiantList.length ; i++){
       if (id == this.etudiantList[i].id)
       {
         console.log( this.etudiantList[i]);
         //this.etudiantList2.push(this.etudiantList[i]);
         this.groupeEtudiantDetail.etudiant = this.etudiantList[i];
+        this.selected.nombrePlacevide =    this.selected.nombrePlacevide-1;
+        this.selected.nombrePlaceNonVide =  this.selected.groupeEtude.nombreEtudiant- this.selected.nombrePlacevide;
         this.groupeEtudiant.groupeEtudiantDetails.push({...this.groupeEtudiantDetail});
         this.groupeEtudiantDetail = null;
+        this.isfull();
         return 0;
       }
     }
     this.etudiantList = null ;
   }
+  public isfull(){
+    if ((this.groupeEtudiant.groupeEtudiantDetails.length - this.selected.groupeEtude.nombreEtudiant) === 0){
+      this.full = true;
+
+    }
+    else {
+      this.full = false ;
+    }
+  }
+
   public deleteFromView(groupeEtudiantDetail: GroupeEtudiantDetail ) {
     const index = this.groupeEtudiant.groupeEtudiantDetails.findIndex(c => c.etudiant.nom === groupeEtudiantDetail.etudiant.nom);
     if (index !== -1 ) {
       this.groupeEtudiant.groupeEtudiantDetails.splice(index, 1);
+      this.selected.nombrePlaceNonVide --;
+      this.selected.nombrePlacevide++;
+      this.isfull();
     }
   }
   public edit() {
 
     this.groupeEtudiants[this.groupeEtudiantService.findIndexById(this.groupeEtudiant.id)] = this.groupeEtudiant;
     this.groupeEtudiantService.edit().subscribe(data => {
-      this.groupeEtudiant = data;
-      this.groupeEtudiantService.findAll();
+      this.groupeEtudiantService.findAll().subscribe(data => {
+            this.groupeEtudiants = data;
+            console.log( this.groupeEtudiants);
+          }
+      );
+
       this.messageService.add({
         severity: 'success',
         summary: 'Successful',
@@ -196,11 +215,13 @@ export class GroupeEtudiantEditComponent implements OnInit {
       });
     });
     this.editDialog = false;
-    this.groupeEtudiant = new GroupeEtudiant();
   }
   get editDialog(): boolean {
 
     return this.groupeEtudiantService.editDialog;
+  }
+  set editDialog(value: boolean) {
+    this.groupeEtudiantService.editDialog = value;
   }
   public delete(groupeEtudiantDetail: GroupeEtudiantDetail) {
     this.groupeEtudiantDetail = groupeEtudiantDetail;
@@ -210,9 +231,10 @@ export class GroupeEtudiantEditComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.groupeEtudiantService.deleteGroupeEtudiantDetailById().subscribe(data => {
-          this.groupeEtudiant.groupeEtudiantDetails = this.groupeEtudiant.groupeEtudiantDetails.filter(val => val.id !== this.groupeEtudiantDetail.id);
-          this.groupeEtudiantDetail = new GroupeEtudiantDetail();
-          this.messageService.add({
+     //     this.groupeEtudiant.groupeEtudiantDetails = this.groupeEtudiant.groupeEtudiantDetails.filter(val => val.id !== this.groupeEtudiantDetail.id);
+             this.deleteFromView(groupeEtudiantDetail);
+             this.groupeEtudiantDetail = new GroupeEtudiantDetail();
+             this.messageService.add({
             severity: 'success',
             summary: 'Successful',
             detail: 'Student Deleted',
@@ -222,10 +244,5 @@ export class GroupeEtudiantEditComponent implements OnInit {
       }
     });
   }
-  set editDialog(value: boolean) {
-    this.groupeEtudiantService.editDialog = value;
-  }
-
-
 
 }
