@@ -17,7 +17,7 @@
 
                 <div class="p-field">
                     <label for="parcours">Level</label><br>
-                    <select  [(ngModel)]="groupeEtudiant.parcours.libelle"
+                    <select  disabled [(ngModel)]="groupeEtudiant.parcours.libelle"
                              #cricket  (change)="selectChangeHandler($event)"
                              class="btn btn-block btn-outline-light form-control"
                              pInputText style=" background-color: gainsboro;margin-left: 5px"
@@ -28,7 +28,11 @@
                     </select>
                 </div>
 
+                <div class="p-field">
+                    <label> Number of students  </label>
+                    <input  style="color: red " [(ngModel)]="this.selected.groupeEtude.nombreEtudiant " disabled  id="libelle" pInputText required type="number"/>
 
+                </div>
 
                 <div class="p-field">
                     <label > Group Label</label>
@@ -45,16 +49,17 @@
                     <input [(ngModel)]="groupeEtudiant.dateFin" autofocus id="dateDebut" pInputText required type="date"/>
 
                 </div>
-                <div class="p-field">
+                <div  class="p-field" >
                     <label >Empty places </label>
-                    <input [(ngModel)]="groupeEtudiant.nombrePlacevide" autofocus id="dateFin" pInputText required type="number"/>
+                    <input style="color: red "  [(ngModel)]="selected.nombrePlacevide" disabled  id="dateFin" pInputText required type="number"/>
 
                 </div>
-                <div class="p-field">
+                <div class="p-field" >
                     <label > Occupied places </label>
-                    <input [(ngModel)]="groupeEtudiant.nombrePlaceNonVide" autofocus id="nombrePlacevide" pInputText required type="number"/>
+                    <input  style="color: red " [(ngModel)]="selected.nombrePlaceNonVide" disabled autofocus id="nombrePlacevide" pInputText required type="number"/>
 
                 </div>
+
 
             </p-tabPanel>
             <p-tabPanel header="Students information ">
@@ -73,7 +78,7 @@
                     </select>
                 </div>
 
-                <button (click)=" exit(id2)" class="p-button-text table1" icon="pi pi-check" label="Add student" pButton
+                <button [disabled]="full"  (click)=" exit(id2)" [disabled]="!isfull()"  class="p-button-text table1" icon="pi pi-check" label="Add student" pButton
                         pRipple></button>
 
                 <p-table [value]="groupeEtudiant.groupeEtudiantDetails" >
