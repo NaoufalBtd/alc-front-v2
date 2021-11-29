@@ -48,7 +48,7 @@ export class ScheduleLocalComponent implements OnInit {
     public data: ScheduleProf = new ScheduleProf();
     // public selectedDate: Date = new Date(2021, 4, 18);
     public selectedDate: Date = new Date();
-    public showWeekend = false;
+    public showWeekend = true;
     public eventSettings: EventSettingsModel = {
         dataSource: this.scheduleProfs,
         fields: {
@@ -200,15 +200,6 @@ export class ScheduleLocalComponent implements OnInit {
                         });
                         console.log(this.scheduleProfs);
                         scheduleObj.eventSettings.dataSource = this.scheduleProfs;
-                        this.eventSettings = {
-                            dataSource: this.scheduleProfs,
-                            fields: {
-                                id: 'Id',
-                                subject: {name: 'subject', title: 'subject'},
-                                startTime: {name: 'startTime', title: 'startTime'},
-                                endTime: {name: 'endTime', title: 'endTime'}
-                            }
-                        };
                         console.log(scheduleObj.eventSettings.dataSource );
                     }
 
@@ -221,23 +212,17 @@ export class ScheduleLocalComponent implements OnInit {
                         life: 3000
                     });
                     scheduleObj.eventSettings.dataSource = this.scheduleProfs;
-                    this.eventSettings = {
-                        dataSource: this.scheduleProfs,
-                        fields: {
-                            id: 'Id',
-                            subject: {name: 'subject', title: 'subject'},
-                            startTime: {name: 'startTime', title: 'startTime'},
-                            endTime: {name: 'endTime', title: 'endTime'}
-                        }
-                    };
                 }
             );
         } else {
+            console.log(this.scheduleProfs);
+
             this.scheduleService.saveByProf().subscribe(
                 data => {
                     for (let i = 0; i < this.scheduleProfs.length; i++) {
                         if (this.scheduleProfs[i].id === data.id) {
-                            this.scheduleProfs.splice(i, 1);
+                            console.log(data);
+                            // this.scheduleProfs.splice(i, 1);
                             this.scheduleProfs[i] = data;
                         }
                     }
@@ -246,15 +231,8 @@ export class ScheduleLocalComponent implements OnInit {
             console.log(this.scheduleProfs);
             scheduleObj.eventSettings.dataSource = this.scheduleProfs;
             console.log(scheduleObj.eventSettings.dataSource);
-            this.eventSettings = {
-                dataSource: this.scheduleProfs,
-                fields: {
-                    id: 'Id',
-                    subject: {name: 'subject', title: 'subject'},
-                    startTime: {name: 'startTime', title: 'startTime'},
-                    endTime: {name: 'endTime', title: 'endTime'}
-                }
-            };
+            this.scheduleObj.eventWindow.refresh();
+
         }
 
 
@@ -262,65 +240,6 @@ export class ScheduleLocalComponent implements OnInit {
         this.scheduleObj.eventWindow.refresh();
 
     }
-
-    // save() {
-    //     this.scheduleProf.prof = this.prof;
-    //     console.log(this.scheduleProf);
-    //     this.scheduleObj.eventSettings.dataSource = null;
-    //     this.scheduleService.saveByProf().subscribe
-    //     (
-    //         data => {
-    //             if (data === null) {
-    //                 this.messageService.add({
-    //                     severity: 'error',
-    //                     summary: 'Warning',
-    //                     detail: 'Registration canceled, please try again.',
-    //                     life: 3000
-    //                 });
-    //             } else {
-    //                 this.scheduleProfs.push({...data});
-    //                 this.messageService.add({
-    //                     severity: 'success',
-    //                     summary: 'Successful',
-    //                     detail: 'Schedule added.',
-    //                     life: 3000
-    //                 });
-    //                 this.scheduleObj.eventSettings.dataSource = this.scheduleProfs;
-    //                 this.eventSettings = {
-    //                     dataSource: this.scheduleProfs,
-    //                     fields: {
-    //                         id: 'Id',
-    //                         subject: {name: 'subject', title: 'subject'},
-    //                         startTime: {name: 'startTime', title: 'startTime'},
-    //                         endTime: {name: 'endTime', title: 'endTime'}
-    //                     }
-    //                 };
-    //                 console.log(this.scheduleProfs);
-    //             }
-    //
-    //         }, error => {
-    //             console.log(error);
-    //             this.messageService.add({
-    //                 severity: 'error',
-    //                 summary: 'Warning',
-    //                 detail: 'Registration canceled',
-    //                 life: 3000
-    //             });
-    //             this.scheduleObj.eventSettings.dataSource = this.scheduleProfs;
-    //             this.eventSettings = {
-    //                 dataSource: this.scheduleProfs,
-    //                 fields: {
-    //                     id: 'Id',
-    //                     subject: {name: 'subject', title: 'subject'},
-    //                     startTime: {name: 'startTime', title: 'startTime'},
-    //                     endTime: {name: 'endTime', title: 'endTime'}
-    //                 }
-    //             };
-    //         }
-    //     );
-    //     this.scheduleProf = new ScheduleProf();
-    //     this.findByProf();
-    // }
 
 
     public onPopupOpen(args: PopupOpenEventArgs): void {
@@ -358,15 +277,6 @@ export class ScheduleLocalComponent implements OnInit {
         }
         scheduleObj.eventSettings.dataSource = this.scheduleProfs;
         console.log(scheduleObj.eventSettings.dataSource);
-        this.eventSettings = {
-            dataSource: this.scheduleProfs,
-            fields: {
-                id: 'Id',
-                subject: {name: 'subject', title: 'subject'},
-                startTime: {name: 'startTime', title: 'startTime'},
-                endTime: {name: 'endTime', title: 'endTime'}
-            }
-        };
         this.hideDialog();
     }
 
