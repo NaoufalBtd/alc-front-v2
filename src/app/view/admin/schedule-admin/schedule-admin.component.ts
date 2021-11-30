@@ -8,16 +8,17 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import {Prof} from '../../../controller/model/prof.model';
 import {L10n} from '@syncfusion/ej2-base';
-import {EventSettingsModel, PopupOpenEventArgs, ScheduleComponent} from '@syncfusion/ej2-angular-schedule';
+import {CurrentAction, EventSettingsModel, PopupOpenEventArgs, ScheduleComponent} from '@syncfusion/ej2-angular-schedule';
 import {ScheduleProf} from '../../../controller/model/calendrier-prof.model';
 import {GroupeEtudiantDetail} from '../../../controller/model/groupe-etudiant-detail.model';
+import {isNullOrUndefined} from 'util';
 
 L10n.load({
     'en-US': {
         schedule: {
             saveButton: '',
-            cancelButton: '',
-            deleteButton: '',
+            cancelButton: 'Close',
+            deleteButton: 'Delete',
             newEvent: 'Add event',
         },
     }
@@ -31,14 +32,23 @@ L10n.load({
 export class ScheduleAdminComponent implements OnInit {
 
     public schedule: ScheduleProf = new ScheduleProf();
-    @ViewChild('scheduleObj') public scheduleObj: ScheduleComponent;
+    @ViewChild('scheduleObj')
+    public scheduleObj: ScheduleComponent;
     display = false;
-    public data: ScheduleProf = new ScheduleProf();
     private selectionTarget: Element;
+    public data: ScheduleProf = new ScheduleProf();
     // public selectedDate: Date = new Date(2021, 4, 18);
     public selectedDate: Date = new Date();
-    public showWeekend = false;
-    public eventSettings: EventSettingsModel;
+    public showWeekend = true;
+    public eventSettings: EventSettingsModel = {
+        dataSource: this.scheduleProfs,
+        fields: {
+            id: 'Id',
+            subject: {name: 'subject', title: 'subject'},
+            startTime: {name: 'startTime', title: 'startTime'},
+            endTime: {name: 'endTime', title: 'endTime'}
+        }
+    };
 
 
     constructor(private scheduleService: ScheduleService, private messageService: MessageService) {
@@ -145,6 +155,7 @@ export class ScheduleAdminComponent implements OnInit {
 
     ngOnInit() {
         this.findAll();
+        this.selectedDate = new Date();
         this.scheduleService.getAllStudents().subscribe(data => this.students = data);
         this.scheduleService.getProf().subscribe(data => this.professors = data);
         this.scheduleService.findEtat().subscribe(data => this.scheduleService.etatEtudiantSchedule = data);
@@ -174,7 +185,6 @@ export class ScheduleAdminComponent implements OnInit {
     }
 
     save() {
-        console.log(this.scheduleProf);
         const scheduleObj = this.scheduleObj;
         scheduleObj.eventSettings.dataSource = null;
         console.log(scheduleObj.eventSettings.dataSource);
@@ -199,15 +209,6 @@ export class ScheduleAdminComponent implements OnInit {
                         });
                         console.log(this.scheduleProfs);
                         scheduleObj.eventSettings.dataSource = this.scheduleProfs;
-                        this.eventSettings = {
-                            dataSource: this.scheduleProfs,
-                            fields: {
-                                id: 'Id',
-                                subject: {name: 'subject', title: 'subject'},
-                                startTime: {name: 'startTime', title: 'startTime'},
-                                endTime: {name: 'endTime', title: 'endTime'}
-                            }
-                        };
                         console.log(scheduleObj.eventSettings.dataSource);
                     }
 
@@ -220,23 +221,17 @@ export class ScheduleAdminComponent implements OnInit {
                         life: 3000
                     });
                     scheduleObj.eventSettings.dataSource = this.scheduleProfs;
-                    this.eventSettings = {
-                        dataSource: this.scheduleProfs,
-                        fields: {
-                            id: 'Id',
-                            subject: {name: 'subject', title: 'subject'},
-                            startTime: {name: 'startTime', title: 'startTime'},
-                            endTime: {name: 'endTime', title: 'endTime'}
-                        }
-                    };
                 }
             );
         } else {
-            this.scheduleService.save().subscribe(
+            console.log(this.scheduleProfs);
+
+            this.scheduleService.saveByProf().subscribe(
                 data => {
                     for (let i = 0; i < this.scheduleProfs.length; i++) {
                         if (this.scheduleProfs[i].id === data.id) {
-                            this.scheduleProfs.splice(i, 1);
+                            console.log(data);
+                            // this.scheduleProfs.splice(i, 1);
                             this.scheduleProfs[i] = data;
                         }
                     }
@@ -245,72 +240,63 @@ export class ScheduleAdminComponent implements OnInit {
             console.log(this.scheduleProfs);
             scheduleObj.eventSettings.dataSource = this.scheduleProfs;
             console.log(scheduleObj.eventSettings.dataSource);
-            this.eventSettings = {
-                dataSource: this.scheduleProfs,
-                fields: {
-                    id: 'Id',
-                    subject: {name: 'subject', title: 'subject'},
-                    startTime: {name: 'startTime', title: 'startTime'},
-                    endTime: {name: 'endTime', title: 'endTime'}
-                }
-            };
+            this.scheduleObj.eventWindow.refresh();
+
         }
 
 
         this.scheduleProf = new ScheduleProf();
+        this.scheduleObj.eventWindow.refresh();
 
     }
+
 
     public onPopupOpen(args: PopupOpenEventArgs): void {
         this.data.subject = args.data.subject;
         this.data.startTime = args.data.startTime;
         this.data.endTime = args.data.endTime;
+        this.scheduleProf.startTime = args.data.startTime;
+        this.scheduleProf.endTime = args.data.endTime;
         this.selectionTarget = null;
         this.selectionTarget = args.target;
     }
 
     public onDetailsClick(event: any): void {
         this.scheduleProf = new ScheduleProf();
-        const data = this.scheduleObj.getCellDetails(this.scheduleObj.getSelectedElements()) ;
-        console.log(data);
-        this.scheduleProf.startTime = data.startTime;
-        this.scheduleProf.endTime = data.endTime;
+        const data: Object = this.scheduleObj.getCellDetails(this.scheduleObj.getSelectedElements()) as Object;
         this.scheduleObj.openEditor(data, 'Add');
-        console.log(this.scheduleProf);
     }
+
 
     public onEditClick(): void {
         const scheduleProf = this.scheduleObj.getEventDetails(this.selectionTarget) as ScheduleProf;
         this.scheduleService.update(scheduleProf);
+        console.log(scheduleProf);
         this.scheduleObj.openEditor(scheduleProf, 'Add');
     }
+
 
     public onDeleteClick(): void {
         const scheduleObj = this.scheduleObj;
         this.scheduleObj.eventSettings.dataSource = null;
         const scheduleProf = this.scheduleObj.getEventDetails(this.selectionTarget) as ScheduleProf;
         this.scheduleService.deleteByRef(scheduleProf.ref);
-        for (let i = 0; i < this.scheduleProfs.length; i++){
-            if (this.scheduleProfs[i].id === scheduleProf.id){
+        for (let i = 0; i < this.scheduleProfs.length; i++) {
+            if (this.scheduleProfs[i].id === scheduleProf.id) {
                 this.scheduleProfs.splice(i, 1);
             }
         }
         scheduleObj.eventSettings.dataSource = this.scheduleProfs;
         console.log(scheduleObj.eventSettings.dataSource);
-        this.eventSettings = {
-            dataSource: this.scheduleProfs,
-            fields: {
-                id: 'Id',
-                subject: {name: 'subject', title: 'subject'},
-                startTime: {name: 'startTime', title: 'startTime'},
-                endTime: {name: 'endTime', title: 'endTime'}
-            }
-        };
         this.hideDialog();
     }
 
+    // public onCloseClick(): void {
+    //     this.scheduleObj.closeEditor();
+    // }
+
     public onCloseClick(): void {
-        this.scheduleObj.closeEditor();
+        this.scheduleObj.quickPopup.quickPopupHide(true);
     }
 
     public getData() {
@@ -329,6 +315,5 @@ export class ScheduleAdminComponent implements OnInit {
 
     onAddClick($event: MouseEvent) {
     }
-
 
 }
