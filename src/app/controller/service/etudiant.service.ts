@@ -22,7 +22,7 @@ export class EtudiantService {
 
     private etudiantUrl = environment.etudiantUrl;
     private url = environment.baseUrl + 'etudiant/';
-    private urlBase = 'http://localhost:8036';
+    private urlBase = environment.baseApi;
     private urlParcours = '/admin/parcours/';
     private urlGroupeEtude = '/admin/groupeEtude/';
     private _selected: Etudiant;
