@@ -11,10 +11,10 @@
             <small *ngIf="submittedSection && !selectedsection.cours.libelle" class="p-invalid">cours is
                 required.</small>
             <label for="categorie"> CategorieSections </label>
-            <select (click)="findAllCategorie()" [(ngModel)]="selectedsection.categorieSection.id" class="btn btn-block btn-outline-light form-control" id="categorie"
+            <select (click)="findAllCategorie()" [(ngModel)]="selectedsection.categorieSection.code" class="btn btn-block btn-outline-light form-control" id="categorie"
                     name="Parcours" pInputText style="background-color: lavender"
                     type="text">
-                <option *ngFor="let s of itemscategoriesection" [ngValue]="s.id"
+                <option *ngFor="let s of itemscategoriesection" [ngValue]="s.code"
                         selected="selected"> {{s.libelle}}</option>
             </select>
             <small *ngIf="submittedSection && !selectedsection.categorieSection.libelle" class="p-invalid">categorie is

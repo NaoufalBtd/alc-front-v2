@@ -105,7 +105,6 @@ export class SessionCoursService {
 
         this.http.get(this.adminUrletudiantCours + idprof + '/' + idetudiant + '/' + idcours).subscribe(
             data => {
-                if (data > 0) {
                     console.log('tzwji bya');
                     this.messageService.add({
                         severity: 'info',
@@ -115,13 +114,6 @@ export class SessionCoursService {
                     });
                     this.savesessioncours(idprof, idetudiant, idcours);
                     this.router.navigate(['/etudiant/etudiant-simulate-sections']);
-                } else {
-                    console.log('tele9ni');
-
-                    this.findSessionCoursByCoursIdAndEtudiantIdAndProfId(idcours, idetudiant, idprof);
-                }
-
-
             }
         );
     }
