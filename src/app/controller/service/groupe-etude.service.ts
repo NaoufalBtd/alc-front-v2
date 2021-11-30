@@ -15,7 +15,7 @@ import {SessionCours} from '../model/session-cours.model';
 export class GroupeEtudeService {
   constructor(private http: HttpClient) {
   }
-  private urlBase = 'http//:localhost:8036';
+  private urlBase = environment.baseApi;
   private urlGroupeEtude = '/admin/groupeEtude/';
 
   // tslint:disable-next-line:variable-name
