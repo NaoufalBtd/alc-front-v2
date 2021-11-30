@@ -3,10 +3,10 @@
     <ng-template pTemplate="content">
         <div class="p-field">
             <label for="centre"> Center </label>
-            <select (click)="findAllCentre()" [(ngModel)]="selecteddparcours.centre.ref" class="btn btn-block btn-outline-light form-control" id="centre"
+            <select [(ngModel)]="selecteddparcours.centre" class="btn btn-block btn-outline-light form-control" id="centre"
                     name="Parcours" pInputText style="background-color: lavender"
                     type="text">
-                <option *ngFor="let c of itemsscentre" [ngValue]="c.ref" selected="selected"> {{c.libelle}}</option>
+                <option *ngFor="let c of itemsscentre" [ngValue]="c" selected="selected"> {{c.libelle}}</option>
             </select>
             <small *ngIf="submitted && !selecteddparcours.centre.libelle" class="p-invalid">centre is required.</small>
         </div>

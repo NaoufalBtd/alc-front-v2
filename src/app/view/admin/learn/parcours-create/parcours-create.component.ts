@@ -58,6 +58,7 @@ export class ParcoursCreateComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.findAllCentre();
     }
 
     public hideCreateDialog() {
@@ -66,24 +67,31 @@ export class ParcoursCreateComponent implements OnInit {
     }
 
     public save() {
+        console.log(this.selecteddparcours);
+        console.log('hani kandkhl lhnaya');
         this.submitted = true;
-        if (this.selecteddparcours.id == null) {
-            this.service.save().subscribe(data => {
-                // @ts-ignore
-                this.itemsparcours.push({...data});
+        this.service.save().subscribe(data => {
+            console.log('hani kandkhl lsubscribe');
+            if ( data === 1){
+                console.log('hani kandkhl l data positive');
                 // tslint:disable-next-line:no-shadowed-variable
-                this.service.init().subscribe(data => this.itemsparcours = data);
-                this.messageService.add({
-                    severity: 'success',
-                    summary: 'Successful',
-                    detail: 'Parcours Created',
-                    life: 3000
+                this.service.init().subscribe(data => {
+                    this.itemsparcours = data;
+                    this.messageService.add({
+                        severity: 'success',
+                        summary: 'Successful',
+                        detail: 'Parcours Created',
+                        life: 3000
+                    });
                 });
-            });
-            this.service.init().subscribe(data => this.itemsparcours = data);
-            this.createDialog = false;
-            this.selecteddparcours = new Parcours();
-        }
+            }else if (data === -2){
+                console.log('l courses makaytcreyawch kamlin');
+            }else if (data === -1){
+                console.log('centre kaydouz null');
+            }
+        });
+        this.createDialog = false;
+      //  this.selecteddparcours = null;
     }
 
     findAllCentre() {
