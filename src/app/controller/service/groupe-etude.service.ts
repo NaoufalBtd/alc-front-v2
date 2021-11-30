@@ -15,7 +15,7 @@ import {SessionCours} from '../model/session-cours.model';
 export class GroupeEtudeService {
   constructor(private http: HttpClient) {
   }
-  private urlBase = 'http//:localhost:8036';
+  private urlAdminBase = environment.adminUrl;
   private urlGroupeEtude = '/admin/groupeEtude/';
 
   // tslint:disable-next-line:variable-name
@@ -41,18 +41,18 @@ export class GroupeEtudeService {
   public save(): Observable<number> {
     console.log(this.groupeEtude);
 
-    return this.http.post<number>('http://localhost:8036/admin/groupeEtude/', this.selected);
+    return this.http.post<number>(this.urlAdminBase + 'groupeEtude/', this.selected);
   }
 
   public findAll(): Observable<Array<GroupeEtude>> {
-    return this.http.get<Array<GroupeEtude>>('http://localhost:8036/admin/groupeEtude/');
+    return this.http.get<Array<GroupeEtude>>(this.urlAdminBase + 'groupeEtude/');
   }
 
   public deleteByLibelle(): Observable<number> {
-    return this.http.delete<number>('http://localhost:8036/admin/groupeEtude/libelle/' + this.groupeEtude.libelle);
+    return this.http.delete<number>(this.urlAdminBase + 'groupeEtude/libelle/' + this.groupeEtude.libelle);
   }
   public deleteMultipleByLibelle(): Observable<number> {
-    return this.http.post<number>('http://localhost:8036/admin/groupeEtude' + '/delete-multiple-by-id', this.selectes);
+    return this.http.post<number>(this.urlAdminBase + 'groupeEtude' + '/delete-multiple-by-id', this.selectes);
   }
   public deleteMultipleIndexById() {
     for (const item of this.selectes) {
@@ -60,7 +60,7 @@ export class GroupeEtudeService {
     }
   }
   public findAllByCriteria() {
-    this.http.post<Array<GroupeEtude>>('http://localhost:8036/admin/groupeEtude/' + 'allByCriteria', this.groupeEtudeVo).subscribe(
+    this.http.post<Array<GroupeEtude>>( this.urlAdminBase + 'groupeEtude/' + 'allByCriteria', this.groupeEtudeVo).subscribe(
         data => {
           if (data != null) {
             this.items = data;
@@ -72,7 +72,7 @@ export class GroupeEtudeService {
     this.items.splice(this.findIndexById(id), 1);
   }
   public edit(): Observable<GroupeEtude> {
-    return this.http.put<GroupeEtude>('http://localhost:8036/admin/groupeEtude/', this.groupeEtude);
+    return this.http.put<GroupeEtude>( this.urlAdminBase + 'groupeEtude/', this.groupeEtude);
   }
   public findIndexById(id: number): number {
     let index = -1;
