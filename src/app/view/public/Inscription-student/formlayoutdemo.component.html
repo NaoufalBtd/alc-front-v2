@@ -112,6 +112,7 @@
                             class="btn btn-block btn-outline-light form-control" id="parcours"
                             name="parcours" pInputText style=" margin-left: 5px"
                             type="text">
+                        <option [ngValue]="Undefinded" selected="selected">Select a level</option>
                         <option *ngFor="let  p of parcoursList" [ngValue]="p.id" selected="selected">{{p.libelle}}
                         </option>
                     </select>
@@ -124,6 +125,8 @@
                             class="btn btn-block btn-outline-light form-control" id="groupeEtude"
                             name="roupe Etude" pInputText style=" margin-left: 5px"
                             type="text">
+                        <option [ngValue]="Undefinded" selected="selected">Select a group</option>
+
                         <option *ngFor="let p of groupeEtudeList" [ngValue]="p.id" selected="selected">{{p.libelle}}
                         </option>
                     </select>
