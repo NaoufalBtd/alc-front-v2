@@ -203,14 +203,14 @@
 
             </div>
             <div class="card" style="margin-top: 15px">
-                <p-tabMenu [activeItem]="menu[0]" [model]="menu" style="width: 100%;background-color: orange"></p-tabMenu>
-                <div id="categoriess" [style.visibility]="'visible'" style="width: 100%;margin-top: 15px">
+                <p-tabMenu [activeItem]="menu[3]" [model]="menu" style="width: 100%;background-color: orange"></p-tabMenu>
+                <div id="categoriess" [style.visibility]="'hidden'" style="width: 100%;margin-top: 15px">
                     <div style="background-color: orange"><h6 style="color: black ">Obligatory</h6></div>
                     <p-table [value]="sectionStandard" id="categ" style="margin-top: 20px; margin-right: 30px;">
                         <ng-template let-section pTemplate="body">
                             <tr class="timeline">
                                 <li>
-                                    <td (click)="Section(section)"
+                                    <td (click)="Section(section.categorieSection.libelle)"
                                         [style.color]="(section.categorieSection.libelle) == (this.selectedsection.categorieSection.libelle)? 'orange' :'black' "
                                         style="cursor: pointer; font-weight: 600;margin-left: 5px; font-size: 15px">
                                         <u>{{section.categorieSection.libelle}}</u></td>
@@ -224,7 +224,7 @@
                         <ng-template let-section pTemplate="body">
                             <tr class="timeline">
                                 <li>
-                                    <td (click)="Section(section)"
+                                    <td (click)="Section(section.categorieSection.libelle)"
                                         [style.color]="(section.categorieSection.libelle) == (this.selectedsection.categorieSection.libelle)? 'orange' :'black' "
                                         style="cursor: pointer; font-weight: 600;margin-left: 5px; font-size: 15px">
                                         <u>{{section.categorieSection.libelle}}</u></td>
@@ -249,7 +249,7 @@
                     </p-table>
                 </div>
                 <app-chat1 [style.visibility]="'hidden'" id="chat"></app-chat1>
-                <div [style.visibility]="'hidden'"  id="homeWork" style="width: 100%;margin-top: 15px">
+                <div [style.visibility]="'visible'"  id="homeWork" style="width: 100%;margin-top: 15px">
                     <p-table [value]="homeWorkList" id="categg" style="margin-top: 20px; margin-right: 30px;">
                         <ng-template let-homeWork pTemplate="body">
                             <tr class="timeline">

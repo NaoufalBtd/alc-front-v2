@@ -360,7 +360,6 @@ export class QuizCreateComponent implements OnInit {
         this.selected.section.id = this.selectedsection.id;
         console.log(this.selected.section.id);
         this.service.refQuiz = this.service.selected.ref;
-        if (!this.isHomeWork){
         this.service.save().subscribe(
             data => {
                 this.items.push({...data});
@@ -375,43 +374,6 @@ export class QuizCreateComponent implements OnInit {
                     life: 3000
                 });
             });
-        }
-        else {
-            this.homeWork.id = this.selected.id;
-            this.homeWork.libelle = this.selected.lib;
-            for (let i = 0 ; i < this.selected.questions.length; i++){
-                this.homeworkQST.libelle = this.selected.questions[i].libelle;
-                this.homeworkQST.ref = this.selected.questions[i].ref;
-                this.homeworkQST.typeDeQuestion = this.selected.questions[i].typeDeQuestion;
-                this.homeworkQST.numero = this.selected.questions[i].numero;
-                this.homeworkQST.pointReponsefausse = this.selected.questions[i].pointReponsefausse;
-                this.homeworkQST.pointReponseJuste = this.selected.questions[i].pointReponseJuste;
-                this.homeWork.questions.push(this.homeworkQST);
-            }
-            for (let i = 0 ; i < this.homeWork.questions.length; i++){
-                this.homeWork.questions[i].reponses = new Array<HomeWorkReponse>();
-                for (let j = 0 ; j < 2 ; j++){
-                    this.homeworkReponse.etatReponse = this.selected.questions[i].reponses[j].etatReponse;
-                    this.homeworkReponse.lib = this.selected.questions[i].reponses[j].lib;
-                    this.homeworkReponse.numero = this.selected.questions[i].reponses[j].numero;
-                    this.homeworkReponse.ref = this.selected.questions[i].reponses[j].ref;
-                    this.homeWork.questions[i].reponses.push(this.homeworkReponse);
-              }
-            }
-            this.homeWork.section = this.selected.section;
-            this.service.saveHomeWork().subscribe(
-                data => {
-                    this.question = null;
-                    this.selected = null;
-                    this.messageService.add({
-                        severity: 'success',
-                        summary: 'Successful',
-                        detail: 'HomeWork Created',
-                        life: 3000
-                    });
-                }
-            );
-        }
     }
 
     public edit() {
