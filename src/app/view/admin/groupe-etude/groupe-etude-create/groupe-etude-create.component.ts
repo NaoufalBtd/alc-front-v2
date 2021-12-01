@@ -136,5 +136,14 @@ export class GroupeEtudeCreateComponent implements OnInit {
   set items(value: Array<GroupeEtude>) {
     this.groupeEtudeService.items = value;
   }
+ public  findAllByCriteria(){
+    this.groupeEtudeService.findAllByCriteria();
+ }
+  get groupeEtudeVo(): GroupeEtude {
 
+    return this.groupeEtudeService.groupeEtudeVo;
+  }
+  set groupeEtudeVo(value: GroupeEtude) {
+    this.groupeEtudeService.groupeEtudeVo = value;
+  }
 }

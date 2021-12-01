@@ -140,7 +140,6 @@ export class GroupeEtudiantCreateComponent implements OnInit {
       this.groupeEtudiants.push({...this.groupeEtudiant});
       // tslint:disable-next-line:no-shadowed-variable
       this.groupeEtudiantService.findAll().subscribe(data => this.groupeEtudiants = data);
-
       this.messageService.add({
         severity: 'success',
         summary: 'Successful',
@@ -148,8 +147,8 @@ export class GroupeEtudiantCreateComponent implements OnInit {
         life: 3000
       });
     });
-
-    this.createDialog = false;
+    this.createDialogEtud = false;
+    this.selected = new GroupeEtudiant();
 
   }
 

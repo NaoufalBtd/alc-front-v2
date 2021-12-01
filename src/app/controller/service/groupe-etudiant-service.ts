@@ -8,6 +8,7 @@ import {Etudiant} from '../model/etudiant.model';
 import {GroupeEtudiantDetail} from '../model/groupe-etudiant-detail.model';
 import {Quiz} from '../model/quiz.model';
 import {Parcours} from '../model/parcours.model';
+import {environment} from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ export class GroupeEtudiantService {
 
   constructor(private http: HttpClient) {
   }
-  private urlBase = 'http://localhost:8036';
+  private urlBase = environment.baseApi  ;
   private urlParcours = '/admin/parcours/';
   private urlGroupeEtude = '/admin/groupeEtude/';
   private urlGroupeEtudiant = '/admin/groupeEtudiant/';

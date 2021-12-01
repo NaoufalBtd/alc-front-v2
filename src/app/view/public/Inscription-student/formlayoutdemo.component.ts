@@ -25,6 +25,7 @@ id :number;
                 private confirmationService: ConfirmationService,
                 private service: InscriptionService, private router: Router) {
     }
+    Undefinded: string;
 
     get createDialog(): boolean {
         return this.service.createDialog;
@@ -107,7 +108,6 @@ id :number;
     ngOnInit(): void {
         this.selected = new Inscription();
         this.selected.datedebutinscription = new Date();
-
     }
 
     public save() {
