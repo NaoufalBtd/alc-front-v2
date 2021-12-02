@@ -22,7 +22,9 @@ export class GroupeEtudeService {
   private _submitted: boolean;
   // tslint:disable-next-line:variable-name
   private _groupeEtude: GroupeEtude;
+  // tslint:disable-next-line:variable-name
   private _groupeEtudeVo: GroupeEtude;
+  // tslint:disable-next-line:variable-name
   private _selected: GroupeEtude;
   private _groupeEtudes: Array<GroupeEtude>;
   // tslint:disable-next-line:variable-name
@@ -63,6 +65,7 @@ export class GroupeEtudeService {
     this.http.post<Array<GroupeEtude>>( this.urlAdminBase + 'groupeEtude/' + 'allByCriteria', this.groupeEtudeVo).subscribe(
         data => {
           if (data != null) {
+
             this.items = data;
           }
         }
@@ -193,4 +196,5 @@ export class GroupeEtudeService {
   set groupeEtudeVo(value: GroupeEtude) {
     this._groupeEtudeVo = value;
   }
+
 }
