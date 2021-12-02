@@ -19,12 +19,14 @@ export class FormLayoutDemoComponent implements OnInit {
         {name: 'native'},
         {name: 'non-native'},
     ];
-id :number;
+    id: number;
+
     constructor(private messageService: MessageService,
                 private etudiantService: EtudiantService,
                 private confirmationService: ConfirmationService,
                 private service: InscriptionService, private router: Router) {
     }
+
     Undefinded: string;
 
     get createDialog(): boolean {
@@ -71,6 +73,7 @@ id :number;
     get etudiant(): Etudiant {
         return this.etudiantService.selected;
     }
+
     // tslint:disable-next-line:adjacent-overload-signatures
     get etudiants(): Array<Etudiant> {
         return this.etudiantService.selectes;
@@ -111,20 +114,43 @@ id :number;
     }
 
     public save() {
+        if (this.etudiant.parcours.id === 0 || this.etudiant.parcours.id === undefined || this.etudiant.parcours.id === null) {
+            this.messageService.add({
+                severity: 'info',
+                summary: 'Warning',
+                detail: 'Please select a level!',
+                life: 5000
+            });
+            return;
+        }
+        if (this.etudiant.groupeEtude.id === 0 || this.etudiant.groupeEtude.id === undefined || this.etudiant.groupeEtude.id === null) {
+            this.messageService.add({
+                severity: 'info',
+                summary: 'Warning',
+                detail: 'Please select your group option!',
+                life: 5000
+            });
+            return;
+        }
         console.log(this.etudiant);
         this.submitted = true;
-  /*      this.selected.datefininscription = new Date();
-
-   */
         console.log(this.etudiant.parcours.id);
         this.etudiantService.create().subscribe(data => {
-            this.etudiants.push({...data});
-            this.messageService.add({
-                severity: 'success',
-                summary: 'Successful',
-                detail: 'Registration added, please check your email to get your password.',
-                life: 4000
-            });
+            if (data === -1) {
+                this.messageService.add({
+                    severity: 'info',
+                    summary: 'Warning',
+                    detail: 'Email already exist, please try another one.',
+                    life: 4000
+                });
+            } else {
+                this.messageService.add({
+                    severity: 'success',
+                    summary: 'Successful',
+                    detail: 'Registration added, please check your email to get your password.',
+                    life: 4000
+                });
+            }
         }, error => {
             this.messageService.add({
                 severity: 'error',
@@ -140,9 +166,11 @@ id :number;
     public findAllCentre() {
         this.service.findAllCentre().subscribe(data => this.centreList = data);
     }
+
     public findAllGroupeEtude() {
         this.etudiantService.findAllGroupeEtude().subscribe(data => this.groupeEtudeList = data);
     }
+
     public findAllParcoursList() {
         this.etudiantService.findAllParcoursList().subscribe(data => {
                 this.parcoursList = data;
@@ -151,14 +179,17 @@ id :number;
         );
 
     }
+
     get groupeEtudeList(): Array<GroupeEtude> {
         return this.etudiantService.groupeEtudeList;
     }
+
     set groupeEtudeList(value: Array<GroupeEtude>) {
         this.etudiantService.groupeEtudeList = value;
     }
+
     affecterParcours(idParcours: any) {
-this.etudiant.parcours.id = idParcours.target.value;
-console.log(idParcours.target.value);
+        this.etudiant.parcours.id = idParcours.target.value;
+        console.log(idParcours.target.value);
     }
 }
