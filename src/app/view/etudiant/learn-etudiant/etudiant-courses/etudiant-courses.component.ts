@@ -268,7 +268,6 @@ export class EtudiantCoursesComponent implements OnInit {
     }
 
     public Console() {
-        this.service.FindCoursByParcours().subscribe(data => this.selectesscours = data);
         console.log(this.selectesscours);
     }
 

@@ -828,8 +828,8 @@ export class ParcoursService {
         return myClone;
     }
 
-    public FindCoursByParcours(): Observable<Array<Cours>> {
-        return this.http.get<Array<Cours>>(this.adminUrl + 'cours/parcours/id/5');
+    public FindCoursByParcours(id: number): Observable<Array<Cours>> {
+        return this.http.get<Array<Cours>>(this.adminUrl + 'cours/parcours/id/' + id);
     }
 
     public afficheCours(): Observable<Array<Cours>> {
