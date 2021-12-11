@@ -111,6 +111,11 @@ export class ScheduleStudentComponent implements OnInit {
         this.displayBasic = true;
     }
 
+    public onPopupOpen(args: PopupOpenEventArgs): void {
+        this.selectionTarget = null;
+        this.selectionTarget = args.target;
+        console.log(args.data);
+    }
 
     public getData() {
         this.scheduleObj.eventSettings.dataSource = null;

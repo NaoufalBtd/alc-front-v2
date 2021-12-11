@@ -16,7 +16,8 @@
 
 
 <ejs-schedule #scheduleObj width='100%' height='600px' [selectedDate]="selectedDate" [readonly]="true"
-              [eventSettings]="eventSettings ">
+              [eventSettings]="eventSettings "
+              (popupOpen)="onPopupOpen($event)">
     <e-views>
         <e-view option="Week" startHour="07:00"></e-view>
         <e-view option="WorkWeek" startHour="07:00"></e-view>
