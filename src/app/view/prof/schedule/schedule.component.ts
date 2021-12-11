@@ -250,6 +250,7 @@ export class ScheduleLocalComponent implements OnInit {
         this.scheduleProf.endTime = args.data.endTime;
         this.selectionTarget = null;
         this.selectionTarget = args.target;
+        console.log(args.data);
     }
 
     public onDetailsClick(event: any): void {
