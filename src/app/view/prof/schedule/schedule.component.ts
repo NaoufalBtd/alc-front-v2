@@ -149,7 +149,7 @@ export class ScheduleLocalComponent implements OnInit {
         this.prof = this.loginService.getConnectedProf();
         console.log(this.prof);
         this.findByProf();
-        this.scheduleService.getAllStudents().subscribe(data => this.students = data);
+        // this.scheduleService.getAllStudentsGroup().subscribe(data => this.students = data);
         this.scheduleService.getProf().subscribe(data => this.professors = data);
         this.scheduleService.findEtat().subscribe(data => this.scheduleService.etatEtudiantSchedule = data);
         console.log(this.scheduleProfs);

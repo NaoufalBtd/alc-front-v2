@@ -67,14 +67,22 @@ export class LoginAdminComponent implements OnInit {
                         {label: 'FAQ List', icon: 'pi pi-fw pi-info-circle', routerLink: ['/admin/faq-admin-list']},
                         {label: 'CREATE NEWS', icon: 'pi pi-fw pi-calendar-times', routerLink: ['/admin/news-admin']},
                         {label: 'Schedule', icon: 'pi pi-fw pi-calendar-times', routerLink: ['/admin/schedule']},
-                        {label: 'LogOut ', icon: 'pi pi-fw pi-sign-out', routerLink: ['']},
+                        {label: 'Schedule', icon: 'pi pi-fw pi-calendar-times', routerLink: ['/admin/schedule']},
+                        {label: 'Schedule', icon: 'pi pi-fw pi-calendar-times', routerLink: ['/admin/schedule']},
                     ];
                     this.service.hasloged = true;
                     this.router.navigate(['admin/parcours']);
                     this.showLoading = false;
                 },
                 (errorResponse: HttpErrorResponse) => {
-                    console.log(errorResponse.message);
+                    console.log(errorResponse);
+                    alert('errorResponse');
+                    this.messageService.add({
+                        severity: 'info',
+                        summary: 'Warning',
+                        detail: 'bad credited for username ',
+                        life: 4000
+                    });
                     this.showLoading = false;
                 }
             )

@@ -18,6 +18,7 @@ export class GroupeEtudiantService {
   constructor(private http: HttpClient) {
   }
   private urlBase = environment.baseApi  ;
+  private urlStudent = environment.etudiantUrl;
   private urlParcours = '/admin/parcours/';
   private urlGroupeEtude = '/admin/groupeEtude/';
   private urlGroupeEtudiant = '/admin/groupeEtudiant/';
@@ -272,5 +273,10 @@ public addEtudiant(){
     this._selectes = value;
   }
 
+
+  public  findGroupeEtudiantDetailByEtudiantId(id: number): Observable<Array<GroupeEtudiantDetail>> {
+    return this.http.get<Array<GroupeEtudiantDetail>>(this.urlStudent  + 'groupeEtudiantDetail/etudiant/id/' + id);
+
+  }
 
 }

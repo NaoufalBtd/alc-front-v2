@@ -10,6 +10,7 @@ import {Prof} from '../model/prof.model';
 import {LoginService} from './login.service';
 import {environment} from '../../../environments/environment';
 import {ScheduleProf} from '../model/calendrier-prof.model';
+import {GroupeEtudiant} from '../model/groupe-etudiant.model';
 
 @Injectable({
     providedIn: 'root'
@@ -270,8 +271,8 @@ export class ScheduleService {
         return this.http.post<Array<ScheduleProf>>(this.adminUrl + 'scheduleProf/all/', schedule);
     }
 
-    public findByStudent(student: Etudiant): Observable<Array<ScheduleProf>> {
-        return this.http.get<Array<ScheduleProf>>(this.studentUrl + 'scheduleProf/etudiant/id/' + student.id);
+    public findByGroupStudentId(groupeEtudiant: GroupeEtudiant): Observable<Array<ScheduleProf>> {
+        return this.http.get<Array<ScheduleProf>>(this.studentUrl + 'scheduleProf/groupe/etudiant/id/' + groupeEtudiant.id);
     }
 
     public findByProf(prof: Prof): Observable<Array<ScheduleProf>> {
@@ -337,8 +338,8 @@ export class ScheduleService {
         return this.http.get<Array<Etudiant>>(this.adminUrl + 'etudiant/prof/id/' + this.selected.prof.id);
     }
 
-    public getAllStudents(): Observable<Array<Etudiant>> {
-        return this.http.get<Array<Etudiant>>(this.adminUrl + 'etudiant/');
+    public getAllStudentsGroup(): Observable<Array<GroupeEtudiant>> {
+        return this.http.get<Array<GroupeEtudiant>>(this.adminUrl + 'groupeEtudiant/');
     }
 
     public getProf(): Observable<Array<Prof>> {
@@ -368,7 +369,7 @@ export class ScheduleService {
         myClone.ref = scheduleProf.ref;
         myClone.subject = scheduleProf.subject;
         myClone.endTime = scheduleProf.endTime;
-        myClone.etudiant = scheduleProf.etudiant;
+        myClone.groupeEtudiant = scheduleProf.groupeEtudiant;
         myClone.prof = scheduleProf.prof;
         return myClone;
     }

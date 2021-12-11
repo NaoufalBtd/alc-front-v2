@@ -12,6 +12,10 @@ import {CurrentAction, EventSettingsModel, PopupOpenEventArgs, ScheduleComponent
 import {ScheduleProf} from '../../../controller/model/calendrier-prof.model';
 import {GroupeEtudiantDetail} from '../../../controller/model/groupe-etudiant-detail.model';
 import {isNullOrUndefined} from 'util';
+import {GroupeEtudiant} from '../../../controller/model/groupe-etudiant.model';
+import {Parcours} from '../../../controller/model/parcours.model';
+import {ParcoursService} from '../../../controller/service/parcours.service';
+import {Cours} from '../../../controller/model/cours.model';
 
 L10n.load({
     'en-US': {
@@ -30,7 +34,19 @@ L10n.load({
     styleUrls: ['./schedule-admin.component.scss'],
 })
 export class ScheduleAdminComponent implements OnInit {
+    optionSelected: any = [
+        {option: 'Never'},
+    ];
+    repeatNumber: number = 1;
+    endDate: Date = new Date();
 
+    groupeStudent: Array<GroupeEtudiant> = new Array<GroupeEtudiant>();
+    courses: Array<Cours> = new Array<Cours>();
+    repeats = [
+        {option: 'Never'},
+        {option: 'Daily'},
+        // {option: 'Weekly'},
+    ];
     public schedule: ScheduleProf = new ScheduleProf();
     @ViewChild('scheduleObj')
     public scheduleObj: ScheduleComponent;
@@ -51,7 +67,9 @@ export class ScheduleAdminComponent implements OnInit {
     };
 
 
-    constructor(private scheduleService: ScheduleService, private messageService: MessageService) {
+    constructor(private scheduleService: ScheduleService,
+                private parcourService: ParcoursService,
+                private messageService: MessageService) {
     }
 
 
@@ -156,7 +174,7 @@ export class ScheduleAdminComponent implements OnInit {
     ngOnInit() {
         this.findAll();
         this.selectedDate = new Date();
-        this.scheduleService.getAllStudents().subscribe(data => this.students = data);
+        this.scheduleService.getAllStudentsGroup().subscribe(data => this.groupeStudent = data);
         this.scheduleService.getProf().subscribe(data => this.professors = data);
         this.scheduleService.findEtat().subscribe(data => this.scheduleService.etatEtudiantSchedule = data);
         console.log(this.scheduleProfs);
@@ -185,9 +203,28 @@ export class ScheduleAdminComponent implements OnInit {
     }
 
     save() {
+        const startedDate = this.scheduleProf.startTime;
+        const endedDate = this.scheduleProf.endTime;
         const scheduleObj = this.scheduleObj;
         scheduleObj.eventSettings.dataSource = null;
-        console.log(scheduleObj.eventSettings.dataSource);
+        this.scheduleProf.subject = this.scheduleProf.cours.libelle;
+        console.log(this.scheduleProf);
+        if (this.optionSelected.option === 'Daily') {
+            while (this.scheduleProf.startTime < this.endDate) {
+                this.saveSchedule(scheduleObj);
+                this.scheduleProf.startTime.setDate(startedDate.getDate() + this.repeatNumber);
+                this.scheduleProf.endTime.setDate(endedDate.getDate() + this.repeatNumber);
+            }
+        } else {
+            this.saveSchedule(scheduleObj);
+        }
+        this.scheduleProf = new ScheduleProf();
+        this.scheduleObj.eventWindow.refresh();
+    }
+
+    private saveSchedule(scheduleObj: any) {
+        console.log(this.scheduleProf.startTime);
+        console.log(this.scheduleProf.endTime);
         if (this.scheduleProf.id === 0 || this.scheduleProf.id === null) {
             this.scheduleService.save().subscribe
             (
@@ -243,11 +280,6 @@ export class ScheduleAdminComponent implements OnInit {
             this.scheduleObj.eventWindow.refresh();
 
         }
-
-
-        this.scheduleProf = new ScheduleProf();
-        this.scheduleObj.eventWindow.refresh();
-
     }
 
 
@@ -316,4 +348,13 @@ export class ScheduleAdminComponent implements OnInit {
     onAddClick($event: MouseEvent) {
     }
 
+    getCourses(groupeEtudiant: GroupeEtudiant) {
+        this.parcourService.FindCoursByParcours(groupeEtudiant.parcours.id).subscribe(data => this.courses = data);
+        console.log(this.courses);
+    }
+
+    repeatOption(selected: any) {
+        // alert(selected.option);
+        // alert(this.optionSelected.option);
+    }
 }

@@ -1,5 +1,7 @@
 import {Etudiant} from './etudiant.model';
 import {Prof} from './prof.model';
+import {GroupeEtudiant} from './groupe-etudiant.model';
+import {Cours} from './cours.model';
 
 export class ScheduleProf {
     public id = Number(0);
@@ -7,6 +9,7 @@ export class ScheduleProf {
     public ref: string;
     public startTime: Date = new Date();
     public endTime: Date = new Date();
-    public etudiant = new Etudiant();
+    public groupeEtudiant = new GroupeEtudiant();
     public prof = new Prof();
+    public cours: Cours = new Cours();
 }
