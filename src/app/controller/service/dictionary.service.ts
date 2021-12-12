@@ -205,7 +205,8 @@ export class DictionaryService {
     }
 
     public save(): Observable<Dictionary> {
-        console.log('this is save method data===>' + this.selected.definition);
+        console.log('save in dictionary service');
+        console.log(this.selected);
         return this.http.post<Dictionary>(this.adminUrl + 'dictionary/', this.selected);
     }
 

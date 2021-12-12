@@ -90,6 +90,7 @@ export class DictionaryCreateComponent implements OnInit {
     public save() {
         this.selected = this.selectedNow;
         this.selected.etudiant = this.serviceUser.etudiant;
+        console.log(this.selected);
         this.dictionnaryService.save().subscribe(data => {
             this.dictionnaryService.FindAllWord().subscribe(
                  data => {
@@ -99,9 +100,7 @@ export class DictionaryCreateComponent implements OnInit {
 
             this.itemsDict.push({...data});
             console.log(this.selected);
-            console.log('meryem');
             this.selected.etudiant.id = this.serviceUser.etudiant.id;
-            this.selected = new Dictionary();
             this.messageService.add({
                 severity: 'success',
                 summary: 'Successful',
