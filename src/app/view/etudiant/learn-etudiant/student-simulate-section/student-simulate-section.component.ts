@@ -56,6 +56,7 @@ export class StudentSimulateSectionComponent implements OnInit {
     word: string;
     wordDict: any;
     j: number;
+
     // tslint:disable-next-line:max-line-lengthg max-line-length
     constructor(private messageService: MessageService,
                 private router: Router,
@@ -81,12 +82,9 @@ export class StudentSimulateSectionComponent implements OnInit {
     }
 
     set coursecomplited(value: boolean) {
-         this.review.coursecomplited = value;
+        this.review.coursecomplited = value;
 
     }
-
-
-
 
 
     get viewDialog(): boolean {
@@ -240,7 +238,6 @@ export class StudentSimulateSectionComponent implements OnInit {
     get etudiant(): Etudiant {
         return this.loginService.etudiant;
     }
-
 
 
     get quizEtudiantList(): QuizEtudiant {
@@ -413,6 +410,7 @@ export class StudentSimulateSectionComponent implements OnInit {
 
     ngOnInit(): void {
         // this.hasfinish = false;
+        // tslint:disable-next-line:max-line-length
         //      this.http.get<EtudiantCours>('http://localhost:8036/etudiant/etudiantCours/prof/id/' + this.loginService.etudiant.prof.id + '/etudiant/id/' +  this.loginService.etudiant.id + '/cours/idc/' + this.).subscribe(
         //          data => {
         //              if (data != null) {
@@ -582,7 +580,7 @@ export class StudentSimulateSectionComponent implements OnInit {
                                         // tslint:disable-next-line:triple-equals
                                         if (this.Synonymes[k] != '\"' && this.Synonymes[k] != ',') {
                                             this.wordDict = this.wordDict + this.Synonymes[k];
-                                        } else if (this.Synonymes[k] == ',') {
+                                        } else if (this.Synonymes[k] === ',') {
                                             break;
                                         } else {
                                             this.listSynonymes.push(this.wordDict);
@@ -760,7 +758,6 @@ export class StudentSimulateSectionComponent implements OnInit {
         }
 
 
-
     }
 
 
@@ -795,14 +792,14 @@ export class StudentSimulateSectionComponent implements OnInit {
         this.homeWorkEtudiantService.homeWork = homeWork;
         this.homeWorkEtudiantService.findbyetudiantIdAndHomeWorkID().subscribe(
             data => {
-                if (data!=null){
+                if (data != null) {
                     this.homeWorkEtudiantService.isUpdate = true;
-                    this.homeWorkEtudiantService.homeWorkEtudiant = data ;
+                    this.homeWorkEtudiantService.homeWorkEtudiant = data;
                 }
 
-            },error =>{
+            }, error => {
                 console.log('makayn tachi homeWork');
-        }
+            }
         );
         this.homeWorkEtudiantService.homeWork.questions = homeWork.questions;
         //  this.homeWorkEtudiantService.homeWorkQuestion = ;

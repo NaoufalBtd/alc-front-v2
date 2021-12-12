@@ -32,36 +32,40 @@
                      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
                      dataKey="id"
                      styleClass="p-datatable-customers">
-<!--                <ng-template pTemplate="caption">-->
-<!--                    <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">-->
-<!--                        <div class="p-col"><h5 class="p-m-0">Manage Inscriptions</h5><br>-->
-<!--                            <span>-->
-<!--                                     <input [(ngModel)]="selected.etudiant.nom  " pInputText-->
-<!--                                            placeholder="Search by LastName"-->
-<!--                                            style="margin-right: 10px;width: 200px"-->
-<!--                                            type="text"/>-->
-<!--                                     <input [(ngModel)]="selected.etudiant.prenom  " pInputText-->
-<!--                                            placeholder="Search by FirstName"-->
-<!--                                            style="margin-right: 10px;width: 200px"-->
-<!--                                            type="text"/>-->
-<!--                                    <input [(ngModel)]="selected.etudiant.username " pInputText-->
-<!--                                           placeholder="Search by UserName"-->
-<!--                                           style="margin-right: 10px;width: 200px"-->
-<!--                                           type="text"/>-->
+                <ng-template pTemplate="caption">
+                    <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
+                        <div class="p-col"><h5 class="p-m-0">Manage Inscriptions</h5><br>
+                            <span>
+                                     <input [(ngModel)]="student.nom" pInputText
+                                            placeholder="Search by LastName"
+                                            style="margin-right: 10px;width: 200px"
+                                            type="text"/>
+                                     <input [(ngModel)]="student.prenom  " pInputText
+                                            placeholder="Search by FirstName"
+                                            style="margin-right: 10px;width: 200px"
+                                            type="text"/>
+                                    <input [(ngModel)]="student.username " pInputText
+                                           placeholder="Search by UserName"
+                                           style="margin-right: 10px;width: 200px"
+                                           type="text"/>
 
-<!--                          <i (click)="findByCriteria()" class="pi pi-search"></i>-->
-<!--                            </span>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </ng-template>-->
+                          <i (click)="findByCriteria()" class="pi pi-search"></i>
+                            </span>
+                        </div>
+                    </div>
+                </ng-template>
                 <ng-template pTemplate="header">
                     <tr>
                         <th style="width: 3rem">
                             <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                         </th>
+                        <th pSortableColumn="id">Id
+                            <p-sortIcon field="id"></p-sortIcon>
+                        </th>
                         <th pSortableColumn="nom">LastName
                             <p-sortIcon field="nom"></p-sortIcon>
                         </th>
+
                         <th pSortableColumn="prenom">FirstName
                             <p-sortIcon field="prenom"></p-sortIcon>
                         </th>
@@ -82,6 +86,7 @@
                         <td>
                             <p-tableCheckbox [value]="inscription"></p-tableCheckbox>
                         </td>
+                        <td>{{inscription.id}}</td>
                         <td>{{inscription.etudiant.nom}}</td>
                         <td>{{inscription.etudiant.prenom}}</td>
                         <td>{{inscription.etudiant.addresse}}</td>

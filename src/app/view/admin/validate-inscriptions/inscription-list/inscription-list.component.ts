@@ -17,6 +17,7 @@ import {EtudiantVo} from '../../../../controller/model/etudiant-vo.model';
 export class InscriptionListComponent implements OnInit {
     cols: any[];
     index: number;
+     student: Etudiant = new Etudiant();
 
     constructor(private messageService: MessageService, private confirmationService: ConfirmationService,
                 private service: InscriptionService) {
@@ -136,7 +137,10 @@ export class InscriptionListComponent implements OnInit {
     }
 
     public findByCriteria() {
-        return this.service.findByCriteria().subscribe(data => this.items = data);
+        return this.service.findByCriteria(this.student).subscribe(data => {
+            this.items = data;
+            console.log(data);
+        });
     }
 
     public deleteMultiple() {

@@ -204,9 +204,9 @@ export class DictionaryService {
         return this.http.get<Array<string>>(this.adminUrl + 'TranslateEnAr/text/synonymes/' + word, {responseType: 'text'});
     }
 
-    public save(): Observable<number> {
+    public save(): Observable<Dictionary> {
         console.log('this is save method data===>' + this.selected.definition);
-        return this.http.post<number>(this.adminUrl + 'dictionary/', this.selected);
+        return this.http.post<Dictionary>(this.adminUrl + 'dictionary/', this.selected);
     }
 
     public editDict(): Observable<number> {
