@@ -11,6 +11,8 @@ import {HttpClient} from '@angular/common/http';
 import {User} from '../model/user.model';
 import {SimulateSectionService} from './simulate-section.service';
 import {AuthenticationService} from './authentication.service';
+import {ParcoursService} from "./parcours.service";
+import {Section} from "../model/section.model";
 
 @Injectable({
     providedIn: 'root'
@@ -19,6 +21,9 @@ export class WebSocketService {
 
     publicUrl = environment.publicUrl;
     private socketUrl = environment.socketUrl;
+    private baseUrl = environment.baseUrl;
+    private profUrl = environment.profUrl;
+    private synchronizationUrl = environment.synchronizationUrl;
     index = 0;
     webSocket: WebSocket ;
     chatMessages: ChatMessageDto[] = [];
@@ -32,7 +37,7 @@ export class WebSocketService {
                 private authService: AuthenticationService,
                 private http: HttpClient,
                 private loginservice: LoginService, public serviceprof: ProfService,
-                private simulatesectionService: SimulateSectionService
+                private simulatesectionService: SimulateSectionService,
                 ) {
     }
 
@@ -53,10 +58,12 @@ export class WebSocketService {
             else if  (data.type === 'NEXT') {
                 console.log('hani ghandir next l student');
                 this.simulatesectionService.nextSection();
+                this.updateCurrentSection(this.loginservice.prof.id, this.simulatesectionService.selectedsection);
             }
            else if (data.type === 'PREVIOUS') {
                console.log('hani ghandir previous l student');
                this.simulatesectionService.PreviousSection();
+               this.updateCurrentSection(this.loginservice.prof.id, this.simulatesectionService.selectedsection);
             } else {
                 console.log(data);
                 console.log(this.connectedUsers);
@@ -80,8 +87,7 @@ export class WebSocketService {
 
 
         this.webSocket.onclose = (event) => {
-            console.log('Close: ', event);
-            this.webSocket.close();
+
         };
     }
 
@@ -122,6 +128,62 @@ export class WebSocketService {
         );
     }
 
+    public saveCurrentSection(id: number, section: Section){
+        this.http.post<number>(this.profUrl + this.synchronizationUrl + '/id/' + id, section ).subscribe(
+            data => {
+                if (data > 0){
+                    console.log('CurrentSection saved');
+                }else {
+                    console.log('section not saved');
+                }
+            }, error => {
+                console.log('problem while saving current section');
+            }
+        );
+    }
+
+    public updateCurrentSection(id: number, section: Section){
+        this.http.post<number>(this.profUrl + this.synchronizationUrl + '/update/' + id, section ).subscribe(
+            data => {
+                if (data > 0){
+                    console.log('CurrentSection updated');
+                }else {
+                    console.log('section not updated');
+                }
+            }, error => {
+                console.log('problem while updating current section');
+            }
+        );
+    }
+
+    public deleteWhenSessionIsfiniched(id: number){
+        this.http.get<number>(this.profUrl + this.synchronizationUrl + '/remove/' + id).subscribe(
+            data => {
+                if (data > 0){
+                    console.log('CurrentSection removed');
+                }else {
+                    console.log('section not removed');
+                }
+            }, error => {
+                console.log('problem while removing current section');
+            }
+        );
+    }
+
+    public findCurrentSectionForstudent(id: number){
+        this.http.get<Section>(this.profUrl + this.synchronizationUrl + '/id/' + this.loginservice.etudiant.prof.id).subscribe(
+            data => {
+                if (data !== null){
+                    console.log('CurrentSection found');
+                    this.simulatesectionService.selectedsection = data;
+                }else {
+                    console.log('section not found');
+                }
+            }, error => {
+                console.log('problem while searching for current section');
+            }
+        );
+    }
 
     public closeWebSocket(user: any) {
         this.webSocket.onclose = (event) => {

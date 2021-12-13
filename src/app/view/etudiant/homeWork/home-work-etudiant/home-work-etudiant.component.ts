@@ -17,6 +17,11 @@ import {HomeWorkReponse} from '../../../../controller/model/home-work-reponse.mo
 import {newArray} from '@angular/compiler/src/util';
 import {LoginService} from '../../../../controller/service/login.service';
 import {Router, RouterModule} from '@angular/router';
+import {Quiz} from "../../../../controller/model/quiz.model";
+import {Etudiant} from "../../../../controller/model/etudiant.model";
+import {QuizEtudiant} from "../../../../controller/model/quiz-etudiant.model";
+import {Cours} from "../../../../controller/model/cours.model";
+import {SectionItemService} from "../../../../controller/service/section-item.service";
 
 @Component({
     selector: 'app-home-work-etudiant',
@@ -35,7 +40,7 @@ export class HomeWorkEtudiantComponent implements OnInit {
     hasprevious = false;
     private etudiantreponseList = new Array<ReponseEtudiantHomeWork>();
 
-    constructor(private router: Router, private loginservice: LoginService, private homeworkservice: HomeworkService, private quizService: QuizEtudiantService, private parcoursservice: ParcoursService, private homeworkEtudiantservice: HomeWorkEtudiantServiceService, private dictionnaryService: DictionaryService) {
+    constructor(private sectionItemService: SectionItemService, private router: Router, private loginservice: LoginService, private homeworkservice: HomeworkService, private quizService: QuizEtudiantService, private parcoursservice: ParcoursService, private homeworkEtudiantservice: HomeWorkEtudiantServiceService, private dictionnaryService: DictionaryService) {
     }
 
     private selectedValue: number;
@@ -348,7 +353,58 @@ export class HomeWorkEtudiantComponent implements OnInit {
     set selectedDictionnary(value: Dictionary) {
         this.dictionnaryService.selected = value;
     }
+    get selectedQuiz(): Quiz {
+        return this.quizService.selectedQuiz;
+    }
 
+    set selectedQuiz(value: Quiz) {
+        this.quizService.selectedQuiz = value;
+    }
+
+    get etudiant(): Etudiant {
+        return this.loginservice.etudiant;
+    }
+
+
+
+    get quizEtudiantList(): QuizEtudiant {
+        return this.quizService.quizEtudiantList;
+    }
+
+    set quizEtudiantList(value: QuizEtudiant) {
+        this.quizService.quizEtudiantList = value;
+    }
+
+    get passerQuiz(): string {
+        return this.quizService.passerQuiz;
+    }
+
+    set passerQuiz(value: string) {
+        this.quizService.passerQuiz = value;
+    }
+
+    get quizView(): boolean {
+        return this.quizService.quizView;
+    }
+
+    set quizView(value: boolean) {
+        this.quizService.quizView = value;
+    }
+
+    get selectedcours(): Cours {
+        return this.parcoursservice.selectedcours;
+    }
+
+    set selectedcours(value: Cours) {
+        this.parcoursservice.selectedcours = value;
+    }
+    get showVocabulary(): boolean {
+        return this.sectionItemService.showVocabulary;
+    }
+
+    set showVocabulary(value: boolean) {
+        this.sectionItemService.showVocabulary = value;
+    }
     sendhomeWork(homeWork: HomeWork) {
         this.hasNext = false;
         this.hasprevious = false;
@@ -394,38 +450,54 @@ export class HomeWorkEtudiantComponent implements OnInit {
             }
         );
     }
+    Vocab(section: Section) {
+        this.sectionItemService.sectionSelected = section;
 
-    public Section(section: Section) {
-        /*    this.quizService.findQuizEtudiant(this.etudiant, this.selectedQuiz).subscribe(
-                data => {
-                  this.quizEtudiant = data;
-                  this.quizEtudiant.note = this.noteQuiz;
-                  this.quizEtudiant.questionCurrent = this.numQuestion;
-                  this.service.updateQuizEtudiant().subscribe();
+        this.sectionItemService.getSectionItems().subscribe(data => {
+            this.sectionItemService.sectionSelected.sectionItems = data;
+            console.log(data);
+            this.showVocabulary = true;
+        });
+
+    }
+    public Section(libelle: string) {
+        this.parcoursservice.afficheSection(libelle).subscribe(
+            data => {
+                this.selectedsection = data;
+                if (data.categorieSection.libelle === 'Vocabulary') {
+                    this.Vocab(data);
+                } else {
+                    this.showVocabulary = false;
                 }
-            );
-            this.parcoursservice.afficheSection(libelle).subscribe(
-                data=> {
-                  this.selectedsection = data;
-                  this.service.findQuizBySectionId(this.selectedsection).subscribe(
-                      data => {
+                this.quizService.findQuizBySectionId(this.selectedsection).subscribe(
+                    // tslint:disable-next-line:no-shadowed-variable
+                    data => {
                         this.selectedQuiz = data;
-                        this.service.findQuizEtudiant(this.login.etudiant, this.selectedQuiz).subscribe(
+                        this.quizService.findQuizEtudiant(this.loginservice.etudiant, this.selectedQuiz).subscribe(
+                            // tslint:disable-next-line:no-shadowed-variable
                             data => {
-                              this.quizEtudiantList = data;
-                              this.passerQuiz = 'View Quiz';
-                              this.quizView = true;
-                            },error =>
-                            {
-                              this.passerQuiz = 'Passer Quiz';
-                              this.quizView = false;
+                                this.quizEtudiantList = data;
+                                console.log(this.quizEtudiantList);
+                                this.quizService.findAllQuestions(this.selectedQuiz.ref).subscribe(
+                                    dataQuestions => {
+                                        if (data.questionCurrent > dataQuestions.length) {
+                                            this.passerQuiz = 'View Quiz';
+                                            this.quizView = true;
+                                        } else {
+                                            this.passerQuiz = 'Continue Quiz';
+                                            this.quizView = false;
+                                        }
+                                    }
+                                );
+                            }, error => {
+                                this.passerQuiz = 'Take Quiz';
+                                this.quizView = false;
                             }
                         );
-                      },
-                  );
-                },error => console.log('erreeeeeeeeeeeeeeeeur') );
-            this.router.navigate(['/etudiant/etudiant-simulate-sections']);*/
-        this.selectedsection = section;
+                    },
+                );
+                this.router.navigate(['etudiant/etudiant-simulate-sections']);
+            }, error => console.log('erreeeeeeeeeeeeeeeeur'));
     }
 
     public dictEdit(dict: Dictionary) {
