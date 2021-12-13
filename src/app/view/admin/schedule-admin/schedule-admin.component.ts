@@ -39,13 +39,22 @@ export class ScheduleAdminComponent implements OnInit {
     ];
     repeatNumber: number = 1;
     endDate: Date = new Date();
-
+    selectedDays: any;
+    daysOptions = [
+        {name: 'Sun', value: 0},
+        {name: 'Mon', value: 1},
+        {name: 'Tue', value: 2},
+        {name: 'Wed', value: 3},
+        {name: 'Thu', value: 4},
+        {name: 'Fri', value: 5},
+        {name: 'Sat', value: 6},
+    ];
     groupeStudent: Array<GroupeEtudiant> = new Array<GroupeEtudiant>();
     courses: Array<Cours> = new Array<Cours>();
     repeats = [
         {option: 'Never'},
         {option: 'Daily'},
-        // {option: 'Weekly'},
+        {option: 'Weekly'},
     ];
     public schedule: ScheduleProf = new ScheduleProf();
     @ViewChild('scheduleObj')
@@ -215,6 +224,38 @@ export class ScheduleAdminComponent implements OnInit {
                 this.scheduleProf.startTime.setDate(startedDate.getDate() + this.repeatNumber);
                 this.scheduleProf.endTime.setDate(endedDate.getDate() + this.repeatNumber);
             }
+        } else if (this.optionSelected.option === 'Weekly') {
+            let firstSubject = this.scheduleProf.subject;
+            console.log(this.selectedDays);
+            while (this.scheduleProf.startTime < this.endDate) {
+                for (const day of this.selectedDays) {
+                    if (this.scheduleProf.startTime.getDay() === day) {
+                        console.log(this.scheduleProf.startTime.getDay());
+                        console.log(this.scheduleProf.startTime.getDate());
+                        this.scheduleProf.ref = this.scheduleProf.ref + String(this.scheduleProf.startTime.getDate());
+                        console.log(this.courses);
+                        for (let i = 0; i < this.courses.length; i++) {
+                            if (this.scheduleProf.cours.libelle === this.courses[i].libelle) {
+                                if (this.scheduleProf.subject === firstSubject){
+                                    firstSubject = null;
+                                    break;
+                                } else {
+                                    console.log(this.courses[i]);
+                                    console.log(this.courses[i + 1]);
+                                    this.scheduleProf.cours = this.courses[i + 1];
+                                    this.scheduleProf.subject = this.scheduleProf.cours.libelle;
+                                    break;
+                                }
+                            }
+                        }
+                        this.saveSchedule(scheduleObj);
+                    }
+                }
+                this.scheduleProf.startTime.setDate(startedDate.getDate() + 1);
+                this.scheduleProf.endTime.setDate(endedDate.getDate() + 1);
+            }
+
+
         } else {
             this.saveSchedule(scheduleObj);
         }
@@ -356,5 +397,10 @@ export class ScheduleAdminComponent implements OnInit {
     repeatOption(selected: any) {
         // alert(selected.option);
         // alert(this.optionSelected.option);
+    }
+
+    getDaysSelected(data: any) {
+        console.log(this.selectedDays);
+        console.log(data);
     }
 }

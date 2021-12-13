@@ -38,8 +38,13 @@ export class InscriptionService {
     private _centreList: Array<Centre>;
     private _parcoursList: Array<Parcours>;
     private _groupeEtudeList: Array<GroupeEtude>;
-    findByCriteria(): Observable<Array<Inscription>> {
-        return this.http.post<Array<Inscription>>(this.adminUrl + 'inscription/search', this.selected);
+
+
+    findByCriteria(student: Etudiant): Observable<Array<Inscription>> {
+        let inscription: Inscription = new Inscription();
+        inscription.etudiant = student;
+        console.log(student);
+        return this.http.post<Array<Inscription>>(this.adminUrl + 'inscription/search', inscription);
     }
 
     public findAllProf(): Observable<Array<Prof>> {

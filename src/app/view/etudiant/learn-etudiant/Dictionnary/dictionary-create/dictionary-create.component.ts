@@ -14,6 +14,7 @@ export class DictionaryCreateComponent implements OnInit {
                 private serviceUser: LoginService,
                 private confirmationService: ConfirmationService, private dictionnaryService: DictionaryService) {
     }
+
     get selectedNow(): Dictionary {
         return this.dictionnaryService.selectedNow;
     }
@@ -89,19 +90,17 @@ export class DictionaryCreateComponent implements OnInit {
     public save() {
         this.selected = this.selectedNow;
         this.selected.etudiant = this.serviceUser.etudiant;
+        console.log(this.selected);
         this.dictionnaryService.save().subscribe(data => {
             this.dictionnaryService.FindAllWord().subscribe(
-                data => {
-                    console.log("haddiii dataa==> "+data);
+                 data => {
+                    console.log( data);
                     this.itemsDict = data;
                 });
 
-            // @ts-ignore
             this.itemsDict.push({...data});
             console.log(this.selected);
-            console.log('meryem');
             this.selected.etudiant.id = this.serviceUser.etudiant.id;
-            this.selected = new Dictionary();
             this.messageService.add({
                 severity: 'success',
                 summary: 'Successful',
