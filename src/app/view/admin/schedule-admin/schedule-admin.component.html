@@ -1,17 +1,16 @@
 <!--<p-toast></p-toast>-->
 
 
-<div class="p-grid">
-    <div class="p-col-4">
-        <span class="p-input-icon-left">
-    <i class="pi pi-search"></i>
-    <input #searchValue [(ngModel)]="schedule.groupeEtudiant.libelle" type="text" pInputText placeholder="Search schedule.." />
-            <button style="margin-left: 5px" pButton pRipple type="button" (click)="findAllByStudent()"
+<div class="p-grid top-bar">
+    <div class="p-col-8">
+        <input class="searchValue" [(ngModel)]="schedule.groupeEtudiant.libelle" type="text" pInputText placeholder="Search by group.." />
+         <input class="searchValue" [(ngModel)]="schedule.prof.nom" type="text" pInputText placeholder="Search by teacher firstName.." />
+         <input class="searchValue" [(ngModel)]="schedule.prof.prenom" type="text" pInputText placeholder="Search by teacher lastName.." />
+         <input class="searchValue" [(ngModel)]="schedule.prof.username" type="text" pInputText placeholder="Search by teacher username.." />
+        <button  pButton pRipple type="button" (click)="findAllByGroupOrTeahcer()"
                     icon="pi pi-search" class="p-button-rounded p-button-success"></button>
-</span>
     </div>
-    <div class="p-col-2"></div>
-    <div class="p-col-6">
+    <div class="p-col-4">
         <button class="instruction-button" (click)="getData()" icon="pi pi-refresh" pButton pRipple></button>
         <button class="instruction-button" (click)="showBasicDialog()" icon="pi pi-question" label="Instruction" pButton
                 pRipple></button>

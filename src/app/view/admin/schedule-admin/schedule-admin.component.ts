@@ -190,10 +190,10 @@ export class ScheduleAdminComponent implements OnInit {
     }
 
 
-    findAllByStudent() {
+    findAllByGroupOrTeahcer() {
         const scheduleObj = this.scheduleObj;
         scheduleObj.eventSettings.dataSource = null;
-        this.scheduleService.findAllByStudent(this.schedule).subscribe(
+        this.scheduleService.findAllByCriteria(this.schedule).subscribe(
             data => {
                 console.log(data);
                 this.eventSettings = {
@@ -264,8 +264,6 @@ export class ScheduleAdminComponent implements OnInit {
     }
 
     private saveSchedule(scheduleObj: any) {
-        console.log(this.scheduleProf.startTime);
-        console.log(this.scheduleProf.endTime);
         if (this.scheduleProf.id === 0 || this.scheduleProf.id === null) {
             this.scheduleService.save().subscribe
             (
@@ -302,9 +300,8 @@ export class ScheduleAdminComponent implements OnInit {
                 }
             );
         } else {
-            console.log(this.scheduleProfs);
-
-            this.scheduleService.saveByProf().subscribe(
+            console.log(this.scheduleProf);
+            this.scheduleService.save().subscribe(
                 data => {
                     for (let i = 0; i < this.scheduleProfs.length; i++) {
                         if (this.scheduleProfs[i].id === data.id) {
@@ -344,7 +341,8 @@ export class ScheduleAdminComponent implements OnInit {
     public onEditClick(): void {
         const scheduleProf = this.scheduleObj.getEventDetails(this.selectionTarget) as ScheduleProf;
         this.scheduleService.update(scheduleProf);
-        console.log(scheduleProf);
+        this.scheduleProf = scheduleProf;
+        console.log(this.scheduleProf);
         this.scheduleObj.openEditor(scheduleProf, 'Add');
     }
 
