@@ -13,6 +13,7 @@ export const environment = {
   etudiantUrl: 'http://localhost:8036/etudiant/',
   publicUrl: 'http://localhost:8036/public/',
   socketUrl: 'ws://localhost:8036/chat',
+  synchronizationUrl: 'synchronization'
 
 
   // baseUrl: 'https://alc-back-v1.herokuapp.com/learn/',
@@ -24,6 +25,7 @@ export const environment = {
   // etudiantUrl: 'https://alc-back-v1.herokuapp.com/etudiant/',
   // publicUrl: 'https://alc-back-v1.herokuapp.com/public/',
   // socketUrl: 'ws://alc-back-v1.herokuapp.com/chat',
+
 };
 
 /*

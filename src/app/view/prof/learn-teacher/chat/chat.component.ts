@@ -22,7 +22,6 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.serviceprof.getConnectedStudent();
         this.webSocketService.findbynumero(this.service.prof.id);
         this.webSocketService.findstudentlist(this.service.prof.id);
-        this.webSocketService.openWebSocket(this.service.prof);
     }
     get listStudent(): Array<Etudiant> {
         return this.serviceprof.listStudent;

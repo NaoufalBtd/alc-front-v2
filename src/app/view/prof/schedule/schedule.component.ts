@@ -19,6 +19,11 @@ import {
     PopupOpenEventArgs
 } from '@syncfusion/ej2-angular-schedule';
 import {Prof} from '../../../controller/model/prof.model';
+import {GroupeEtudiantService} from "../../../controller/service/groupe-etudiant-service";
+import {GroupeEtudiantDetail} from "../../../controller/model/groupe-etudiant-detail.model";
+import {WebSocketService} from "../../../controller/service/web-socket.service";
+import {Router} from "@angular/router";
+import {SimulateSectionService} from "../../../controller/service/simulate-section.service";
 
 L10n.load({
     'en-US': {
@@ -49,6 +54,7 @@ export class ScheduleLocalComponent implements OnInit {
     // public selectedDate: Date = new Date(2021, 4, 18);
     public selectedDate: Date = new Date();
     public showWeekend = true;
+    public groupeEtudiantDetails  = new Array<GroupeEtudiantDetail>();
     public eventSettings: EventSettingsModel = {
         dataSource: this.scheduleProfs,
         fields: {
@@ -61,7 +67,9 @@ export class ScheduleLocalComponent implements OnInit {
 
 
     constructor(private scheduleService: ScheduleService, private messageService: MessageService,
-                private confirmationService: ConfirmationService, private loginService: LoginService) {
+                private confirmationService: ConfirmationService, private loginService: LoginService,
+                private groupeEtudiantService: GroupeEtudiantService, private webSocketService: WebSocketService,
+                private router: Router, private simulateSectionService: SimulateSectionService) {
     }
 
 
@@ -246,10 +254,12 @@ export class ScheduleLocalComponent implements OnInit {
         this.data.subject = args.data.subject;
         this.data.startTime = args.data.startTime;
         this.data.endTime = args.data.endTime;
+        this.data.cours = args.data.cours;
         this.scheduleProf.startTime = args.data.startTime;
         this.scheduleProf.endTime = args.data.endTime;
         this.selectionTarget = null;
         this.selectionTarget = args.target;
+        this.data.groupeEtudiant = args.data.groupeEtudiant;
         console.log(args.data);
     }
 
@@ -300,5 +310,27 @@ export class ScheduleLocalComponent implements OnInit {
     }
 
     onAddClick($event: MouseEvent) {
+    }
+
+    public findAllGroupeEtudiantDetail(id: number){
+        this.groupeEtudiantService.findAllGroupeEtudiantDetail(id).subscribe(
+            data => {
+                this.groupeEtudiantDetails = data ;
+                for (let i = 0 ; i < this.groupeEtudiantDetails.length; i++){
+                    this.webSocketService.connectedUsers.push(this.groupeEtudiantDetails[i].etudiant);
+                }
+                console.log(this.webSocketService.connectedUsers);
+            }
+        );
+    }
+
+    startSession() {
+        console.log(this.data.groupeEtudiant.id);
+        this.findAllGroupeEtudiantDetail(this.data.groupeEtudiant.id);
+        console.log(this.data.cours);
+        this.simulateSectionService.findSectionOneByOne(this.data.cours);
+        this.webSocketService.openWebSocket(this.prof);
+        this.webSocketService.saveCurrentSection(this.prof.id, this.simulateSectionService.selectedsection);
+        this.router.navigate(['prof/sections-simulate']);
     }
 }

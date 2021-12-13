@@ -9,6 +9,10 @@ import {Prof} from '../../../controller/model/prof.model';
 import {Etudiant} from '../../../controller/model/etudiant.model';
 import {AuthenticationService} from '../../../controller/service/authentication.service';
 import {GroupeEtudiantService} from '../../../controller/service/groupe-etudiant-service';
+import {WebSocketService} from "../../../controller/service/web-socket.service";
+import {Router} from "@angular/router";
+import {SimulateSectionService} from "../../../controller/service/simulate-section.service";
+import {ParcoursService} from "../../../controller/service/parcours.service";
 
 
 L10n.load({
@@ -41,7 +45,11 @@ export class ScheduleStudentComponent implements OnInit {
     constructor(private scheduleService: ScheduleService, private messageService: MessageService,
                 private confirmationService: ConfirmationService,
                 private groupeEtudiantService: GroupeEtudiantService,
-                private authenticationService: AuthenticationService) {
+                private authenticationService: AuthenticationService,
+                private webSocketService: WebSocketService,
+                private router: Router,
+                private simulateSection: SimulateSectionService,
+                private parcoursService: ParcoursService) {
     }
 
 
@@ -114,6 +122,7 @@ export class ScheduleStudentComponent implements OnInit {
     public onPopupOpen(args: PopupOpenEventArgs): void {
         this.selectionTarget = null;
         this.selectionTarget = args.target;
+        this.parcoursService.selectedcours = args.data.cours;
         console.log(args.data);
     }
 
@@ -133,5 +142,12 @@ export class ScheduleStudentComponent implements OnInit {
         //         };
         //     }
         // );
+    }
+
+    joinSession() {
+        this.simulateSection.findSectionOneByOne(this.parcoursService.selectedcours);
+        this.webSocketService.openWebSocket(this.etudiant);
+        this.webSocketService.findCurrentSectionForstudent(this.etudiant.prof.id);
+        this.router.navigate(['etudiant/etudiant-simulate-sections']);
     }
 }

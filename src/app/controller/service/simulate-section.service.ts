@@ -512,4 +512,74 @@ export class SimulateSectionService {
   set Synonymes(value: Array<any>) {
     this.dictionnaryService.Synonymes = value;
   }
+  public findSectionOneByOne(cour: Cours) {
+    this.selectedcours = cour;
+    let i = 0;
+    i = i + 1;
+    this.service.affichelistSection().subscribe(
+        data => {
+          this.itemssection2 = data;
+          // tslint:disable-next-line:no-shadowed-variable
+        });
+    this.service.image = '';
+    this.service.afficheOneSection().subscribe(
+        data => {
+          this.selectedsection = data;
+          if (data.categorieSection.libelle === 'Vocabulary') {
+            this.Vocab(data);
+          } else {
+            this.showVocabulary = false;
+          }
+          this.quizService.findQuizBySection(this.selectedsection.id).subscribe(data => {
+            this.selectedQuiz = data;
+          });
+          //    for (let j = 0; j < 76 ; j++)
+          //  {
+          //  this.service.image = this.service.selectedsection.urlImage;
+          this.service.image = this.selectedsection.urlImage;
+          //   this.img = this.service.image;
+          // }
+          // this.service.image += 'preview';
+          console.log(this.service.image);
+        });
+    this.quizService.section.id = this.selectedsection.id;
+    this.quizService.findQuizSection().subscribe(data => this.selectedQuiz = data);
+  }
+
+  public goToSection(libelle: string) {
+    this.service.afficheSection(libelle).subscribe(
+        data => {
+          this.selectedsection = data;
+          if (data.categorieSection.libelle === 'Vocabulary') {
+            this.Vocab(data);
+          } else {
+            this.showVocabulary = false;
+          }
+          this.quizService.findQuizBySectionId(this.selectedsection).subscribe(
+              data => {
+                this.selectedQuiz = data;
+                this.quizService.findQuizEtudiant(this.loginService.etudiant, this.selectedQuiz).subscribe(
+                    data => {
+                      this.quizEtudiantList = data;
+                      console.log(this.quizEtudiantList);
+                      this.quizService.findAllQuestions(this.selectedQuiz.ref).subscribe(
+                          dataQuestions => {
+                            if (data.questionCurrent > dataQuestions.length) {
+                              this.passerQuiz = 'View Quiz';
+                              this.quizView = true;
+                            } else {
+                              this.passerQuiz = 'Continue Quiz';
+                              this.quizView = false;
+                            }
+                          }
+                      );
+                    }, error => {
+                      this.passerQuiz = 'Take Quiz';
+                      this.quizView = false;
+                    }
+                );
+              },
+          );
+        }, error => console.log('erreeeeeeeeeeeeeeeeur'));
+  }
 }
