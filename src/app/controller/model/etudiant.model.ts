@@ -18,4 +18,7 @@ export class Etudiant extends User {
     public prof = new Prof();
     public chatMessageDto = new Array<ChatMessageDto>();
     public groupeEtudiantDetails = new  Array< GroupeEtudiantDetail>();
+
+
+
 }

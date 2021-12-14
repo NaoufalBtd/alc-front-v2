@@ -13,6 +13,7 @@ import {EtudiantCours} from '../../../../controller/model/etudiant-cours.model';
 export class ProfesseurListComponent implements OnInit {
 
     cols: any[];
+    prof: Prof = new Prof();
 
     constructor(private messageService: MessageService, private confirmationService: ConfirmationService,
                 private service: ProfessorService) {
@@ -91,7 +92,7 @@ export class ProfesseurListComponent implements OnInit {
     }
 
     public findByCriteria() {
-        return this.service.findByCriteria().subscribe(data => this.items = data);
+        return this.service.findByCriteria(this.prof).subscribe(data => this.items = data);
     }
 
     ngOnInit(): void {

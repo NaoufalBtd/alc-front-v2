@@ -13,6 +13,8 @@ export class User {
     public  numero: string;
     public  addresse: string;
     public  ville: string;
+    public  country: string = String('Morocco');
+    public  dateNaissance: string;
     public  age: number;
     public  image: string;
 }

@@ -9,6 +9,8 @@ import {HttpErrorResponse, HttpEvent, HttpEventType} from '@angular/common/http'
 import {Subscription} from 'rxjs';
 import {FileUploadStatus} from '../../../controller/model/FileUploadStatus';
 import {Role} from '../../../enum/role.enum';
+import {AdminService} from '../../../controller/service/admin.service';
+import {Admin} from '../../../controller/model/admin.model';
 
 @Component({
     selector: 'app-user-profile',
@@ -20,8 +22,8 @@ export class UserProfileComponent implements OnInit {
     userInfo: User = new User();
     userDelete: User = new User();
     newUser: User = new User();
-    public users: User[];
-    allUsers: User[];
+    public users: Admin[];
+    allUsers: Admin[];
     public refreshing: boolean;
     public selectedUser: User = new User();
     public fileName: string;
@@ -45,6 +47,7 @@ export class UserProfileComponent implements OnInit {
     constructor(private menuService: MenuService,
                 private authenticationService: AuthenticationService,
                 private userService: UserService,
+                private adminService: AdminService,
                 private primengConfig: PrimeNGConfig, public app: AppComponent) {
     }
 
@@ -52,12 +55,10 @@ export class UserProfileComponent implements OnInit {
     ngOnInit(): void {
         this.user = this.authenticationService.getUserFromLocalCache();
         this.findAll();
-        // @ts-ignore
-        this.user.parcours;
     }
 
     findAll() {
-        this.userService.getUsers().subscribe(
+        this.adminService.findAll().subscribe(
             data => {
                 this.users = data;
                 this.allUsers = data;
@@ -212,6 +213,7 @@ export class UserProfileComponent implements OnInit {
     }
 
     addNewUser() {
+        this.newUser.role = 'ADMIN';
         this.userService.addUser(this.newUser).subscribe(
             data => {
                 if (data == null) {

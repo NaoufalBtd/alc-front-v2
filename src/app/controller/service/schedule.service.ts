@@ -375,4 +375,11 @@ export class ScheduleService {
         return myClone;
     }
 
+    public deleteScheduleProfById(scheduleProf: ScheduleProf): Observable<number> {
+        console.log(scheduleProf.id);
+        return this.http.delete<number>(this.adminUrl + 'scheduleProf/id/' + scheduleProf.id);
+
+    }
+
+
 }

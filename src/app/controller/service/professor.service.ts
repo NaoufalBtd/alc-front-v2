@@ -38,8 +38,8 @@ export class ProfessorService {
         return this.http.get<Array<Paiement>>(this.adminUrl + '/prof/paiement');
     }
 
-    findByCriteria(): Observable<Array<Prof>> {
-        return this.http.post<Array<Prof>>(this.adminUrl + 'prof/search', this.selected);
+    findByCriteria(prof: Prof): Observable<Array<Prof>> {
+        return this.http.post<Array<Prof>>(this.adminUrl + 'prof/search', prof);
     }
 
     public findAll(): Observable<Array<Prof>> {

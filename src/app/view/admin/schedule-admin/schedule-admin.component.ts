@@ -40,6 +40,7 @@ export class ScheduleAdminComponent implements OnInit {
     repeatNumber: number = 1;
     endDate: Date = new Date();
     selectedDays: any;
+    deleteOption = false;
     daysOptions = [
         {name: 'Sun', value: 0},
         {name: 'Mon', value: 1},
@@ -212,6 +213,7 @@ export class ScheduleAdminComponent implements OnInit {
     }
 
     save() {
+        const fixedRef = this.scheduleProf.ref;
         const startedDate = this.scheduleProf.startTime;
         const endedDate = this.scheduleProf.endTime;
         const scheduleObj = this.scheduleObj;
@@ -232,11 +234,11 @@ export class ScheduleAdminComponent implements OnInit {
                     if (this.scheduleProf.startTime.getDay() === day) {
                         console.log(this.scheduleProf.startTime.getDay());
                         console.log(this.scheduleProf.startTime.getDate());
-                        this.scheduleProf.ref = this.scheduleProf.ref + String(this.scheduleProf.startTime.getDate());
+                        this.scheduleProf.ref = fixedRef + String(this.scheduleProf.startTime.getDay());
                         console.log(this.courses);
                         for (let i = 0; i < this.courses.length; i++) {
                             if (this.scheduleProf.cours.libelle === this.courses[i].libelle) {
-                                if (this.scheduleProf.subject === firstSubject){
+                                if (this.scheduleProf.subject === firstSubject) {
                                     firstSubject = null;
                                     break;
                                 } else {
@@ -261,6 +263,7 @@ export class ScheduleAdminComponent implements OnInit {
         }
         this.scheduleProf = new ScheduleProf();
         this.scheduleObj.eventWindow.refresh();
+        this.optionSelected = 'Never';
     }
 
     private saveSchedule(scheduleObj: any) {
@@ -351,15 +354,32 @@ export class ScheduleAdminComponent implements OnInit {
         const scheduleObj = this.scheduleObj;
         this.scheduleObj.eventSettings.dataSource = null;
         const scheduleProf = this.scheduleObj.getEventDetails(this.selectionTarget) as ScheduleProf;
-        this.scheduleService.deleteByRef(scheduleProf.ref);
-        for (let i = 0; i < this.scheduleProfs.length; i++) {
-            if (this.scheduleProfs[i].id === scheduleProf.id) {
-                this.scheduleProfs.splice(i, 1);
+        console.log(scheduleProf);
+        if (this.deleteOption === false) {
+            this.scheduleService.deleteScheduleProfById(scheduleProf).subscribe(
+                data => {
+                }, error => {
+                    console.log(error);
+                }
+            );
+            for (let i = 0; i < this.scheduleProfs.length; i++) {
+                if (this.scheduleProfs[i].id === scheduleProf.id) {
+                    this.scheduleProfs.splice(i, 1);
+                }
+            }
+        } else {
+            this.scheduleService.deleteByRef(scheduleProf.ref);
+            for (let i = 0; i < this.scheduleProfs.length; i++) {
+                if (this.scheduleProfs[i].ref === scheduleProf.ref) {
+                    this.scheduleProfs.splice(i, 1);
+                }
             }
         }
         scheduleObj.eventSettings.dataSource = this.scheduleProfs;
         console.log(scheduleObj.eventSettings.dataSource);
         this.hideDialog();
+        this.scheduleObj.eventWindow.refresh();
+        this.deleteOption = false;
     }
 
     // public onCloseClick(): void {
