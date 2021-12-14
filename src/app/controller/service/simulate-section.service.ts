@@ -40,7 +40,7 @@ export class SimulateSectionService {
   wordDict: any;
   j: number;
   private profUrl = environment.profUrl;
-  private synchronizationUrl = environment.synchronizationUrl;
+  private synchronizationUrl = 'synchronization';
   constructor(private messageService: MessageService,
               private router: Router,
               private dictionnaryService: DictionaryService,
