@@ -143,11 +143,11 @@ export class ScheduleStudentComponent implements OnInit {
         //     }
         // );
     }
-
     joinSession() {
-        this.simulateSection.findSectionOneByOne(this.parcoursService.selectedcours);
+      //  this.simulateSection.findSectionOneByOne(this.parcoursService.selectedcours);
         this.webSocketService.openWebSocket(this.etudiant);
-        this.webSocketService.findCurrentSectionForstudent(this.etudiant.prof.id);
-        this.router.navigate(['etudiant/etudiant-simulate-sections']);
+        this.webSocketService.isInSession = true;
+        this.webSocketService.findCurrentSectionForstudent(this.parcoursService.selectedcours);
+
     }
 }

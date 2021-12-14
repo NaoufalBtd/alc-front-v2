@@ -409,15 +409,6 @@ export class StudentSimulateSectionComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        // this.hasfinish = false;
-        // tslint:disable-next-line:max-line-length
-        //      this.http.get<EtudiantCours>('http://localhost:8036/etudiant/etudiantCours/prof/id/' + this.loginService.etudiant.prof.id + '/etudiant/id/' +  this.loginService.etudiant.id + '/cours/idc/' + this.).subscribe(
-        //          data => {
-        //              if (data != null) {
-        //                  this.hasfinish = false;
-        //              }
-        //          }
-        //      );
 
         this.review.findReview(this.selectedcours.id).subscribe(
             data => {
@@ -507,6 +498,11 @@ export class StudentSimulateSectionComponent implements OnInit {
             }
         ];
         this.findhomeworkbycours(this.sectionItemService.coursofsection);
+       if (this.webSocketService.isInSession){
+            this.webSocketService.findCurrentSectionForstudent(this.service.selectedcours);
+            console.log('rh 9lbt eliha mn NgOnInit');
+            console.log(this.service.selectedsection);
+        }
     }
 
     public findhomeworkbycours(cours: Cours) {

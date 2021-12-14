@@ -13,6 +13,8 @@ import {SimulateSectionService} from './simulate-section.service';
 import {AuthenticationService} from './authentication.service';
 import {ParcoursService} from "./parcours.service";
 import {Section} from "../model/section.model";
+import {Cours} from "../model/cours.model";
+import {Router} from "@angular/router";
 
 @Injectable({
     providedIn: 'root'
@@ -31,6 +33,7 @@ export class WebSocketService {
     actionType: Array<string> = new Array<string>();
     students: Etudiant[];
     idprof: number;
+    public isInSession = false ;
 
 
     constructor(private serviceetudiant: EtudiantService,
@@ -38,6 +41,8 @@ export class WebSocketService {
                 private http: HttpClient,
                 private loginservice: LoginService, public serviceprof: ProfService,
                 private simulatesectionService: SimulateSectionService,
+                private parcoursService: ParcoursService,
+                private router: Router
                 ) {
     }
 
@@ -58,12 +63,12 @@ export class WebSocketService {
             else if  (data.type === 'NEXT') {
                 console.log('hani ghandir next l student');
                 this.simulatesectionService.nextSection();
-                this.updateCurrentSection(this.loginservice.prof.id, this.simulatesectionService.selectedsection);
+
             }
            else if (data.type === 'PREVIOUS') {
                console.log('hani ghandir previous l student');
                this.simulatesectionService.PreviousSection();
-               this.updateCurrentSection(this.loginservice.prof.id, this.simulatesectionService.selectedsection);
+            //   this.updateCurrentSection(this.loginservice.prof.id, this.simulatesectionService.selectedsection);
             } else {
                 console.log(data);
                 console.log(this.connectedUsers);
@@ -170,12 +175,17 @@ export class WebSocketService {
         );
     }
 
-    public findCurrentSectionForstudent(id: number){
+    public findCurrentSectionForstudent(cours: Cours){
         this.http.get<Section>(this.profUrl + this.synchronizationUrl + '/id/' + this.loginservice.etudiant.prof.id).subscribe(
-            data => {
+            async data => {
                 if (data !== null){
+                    this.parcoursService.selectedsection = data;
                     console.log('CurrentSection found');
-                    this.simulatesectionService.selectedsection = data;
+                    console.log(this.parcoursService.selectedsection);
+                    this.simulatesectionService.findSectionOneByOne(cours);
+                    this.router.navigate(['etudiant/etudiant-simulate-sections']);
+                    this.simulatesectionService.goToSection(this.parcoursService.selectedsection.categorieSection.libelle);
+
                 }else {
                     console.log('section not found');
                 }
