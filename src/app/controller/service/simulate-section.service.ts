@@ -22,6 +22,7 @@ import {QuizEtudiant} from '../model/quiz-etudiant.model';
 import {Cours} from '../model/cours.model';
 import {HomeWork} from '../model/home-work.model';
 import {Section} from '../model/section.model';
+import {environment} from "../../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -38,6 +39,8 @@ export class SimulateSectionService {
   word: string;
   wordDict: any;
   j: number;
+  private profUrl = environment.profUrl;
+  private synchronizationUrl = environment.synchronizationUrl;
   constructor(private messageService: MessageService,
               private router: Router,
               private dictionnaryService: DictionaryService,
@@ -286,8 +289,20 @@ export class SimulateSectionService {
     });
 
   }
+    public updateCurrentSection(id: number, section: Section){
+        this.http.post<number>(this.profUrl + this.synchronizationUrl + '/update/' + id, section ).subscribe(
+            data => {
+                if (data > 0){
+                    console.log('CurrentSection updated');
+                }else {
+                    console.log('section not updated');
+                }
+            }, error => {
+                console.log('problem while updating current section');
+            }
+        );
+    }
   public nextSection(){
-
     this.service.affichelistSection().subscribe(
         data => {
           this.itemssection2 = data;
@@ -297,8 +312,11 @@ export class SimulateSectionService {
     // tslint:disable-next-line:triple-equals
     if (this.selectedsection.numeroOrder <= this.itemssection2.length) {
       this.service.afficheOneSection2().subscribe(
-          async data => {
+           data => {
             this.selectedsection = data;
+            console.log("selected section from simulate service");
+            console.log(this.selectedsection);
+            this.updateCurrentSection(this.loginService.prof.id, this.selectedsection);
             if (data.categorieSection.libelle === 'Vocabulary') {
               this.Vocab(data);
             } else {
@@ -352,6 +370,7 @@ export class SimulateSectionService {
       this.service.afficheOneSection2().subscribe(
           data => {
             this.selectedsection = data;
+            this.updateCurrentSection(this.loginService.prof.id, this.selectedsection);
             if (data.categorieSection.libelle === 'Vocabulary') {
               this.Vocab(data);
             } else {
@@ -519,9 +538,21 @@ export class SimulateSectionService {
     this.service.affichelistSection().subscribe(
         data => {
           this.itemssection2 = data;
+          this.service.sectionAdditional = [];
+          this.service.sectionStandard = [];
+          this.itemssection2 = data;
+          console.log(this.itemssection2);
+          for (let _i = 0; _i < data.length; _i++) {
+                if (data[_i].categorieSection.superCategorieSection.libelle === 'Obligatory') {
+                    this.service.sectionStandard.push(data[_i]);
+                } else if (data[_i].categorieSection.superCategorieSection.libelle === 'Additional') {
+                    this.service.sectionAdditional.push(data[_i]);
+                }
+            }
           // tslint:disable-next-line:no-shadowed-variable
         });
     this.service.image = '';
+    if (this.loginService.prof !== null){
     this.service.afficheOneSection().subscribe(
         data => {
           this.selectedsection = data;
@@ -533,15 +564,10 @@ export class SimulateSectionService {
           this.quizService.findQuizBySection(this.selectedsection.id).subscribe(data => {
             this.selectedQuiz = data;
           });
-          //    for (let j = 0; j < 76 ; j++)
-          //  {
-          //  this.service.image = this.service.selectedsection.urlImage;
-          this.service.image = this.selectedsection.urlImage;
-          //   this.img = this.service.image;
-          // }
-          // this.service.image += 'preview';
           console.log(this.service.image);
         });
+    }
+    this.service.image = this.selectedsection.urlImage;
     this.quizService.section.id = this.selectedsection.id;
     this.quizService.findQuizSection().subscribe(data => this.selectedQuiz = data);
   }
