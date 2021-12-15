@@ -7,7 +7,7 @@
 
     <ul [hidden]="user == null" class="topbar-menu">
         <li [ngClass]="{'active-topmenuitem fadeInDown': appMain.topbarUserMenuActive}"  class="user-profile">
-            <a class="ng-star-inserted" (click)="appMain.onTopbarUserMenuButtonClick($event)" *ngIf="!app.inlineUser">
+            <a class="ng-star-inserted" (click)="appMain.onTopbarUserMenuButtonClick($event); hidePopUp=false" *ngIf="!app.inlineUser">
                 <img class="img" [src]="user?.image">
                 <div class="layout-profile-userinfo">
                     <span class="layout-profile-name profile-label">{{user?.nom}} {{ user?.prenom}}</span>
@@ -17,7 +17,7 @@
                 </div>
             </a>
 
-            <ul class="fadeInDown">
+            <ul *ngIf="hidePopUp === false" class="fadeInDown">
 
                 <li class="user-profile-drop-dawn">
                     <a [routerLink]="['profile']" style="height: 52px" class="user-profile-drop-dawn-text">
@@ -30,7 +30,9 @@
                 <li class="user-profile-drop-dawn">
                     <a href="#" style="height: 52px">
                         <button icon="pi pi-fw pi-sign-out" id="button" pButton class="p-button-raised
-                                     p-button-secondary p-button-rounded" (click)="logOut()" type="button" label="Log Out">
+                                     p-button-secondary p-button-rounded"
+                                [routerLink]="['/']"
+                                (click)="logOut()" type="button" label="Log Out">
                         </button>
                     </a>
                 </li>

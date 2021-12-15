@@ -30,7 +30,7 @@ user: User = new User();
 
   menuClick: boolean;
 
-  userMenuClick: boolean;
+  public userMenuClick: boolean;
 
   notificationMenuClick: boolean;
   notificationMenuClick2: boolean;

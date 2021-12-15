@@ -22,6 +22,7 @@ export class AppTopBarComponent implements OnInit, OnDestroy {
     role: Role;
     items: MenuItem[];
     user: User = new User();
+    hidePopUp = true;
 
     constructor(public app: AppComponent, public appMain: PublicComponent,
                 private router: Router,

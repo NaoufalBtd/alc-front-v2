@@ -9,10 +9,10 @@ import {Prof} from '../../../controller/model/prof.model';
 import {Etudiant} from '../../../controller/model/etudiant.model';
 import {AuthenticationService} from '../../../controller/service/authentication.service';
 import {GroupeEtudiantService} from '../../../controller/service/groupe-etudiant-service';
-import {WebSocketService} from "../../../controller/service/web-socket.service";
-import {Router} from "@angular/router";
-import {SimulateSectionService} from "../../../controller/service/simulate-section.service";
-import {ParcoursService} from "../../../controller/service/parcours.service";
+import {WebSocketService} from '../../../controller/service/web-socket.service';
+import {Router} from '@angular/router';
+import {SimulateSectionService} from '../../../controller/service/simulate-section.service';
+import {ParcoursService} from '../../../controller/service/parcours.service';
 
 
 L10n.load({
@@ -40,7 +40,7 @@ export class ScheduleStudentComponent implements OnInit {
     // public selectedDate: Date = new Date(2021, 4, 18);
     public selectedDate: Date = new Date();
     public showWeekend = false;
-    public eventSettings: EventSettingsModel ;
+    public eventSettings: EventSettingsModel;
 
     constructor(private scheduleService: ScheduleService, private messageService: MessageService,
                 private confirmationService: ConfirmationService,
@@ -80,8 +80,7 @@ export class ScheduleStudentComponent implements OnInit {
         this.scheduleService.professors = value;
     }
 
-
-    ngOnInit() {
+    private findByGroupStudent() {
         this.scheduleProfs.splice(0, this.scheduleProfs.length);
         const scheduleObj = this.scheduleObj;
         this.etudiant = this.authenticationService.getConnectedStudent();
@@ -112,6 +111,10 @@ export class ScheduleStudentComponent implements OnInit {
             }
         );
 
+    }
+
+    ngOnInit() {
+        this.findByGroupStudent();
 
     }
 
@@ -128,23 +131,11 @@ export class ScheduleStudentComponent implements OnInit {
 
     public getData() {
         this.scheduleObj.eventSettings.dataSource = null;
-        // this.scheduleService.findByGroupStudentId(this.etudiant).subscribe(
-        //     data => {
-        //         this.scheduleProfs = data;
-        //         this.eventSettings = {
-        //             dataSource: this.scheduleProfs,
-        //             fields: {
-        //                 id: 'Id',
-        //                 subject: {name: 'subject', title: 'subject'},
-        //                 startTime: {name: 'startTime', title: 'startTime'},
-        //                 endTime: {name: 'endTime', title: 'endTime'}
-        //             }
-        //         };
-        //     }
-        // );
+        this.findByGroupStudent();
     }
+
     joinSession() {
-      //  this.simulateSection.findSectionOneByOne(this.parcoursService.selectedcours);
+        //  this.simulateSection.findSectionOneByOne(this.parcoursService.selectedcours);
         this.webSocketService.openWebSocket(this.etudiant);
         this.webSocketService.isInSession = true;
         this.webSocketService.findCurrentSectionForstudent(this.parcoursService.selectedcours);
