@@ -1,6 +1,6 @@
 
-<div class="p-grid">
-    <div class="p-col-12">
+<div  class="p-grid">
+    <div [hidden]="!scheduleDialog" class="p-col-12">
 
         <p-toast></p-toast>
 
@@ -82,6 +82,9 @@
                                     pRipple></button>
                         <button   (click)=" findAllGroupeEtudiantDetail(groupeEtudiant); openGroupeEtudiantDetail()"   class="p-button-rounded p-button-info p-mr-2" icon="pi pi-list" pButton
                                  pRipple></button>
+                            <button pButton pRipple type="button" icon="pi pi-calendar"
+                                    (click)="showScheduleDialog(groupeEtudiant)"
+                                    class="p-button-rounded p-button-secondary"></button>
 
                         </td>
 
@@ -109,5 +112,25 @@
 
         <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
     </div>
+</div>
+
+
+<!------------------------ Schedule dialog -------------------------------------------------->
+
+
+<div [hidden]="scheduleDialog" class="p-col-md-12">
+        <button pButton (click)="hideDialog()" pRipple style="float:right!important; margin: 1%  2px"
+                type="button" icon="pi pi-times"
+                class="p-button-rounded p-button-secondary "></button>
+
+
+    <ejs-schedule width='100%' height='600px' #scheduleObj  [selectedDate]="selectedDate" [readonly]="true"
+                  [eventSettings]="eventSettings ">
+        <e-views>
+            <e-view option="Week" startHour="07:00"></e-view>
+            <e-view option="WorkWeek" startHour="07:00"></e-view>
+            <e-view option="Month" [showWeekend]="showWeekend"></e-view>
+        </e-views>
+    </ejs-schedule>
 </div>
 

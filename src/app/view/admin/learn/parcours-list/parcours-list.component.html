@@ -38,11 +38,11 @@
                     </tr>
                 </ng-template>
                 <ng-template let-parcours pTemplate="body">
-                    <tr>
+                    <tr >
                         <td>
                             <p-tableCheckbox [value]="parcours"></p-tableCheckbox>
                         </td>
-                        <td>{{parcours.libelle}}</td>
+                        <td   [id]="parcours.libelle" >{{parcours.libelle}}</td>
 
 
                         <td>
