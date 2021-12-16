@@ -20,7 +20,7 @@
             <ul *ngIf="hidePopUp === false" class="fadeInDown">
 
                 <li class="user-profile-drop-dawn">
-                    <a [routerLink]="['profile']" style="height: 52px" class="user-profile-drop-dawn-text">
+                    <a [routerLink]="['profile']" style="height: 52px" (click)="appMain.onTopbarUserMenuButtonClick($event)" class="user-profile-drop-dawn-text">
                         <i class="pi pi-fw pi-user" style="margin-right:4px"></i>
                         <span>Your profile</span>
                     </a>
@@ -28,11 +28,10 @@
 
 
                 <li class="user-profile-drop-dawn">
-                    <a href="#" style="height: 52px">
+                    <a  style="height: 52px">
                         <button icon="pi pi-fw pi-sign-out" id="button" pButton class="p-button-raised
                                      p-button-secondary p-button-rounded"
-                                [routerLink]="['/']"
-                                (click)="logOut()" type="button" label="Log Out">
+                                (click)="logOut(); appMain.onTopbarUserMenuButtonClick($event)" type="button" label="Log Out">
                         </button>
                     </a>
                 </li>

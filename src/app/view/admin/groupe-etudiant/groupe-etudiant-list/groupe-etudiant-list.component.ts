@@ -7,6 +7,7 @@ import {GroupeEtudiant} from '../../../../controller/model/groupe-etudiant.model
 import {ScheduleProf} from '../../../../controller/model/calendrier-prof.model';
 import {ScheduleService} from '../../../../controller/service/schedule.service';
 import {EventSettingsModel, ScheduleComponent} from '@syncfusion/ej2-angular-schedule';
+import {GroupeEtudiantDetail} from '../../../../controller/model/groupe-etudiant-detail.model';
 
 
 @Component({
@@ -15,7 +16,8 @@ import {EventSettingsModel, ScheduleComponent} from '@syncfusion/ej2-angular-sch
     styleUrls: ['./groupe-etudiant-list.component.scss']
 })
 export class GroupeEtudiantListComponent implements OnInit {
-
+    groupStudent: GroupeEtudiant = new GroupeEtudiant();
+    groupStudentDetail: GroupeEtudiantDetail = new GroupeEtudiantDetail();
     private submitted: boolean;
     cols: any[];
     scheduleDialog = true;
@@ -30,7 +32,8 @@ export class GroupeEtudiantListComponent implements OnInit {
 
     constructor(private messageService: MessageService,
                 private scheduleService: ScheduleService,
-                private groupeEtudiantService: GroupeEtudiantService, private confirmationService: ConfirmationService) {
+                private groupeEtudiantService: GroupeEtudiantService,
+                private confirmationService: ConfirmationService) {
     }
 
     ngOnInit(): void {
@@ -209,5 +212,36 @@ export class GroupeEtudiantListComponent implements OnInit {
         scheduleObj.eventSettings.dataSource = null;
         this.scheduleObj.eventWindow.refresh();
 
+    }
+
+    findByCriteria() {
+        this.groupeEtudiants.splice(0, this.groupeEtudiants.length);
+        if (this.groupStudent.libelle !== undefined || this.groupStudent.parcours.libelle !== undefined ) {
+            this.groupeEtudiantService.searchGroupStudent(this.groupStudent).subscribe(
+                data => {
+                    this.groupeEtudiants = data;
+                }, error => {
+                    console.log(error);
+                }
+            );
+        }
+        else if (this.groupStudentDetail.etudiant.nom !== undefined || this.groupStudentDetail.etudiant.prenom !== undefined ){
+            this.groupeEtudiantService.searchGroupStudentDetail(this.groupStudentDetail).subscribe(
+                data => {
+                    for (const item of data) {
+                        this.groupeEtudiants.push(item.groupeEtudiant);
+                    }
+                }, error => {
+                    console.log(error);
+                });
+        } else{
+            this.groupeEtudiantService.findAll().subscribe(data => {
+                    this.groupeEtudiants = data;
+                    console.log(this.groupeEtudiants);
+                }
+            );
+        }
+        this.groupStudentDetail = new GroupeEtudiantDetail();
+        this.groupStudent = new GroupeEtudiant();
     }
 }
