@@ -38,7 +38,7 @@
                     <app-vocabulary-section (someEvent)="return($event)"></app-vocabulary-section>
                 </div>
             </div>
-            <div style="position: relative;margin-top: 50px">
+            <div style="position: relative;margin-top: 50px" *ngIf="!this.webSocketService.isInSession">
                 <button (click)="PreviousSection()"
                         [style.visibility]="(this.selectedsection.numeroOrder != 1)? 'visible':'hidden'"
                         class="p-button-rounded" icon="pi pi-caret-left" id="previous"
