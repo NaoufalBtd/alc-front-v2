@@ -307,8 +307,6 @@ export class SectionSimulateComponent implements OnInit {
             this.selectedsection.numeroOrder = this.itemssection2.length + 1;
             this.NextSection();
         }
-        this.goToSection('PREVIOUS', 'previous');
-
     }
 
     URLVideo() {
@@ -389,15 +387,23 @@ export class SectionSimulateComponent implements OnInit {
             this.selectedsection.numeroOrder = 0;
             this.PreviousSection();
         }
-        this.goToSection('NEXT', 'next');
     }
 
     public goToSection(type: string, message: string) {
-        const chatMessageDto = new ChatMessageDto(this.prof.nom, message, false);
-        chatMessageDto.student = this.prof.students;
-        chatMessageDto.prof = this.prof;
-        chatMessageDto.type = type;
-        this.webSocketService.sendMessage(chatMessageDto);
+        if (this.webSocketService.sessionHasStarted){
+            const chatMessageDto = new ChatMessageDto(this.prof.nom, message, false);
+            chatMessageDto.student = this.prof.students;
+            chatMessageDto.prof = this.prof;
+            chatMessageDto.type = type;
+            this.webSocketService.sendMessage(chatMessageDto);
+        }
+        else {
+            if (type === 'NEXT'){
+                this.NextSection();
+            } else if (type === 'PREVIOUS'){
+                this.PreviousSection();
+            }
+        }
     }
 
     get showVocabulary(): boolean {

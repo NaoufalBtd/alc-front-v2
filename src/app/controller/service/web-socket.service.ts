@@ -34,6 +34,7 @@ export class WebSocketService {
     students: Etudiant[];
     idprof: number;
     public isInSession = false ;
+    public sessionHasStarted = false;
 
 
     constructor(private serviceetudiant: EtudiantService,

@@ -55,6 +55,7 @@ export class ScheduleLocalComponent implements OnInit {
     public selectedDate: Date = new Date();
     public showWeekend = true;
     public groupeEtudiantDetails  = new Array<GroupeEtudiantDetail>();
+    public sessionHasStarted = false;
     public eventSettings: EventSettingsModel = {
         dataSource: this.scheduleProfs,
         fields: {
@@ -326,6 +327,7 @@ export class ScheduleLocalComponent implements OnInit {
 
     startSession() {
         console.log(this.data.groupeEtudiant.id);
+        this.webSocketService.sessionHasStarted = true;
         this.findAllGroupeEtudiantDetail(this.data.groupeEtudiant.id);
         console.log(this.data.cours);
         this.simulateSectionService.findSectionOneByOne(this.data.cours);
