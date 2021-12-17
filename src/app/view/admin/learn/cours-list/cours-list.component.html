@@ -40,8 +40,8 @@
                         <th>Actions</th>
                     </tr>
                 </ng-template>
-                <ng-template let-cours pTemplate="body">
-                    <tr>
+                <ng-template let-cours pTemplate="body" >
+                    <tr [id]="cours.libelle">
                         <td>
                             <p-tableCheckbox [value]="cours"></p-tableCheckbox>
                         </td>

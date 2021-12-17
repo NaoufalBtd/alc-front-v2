@@ -26,51 +26,51 @@
 
             <div class="p-col-4">
             <span class="p-float-label">
-                 <input id="float-input" type="text" pInputText [(ngModel)]="user.prenom"><label for="float-input">First name</label>
+                 <input  type="text" pInputText [(ngModel)]="user.prenom"><label >First name</label>
             </span>
             </div>
 
             <div class="p-col-4">
             <span class="p-float-label">
-                 <input id="float-input" type="text" pInputText [(ngModel)]="user.nom"><label for="float-input">Last name</label>
-            </span>
-            </div>
-
-
-            <div class="p-col-4">
-            <span class="p-float-label">
-                 <input id="float-input" disabled type="text" pInputText [(ngModel)]="user.username"><label
-                    for="float-input">Username</label>
+                 <input  type="text" pInputText [(ngModel)]="user.nom"><label >Last name</label>
             </span>
             </div>
 
 
             <div class="p-col-4">
             <span class="p-float-label">
-                 <input id="float-input" type="number" pInputText [(ngModel)]="user.age"><label
-                    for="float-input">Age</label>
+                 <input  disabled type="text" pInputText [(ngModel)]="user.username"><label
+                    >Username</label>
             </span>
             </div>
 
 
             <div class="p-col-4">
             <span class="p-float-label">
-                 <input id="float-input" type="text" pInputText [(ngModel)]="user.addresse"><label for="float-input">Address</label>
+                 <input  type="number" pInputText [(ngModel)]="user.age"><label
+                    >Age</label>
             </span>
             </div>
 
 
             <div class="p-col-4">
             <span class="p-float-label">
-                 <input id="float-input" type="text" pInputText [(ngModel)]="user.numero"><label
-                    for="float-input">Phone</label>
+                 <input  type="text" pInputText [(ngModel)]="user.addresse"><label >Address</label>
+            </span>
+            </div>
+
+
+            <div class="p-col-4">
+            <span class="p-float-label">
+                 <input  type="text" pInputText [(ngModel)]="user.numero"><label
+                    >Phone</label>
             </span>
             </div>
 
             <div class="p-col-4">
             <span class="p-float-label">
-                 <input id="float-input" type="text" pInputText [(ngModel)]="user.ville"><label
-                    for="float-input">City</label>
+                 <input  type="text" pInputText [(ngModel)]="user.ville"><label
+                    >City</label>
             </span>
             </div>
 
@@ -90,6 +90,11 @@
 
 </div>
 
+
+
+
+<!-----------------------------------------------------List of users-------------------------------------------------------->
+
 <div class="p-grid p-shadow-5">
 
     <div class="p-col-6">
@@ -103,14 +108,14 @@
 
 
     <div class="p-col-6" style="text-align: right">
-        <button pButton pRipple label="New user" type="button" icon="pi pi-user-plus" (click)="showAddUserDialog()"
+        <button pButton pRipple label="New Admin" type="button" icon="pi pi-user-plus" (click)="showAddUserDialog()"
                 class="p-button-rounded  p-button-success"></button>
     </div>
 
     <div class="p-col-12">
 
         <div class="card">
-            <h5>Users</h5>
+            <h5>Admins</h5>
             <div class="p-mb-3">
                 <p-button type="button" icon="pi pi-chevron-left" (click)="prev()" [disabled]="isFirstPage()"
                           styleClass="p-button-text"></p-button>
@@ -160,7 +165,7 @@
 
 <p-dialog id="delete-dialog" [(visible)]="deleteDialog"  [style]="{width: '40vw'}"
           [draggable]="false" [resizable]="false">
-    <h4>Are you sure you want to delete this user!</h4>
+    <h4>Are you sure you want to delete this admin!</h4>
     <ng-template pTemplate="footer">
         <p-button (click)="deleteDialog=false" label="No" styleClass="p-button-text"></p-button>
         <p-button (click)="deleteDialog=false; deleteUser()" label="Yes" styleClass="p-button-text"></p-button>
@@ -171,58 +176,58 @@
 <!------------------------ edit User Dialog -------------------------------------------------->
 
 
-<p-dialog header="User information" [(visible)]="editDialog" [style]="{width: '70vw'}">
+<p-dialog header="Admin information" [(visible)]="editDialog" [style]="{width: '70vw'}">
 
     <div class="p-grid">
 
         <div class="p-col-4">
             <span class="p-float-label">
-                 <input id="float-input" type="text" pInputText [(ngModel)]="userInfo.prenom"><label for="float-input">First name</label>
+                 <input  type="text" pInputText [(ngModel)]="userInfo.prenom"><label >First name</label>
             </span>
         </div>
 
         <div class="p-col-4">
             <span class="p-float-label">
-                 <input id="float-input" type="text" pInputText [(ngModel)]="userInfo.nom"><label for="float-input">Last name</label>
-            </span>
-        </div>
-
-
-        <div class="p-col-4">
-            <span class="p-float-label">
-                 <input id="float-input" disabled type="text" pInputText [(ngModel)]="userInfo.username"><label
-                    for="float-input">Username</label>
+                 <input  type="text" pInputText [(ngModel)]="userInfo.nom"><label >Last name</label>
             </span>
         </div>
 
 
         <div class="p-col-4">
             <span class="p-float-label">
-                 <input id="float-input" type="number" pInputText [(ngModel)]="userInfo.age"><label
-                    for="float-input">Age</label>
+                 <input  disabled type="text" pInputText [(ngModel)]="userInfo.username"><label
+                    >Username</label>
             </span>
         </div>
 
 
         <div class="p-col-4">
             <span class="p-float-label">
-                 <input id="float-input" type="text" pInputText [(ngModel)]="userInfo.addresse"><label
-                    for="float-input">Address</label>
+                 <input  type="number" pInputText [(ngModel)]="userInfo.age"><label
+                    >Age</label>
             </span>
         </div>
 
 
         <div class="p-col-4">
             <span class="p-float-label">
-                 <input id="float-input" type="text" pInputText [(ngModel)]="userInfo.numero"><label
-                    for="float-input">Phone</label>
+                 <input  type="text" pInputText [(ngModel)]="userInfo.addresse"><label
+                    >Address</label>
+            </span>
+        </div>
+
+
+        <div class="p-col-4">
+            <span class="p-float-label">
+                 <input  type="text" pInputText [(ngModel)]="userInfo.numero"><label
+                    >Phone</label>
             </span>
         </div>
 
         <div class="p-col-4">
             <span class="p-float-label">
-                 <input id="float-input" type="text" pInputText [(ngModel)]="userInfo.ville"><label
-                    for="float-input">City</label>
+                 <input  type="text" pInputText [(ngModel)]="userInfo.ville"><label
+                    >City</label>
             </span>
         </div>
 
@@ -249,69 +254,61 @@
 <!------------------------ New User Dialog -------------------------------------------------->
 
 
-<p-dialog header="User information" [(visible)]="newUserDialog"
+<p-dialog header="Admin information" [(visible)]="newUserDialog"
           [style]="{width: '70vw'}">
     <div content class=" p-dialog-content">
         <div class="p-grid">
 
             <div class="p-col-4">
             <span class="p-float-label">
-                 <input id="float-input" type="text" pInputText [(ngModel)]="newUser.prenom"><label for="float-input">First name</label>
+                 <input  type="text" pInputText [(ngModel)]="newUser.prenom"><label >First name</label>
             </span>
             </div>
 
             <div class="p-col-4">
             <span class="p-float-label">
-                 <input id="float-input" type="text" pInputText [(ngModel)]="newUser.nom"><label for="float-input">Last name</label>
+                 <input  type="text" pInputText [(ngModel)]="newUser.nom"><label >Last name</label>
             </span>
             </div>
 
 
             <div class="p-col-4">
             <span  class="p-float-label">
-                 <input required id="float-input" type="text" pInputText [(ngModel)]="newUser.username"><label
-                    for="float-input">Username</label>
+                 <input required  type="text" pInputText [(ngModel)]="newUser.username"><label
+                    >Username</label>
             </span>
             </div>
 
 
             <div class="p-col-4">
             <span class="p-float-label">
-                 <input id="float-input" type="number" pInputText [(ngModel)]="newUser.age"><label
-                    for="float-input">Age</label>
+                 <input  type="number" pInputText [(ngModel)]="newUser.age"><label
+                    >Age</label>
             </span>
             </div>
 
 
             <div class="p-col-4">
             <span class="p-float-label">
-                 <input id="float-input" type="text" pInputText [(ngModel)]="newUser.addresse"><label for="float-input">Address</label>
+                 <input  type="text" pInputText [(ngModel)]="newUser.addresse"><label >Address</label>
             </span>
             </div>
 
 
             <div class="p-col-4">
             <span class="p-float-label">
-                 <input id="float-input" type="text" pInputText [(ngModel)]="newUser.numero"><label
-                    for="float-input">Phone</label>
+                 <input  type="text" pInputText [(ngModel)]="newUser.numero"><label
+                    >Phone</label>
             </span>
             </div>
 
             <div class="p-col-4">
             <span class="p-float-label">
-                 <input id="float-input" type="text" pInputText [(ngModel)]="newUser.ville"><label
-                    for="float-input">City</label>
+                 <input  type="text" pInputText [(ngModel)]="newUser.ville"><label
+                    >City</label>
             </span>
             </div>
 
-            <div class="p-col-4">
-                <select required name="role" id="" [(ngModel)]="newUser.role" placeholder="role" >
-                    <option selected value="Role">Select a role</option>
-                    <option value="ADMIN">ADMIN</option>
-                    <option value="TEACHER">TEACHER</option>
-                    <option value="STUDENT">STUDENT</option>
-                </select>
-            </div>
 
             <div class="p-col-4">
 

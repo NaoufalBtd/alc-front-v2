@@ -74,16 +74,9 @@ export class EtudiantService {
         return this.http.get<Array<Etudiant>>(this.adminUrl + 'etudiant/prof/id/' + id);
     }
 
-    findByCriteria() {
-        console.log(this.etudiantVo);
-        this.http.post<Array<Etudiant>>(this.adminUrl + 'etudiant/search', this.etudiantVo).subscribe(
-            data => {
-                console.log(data);
-                this.items = data;
-            }, error => {
-                console.log('la fonction ne fonctionne pas');
-            }
-        );
+    findByCriteria(std: Etudiant): Observable<Array<Etudiant>> {
+        console.log(std);
+        return this.http.post<Array<Etudiant>>(this.adminUrl + 'etudiant/search-all/', std);
     }
 
     public findAll(): Observable<Array<Etudiant>> {
@@ -94,8 +87,10 @@ export class EtudiantService {
         return this.http.post<number>(this.adminUrl + 'delete-multiple-by-id', this.selectes);
     }
 
-    public deleteByNom(): Observable<number> {
-        return this.http.delete<number>(this.adminUrl + 'etudiant/id/' + this.selected.id);
+
+    public deleteById(id: number): Observable<number> {
+        console.log(id);
+        return this.http.delete<number>(this.adminUrl + 'etudiant/id/' + id);
     }
 
     public deleteMultipleIndexById() {

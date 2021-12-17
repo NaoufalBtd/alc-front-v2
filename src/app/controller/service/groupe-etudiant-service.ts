@@ -19,6 +19,7 @@ export class GroupeEtudiantService {
   }
   private urlBase = environment.baseApi  ;
   private urlStudent = environment.etudiantUrl;
+  private urlAdmin = environment.adminUrl;
   private urlParcours = '/admin/parcours/';
   private urlGroupeEtude = '/admin/groupeEtude/';
   private urlGroupeEtudiant = '/admin/groupeEtudiant/';
@@ -276,7 +277,14 @@ public addEtudiant(){
 
   public  findGroupeEtudiantDetailByEtudiantId(id: number): Observable<Array<GroupeEtudiantDetail>> {
     return this.http.get<Array<GroupeEtudiantDetail>>(this.urlStudent  + 'groupeEtudiantDetail/etudiant/id/' + id);
+  }
 
+  public searchGroupStudent(groupStudent: GroupeEtudiant): Observable<Array<GroupeEtudiant>>{
+    return this.http.post<Array<GroupeEtudiant>>(this.urlAdmin + 'groupeEtudiant/search/', groupStudent);
+  }
+
+  public searchGroupStudentDetail(groupStudentDetail: GroupeEtudiantDetail): Observable<Array<GroupeEtudiantDetail>>{
+    return this.http.post<Array<GroupeEtudiantDetail>>(this.urlAdmin + 'groupeEtudiantDetail/search/', groupStudentDetail);
   }
 
 }

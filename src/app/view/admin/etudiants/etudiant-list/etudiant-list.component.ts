@@ -1,8 +1,15 @@
 import {Component, OnInit} from '@angular/core';
-import {ConfirmationService, MessageService} from 'primeng/api';
+import {ConfirmationService, MessageService, PrimeNGConfig} from 'primeng/api';
 import {EtudiantService} from '../../../../controller/service/etudiant.service';
 import {Etudiant} from '../../../../controller/model/etudiant.model';
 import {EtudiantVo} from '../../../../controller/model/etudiant-vo.model';
+import {MenuService} from '../../../shared/slide-bar/app.menu.service';
+import {AuthenticationService} from '../../../../controller/service/authentication.service';
+import {UserService} from '../../../../controller/service/user.service';
+import {AppComponent} from '../../../../app.component';
+import {User} from '../../../../controller/model/user.model';
+import {FileUploadStatus} from '../../../../controller/model/FileUploadStatus';
+import {Subscription} from 'rxjs';
 
 
 @Component({
@@ -11,150 +18,175 @@ import {EtudiantVo} from '../../../../controller/model/etudiant-vo.model';
     styleUrls: ['./etudiant-list.component.scss']
 })
 export class EtudiantListComponent implements OnInit {
-    cols: any[];
+    user: User = new User();
+    userInfo: User = new User();
+    userDelete: User = new User();
+    public users: Etudiant[];
+    first = 0;
+    rows = 10;
+    deleteDialog: boolean;
+    private subscriptions: Subscription[] = [];
+    public editUser = new User();
+    editDialog: boolean;
+    newUserDialog: boolean;
+    public index: number;
+    public etudiant: Etudiant = new Etudiant();
 
-    constructor(private messageService: MessageService, private confirmationService: ConfirmationService,
-                private service: EtudiantService) {
+
+    constructor(private menuService: MenuService,
+                private authenticationService: AuthenticationService,
+                private userService: UserService,
+                private studentService: EtudiantService,
+                private primengConfig: PrimeNGConfig, public app: AppComponent) {
     }
 
-    get selected(): Etudiant {
-        return this.service.selected;
+
+    public searchUsers(): void {
+        console.log(this.etudiant);
+        this.studentService.findByCriteria(this.etudiant).subscribe(
+            data => {
+                this.users.splice(0, this.users.length);
+                this.users = data;
+            }, error => {
+                console.log(error);
+            }
+        );
+        // const results: Etudiant[] = [];
+        // for (const user of this.users) {
+        //     if (
+        //         user.nom.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1 ||
+        //         user.prenom.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1 ||
+        //         user?.prof?.nom.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1 ||
+        //         user?.parcours?.libelle.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1 ||
+        //         user?.parcours?.code.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1 ||
+        //         user?.prof?.prenom.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1 ||
+        //         user.username.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1) {
+        //         results.push(user);
+        //     }
+        // }
+        // if (results.length === 0 || !searchTerm) {
+        //     this.findAll();
+        // } else {
+        //     this.users.splice(0, this.users.length);
+        //     for (const item of results) {
+        //         this.users.push(item);
+        //     }
+        // }
     }
 
-    set selected(value: Etudiant) {
-        this.service.selected = value;
-    }
-
-    get items(): Array<Etudiant> {
-        return this.service.items;
-    }
-
-    set items(value: Array<Etudiant>) {
-        this.service.items = value;
-    }
-
-    get submitted(): boolean {
-        return this.service.submitted;
-    }
-
-    set submitted(value: boolean) {
-        this.service.submitted = value;
-    }
-
-    get createDialogEtud(): boolean {
-        return this.service.createDialog;
-    }
-
-    set createDialogEtud(value: boolean) {
-        this.service.createDialog = value;
-    }
-
-    get editDialog(): boolean {
-        return this.service.editDialog;
-    }
-
-    set editDialog(value: boolean) {
-        this.service.editDialog = value;
-    }
-
-    get viewDialog(): boolean {
-        return this.service.viewDialog;
-    }
-
-    set viewDialog(value: boolean) {
-        this.service.viewDialog = value;
-    }
-
-    get selectes(): Array<Etudiant> {
-        return this.service.selectes;
-    }
-
-    set selectes(value: Array<Etudiant>) {
-        this.service.selectes = value;
-    }
-
-    get etudiantVo(): EtudiantVo {
-        return this.service.etudiantVo;
-    }
-
-    set etudiantVo(value: EtudiantVo) {
-        this.service.etudiantVo = value;
+    findAll() {
+        this.studentService.findAll().subscribe(
+            data => {
+                this.users = data;
+            }, error => {
+                console.log(error);
+            }
+        );
     }
 
     ngOnInit(): void {
-        this.initCol();
-        this.service.findAll().subscribe(data => this.items = data);
+        this.findAll();
     }
 
-    public delete(selected: Etudiant) {
-        this.selected = selected;
-        this.confirmationService.confirm({
-            message: 'Are you sure you want to delete ' + selected.nom + '?',
-            header: 'Confirm',
-            icon: 'pi pi-exclamation-triangle',
-            accept: () => {
-                this.service.deleteByNom().subscribe(data => {
-                    this.items = this.items.filter(val => val.id !== this.selected.id);
-                    this.selected = new Etudiant();
-                    this.messageService.add({
-                        severity: 'success',
-                        summary: 'Successful',
-                        detail: 'Etudiant Deleted',
-                        life: 3000
-                    });
-                });
-            }
-        });
+
+    next() {
+        this.first = this.first + this.rows;
     }
 
-    public deleteMultiple() {
-        this.confirmationService.confirm({
-            message: 'Are you sure you want to delete the selected quizs?',
-            header: 'Confirm',
-            icon: 'pi pi-exclamation-triangle',
-            accept: () => {
-                this.service.deleteMultipleByNom().subscribe(data => {
-                    this.service.deleteMultipleIndexById();
-                    this.selectes = null;
-                    this.messageService.add({
-                        severity: 'success',
-                        summary: 'Successful',
-                        detail: 'Etudiants Deleted',
-                        life: 3000
-                    });
-                });
-            }
-        });
+    prev() {
+        this.first = this.first - this.rows;
     }
 
-    public openCreateEtud() {
-        this.selected = new Etudiant();
-        this.submitted = false;
-        this.createDialogEtud = true;
+    reset() {
+        this.first = 0;
     }
 
-    public edit(etudiant: Etudiant) {
-        this.selected = {...etudiant};
+    isLastPage(): boolean {
+        return this.users ? this.first === (this.users.length - this.rows) : true;
+    }
+
+    isFirstPage(): boolean {
+        return this.users ? this.first === 0 : true;
+    }
+
+    showDeleteDialog(user: User, index: number) {
+        this.userDelete = user;
+        this.index = index;
+        console.log(this.index);
+        this.deleteDialog = true;
+    }
+
+    showEditDialog(user: User) {
         this.editDialog = true;
+        this.userInfo = user;
     }
 
-    public view(etudiant: Etudiant) {
-        this.selected = {...etudiant};
-        this.viewDialog = true;
+    // addNewUser() {
+    //     this.newUser.role = 'STUDENT';
+    //     this.userService.addUser(this.newUser).subscribe(
+    //         data => {
+    //             if (data == null) {
+    //                 alert('error to save user');
+    //             } else {
+    //                 const student: Etudiant = new Etudiant(data);
+    //                 console.log(student);
+    //                 this.users.push({...student});
+    //                 console.log(data);
+    //             }
+    //         }, error => {
+    //             console.log(error);
+    //         }
+    //     );
+    //     this.newUser = new User();
+    // }
+
+    deleteUser() {
+        console.log(this.userDelete);
+        this.studentService.deleteById(this.userDelete.id).subscribe(
+            data => {
+                console.log(data);
+            }, error => {
+                console.log(error);
+            }
+        );
+        for (let i = 0; i < this.users.length; i++) {
+            if (this.users[i].id === this.userDelete.id) {
+                this.users.splice(i, 1);
+            }
+        }
+        this.userDelete = new User();
     }
 
-    public findByCriteria() {
-        return this.service.findByCriteria();
+    showAddUserDialog() {
+        this.newUserDialog = true;
     }
 
-    private initCol() {
-        this.cols = [
-            {field: 'id', header: 'Id'},
-            {field: 'reference', header: 'Reference'},
-            {field: 'total', header: 'Total'},
-            {field: 'totalPaye', header: 'Total Paye'}
-        ];
+
+    public updateUser(user: User) {
+        this.subscriptions.push(
+            this.userService.updateUser(user).subscribe(
+                data => {
+                    this.user = data;
+                    this.authenticationService.addUserToLocalCache(this.user);
+                    console.log(data);
+                }, err => {
+                    console.log(err);
+                }
+            )
+        );
     }
 
-// search
+    public updateOtherUser(user: User) {
+        this.subscriptions.push(
+            this.userService.updateUser(user).subscribe(
+                data => {
+                    console.log(data);
+                }, err => {
+                    console.log(err);
+                }
+            )
+        );
+    }
+
+
 }

@@ -14,7 +14,7 @@ import {Quiz} from '../../../../controller/model/quiz.model';
 })
 export class CoursListComponent implements OnInit {
     cols: any[];
-
+    couchedTd = null;
     // tslint:disable-next-line:max-line-length
     constructor(private quizService: QuizEtudiantService, private messageService: MessageService, private confirmationService: ConfirmationService, private service: ParcoursService) {
     }
@@ -107,6 +107,13 @@ export class CoursListComponent implements OnInit {
     }
 
     public FindSection(cour: Cours) {
+        if (this.couchedTd === null){
+            document.getElementById(cour.libelle).className = 'couchedTd';
+        } else {
+            document.getElementById(this.couchedTd).className = ' ';
+            document.getElementById(cour.libelle).className = 'couchedTd';
+        }
+        this.couchedTd = cour.libelle;
         this.selectedcours = cour;
         this.service.affichelistSection().subscribe(
             data => {

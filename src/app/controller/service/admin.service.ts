@@ -68,4 +68,8 @@ export class AdminService {
         return this.http.post<number>(this.adminUrl + 'admin/', this.selected);
     }
 
+    public findAll(): Observable<Array<Admin>>{
+        return this.http.get<Array<Admin>>(this.adminUrl + 'admin/');
+    }
+
 }

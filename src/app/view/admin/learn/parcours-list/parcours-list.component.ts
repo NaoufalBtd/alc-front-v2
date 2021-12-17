@@ -15,7 +15,7 @@ import {Parcours} from '../../../../controller/model/parcours.model';
 })
 export class ParcoursListComponent implements OnInit {
     cols: any[];
-
+    couchedTd = null;
     // tslint:disable-next-line:max-line-length
     constructor(private messageService: MessageService, private confirmationService: ConfirmationService, private service: ParcoursService) {
     }
@@ -103,6 +103,7 @@ export class ParcoursListComponent implements OnInit {
     }
 
     // tslint:disable-next-line:adjacent-overload-signatures
+
     set itemscours(value: Array<Cours>) {
         this.service.itemscours = value;
     }
@@ -164,6 +165,14 @@ export class ParcoursListComponent implements OnInit {
     }
 
     public FindCours(parcour: Parcours) {
+        if (this.couchedTd === null){
+            document.getElementById(parcour.libelle).className = 'couchedTd';
+        } else {
+            document.getElementById(this.couchedTd).className = ' ';
+            document.getElementById(parcour.libelle).className = 'couchedTd';
+        }
+        this.couchedTd = parcour.libelle;
+
         this.selectedparcours = parcour;
         this.service.afficheCours().subscribe(
             data => {

@@ -1,8 +1,12 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {ProfessorService} from '../../../../controller/service/professor.service';
 import {ConfirmationService, MessageService} from 'primeng/api';
 import {Prof} from '../../../../controller/model/prof.model';
 import {EtudiantCours} from '../../../../controller/model/etudiant-cours.model';
+import {GroupeEtudiant} from '../../../../controller/model/groupe-etudiant.model';
+import {ScheduleProf} from '../../../../controller/model/calendrier-prof.model';
+import {EventSettingsModel, ScheduleComponent} from '@syncfusion/ej2-angular-schedule';
+import {ScheduleService} from '../../../../controller/service/schedule.service';
 
 
 @Component({
@@ -13,8 +17,20 @@ import {EtudiantCours} from '../../../../controller/model/etudiant-cours.model';
 export class ProfesseurListComponent implements OnInit {
 
     cols: any[];
+    prof: Prof = new Prof();
+    scheduleDialog = true;
+    @ViewChild('scheduleObj')
+    public scheduleObj: ScheduleComponent;
+    display = false;
+    private selectionTarget: Element;
+    // public selectedDate: Date = new Date(2021, 4, 18);
+    public selectedDate: Date = new Date();
+    public showWeekend = false;
+    public eventSettings: EventSettingsModel;
 
-    constructor(private messageService: MessageService, private confirmationService: ConfirmationService,
+    constructor(private messageService: MessageService,
+                private scheduleService: ScheduleService,
+                private confirmationService: ConfirmationService,
                 private service: ProfessorService) {
     }
 
@@ -91,7 +107,7 @@ export class ProfesseurListComponent implements OnInit {
     }
 
     public findByCriteria() {
-        return this.service.findByCriteria().subscribe(data => this.items = data);
+        return this.service.findByCriteria(this.prof).subscribe(data => this.items = data);
     }
 
     ngOnInit(): void {
@@ -187,6 +203,51 @@ export class ProfesseurListComponent implements OnInit {
             {field: 'email', header: 'email'}
 
         ];
+    }
+
+    showScheduleDialog(prof: Prof) {
+        this.scheduleProfs.splice(0, this.scheduleProfs.length);
+        this.scheduleDialog = false;
+        this.scheduleProfs.splice(0, this.scheduleProfs.length);
+        const scheduleObj = this.scheduleObj;
+        scheduleObj.eventSettings.dataSource = null;
+        console.log(prof);
+        this.scheduleService.findByProf(prof).subscribe(
+            scheduleData => {
+                console.log(this.scheduleProfs);
+                for (const item1 of scheduleData) {
+                    this.scheduleProfs.push({...item1});
+                    this.eventSettings = {
+                        dataSource: this.scheduleProfs,
+                        fields: {
+                            id: 'Id',
+                            subject: {name: 'subject', title: 'subject'},
+                            startTime: {name: 'startTime', title: 'startTime'},
+                            endTime: {name: 'endTime', title: 'endTime'}
+                        }
+                    };
+                }
+                console.log(this.scheduleProfs);
+            }
+        );
+        this.scheduleObj.eventWindow.refresh();
+    }
+
+    get scheduleProfs(): Array<ScheduleProf> {
+        return this.scheduleService.scheduleProfs;
+    }
+
+
+    set scheduleProfs(value: Array<ScheduleProf>) {
+        this.scheduleService.scheduleProfs = value;
+    }
+
+    hideDialog() {
+        this.scheduleDialog = true;
+        const scheduleObj = this.scheduleObj;
+        scheduleObj.eventSettings.dataSource = null;
+        this.scheduleObj.eventWindow.refresh();
+
     }
 
 }

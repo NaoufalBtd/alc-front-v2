@@ -25,7 +25,7 @@ export class WebSocketService {
     private socketUrl = environment.socketUrl;
     private baseUrl = environment.baseUrl;
     private profUrl = environment.profUrl;
-    private synchronizationUrl = environment.synchronizationUrl;
+    private synchronizationUrl = 'synchronization';
     index = 0;
     webSocket: WebSocket ;
     chatMessages: ChatMessageDto[] = [];

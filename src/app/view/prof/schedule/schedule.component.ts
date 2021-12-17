@@ -19,11 +19,11 @@ import {
     PopupOpenEventArgs
 } from '@syncfusion/ej2-angular-schedule';
 import {Prof} from '../../../controller/model/prof.model';
-import {GroupeEtudiantService} from "../../../controller/service/groupe-etudiant-service";
-import {GroupeEtudiantDetail} from "../../../controller/model/groupe-etudiant-detail.model";
-import {WebSocketService} from "../../../controller/service/web-socket.service";
-import {Router} from "@angular/router";
-import {SimulateSectionService} from "../../../controller/service/simulate-section.service";
+import {GroupeEtudiantService} from '../../../controller/service/groupe-etudiant-service';
+import {GroupeEtudiantDetail} from '../../../controller/model/groupe-etudiant-detail.model';
+import {WebSocketService} from '../../../controller/service/web-socket.service';
+import {Router} from '@angular/router';
+import {SimulateSectionService} from '../../../controller/service/simulate-section.service';
 
 L10n.load({
     'en-US': {

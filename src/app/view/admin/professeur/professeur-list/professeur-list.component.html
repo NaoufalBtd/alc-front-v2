@@ -1,5 +1,5 @@
 <div class="p-grid">
-    <div class="p-col-12">
+    <div class="p-col-12" [hidden]="!scheduleDialog">
 
         <p-toast></p-toast>
 
@@ -30,14 +30,16 @@
                     <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
                         <div class="p-col"><h5 class="p-m-0">Manage Professors</h5><br>
                             <span>
-                        <input [(ngModel)]="selected.nom  " pInputText placeholder="Search by LastName" style="margin-right: 10px;width: 200px"
+                        <input [(ngModel)]="prof.nom  " pInputText placeholder="Search by LastName" style="margin-right: 10px;width: 200px"
                                type="text"/>
-                        <input [(ngModel)]="selected.prenom  " pInputText placeholder="Search by FirstName" style="margin-right: 10px;width: 200px"
+                        <input [(ngModel)]="prof.prenom  " pInputText placeholder="Search by FirstName" style="margin-right: 10px;width: 200px"
                                type="text"/>
-                        <input [(ngModel)]="selected.username  " pInputText placeholder="Search by UserName" style="margin-right: 10px;width: 200px"
+                        <input [(ngModel)]="prof.username  " pInputText placeholder="Search by UserName" style="margin-right: 10px;width: 200px"
                                type="text"/>
 
-             <i (click)="findByCriteria()" class="pi pi-search"></i>
+              <button pButton pRipple type="button" icon="pi pi-search" (click)="findByCriteria()"
+                      style="margin-left: 25px"
+                      class="p-button-rounded p-button-success"></button>
 
                         </span></div>
                     </div>
@@ -47,14 +49,8 @@
                         <th style="width: 3rem">
                             <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                         </th>
-                        <th pSortableColumn="firstName">First Name
+                        <th pSortableColumn="firstName"> Name
                             <p-sortIcon field="firstName"></p-sortIcon>
-                        </th>
-                        <th pSortableColumn="lastName">Last Name
-                            <p-sortIcon field="lastName"></p-sortIcon>
-                        </th>
-                        <th pSortableColumn="login">UserName
-                            <p-sortIcon field="login"></p-sortIcon>
                         </th>
                         <th pSortableColumn="phoneNumber">Phone Number
                             <p-sortIcon field="phoneNumber"></p-sortIcon>
@@ -62,8 +58,8 @@
                         <th pSortableColumn="email">Email
                             <p-sortIcon field="email"></p-sortIcon>
                         </th>
-                        <th pSortableColumn="address">Address
-                            <p-sortIcon field="address"></p-sortIcon>
+                        <th pSortableColumn="City">City
+                            <p-sortIcon field="City"></p-sortIcon>
                         </th>
 
                         <th></th>
@@ -74,12 +70,10 @@
                         <td>
                             <p-tableCheckbox [value]="professor"></p-tableCheckbox>
                         </td>
-                        <td>{{professor.prenom}}</td>
-                        <td>{{professor.nom}}</td>
-                        <td>{{professor.login}}</td>
-                        <td>{{professor.numero}}</td>
-                        <td>{{professor.email}}</td>
-                        <td>{{professor.addresse}}</td>
+                        <td>{{professor?.prenom}} {{ professor?.nom}}</td>
+                        <td>{{professor?.numero}}</td>
+                        <td>{{professor?.username}}</td>
+                        <td>{{professor?.ville}}</td>
 
                         <td>
                             <button (click)="edit(professor)" class="p-button-rounded p-button-success p-mr-2" icon="pi pi-pencil" pButton
@@ -90,6 +84,9 @@
                                     pRipple></button>
                             <button (click)="viewSession(professor)" class="p-button-rounded p-button-sm p-mr-2" icon="pi pi-book" pButton
                                     pRipple></button>
+                            <button pButton pRipple type="button" icon="pi pi-calendar"
+                                    (click)="showScheduleDialog(professor)"
+                                    class="p-button-rounded p-button-secondary"></button>
                         </td>
                     </tr>
                 </ng-template>
@@ -106,4 +103,23 @@
         <app-professeur-view></app-professeur-view>
         <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
     </div>
+</div>
+
+<!------------------------ Schedule dialog -------------------------------------------------->
+
+
+<div [hidden]="scheduleDialog" class="p-col-md-12">
+    <button pButton (click)="hideDialog()" pRipple style="float:right!important; margin: 1%  2px"
+            type="button" icon="pi pi-times"
+            class="p-button-rounded p-button-secondary "></button>
+
+
+    <ejs-schedule width='100%' height='600px' #scheduleObj  [selectedDate]="selectedDate" [readonly]="true"
+                  [eventSettings]="eventSettings ">
+        <e-views>
+            <e-view option="Week" startHour="07:00"></e-view>
+            <e-view option="WorkWeek" startHour="07:00"></e-view>
+            <e-view option="Month" [showWeekend]="showWeekend"></e-view>
+        </e-views>
+    </ejs-schedule>
 </div>

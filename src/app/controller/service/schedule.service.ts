@@ -267,7 +267,7 @@ export class ScheduleService {
     }
 
 
-    public findAllByStudent(schedule: ScheduleProf): Observable<Array<ScheduleProf>> {
+    public findAllByCriteria(schedule: ScheduleProf): Observable<Array<ScheduleProf>> {
         return this.http.post<Array<ScheduleProf>>(this.adminUrl + 'scheduleProf/all/', schedule);
     }
 
@@ -285,7 +285,7 @@ export class ScheduleService {
     }
 
     public update(scheduleProf: ScheduleProf) {
-        this.scheduleProf = this.clone(scheduleProf);
+        this.scheduleProf = scheduleProf;
     }
 
     public delete(): Observable<number> {
@@ -371,7 +371,15 @@ export class ScheduleService {
         myClone.endTime = scheduleProf.endTime;
         myClone.groupeEtudiant = scheduleProf.groupeEtudiant;
         myClone.prof = scheduleProf.prof;
+        myClone.cours = scheduleProf.cours;
         return myClone;
     }
+
+    public deleteScheduleProfById(scheduleProf: ScheduleProf): Observable<number> {
+        console.log(scheduleProf.id);
+        return this.http.delete<number>(this.adminUrl + 'scheduleProf/id/' + scheduleProf.id);
+
+    }
+
 
 }
