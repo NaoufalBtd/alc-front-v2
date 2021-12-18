@@ -1,4 +1,4 @@
-<div class=" card" style="background-color: transparent">
+<div class=" card" style="background-color: transparent" >
     <div class="p-grid">
         <p-toast></p-toast>
 
@@ -31,56 +31,52 @@
                                  src="../../../../../assets/notfound.jpg" style="width: 100%">
 
 
-                            <div *ngIf=" this.selectedsection.contenu != null && this.selectedsection.urlVideo == null"
-                                 style="box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)">
-                                <h3 (mouseup)="dict()"
-                                    style=" background-color: white;white-space: pre-wrap; font-family: Great Vibes, cursive; font-size: 200%;line-height: 60px; text-align: left ;margin-left: 50px ;">{{this.selectedsection.contenu}}</h3>
-                            </div>
+                        <div *ngIf=" this.selectedsection.contenu != null && this.selectedsection.urlVideo == null" style="box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)">
+                            <h3 (mouseup)="dict()"
+                                style=" background-color: white;white-space: pre-wrap; font-family: Great Vibes, cursive; font-size: 200%;line-height: 60px; text-align: left ;margin-left: 50px ;">{{this.selectedsection.contenu}}</h3>
                         </div>
                     </div>
-                    <div *ngIf="showVocabulary===true" class="p-col">
-                        <app-vocabulary-section (someEvent)="return($event)"></app-vocabulary-section>
-                    </div>
                 </div>
-                <div style="position: relative;margin-top: 50px">
-                    <button (click)="PreviousSection()"
-                            [style.visibility]="(this.selectedsection.numeroOrder != 1)? 'visible':'hidden'"
-                            class="p-button-rounded" icon="pi pi-caret-left" id="previous"
-                            label="Previous" pButton pRipple
-                            style="margin-left: 15px; width: 120px; background-color: orange"
-                            type="button"></button>
-
-
-<!--                    <button *ngIf="this.selectedsection.categorieSection.libelle != 'Vocabulary'  "-->
-<!--                            [style.visibility]="(this.selectedQuiz.section.id == this.selectedsection.id )? 'visible':'hidden'"-->
-<!--                            class="p-button-rounded"-->
-<!--                            id="quiz" label="{{this.passerQuiz}}"-->
-<!--                            pButton-->
-<!--                            pRipple-->
-<!--                            style="background-color: orange; position: absolute;margin: 0;left: 50%; -ms-transform: translate(-50%, -50%); transform: translate(-50%, -50%);top: 50%;  width: 120px"-->
-<!--                            type="button"></button>-->
-
-
-                    <button (click)="NextSection()"
-                            [style.visibility]="(this.selectedsection.numeroOrder < this.sectionStandard.length)? 'visible':'hidden'"
-                            class="p-button-rounded" icon="pi pi-caret-right" id="next" label="Next"
-                            pButton pRipple
-                            style=" width: 120px; background-color: orange; position: absolute;right: 15px;"
-                            type="button"></button>
-                    <button *ngIf="!this.coursecomplited"
-                            (click)="finish()"
-                            [style.visibility]="(this.selectedsection.numeroOrder < this.itemssection2.length)? 'hidden':'visible'"
-                            class="p-button-rounded" icon="pi pi-check" label="Finish" pButton pRipple
-                            style=" width: 130px; background-color: orange; position: absolute;right: 15px;"
-                            type="button"></button>
-                    <button *ngIf="this.coursecomplited"
-                            (click)="navigate()"
-                            [style.visibility]="(this.selectedsection.numeroOrder < this.itemssection2.length)? 'hidden':'visible'"
-                            class="p-button-rounded" icon="pi pi-check" label="Bach to All Course" pButton pRipple
-                            style=" width: 160px; background-color: orange; position: absolute;right: 15px;"
-                            type="button"></button>
+                <div *ngIf="showVocabulary===true" class="p-col">
+                    <app-vocabulary-section (someEvent)="return($event)"></app-vocabulary-section>
                 </div>
             </div>
+            <div style="position: relative;margin-top: 50px" *ngIf="!this.webSocketService.isInSession">
+                <button (click)="PreviousSection()"
+                        [style.visibility]="(this.selectedsection.numeroOrder != 1)? 'visible':'hidden'"
+                        class="p-button-rounded" icon="pi pi-caret-left" id="previous"
+                        label="Previous" pButton pRipple
+                        style="margin-left: 15px; width: 120px; background-color: orange"
+                        type="button"></button>
+                <button *ngIf="this.selectedsection.categorieSection.libelle != 'Vocabulary'  "
+                        [routerLink]="quizView? ['/etudiant/quiz-view']: ['/etudiant/quiz-take']"
+                        [style.visibility]="(this.selectedQuiz.section.id == this.selectedsection.id )? 'visible':'hidden'"
+                        class="p-button-rounded"
+                        id="quiz" label="{{this.passerQuiz}}"
+                        pButton
+                        pRipple
+                        style="background-color: orange; position: absolute;margin: 0;left: 50%; -ms-transform: translate(-50%, -50%); transform: translate(-50%, -50%);top: 50%;  width: 120px"
+                        type="button"></button>
+                <button  (click)="NextSection()"
+                        [style.visibility]="(this.selectedsection.numeroOrder < this.sectionStandard.length)? 'visible':'hidden'"
+                        class="p-button-rounded" icon="pi pi-caret-right" id="next" label="Next"
+                        pButton pRipple
+                        style=" width: 120px; background-color: orange; position: absolute;right: 15px;"
+                        type="button"></button>
+                <button *ngIf="!this.coursecomplited"
+                        (click)="finish()"
+                        [style.visibility]="(this.selectedsection.numeroOrder < this.itemssection2.length)? 'hidden':'visible'"
+                        class="p-button-rounded" icon="pi pi-check" label="Finish" pButton pRipple
+                        style=" width: 130px; background-color: orange; position: absolute;right: 15px;"
+                        type="button"></button>
+                <button *ngIf="this.coursecomplited"
+                        (click)="navigate()"
+                        [style.visibility]="(this.selectedsection.numeroOrder < this.itemssection2.length)? 'hidden':'visible'"
+                        class="p-button-rounded" icon="pi pi-check" label="Bach to All Course" pButton pRipple
+                        style=" width: 160px; background-color: orange; position: absolute;right: 15px;"
+                        type="button"></button>
+            </div>
+        </div>
 
 
             <div *ngIf="this.selectedQuiz.section.id == this.selectedsection.id " class="p-col">
@@ -92,22 +88,17 @@
         <div class="p-col-3 product-grid-item">
             <div class="product-grid-item-content" style="margin-top: 0">
                 <div style="margin-top: 0px">
-                    <div id="dictionnair" class="p-inputgroup"
-                         style="width: 0%; height: 0px; visibility: hidden; margin-bottom: 10px">
-                        <h5 style="margin-left: 5px; font-size: 25px; text-align: center"><b
-                                style="font-size: 20px; color: orange;">+</b>
-                            <u style="color: #8b8b90; margin-left: 10px">{{this.selectedDict.word}}</u>
-                            :  {{this.selectedDict.definition}}
+                    <div id="dictionnair"  class="p-inputgroup" style="width: 0%; height: 0px; visibility: hidden; margin-bottom: 10px">
+                        <h5 style="margin-left: 5px; font-size: 25px; text-align: center"><b style="font-size: 20px; color: orange;" >+</b>
+                            <u style="color: #8b8b90; margin-left: 10px">{{this.selectedDict.word}}</u> :  {{this.selectedDict.definition}}
                         </h5>
                     </div>
                     <div class="p-inputgroup" style="width: 100%; align-content: center">
                         <p-autoComplete (completeMethod)="filterDict($event)" [(ngModel)]="word"
                                         [minLength]="1" [suggestions]="filteredDict"
-                                        field="word"></p-autoComplete>
-                        <button (click)="findByWord()" style="background-color: orange" icon="pi pi-search" pButton
-                                pRipple type="button"></button>
-                        <button (click)="openCreateDict()" icon="pi pi-plus" pButton pRipple
-                                style="background-color: #8b8b90"
+                                        field="word" ></p-autoComplete>
+                        <button (click)="findByWord()" style="background-color: orange" icon="pi pi-search" pButton pRipple type="button"></button>
+                        <button (click)="openCreateDict()" icon="pi pi-plus" pButton pRipple style="background-color: #8b8b90"
                                 type="button"></button>
                     </div>
                     <!-- <input  [(ngModel)]="word" pInputText placeholder="Search" style="width: 180px;" type="text"/>
@@ -117,8 +108,7 @@
               -->
                 </div>
                 <div class="card" style="margin-top: 15px">
-                    <p-tabMenu [activeItem]="menu[0]" [model]="menu"
-                               style="width: 100%;background-color: orange"></p-tabMenu>
+                    <p-tabMenu [activeItem]="menu[0]" [model]="menu" style="width: 100%;background-color: orange"></p-tabMenu>
                     <div id="categoriess" style="width: 100%;margin-top: 15px">
                         <div style="background-color: orange"><h6 style="color: black ">Obligatory</h6></div>
                         <p-table [value]="sectionStandard" id="categ" style="margin-top: 20px; margin-right: 30px;">
@@ -162,18 +152,15 @@
                                 <tr>
 
                                     <td (click)="dictEdit(dict)"
-                                        style="font-weight: 800; text-align: center; cursor: pointer"><b
-                                            style="font-size: 20px; color: black;">{{dict.word}}</b> : <b
-                                            style="font-size: 20px; color: orange;">{{dict.definition}}</b></td>
+                                        style="font-weight: 800; text-align: center; cursor: pointer"><b style="font-size: 20px; color: black;">{{dict.word}}</b> : <b style="font-size: 20px; color: orange;">{{dict.definition}}</b></td>
                                 </tr>
                             </ng-template>
 
                         </p-table>
                     </div>
                     <app-chat1 [style.visibility]="'hidden'" id="chat"></app-chat1>
-                    <div class="card" [style.visibility]="'hidden'" id="homeWork">
-                        <p-table *ngIf="this.homeWorkList.length!==0" [value]="homeWorkList"
-                                 style="margin-top: 20px; margin-right: 30px;">
+                    <div class="card" [style.visibility]="'hidden'"  id="homeWork">
+                        <p-table *ngIf="this.homeWorkList.length!==0" [value]="homeWorkList" style="margin-top: 20px; margin-right: 30px;">
                             <ng-template let-homeWork pTemplate="body">
                                 <tr class="timeline">
                                     <li>
@@ -188,14 +175,14 @@
                         <b *ngIf="this.homeWorkList.length == 0">No HomeWork found </b>
                     </div>
                     <div id="connectedStudent" [style.visibility]="'hidden'">
-                        <p-table [value]="this.webSocketService.connectedUsers" responsiveLayout="scroll">
+                        <p-table [value]="this.webSocketService.connectedUsers"  responsiveLayout="scroll">
                             <ng-template pTemplate="header">
                                 <tr>
                                     <th>Connected Student</th>
 
                                 </tr>
                             </ng-template>
-                            <ng-template pTemplate="body" let-student>
+                            <ng-template pTemplate="body" let-student >
                                 <tr>
                                     <td>{{student.nom }} {{ student.prenom}}</td>
 
