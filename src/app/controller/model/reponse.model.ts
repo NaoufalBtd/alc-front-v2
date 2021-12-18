@@ -1,7 +1,7 @@
 import {Question} from './question.model';
 
 export class Reponse {
-    public id: number;
+    public id: number = Number(0);
     public ref: string;
     public lib: string;
     public numero: number;

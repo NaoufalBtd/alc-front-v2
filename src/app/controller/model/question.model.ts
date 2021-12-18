@@ -11,5 +11,5 @@ export class Question {
     public pointReponsefausse: number;
     public typeDeQuestion = new TypeDeQuestion();
     public quiz = new Quiz();
-    public reponses = new Array<Reponse>();
+    public reponses: Array<Reponse> = new Array<Reponse>();
 }

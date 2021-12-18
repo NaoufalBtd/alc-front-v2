@@ -7,6 +7,12 @@ import {Inscription} from '../../../../controller/model/inscription.model';
 import {EtatInscription} from '../../../../controller/model/etat-inscription.model';
 import {Etudiant} from '../../../../controller/model/etudiant.model';
 import {EtudiantVo} from '../../../../controller/model/etudiant-vo.model';
+import {Parcours} from '../../../../controller/model/parcours.model';
+import {ParcoursService} from '../../../../controller/service/parcours.service';
+import {Prof} from '../../../../controller/model/prof.model';
+import {ProfService} from '../../../../controller/service/prof.service';
+import {GroupeEtude} from '../../../../controller/model/groupe-etude.model';
+import {GroupeEtudeService} from '../../../../controller/service/groupe-etude.service';
 
 @Component({
     selector: 'app-inscription-list',
@@ -17,9 +23,19 @@ import {EtudiantVo} from '../../../../controller/model/etudiant-vo.model';
 export class InscriptionListComponent implements OnInit {
     cols: any[];
     index: number;
-     student: Etudiant = new Etudiant();
+    student: Etudiant = new Etudiant();
+    editInscDialog: boolean;
+    inscription: Inscription = new Inscription();
+    parcours: Array<Parcours> = new Array<Parcours>();
+    etatInsc: Array<EtatInscription> = new Array<EtatInscription>();
+    teachers: Array<Prof> = new Array<Prof>();
+    groupEtudes: Array<GroupeEtude> = new Array<GroupeEtude>();
 
-    constructor(private messageService: MessageService, private confirmationService: ConfirmationService,
+    constructor(private messageService: MessageService,
+                private profService: ProfService,
+                private parcourService: ParcoursService,
+                private groupeEtudeService: GroupeEtudeService,
+                private confirmationService: ConfirmationService,
                 private service: InscriptionService) {
     }
 
@@ -109,10 +125,37 @@ export class InscriptionListComponent implements OnInit {
 
     ngOnInit(): void {
         this.initCol();
+        this.findAll();
+        this.parcourService.FindAllParcours().subscribe(
+            data => {
+                this.parcours = data;
+            }
+        );
+
+        this.service.findAllEtat().subscribe(
+            data => {
+                this.etatInsc = data;
+            }
+        );
+
+        this.profService.findAll().subscribe(
+            data => {
+                this.teachers = data;
+            }
+        );
+
+        this.groupeEtudeService.findAll().subscribe(
+            data => {
+                this.groupEtudes = data;
+            }
+        );
+    }
+
+    findAll() {
         this.service.findAll().subscribe(data => {
             this.items = data;
             console.log(this.items);
-        } );
+        });
     }
 
     public delete(selected: Inscription) {
@@ -202,4 +245,30 @@ export class InscriptionListComponent implements OnInit {
         ];
     }
 
+    handleChange(e) {
+        const index = e.index;
+        if (index === 0) {
+            this.findAll();
+        } else {
+            this.service.findByEtatInscription('Pending').subscribe(
+                data => {
+                    this.items = data;
+                }, error => {
+                    console.log(error);
+                }
+            );
+        }
+    }
+
+    updateInsc(inscription: Inscription) {
+        // this.selected = inscription;
+        console.log(inscription);
+        this.service.edit(inscription).subscribe(data => console.log(data));
+    }
+
+    showEditDialog(inscription: Inscription) {
+        this.editInscDialog = true;
+        this.inscription = inscription;
+        console.log(inscription);
+    }
 }

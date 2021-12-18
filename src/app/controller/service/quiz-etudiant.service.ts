@@ -27,7 +27,7 @@ export class QuizEtudiantService {
   private _section: Section;
   private _quizSelct: Quiz;
   private _quizItems: Array<Quiz>;
-  private _items: Array<Question>;
+  private _items: Array<Question> = new Array<Question>();
   private _selected: Question;
   private _reponses: Array<Reponse>;
   private _quizsEtudiant: Array<QuizEtudiant>;

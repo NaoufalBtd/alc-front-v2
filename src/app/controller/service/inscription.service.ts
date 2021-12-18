@@ -81,8 +81,8 @@ export class InscriptionService {
         return this.http.post<Inscription>(this.adminUrl + 'inscription/', this.selected);
     }
 
-    public edit(): Observable<Inscription> {
-        return this.http.put<Inscription>(this.adminUrl + 'inscription/', this.selected);
+    public edit(insc: Inscription): Observable<Inscription> {
+        return this.http.post<Inscription>(this.adminUrl + 'inscription/', insc);
     }
 
     public deleteByNumeroInscription(): Observable<number> {
@@ -300,6 +300,10 @@ export class InscriptionService {
 
     set groupeEtudeList(value: Array<GroupeEtude>) {
         this._groupeEtudeList = value;
+    }
+
+    findByEtatInscription(pending: string): Observable<Array<Inscription>> {
+        return this.http.get<Array<Inscription>>(this.adminUrl + 'inscription/etat/libelle/' + pending);
     }
 }
 

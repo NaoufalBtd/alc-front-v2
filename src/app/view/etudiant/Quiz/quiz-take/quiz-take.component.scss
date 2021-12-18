@@ -281,3 +281,44 @@ tr.timeline > li:before {
   height: 10px;
   z-index: 200;
 }
+
+.pi-check-circle{
+  color: #2d6a4f;
+}
+
+.pi-times-circle{
+  color: red;
+}
+
+.correctAnswer{
+  background-color: #3aaf3e47;
+  border: 2px solid #17732fa6;
+  color: black;
+}
+.falseAnswer{
+  background-color: #0400ff0d;
+  border: 2px solid #001fff47;
+  color: black;
+}
+
+.p-grid{
+  margin:1% 2% 0 0;
+}
+
+.topBar{
+  background-color: #ced4da;
+}
+.bottomBar{
+  background-color: #e9ecef;
+}
+
+h5{
+  display: inline-block !important;
+  margin-right: 6px;
+}
+
+p{
+  color: #ff7b00;
+  display: inline-block !important;
+
+}

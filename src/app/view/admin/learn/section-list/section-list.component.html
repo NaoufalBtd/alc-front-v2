@@ -58,10 +58,15 @@
                                     pRipple></button>
                             <button (click)="delete(section)" class="p-button-rounded p-button-danger" icon="pi pi-trash" pButton
                                     pRipple></button>
-                            <button (click)="getSection(section)" *ngIf="this.section.categorieSection.libelle != 'Vocabulary'" [style.background-color]="(this.selectedQuiz.section.id != section.id)?'red':'blue'" class="p-button-rounded p-button-sm "
-                                    icon="pi pi-book"
+
+
+                            <button (click)="getSection(section)" *ngIf="this.section.categorieSection.libelle != 'Vocabulary'" [style.background-color]="(this.selectedQuiz.section.id != section.id)?'':'#2d6a4f'" class="p-button-rounded p-button-warning "
+                                    icon="pi pi-question-circle"
                                     pButton
                                     pRipple></button>
+
+
+
                             <button (click)="showme(section)" class="p-button-rounded p-button-sm "
                                     icon="pi pi-book "
                                     pButton

@@ -3,6 +3,7 @@ import {Prof} from './prof.model';
 import {Parcours} from './parcours.model';
 import {QuizEtudiant} from './quiz-etudiant.model';
 import {Etudiant} from './etudiant.model';
+import {GroupeEtude} from './groupe-etude.model';
 
 export class Inscription {
     public id: number;
@@ -14,4 +15,5 @@ export class Inscription {
     public datefininscription: Date;
     public prof = new Prof();
     public etatInscription = new EtatInscription();
+    public groupeEtude: GroupeEtude = new GroupeEtude();
 }
