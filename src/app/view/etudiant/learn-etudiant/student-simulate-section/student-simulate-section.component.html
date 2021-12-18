@@ -48,15 +48,10 @@
                         label="Previous" pButton pRipple
                         style="margin-left: 15px; width: 120px; background-color: orange"
                         type="button"></button>
-                <button *ngIf="this.selectedsection.categorieSection.libelle != 'Vocabulary'  "
-                        [routerLink]="quizView? ['/etudiant/quiz-view']: ['/etudiant/quiz-take']"
-                        [style.visibility]="(this.selectedQuiz.section.id == this.selectedsection.id )? 'visible':'hidden'"
-                        class="p-button-rounded"
-                        id="quiz" label="{{this.passerQuiz}}"
-                        pButton
-                        pRipple
-                        style="background-color: orange; position: absolute;margin: 0;left: 50%; -ms-transform: translate(-50%, -50%); transform: translate(-50%, -50%);top: 50%;  width: 120px"
-                        type="button"></button>
+
+
+
+
                 <button  (click)="NextSection()"
                         [style.visibility]="(this.selectedsection.numeroOrder < this.sectionStandard.length)? 'visible':'hidden'"
                         class="p-button-rounded" icon="pi pi-caret-right" id="next" label="Next"
