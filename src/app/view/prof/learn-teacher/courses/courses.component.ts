@@ -3,6 +3,7 @@ import {ConfirmationService, MessageService} from 'primeng/api';
 import {ParcoursService} from '../../../../controller/service/parcours.service';
 import {Cours} from '../../../../controller/model/cours.model';
 import {Section} from '../../../../controller/model/section.model';
+import {Parcours} from '../../../../controller/model/parcours.model';
 
 @Component({
     selector: 'app-courses',
@@ -135,5 +136,16 @@ export class CoursesComponent implements OnInit {
             {field: 'parcours', header: 'Parcours'}
         ];
     }
+    get nameParcours(): Parcours {
+        return this.service.nameParcours;
+    }
 
+    set nameParcours(value: Parcours) {
+        this.service.nameParcours = value;
+    }
+
+
+    Namecours( Namecours: string) {
+        this.selectedcours.libelle = Namecours;
+    }
 }

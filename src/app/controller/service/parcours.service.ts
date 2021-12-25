@@ -21,6 +21,7 @@ import {Prof} from '../model/prof.model';
     providedIn: 'root'
 })
 export class ParcoursService {
+    private _nameParcours: Parcours;
     private _index: number;
     private _contenuSection: Array<string>;
     private adminUrl = environment.adminUrl;
@@ -120,6 +121,18 @@ export class ParcoursService {
 
     set selecteddparcours(value: Parcours) {
         this._selecteddparcours = value;
+    }
+
+
+    get nameParcours(): Parcours {
+        if (this._nameParcours == null) {
+            this._nameParcours = new Parcours();
+        }
+        return this._nameParcours;
+    }
+
+    set nameParcours(value: Parcours) {
+        this._nameParcours = value;
     }
 
     private _itemsparcours: Array<Parcours>;

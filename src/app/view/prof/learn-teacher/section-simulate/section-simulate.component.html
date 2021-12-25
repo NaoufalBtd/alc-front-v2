@@ -1,8 +1,12 @@
 <div class=" card">
     <p-toast></p-toast>
+    <h1 class="p-m-0"> {{this.selectedcours.parcours.libelle}}</h1>
+    <h1 class="p-m-0"> {{this.selectedcours.libelle}}</h1>
     <div class="p-grid">
         <div class="p-col">
+
             <div class="product-grid-item ">
+
                 <div *ngIf="showVocabulary===false" class="product-grid-item-content">
                     <div class="product-name" style="margin-bottom: 15px; background-color: orange; color: white"><h1>-{{this.selectedsection.libelle}}-</h1>
                     </div>

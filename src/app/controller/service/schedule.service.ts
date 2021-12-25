@@ -270,7 +270,9 @@ export class ScheduleService {
     public findAllByCriteria(schedule: ScheduleProf): Observable<Array<ScheduleProf>> {
         return this.http.post<Array<ScheduleProf>>(this.adminUrl + 'scheduleProf/all/', schedule);
     }
-
+    public findByCriteriaStudent(schedule: ScheduleProf): Observable<Array<ScheduleProf>> {
+        return this.http.post<Array<ScheduleProf>>(this.profUrl + 'scheduleProf/all/', schedule);
+    }
     public findByGroupStudentId(groupeEtudiant: GroupeEtudiant): Observable<Array<ScheduleProf>> {
         return this.http.get<Array<ScheduleProf>>(this.studentUrl + 'scheduleProf/groupe/etudiant/id/' + groupeEtudiant.id);
     }

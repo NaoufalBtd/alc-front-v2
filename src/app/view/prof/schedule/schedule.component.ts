@@ -291,6 +291,27 @@ export class ScheduleLocalComponent implements OnInit {
         console.log(scheduleObj.eventSettings.dataSource);
         this.hideDialog();
     }
+    public schedule: ScheduleProf = new ScheduleProf();
+    findByCriteriaStudent() {
+        const scheduleObj = this.scheduleObj;
+        scheduleObj.eventSettings.dataSource = null;
+        this.scheduleService.findByCriteriaStudent(this.schedule).subscribe(
+            data => {
+                console.log(data);
+                this.eventSettings = {
+                    dataSource: data,
+                    fields: {
+                        id: 'Id',
+                        subject: {name: 'subject', title: 'subject'},
+                        startTime: {name: 'startTime', title: 'startTime'},
+                        endTime: {name: 'endTime', title: 'endTime'}
+                    }
+                };
+            }, error => {
+                console.log(error);
+            }
+        );
+    }
 
     public onCloseClick(): void {
         this.scheduleObj.closeEditor();

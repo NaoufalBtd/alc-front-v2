@@ -43,6 +43,14 @@ export class EdCoursesComponent implements OnInit {
         this.service.selectedparcours = value;
     }
 
+
+    get nameParcours(): Parcours {
+        return this.service.nameParcours;
+    }
+
+    set nameParcours(value: Parcours) {
+        this.service.nameParcours = value;
+    }
     get itemscours(): Array<Cours> {
         return this.service.itemscours;
     }
@@ -94,4 +102,7 @@ export class EdCoursesComponent implements OnInit {
     }
 
 
+    NameParcours( NomParcours: string) {
+     this.nameParcours.libelle = NomParcours;
+    }
 }
