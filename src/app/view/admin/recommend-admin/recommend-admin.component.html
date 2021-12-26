@@ -46,18 +46,21 @@
                         <th pSortableColumn="duration">Phone Number
                             <p-sortIcon field="duration"></p-sortIcon>
                         </th>
-
+                        <th pSortableColumn="duration">Email
+                            <p-sortIcon field="duration"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="duration">Recommendation Date
+                            <p-sortIcon field="duration"></p-sortIcon>
+                        </th>
                     </tr>
                 </ng-template>
                 <ng-template let-recommend pTemplate="body">
                     <tr>
-                        <td>{{recommend.nom}}</td>
-
+                        <td>{{recommend.nom}} {{recommend.prenom}}</td>
                         <td>{{recommend.prof.nom}}  {{recommend.prof.prenom}}</td>
-
                         <td>{{recommend.telephone}}</td>
-
-
+                        <td>{{recommend.login}}</td>
+                        <t>{{recommend.dateRecommamdation}}</t>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="summary">

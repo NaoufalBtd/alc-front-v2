@@ -1,4 +1,9 @@
 <p-toast></p-toast>
+<div class="p-col-8">
+    <input class="searchValue" [(ngModel)]="schedule.groupeEtudiant.libelle" type="text" pInputText placeholder="Search by group.." />
+    <button  pButton pRipple type="button" (click)="findByCriteriaStudent()"
+             icon="pi pi-search" class="p-button-rounded p-button-success"></button>
+</div>
 <button class="instruction-button" (click)="showBasicDialog()" icon="pi pi-question" label="Instruction" pButton
         pRipple></button>
 <button class="e-btn1" (click)="getData()" icon="pi pi-refresh" pButton pRipple></button>
