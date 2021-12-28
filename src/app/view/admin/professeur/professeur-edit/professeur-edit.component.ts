@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {Prof} from '../../../../controller/model/prof.model';
 import {MessageService} from 'primeng/api';
 import {ProfessorService} from '../../../../controller/service/professor.service';
+import {Parcours} from '../../../../controller/model/parcours.model';
+import {TrancheHoraireProf} from '../../../../controller/model/tranche-horaire-prof.model';
 
 @Component({
     selector: 'app-professeur-edit',
@@ -11,6 +13,15 @@ import {ProfessorService} from '../../../../controller/service/professor.service
 export class ProfesseurEditComponent implements OnInit {
 
     constructor(private messageService: MessageService, private service: ProfessorService) {
+    }
+    public findAllParcours() {
+        this.service.findAllParcours().subscribe(data => this.parcoursList = data);
+    }
+    get parcoursList(): Array<Parcours> {
+        return this.service.parcoursList;
+    }
+    set parcoursList(value: Array<Parcours>) {
+        this.service.parcoursList = value;
     }
 
     get selected(): Prof {
@@ -48,6 +59,27 @@ export class ProfesseurEditComponent implements OnInit {
     ngOnInit(): void {
     }
 
+    public addHoraire(){
+        console.log(this.trancheHoraireProf.datee);
+        this.selected.trancheHoraireProfList.push(this.trancheHoraireProf);
+
+    }
+
+    get trancheHoraireProfList(): Array<TrancheHoraireProf> {
+        return this.service.trancheHoraireProfList;
+    }
+
+    set trancheHoraireProfList(value: Array<TrancheHoraireProf>) {
+        this.service.trancheHoraireProfList = value;
+    }
+
+    get trancheHoraireProf(): TrancheHoraireProf {
+        return this.service.trancheHoraireProf;
+    }
+
+    set trancheHoraireProf( value: TrancheHoraireProf) {
+        this.service.trancheHoraireProf = value;
+    }
     public edit() {
         this.submitted = true;
         if (this.selected.id) {

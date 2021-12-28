@@ -8,6 +8,8 @@ import {Paiement} from '../model/paiement.model';
 import {SessionCours} from '../model/session-cours.model';
 import {LoginService} from './login.service';
 import {EtudiantCours} from '../model/etudiant-cours.model';
+import {Parcours} from '../model/parcours.model';
+import {TrancheHoraireProf} from '../model/tranche-horaire-prof.model';
 
 
 @Injectable({
@@ -27,6 +29,12 @@ export class ProfessorService {
     private _items: Array<Prof>;
     private _selected: Prof;
     private adminUrl = environment.adminUrl;
+    private urlBase = environment.baseApi;
+    private _parcoursList: Array<Parcours>;
+    private urlParcours = '/admin/parcours/';
+    private _trancheHoraireProfList: Array<TrancheHoraireProf>;
+    private _trancheHoraireProf: TrancheHoraireProf;
+
     public afficheSession(id: number): Observable<Array<EtudiantCours>> {
         return this.http.get<Array<EtudiantCours>>(this.adminUrl + 'etudiantCours/prof/id/' + id);
     }
@@ -56,6 +64,9 @@ export class ProfessorService {
 
     public edit(): Observable<Prof> {
         return this.http.put<Prof>(this.adminUrl + 'prof/', this.selected);
+    }
+    public findAllParcours(): Observable<Array<Parcours>> {
+        return this.http.get<Array<Parcours>>(this.urlBase + this.urlParcours);
     }
 
     public deleteByReference(): Observable<number> {
@@ -97,6 +108,41 @@ export class ProfessorService {
     constructor(private http: HttpClient, private user: LoginService) {
     }
 
+    get trancheHoraireProfList(): Array<TrancheHoraireProf> {
+        if( this._trancheHoraireProfList == null){
+            this._trancheHoraireProfList = new Array<TrancheHoraireProf>();
+        }
+        return this._trancheHoraireProfList;
+    }
+
+    set trancheHoraireProfList(value: Array<TrancheHoraireProf>) {
+        this._trancheHoraireProfList = value;
+    }
+
+    get trancheHoraireProf(): TrancheHoraireProf {
+        if( this._trancheHoraireProf == null){
+            this._trancheHoraireProf = new TrancheHoraireProf();
+        }
+        return this._trancheHoraireProf;
+    }
+
+    set trancheHoraireProf( value: TrancheHoraireProf) {
+        this._trancheHoraireProf = value;
+    }
+
+
+    set parcoursList(value: Array<Parcours>) {
+        this._parcoursList = value;
+    }
+
+
+    get parcoursList(): Array<Parcours> {
+        if (this._parcoursList == null)
+        {
+            this.parcoursList = new Array<Parcours>();
+        }
+        return this._parcoursList;
+    }
 
     get items(): Array<Prof> {
         if (this._items == null) {

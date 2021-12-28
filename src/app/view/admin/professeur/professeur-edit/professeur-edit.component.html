@@ -1,7 +1,8 @@
 <p-dialog [(visible)]="editDialog" [modal]="true" [style]="{width: '450px'}" header="Professor Edit"
           styleClass="p-fluid">
     <ng-template pTemplate="content">
-
+        <p-tabView>
+            <p-tabPanel header="Agent information">
         <div class="p-field">
             <label for="firstName">First Name</label>
             <input [(ngModel)]="selected.prenom" autofocus id="firstName" pInputText required type="text"/>
@@ -36,6 +37,38 @@
         </div>
 
 
+ <div class="p-field">
+        <label>Level Max</label><br>
+        <p-dropdown  [options]="parcoursList" (click)="findAllParcours()" [(ngModel)]="selected.levelMax" optionLabel="libelle"></p-dropdown>
+    </div>
+        <div class="p-field">
+            <label>Level Min</label><br>
+        <p-dropdown class="class1"  [options]="parcoursList" (click)="findAllParcours()" [(ngModel)]="selected.levelMin" optionLabel="libelle"></p-dropdown>
+    </div>
+            </p-tabPanel>
+            <p-tabPanel header="Information">
+                <label>Horaire</label><br>
+                <input [(ngModel)]="trancheHoraireProf.datee" autofocus id="datee" pInputText required type="text"/>
+                <button (click)="addHoraire()" class="p-button-text table1" icon="pi pi-check" label="Add Horaire" pButton
+                        pRipple></button>
+                <p-table [value]="selected.trancheHoraireProfList" >
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th pSortableColumn="datee"> Horaire
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template let-e pTemplate="body">
+                        <tr>
+                            <td>{{e.datee}}</td>
+
+                        </tr>
+                    </ng-template>
+                </p-table>
+
+            </p-tabPanel>
+
+        </p-tabView>
     </ng-template>
 
     <ng-template pTemplate="footer">

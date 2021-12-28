@@ -187,8 +187,8 @@ public trouver(id: number){
         console.log( this.etudiantList[i]);
         //this.etudiantList2.push(this.etudiantList[i]);
         this.groupeEtudiantDetail.etudiant = this.etudiantList[i];
-        this.selected.nombrePlacevide =    this.selected.nombrePlacevide-1;
-        this.selected.nombrePlaceNonVide =  this.selected.groupeEtude.nombreEtudiant- this.selected.nombrePlacevide;
+        this.selected.nombrePlacevide =    this.selected.nombrePlacevide - 1;
+        this.selected.nombrePlaceNonVide =  this.selected.groupeEtude.nombreEtudiant - this.selected.nombrePlacevide;
         this.groupeEtudiant.groupeEtudiantDetails.push({...this.groupeEtudiantDetail});
         this.groupeEtudiantDetail = null;
         this.isfull();
