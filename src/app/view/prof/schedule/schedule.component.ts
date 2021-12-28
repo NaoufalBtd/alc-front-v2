@@ -16,7 +16,7 @@ import {
     WeekService,
     WorkWeekService,
     MonthService,
-    PopupOpenEventArgs
+    PopupOpenEventArgs, TimeScaleModel
 } from '@syncfusion/ej2-angular-schedule';
 import {Prof} from '../../../controller/model/prof.model';
 import {GroupeEtudiantService} from '../../../controller/service/groupe-etudiant-service';
@@ -51,7 +51,7 @@ export class ScheduleLocalComponent implements OnInit {
     display = false;
     private selectionTarget: Element;
     public data: ScheduleProf = new ScheduleProf();
-    // public selectedDate: Date = new Date(2021, 4, 18);
+    public timeScale: TimeScaleModel = { interval: 60, slotCount: 1 };
     public selectedDate: Date = new Date();
     public showWeekend = true;
     public groupeEtudiantDetails  = new Array<GroupeEtudiantDetail>();

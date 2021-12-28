@@ -3,7 +3,7 @@ import {ScheduleService} from '../../../controller/service/schedule.service';
 import {ConfirmationService, MessageService} from 'primeng/api';
 import {LoginService} from '../../../controller/service/login.service';
 import {L10n} from '@syncfusion/ej2-base';
-import {EventSettingsModel, PopupOpenEventArgs, ScheduleComponent} from '@syncfusion/ej2-angular-schedule';
+import {EventSettingsModel, PopupOpenEventArgs, ScheduleComponent, TimeScaleModel} from '@syncfusion/ej2-angular-schedule';
 import {ScheduleProf} from '../../../controller/model/calendrier-prof.model';
 import {Prof} from '../../../controller/model/prof.model';
 import {Etudiant} from '../../../controller/model/etudiant.model';
@@ -37,7 +37,7 @@ export class ScheduleStudentComponent implements OnInit {
     public scheduleObj: ScheduleComponent;
     display = false;
     private selectionTarget: Element;
-    // public selectedDate: Date = new Date(2021, 4, 18);
+    public timeScale: TimeScaleModel = { interval: 60, slotCount: 1 };
     public selectedDate: Date = new Date();
     public showWeekend = false;
     public eventSettings: EventSettingsModel;
