@@ -10,6 +10,7 @@ import {LoginService} from './login.service';
 import {EtudiantCours} from '../model/etudiant-cours.model';
 import {Parcours} from '../model/parcours.model';
 import {TrancheHoraireProf} from '../model/tranche-horaire-prof.model';
+import {GroupeEtudiantDetail} from '../model/groupe-etudiant-detail.model';
 
 
 @Injectable({
@@ -52,6 +53,12 @@ export class ProfessorService {
 
     public findAll(): Observable<Array<Prof>> {
         return this.http.get<Array<Prof>>(this.adminUrl + 'prof/');
+    }
+    public  findByProfId(id: number): Observable<Array<TrancheHoraireProf>> {
+        return this.http.get<Array<TrancheHoraireProf>>(this.adminUrl  + 'trancheHoraireProfRest/id/' + id);
+    }
+    public deleteTrancheHoraireProfById(): Observable<number> {
+        return this.http.delete<number>(this.adminUrl + 'trancheHoraireProfRest/id/' + this.trancheHoraireProf.id);
     }
 
     public Search(): Observable<Array<Prof>> {
@@ -143,6 +150,7 @@ export class ProfessorService {
         }
         return this._parcoursList;
     }
+
 
     get items(): Array<Prof> {
         if (this._items == null) {
