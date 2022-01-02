@@ -66,7 +66,7 @@ export class GroupeEtudiantService {
     return this.http.delete<number>(this.urlBase + this.urlGroupeEtudiantDetail + 'id/' + this.groupeEtudiantDetail.id);
   }
   public findAllGroupeEtudiantDetail(id: number): Observable<Array<GroupeEtudiantDetail>> {
-    return this.http.get<Array<GroupeEtudiantDetail>>(this.urlBase + this.urlGroupeEtudiant +'id/' + id);
+    return this.http.get<Array<GroupeEtudiantDetail>>(this.urlBase + this.urlGroupeEtudiant + 'id/' + id);
   }
   // tslint:disable-next-line:ban-types
   public findEtudiantListByParcoursLibelle(libelle: string): Observable<Array<Etudiant>> {
