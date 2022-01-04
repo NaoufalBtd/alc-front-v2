@@ -42,10 +42,10 @@ input {
 }
 
 .p-float-label {
-  margin: -3%;
+  margin: -1%;
 }
 
-#inputDashedBorder {
+#inputDashedBorder, #inputQstT4, #inputQstT6 {
   border: dashed 1px #6197ba !important;
   width: 75%;
   font-weight: bold;
@@ -193,7 +193,7 @@ h4 {
   color: #52b788;
 }
 .pi-times-circle{
-  color: #f08080;
+  color: #fc1b1b;
 }
 
 
@@ -225,5 +225,19 @@ h4 {
   display: inline-block;
   margin-right: 2%;
   font-family: auto, fantasy;
+  color: #ffa500;
+}
+
+.p-inputtext:enabled:focus {
+  outline: 0 none;
+  outline-offset: 0;
+  font-weight: 700 !important;
+}
+
+.pi-exclamation-circle{
+  color: #ffa500;
+}
+
+.pi-users{
   color: #ffa500;
 }

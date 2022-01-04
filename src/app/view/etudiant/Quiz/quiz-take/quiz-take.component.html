@@ -23,7 +23,7 @@
             </div>
 
 
-            <div style="float:right;display: inline-block;text-align: center">{{index}}/{{numberOfQuestion}}</div>
+            <div style="float:right;display: inline-block;text-align: center">{{question.numero}}/{{numberOfQuestion}}</div>
         </div>
     </div>
 
@@ -31,6 +31,10 @@
         <div style="  background-color: transparent!important;" class="p-col-12">
             <p-progressBar [style]="{'height': '6px'}" [showValue]="false"
                            [value]="value"></p-progressBar>
+        </div>
+        <div class="p-col-12">
+            <button pButton pRipple (click)="closeWebSocket()" type="button" icon="pi pi-times" class="p-button-rounded p-button-danger"></button>
+            <button pButton pRipple  (click)="startWebSocket()" type="button" icon="pi pi-times" class="p-button-rounded p-button-success"></button>
         </div>
     </div>
 
@@ -44,7 +48,7 @@
             <span class="p-float-label">
             <input *ngIf="answerSelected.lib === undefined" disabled id="inputDashedBorder" inputId="inputDashedBorder"
                    type="text"
-                   [(ngModel)]="answer.lib"
+                   [(ngModel)]="reponseQuiz.lib"
                    class="p-inputtext-sm " pInputText/>
 
 
@@ -71,9 +75,9 @@
         </div>
         <div class="p-col-12 answers">
             <div *ngFor="let reponse of question?.reponses" class="p-field-checkbox textQuestion">
-                <p-radioButton [inputId]="reponse.lib" name="category" [(ngModel)]="answer"
+                <p-radioButton [inputId]="reponse.lib" name="category" [(ngModel)]="reponseQuiz.lib"
                                (onClick)="showDontKnowButton = false; showCheckButton = true"
-                               [value]="reponse"></p-radioButton>
+                               [value]="reponse.lib"></p-radioButton>
                 <label [for]="reponse.lib">{{reponse.lib}}</label>
             </div>
             <button *ngIf="showCheckButton && !saveDone" pButton pRipple type="button"
@@ -96,44 +100,41 @@
 
     <div *ngIf="question.typeDeQuestion.ref === 't3'" class="p-grid">
         <div class="p-col-12 question">
-            <h5 class="translateQuestion"> {{  question?.libelle}}  </h5>
+            <h5 style="margin-top: -20px;" class="translateQuestion"> {{  question?.libelle}}  </h5>
 
-            <span class="p-float-label">
-            <button *ngIf="answerSelected.lib !== undefined && answerIsCorrect(answerSelected, question)"
+            <span style="margin: 0" class="p-float-label">
+            <button *ngIf="answerSelected.lib !== undefined"
                     [disabled]="disableButtonSon" pButton pRipple type="button" (click)="sound(question)"
                     icon="pi pi-volume-up" class="p-button-rounded sonButton ">
             </button>
 
             <input *ngIf="answerSelected.lib === undefined" id="input-answer" type="text"
                    (focus)="showDontKnowButton = false ; showCheckButton=true"
-                   [(ngModel)]="answer.lib" pInputText>
+                   [(ngModel)]="reponseQuiz.lib" pInputText>
 
             <input disabled *ngIf="answerSelected.lib !== undefined && answerIsCorrect(answerSelected, question)"
                    id="input-answer-correct" type="text"
                    [(ngModel)]="answerSelected.lib" pInputText>
 
-            <input disabled *ngIf="answerSelected.lib !== undefined && !answerIsCorrect(answerSelected, question)"
+            <input style="text-decoration: 2px line-through red;" disabled *ngIf="answerSelected.lib !== undefined && !answerIsCorrect(answerSelected, question)"
                    id="input-answer-incorrect" type="text"
                    [(ngModel)]="answerSelected.lib" pInputText>
+            <label style="
+               margin-left: 150px;
+                font-size: large;
+                 color: green;
+                 padding: 0;
+                width: 50%;
+                 margin-top: 9px;
+                 font-weight: 800;"
+                   [hidden]="answerSelected.lib === undefined || answerIsCorrect(answerSelected, question)"
+                   class="" for="inputDashedBorder"
+                   *ngFor="let ans of correctAnswersList?.get(question.id)">{{ ans.lib}}
+            </label>
         </span>
-
         </div>
 
         <div class="p-col-12 answers">
-            <button style="margin: 0 0 -13px 0;"
-                    *ngIf="answerSelected.lib !== undefined && !answerIsCorrect(answerSelected, question)"
-                    [disabled]="disableButtonSon" pButton pRipple type="button" (click)="sound(question)"
-                    icon="pi pi-volume-up" class="p-button-rounded sonButton ">
-            </button>
-
-            <h4 [hidden]="answerSelected.lib === undefined || answerIsCorrect(answerSelected, question)"
-                class=""
-                *ngFor="let ans of correctAnswersList?.get(question.id)">
-                {{ ans.lib}}
-            </h4>
-            <h4 *ngIf="translateWord !== undefined">{{translateWord}}</h4>
-
-
             <button *ngIf="showCheckButton && !saveDone" pButton pRipple type="button"
                     icon="pi pi-check" iconPos="right"
                     label="Check answer" class="p-button-raised check-button "
@@ -158,10 +159,13 @@
             </button>
             <h5 class="h5"> {{  questionSideLeft}}  </h5>
             <span class="p-float-label">
-            <input *ngIf="answerSelected.lib === undefined" id="inputDashedBorder"
-                   (focus)="showDontKnowButton =false; showCheckButton=true"
+            <input style="font-weight: normal;" *ngIf="answerSelected.lib === undefined" id="inputQstT4"
+                   (focus)="showDontKnowButton =false; showCheckButton=true;"
+                   (focusin)="hidePlaceHolder('HIDE')"
+                   (focusout)="hidePlaceHolder('SHOW')"
                    inputId="inputDashedBorder" type="text"
-                   [(ngModel)]="inputAnswer" class="p-inputtext-sm " pInputText/>
+                   [placeholder]="inputAnswer"
+                   [(ngModel)]="reponseQuiz.lib" class="p-inputtext-sm " pInputText/>
 
 
             <input *ngIf="answerSelected.lib !== undefined && answerIsCorrect(answerSelected, question) " disabled
@@ -204,17 +208,20 @@
 
     <!--------------------------------- WRITE  THE CORRECT FORM -------------------------------------------------------->
 
-    <div *ngIf="question.typeDeQuestion.ref === 't6'" class="p-grid">
+    <div style="font-weight: normal;" *ngIf="question.typeDeQuestion.ref === 't6'" class="p-grid">
         <div class="p-col-12 question">
             <button [disabled]="disableButtonSon" pButton pRipple type="button" (click)="sound(question)"
                     icon="pi pi-volume-up" class="p-button-rounded sonButton ">
             </button>
             <h5 class="h5"> {{  questionSideLeft}}  </h5>
             <span class="p-float-label">
-            <input *ngIf="answerSelected.lib === undefined" id="inputDashedBorder"
+            <input *ngIf="answerSelected.lib === undefined" id="inputQstT6"
                    (focus)="showDontKnowButton =false; showCheckButton=true"
+                   (focusin)="hidePlaceHolder('HIDE')"
+                   (focusout)="hidePlaceHolder('SHOW')"
                    inputId="inputDashedBorder" type="text"
-                   [(ngModel)]="inputAnswer" class="p-inputtext-sm " pInputText/>
+                   [placeholder]="inputAnswer"
+                   [(ngModel)]="reponseQuiz.lib" class="p-inputtext-sm " pInputText/>
 
 
             <input *ngIf="answerSelected.lib !== undefined && answerIsCorrect(answerSelected, question) " disabled
@@ -320,36 +327,56 @@
 </div>
 
 <div *ngIf="showQuizReview" class="card">
-        <p-table [value]="answersList | keyvalue" styleClass="p-datatable-sm" responsiveLayout="scroll">
-            <ng-template pTemplate="caption">
-                <button  style=" float: none ;position: relative;margin-left: 82%;"
-                        pButton pRipple type="button"
-                        icon="pi pi-question" iconPos="right"
-                        label="Review" class="p-button-rounded dont-know-button ">
-                </button>
-            </ng-template>
-            <ng-template pTemplate="header">
-                <tr >
-                    <th style="width: 20px;"></th>
-                    <th>Number</th>
-                    <th>Your answer</th>
-                    <th>Correct answer</th>
-                    <th>Note</th>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-value>
-                <tr>
-                    <td *ngIf="value.value[0].etatReponse === 'true'"><i class="pi pi-check-circle"></i></td>
-                    <td *ngIf="value.value[0].etatReponse === 'false'"><i class="pi pi-times-circle"></i></td>
-                    <td>{{value?.key?.numero}}</td>
-                    <td>{{value?.value[0]?.lib}}</td>
-                    <td>{{correctAnswersList?.get(value.key.id)[0].lib}}</td>
-                    <td *ngIf="value.value[0].etatReponse === 'true'">{{value?.key?.pointReponseJuste}}</td>
-                    <td *ngIf="value.value[0].etatReponse === 'false'">{{value?.key?.pointReponsefausse}}</td>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="footer">
-                <th colspan="5" style="padding: 3% 0 10px 9%;text-align: center;"><h4 class="noteFinal">Note final: </h4>  {{  noteQuiz}} / {{answersList.size}}</th>
-            </ng-template>
-        </p-table>
+    <p-table [value]="answersList | keyvalue" styleClass="p-datatable-sm" responsiveLayout="scroll">
+        <ng-template pTemplate="caption">
+            <button style=" float: none ;position: relative;margin-left: 82%;"
+                    pButton pRipple type="button"
+                    icon="pi pi-question" iconPos="right"
+                    routerLink="quiz-review"
+                    label="Review" class="p-button-rounded dont-know-button ">
+            </button>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width: 20px;"></th>
+                <th>Number</th>
+                <th>Your answer</th>
+                <th>Correct answer</th>
+                <th>Note</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-value>
+            <tr>
+                <td *ngIf="value.value.etatReponse === 'true' && (answersPointStudent.get(value.key))?.toString() === 'STUDENT_ANSWER'">
+                    <i class="pi pi-check-circle"></i></td>
+                <td *ngIf="value.value.etatReponse === 'false'"><i class="pi pi-times-circle"></i></td>
+
+                <td *ngIf="value.value.etatReponse === 'true' && answersPointStudent.get(value.key)?.toString() === 'TEACHER_ANSWER'">
+                    <i class="pi pi-users"></i></td>
+
+                <td *ngIf="value.value.etatReponse === 'true' && answersPointStudent.get(value.key)?.toString() === 'STUDENT_DONT_KNOW'">
+                    <i class="pi pi-exclamation-circle"></i></td>
+
+
+                <td>{{value?.key?.numero}}</td>
+
+
+                <td *ngIf="(answersPointStudent.get(value.key))?.toString() === 'STUDENT_ANSWER'">{{value?.value?.lib}}</td>
+                <td *ngIf="(answersPointStudent.get(value.key))?.toString() !== 'STUDENT_ANSWER'"></td>
+
+
+                <td>{{correctAnswersList?.get(value.key.id)[0].lib}}</td>
+
+
+                <td *ngIf="value.value.etatReponse === 'true'  && (answersPointStudent.get(value.key))?.toString() === 'STUDENT_ANSWER'">{{value?.key?.pointReponseJuste}}</td>
+                <td *ngIf="value.value.etatReponse === 'true'  && (answersPointStudent.get(value.key))?.toString() === 'TEACHER_ANSWER'">{{(value?.key?.pointReponseJuste)/2}}</td>
+                <td *ngIf="value.value.etatReponse === 'true'  && (answersPointStudent.get(value.key))?.toString() === 'STUDENT_DONT_KNOW'">0</td>
+                <td *ngIf="value.value.etatReponse === 'false'">{{value?.key?.pointReponsefausse}}</td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="footer">
+            <th colspan="5" style="padding: 3% 0 10px 9%;text-align: center;"><h4 class="noteFinal">Note
+                final: </h4>  {{  noteQuiz}} / {{answersList.size}}</th>
+        </ng-template>
+    </p-table>
 </div>

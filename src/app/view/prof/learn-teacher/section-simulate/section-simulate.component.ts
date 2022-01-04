@@ -41,6 +41,8 @@ export class SectionSimulateComponent implements OnInit {
     srcImg: string;
     value = 0;
     word: string;
+    showTakeQuiz = false;
+    showViewQuiz = false;
 
     // tslint:disable-next-line:max-line-length
     constructor(private sectionItemService: SectionItemService,
@@ -299,8 +301,8 @@ export class SectionSimulateComponent implements OnInit {
                     this.showVocabulary = false;
                 }
                 this.quizService.findQuizBySection(this.selectedsection.id).subscribe(
-                    data => {
-                        this.selectedQuiz = data;
+                    dataQuiz => {
+                        this.selectedQuiz = dataQuiz;
                     });
             });
         } else {

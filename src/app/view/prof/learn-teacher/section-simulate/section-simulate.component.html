@@ -50,25 +50,19 @@
                         label="Previous" pButton pRipple
                         style="margin-left: 15px; width: 120px; background-color: orange"
                         type="button"></button>
-                <button (click)="quiz()" *ngIf="this.selectedsection.categorieSection.libelle != 'Vocabulary'  "
-                        [style.visibility]="(this.selectedQuiz.section.id == this.selectedsection.id )? 'visible':'hidden'"
-                        class="p-button-rounded" id="quiz"
-                        label="quiz"
-                        pButton
-                        pRipple
-                        style="position: absolute;margin: 0; background-color: orange ;left: 50%; -ms-transform: translate(-50%, -50%); transform: translate(-50%, -50%);top: 50%;  width: 120px" type="button"></button>
+
+
                 <button (click)="goToSection('NEXT', 'next')"
                         [style.visibility]="(this.selectedsection.numeroOrder < this.itemssection2.length)? 'visible':'hidden'"
                         class="p-button-rounded" icon="pi pi-caret-right" id="next" label="Next"
                         pButton pRipple
                         style=" width: 120px ; background-color: orange;  position: absolute;right: 15px;"
                         type="button"></button>
-                <button
-                        (click)="Review()"
-                        [style.visibility]="(this.selectedsection.numeroOrder < this.itemssection2.length)? 'hidden':'visible'"
-                        class="p-button-rounded" icon="pi pi-check" label="Review" pButton pRipple
-                        style=" width: 130px; background-color: orange; position: absolute;right: 15px;"
-                        type="button"></button>
+
+            </div>
+
+            <div  *ngIf="this.selectedQuiz.section.id == this.selectedsection.id" class="p-col quiz">
+                <app-quiz-preview-prof></app-quiz-preview-prof>
 
             </div>
 

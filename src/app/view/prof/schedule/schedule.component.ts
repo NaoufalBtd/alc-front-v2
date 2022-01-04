@@ -350,9 +350,9 @@ export class ScheduleLocalComponent implements OnInit {
         console.log(this.data.groupeEtudiant.id);
         this.webSocketService.sessionHasStarted = true;
         this.findAllGroupeEtudiantDetail(this.data.groupeEtudiant.id);
-        console.log(this.data.cours);
+        console.log(this.data);
         this.simulateSectionService.findSectionOneByOne(this.data.cours);
-        this.webSocketService.openWebSocket(this.prof);
+        this.webSocketService.startSessionByProf(this.prof, this.data.groupeEtudiant);
         this.webSocketService.saveCurrentSection(this.prof.id, this.simulateSectionService.selectedsection);
         this.router.navigate(['prof/sections-simulate']);
     }

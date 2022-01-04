@@ -11,10 +11,16 @@ import {HttpClient} from '@angular/common/http';
 import {User} from '../model/user.model';
 import {SimulateSectionService} from './simulate-section.service';
 import {AuthenticationService} from './authentication.service';
-import {ParcoursService} from "./parcours.service";
-import {Section} from "../model/section.model";
-import {Cours} from "../model/cours.model";
-import {Router} from "@angular/router";
+import {ParcoursService} from './parcours.service';
+import {Section} from '../model/section.model';
+import {Cours} from '../model/cours.model';
+import {Router} from '@angular/router';
+import {QuizEtudiant} from '../model/quiz-etudiant.model';
+import {Reponse} from '../model/reponse.model';
+import {QuizReponse} from '../model/quiz-reponse';
+import {LearnService} from './learn.service';
+import {Question} from '../model/question.model';
+import {GroupeEtudiant} from '../model/groupe-etudiant.model';
 
 @Injectable({
     providedIn: 'root'
@@ -27,13 +33,13 @@ export class WebSocketService {
     private profUrl = environment.profUrl;
     private synchronizationUrl = 'synchronization';
     index = 0;
-    webSocket: WebSocket ;
+    webSocket: WebSocket;
     chatMessages: ChatMessageDto[] = [];
     private _connectedUsers: any[] = [];
     actionType: Array<string> = new Array<string>();
     students: Etudiant[];
     idprof: number;
-    public isInSession = false ;
+    public isInSession = false;
     public sessionHasStarted = false;
 
 
@@ -43,14 +49,59 @@ export class WebSocketService {
                 private loginservice: LoginService, public serviceprof: ProfService,
                 private simulatesectionService: SimulateSectionService,
                 private parcoursService: ParcoursService,
-                private router: Router
-                ) {
+                private router: Router,
+                private learnService: LearnService
+    ) {
     }
 
+    get reponseQuiz(): QuizReponse {
+        return this.learnService.reponseQuiz;
+    }
+
+    set reponseQuiz(value: QuizReponse) {
+        this.learnService.reponseQuiz = value;
+    }
+
+
+    get participants(): Map<Prof, GroupeEtudiant> {
+        return this.learnService.participants;
+    }
+
+    set participants(value: Map<Prof, GroupeEtudiant>) {
+        this.learnService.participants = value;
+    }
+
+
+    get question(): Question {
+        return this.learnService.question;
+    }
+
+    set question(value: Question) {
+        this.learnService.question = value;
+    }
+
+    public closeWebSocket(user: any) {
+        this.webSocket.send(JSON.stringify(user));
+        this.webSocket.close();
+        this.webSocket.onclose = (event) => {
+            console.log('Clooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooose: ');
+            console.log(event);
+        };
+    }
+
+    public startSessionByProf(prof: Prof, grpEtudant: GroupeEtudiant) {
+        this.webSocket = new WebSocket(this.socketUrl);
+        this.webSocket.onopen = (event) => {
+            this.webSocket.send(JSON.stringify(prof));
+            console.log('ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooopeeeeeeeeen');
+            this.participants.set(prof, grpEtudant);
+        };
+    }
     public openWebSocket(user: User) {
         this.webSocket = new WebSocket(this.socketUrl);
         this.webSocket.onopen = (event) => {
             this.webSocket.send(JSON.stringify(user));
+            console.log('ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooopeeeeeeeeen');
             // this.connectedUsers.push(this.webSocket.)
         };
         // this.findbynumero(this.loginservice.prof.id);
@@ -60,22 +111,37 @@ export class WebSocketService {
             if (data.type === 'message') {
                 this.chatMessages.push(data);
                 console.log(data);
-            }
-            else if  (data.type === 'NEXT') {
+            } else if (data.type === 'NEXT') {
                 console.log('hani ghandir next l student');
                 this.simulatesectionService.nextSection();
 
-            }
-           else if (data.type === 'PREVIOUS') {
-               console.log('hani ghandir previous l student');
-               this.simulatesectionService.PreviousSection();
-            //   this.updateCurrentSection(this.loginservice.prof.id, this.simulatesectionService.selectedsection);
+            } else if (data.type === 'PREVIOUS') {
+                console.log('hani ghandir previous l student');
+                this.simulatesectionService.PreviousSection();
+                //   this.updateCurrentSection(this.loginservice.prof.id, this.simulatesectionService.selectedsection);
+            } else if (data.type === 'QUIZ') {
+                this.reponseQuiz = JSON.parse(event.data);
+                console.log(this.reponseQuiz);
+                if (this.reponseQuiz?.question?.typeDeQuestion?.ref === 't5') {
+                    this.trueOrFalse = this.reponseQuiz.lib !== 'false';
+                    alert(this.trueOrFalse);
+                }
+                if (this.reponseQuiz.sender === 'PROF') {
+                    this.learnService.saveAnswers(this.question, 'TEACHER_ANSWER');
+                } else if (this.reponseQuiz.sender === 'STUDENT') {
+                    this.learnService.saveAnswers(this.question, 'STUDENT_ANSWER');
+                }
+
+            } else if (data.type === 'FOLLOW-QUIZ') {
+                this.reponseQuiz = JSON.parse(event.data);
+                this.question = this.reponseQuiz?.question;
+                this.learnService.nextQuestionFct();
             } else {
                 console.log(data);
                 console.log(this.connectedUsers);
                 if (this.connectedUsers.length > 0) {
-                    for (let user of this.connectedUsers) {
-                        if (user.id === data.id) {
+                    for (const connectedUser of this.connectedUsers) {
+                        if (connectedUser.id === data.id) {
                             return;
                         }
                     }
@@ -91,15 +157,48 @@ export class WebSocketService {
             }
         };
 
+    }
 
-        this.webSocket.onclose = (event) => {
+    get trueOrFalse(): boolean {
+        return this.learnService.trueOrFalse;
+    }
 
-        };
+    set trueOrFalse(value: boolean) {
+        this.learnService.trueOrFalse = value;
     }
 
     public sendMessage(chatMessageDto: ChatMessageDto) {
         this.webSocket.send(JSON.stringify(chatMessageDto));
     }
+
+    public sendReponseQuiz(reponse: QuizReponse) {
+        this.webSocket.send(JSON.stringify(reponse));
+        this.webSocket.onmessage = (event) => {
+            this.reponseQuiz = JSON.parse(event.data);
+            console.log(this.reponseQuiz);
+            if (this.reponseQuiz.type === 'FOLLOW-QUIZ') {
+                this.reponseQuiz = JSON.parse(event.data);
+                this.question = this.reponseQuiz?.question;
+                this.learnService.nextQuestionFct();
+            } else if (this.reponseQuiz.type === 'QUIZ') {
+                this.reponseQuiz = JSON.parse(event.data);
+                console.log(this.reponseQuiz);
+                if (this.reponseQuiz?.question?.typeDeQuestion?.ref === 't5') {
+                    this.trueOrFalse = this.reponseQuiz.lib !== 'false';
+                    alert(this.trueOrFalse);
+                }
+                if (this.reponseQuiz.sender === 'PROF') {
+                    this.learnService.saveAnswers(this.question, 'TEACHER_ANSWER');
+                } else if (this.reponseQuiz.sender === 'STUDENT') {
+                    this.learnService.saveAnswers(this.question, 'STUDENT_ANSWER');
+                } else {
+                    this.learnService.saveAnswers(this.question, 'STUDENT_DONT_KNOW');
+                }
+
+            }
+        };
+    }
+
 
     public findstudentlist(idprof: number): Etudiant[] {
         this.serviceetudiant.findetudiantProf1(idprof).subscribe(
@@ -134,12 +233,12 @@ export class WebSocketService {
         );
     }
 
-    public saveCurrentSection(id: number, section: Section){
-        this.http.post<number>(this.profUrl + this.synchronizationUrl + '/id/' + id, section ).subscribe(
+    public saveCurrentSection(id: number, section: Section) {
+        this.http.post<number>(this.profUrl + this.synchronizationUrl + '/id/' + id, section).subscribe(
             data => {
-                if (data > 0){
+                if (data > 0) {
                     console.log('CurrentSection saved');
-                }else {
+                } else {
                     console.log('section not saved');
                 }
             }, error => {
@@ -148,12 +247,12 @@ export class WebSocketService {
         );
     }
 
-    public updateCurrentSection(id: number, section: Section){
-        this.http.post<number>(this.profUrl + this.synchronizationUrl + '/update/' + id, section ).subscribe(
+    public updateCurrentSection(id: number, section: Section) {
+        this.http.post<number>(this.profUrl + this.synchronizationUrl + '/update/' + id, section).subscribe(
             data => {
-                if (data > 0){
+                if (data > 0) {
                     console.log('CurrentSection updated');
-                }else {
+                } else {
                     console.log('section not updated');
                 }
             }, error => {
@@ -162,12 +261,12 @@ export class WebSocketService {
         );
     }
 
-    public deleteWhenSessionIsfiniched(id: number){
+    public deleteWhenSessionIsfiniched(id: number) {
         this.http.get<number>(this.profUrl + this.synchronizationUrl + '/remove/' + id).subscribe(
             data => {
-                if (data > 0){
+                if (data > 0) {
                     console.log('CurrentSection removed');
-                }else {
+                } else {
                     console.log('section not removed');
                 }
             }, error => {
@@ -176,10 +275,10 @@ export class WebSocketService {
         );
     }
 
-    public findCurrentSectionForstudent(cours: Cours){
+    public findCurrentSectionForstudent(cours: Cours) {
         this.http.get<Section>(this.profUrl + this.synchronizationUrl + '/id/' + this.loginservice.etudiant.prof.id).subscribe(
             async data => {
-                if (data !== null){
+                if (data !== null) {
                     this.parcoursService.selectedsection = data;
                     console.log('CurrentSection found');
                     console.log(this.parcoursService.selectedsection);
@@ -187,7 +286,7 @@ export class WebSocketService {
                     this.router.navigate(['etudiant/etudiant-simulate-sections']);
                     this.simulatesectionService.goToSection(this.parcoursService.selectedsection.categorieSection.libelle);
 
-                }else {
+                } else {
                     console.log('section not found');
                 }
             }, error => {
@@ -196,17 +295,9 @@ export class WebSocketService {
         );
     }
 
-    public closeWebSocket(user: any) {
-        this.webSocket.onclose = (event) => {
-            console.log('Close: ', event);
-            this.webSocket.close();
-        };
-        // this.webSocket.close();
-    }
-
 
     get connectedUsers(): any[] {
-        if (this._connectedUsers == null){
+        if (this._connectedUsers == null) {
             this._connectedUsers = [];
         }
         return this._connectedUsers;
@@ -215,4 +306,5 @@ export class WebSocketService {
     set connectedUsers(value: any[]) {
         this._connectedUsers = value;
     }
+
 }

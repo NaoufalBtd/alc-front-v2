@@ -327,7 +327,7 @@ export class SimulateSectionService {
                 data => {
                   this.selectedQuiz = data;
 
-                  this.quizService.findQuizEtudiant(this.loginService.etudiant, this.selectedQuiz).subscribe(
+                  this.quizService.findQuizEtudanitByEtudiantIdAndQuizId(this.loginService.etudiant, this.selectedQuiz).subscribe(
                       data => {
                         this.quizEtudiantList = data;
                         console.log(this.quizEtudiantList);
@@ -379,13 +379,13 @@ export class SimulateSectionService {
             this.quizService.findQuizBySectionId(this.selectedsection).subscribe(
                 data => {
                   this.selectedQuiz = data;
-                  this.quizService.findQuizEtudiant(this.loginService.etudiant, this.selectedQuiz).subscribe(
+                  this.quizService.findQuizEtudanitByEtudiantIdAndQuizId(this.loginService.etudiant, this.selectedQuiz).subscribe(
                       data => {
                         this.quizEtudiantList = data;
                         console.log(this.quizEtudiantList);
                         this.quizService.findAllQuestions(this.selectedQuiz.ref).subscribe(
                             dataQuestions => {
-                              if (data.questionCurrent > dataQuestions.length) {
+                              if (data?.questionCurrent > dataQuestions?.length) {
                                 this.passerQuiz = 'View Quiz';
                                 this.quizView = true;
                               } else {
@@ -584,13 +584,13 @@ export class SimulateSectionService {
           this.quizService.findQuizBySectionId(this.selectedsection).subscribe(
               data => {
                 this.selectedQuiz = data;
-                this.quizService.findQuizEtudiant(this.loginService.etudiant, this.selectedQuiz).subscribe(
+                this.quizService.findQuizEtudanitByEtudiantIdAndQuizId(this.loginService.etudiant, this.selectedQuiz).subscribe(
                     data => {
                       this.quizEtudiantList = data;
                       console.log(this.quizEtudiantList);
                       this.quizService.findAllQuestions(this.selectedQuiz.ref).subscribe(
                           dataQuestions => {
-                            if (data.questionCurrent > dataQuestions.length) {
+                            if (data?.questionCurrent > dataQuestions?.length) {
                               this.passerQuiz = 'View Quiz';
                               this.quizView = true;
                             } else {

@@ -74,8 +74,9 @@
         </div>
 
 
-            <div  *ngIf="this.selectedQuiz.section.id == this.selectedsection.id " class="p-col quiz">
-                <app-quiz-take></app-quiz-take>
+            <div  *ngIf="this.selectedQuiz.section.id == this.selectedsection.id" class="p-col quiz">
+                <app-quiz-take *ngIf="showTakeQuiz"></app-quiz-take>
+                <app-quiz-etudiant-view *ngIf="showViewQuiz"></app-quiz-etudiant-view>
             </div>
         </div>
 
