@@ -61,6 +61,7 @@ export class HomeWorkEtudiantComponent implements OnInit {
     debutPlaceholder = 0;
     finPlaceholder = 0;
     answer = '_____';
+    trueorFalse = false;
     answerCorrect = '';
     isSelected: boolean;
     correctMistakeAnswer: string;
@@ -99,8 +100,19 @@ export class HomeWorkEtudiantComponent implements OnInit {
     numberofword: any;
     public i: number;
     hasNext = false;
+    disableToggleButton = false;
+    showCheckButton = false;
+    questionSideLeft: string;
+    questionSideRight: string;
+    answerSelected: string;
+    inputAnswer: string;
 
-
+    substractQuestionT4(){
+        this.questionSideLeft = this.homeWorkQuestion.libelle.substring(0, this.homeWorkQuestion.libelle.indexOf('@'));
+        this.questionSideRight = this.homeWorkQuestion.libelle.substring(this.homeWorkQuestion.libelle.lastIndexOf('@') + 1);
+        this.inputAnswer = this.homeWorkQuestion.libelle.substring(this.homeWorkQuestion.libelle.indexOf('@') + 1,
+            this.homeWorkQuestion.libelle.lastIndexOf('@'));
+    }
     ngOnInit(): void {
         console.log(this.homeWorkList);
         this.findbyetudiantIdAndHomeWorkID();
@@ -114,6 +126,9 @@ export class HomeWorkEtudiantComponent implements OnInit {
                 this.homeWork.questions = data;
                 this.homeWorkQuestion = data[0];
                 this.i = 0;
+                if (this.homeWorkQuestion.typeDeQuestion.ref =='t4'){
+                    this.substractQuestionT4();
+                }
                 this.findReponseByQuestion();
             }
         );
@@ -697,6 +712,9 @@ export class HomeWorkEtudiantComponent implements OnInit {
 
         this.homeWorkQuestion = this.homeWork.questions[this.i + 1];
         this.findReponseByQuestion();
+        if (this.homeWorkQuestion.typeDeQuestion.ref == 't4'){
+            this.substractQuestionT4();
+        }
         this.i++;
         this.etudiantReponse = new HoweWorkQSTReponse();
         this.reponseInput = '';
@@ -715,6 +733,9 @@ export class HomeWorkEtudiantComponent implements OnInit {
         if (this.i > 0) {
             this.homeWorkQuestion = this.homeWork.questions[this.i - 1];
             this.findReponseByQuestion();
+            if (this.homeWorkQuestion.typeDeQuestion.ref == 't4'){
+                this.substractQuestionT4();
+            }
             this.hasNext = true;
             this.disable = false;
             this.etudiantReponse = new HoweWorkQSTReponse();
@@ -736,6 +757,14 @@ export class HomeWorkEtudiantComponent implements OnInit {
         this.etudiantreponseList.push(etudiantreponse);
     }
 
+    onOffTrue(){
+        if(this.trueorFalse === true){
+            this.trueorFalse = false;
+        }
+        else {
+            this.trueorFalse = true;
+        }
+    }
     submithomeWork() {
         this.homeWorkEtudiant.homeWork = this.homeWork;
         this.homeWorkEtudiant.etudiant = this.loginservice.etudiant;
@@ -767,5 +796,26 @@ export class HomeWorkEtudiantComponent implements OnInit {
         this.etudiantreponseList.push(etudiantreponse);
         this.homeworkEtudiantservice.QstReponseetudiant = this.etudiantreponseList;
         console.log(this.homeworkEtudiantservice.QstReponseetudiant);
+    }
+
+    submitOnOff() {
+        this.disable = true;
+        const etudiantreponse = new ReponseEtudiantHomeWork();
+        if (this.trueorFalse){
+            etudiantreponse.answer = 'true';
+        }else{
+            etudiantreponse.answer = 'false';
+        }
+        etudiantreponse.question = this.homeWorkQuestion;
+        this.etudiantreponseList.push(etudiantreponse);
+        console.log(this.etudiantreponseList);
+    }
+
+    submitMistake() {
+        this.disable = true;
+        const etudiantreponse = new ReponseEtudiantHomeWork();
+        etudiantreponse.question = this.homeWorkQuestion;
+        etudiantreponse.answer = this.inputAnswer;
+        this.etudiantreponseList.push(etudiantreponse);
     }
 }
