@@ -58,11 +58,9 @@
                         <th pSortableColumn="email">Email
                             <p-sortIcon field="email"></p-sortIcon>
                         </th>
-                        <th pSortableColumn="City">City
-                            <p-sortIcon field="City"></p-sortIcon>
+                        <th pSortableColumn="City">Action
                         </th>
 
-                        <th></th>
                     </tr>
                 </ng-template>
                 <ng-template let-professor pTemplate="body">
@@ -73,12 +71,10 @@
                         <td>{{professor?.prenom}} {{ professor?.nom}}</td>
                         <td>{{professor?.numero}}</td>
                         <td>{{professor?.username}}</td>
-                        <td>{{professor?.ville}}</td>
-
                         <td>
-                            <button (click)="edit(professor)" class="p-button-rounded p-button-success p-mr-2" icon="pi pi-pencil" pButton
+                            <button (click)="edit(professor); findByProfId(professor)" class="p-button-rounded p-button-success p-mr-2" icon="pi pi-pencil" pButton
                                     pRipple></button>
-                            <button (click)="view(professor)" class="p-button-rounded p-button-info p-mr-2" icon="pi pi-list" pButton
+                            <button (click)="view(professor) ; findByProfId(professor)" class="p-button-rounded p-button-info p-mr-2" icon="pi pi-list" pButton
                                     pRipple></button>
                             <button (click)="delete(professor)" class="p-button-rounded p-button-danger p-mr-2" icon="pi pi-trash" pButton
                                     pRipple></button>

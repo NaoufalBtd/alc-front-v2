@@ -32,7 +32,9 @@ export class ProfesseurViewComponent implements OnInit {
     }
 
     ngOnInit(): void {
-    }
+        this.service.findByProfId(this.selected.id).subscribe(data => this.selected.trancheHoraireProfList = data);
+    
+}
 
     public hideViewDialog() {
         this.viewDialog = false;
