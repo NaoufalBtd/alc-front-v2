@@ -432,7 +432,7 @@ export class QuizCreateComponent implements OnInit {
     }
 
     chooseType(){
-        if(this.question.typeDeQuestion.ref == 't5')
+        if (this.question.typeDeQuestion.ref == 't5')
         {
             this.viewOnOffDialog = true;
         }

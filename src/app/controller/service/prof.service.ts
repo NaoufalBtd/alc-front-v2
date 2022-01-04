@@ -8,6 +8,7 @@ import {Observable} from 'rxjs';
 import {Etudiant} from '../model/etudiant.model';
 import {User} from '../model/user.model';
 import {LoginService} from './login.service';
+import {Parcours} from '../model/parcours.model';
 
 @Injectable({
     providedIn: 'root'
@@ -16,6 +17,8 @@ export class ProfService {
 
     private adminUrl = environment.adminUrl;
     private profUrl = environment.profUrl;
+    private urlBase = environment.baseApi;
+    private urlParcours = '/admin/parcours/';
     prof: Prof = this.loginService.getConnectedProf();
 
     constructor(private http: HttpClient,
@@ -40,7 +43,9 @@ export class ProfService {
     set listprof(value: Array<Prof>) {
         this._listprof = value;
     }
-
+    public findAllParcours(): Observable<Array<Parcours>> {
+        return this.http.get<Array<Parcours>>(this.urlBase + this.urlParcours);
+    }
     public save(): Observable<number> {
         return this.http.post<number>(this.adminUrl + 'prof/', this.selectedProf);
     }
