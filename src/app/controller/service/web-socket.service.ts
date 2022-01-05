@@ -21,6 +21,7 @@ import {QuizReponse} from '../model/quiz-reponse';
 import {LearnService} from './learn.service';
 import {Question} from '../model/question.model';
 import {GroupeEtudiant} from '../model/groupe-etudiant.model';
+import {GroupeEtudiantService} from './groupe-etudiant-service';
 
 @Injectable({
     providedIn: 'root'
@@ -28,6 +29,8 @@ import {GroupeEtudiant} from '../model/groupe-etudiant.model';
 export class WebSocketService {
 
     publicUrl = environment.publicUrl;
+    private _prof: Prof = new Prof();
+    private _studentsEnLigne: Map<number, Etudiant> = new Map<number, Etudiant>();
     private socketUrl = environment.socketUrl;
     private baseUrl = environment.baseUrl;
     private profUrl = environment.profUrl;
@@ -50,8 +53,26 @@ export class WebSocketService {
                 private simulatesectionService: SimulateSectionService,
                 private parcoursService: ParcoursService,
                 private router: Router,
+                private groupeEtudiantService: GroupeEtudiantService,
                 private learnService: LearnService
     ) {
+    }
+
+
+    get studentsEnLigne(): Map<number, Etudiant> {
+        return this._studentsEnLigne;
+    }
+
+    set studentsEnLigne(value: Map<number, Etudiant>) {
+        this._studentsEnLigne = value;
+    }
+
+    get prof(): Prof {
+        return this._prof;
+    }
+
+    set prof(value: Prof) {
+        this._prof = value;
     }
 
     get reponseQuiz(): QuizReponse {
@@ -63,11 +84,11 @@ export class WebSocketService {
     }
 
 
-    get participants(): Map<Prof, GroupeEtudiant> {
+    get participants(): Map<number, Array<Etudiant>> {
         return this.learnService.participants;
     }
 
-    set participants(value: Map<Prof, GroupeEtudiant>) {
+    set participants(value: Map<number, Array<Etudiant>>) {
         this.learnService.participants = value;
     }
 
@@ -86,28 +107,36 @@ export class WebSocketService {
         this.webSocket.onclose = (event) => {
             console.log('Clooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooose: ');
             console.log(event);
+            console.log('================================================================================');
         };
     }
 
-    public startSessionByProf(prof: Prof, grpEtudant: GroupeEtudiant) {
+    public openWebSocket(user: User, prof: Prof, grpEtudiant: GroupeEtudiant, sender: string) {
         this.webSocket = new WebSocket(this.socketUrl);
         this.webSocket.onopen = (event) => {
-            this.webSocket.send(JSON.stringify(prof));
+            if (sender === 'PROF') {
+                console.log('ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooopeeeeeeeeen');
+                this.participants.set(prof.id, this.connectedUsers);
+                console.log(this.participants);
+            } else {
+                this.prof = prof;
+                this.groupeEtudiantService.findAllGroupeEtudiantDetail(grpEtudiant.id).subscribe(
+                    data => {
+                        const groupeEtudiantDetails = data;
+                        for (let i = 0; i < groupeEtudiantDetails.length; i++) {
+                            this.connectedUsers.push({...groupeEtudiantDetails[i].etudiant});
+                        }
+                        this.participants.set(prof.id, this.connectedUsers);
+                    }
+                );
+                this.webSocket.send(JSON.stringify(user));
+            }
             console.log('ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooopeeeeeeeeen');
-            this.participants.set(prof, grpEtudant);
         };
-    }
-    public openWebSocket(user: User) {
-        this.webSocket = new WebSocket(this.socketUrl);
-        this.webSocket.onopen = (event) => {
-            this.webSocket.send(JSON.stringify(user));
-            console.log('ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooopeeeeeeeeen');
-            // this.connectedUsers.push(this.webSocket.)
-        };
-        // this.findbynumero(this.loginservice.prof.id);
         this.webSocket.onmessage = (event) => {
+            
             console.log(event);
-            const data = JSON.parse(event.data);
+            const data: ChatMessageDto = JSON.parse(event.data);
             if (data.type === 'message') {
                 this.chatMessages.push(data);
                 console.log(data);
@@ -119,8 +148,12 @@ export class WebSocketService {
                 console.log('hani ghandir previous l student');
                 this.simulatesectionService.PreviousSection();
                 //   this.updateCurrentSection(this.loginservice.prof.id, this.simulatesectionService.selectedsection);
+            } else if (data.type === 'FOLLOW-QUIZ') {
+                this.reponseQuiz = data.quizReponse;
+                this.question = this.reponseQuiz?.question;
+                this.learnService.nextQuestionFct();
             } else if (data.type === 'QUIZ') {
-                this.reponseQuiz = JSON.parse(event.data);
+                this.reponseQuiz = data.quizReponse;
                 console.log(this.reponseQuiz);
                 if (this.reponseQuiz?.question?.typeDeQuestion?.ref === 't5') {
                     this.trueOrFalse = this.reponseQuiz.lib !== 'false';
@@ -130,29 +163,45 @@ export class WebSocketService {
                     this.learnService.saveAnswers(this.question, 'TEACHER_ANSWER');
                 } else if (this.reponseQuiz.sender === 'STUDENT') {
                     this.learnService.saveAnswers(this.question, 'STUDENT_ANSWER');
+                } else {
+                    this.learnService.saveAnswers(this.question, 'STUDENT_DONT_KNOW');
                 }
 
-            } else if (data.type === 'FOLLOW-QUIZ') {
-                this.reponseQuiz = JSON.parse(event.data);
-                this.question = this.reponseQuiz?.question;
-                this.learnService.nextQuestionFct();
-            } else {
-                console.log(data);
-                console.log(this.connectedUsers);
-                if (this.connectedUsers.length > 0) {
-                    for (const connectedUser of this.connectedUsers) {
-                        if (connectedUser.id === data.id) {
-                            return;
+            }
+
+
+                // else if (data.type === 'QUIZ') {
+                //     this.reponseQuiz = JSON.parse(event.data);
+                //     console.log(this.reponseQuiz);
+                //     if (this.reponseQuiz?.question?.typeDeQuestion?.ref === 't5') {
+                //         this.trueOrFalse = this.reponseQuiz.lib !== 'false';
+                //         alert(this.trueOrFalse);
+                //     }
+                //     if (this.reponseQuiz.sender === 'PROF') {
+                //         this.learnService.saveAnswers(this.question, 'TEACHER_ANSWER');
+                //     } else if (this.reponseQuiz.sender === 'STUDENT') {
+                //         this.learnService.saveAnswers(this.question, 'STUDENT_ANSWER');
+                //     }
+                //
+                // } else if (data.type === 'FOLLOW-QUIZ') {
+                //     this.reponseQuiz = JSON.parse(event.data);
+                //     this.question = this.reponseQuiz?.question;
+            //     this.learnService.nextQuestionFct();
+            else {
+                const mydata = JSON.parse(event.data);
+                console.log(mydata);
+                const studentList = this.participants.get(mydata?.prof?.id);
+                for (const student of studentList) {
+                    if (student.id === mydata.id) {
+                        if (this.studentsEnLigne.get(student.id) === undefined) {
+                            this.studentsEnLigne.set(student.id, student);
+                        } else {
+                            this.studentsEnLigne.delete(student.id);
+                            console.log('========== DELETE  STUDENT ========');
+                            console.log(this.studentsEnLigne);
+                            console.log('========== DELETE  STUDENT ========');
                         }
                     }
-                    this.connectedUsers.push({...data});
-
-                } else {
-                    console.log(this.connectedUsers);
-                    this.connectedUsers.push({...data});
-                    // this.connectedUsers = this.connectedUsers;
-                    // console.log(this.webSocket.readyState);
-                    console.log(this.connectedUsers);
                 }
             }
         };
@@ -168,35 +217,45 @@ export class WebSocketService {
     }
 
     public sendMessage(chatMessageDto: ChatMessageDto) {
-        this.webSocket.send(JSON.stringify(chatMessageDto));
+        console.log('===========================this.webSocket.readyState ===========================');
+        console.log(this.webSocket.readyState);
+        console.log(this.webSocket.OPEN);
+        console.log(this.webSocket.CLOSED);
+        if (this.webSocket.readyState === this.webSocket.OPEN){
+            this.webSocket.send(JSON.stringify(chatMessageDto));
+        } else {
+            this.webSocket = new WebSocket(this.socketUrl);
+            this.webSocket.send(JSON.stringify(chatMessageDto));
+
+        }
     }
 
     public sendReponseQuiz(reponse: QuizReponse) {
         this.webSocket.send(JSON.stringify(reponse));
-        this.webSocket.onmessage = (event) => {
-            this.reponseQuiz = JSON.parse(event.data);
-            console.log(this.reponseQuiz);
-            if (this.reponseQuiz.type === 'FOLLOW-QUIZ') {
-                this.reponseQuiz = JSON.parse(event.data);
-                this.question = this.reponseQuiz?.question;
-                this.learnService.nextQuestionFct();
-            } else if (this.reponseQuiz.type === 'QUIZ') {
-                this.reponseQuiz = JSON.parse(event.data);
-                console.log(this.reponseQuiz);
-                if (this.reponseQuiz?.question?.typeDeQuestion?.ref === 't5') {
-                    this.trueOrFalse = this.reponseQuiz.lib !== 'false';
-                    alert(this.trueOrFalse);
-                }
-                if (this.reponseQuiz.sender === 'PROF') {
-                    this.learnService.saveAnswers(this.question, 'TEACHER_ANSWER');
-                } else if (this.reponseQuiz.sender === 'STUDENT') {
-                    this.learnService.saveAnswers(this.question, 'STUDENT_ANSWER');
-                } else {
-                    this.learnService.saveAnswers(this.question, 'STUDENT_DONT_KNOW');
-                }
-
-            }
-        };
+        // this.webSocket.onmessage = (event) => {
+        //     this.reponseQuiz = JSON.parse(event.data);
+        //     console.log(this.reponseQuiz);
+        //     if (this.reponseQuiz.type === 'FOLLOW-QUIZ') {
+        //         this.reponseQuiz = JSON.parse(event.data);
+        //         this.question = this.reponseQuiz?.question;
+        //         this.learnService.nextQuestionFct();
+        //     } else if (this.reponseQuiz.type === 'QUIZ') {
+        //         this.reponseQuiz = JSON.parse(event.data);
+        //         console.log(this.reponseQuiz);
+        //         if (this.reponseQuiz?.question?.typeDeQuestion?.ref === 't5') {
+        //             this.trueOrFalse = this.reponseQuiz.lib !== 'false';
+        //             alert(this.trueOrFalse);
+        //         }
+        //         if (this.reponseQuiz.sender === 'PROF') {
+        //             this.learnService.saveAnswers(this.question, 'TEACHER_ANSWER');
+        //         } else if (this.reponseQuiz.sender === 'STUDENT') {
+        //             this.learnService.saveAnswers(this.question, 'STUDENT_ANSWER');
+        //         } else {
+        //             this.learnService.saveAnswers(this.question, 'STUDENT_DONT_KNOW');
+        //         }
+        //
+        //     }
+        // };
     }
 
 
@@ -233,10 +292,16 @@ export class WebSocketService {
         );
     }
 
+    get selectedsection(): Section {
+        return this.parcoursService.selectedsection;
+    }
+
     public saveCurrentSection(id: number, section: Section) {
+        console.log(this.selectedsection);
         this.http.post<number>(this.profUrl + this.synchronizationUrl + '/id/' + id, section).subscribe(
             data => {
                 if (data > 0) {
+                    console.log(section);
                     console.log('CurrentSection saved');
                 } else {
                     console.log('section not saved');

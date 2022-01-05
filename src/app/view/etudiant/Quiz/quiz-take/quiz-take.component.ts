@@ -22,6 +22,7 @@ import {WebSocketService} from '../../../../controller/service/web-socket.servic
 import {QuizReponse} from '../../../../controller/model/quiz-reponse';
 import {LearnService} from '../../../../controller/service/learn.service';
 import {Role} from '../../../../enum/role.enum';
+import {ChatMessageDto} from '../../../../controller/model/chatMessageDto';
 
 @Component({
     selector: 'app-quiz-take',
@@ -224,6 +225,7 @@ export class QuizTakeComponent implements OnInit, OnDestroy {
     set selectedQuiz(value: Quiz) {
         this.service.selectedQuiz = value;
     }
+
     get answersPointStudent(): Map<Question, string> {
         return this.learnService.answersPointStudent;
     }
@@ -231,8 +233,6 @@ export class QuizTakeComponent implements OnInit, OnDestroy {
     set answersPointStudent(value: Map<Question, string>) {
         this.learnService.answersPointStudent = value;
     }
-
-
 
 
     get reponseQuiz(): QuizReponse {
@@ -255,14 +255,6 @@ export class QuizTakeComponent implements OnInit, OnDestroy {
         }
     }
 
-    closeWebSocket() {
-        alert('close');
-        this.webSocketService.closeWebSocket(this.login.getConnectedProf());
-    }
-
-    startWebSocket() {
-        // this.webSocketService.openWebSocket(this.login.getConnectedProf());
-    }
 
     ngOnDestroy(): void {
     }
@@ -285,7 +277,10 @@ export class QuizTakeComponent implements OnInit, OnDestroy {
         this.reponseQuiz.sender = 'STUDENT';
         this.reponseQuiz.student = this.login.getConnectedStudent();
         this.reponseQuiz.etatReponse = reponse.etatReponse;
-        this.webSocketService.sendReponseQuiz(this.reponseQuiz);
+        const chatMessageDto: ChatMessageDto = new ChatMessageDto(this.login.getConnectedStudent().toString(), '', true);
+        chatMessageDto.quizReponse = this.reponseQuiz;
+        chatMessageDto.type = 'QUIZ';
+        this.webSocketService.sendMessage(chatMessageDto);
     }
 
     showAnswers(question: Question) {
@@ -298,7 +293,10 @@ export class QuizTakeComponent implements OnInit, OnDestroy {
         this.reponseQuiz.sender = 'STUDENT_DONT_KNOW';
         this.reponseQuiz.student = this.login.getConnectedStudent();
         this.reponseQuiz.etatReponse = reponse.etatReponse;
-        this.webSocketService.sendReponseQuiz(this.reponseQuiz);
+        const chatMessageDto: ChatMessageDto = new ChatMessageDto(this.login.getConnectedStudent().toString(), '', true);
+        chatMessageDto.quizReponse = this.reponseQuiz;
+        chatMessageDto.type = 'QUIZ';
+        this.webSocketService.sendMessage(chatMessageDto);
     }
 
     nextQuestionFct() {

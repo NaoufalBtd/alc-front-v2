@@ -24,6 +24,8 @@ import {GroupeEtudiantDetail} from '../../../controller/model/groupe-etudiant-de
 import {WebSocketService} from '../../../controller/service/web-socket.service';
 import {Router} from '@angular/router';
 import {SimulateSectionService} from '../../../controller/service/simulate-section.service';
+import {Section} from '../../../controller/model/section.model';
+import {ParcoursService} from '../../../controller/service/parcours.service';
 
 L10n.load({
     'en-US': {
@@ -51,10 +53,10 @@ export class ScheduleLocalComponent implements OnInit {
     display = false;
     private selectionTarget: Element;
     public data: ScheduleProf = new ScheduleProf();
-    public timeScale: TimeScaleModel = { interval: 60, slotCount: 1 };
+    public timeScale: TimeScaleModel = {interval: 60, slotCount: 1};
     public selectedDate: Date = new Date();
     public showWeekend = true;
-    public groupeEtudiantDetails  = new Array<GroupeEtudiantDetail>();
+    public groupeEtudiantDetails = new Array<GroupeEtudiantDetail>();
     public sessionHasStarted = false;
     public eventSettings: EventSettingsModel = {
         dataSource: this.scheduleProfs,
@@ -68,6 +70,7 @@ export class ScheduleLocalComponent implements OnInit {
 
 
     constructor(private scheduleService: ScheduleService, private messageService: MessageService,
+                private parcoursService: ParcoursService,
                 private confirmationService: ConfirmationService, private loginService: LoginService,
                 private groupeEtudiantService: GroupeEtudiantService, private webSocketService: WebSocketService,
                 private router: Router, private simulateSectionService: SimulateSectionService) {
@@ -187,7 +190,7 @@ export class ScheduleLocalComponent implements OnInit {
         this.scheduleProf.prof = this.prof;
         const scheduleObj = this.scheduleObj;
         scheduleObj.eventSettings.dataSource = null;
-        console.log(scheduleObj.eventSettings.dataSource );
+        console.log(scheduleObj.eventSettings.dataSource);
         if (this.scheduleProf.id === 0 || this.scheduleProf.id === null) {
             this.scheduleService.saveByProf().subscribe
             (
@@ -209,7 +212,7 @@ export class ScheduleLocalComponent implements OnInit {
                         });
                         console.log(this.scheduleProfs);
                         scheduleObj.eventSettings.dataSource = this.scheduleProfs;
-                        console.log(scheduleObj.eventSettings.dataSource );
+                        console.log(scheduleObj.eventSettings.dataSource);
                     }
 
                 }, error => {
@@ -282,8 +285,8 @@ export class ScheduleLocalComponent implements OnInit {
         this.scheduleObj.eventSettings.dataSource = null;
         const scheduleProf = this.scheduleObj.getEventDetails(this.selectionTarget) as ScheduleProf;
         this.scheduleService.deleteByRef(scheduleProf.ref);
-        for (let i = 0; i < this.scheduleProfs.length; i++){
-            if (this.scheduleProfs[i].id === scheduleProf.id){
+        for (let i = 0; i < this.scheduleProfs.length; i++) {
+            if (this.scheduleProfs[i].id === scheduleProf.id) {
                 this.scheduleProfs.splice(i, 1);
             }
         }
@@ -291,7 +294,9 @@ export class ScheduleLocalComponent implements OnInit {
         console.log(scheduleObj.eventSettings.dataSource);
         this.hideDialog();
     }
+
     public schedule: ScheduleProf = new ScheduleProf();
+
     findByCriteriaStudent() {
         const scheduleObj = this.scheduleObj;
         scheduleObj.eventSettings.dataSource = null;
@@ -334,16 +339,25 @@ export class ScheduleLocalComponent implements OnInit {
     onAddClick($event: MouseEvent) {
     }
 
-    public findAllGroupeEtudiantDetail(id: number){
+    public findAllGroupeEtudiantDetail(id: number) {
         this.groupeEtudiantService.findAllGroupeEtudiantDetail(id).subscribe(
             data => {
-                this.groupeEtudiantDetails = data ;
-                for (let i = 0 ; i < this.groupeEtudiantDetails.length; i++){
+                this.groupeEtudiantDetails = data;
+                for (let i = 0; i < this.groupeEtudiantDetails.length; i++) {
                     this.webSocketService.connectedUsers.push(this.groupeEtudiantDetails[i].etudiant);
                 }
                 console.log(this.webSocketService.connectedUsers);
             }
         );
+    }
+
+    get selectedsection(): Section {
+        return this.parcoursService.selectedsection;
+    }
+
+    // tslint:disable-next-line:adjacent-overload-signatures
+    set selectedsection(value: Section) {
+        this.parcoursService.selectedsection = value;
     }
 
     startSession() {
@@ -352,8 +366,17 @@ export class ScheduleLocalComponent implements OnInit {
         this.findAllGroupeEtudiantDetail(this.data.groupeEtudiant.id);
         console.log(this.data);
         this.simulateSectionService.findSectionOneByOne(this.data.cours);
-        this.webSocketService.startSessionByProf(this.prof, this.data.groupeEtudiant);
-        this.webSocketService.saveCurrentSection(this.prof.id, this.simulateSectionService.selectedsection);
+        this.parcoursService.afficheOneSectionByProf(this.data.cours).subscribe(
+            dataSection => {
+                console.log('============ SCHEDULE SECTION ===========================');
+                console.log(dataSection);
+                console.log('============ SCHEDULE SECTION ===========================');
+                this.webSocketService.saveCurrentSection(this.prof.id, dataSection);
+
+            }
+        );
+        console.log(this.selectedsection);
+        this.webSocketService.openWebSocket(this.prof, this.prof, this.data.groupeEtudiant, 'PROF');
         this.router.navigate(['prof/sections-simulate']);
     }
 }

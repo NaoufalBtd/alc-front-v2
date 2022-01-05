@@ -1,131 +1,191 @@
 <div class=" card">
     <p-toast></p-toast>
-    <h1 class="p-m-0"> {{this.selectedcours.parcours.libelle}}</h1>
-    <h1 class="p-m-0"> {{this.selectedcours.libelle}}</h1>
-    <div class="p-grid">
-        <div class="p-col">
+    <!--    <h1 class="p-m-0"> {{this.selectedcours.parcours.libelle}}</h1>-->
+    <!--    <h1 class="p-m-0"> {{this.selectedcours.libelle}}</h1>-->
+    <div class="p-grid" style="margin-top: 5rem; padding:10px">
+        <div class="p-col-12 toopBar">
+            <div class="p-grid">
+                <div class="p-col-8"></div>
+                <div class="p-col-3">
+                    <p-overlayPanel #op [style]="{width: '400px'}"
+                                    [showTransitionOptions]="'0ms'" [hideTransitionOptions]="'0ms'" [dismissable]="true"
+                                    [showCloseIcon]="false">
+                        <ng-template pTemplate>
+                            <p-table [value]="participants.get(prof.id)" [scrollable]="true" scrollHeight="400px">
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th style="min-width:200px">Full Name</th>
+                                        <th style="min-width:200px">Status</th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-etudiant>
+                                    <tr>
+                                        <td>{{etudiant?.nom }} {{ etudiant?.prenom }}</td>
+                                        <td>
+                                            <button *ngIf="studentsEnLigne.get(etudiant.id) === undefined" style="width: 15px;height: 0" pButton pRipple
+                                                    type="button" icon="pi pi-circle-fill"
+                                                    class="p-button-rounded p-button-danger">
 
-            <div class="product-grid-item ">
+                                             </button>
+                                            <button *ngIf="studentsEnLigne.get(etudiant.id) !== undefined" style="width: 15px;height: 0" pButton pRipple
+                                                    type="button" icon="pi pi-circle-fill"
+                                                    class="p-button-rounded p-button-success">
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </ng-template>
+                    </p-overlayPanel>
 
-                <div *ngIf="showVocabulary===false" class="product-grid-item-content">
-                    <div class="product-name" style="margin-bottom: 15px; background-color: orange; color: white"><h1>-{{this.selectedsection.libelle}}-</h1>
+                    <button style="float:right" pButton pRipple type="button" icon="pi pi-users"
+                            (click)="op.toggle($event); getData()"
+                            class="p-button-rounded p-button-secondary  p-button-outlined">
+
+                    </button>
+                </div>
+                <div class="p-col-1">
+                    <button pButton pRipple type="button" icon="pi pi-fw pi-power-off" label="Quit"
+                            (click)="closeSession()" routerLink="/"
+                            class="p-button-rounded p-button-secondary  p-button-outlined">
+
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="p-col-12 middleBar">
+            <div class="p-grid">
+                <div class="p-col-9">
+
+                    <div class="product-grid-item ">
+
+                        <div *ngIf="showVocabulary===false" class="product-grid-item-content">
+                            <div class="product-name"
+                                 style="margin-bottom: 15px; background-color: orange; color: white"><h1>
+                                -{{this.selectedsection.libelle}}-</h1>
+                            </div>
+                            <!-- <iframe *ngIf=" this.selectedsection.libelle != 'Watch the video' && this.selectedsection.urlImage != null"
+                                       [src]='photoURL() | safe' loading="lazy" width="400" height="200" ></iframe> -->
+                            <div style="width: 80%;margin: 0 auto">
+                                <img *ngIf=" this.selectedsection.urlImage && !this.selectedsection.urlVideo"
+                                     src="{{photoURL()}}"
+                                     style="width: 100%">
+                                <iframe *ngIf="this.selectedsection.urlVideo && !this.selectedsection.urlImage"
+                                        [src]='URLVideo() | safe'
+                                        allowfullscreen loading="lazy" style="width: 100% ;height: 500px;"></iframe>
+                                <div *ngIf="this.selectedsection.urlVideo && this.selectedsection.urlImage"
+                                     style="width: 100%;">
+                                    <img src="{{photoURL()}}" style="width: 100%">
+                                    <div>
+                                        <iframe [src]='URLVideo() | safe' allowfullscreen
+                                                loading="lazy" style="width: 100%;"></iframe>
+                                    </div>
+
+                                </div>
+                                <img *ngIf="!this.selectedsection.urlImage && !this.selectedsection.urlVideo"
+                                     src="../../../../../assets/notfound.jpg" style="width: 100%">
+
+
+                                <div *ngIf=" this.selectedsection.contenu != null && this.selectedsection.urlVideo == null"
+                                     style="box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)">
+                                    <h3 (mouseup)="dict()"
+                                        style=" background-color: white;white-space: pre-wrap; font-family: Great Vibes, cursive; font-size: 200%;line-height: 60px; text-align: left ;margin-left: 50px ;">{{this.selectedsection.contenu}}</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="showVocabulary===true" class="p-col">
+                            <app-vocabulary-section-prof (someEvent)="return($event)"></app-vocabulary-section-prof>
+                        </div>
                     </div>
-                    <!-- <iframe *ngIf=" this.selectedsection.libelle != 'Watch the video' && this.selectedsection.urlImage != null"
-                               [src]='photoURL() | safe' loading="lazy" width="400" height="200" ></iframe> -->
-                    <div style="width: 80%;margin: 0 auto">
-                        <img *ngIf=" this.selectedsection.urlImage && !this.selectedsection.urlVideo"
-                             src="{{photoURL()}}"
-                             style="width: 100%">
-                        <iframe *ngIf="this.selectedsection.urlVideo && !this.selectedsection.urlImage"
-                                [src]='URLVideo() | safe'
-                                allowfullscreen loading="lazy" style="width: 100% ;height: 500px;"></iframe>
-                        <div *ngIf="this.selectedsection.urlVideo && this.selectedsection.urlImage"
-                             style="width: 100%;">
-                            <img src="{{photoURL()}}" style="width: 100%">
-                            <div>
-                                <iframe [src]='URLVideo() | safe' allowfullscreen
-                                        loading="lazy" style="width: 100%;"></iframe>
+
+                    <div style="position: relative;margin-top: 50px">
+                        <button (click)="goToSection('PREVIOUS', 'previous')"
+                                [style.visibility]="(this.selectedsection.numeroOrder != 1)? 'visible':'hidden'"
+                                class="p-button-rounded" icon="pi pi-caret-left" id="previous"
+                                label="Previous" pButton pRipple
+                                style="margin-left: 15px; width: 120px; background-color: orange"
+                                type="button"></button>
+
+
+                        <button (click)="goToSection('NEXT', 'next')"
+                                [style.visibility]="(this.selectedsection.numeroOrder < this.itemssection2.length)? 'visible':'hidden'"
+                                class="p-button-rounded" icon="pi pi-caret-right" id="next" label="Next"
+                                pButton pRipple
+                                style=" width: 120px ; background-color: orange;  position: absolute;right: 15px;"
+                                type="button"></button>
+
+                    </div>
+
+                    <div *ngIf="this.selectedQuiz.section.id == this.selectedsection.id" class="p-col quiz">
+                        <app-quiz-preview-prof></app-quiz-preview-prof>
+
+                    </div>
+
+                </div>
+
+                <div class="p-col-3 product-grid-item">
+                    <div class="product-grid-item-content">
+                        <!--    <div style="margin-top: 20px">
+
+
+                               <button (click)="openCreateDict()" icon="pi pi-plus" pButton pRipple
+                                       style="background-color: #8b8b90; width: 100%" type="button"></button>
+
+                         <input  [(ngModel)]="word" pInputText placeholder="Search" style="width: 180px;" type="text"/>
+                                <button pButton pRipple type="button" icon="pi pi-search"  (click)="findByWord()" style="margin-left: 2px;" ></button>
+
+                                <p-button (click)="openCreateDict()" icon="pi pi-plus" style="margin-left: 2px;" ></p-button>
+
+                        </div> -->
+                        <div class="card" style="margin-top: 15px">
+                            <p-tabMenu [activeItem]="menu[0]" [model]="menu" style="width: 100%;"></p-tabMenu>
+
+
+                            <div [style.visibility]="'visible'" id="categoriess" style="width: 100%;margin-top: 15px">
+                                <p-table [value]="itemssection2" align="alternate" id="categ"
+                                         style="margin-top: 20px; width: 100%;">
+
+                                    <ng-template let-section pTemplate="body">
+                                        <tr class="timeline">
+                                            <li>
+                                                <td (click)="Section(section.categorieSection.libelle)"
+                                                    [style.color]="(section.categorieSection.libelle) == (this.selectedsection.categorieSection.libelle)? 'orange' :'black' "
+                                                    style="cursor: pointer; font-weight: 600">
+                                                    <u>{{section.categorieSection.libelle}}</u>
+                                                </td>
+                                            </li>
+                                        </tr>
+                                    </ng-template>
+
+                                </p-table>
+                            </div>
+
+                            <app-chat [style.visibility]="'hidden'" id="chat"></app-chat>
+
+                            <div id="connectedStudent" [style.visibility]="'hidden'">
+                                <p-table [value]="this.webSocketService.connectedUsers" responsiveLayout="scroll">
+                                    <ng-template pTemplate="header">
+                                        <tr>
+                                            <th>Connected Student</th>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-student>
+                                        <tr>
+                                            <td>{{student.nom }} {{ student.prenom}}</td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
                             </div>
 
                         </div>
-                        <img *ngIf="!this.selectedsection.urlImage && !this.selectedsection.urlVideo"
-                             src="../../../../../assets/notfound.jpg" style="width: 100%">
 
-
-                        <div *ngIf=" this.selectedsection.contenu != null && this.selectedsection.urlVideo == null" style="box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)">
-                            <h3 (mouseup)="dict()"
-                                style=" background-color: white;white-space: pre-wrap; font-family: Great Vibes, cursive; font-size: 200%;line-height: 60px; text-align: left ;margin-left: 50px ;">{{this.selectedsection.contenu}}</h3>
-                        </div>
                     </div>
                 </div>
-                <div *ngIf="showVocabulary===true" class="p-col">
-                    <app-vocabulary-section-prof (someEvent)="return($event)"></app-vocabulary-section-prof>
-                </div>
             </div>
-
-            <div style="position: relative;margin-top: 50px">
-                <button (click)="goToSection('PREVIOUS', 'previous')"
-                        [style.visibility]="(this.selectedsection.numeroOrder != 1)? 'visible':'hidden'"
-                        class="p-button-rounded" icon="pi pi-caret-left" id="previous"
-                        label="Previous" pButton pRipple
-                        style="margin-left: 15px; width: 120px; background-color: orange"
-                        type="button"></button>
-
-
-                <button (click)="goToSection('NEXT', 'next')"
-                        [style.visibility]="(this.selectedsection.numeroOrder < this.itemssection2.length)? 'visible':'hidden'"
-                        class="p-button-rounded" icon="pi pi-caret-right" id="next" label="Next"
-                        pButton pRipple
-                        style=" width: 120px ; background-color: orange;  position: absolute;right: 15px;"
-                        type="button"></button>
-
-            </div>
-
-            <div  *ngIf="this.selectedQuiz.section.id == this.selectedsection.id" class="p-col quiz">
-                <app-quiz-preview-prof></app-quiz-preview-prof>
-
-            </div>
-
         </div>
 
-        <div class="p-col-3 product-grid-item">
-            <div class="product-grid-item-content">
-                <!--    <div style="margin-top: 20px">
-
-
-                       <button (click)="openCreateDict()" icon="pi pi-plus" pButton pRipple
-                               style="background-color: #8b8b90; width: 100%" type="button"></button>
-
-                 <input  [(ngModel)]="word" pInputText placeholder="Search" style="width: 180px;" type="text"/>
-                        <button pButton pRipple type="button" icon="pi pi-search"  (click)="findByWord()" style="margin-left: 2px;" ></button>
-
-                        <p-button (click)="openCreateDict()" icon="pi pi-plus" style="margin-left: 2px;" ></p-button>
-
-                </div> -->
-                <div class="card" style="margin-top: 15px">
-                    <p-tabMenu [activeItem]="menu[0]" [model]="menu" style="width: 100%;"></p-tabMenu>
-
-
-                    <div [style.visibility]="'visible'" id="categoriess" style="width: 100%;margin-top: 15px">
-                        <p-table [value]="itemssection2" align="alternate" id="categ"
-                                 style="margin-top: 20px; width: 100%;">
-
-                            <ng-template let-section pTemplate="body">
-                                <tr class="timeline">
-                                    <li>
-                                        <td (click)="Section(section.categorieSection.libelle)"
-                                            [style.color]="(section.categorieSection.libelle) == (this.selectedsection.categorieSection.libelle)? 'orange' :'black' "
-                                            style="cursor: pointer; font-weight: 600">
-                                            <u>{{section.categorieSection.libelle}}</u>
-                                        </td>
-                                    </li>
-                                </tr>
-                            </ng-template>
-
-                        </p-table>
-                    </div>
-
-                    <app-chat [style.visibility]="'hidden'" id="chat"></app-chat>
-
-                    <div id="connectedStudent" [style.visibility]="'hidden'">
-                        <p-table [value]="this.webSocketService.connectedUsers"  responsiveLayout="scroll">
-                            <ng-template pTemplate="header">
-                                <tr>
-                                    <th>Connected Student</th>
-                                </tr>
-                            </ng-template>
-                            <ng-template pTemplate="body" let-student >
-                                <tr>
-                                    <td>{{student.nom }} {{ student.prenom}}</td>
-                                </tr>
-                            </ng-template>
-                        </p-table>
-                    </div>
-
-                </div>
-
-            </div>
-        </div>
     </div>
     <app-dictionary-create></app-dictionary-create>
     <app-prof-review-view></app-prof-review-view>

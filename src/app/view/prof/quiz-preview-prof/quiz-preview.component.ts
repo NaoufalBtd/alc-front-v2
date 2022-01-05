@@ -22,6 +22,7 @@ import {Cours} from '../../../controller/model/cours.model';
 import {Parcours} from '../../../controller/model/parcours.model';
 import {WebSocketService} from '../../../controller/service/web-socket.service';
 import {QuizReponse} from '../../../controller/model/quiz-reponse';
+import {ChatMessageDto} from '../../../controller/model/chatMessageDto';
 
 @Component({
     selector: 'app-quiz-preview-prof',
@@ -238,15 +239,6 @@ export class QuizPreviewProfComponent implements OnInit, OnDestroy {
     }
 
 
-    closeWebSocket() {
-        alert('close');
-        this.webSocketService.closeWebSocket(this.login.getConnectedProf());
-    }
-
-    startWebSocket() {
-        // this.webSocketService.openWebSocket(this.login.getConnectedProf());
-    }
-
     ngOnDestroy(): void {
     }
 
@@ -270,7 +262,10 @@ export class QuizPreviewProfComponent implements OnInit, OnDestroy {
         this.reponseQuiz.sender = 'PROF';
         this.reponseQuiz.prof = this.login.getConnectedProf();
         this.reponseQuiz.etatReponse = reponse.etatReponse;
-        this.webSocketService.sendReponseQuiz(this.reponseQuiz);
+        const chatMessageDto: ChatMessageDto = new ChatMessageDto(this.login.getConnectedProf().toString(), ' ', false);
+        chatMessageDto.quizReponse = this.reponseQuiz;
+        chatMessageDto.type = 'QUIZ';
+        this.webSocketService.sendMessage(chatMessageDto);
     }
 
 
@@ -310,12 +305,15 @@ export class QuizPreviewProfComponent implements OnInit, OnDestroy {
         this.showFollowButton = false;
         const reponseQuiz: QuizReponse = new QuizReponse();
         for (let i = 0; i < this.questionList.length; i++) {
-            if (this.questionList[i].id === question.id){
+            if (this.questionList[i].id === question.id) {
                 reponseQuiz.question = this.questionList[i - 1];
             }
         }
         reponseQuiz.type = 'FOLLOW-QUIZ';
         reponseQuiz.prof = this.login.getConnectedProf();
-        this.webSocketService.sendReponseQuiz(reponseQuiz);
+        const chatMessageDto: ChatMessageDto = new ChatMessageDto(this.login.getConnectedProf().toString(), ' ', false);
+        chatMessageDto.quizReponse = reponseQuiz;
+        chatMessageDto.type = 'FOLLOW-QUIZ';
+        this.webSocketService.sendMessage(chatMessageDto);
     }
 }

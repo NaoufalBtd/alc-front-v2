@@ -869,6 +869,11 @@ export class ParcoursService {
         return this.http.get<Section>(this.adminUrl + 'section/cours/id/' + this.selectedcours.id + '/numeroOrder/1');
     }
 
+    afficheOneSectionByProf(cour: Cours): Observable<Section> {
+        // tslint:disable-next-line:max-line-length
+        return this.http.get<Section>(this.adminUrl + 'section/cours/id/' + cour.id + '/numeroOrder/1');
+    }
+
     public findSectionByLibelle(libel: string): Observable<Array<Section>> {
         return this.http.get<Array<Section>>(this.adminUrl + 'section/libelle/' + libel);
     }

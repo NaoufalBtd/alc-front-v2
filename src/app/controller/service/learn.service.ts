@@ -19,13 +19,14 @@ import {Quiz} from '../model/quiz.model';
 import {QuizEtudiant} from '../model/quiz-etudiant.model';
 import {GroupeEtudiant} from '../model/groupe-etudiant.model';
 import {Prof} from '../model/prof.model';
+import {Etudiant} from '../model/etudiant.model';
 
 @Injectable({
     providedIn: 'root'
 })
 export class LearnService {
 
-    private _participants: Map<Prof, GroupeEtudiant> = new Map<Prof, GroupeEtudiant>();
+    private _participants: Map<number, Array<Etudiant>> = new Map<number, Array<Etudiant>>();
     private _parcourCurrent: Parcours = new Parcours();
     private _sectionCurrent: Section = new Section();
     private _courseCurrent: Cours = new Cours();
@@ -54,11 +55,20 @@ export class LearnService {
     private _pourCentgage = 0;
     private _placeHolderAnswer: string;
     private _reponseQuiz: QuizReponse = new QuizReponse();
+    private _showAppMenu = true;
 
     wordDictionnary: string;
     son = '';
     private _answersPointStudent: Map<Question, string> = new Map<Question, string>();
 
+
+    get showAppMenu(): boolean {
+        return this._showAppMenu;
+    }
+
+    set showAppMenu(value: boolean) {
+        this._showAppMenu = value;
+    }
 
     get answersPointStudent(): Map<Question, string> {
         return this._answersPointStudent;
@@ -73,11 +83,11 @@ export class LearnService {
     }
 
 
-    get participants(): Map<Prof, GroupeEtudiant> {
+    get participants(): Map<number, Array<Etudiant>> {
         return this._participants;
     }
 
-    set participants(value: Map<Prof, GroupeEtudiant>) {
+    set participants(value: Map<number, Array<Etudiant>>) {
         this._participants = value;
     }
 
