@@ -20,7 +20,7 @@ export class ProfesseurEditComponent implements OnInit {
     public parcoursList2: Array<Parcours> = new Array<Parcours>();
     public findAllParcours() {
         this.service.findAllParcours().subscribe(data => { this.parcoursList = data,
-        this.parcoursList2 = data;});
+            this.parcoursList2 = data;});
     }
     ngOnInit(): void {
         this.findAllParcours();
@@ -75,7 +75,7 @@ export class ProfesseurEditComponent implements OnInit {
     public addHoraire(){
         console.log(this.trancheHoraireProf);
         this.selected.trancheHoraireProfList.push({...this.trancheHoraireProf});
-    //    this.selected.trancheHoraireProfList =  this.trancheHoraireProfs;
+        //    this.selected.trancheHoraireProfList =  this.trancheHoraireProfs;
 
 
     }
@@ -150,13 +150,11 @@ export class ProfesseurEditComponent implements OnInit {
             }
         });
     }
-    public deleteFromView(trancheHoraireProf: TrancheHoraireProf) {
-        const index = this.selected.trancheHoraireProfList.findIndex(c => c.horaire === trancheHoraireProf.horaire);
-        if (index !== -1 ) {
-            this.selected.trancheHoraireProfList.splice(index, 1);
+        public deleteFromView(trancheHoraireProf: TrancheHoraireProf) {
+                const index = this.selected.trancheHoraireProfList.findIndex(c => c.horaire === trancheHoraireProf.horaire);
+                if (index !== -1 ) {
+                    this.selected.trancheHoraireProfList.splice(index, 1);
 
-        }
-    }
-
-
+                }
+            }
 }
