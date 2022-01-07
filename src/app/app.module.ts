@@ -530,8 +530,8 @@ import {ViewProfilEtudiantComponent} from './view/prof/synthese-session/view-pro
         LoginComponent,
         ProfinscriptionComponent,
         EtudiantinscriptionComponent,
-        ViewProfilEtudiantComponent
-        EtudiantinscriptionComponent,
+        ViewProfilEtudiantComponent,
+        EtudiantinscriptionComponent
     ],
     providers: [
         {provide: LocationStrategy, useClass: HashLocationStrategy},
