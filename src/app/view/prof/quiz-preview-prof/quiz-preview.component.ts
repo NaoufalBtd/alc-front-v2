@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {QuizEtudiantService} from '../../../controller/service/quiz-etudiant.service';
 import {LoginService} from '../../../controller/service/login.service';
 import {ConfirmationService, MenuItem, MessageService, TreeNode} from 'primeng/api';
@@ -16,981 +16,304 @@ import {Question} from '../../../controller/model/question.model';
 import {QuizEtudiant} from '../../../controller/model/quiz-etudiant.model';
 import {Dictionary} from '../../../controller/model/dictionary.model';
 import {Section} from '../../../controller/model/section.model';
+import {LearnService} from '../../../controller/service/learn.service';
+import {ReponseEtudiantService} from '../../../controller/service/reponse-etudiant.service';
+import {Cours} from '../../../controller/model/cours.model';
+import {Parcours} from '../../../controller/model/parcours.model';
+import {WebSocketService} from '../../../controller/service/web-socket.service';
+import {QuizReponse} from '../../../controller/model/quiz-reponse';
+import {ChatMessageDto} from '../../../controller/model/chatMessageDto';
 
 @Component({
-  selector: 'app-quiz-preview',
-  templateUrl: './quiz-preview.component.html',
-  styleUrls: ['./quiz-preview.component.scss']
+    selector: 'app-quiz-preview-prof',
+    templateUrl: './quiz-preview.component.html',
+    styleUrls: ['./quiz-preview.component.scss']
 })
-export class QuizPreviewProfComponent implements OnInit {
+export class QuizPreviewProfComponent implements OnInit, OnDestroy {
+    questionOptions = [{label: 'True', value: 'true'}, {label: 'False', value: 'false'}];
+    showFollowButton = true;
 
-  constructor(private service: QuizEtudiantService, private login: LoginService, private messageService: MessageService, private router: Router, private dictionnaryService: DictionaryService, private sanitizer: DomSanitizer, private confirmationService: ConfirmationService, private parcoursservice: ParcoursService, private http: HttpClient, private  vocab: VocabularyService) {
-  }
-
-  private selectedValue: number;
-  private _selectedValueCheckbox: Array<Reponse>;
-  private _type: string;
-  private _button: string;
-  private _radio: string;
-  private _checkbox: string;
-  private _noteQst: number;
-  private _noteQuiz: number;
-  private _noteCheckbox: number;
-  private _numeroCheckBox: number;
-  private _numeroQuestion: number;
-  question1 = '';
-  question2 = '';
-  debutBlink = 0;
-  finBlink = 0;
-  debutPlaceholder = 0;
-  finPlaceholder = 0;
-  answer = '_____';
-  answerCorrect = '';
-  isSelected: boolean;
-  correctMistakeAnswer: string;
-  private _disable: boolean;
-  myAnswerCorrectMistake: string;
-  trueAnswerCorrectMistake: string;
-  image: string;
-  ref: string;
-  private _myanswers: Array<string>;
-  private _correctanswers: Array<string>;
-  private _questionanswers: Array<string>;
-  private _numberofword: Array<string>;
-  word = '';
-  correctMistakeNumber: number;
-  j: number;
-  k: number;
-  private _answerCorrectOrFalse: Array<boolean>;
-  isChecked: boolean;
-  next: boolean;
-  translate: string;
-  question= '';
-  wordDictionnary: string;
-  filteredDict: any[];
-  nodes: TreeNode[];
-  menu: MenuItem[];
-  resultat: string;
-  on_off : boolean;
-  totalNote = 0;
-  string_input = '';
-  son = '';
-
-  get answerCorrectOrFalse(): Array<boolean> {
-    if(this._answerCorrectOrFalse == null)
-    {
-      this._answerCorrectOrFalse = new Array<boolean>();
+    constructor(private service: QuizEtudiantService,
+                private learnService: LearnService,
+                private reponseEtudiantService: ReponseEtudiantService,
+                private login: LoginService,
+                private messageService: MessageService,
+                private router: Router,
+                private dictionnaryService: DictionaryService,
+                private sanitizer: DomSanitizer,
+                private confirmationService: ConfirmationService,
+                private webSocketService: WebSocketService,
+                private parcoursservice: ParcoursService) {
     }
-    return this._answerCorrectOrFalse;
-  }
 
-  set answerCorrectOrFalse(value: Array<boolean>) {
-    this._answerCorrectOrFalse = value;
-  }
-
-  get myanswers(): Array<string> {
-    if (this._myanswers == null) {
-      this._myanswers = new Array<string>();
+    get showTakeQuiz(): boolean {
+        return this.learnService.showTakeQuiz;
     }
-    return this._myanswers;
-  }
 
-  set myanswers(value: Array<string>) {
-    this._myanswers = value;
-  }
-
-
-  get correctanswers(): Array<string> {
-    if (this._correctanswers == null) {
-      this._correctanswers = new Array<string>();
+    set showTakeQuiz(value: boolean) {
+        this.learnService.showTakeQuiz = value;
     }
-    return this._correctanswers;
-  }
 
-  set correctanswers(value: Array<string>) {
-    this._correctanswers = value;
-  }
-
-  get questionanswers(): Array<string> {
-    if (this._questionanswers == null) {
-      this._questionanswers = new Array<string>();
+    get showQuizReview(): boolean {
+        return this.learnService.showQuizReview;
     }
-    return this._questionanswers;
-  }
 
-  set questionanswers(value: Array<string>) {
-    this._questionanswers = value;
-  }
-
-
-  get numberofword(): Array<string> {
-    return this._numberofword;
-  }
-
-  set numberofword(value: Array<string>) {
-    if (this._numberofword == null) {
-      this._numberofword = new Array<string>();
+    set showQuizReview(value: boolean) {
+        this.learnService.showQuizReview = value;
     }
-    this._numberofword = value;
-  }
 
-  get disable(): boolean {
-    return this._disable;
-  }
-
-  set disable(value: boolean) {
-    this._disable = value;
-  }
-
-  get numeroQuestion(): number {
-    return this._numeroQuestion;
-  }
-
-  set numeroQuestion(value: number) {
-    this._numeroQuestion = value;
-  }
-
-  get numeroCheckBox(): number {
-    return this._numeroCheckBox;
-  }
-
-  set numeroCheckBox(value: number) {
-    this._numeroCheckBox = value;
-  }
-
-  get noteCheckbox(): number {
-    return this._noteCheckbox;
-  }
-
-  set noteCheckbox(value: number) {
-    this._noteCheckbox = value;
-  }
-
-  get selectedValueCheckbox(): Array<Reponse> {
-    if (this._selectedValueCheckbox == null) {
-      this._selectedValueCheckbox = new Array<Reponse>();
+    get myAnswer(): Reponse {
+        return this.learnService.myAnswer;
     }
-    return this._selectedValueCheckbox;
-  }
-
-  set selectedValueCheckbox(value: Array<Reponse>) {
-    this._selectedValueCheckbox = value;
-  }
-
-  get type(): string {
-    return this._type;
-  }
-
-  set type(value: string) {
-    this._type = value;
-  }
-
-  get reponsesEtudiant(): Array<ReponseEtudiant> {
-    return this.service.reponsesEtudiant;
-  }
-
-  set reponsesEtudiant(value: Array<ReponseEtudiant>) {
-    this.service.reponsesEtudiant = value;
-  }
-
-  get myAnswer(): Reponse {
-    return this.service.myAnswer;
-  }
-
-  set myAnswer(value: Reponse) {
-    this.service.myAnswer = value;
-  }
-
-  get reponseEtudiant(): ReponseEtudiant {
-    return this.service.reponseEtudiant;
-  }
-
-  set reponseEtudiant(value: ReponseEtudiant) {
-    this.service.reponseEtudiant = value;
-  }
-
-  get noteQst(): number {
-    return this._noteQst;
-  }
-
-  set noteQst(value: number) {
-    this._noteQst = value;
-  }
-
-  get noteQuiz(): number {
-    return this._noteQuiz;
-  }
-
-  set noteQuiz(value: number) {
-    this._noteQuiz = value;
-  }
-
-  get correctAnswers(): Array<Reponse> {
-    return this.service.correctAnswers;
-  }
-
-  set correctAnswers(value: Array<Reponse>) {
-    this.service.correctAnswers = value;
-  }
-
-  get checkbox(): string {
-    return this._checkbox;
-  }
-
-  set checkbox(value: string) {
-    this._checkbox = value;
-  }
-
-  get radio(): string {
-    return this._radio;
-  }
-
-  set radio(value: string) {
-    this._radio = value;
-  }
-
-  get button(): string {
-    return this._button;
-  }
-
-  set button(value: string) {
-    this._button = value;
-  }
-
-  get etudiant(): Etudiant {
-    return this.service.etudiant;
-  }
-
-  set etudiant(value: Etudiant) {
-    this.service.etudiant = value;
-  }
-
-  get quiz(): Quiz {
-    return this.service.quiz;
-  }
-
-  set quiz(value: Quiz) {
-    this.service.quiz = value;
-  }
-
-  get items(): Array<Question> {
-    return this.service.items;
-  }
-
-  set items(value: Array<Question>) {
-    this.service.items = value;
-  }
-
-  get selected(): Question {
-    return this.service.selected;
-  }
-
-  set selected(value: Question) {
-    this.service.selected = value;
-  }
-
-  get reponses(): Array<Reponse> {
-    return this.service.reponses;
-  }
-
-  set reponses(value: Array<Reponse>) {
-    this.service.reponses = value;
-  }
-
-  get numReponses(): number {
-    return this.service.numReponses;
-  }
-
-  set numReponses(value: number) {
-    this.service.numReponses = value;
-  }
-
-  get numQuestion(): number {
-    return this.service.numQuestion;
-  }
-
-  set numQuestion(value: number) {
-    this.service.numQuestion = value;
-  }
-
-  get quizsEtudiant(): Array<QuizEtudiant> {
-    return this.service.quizsEtudiant;
-  }
-
-  set quizsEtudiant(value: Array<QuizEtudiant>) {
-    this.service.quizsEtudiant = value;
-  }
-
-  get quizEtudiant(): QuizEtudiant {
-    return this.service.quizEtudiant;
-  }
-
-  set quizEtudiant(value: QuizEtudiant) {
-    this.service.quizEtudiant = value;
-  }
-
-  get selectedQuiz(): Quiz {
-    return this.service.selectedQuiz;
-  }
-
-  set selectedQuiz(value: Quiz) {
-    this.service.selectedQuiz = value;
-  }
-
-  get selectedDict(): Dictionary {
-    return this.dictionnaryService.selectedDict;
-  }
-
-  set selectedDict(value: Dictionary) {
-    this.dictionnaryService.selectedDict = value;
-  }
-
-  get itemsDict(): Array<Dictionary> {
-    return this.dictionnaryService.itemsDict;
-  }
-
-  set itemsDict(value: Array<Dictionary>) {
-    this.dictionnaryService.itemsDict = value;
-  }
-
-  get submittedDict(): boolean {
-    return this.dictionnaryService.submittedDict;
-  }
-  set submittedDict(value: boolean) {
-    this.dictionnaryService.submittedDict = value;
-  }
-
-  get createDialogDict(): boolean {
-    return this.dictionnaryService.createDialogDict;
-  }
-
-  set createDialogDict(value: boolean) {
-    this.dictionnaryService.createDialogDict = value;
-  }
-
-  set itemssection2(value: Array<Section>) {
-    this.parcoursservice.itemssection2 = value;
-  }
-  get itemssection2(): Array<Section> {
-    return this.parcoursservice.itemssection2;
-  }
-
-  get selectedsection(): Section {
-    return this.parcoursservice.selectedsection;
-  }
-  get section(): Section {
-    return this.service.section;
-  }
-
-  set section(value: Section) {
-    this.service.section = value;
-  }
-  // tslint:disable-next-line:adjacent-overload-signatures
-  set selectedsection(value: Section) {
-    this.parcoursservice.selectedsection = value;
-  }
-
-  get quizEtudiantList(): QuizEtudiant {
-    return this.service.quizEtudiantList;
-  }
-
-  set quizEtudiantList(value: QuizEtudiant) {
-    this.service.quizEtudiantList = value;
-  }
-
-  get passerQuiz(): string {
-    return this.service.passerQuiz;
-  }
-
-  set passerQuiz(value: string) {
-    this.service.passerQuiz = value;
-  }
-
-  get quizView(): boolean {
-    return this.service.quizView;
-  }
-
-  set quizView(value: boolean) {
-    this.service.quizView = value;
-  }
-
-  get selectedDictionnary(): Dictionary {
-    return this.dictionnaryService.selected;
-  }
-
-  set selectedDictionnary(value: Dictionary) {
-    this.dictionnaryService.selected = value;
-  }
-
-  get submittedDictEdit(): boolean {
-    return this.dictionnaryService.submittedDictEdit;
-  }
-
-  set submittedDictEdit(value: boolean) {
-    this.dictionnaryService.submittedDictEdit = value;
-  }
-
-  get editDialogDict(): boolean {
-    return this.dictionnaryService.editDialogDict;
-  }
-
-  set editDialogDict(value: boolean) {
-    this.dictionnaryService.editDialogDict = value;
-  }
-
-  ngOnInit(): void {
-    this.numQuestion = 0;
-    this.service.findAllQuestions(this.selectedQuiz.ref).subscribe(
-        data => {
-          this.items = data;
+
+    set myAnswer(value: Reponse) {
+        this.learnService.myAnswer = value;
+    }
+
+    get answerSelected(): Reponse {
+        return this.learnService.answerSelected;
+    }
+
+    set answerSelected(value: Reponse) {
+        this.learnService.answerSelected = value;
+    }
+
+    get inputAnswer(): string {
+        return this.learnService.inputAnswer;
+    }
+
+    set inputAnswer(value: string) {
+        this.learnService.inputAnswer = value;
+    }
+
+    get trueOrFalse(): boolean {
+        return this.learnService.trueOrFalse;
+    }
+
+    set trueOrFalse(value: boolean) {
+        this.learnService.trueOrFalse = value;
+    }
+
+    get disableToggleButton(): boolean {
+        return this.learnService.disableToggleButton;
+    }
+
+    set disableToggleButton(value: boolean) {
+        this.learnService.disableToggleButton = value;
+    }
+
+
+    get noteQuiz(): number {
+        return this.learnService.noteQuiz;
+    }
+
+    get placeHolderAnswer(): string {
+        return this.learnService.placeHolderAnswer;
+    }
+
+    set placeHolderAnswer(value: string) {
+        this.learnService.placeHolderAnswer = value;
+    }
+
+
+    // List of Question
+    get questionList(): Array<Question> {
+        return this.service.items;
+    }
+
+
+    get reponses(): Array<Reponse> {
+        return this.service.reponses;
+    }
+
+    set reponses(value: Array<Reponse>) {
+        this.service.reponses = value;
+    }
+
+
+    get answersList(): Map<Question, Reponse> {
+        return this.learnService.answersList;
+    }
+
+
+    get correctAnswersList(): Map<number, Array<Reponse>> {
+        return this.learnService.correctAnswersList;
+    }
+
+    set correctAnswersList(value: Map<number, Array<Reponse>>) {
+        this.learnService.correctAnswersList = value;
+    }
+
+    get question(): Question {
+        return this.learnService.question;
+    }
+
+    set question(value: Question) {
+        this.learnService.question = value;
+    }
+
+    get questionSideLeft(): string {
+        return this.learnService.questionSideLeft;
+    }
+
+
+    get questionSideRight(): string {
+        return this.learnService.questionSideRight;
+    }
+
+    set questionSideRight(value: string) {
+        this.learnService.questionSideRight = value;
+    }
+
+    get numberOfQuestion(): number {
+        return this.learnService.numberOfQuestion;
+    }
+
+
+    get value(): number {
+        return this.learnService.value;
+    }
+
+    set value(value: number) {
+        this.learnService.value = value;
+    }
+
+    get index(): number {
+        return this.learnService.index;
+    }
+
+    set index(value: number) {
+        this.learnService.index = value;
+    }
+
+    get showCheckButton(): boolean {
+        return this.learnService.showCheckButton;
+    }
+
+    set showCheckButton(value: boolean) {
+        this.learnService.showCheckButton = value;
+    }
+
+    get saveDone(): boolean {
+        return this.learnService.saveDone;
+    }
+
+    set saveDone(value: boolean) {
+        this.learnService.saveDone = value;
+    }
+
+    get showDontKnowButton(): boolean {
+        return this.learnService.showDontKnowButton;
+    }
+
+    set showDontKnowButton(value: boolean) {
+        this.learnService.showDontKnowButton = value;
+    }
+
+    get showNextButton(): boolean {
+        return this.learnService.showNextButton;
+    }
+
+    set showNextButton(value: boolean) {
+        this.learnService.showNextButton = value;
+    }
+
+    get disableButtonSon(): boolean {
+        return this.learnService.disableButtonSon;
+    }
+
+    get translateWord(): string {
+        return this.learnService.translateWord;
+    }
+
+    get selectedQuiz(): Quiz {
+        return this.service.selectedQuiz;
+    }
+
+    set selectedQuiz(value: Quiz) {
+        this.service.selectedQuiz = value;
+    }
+
+    ngOnInit(): void {
+        this.learnService.onStart();
+    }
+
+
+    ngOnDestroy(): void {
+    }
+
+    sound(question: Question) {
+        this.learnService.sound(question);
+    }
+
+    answerIsCorrect(answerSelected: Reponse, question: Question) {
+        return this.learnService.answerIsCorrect(answerSelected, question);
+    }
+
+    saveAnswers(question: Question) {
+        const reponse = this.learnService.saveAnswers(question, 'TEACHER_ANSWER');
+        console.log(reponse);
+        this.reponseQuiz.lib = reponse.lib;
+        this.reponseQuiz.type = 'QUIZ';
+        this.reponseQuiz.id = reponse.id;
+        this.reponseQuiz.question = reponse.question;
+        this.reponseQuiz.question.reponses = reponse.question?.reponses;
+        this.reponseQuiz.numero = reponse.numero;
+        this.reponseQuiz.sender = 'PROF';
+        this.reponseQuiz.prof = this.login.getConnectedProf();
+        this.reponseQuiz.etatReponse = reponse.etatReponse;
+        const chatMessageDto: ChatMessageDto = new ChatMessageDto(this.login.getConnectedProf().toString(), ' ', false);
+        chatMessageDto.quizReponse = this.reponseQuiz;
+        chatMessageDto.type = 'QUIZ';
+        this.webSocketService.sendMessage(chatMessageDto);
+    }
+
+
+    nextQuestionFct() {
+        this.showFollowButton = true;
+        this.learnService.nextQuestionFct();
+    }
+
+    finishQuiz() {
+        this.learnService.finishQuiz();
+    }
+
+
+    hidePlaceHolder(type: string) {
+        if (type === 'HIDE') {
+            this.placeHolderAnswer = '';
+            this.inputAnswer = '';
+            console.log(this.inputAnswer);
+        } else {
+            this.placeHolderAnswer = this.correctAnswersList.get(this.question.id)[0].lib;
+            this.inputAnswer = this.question.libelle.substring(this.question.libelle.indexOf('@') + 1,
+                this.question.libelle.lastIndexOf('@'));
         }
-    );
-    this.quizEtudiant.quiz = this.selectedQuiz;
-    this.quizEtudiant.resultat = null;
-    this.quizEtudiant.note = 0;
-    this.quizEtudiant.etudiant = this.login.etudiant;
-    this.start();
-    /*this.dictionnaryService.FindAllWord().subscribe(
-        data => {
-            this.itemsDict = data;
-        });*/
-    this.menu = [
-        { icon: 'pi pi-list', command: (event) => {
-                this.parcoursservice.affichelistSection().subscribe(
-                    data => {
-                        this.itemssection2 = data;
-                        // tslint:disable-next-line:no-shadowed-variable
-                    });
-                document.getElementById('word').style.visibility = 'hidden';
-                document.getElementById('word').style.height = '0px';
-
-                document.getElementById('categoriess').style.visibility = 'visible';
-
-                document.getElementById('categoriess').style.width = '100%';
-                document.getElementById('categoriess').style.height = '100%';
-                document.getElementById('categ').style.height = '100%';
-                document.getElementById('chat').style.visibility = 'hidden';
-            }}, {icon: 'pi pi-fw pi-comments', command: (event) => {
-                document.getElementById('categoriess').style.visibility = 'hidden';
-                document.getElementById('categoriess').style.height = '0px';
-                document.getElementById('word').style.visibility = 'hidden';
-                document.getElementById('word').style.height = '0px';
-                document.getElementById('chat').style.visibility = 'visible';
-            }},
-    ];
-  }
-
-  //////////////////Start/////////
-  public start() {
-    this.numQuestion = this.numQuestion + 1;
-    this.trueAnswerCorrectMistake = '';
-    this.myAnswerCorrectMistake = '';
-    this.answerCorrect = '';
-    this.disable = false;
-    this.isChecked = false;
-    this.next = false;
-    this.on_off = false;
-    this.answerCorrectOrFalse = new Array<boolean>();
-    document.getElementById('translate-correct-mistake').style.visibility = 'hidden';
-    document.getElementById('translate-on-off').style.visibility = 'hidden';
-    this.translate = '';
-    document.getElementById('myAnswer').style.textDecoration = 'none';
-    //document.getElementById('tooltiptext').style.visibility = 'hidden';
-    this.service.findAllQuestions(this.selectedQuiz.ref).subscribe(
-        data => {
-          this.items = data;
-          if (this.numQuestion > this.items.length) {
-            document.getElementById('result').style.visibility = 'visible';
-            document.getElementById('bodyRadio').style.visibility = 'hidden';
-            document.getElementById('bodyRadio').style.height = '0px';
-          }
-        }
-    );
-    if (this.numQuestion > this.items.length && this.numQuestion > 1) {
-      this.myanswers = new Array<string>();
-      this.correctanswers = new Array<string>();
-      this.questionanswers = new Array<string>();
-      for (let i = 0; i < this.myanswers.length; i++) {
-        document.getElementById('span-output-' + i).style.color = '#0a80bb';
-        document.getElementById('span-output-' + i).style.textDecoration = 'none';
-        document.getElementById('span-correct-' + i).style.visibility = 'hidden';
-      }
-      document.getElementById('result').style.visibility = 'visible';
-      document.getElementById('result').style.marginTop = '-100px';
-      document.getElementById('question').style.visibility = 'hidden';
-      document.getElementById('question').style.height = '0px';
-      document.getElementById('answers').style.visibility = 'hidden';
-      document.getElementById('answers').style.height = '0px';
-      document.getElementById('mistake').style.visibility = 'hidden';
-      document.getElementById('mistake').style.height = '0px';
-      document.getElementById('header').style.visibility = 'hidden';
-      document.getElementById('div-output').style.visibility = 'hidden';
-      document.getElementById('on-off-question').style.visibility = 'hidden';
-      document.getElementById('on-off-question').style.height = '0px';
-      document.getElementById('on-off-answer').style.visibility = 'hidden';
-      document.getElementById('on-off-answer').style.height = '0px';
-      document.getElementById('type-input').style.visibility = 'hidden';
-      document.getElementById('type-input').style.height = '0px';
-    }
-    this.button = 'Next';
-    this.service.findQuestion(this.selectedQuiz.ref, this.numQuestion).subscribe(
-        data => {
-          this.selected = data;
-          this.service.findReponses(this.selected.id).subscribe(
-              dataAnswers => {
-                this.reponses = dataAnswers;
-              }
-          );
-          this.service.findCorrectAnswers(this.selected.id).subscribe(
-              data => {
-                this.correctAnswers = data;
-                if (this.selected.typeDeQuestion.ref == 't1') {
-                  for(let i = 0 ; i < this.myanswers.length ; i++)
-                  {
-                    this.answerCorrectOrFalse.push(true);
-                  }
-                  this.question1 = '';
-                  this.question2 = '';
-                  this.question = '';
-                  this.answer = '_____';
-                  document.getElementById('mistake').style.visibility = 'hidden';
-                  document.getElementById('mistake').style.height = '0px';
-                  document.getElementById('type-input').style.visibility = 'hidden';
-                  document.getElementById('type-input').style.height = '0px';
-                  document.getElementById('div-output').style.visibility = 'hidden';
-                  document.getElementById('div-output').style.height = '0px';
-                  document.getElementById('question').style.visibility = 'visible';
-                  document.getElementById('question').style.height = 'auto';
-                  document.getElementById('answers').style.visibility = 'visible';
-                  document.getElementById('answers').style.height = 'auto';
-                  document.getElementById('on-off-question').style.visibility = 'hidden';
-                  document.getElementById('on-off-question').style.height = '0px';
-                  document.getElementById('on-off-answer').style.visibility = 'hidden';
-                  document.getElementById('on-off-answer').style.height = '0px';
-                  document.getElementById('result').style.visibility = 'hidden';
-                  document.getElementById('result').style.height = '0px';
-                  this.isSelected = false;
-                  for (let i = 0; i < this.selected.libelle.length; i++) {
-                    if (this.selected.libelle[i] == '.' && this.selected.libelle[i + 1] == '.' && this.selected.libelle[i + 2] == '.') {
-                      this.debutBlink = i;
-                      for (let j = i + 2; i < this.selected.libelle.length; j++) {
-                        if (this.selected.libelle[j] != '.') {
-                          this.finBlink = j;
-                          break;
-                        }
-                      }
-                      break;
-                    }
-                  }
-                  for (let i = 0; i < this.debutBlink; i++) {
-                    this.question1 = this.question1 + this.selected.libelle[i];
-                    this.question = this.question + this.selected.libelle[i];
-                  }
-                  this.question = this.question + this.correctAnswers[0].lib;
-                  for (let i = this.finBlink; i < this.selected.libelle.length; i++) {
-                    this.question2 = this.question2 + this.selected.libelle[i];
-                    this.question = this.question + this.selected.libelle[i];
-                  }
-                  for(let i = 0 ; i < this.questionanswers.length ; i++)
-                  {
-                    this.answerCorrectOrFalse.push(true);
-                  }
-                  this.service.translate(this.question).subscribe(
-                      data => {
-                        this.translate = data;
-                      }
-                  );
-                }
-                else if (this.selected.typeDeQuestion.ref == 't3') {
-                  for(let i = 0 ; i < this.questionanswers.length ; i++)
-                  {
-                    this.answerCorrectOrFalse.push(true);
-                  }
-                  this.question1 = '';
-                  this.question2 = '';
-                  document.getElementById('type-input').style.visibility = 'visible';
-                  document.getElementById('type-input').style.height = 'auto';
-                  document.getElementById('mistake').style.visibility = 'hidden';
-                  document.getElementById('div-output').style.visibility = 'hidden';
-                  document.getElementById('mistake').style.height = '0px';
-                  document.getElementById('question').style.visibility = 'hidden';
-                  document.getElementById('question').style.height = '0px';
-                  document.getElementById('answers').style.visibility = 'hidden';
-                  document.getElementById('answers').style.height = '0px';
-                  document.getElementById('on-off-question').style.visibility = 'hidden';
-                  document.getElementById('on-off-question').style.height = '0px';
-                  document.getElementById('on-off-answer').style.visibility = 'hidden';
-                  document.getElementById('on-off-answer').style.height = '0px';
-                  this.isSelected = false;
-                  this.disable = true;
-                  this.button = 'Next';
-                  this.string_input = '';
-                  for (let i = 0; i < this.selected.libelle.length; i++) {
-                    if (this.selected.libelle[i] == '.' && this.selected.libelle[i + 1] == '.' && this.selected.libelle[i + 2] == '.') {
-                      this.debutBlink = i;
-                      for (let j = i + 2; j < this.selected.libelle.length; j++) {
-                        if (this.selected.libelle[j] != '.') {
-                          this.debutPlaceholder = j;
-                          break;
-                        }
-                      }
-                      for (let j = this.debutPlaceholder; j < this.selected.libelle.length; j++) {
-                        if (this.selected.libelle[j] == '.') {
-                          this.finPlaceholder = j;
-                          break;
-                        }
-                      }
-                      for (let j = this.finPlaceholder; j < this.selected.libelle.length; j++) {
-                        if (this.selected.libelle[j] != '.') {
-                          this.finBlink = j;
-                          break;
-                        }
-                      }
-                      break;
-                    }
-                  }
-                  for (let i = 0; i < this.debutBlink; i++) {
-                    this.question1 = this.question1 + this.selected.libelle[i];
-                  }
-                  for (let i = this.finBlink; i < this.selected.libelle.length; i++) {
-                    this.question2 = this.question2 + this.selected.libelle[i];
-                  }
-                  for (let i = 0; i < this.debutBlink; i++) {
-                    this.string_input = this.string_input + this.selected.libelle[i];
-                  }
-                  this.string_input = this.string_input + this.correctAnswers[0].lib;
-                  for (let i = this.debutPlaceholder; i < this.finPlaceholder; i++) {
-                  }
-                  for (let i = this.finBlink; i < this.selected.libelle.length; i++) {
-                    this.string_input = this.string_input + this.selected.libelle[i];
-                  }
-                  this.son = this.string_input;
-                  this.service.translate(this.string_input).subscribe(
-                      data => {
-                        this.translate = data;
-                      }
-                  );
-                  for(let i = 0 ; i < this.questionanswers.length ; i++)
-                  {
-                    this.answerCorrectOrFalse.push(true);
-                  }
-                }
-                else if (this.selected.typeDeQuestion.ref == 't4') {
-                  for(let i = 0 ; i < this.questionanswers.length ; i++)
-                  {
-                    this.answerCorrectOrFalse.push(true);
-                  }
-                  this.correctMistakeAnswer = null;
-                  this.j = -1;
-                  this.word = '';
-                  this.myanswers = new Array<string>();
-                  this.correctanswers = new Array<string>();
-                  this.questionanswers = new Array<string>();
-                  this.numberofword = new Array<string>();
-                  this.answerCorrectOrFalse = new Array<boolean>();
-                  this.correctMistakeNumber = 0;
-                  document.getElementById('mistake').style.visibility = 'visible';
-                  document.getElementById('mistake').style.height = 'auto';
-                  document.getElementById('div-output').style.visibility = 'visible';
-                  document.getElementById('div-output').style.height = 'auto';
-                  document.getElementById('type-input').style.visibility = 'hidden';
-                  document.getElementById('type-input').style.height = '0px';
-                  document.getElementById('on-off-question').style.visibility = 'hidden';
-                  document.getElementById('on-off-question').style.height = '0px';
-                  document.getElementById('on-off-answer').style.visibility = 'hidden';
-                  document.getElementById('on-off-answer').style.height = '0px';
-                  document.getElementById('question').style.visibility = 'hidden';
-                  document.getElementById('question').style.height = '0px';
-                  document.getElementById('answers').style.visibility = 'hidden';
-                  document.getElementById('answers').style.height = '0px';
-                  //document.getElementById('output-correct-mistake').style.visibility = 'hidden';
-                  this.answerCorrectOrFalse = new Array<boolean>();
-                  for(let i = 0 ; i < this.questionanswers.length ; i++)
-                  {
-                    this.answerCorrectOrFalse.push(true);
-                  }
-                  this.correctMistakeNumber = 0;
-                  for (let i = this.correctMistakeNumber; i < this.correctAnswers[0].lib.length; i++) {
-                    if (this.correctAnswers[0].lib[i] == ' ') {
-                      this.correctMistakeNumber = i;
-                      this.correctanswers.push(this.word);
-                      this.word = '';
-                      continue;
-                    } else {
-                      this.word = this.word + this.correctAnswers[0].lib[i];
-                    }
-                    if (i == this.correctAnswers[0].lib.length - 1) {
-                      this.correctanswers.push(this.word);
-                      this.word = '';
-                      continue;
-                    }
-                  }
-                  this.correctMistakeNumber = 0;
-                  this.word = '';
-
-                  this.service.findQuestion(this.selectedQuiz.ref, this.numQuestion).subscribe(
-                      data => {
-                        for (let i = this.correctMistakeNumber; i < data.libelle.length; i++) {
-                          if (data.libelle[i] == ' ') {
-                            this.correctMistakeNumber = i;
-                            this.questionanswers.push(this.word);
-                            this.j = this.j + 1;
-                            this.numberofword.push(this.j.toString());
-                            this.word = '';
-                            continue;
-                          } else {
-                            this.word = this.word + data.libelle[i];
-                          }
-                          if (i == data.libelle.length - 1) {
-                            this.questionanswers.push(this.word);
-                            this.j = this.j + 1;
-                            this.numberofword.push(this.j.toString());
-                            this.word = '';
-                            continue;
-                          }
-                        }
-                        //this.isChecked = true;
-                        for (let i = 0; i < this.correctanswers.length; i++) {
-                          if (this.correctanswers[i] == this.questionanswers[i]) {
-                            this.answerCorrectOrFalse.push(true);
-                          } else {
-                            this.answerCorrectOrFalse.push(false);
-                          }
-                        }
-                        this.service.translate(this.correctAnswers[0].lib).subscribe(
-                            data => {
-                              this.translate = data;
-                              console.log(this.translate);
-                            }
-                        );
-                        document.getElementById('translate-correct-mistake').style.visibility = 'visible';
-                      }
-                  );
-                  //this.isChecked = false;
-                }
-                else if (this.selected.typeDeQuestion.ref == 't5') {
-                  for(let i = 0 ; i < this.myanswers.length ; i++)
-                  {
-                    this.answerCorrectOrFalse.push(true);
-                  }
-                  this.correctMistakeAnswer = null;
-                  if(this.correctAnswers[0].lib == 'true'){
-                    this.on_off = true;
-                  }
-                  else if(this.correctAnswers[0].lib == 'false'){
-                    this.on_off = false;
-                  }
-                  this.service.translate(this.selected.libelle).subscribe(
-                      data => {
-                        this.translate = data;
-                      }
-                  );
-                  document.getElementById('on-off-question').style.visibility = 'visible';
-                  document.getElementById('on-off-question').style.height = 'auto';
-                  document.getElementById('on-off-answer').style.visibility = 'visible';
-                  document.getElementById('on-off-answer').style.height = 'auto';
-                  document.getElementById('translate-on-off').style.visibility = 'visible';
-                  document.getElementById('question-on-off').style.color = 'black';
-                  document.getElementById('type-input').style.visibility = 'hidden';
-                  document.getElementById('type-input').style.height = '0px';
-                  document.getElementById('mistake').style.visibility = 'hidden';
-                  document.getElementById('mistake').style.height = '0px';
-                  document.getElementById('question').style.visibility = 'hidden';
-                  document.getElementById('question').style.height = '0px';
-                  document.getElementById('answers').style.visibility = 'hidden';
-                  document.getElementById('answers').style.height = '0px';
-                  document.getElementById('div-output').style.visibility = 'hidden';
-                  this.answerCorrectOrFalse = new Array<boolean>();
-                  for(let i = 0 ; i < this.questionanswers.length ; i++)
-                  {
-                    this.answerCorrectOrFalse.push(true);
-                  }
-                  this.isChecked = false;
-                }
-              }
-          );
-        }
-    );
-  }
-
-
-  public findByWord(){
-    this.dictionnaryService.FindByWord(this.wordDictionnary).subscribe(
-        data=>{
-          this.selectedDict = data;
-          //document.getElementById('dictionary').style.visibility = 'visible';
-        },error => console.log('erreeeeeeeeeeeeeeeeur') );
-    //document.getElementById('dictionary').style.visibility = 'visible';
-  }
-
-  filterDict(event) {
-    const filtered: any[] = [];
-    const query = event.query;
-
-    // tslint:disable-next-line:prefer-for-of
-    for(let i = 0; i < this.itemsDict.length; i++) {
-      const dict = this.itemsDict[i];
-      // tslint:disable-next-line:triple-equals
-      if (dict.word.toLowerCase().indexOf(query.toLowerCase()) == 0) {
-        filtered.push(dict);
-      }
     }
 
-    this.filteredDict = filtered;
-  }
 
-  public openCreateDict() {
-    this.submittedDict = false;
-    this.createDialogDict = true;
-    this.selectedDict = new Dictionary();
-  }
-
-  public Section(libelle: string){
-    this.service.findQuizEtudiant(this.etudiant, this.selectedQuiz).subscribe(
-        data => {
-          this.quizEtudiant = data;
-          this.quizEtudiant.note = this.noteQuiz;
-          this.quizEtudiant.questionCurrent = this.numQuestion;
-          this.service.updateQuizEtudiant().subscribe();
-        }
-    );
-    this.parcoursservice.afficheSection(libelle).subscribe(
-        data=> {
-          this.selectedsection = data;
-          this.service.findQuizBySectionId(this.selectedsection).subscribe(
-              data => {
-                this.selectedQuiz = data;
-                this.service.findQuizEtudiant(this.login.etudiant, this.selectedQuiz).subscribe(
-                    data => {
-                      this.quizEtudiantList = data;
-                      this.passerQuiz = 'View Quiz';
-                      this.quizView = true;
-                    },error =>
-                    {
-                      this.passerQuiz = 'Passer Quiz';
-                      this.quizView = false;
-                    }
-                );
-              },
-          );
-        },error => console.log('erreeeeeeeeeeeeeeeeur') );
-    this.router.navigate(['/prof/sections-simulate']);
-  }
-
-  public dictEdit(dict: Dictionary){
-    this.selectedDictionnary = dict;
-    if(this.selectedDictionnary.word != null){
-      this.submittedDictEdit = false;
-      this.editDialogDict = true;
+    get reponseQuiz(): QuizReponse {
+        return this.webSocketService.reponseQuiz;
     }
-  }
 
-  restart(){
+    previousQuestionFct() {
+        this.showFollowButton = true;
+        this.learnService.previousQuestionFct();
+    }
 
-  }
-  public restartQuiz(){
-    this.service.deleteQuizEtudiant(this.quizEtudiant).subscribe(
-        data => {
-          document.getElementById('result').style.visibility = 'hidden';
-          document.getElementById('question').style.height = 'auto';
-          document.getElementById('answers').style.height = 'auto';
-          document.getElementById('mistake').style.height = 'auto';
-          document.getElementById('header').style.visibility = 'visible';
-          document.getElementById('bodyRadio').style.visibility = 'visible';
-          document.getElementById('bodyRadio').style.height = 'auto';
-          this.quizEtudiant = new QuizEtudiant();
-          this.numQuestion = 0;
-          this.noteQuiz = 0;
-          this.etudiant = this.login.etudiant;
-          this.service.findAllQuestions(this.selectedQuiz.ref).subscribe(
-              data => {
-                this.items = data;
-              }
-          );
-          this.quizEtudiant.quiz = this.selectedQuiz;
-          this.quizEtudiant.resultat = null;
-          this.quizEtudiant.note = 0;
-          this.quizEtudiant.etudiant = this.login.etudiant;
-          this.service.findQuizEtudiant(this.etudiant, this.selectedQuiz).subscribe(
-              data => {
-                this.quizEtudiant = data;
-                this.quizEtudiant.id = data.id;
-                this.numQuestion = data.questionCurrent - 1;
-                this.noteQuiz = data.note;
-                this.start();
-              }, error => {
-                this.service.insertQuizEtudiant().subscribe();
-                this.start();
-              }
-          );
-          this.reponseEtudiant.quizEtudiant = this.quizEtudiant;
+    followMeFct(question: Question) {
+        this.showFollowButton = false;
+        const reponseQuiz: QuizReponse = new QuizReponse();
+        for (let i = 0; i < this.questionList.length; i++) {
+            if (this.questionList[i].id === question.id) {
+                reponseQuiz.question = this.questionList[i - 1];
+            }
         }
-    );
-  }
-
-  NextSection() {
-    this.parcoursservice.affichelistSection().subscribe(
-        data => {
-          this.itemssection2 = data;
-          // tslint:disable-next-line:no-shadowed-variable
-        });
-    this.selectedsection.numeroOrder = this.selectedsection.numeroOrder + 1;
-    // tslint:disable-next-line:triple-equals
-    if (this.selectedsection.numeroOrder <= this.itemssection2.length) {
-      this.parcoursservice.afficheOneSection2().subscribe(
-          data => {
-            this.selectedsection = data;
-            this.service.findQuizBySectionId(this.selectedsection).subscribe(
-                data => {
-                  this.selectedQuiz = data;
-
-                  this.service.findQuizEtudiant(this.login.etudiant, this.selectedQuiz).subscribe(
-                      data => {
-                        this.quizEtudiantList = data;
-                        this.service.findAllQuestions(this.selectedQuiz.ref).subscribe(
-                            dataQuestions => {
-                              if(data.questionCurrent > dataQuestions.length){
-                                this.passerQuiz = 'View Quiz';
-                                this.quizView = true;
-                              }
-                              else {
-                                this.passerQuiz = 'Continue Quiz';
-                                this.quizView = false;
-                              }
-                            }
-                        );
-                      },error =>
-                      {
-                        this.passerQuiz = 'Take Quiz';
-                        this.quizView = false;
-                      }
-                  );
-                },
-            );
-          });
-      this.router.navigate(['/pages/etudiantsimulatesections']);
-    } /*else {
-      this.selectedsection.numeroOrder = 0;
-      this.PreviousSection();
-    }*/
-  }
-
-  findQuestionByNumber(numero: number) {
-    this.numQuestion = numero - 1;
-    this.start();
-  }
-
-  public sound(word: string){
-    const text = encodeURIComponent(word);
-    const url = 'http://translate.google.com/translate_tts?ie=UTF-8&total=1&idx=0&textlen=32&client=tw-ob&q=' + text + '&tl=En-gb';
-    const audio = new Audio(url);
-    audio.play();
-  }
-
-
-
-  backToParcoursList() {
-    this.router.navigate(['/prof/courses']);
-  }
-
+        reponseQuiz.type = 'FOLLOW-QUIZ';
+        reponseQuiz.prof = this.login.getConnectedProf();
+        const chatMessageDto: ChatMessageDto = new ChatMessageDto(this.login.getConnectedProf().toString(), ' ', false);
+        chatMessageDto.quizReponse = reponseQuiz;
+        chatMessageDto.type = 'FOLLOW-QUIZ';
+        this.webSocketService.sendMessage(chatMessageDto);
+    }
 }

@@ -17,7 +17,8 @@ export class CoursesComponent implements OnInit {
     cols: any[];
 
     // tslint:disable-next-line:max-line-length
-    constructor(private messageService: MessageService, private confirmationService: ConfirmationService, private service: ParcoursService) {
+    constructor(private messageService: MessageService,
+                private confirmationService: ConfirmationService, private service: ParcoursService) {
     }
 
     get viewChooseType(): boolean {

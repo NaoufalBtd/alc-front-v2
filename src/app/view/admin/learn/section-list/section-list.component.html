@@ -60,7 +60,9 @@
                                     pRipple></button>
 
 
-                            <button (click)="getSection(section)" *ngIf="this.section.categorieSection.libelle != 'Vocabulary'" [style.background-color]="(this.selectedQuiz.section.id != section.id)?'':'#2d6a4f'" class="p-button-rounded p-button-warning "
+                            <button (click)="getSection(section)" *ngIf="this.section.categorieSection.libelle != 'Vocabulary'"
+                                    [style.background-color]="(this.selectedQuiz.section.id != section.id)?'':'#2d6a4f'"
+                                    class="p-button-rounded p-button-warning "
                                     icon="pi pi-question-circle"
                                     pButton
                                     pRipple></button>

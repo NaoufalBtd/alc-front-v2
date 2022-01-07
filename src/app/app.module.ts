@@ -266,6 +266,7 @@ import { ProfinscriptionComponent } from './view/public/profinscription/profinsc
 import { EtudiantinscriptionComponent } from './view/public/etudiantinscription/etudiantinscription.component';
 import {ViewProfilEtudiantComponent} from './view/prof/synthese-session/view-profil-etudiant/view-profil-etudiant.component';
 
+
 @NgModule({
     imports: [
         BrowserModule,
@@ -530,6 +531,7 @@ import {ViewProfilEtudiantComponent} from './view/prof/synthese-session/view-pro
         ProfinscriptionComponent,
         EtudiantinscriptionComponent,
         ViewProfilEtudiantComponent
+        EtudiantinscriptionComponent,
     ],
     providers: [
         {provide: LocationStrategy, useClass: HashLocationStrategy},

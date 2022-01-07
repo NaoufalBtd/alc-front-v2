@@ -9,7 +9,8 @@ import {QuizEtudiantService} from '../../../../controller/service/quiz-etudiant.
 import {Quiz} from '../../../../controller/model/quiz.model';
 import {Cours} from '../../../../controller/model/cours.model';
 import {SectionItemService} from '../../../../controller/service/section-item.service';
-import {HomeworkService} from "../../../../controller/service/homework.service";
+import {HomeworkService} from '../../../../controller/service/homework.service';
+import {LearnService} from '../../../../controller/service/learn.service';
 
 
 @Component({
@@ -23,7 +24,13 @@ export class SectionListComponent implements OnInit {
     cols: any[];
 
     // tslint:disable-next-line:max-line-length no-shadowed-variable
-    constructor(private homeworkService: HomeworkService, private serviceQuiz: QuizService, private quizService: QuizEtudiantService, private messageService: MessageService, private confirmationService: ConfirmationService, private service: ParcoursService, private router: Router, private VocabularyService: VocabularyService, private sectionItemService: SectionItemService) {
+    constructor(private homeworkService: HomeworkService,
+                private learnService: LearnService,
+                private serviceQuiz: QuizService, private quizService: QuizEtudiantService, private messageService: MessageService, private confirmationService: ConfirmationService, private service: ParcoursService, private router: Router, private VocabularyService: VocabularyService, private sectionItemService: SectionItemService) {
+    }
+
+    set sectionCurrent(value: Section) {
+        this.learnService.sectionCurrent = value;
     }
 
     get selectedQuiz(): Quiz {
@@ -195,6 +202,7 @@ export class SectionListComponent implements OnInit {
     }
 
     public getSection(section: Section) {
+        this.sectionCurrent = section;
         console.log(section);
         console.log(section.categorieSection.id);
         this.serviceQuiz.sectionSelected = section;

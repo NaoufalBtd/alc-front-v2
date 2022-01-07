@@ -9,6 +9,7 @@ import {TypeDeQuestion} from "../../../controller/model/type-de-question.model";
 import {Section} from "../../../controller/model/section.model";
 import {HoweWorkQSTReponse} from "../../../controller/model/howe-work-qstreponse.model";
 import {HomeWorkEtudiantServiceService} from "../../../controller/service/home-work-etudiant-service.service";
+import {Question} from "../../../controller/model/question.model";
 
 @Component({
   selector: 'app-home-work-component',
@@ -18,6 +19,9 @@ import {HomeWorkEtudiantServiceService} from "../../../controller/service/home-w
 export class HomeWorkComponentComponent implements OnInit {
 
   nodes: TreeNode[];
+  viewOnOffDialog = false;
+  onOff_true = true;
+  onOff_false = false;
   constructor(private service: HomeworkService, private messageService: MessageService) { }
 
   ngOnInit(): void {
@@ -170,5 +174,60 @@ export class HomeWorkComponentComponent implements OnInit {
     this.homeworkQST = this.homeWork.questions[updateNumber];
     this.reponses = this.homeworkQST.reponses;
     this.deleteQuestion(key);
+  }
+
+  chooseType(){
+    if (this.homeworkQST.typeDeQuestion.ref === 't5')
+    {
+      this.viewOnOffDialog = true;
+    }
+  }
+
+  hideOnOffDialog() {
+    this.homeworkQST = new HomeWorkQST();
+    this.homeworkQST.numero = this.homeWork.questions.length + 1 ;
+    this.homeworkQST.pointReponsefausse = 0;
+    this.homeworkQST.pointReponseJuste = 1;
+    this.viewOnOffDialog = false;
+  }
+
+  submitOnOff(){
+    this.reponses.length = 0;
+    this.homeworkReponse.lib = 'true';
+    if(this.onOff_true == true)
+    {
+      this.homeworkReponse.etatReponse = 'true';
+    }
+    else {
+      this.homeworkReponse.etatReponse = 'false';
+    }
+    this.homeworkReponse.numero = 1;
+    this.addAnswer();
+    this.homeworkReponse.lib = 'false';
+    if (this.onOff_false === true)
+    {
+      this.homeworkReponse.etatReponse = 'true';
+    }
+    else {
+      this.homeworkReponse.etatReponse = 'false';
+    }
+    this.addAnswer();
+    this.viewOnOffDialog = false;
+  }
+  onOffTrue(){
+    if (this.onOff_true === true){
+      this.onOff_false = false;
+    }
+    else {
+      this.onOff_false = true;
+    }
+  }
+  onOffFalse(){
+    if (this.onOff_false === true){
+      this.onOff_true = false;
+    }
+    else {
+      this.onOff_true = true;
+    }
   }
 }

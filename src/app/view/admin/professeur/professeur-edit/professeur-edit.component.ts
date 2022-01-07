@@ -35,8 +35,8 @@ export class ProfesseurEditComponent implements OnInit {
     set parcoursList(value: Array<Parcours>) {
         this.service.parcoursList = value;
     }
-  
-    
+
+
 
     get selected(): Prof {
         return this.service.selected;
@@ -135,16 +135,28 @@ export class ProfesseurEditComponent implements OnInit {
         const index = this.selected.trancheHoraireProfList.findIndex(c => c.dateDebut === trancheHoraireProf.dateDebut);
         if (index !== -1 ) {
             this.selected.trancheHoraireProfList.splice(index, 1);
+    public delete(trancheHoraireProf: TrancheHoraireProf) {
+        this.trancheHoraireProf = trancheHoraireProf;
+        this.confirmationService.confirm({
+            message: 'Are you sure you want to delete ' + trancheHoraireProf.horaire + '?',
+            header: 'Confirm',
+            icon: 'pi pi-exclamation-triangle',
+            accept: () => {
+                this.service.deleteTrancheHoraireProfById().subscribe(data => {
+                    this.deleteFromView(trancheHoraireProf);
+                    this.trancheHoraireProf = new TrancheHoraireProf();
 
-        }
+                });
+            }
+        });
     }
-
-    public deleteFromView1(trancheHoraireProf: TrancheHoraireProf) {
-        const index = this.selected.trancheHoraireProfList.findIndex(c => c.dateDebut === trancheHoraireProf.dateDebut);
+    public deleteFromView(trancheHoraireProf: TrancheHoraireProf) {
+        const index = this.selected.trancheHoraireProfList.findIndex(c => c.horaire === trancheHoraireProf.horaire);
         if (index !== -1 ) {
             this.selected.trancheHoraireProfList.splice(index, 1);
 
         }
     }
+
 
 }

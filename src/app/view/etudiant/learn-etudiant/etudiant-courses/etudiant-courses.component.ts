@@ -13,7 +13,7 @@ import {EtudiantReview} from '../../../../controller/model/etudiant-review.model
 import {EtudiantReviewService} from '../../../../controller/service/etudiant-review.service';
 import {SectionItemService} from '../../../../controller/service/section-item.service';
 import {HttpClient} from '@angular/common/http';
-import {SessionCoursService} from "../../../../controller/service/session-cours.service";
+import {SessionCoursService} from '../../../../controller/service/session-cours.service';
 
 @Component({
     selector: 'app-etudiant-courses',
@@ -107,19 +107,25 @@ export class EtudiantCoursesComponent implements OnInit {
                         // document.getElementById('dict1').style.visibility = 'hidden';
                         // document.getElementById('quiz').style.visibility = 'visible';
                         console.log('teeeeeeeeest');
-                        this.quizService.findQuizEtudiant(this.loginService.getConnectedStudent(), this.selectedQuiz).subscribe(
+                        this.quizService.findQuizEtudanitByEtudiantIdAndQuizId(this.loginService.getConnectedStudent(), this.selectedQuiz).subscribe(
                             data => {
                                 this.quizEtudiantList = data;
                                 console.log(this.quizEtudiantList);
                                 this.quizService.findAllQuestions(this.selectedQuiz.ref).subscribe(
                                     dataQuestions => {
-                                        if (data.questionCurrent > dataQuestions.length) {
-                                            this.passerQuiz = 'View Quiz';
-                                            this.quizView = true;
-                                        } else {
+                                        if (data === null) {
                                             this.passerQuiz = 'Continue Quiz';
                                             this.quizView = false;
+                                        } else {
+                                            if (data.questionCurrent > dataQuestions.length) {
+                                                this.passerQuiz = 'View Quiz';
+                                                this.quizView = true;
+                                            } else {
+                                                this.passerQuiz = 'Continue Quiz';
+                                                this.quizView = false;
+                                            }
                                         }
+
                                     }
                                 );
                             }, error => {

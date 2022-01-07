@@ -12,6 +12,7 @@ import {Parcours} from '../model/parcours.model';
 import {TrancheHoraireProf} from '../model/tranche-horaire-prof.model';
 import {GroupeEtudiantDetail} from '../model/groupe-etudiant-detail.model';
 import {Etudiant} from '../model/etudiant.model';
+import {GroupeEtudiantDetail} from '../model/groupe-etudiant-detail.model';
 
 
 @Injectable({

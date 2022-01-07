@@ -158,6 +158,14 @@ export class UserProfileComponent implements OnInit {
 
         }
     }
+    public isSuperAdmin(user: User): boolean {
+        if (user == null) {
+            return false;
+        } else {
+            // @ts-ignore
+            return user.role === Role.SUPERADMIN;
+        }
+    }
 
     public isProf(user: User): boolean {
         if (user == null) {

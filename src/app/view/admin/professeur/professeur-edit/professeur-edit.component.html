@@ -24,10 +24,20 @@
     </div>
         <div class="p-field">
             <label>Level Min</label><br>
+        <p-dropdown class="class1"  [options]="parcoursList2"  [(ngModel)]="selected.levelMin" optionLabel="libelle"></p-dropdown>
         <p-dropdown class="class1"  [options]="parcoursList2" [(ngModel)]="selected.levelMin" optionLabel="libelle"></p-dropdown>
     </div>
             </p-tabPanel>
             <p-tabPanel header="Information">
+                <label>Horaire</label><br>
+
+                    <p-calendar id="start" [(ngModel)]="trancheHoraireProf.horaire" [showTime]="true" name="StartTime"
+                                class="e-field"
+                                data-name="startTime"
+                                [showIcon]="true"
+                                inputId="start"></p-calendar>
+
+                <button (click)="addHoraire()" class="p-button-text table1" icon="pi pi-plus" label="Add Horaire" pButton
                    <div  class="p-field" >
                 <label>Start date</label>
 
@@ -53,9 +63,7 @@
                 <p-table [value]="selected.trancheHoraireProfList" >
                     <ng-template pTemplate="header">
                         <tr>
-                            <th pSortableColumn="datee">Start Date
-                            </th>
-                            <th pSortableColumn="datee"> End Date
+                            <th pSortableColumn="datee"> Horaire
                             </th>
                             <th pSortableColumn="datee"> Action
                             </th>
@@ -63,6 +71,11 @@
                     </ng-template>
                     <ng-template let-e pTemplate="body">
                         <tr>
+                            <td>{{e.horaire}}</td>
+                            <td>
+                                <button (click)="delete(e)" class="p-button-rounded p-button-danger" icon="pi pi-trash" pButton
+                                        pRipple></button>
+                            </td>
                             <td>{{e.dateDebut| date:' yyyy-MM-dd\' Time \'HH:mm:ss'}}</td>
                             <td>{{e.dateFin| date:' yyyy-MM-dd\' Time \'HH:mm:ss'}}</td>
                             <td>
