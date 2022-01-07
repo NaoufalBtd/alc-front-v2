@@ -20,6 +20,7 @@ import {QuizEtudiant} from '../model/quiz-etudiant.model';
 import {GroupeEtudiant} from '../model/groupe-etudiant.model';
 import {Prof} from '../model/prof.model';
 import {Etudiant} from '../model/etudiant.model';
+import {getContainingStatement} from '@angular/compiler-cli/ngcc/src/host/esm2015_host';
 
 @Injectable({
     providedIn: 'root'
@@ -436,8 +437,10 @@ export class LearnService {
     }
 
 
-    nextQuestionFct() {
+    nextQuestionFct(): Question {
+        console.log('=========================== NEXT QUESTION  FUNCTION =================================');
         console.log(this.question);
+        console.log('=========================== NEXT QUESTION  FUNCTION =================================');
         this.reponseQuiz = new QuizReponse();
         this.translateWord = String();
         this.wordDictionnary = String();
@@ -456,7 +459,8 @@ export class LearnService {
         for (let i = 0; i < (this.questionList.length); i++) {
             if (this.question.id === this.questionList[i].id) {
                 this.question = this.questionList[i + 1];
-
+                console.log('===========================  QUESTION  ACTUEL =================================');
+                console.log(this.question);
                 if (this.question.typeDeQuestion.ref === 't1') {
                     this.questionSideLeft = this.question.libelle.substring(0, this.question.libelle.indexOf('...'));
                     this.questionSideRight = this.question.libelle.substring(this.question.libelle.lastIndexOf('...') + 3);
@@ -466,7 +470,10 @@ export class LearnService {
                     this.inputAnswer = this.question.libelle.substring(this.question.libelle.indexOf('@') + 1,
                         this.question.libelle.lastIndexOf('@'));
                 } else if (this.question.typeDeQuestion.ref === 't3') {
-                    this.placeHolderAnswer = this.correctAnswersList.get(this.question.id)[0].lib;
+                    console.log('====================== T3 =======================================');
+                    console.log(this.correctAnswersList.get(this.question.id)[0]);
+                    console.log('====================== T3 =======================================');
+                    this.placeHolderAnswer = this.correctAnswersList.get(this.question.id)[0]?.lib;
                 }
                 break;
             }
@@ -474,9 +481,10 @@ export class LearnService {
         console.log('==============================================================');
         console.log(this.question);
         console.log('==============================================================');
+        return this.question;
     }
 
-    previousQuestionFct() {
+    previousQuestionFct(): Question {
         this.reponseQuiz = new QuizReponse();
         this.translateWord = String();
         this.wordDictionnary = String();
@@ -505,11 +513,12 @@ export class LearnService {
                     this.inputAnswer = this.question.libelle.substring(this.question.libelle.indexOf('@') + 1,
                         this.question.libelle.lastIndexOf('@'));
                 } else if (this.question.typeDeQuestion.ref === 't3') {
-                    this.placeHolderAnswer = this.correctAnswersList.get(this.question.id)[0].lib;
+                    this.placeHolderAnswer = this.correctAnswersList.get(this.question.id)[0]?.lib;
                 }
                 break;
             }
         }
+        return this.question;
     }
 
 

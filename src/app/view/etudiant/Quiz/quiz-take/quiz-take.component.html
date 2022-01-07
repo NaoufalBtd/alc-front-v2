@@ -304,7 +304,8 @@
         <div class="p-col-6"></div>
 
         <div class="p-col-3">
-            <button *ngIf="showNextButton && question.id !== questionList[questionList.length -1]?.id"
+            <button *ngIf="showNextButton && question.id !== questionList[questionList.length -1]?.id &&
+                            this.participants.get(this.prof.id).length === 1"
                     style="float:right"
                     pButton pRipple
                     type="button" icon="pi pi-arrow-right" iconPos="right"

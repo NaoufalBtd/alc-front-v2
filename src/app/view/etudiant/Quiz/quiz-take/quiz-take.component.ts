@@ -23,6 +23,7 @@ import {QuizReponse} from '../../../../controller/model/quiz-reponse';
 import {LearnService} from '../../../../controller/service/learn.service';
 import {Role} from '../../../../enum/role.enum';
 import {ChatMessageDto} from '../../../../controller/model/chatMessageDto';
+import {Prof} from '../../../../controller/model/prof.model';
 
 @Component({
     selector: 'app-quiz-take',
@@ -280,7 +281,7 @@ export class QuizTakeComponent implements OnInit, OnDestroy {
         const chatMessageDto: ChatMessageDto = new ChatMessageDto(this.login.getConnectedStudent().toString(), '', true);
         chatMessageDto.quizReponse = this.reponseQuiz;
         chatMessageDto.type = 'QUIZ';
-        this.webSocketService.sendMessage(chatMessageDto);
+        this.webSocketService.sendMessage(chatMessageDto, 'STUDENT');
     }
 
     showAnswers(question: Question) {
@@ -296,11 +297,39 @@ export class QuizTakeComponent implements OnInit, OnDestroy {
         const chatMessageDto: ChatMessageDto = new ChatMessageDto(this.login.getConnectedStudent().toString(), '', true);
         chatMessageDto.quizReponse = this.reponseQuiz;
         chatMessageDto.type = 'QUIZ';
-        this.webSocketService.sendMessage(chatMessageDto);
+        this.webSocketService.sendMessage(chatMessageDto, 'STUDENT');
     }
 
     nextQuestionFct() {
-        this.learnService.nextQuestionFct();
+        const  question = this.learnService.nextQuestionFct();
+        if (this.participants.get(this.prof.id).length === 1){
+            this.followMeFct(question);
+        }
+    }
+
+    get prof(): Prof {
+        return this.webSocketService.prof;
+    }
+
+
+    get participants(): Map<number, Array<Etudiant>> {
+        return this.learnService.participants;
+    }
+
+
+    followMeFct(question: Question) {
+        const reponseQuiz: QuizReponse = new QuizReponse();
+        for (let i = 0; i < this.questionList.length; i++) {
+            if (this.questionList[i].id === question.id) {
+                reponseQuiz.question = this.questionList[i - 1];
+            }
+        }
+        reponseQuiz.type = 'FOLLOW-QUIZ';
+        reponseQuiz.student = this.login.getConnectedStudent();
+        const chatMessageDto: ChatMessageDto = new ChatMessageDto(this.login.getConnectedStudent().toString(), ' ', false);
+        chatMessageDto.quizReponse = reponseQuiz;
+        chatMessageDto.type = 'FOLLOW-QUIZ';
+        this.webSocketService.sendMessage(chatMessageDto, 'PROF');
     }
 
     finishQuiz() {
