@@ -25,6 +25,7 @@
         <div class="p-field">
             <label>Level Min</label><br>
         <p-dropdown class="class1"  [options]="parcoursList2"  [(ngModel)]="selected.levelMin" optionLabel="libelle"></p-dropdown>
+        <p-dropdown class="class1"  [options]="parcoursList2" [(ngModel)]="selected.levelMin" optionLabel="libelle"></p-dropdown>
     </div>
             </p-tabPanel>
             <p-tabPanel header="Information">
@@ -36,6 +37,27 @@
                                 [showIcon]="true"
                                 inputId="start"></p-calendar>
 
+                <button (click)="addHoraire()" class="p-button-text table1" icon="pi pi-plus" label="Add Horaire" pButton
+                   <div  class="p-field" >
+                <label>Start date</label>
+
+                    <p-calendar id="start" [(ngModel)]="trancheHoraireProf.dateDebut" [showTime]="true" name="StartTime"
+                                class="e-field input2 "
+                                data-name="startTime"
+                                [showIcon]="true"
+                                inputId="start">
+
+                    </p-calendar>
+                   </div>
+                <div  class="p-field" >
+                <label>End date</label>
+
+                <p-calendar id="start" [(ngModel)]="trancheHoraireProf.dateFin" [showTime]="true" name="StartTime"
+                            class="e-field"
+                            data-name="startTime"
+                            [showIcon]="true"
+                            inputId="start"></p-calendar>
+                </div>
                 <button (click)="addHoraire()" class="p-button-text table1" icon="pi pi-plus" label="Add Horaire" pButton
                         pRipple></button>
                 <p-table [value]="selected.trancheHoraireProfList" >
@@ -54,10 +76,15 @@
                                 <button (click)="delete(e)" class="p-button-rounded p-button-danger" icon="pi pi-trash" pButton
                                         pRipple></button>
                             </td>
+                            <td>{{e.dateDebut| date:' yyyy-MM-dd\' Time \'HH:mm:ss'}}</td>
+                            <td>{{e.dateFin| date:' yyyy-MM-dd\' Time \'HH:mm:ss'}}</td>
+                            <td>
+                                <button (click)="delete(e)" class="p-button-rounded p-button-danger" icon="pi pi-trash" pButton
+                                        pRipple></button>
+                            </td>
                         </tr>
                     </ng-template>
                 </p-table>
-
             </p-tabPanel>
 
         </p-tabView>

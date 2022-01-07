@@ -95,11 +95,9 @@
                         <td>{{groupeEtudiant.nombrePlaceNonVide}}</td>
                         <td>{{groupeEtudiant.parcours.code}}</td>
                         <td>
-
                             <button (click)="delete(groupeEtudiant)" class="p-button-rounded p-button-danger"
                                     icon="pi pi-trash" pButton
-                                    pRipple></button>
-                            &nbsp;
+                                    pRipple></button>&nbsp;
                             <button (click)="edit(groupeEtudiant) ;findAllGroupeEtudiantDetail(groupeEtudiant)"
                                     class="p-button-rounded p-button-success p-mr-2" icon="pi pi-pencil" pButton
                                     pRipple></button>
@@ -109,7 +107,6 @@
                             <button pButton pRipple type="button" icon="pi pi-calendar"
                                     (click)="showScheduleDialog(groupeEtudiant)"
                                     class="p-button-rounded p-button-secondary"></button>
-
                         </td>
 
                         <!--

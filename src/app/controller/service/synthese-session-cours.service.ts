@@ -12,109 +12,20 @@ import {LoginService} from './login.service';
 })
 export class SyntheseSessionCoursService {
 
-    private adminUrl = environment.adminUrl;
-
-    private url = environment.baseUrl + 'etat/';
-    
     constructor(private http: HttpClient, private serviceUser: LoginService) {
     }
-
+    private adminUrl = environment.adminUrl;
+    private url = environment.baseUrl + 'etat/';
     private _items: Array<SyntheseSessionCours>;
     private _itemsEtudiant: Array<Etudiant>;
-
-    get itemsEtudiant(): Array<Etudiant> {
-        if (this._itemsEtudiant == null) {
-            this._itemsEtudiant = new Array<Etudiant>();
-        }
-        return this._itemsEtudiant;
-    }
-
-    set itemsEtudiant(value: Array<Etudiant>) {
-        this._itemsEtudiant = value;
-    }
-
-    get items(): Array<SyntheseSessionCours> {
-        if (this._items == null) {
-            this._items = new Array<SyntheseSessionCours>();
-        }
-        return this._items;
-    }
-
-    set items(value: Array<SyntheseSessionCours>) {
-        this._items = value;
-    }
-
-    private _selected: SyntheseSessionCours;
-
-    get selected(): SyntheseSessionCours {
-        if (this._selected == null) {
-            this._selected = new SyntheseSessionCours();
-        }
-        return this._selected;
-    }
-
-    set selected(value: SyntheseSessionCours) {
-        this._selected = value;
-    }
-
-
-    // constructor(private messageService: MessageService,
-    //             private confirmationService: ConfirmationService, private http: HttpClient) {
-
     private _selectes: Array<SyntheseSessionCours>;
-
-    get selectes(): Array<SyntheseSessionCours> {
-        if (this._selectes == null) {
-            this._selectes = new Array<SyntheseSessionCours>();
-        }
-        return this._selectes;
-    }
-
-    set selectes(value: Array<SyntheseSessionCours>) {
-        this._selectes = value;
-    }
-
     private _createDialog: boolean;
-
-    get createDialog(): boolean {
-
-        return this._createDialog;
-    }
-
-    set createDialog(value: boolean) {
-        this._createDialog = value;
-    }
-
+    private _selected: SyntheseSessionCours;
     private _editDialog: boolean;
-
-    get editDialog(): boolean {
-        return this._editDialog;
-    }
-
-    set editDialog(value: boolean) {
-        this._editDialog = value;
-    }
-
     private _viewDialog: boolean;
-
-    get viewDialog(): boolean {
-        return this._viewDialog;
-    }
-
-    set viewDialog(value: boolean) {
-        this._viewDialog = value;
-    }
-
     private _submitted: boolean;
-
-    get submitted(): boolean {
-        return this._submitted;
-    }
-
-    set submitted(value: boolean) {
-        this._submitted = value;
-    }
-
+    private _profilDiaglog: boolean;
+    private etudiantUrl = environment.etudiantUrl;
     public findAll(): Observable<Array<SyntheseSessionCours>> {
         return this.http.get<Array<SyntheseSessionCours>>(this.adminUrl + 'etat/');
     }
@@ -147,7 +58,6 @@ export class SyntheseSessionCoursService {
         }
         return index;
     }
-
     public lent(): number {
         return this.items.length;
     }
@@ -161,6 +71,94 @@ export class SyntheseSessionCoursService {
             this.deleteIndexById(item.id);
         }
     }
+    get itemsEtudiant(): Array<Etudiant> {
+        if (this._itemsEtudiant == null) {
+            this._itemsEtudiant = new Array<Etudiant>();
+        }
+        return this._itemsEtudiant;
+    }
+
+    set itemsEtudiant(value: Array<Etudiant>) {
+        this._itemsEtudiant = value;
+    }
+
+    get items(): Array<SyntheseSessionCours> {
+        if (this._items == null) {
+            this._items = new Array<SyntheseSessionCours>();
+        }
+        return this._items;
+    }
+
+    set items(value: Array<SyntheseSessionCours>) {
+        this._items = value;
+    }
+
+    get selected(): SyntheseSessionCours {
+        if (this._selected == null) {
+            this._selected = new SyntheseSessionCours();
+        }
+        return this._selected;
+    }
+
+    set selected(value: SyntheseSessionCours) {
+        this._selected = value;
+    }
 
 
+    // constructor(private messageService: MessageService,
+    //             private confirmationService: ConfirmationService, private http: HttpClient) {
+
+
+    get selectes(): Array<SyntheseSessionCours> {
+        if (this._selectes == null) {
+            this._selectes = new Array<SyntheseSessionCours>();
+        }
+        return this._selectes;
+    }
+
+    set selectes(value: Array<SyntheseSessionCours>) {
+        this._selectes = value;
+    }
+
+
+
+    get createDialog(): boolean {
+
+        return this._createDialog;
+    }
+
+    set createDialog(value: boolean) {
+        this._createDialog = value;
+    }
+
+    get editDialog(): boolean {
+        return this._editDialog;
+    }
+
+    set editDialog(value: boolean) {
+        this._editDialog = value;
+    }
+    get profilDiaglog(): boolean {
+        return this._profilDiaglog;
+    }
+
+    set profilDiaglog(value: boolean) {
+        this._profilDiaglog = value;
+    }
+
+    get viewDialog(): boolean {
+        return this._viewDialog;
+    }
+
+    set viewDialog(value: boolean) {
+        this._viewDialog = value;
+    }
+
+    get submitted(): boolean {
+        return this._submitted;
+    }
+
+    set submitted(value: boolean) {
+        this._submitted = value;
+    }
 }

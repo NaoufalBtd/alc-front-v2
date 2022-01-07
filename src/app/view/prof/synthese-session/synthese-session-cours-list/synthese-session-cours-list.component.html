@@ -60,9 +60,7 @@
                         <th pSortableColumn="reference">STUDENT
                             <p-sortIcon field="Student"></p-sortIcon>
                         </th>
-                        <th pSortableColumn="id">SCHEDULE
-                            <p-sortIcon field="schedule"></p-sortIcon>
-                        </th>
+
                         <th pSortableColumn="totalPaye">LAST CLASS
                             <p-sortIcon field="last class"></p-sortIcon>
                         </th>
@@ -83,11 +81,11 @@
                         </td>
                         <td><!-- <img src="" alt="drapeau">-->
                             <a (click)="setetat(3)" >{{synthese.nom}}</a>
+                        <td><P class="bold"></P>
+                            <a (click)=" findEtudiantById(synthese) "     style="margin-top: 10px; cursor: pointer" >{{synthese.nom}}</a>
                             <p class="nom"> {{synthese.prenom}}</p>
                         </td>
-                        <td><p class="bold">{{synthese.datedebutinscription}} </p>
-                            <p class="bold"> {{synthese.datefininscription}} </p>
-                        </td>
+
                         <td (click)="viewSession(synthese)"><P class="bold"></P>
                             <a >Lessons card</a> <br>
                             <!--   <img class="icon" src="img/horloge.png" alt="">-->

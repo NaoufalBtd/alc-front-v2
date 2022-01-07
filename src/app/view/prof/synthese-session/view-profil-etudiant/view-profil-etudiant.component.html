@@ -1,1 +1,54 @@
+<p-dialog [(visible)]="profilDiaglog" [modal]="true" [style]="{width: '450px'}"  header="          "
+          styleClass="p-fluid">
+    <ng-template pTemplate="header">
+
+    </ng-template>
+    <ng-template pTemplate="content">
+
+        <div class="p-grid p-fluid ">
+            <div class="p-field ">
+                <img [src]="etudiant?.image" alt="Image" width="250">
+            </div>
+            <div class="p-field name">
+                <h3>{{ etudiant?.nom}} {{ etudiant?.prenom}}</h3>
+            </div>
+        </div>
+        <!--
+        <div class="p-grid p-fluid ">
+            <div class="p-field ">
+                <img [src]="etudiant?.image" alt="Image" width="250">
+            </div>
+            <div class="p-field name">
+                <h3>{{ etudiant?.nom}} {{ etudiant?.prenom}}</h3>
+            </div>
+        </div>
+        -->
+        <p-tabView>
+
+            <p-tabPanel header="About">
+                <div class="p-grid p-shadow-5 class5">
+                <div class="p-grid p-fluid class1 ">
+                            <div class=" p-field  ">
+                <label >Level : {{etudiant.parcours.libelle}}</label>
+                            </div>
+                    <div class=" p-field username ">
+                        <label >Gmail : {{etudiant.username}}</label>
+             </div>
+                </div>
+                <div class="p-grid p-fluid class2 ">
+                    <div class=" p-field" >
+                        <label >Age : {{etudiant.age}}</label>
+                            </div>
+                     <div class=" p-field numero ">
+                         <label >Phone : {{etudiant.numero}}</label>
+                     </div>
+                </div>
+                </div>
+            </p-tabPanel>
+
+            <p-tabPanel header="Courses">
+            </p-tabPanel>
+        </p-tabView>
+    </ng-template>
+</p-dialog>
 <p>view-profil-etudiant works!</p>

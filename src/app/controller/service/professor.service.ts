@@ -11,6 +11,8 @@ import {EtudiantCours} from '../model/etudiant-cours.model';
 import {Parcours} from '../model/parcours.model';
 import {TrancheHoraireProf} from '../model/tranche-horaire-prof.model';
 import {GroupeEtudiantDetail} from '../model/groupe-etudiant-detail.model';
+import {Etudiant} from '../model/etudiant.model';
+import {GroupeEtudiantDetail} from '../model/groupe-etudiant-detail.model';
 
 
 @Injectable({
@@ -35,6 +37,8 @@ export class ProfessorService {
     private urlParcours = '/admin/parcours/';
     private _trancheHoraireProfList: Array<TrancheHoraireProf>;
     private _trancheHoraireProf: TrancheHoraireProf;
+    private _etudiant: Etudiant;
+    private etudiantUrl = environment.etudiantUrl;
 
     public afficheSession(id: number): Observable<Array<EtudiantCours>> {
         return this.http.get<Array<EtudiantCours>>(this.adminUrl + 'etudiantCours/prof/id/' + id);
@@ -90,6 +94,9 @@ export class ProfessorService {
 
     public findSessionNonPayer(id: number): Observable<Array<EtudiantCours>> {
         return this.http.get<Array<EtudiantCours>>(this.adminUrl + 'prof/sessionNonPayer/prof/id/' + id);
+    }
+    public findEtudiantById(id: number): Observable<Etudiant> {
+        return this.http.get<Etudiant>(this.etudiantUrl + 'etudiant/id/' + id);
     }
 
     public findIndexById(id: number): number {
@@ -285,6 +292,12 @@ export class ProfessorService {
     set paiement(value: Paiement) {
         this._paiement = value;
     }
+    get etudiant(): Etudiant {
+        return this._etudiant;
+    }
 
+    set etudiant(value: Etudiant) {
+        this._etudiant = value;
+    }
 
 }
