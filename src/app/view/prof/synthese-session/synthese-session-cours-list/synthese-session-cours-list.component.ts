@@ -80,7 +80,7 @@ export class SyntheseSessionCoursListComponent implements OnInit {
     public findEtudiantById(etudiant: Etudiant) {
         this.submitted = false;
         this.profilDiaglog = true;
-        this.etudiant = new Etudiant();
+
 
         this.servicePrf.findEtudiantById(etudiant.id).subscribe(
             data =>

@@ -40,9 +40,8 @@ export class ViewProfilEtudiantComponent implements OnInit {
   set submitted(value: boolean) {
     this.service.submitted = value;
   }
-  constructor() { }
 
-  ngOnInit(): void {
-  }
+
+
 
 }
