@@ -14,7 +14,6 @@ import {GroupeEtudiantDetail} from '../../../../controller/model/groupe-etudiant
     styleUrls: ['./professeur-edit.component.scss']
 })
 export class ProfesseurEditComponent implements OnInit {
-
     constructor(private messageService: MessageService, private service: ProfessorService, private confirmationService: ConfirmationService) {
     }
 
