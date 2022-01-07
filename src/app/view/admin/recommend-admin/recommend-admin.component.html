@@ -36,7 +36,7 @@
                 </ng-template>
                 <ng-template pTemplate="header">
                     <tr>
-                        <th pSortableColumn="student">Recommended Teacher LastName
+                        <th pSortableColumn="student">Recommended Teacher Full Name
                             <p-sortIcon field="student"></p-sortIcon>
                         </th>
                         <th pSortableColumn="start at">Recommended By
@@ -56,7 +56,7 @@
                 </ng-template>
                 <ng-template let-recommend pTemplate="body">
                     <tr>
-                        <td>{{recommend.nom}} {{recommend.prenom}}</td>
+                        <td>{{recommend.nom}} </td>
                         <td>{{recommend.prof.nom}}  {{recommend.prof.prenom}}</td>
                         <td>{{recommend.telephone}}</td>
                         <td>{{recommend.login}}</td>
