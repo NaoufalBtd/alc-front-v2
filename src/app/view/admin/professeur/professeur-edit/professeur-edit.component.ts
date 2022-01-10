@@ -143,8 +143,6 @@ export class ProfesseurEditComponent implements OnInit {
         const index = this.selected.trancheHoraireProfList.findIndex(c => c.dateDebut === trancheHoraireProf.dateDebut);
         if (index !== -1) {
             this.selected.trancheHoraireProfList.splice(index, 1);
-
-
         }
     }
 }

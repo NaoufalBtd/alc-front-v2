@@ -345,25 +345,56 @@
 </div>
 
 <div *ngIf="showQuizReview" class="card">
-    <p-table [value]="answersList | keyvalue" styleClass="p-datatable-sm" responsiveLayout="scroll">
-        <ng-template pTemplate="caption">
+    <p-table [value]="reponseQuizList" styleClass="p-datatable-striped">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Student name</th>
+                <th>Result </th>
+            </tr>
         </ng-template>
+        <ng-template pTemplate="body" let-reponse>
+            <tr>
+                <td>{{reponse?.etudiant?.nom }} {{ reponse?.etudiant?.prenom}}</td>
+                <td>{{reponse?.resultat}}</td>
+                <td>
+                    <button pButton pRipple type="button" icon="pi pi-info"
+                            (click)="showDetails(reponse)"
+                            class="p-button-rounded p-button-warning">
+                    </button>
+
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+<p-dialog [header]="listAnswers[0]?.quizEtudiant?.etudiant?.nom + ' ' + listAnswers[0]?.quizEtudiant?.etudiant?.prenom" [(visible)]="display" [style]="{width: '80vw'}">
+    <p-table [value]="listAnswers" styleClass="p-datatable-striped" >
         <ng-template pTemplate="header">
             <tr>
                 <th style="width: 20px;"></th>
-                <th>Number</th>
-                <th>Your answer</th>
+                <th style="width: 20px;"></th>
+                <th>Question type</th>
+                <th>Student answer </th>
                 <th>Correct answer</th>
                 <th>Note</th>
             </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-value>
+        <ng-template pTemplate="body" let-answer>
             <tr>
+                <th scope="row" *ngIf="answer.answer === answer?.reponse?.lib && answer.note !== 0.5 "><i class="pi pi-check-circle"></i></th>
+
+                <th scope="row" *ngIf="answer.answer !== answer.reponse.lib"><i class="pi pi-times-circle"></i></th>
+
+                <th scope="row" *ngIf="answer.note === 0.5"><i class="pi pi-users"></i></th>
+
+                <th scope="row" *ngIf="answer.answer === null || undefined"><i class="pi pi-exclamation-circle"></i></th>
+
+                <th scope="row">{{answer?.question?.numero}}</th>
+                <td>{{answer?.question?.typeDeQuestion?.lib}}</td>
+                <td>{{answer?.answer}}</td>
+                <td>{{answer?.reponse?.lib}}</td>
+                <td>{{answer?.note}}</td>
             </tr>
         </ng-template>
-        <ng-template pTemplate="footer">
-            <th colspan="5" style="padding: 3% 0 10px 9%;text-align: center;"><h4 class="noteFinal">Note
-                final: </h4>  {{  noteQuiz}} / {{answersList.size}}</th>
-        </ng-template>
-    </p-table>
-</div>
+    </p-table></p-dialog>

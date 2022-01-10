@@ -23,6 +23,7 @@ import {Parcours} from '../../../controller/model/parcours.model';
 import {WebSocketService} from '../../../controller/service/web-socket.service';
 import {QuizReponse} from '../../../controller/model/quiz-reponse';
 import {ChatMessageDto} from '../../../controller/model/chatMessageDto';
+import {findIndexInData} from '@syncfusion/ej2-angular-schedule';
 
 @Component({
     selector: 'app-quiz-preview-prof',
@@ -30,8 +31,6 @@ import {ChatMessageDto} from '../../../controller/model/chatMessageDto';
     styleUrls: ['./quiz-preview.component.scss']
 })
 export class QuizPreviewProfComponent implements OnInit, OnDestroy {
-
-     reponsesQuiz: Array<QuizEtudiant> = new Array<QuizEtudiant>();
 
     constructor(private service: QuizEtudiantService,
                 private learnService: LearnService,
@@ -244,13 +243,39 @@ export class QuizPreviewProfComponent implements OnInit, OnDestroy {
         return this.webSocketService.reponseQuiz;
     }
 
+    get participants(): Map<number, Array<Etudiant>> {
+        return this.learnService.participants;
+    }
+
+    reponseQuizList: Array<QuizEtudiant> = new Array<QuizEtudiant>();
+    listAnswers: Array<ReponseEtudiant> = new Array<ReponseEtudiant>();
+
     questionOptions = [{label: 'True', value: 'true'}, {label: 'False', value: 'false'}];
     showFollowButton = true;
 
     test: string;
 
+    display: boolean = false;
+
     ngOnInit(): void {
-        this.learnService.onStart();
+        this.quizEtudiantService.findQuizEtudiantByQuizId(this.selectedQuiz.id).subscribe(
+            data => {
+                for (const student of this.participants.get(this.login.getConnectedProf().id)) {
+                    for (const reponse of data) {
+                        if (reponse.etudiant.id === student.id) {
+                            this.reponseQuizList.push({...reponse});
+                        }
+                    }
+                }
+                console.log(this.reponseQuizList);
+                if (this.reponseQuizList.length === 0) {
+                    this.learnService.onStart();
+                } else {
+                    this.showTakeQuiz = false;
+                    this.showQuizReview = true;
+                }
+            }
+        );
     }
 
 
@@ -283,10 +308,6 @@ export class QuizPreviewProfComponent implements OnInit, OnDestroy {
         this.webSocketService.sendMessage(chatMessageDto, 'PROF');
     }
 
-    get participants(): Map<number, Array<Etudiant>> {
-        return this.learnService.participants;
-    }
-
     nextQuestionFct() {
         this.grpStudentAnswers.clear();
         const question = this.learnService.nextQuestionFct();
@@ -300,15 +321,6 @@ export class QuizPreviewProfComponent implements OnInit, OnDestroy {
         if (qst.id !== this.questionList[0].id) {
             this.followMeFct(qst);
         }
-    }
-
-    finishQuiz() {
-        this.quizEtudiantService.findQuizEtudiantByQuizId(this.selectedQuiz.id).subscribe(
-            data => {
-                this.reponsesQuiz = data;
-                console.log(data);
-            }
-        );
     }
 
 
@@ -343,7 +355,37 @@ export class QuizPreviewProfComponent implements OnInit, OnDestroy {
         this.webSocketService.sendMessage(chatMessageDto, 'PROF');
     }
 
-    // sendWebSocket(test: string) {
-    //    this.webSocketService.webSocket.send(test);
-    // }
+    finishQuiz() {
+        this.showTakeQuiz = false;
+        this.showQuizReview = true;
+        this.quizEtudiantService.findQuizEtudiantByQuizId(this.selectedQuiz.id).subscribe(
+            data => {
+                for (const student of this.participants.get(this.login.getConnectedProf().id)) {
+                    for (const reponse of data) {
+                        if (reponse.etudiant.id === student.id) {
+                            this.reponseQuizList.push({...reponse});
+                        }
+                    }
+                }
+                console.log(this.reponseQuizList);
+            }
+        );
+    }
+
+    showDetails(quizEtudiant: QuizEtudiant) {
+        if (this.listAnswers.length !== 0) {
+            this.listAnswers.splice(0, this.listAnswers.length);
+        }
+        this.reponseEtudiantService.findByQuizStudent(quizEtudiant).subscribe(
+            data => {
+                this.listAnswers = data;
+                console.log(this.listAnswers);
+            }
+        );
+        this.showDialog();
+    }
+
+    showDialog() {
+        this.display = true;
+    }
 }

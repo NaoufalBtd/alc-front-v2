@@ -5,22 +5,13 @@ import {Cours} from '../model/cours.model';
 import {QuizEtudiantService} from './quiz-etudiant.service';
 import {ReponseEtudiantService} from './reponse-etudiant.service';
 import {LoginService} from './login.service';
-import {ConfirmationService, MessageService} from 'primeng/api';
-import {Router} from '@angular/router';
-import {DictionaryService} from './dictionary.service';
-import {DomSanitizer} from '@angular/platform-browser';
-import {WebSocketService} from './web-socket.service';
-import {ParcoursService} from './parcours.service';
 import {Question} from '../model/question.model';
 import {ReponseEtudiant} from '../model/reponse-etudiant.model';
 import {Reponse} from '../model/reponse.model';
 import {QuizReponse} from '../model/quiz-reponse';
 import {Quiz} from '../model/quiz.model';
 import {QuizEtudiant} from '../model/quiz-etudiant.model';
-import {GroupeEtudiant} from '../model/groupe-etudiant.model';
-import {Prof} from '../model/prof.model';
 import {Etudiant} from '../model/etudiant.model';
-import {getContainingStatement} from '@angular/compiler-cli/ngcc/src/host/esm2015_host';
 
 @Injectable({
     providedIn: 'root'
@@ -573,8 +564,6 @@ export class LearnService {
         this.showNextButton = false;
         this.disableButtonSon = true;
         this.pourCentgage = 0;
-
-
         console.log(this.showDontKnowButton);
         console.log(this.showCheckButton);
         this.noteQuiz = 0;
@@ -625,7 +614,6 @@ export class LearnService {
             if (value[1].etatReponse === 'true') {
                 if (this.answersPointStudent.get(value[0]) === 'STUDENT_ANSWER') {
                     this.noteQuiz += value[0].pointReponseJuste;
-                    alert(this.noteQuiz);
                 } else if (this.answersPointStudent.get(value[0]) === 'TEACHER_ANSWER') {
                     this.noteQuiz += value[0].pointReponseJuste / 2;
                 } else {
@@ -634,43 +622,48 @@ export class LearnService {
             } else {
                 this.noteQuiz -= value[0].pointReponsefausse;
             }
-
-            quizStudent.quiz = this.selectedQuiz;
-            quizStudent.etudiant = this.login.getConnectedStudent();
-            quizStudent.note = this.noteQuiz;
-            quizStudent.questionCurrent = threshold;
-            quizStudent.resultat = String(this.noteQuiz + ' / ' + threshold);
-            console.log(quizStudent);
-            // this.service.save(quizStudent).subscribe(
-            //     quitEtudiant => {
-            //         console.log(quitEtudiant);
-            //         for (const value of this.answersList.entries()) {
-            //             this.answer.question = value[0];
-            //             this.answer.quizEtudiant = quitEtudiant;
-            //             this.answer.reponse = this.correctAnswersList.get(value[0].id)[0];
-            //             this.answer.answer = value[1].lib;
-            //             if (value[1].etatReponse === 'true') {
-            //                 this.answer.note = value[0].pointReponseJuste;
-            //             } else {
-            //                 this.answer.note = value[0].pointReponsefausse;
-            //             }
-            //             this.reponseEtudiantService.save().subscribe(
-            //                 reponse => {
-            //                     console.log(reponse);
-            //                     this.reponseEtudiantList.push({...reponse});
-            //                 }, error => {
-            //                     console.log(error);
-            //                 }
-            //             );
-            //         }
-            //     }, error => {
-            //         console.log(error);
-            //     }
-            // );
-            console.log(this.noteQuiz + ' / ' + threshold);
-            this.showTakeQuiz = false;
-            this.showQuizReview = true;
         }
+        quizStudent.quiz = this.selectedQuiz;
+        quizStudent.etudiant = this.login.getConnectedStudent();
+        quizStudent.note = this.noteQuiz;
+        quizStudent.questionCurrent = threshold;
+        quizStudent.resultat = String(this.noteQuiz + ' / ' + threshold);
+        console.log(quizStudent);
+        this.service.save(quizStudent).subscribe(
+            quitEtudiant => {
+                console.log(quitEtudiant);
+                for (const entry of this.answersList.entries()) {
+                    this.answer.question = entry[0];
+                    this.answer.quizEtudiant = quitEtudiant;
+                    this.answer.reponse = this.correctAnswersList.get(entry[0].id)[0];
+                    this.answer.answer = entry[1].lib;
+                    if (entry[1].etatReponse === 'true') {
+                        if (this.answersPointStudent.get(entry[0]) === 'STUDENT_ANSWER') {
+                            this.answer.note = entry[0].pointReponseJuste;
+                        } else if (this.answersPointStudent.get(entry[0]) === 'TEACHER_ANSWER') {
+                            this.answer.note = entry[0].pointReponseJuste / 2;
+                        } else {
+                            this.answer.note = 0;
+                            this.answer.answer = null;
+                        }
+                    } else {
+                        this.answer.note = entry[0].pointReponsefausse;
+                    }
+                    this.reponseEtudiantService.save().subscribe(
+                        reponse => {
+                            console.log(reponse);
+                        }, error => {
+                            console.log(error);
+                        }
+                    );
+                }
+            }, error => {
+                console.log(error);
+            }
+        );
+        console.log(this.noteQuiz + ' / ' + threshold);
+        this.showTakeQuiz = false;
+        this.showQuizReview = true;
     }
 
     public sound(qst: Question) {
