@@ -33,9 +33,9 @@ export class ProfessorService {
     public afficheSessionStd(id: number): Observable<Array<EtudiantCours>> {
         return this.http.get<Array<EtudiantCours>>(this.adminUrl + 'etudiantCours/prof/id/' + this.user.prof.id + '/etudiant/id/' + id );
     }
-    /*paiement*/
+    /*allSalary*/
     public paiementProf(): Observable<Array<Paiement>> {
-        return this.http.get<Array<Paiement>>(this.adminUrl + '/prof/paiement');
+        return this.http.get<Array<Paiement>>(this.adminUrl + '/prof/allSalary');
     }
 
     findByCriteria(prof: Prof): Observable<Array<Prof>> {
@@ -67,7 +67,7 @@ export class ProfessorService {
     }
 
     public payer(paiement: Paiement): Observable<Paiement> {
-        return this.http.post<Paiement>(this.adminUrl + 'paiement/', paiement);
+        return this.http.post<Paiement>(this.adminUrl + 'allSalary/', paiement);
     }
 
     public findSessionNonPayer(id: number): Observable<Array<EtudiantCours>> {

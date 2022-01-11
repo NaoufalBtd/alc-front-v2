@@ -184,8 +184,7 @@ import {NewsEtudiantListComponent} from './view/etudiant/news-etudiant/news-etud
 import {NewsEtudiantViewComponent} from './view/etudiant/news-etudiant/news-etudiant-view/news-etudiant-view.component';
 import {NewsAdminEditComponent} from './view/admin/news-admin/news-admin-edit/news-admin-edit.component';
 import {NewsAdminDeleteComponent} from './view/admin/news-admin/news-admin-delete/news-admin-delete.component';
-import {PaiementComponent} from './view/admin/paiement/paiement.component';
-// import {PaiementListComponent} from './view/admin/paiement/paiement-list/paiement-list.component';
+ // import {PaiementListComponent} from './view/admin/allSalary/allSalary-list/allSalary-list.component';
 import {ScheduleAdminComponent} from './view/admin/schedule-admin/schedule-admin.component';
 import {ScheduleStudentComponent} from './view/etudiant/schedule-student/schedule-student.component';
 import {QuizUpdateComponent} from './view/admin/quiz/quiz-update/quiz-update.component';
@@ -264,6 +263,7 @@ import {ConnectedStudentComponent} from './view/prof/connected-student/connected
 import {SyntheseSessionCours} from './controller/model/synthese-session-cours.model';
 import { ProfinscriptionComponent } from './view/public/profinscription/profinscription.component';
 import { EtudiantinscriptionComponent } from './view/public/etudiantinscription/etudiantinscription.component';
+import { BonusProfComponent } from './view/admin/bonus-prof/bonus-prof.component';
 @NgModule({
     imports: [
         BrowserModule,
@@ -460,8 +460,7 @@ import { EtudiantinscriptionComponent } from './view/public/etudiantinscription/
         NewsEtudiantViewComponent,
         NewsAdminEditComponent,
         NewsAdminDeleteComponent,
-        PaiementComponent,
-        ScheduleAdminComponent,
+         ScheduleAdminComponent,
         ScheduleStudentComponent,
         QuizUpdateComponent,
         SectionCreateComponent,
@@ -526,7 +525,8 @@ import { EtudiantinscriptionComponent } from './view/public/etudiantinscription/
         ResetPasswordComponent,
         LoginComponent,
         ProfinscriptionComponent,
-        EtudiantinscriptionComponent
+        EtudiantinscriptionComponent,
+        BonusProfComponent
     ],
     providers: [
         {provide: LocationStrategy, useClass: HashLocationStrategy},

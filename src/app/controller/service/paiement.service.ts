@@ -18,7 +18,7 @@ export class PaiementService {
 
     private adminUrl = environment.adminUrl;
     private profUrl = environment.profUrl;
-    private adminUrlpaiement = environment.profUrl + 'paiement/';
+    private adminUrlpaiement = environment.profUrl + 'allSalary/';
 
     private _paiement: Paiement;
     private _paiementsearch: Paiement;
@@ -89,7 +89,7 @@ export class PaiementService {
     }
 
     public findAllByCriteria() {
-        this.http.post<Array<Paiement>>(this.adminUrl + 'paiement/ByCriteria', this.paiementsearch).subscribe(
+        this.http.post<Array<Paiement>>(this.adminUrl + 'allSalary/ByCriteria', this.paiementsearch).subscribe(
             data => {
                 if (data != null) {
                     this.paiementlist = data;
