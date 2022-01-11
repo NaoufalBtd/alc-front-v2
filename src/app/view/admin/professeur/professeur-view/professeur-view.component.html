@@ -1,6 +1,8 @@
 <p-dialog [(visible)]="viewDialog" [modal]="true" [style]="{width: '450px'}" header="Professor Details"
           styleClass="p-fluid">
     <ng-template pTemplate="content">
+        <p-tabView>
+            <p-tabPanel header="Agent information">
         <div class="p-field">
             <label for="reference">UserName</label>
             <input [(ngModel)]="selected.username" disabled id="reference" pInputText type="text"/>
@@ -26,6 +28,57 @@
             <label for="email">Address</label>
             <input [(ngModel)]="selected.addresse" disabled id="address" pInputText type="text"/>
         </div>
+
+            </p-tabPanel>
+
+                <p-tabPanel header="Horaire">
+                    <div class="p-grid">
+                        <div class="p-col-12">
+
+                            <p-toast></p-toast>
+
+                            <div class="card" style="background-color: gainsboro;">
+
+
+                                <p-table #dt   [globalFilterFields]="['libelle','nombreEtudiant']" [paginator]="true"
+                                         [rowHover]="true"
+                                         [rows]="8" [showCurrentPageReport]="true" [value]="selected.trancheHoraireProfList"
+                                         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                                         dataKey="id"
+                                         styleClass="p-datatable-customers">
+                                    <ng-template pTemplate="caption">
+                                        <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
+
+                                        </div>
+                                    </ng-template>
+                                    <ng-template pTemplate="header">
+                                        <tr>
+                                            <th pSortableColumn="libelle">Start Date
+
+                                            </th>
+                                            <th pSortableColumn="libelle">End Date
+
+                                            </th>
+
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template let-trancheHoraireProf pTemplate="body">
+                                        <tr>
+                                            <td>{{trancheHoraireProf.dateDebut | date:' yyyy-MM-dd\' Time \'HH:mm:ss'}}</td>
+                                            <td>{{trancheHoraireProf.dateFin | date:' yyyy-MM-dd\' Time \'HH:mm:ss'}}</td>
+                                        </tr>
+
+
+                                    </ng-template>
+                                </p-table>
+                            </div>
+                            <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+                        </div>
+                    </div>
+                </p-tabPanel>
+
+        </p-tabView>
+
     </ng-template>
 
     <ng-template pTemplate="footer">

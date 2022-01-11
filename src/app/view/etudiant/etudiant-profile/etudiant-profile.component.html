@@ -5,25 +5,20 @@
         <img [src]="user?.image" alt="Image" width="250">
     </div>
     <div class="p-col-6">
-        <h3>{{ user?.nom}} {{ user?.prenom}}</h3>         <!---- pi-user -->
+        <h3>{{ user?.nom}} {{ user?.prenom}}</h3>
         <h5>Student</h5>
         <button pButton pRipple type="button" icon="pi pi-image " class="p-button-rounded p-button-secondary"
                 (click)="updateProfileImage()"
         ></button>
-
-
-        <!-- profile image change form -->
         <form enctype="multipart/form-data" style="display:none;">
             <input type="file"
                    (change)="onProfileImageChange($event); onUpdateProfileImage()"
                    name="profile-image-input" id="profile-image-input" placeholder="file" accept="image/*"/>
         </form>
-
     </div>
 
     <div class="p-col-12">
         <div class="p-grid">
-
             <div class="p-col-4">
             <span class="p-float-label">
                  <input id="float-input" type="text" pInputText [(ngModel)]="user.prenom"><label for="float-input">First name</label>

@@ -10,4 +10,5 @@ export class RecommendTeacher {
     public login: string;
     public telephone: string;
     public prof = new Prof();
+    public  dateRecommamdation: Date = new Date();
 }

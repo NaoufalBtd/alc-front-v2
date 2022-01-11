@@ -8,6 +8,7 @@ import {Prof} from '../../../../controller/model/prof.model';
 import {SessionCours} from '../../../../controller/model/session-cours.model';
 import {ProfessorService} from '../../../../controller/service/professor.service';
 import {EtudiantCours} from '../../../../controller/model/etudiant-cours.model';
+import {GroupeEtudiant} from '../../../../controller/model/groupe-etudiant.model';
 
 @Component({
     selector: 'app-synthese-session-cours-list',
@@ -22,7 +23,7 @@ export class SyntheseSessionCoursListComponent implements OnInit {
     cols: any[];
     public etat = 1;
     public p = 2;
-    public j: number = 0;
+    public j = 0;
     public k = 0;
     public c = 0;
     public m = 0;
@@ -37,7 +38,158 @@ export class SyntheseSessionCoursListComponent implements OnInit {
             {name: 'Paris', code: 'PRS'}
         ];
     }
+    private initCol() {
+        this.cols = [
+            {field: 'id', header: 'STUDENtT'},
+            {field: 'reference', header: 'SCHEDULE'},
+            {field: '', header: 'LAST CLASS'},
+            {field: '', header: 'BALANCE'},
+            {field: '', header: 'ED CLASS'}
+        ];
+    }
+    ngOnInit(): void {
+        this.initCol();
+        this.service.findAllStudent().subscribe(
+            data => {
+                this.itemsEtudiant = data;
+            }
+        );
 
+        console.log(this.itemsEtudiant);
+        this.service.findAll().subscribe(data => {
+            this.items = data;
+            for (let i = 0; i < this.items.length; i++) {
+                // tslint:disable-next-line:triple-equals
+                if (this.items[i].etatNumber == 1) {
+                    console.log(this.j);
+                    this.j++;
+                    console.log(this.j);
+                    // tslint:disable-next-line:triple-equals
+                } else if (this.items[i].etatNumber == 2) {
+                    this.k++;
+                    // tslint:disable-next-line:triple-equals
+                } else if (this.items[i].etatNumber == 4) {
+                    this.m++;
+                } else {
+                    this.c++;
+                }
+            }
+        });
+
+    }
+    public findEtudiantById(etudiant: Etudiant) {
+        this.submitted = false;
+        this.profilDiaglog = true;
+
+
+        this.servicePrf.findEtudiantById(etudiant.id).subscribe(
+            data =>
+            {this.etudiant = data;
+             console.log(this.etudiant);
+
+            },
+            error => { console.log(error); }
+        );
+
+    }
+
+
+
+    public viewSession(etd: Etudiant) {
+        this.servicePrf.afficheSessionStd(etd.id).subscribe(
+            data => {
+                // @ts-ignore
+                this.itemsSession = data;
+            });
+        this.viewDialogProf = true;
+    }
+
+
+
+    public delete(selected: SyntheseSessionCours) {
+        this.selected = selected;
+        this.confirmationService.confirm({
+            message: 'Are you sure you want to delete ' + selected.reference + '?',
+            header: 'Confirm',
+            icon: 'pi pi-exclamation-triangle',
+            accept: () => {
+                this.service.deleteByReference().subscribe(data => {
+                    this.items = this.items.filter(val => val.id !== this.selected.id);
+                    this.selected = new SyntheseSessionCours();
+                    this.messageService.add({
+                        severity: 'success',
+                        summary: 'Successful',
+                        detail: 'Synthese Deleted',
+                        life: 3000
+                    });
+                });
+            }
+        });
+    }
+
+    public deleteMultiple() {
+        this.confirmationService.confirm({
+            message: 'Are you sure you want to delete the selected synthese?',
+            header: 'Confirm',
+            icon: 'pi pi-exclamation-triangle',
+            accept: () => {
+                this.service.deleteMultipleByReference().subscribe(data => {
+                    this.service.deleteMultipleIndexById();
+                    this.selectes = null;
+                    this.messageService.add({
+                        severity: 'success',
+                        summary: 'Successful',
+                        detail: 'Synthese Deleted',
+                        life: 3000
+                    });
+                });
+            }
+        });
+    }
+
+    public openCreate() {
+        this.selected = new SyntheseSessionCours();
+        this.submitted = false;
+        this.createDialog = true;
+    }
+
+    public viewProfiel() {
+        this.submitted = false;
+        this.profilDiaglog = true;
+
+    }
+    public edit(synthese: SyntheseSessionCours) {
+        this.selected = {...synthese};
+        this.editDialog = true;
+    }
+
+    public view(synthese: SyntheseSessionCours) {
+        this.selected = {...synthese};
+        this.viewDialog = true;
+    }
+
+    incrementer(synthese: SyntheseSessionCours) {
+        synthese.nbrClass++;
+    }
+
+    public setetat(nbr: number): number {
+        this.etat = nbr;
+        return this.etat;
+    }
+    get itemsEtudiant(): Array<Etudiant> {
+        return this.service.itemsEtudiant;
+    }
+
+    set itemsEtudiant(value: Array<Etudiant>) {
+        this.service.itemsEtudiant = value;
+    }
+    get etudiant(): Etudiant{
+        return  this.servicePrf.etudiant;
+    }
+
+    set etudiant(value: Etudiant) {
+        this.servicePrf.etudiant = value;
+    }
     get selected(): SyntheseSessionCours {
 
         return this.service.selected;
@@ -87,6 +239,13 @@ export class SyntheseSessionCoursListComponent implements OnInit {
     set viewDialog(value: boolean) {
         this.service.viewDialog = value;
     }
+    get profilDiaglog(): boolean {
+        return this.service.profilDiaglog;
+    }
+
+    set profilDiaglog(value: boolean) {
+        this.service.profilDiaglog = value;
+    }
 
     get selectes(): Array<SyntheseSessionCours> {
         return this.service.selectes;
@@ -94,36 +253,6 @@ export class SyntheseSessionCoursListComponent implements OnInit {
 
     set selectes(value: Array<SyntheseSessionCours>) {
         this.service.selectes = value;
-    }
-
-    ngOnInit(): void {
-        this.initCol();
-        this.service.findAllStudent().subscribe(
-            data => {
-                this.itemsEtudiant = data;
-            }
-        );
-        console.log(this.itemsEtudiant);
-        this.service.findAll().subscribe(data => {
-            this.items = data;
-            for (let i = 0; i < this.items.length; i++) {
-                // tslint:disable-next-line:triple-equals
-                if (this.items[i].etatNumber == 1) {
-                    console.log(this.j);
-                    this.j++;
-                    console.log(this.j);
-                    // tslint:disable-next-line:triple-equals
-                } else if (this.items[i].etatNumber == 2) {
-                    this.k++;
-                    // tslint:disable-next-line:triple-equals
-                } else if (this.items[i].etatNumber == 4) {
-                    this.m++;
-                } else {
-                    this.c++;
-                }
-            }
-        });
-
     }
     get itemsSession(): Array<EtudiantCours> {
         return this.servicePrf.itemsSession;
@@ -140,93 +269,4 @@ export class SyntheseSessionCoursListComponent implements OnInit {
         this.servicePrf.viewDialogProf = value;
     }
 
-    public viewSession(etd: Etudiant) {
-        this.servicePrf.afficheSessionStd(etd.id).subscribe(
-            data => {
-                // @ts-ignore
-                this.itemsSession = data;
-            });
-        this.viewDialogProf = true;
-    }
-    public setetat(nbr: number): number {
-        this.etat = nbr;
-        return this.etat;
-    }
-    get itemsEtudiant(): Array<Etudiant> {
-        return this.service.itemsEtudiant;
-    }
-
-    set itemsEtudiant(value: Array<Etudiant>) {
-        this.service.itemsEtudiant = value;
-    }
-    public delete(selected: SyntheseSessionCours) {
-        this.selected = selected;
-        this.confirmationService.confirm({
-            message: 'Are you sure you want to delete ' + selected.reference + '?',
-            header: 'Confirm',
-            icon: 'pi pi-exclamation-triangle',
-            accept: () => {
-                this.service.deleteByReference().subscribe(data => {
-                    this.items = this.items.filter(val => val.id !== this.selected.id);
-                    this.selected = new SyntheseSessionCours();
-                    this.messageService.add({
-                        severity: 'success',
-                        summary: 'Successful',
-                        detail: 'Synthese Deleted',
-                        life: 3000
-                    });
-                });
-            }
-        });
-    }
-
-    public deleteMultiple() {
-        this.confirmationService.confirm({
-            message: 'Are you sure you want to delete the selected synthese?',
-            header: 'Confirm',
-            icon: 'pi pi-exclamation-triangle',
-            accept: () => {
-                this.service.deleteMultipleByReference().subscribe(data => {
-                    this.service.deleteMultipleIndexById();
-                    this.selectes = null;
-                    this.messageService.add({
-                        severity: 'success',
-                        summary: 'Successful',
-                        detail: 'Synthese Deleted',
-                        life: 3000
-                    });
-                });
-            }
-        });
-    }
-
-    public openCreate() {
-        this.selected = new SyntheseSessionCours();
-        this.submitted = false;
-        this.createDialog = true;
-    }
-
-    public edit(synthese: SyntheseSessionCours) {
-        this.selected = {...synthese};
-        this.editDialog = true;
-    }
-
-    public view(synthese: SyntheseSessionCours) {
-        this.selected = {...synthese};
-        this.viewDialog = true;
-    }
-
-    incrementer(synthese: SyntheseSessionCours) {
-        synthese.nbrClass++;
-    }
-
-    private initCol() {
-        this.cols = [
-            {field: 'id', header: 'STUDENtT'},
-            {field: 'reference', header: 'SCHEDULE'},
-            {field: '', header: 'LAST CLASS'},
-            {field: '', header: 'BALANCE'},
-            {field: '', header: 'ED CLASS'}
-        ];
-    }
 }

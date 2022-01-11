@@ -204,7 +204,11 @@ export class ProfesseurListComponent implements OnInit {
 
         ];
     }
-
+    public findByProfId(prof: Prof) {
+        console.log(this.selected.trancheHoraireProfList);
+        this.service.findByProfId(prof.id).subscribe(
+            data => this.selected.trancheHoraireProfList = data);
+    }
     showScheduleDialog(prof: Prof) {
         this.scheduleProfs.splice(0, this.scheduleProfs.length);
         this.scheduleDialog = false;

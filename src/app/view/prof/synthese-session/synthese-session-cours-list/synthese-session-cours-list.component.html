@@ -60,19 +60,20 @@
                         <th pSortableColumn="reference">STUDENT
                             <p-sortIcon field="Student"></p-sortIcon>
                         </th>
-                        <th pSortableColumn="id">SCHEDULE
-                            <p-sortIcon field="schedule"></p-sortIcon>
-                        </th>
-                        <th pSortableColumn="totalPaye">LAST CLASS
-                            <p-sortIcon field="last class"></p-sortIcon>
-                        </th>
                         <th pSortableColumn="totalPaye">BALANCE
                             <p-sortIcon field="last class"></p-sortIcon>
                         </th>
                         <th pSortableColumn="totalPaye">EDCLASS
                             <p-sortIcon field="last class"></p-sortIcon>
                         </th>
-                        <th></th>
+
+                        <th pSortableColumn="totalPaye">Level
+                            <p-sortIcon field="last class"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="totalPaye">Action
+                            <p-sortIcon field="last class"></p-sortIcon>
+                        </th>
+
                     </tr>
                 </ng-template>
                 <ng-template let-synthese pTemplate="body"> <!--*ngIf="etatEtudiant.id==33"-->
@@ -81,13 +82,12 @@
                         <td>
                             <p-tableCheckbox [value]="synthese"></p-tableCheckbox>
                         </td>
-                        <td><!-- <img src="" alt="drapeau">-->
-                            <a (click)="setetat(3)" href="http://localhost:4200/#/pages/etat">{{synthese.nom}}</a>
+                        <!-- <img src="" alt="drapeau">-->
+                        <td><P class="bold"></P>
+                            <a (click)=" findEtudiantById(synthese) "     style="margin-top: 10px; cursor: pointer" >{{synthese.nom}}</a>
                             <p class="nom"> {{synthese.prenom}}</p>
                         </td>
-                        <td><p class="bold">{{synthese.datedebutinscription}} </p>
-                            <p class="bold"> {{synthese.datefininscription}} </p>
-                        </td>
+
                         <td (click)="viewSession(synthese)"><P class="bold"></P>
                             <a >Lessons card</a> <br>
                             <!--   <img class="icon" src="img/horloge.png" alt="">-->
@@ -123,6 +123,7 @@
 
         <app-synthese-session-cours-create></app-synthese-session-cours-create>
         <app-synthese-session-cours-edit></app-synthese-session-cours-edit>
+        <app-view-profil-etudiant></app-view-profil-etudiant>
         <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
     </div>
 

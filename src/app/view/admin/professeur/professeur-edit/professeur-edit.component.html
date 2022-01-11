@@ -1,41 +1,81 @@
 <p-dialog [(visible)]="editDialog" [modal]="true" [style]="{width: '450px'}" header="Professor Edit"
           styleClass="p-fluid">
     <ng-template pTemplate="content">
-
+        <p-tabView>
+            <p-tabPanel header="Agent information">
         <div class="p-field">
             <label for="firstName">First Name</label>
             <input [(ngModel)]="selected.prenom" autofocus id="firstName" pInputText required type="text"/>
             <small *ngIf="submitted && !selected.prenom" class="p-invalid">First Name is required.</small>
         </div>
-
         <div class="p-field">
             <label for="firstName">Last Name</label>
             <input [(ngModel)]="selected.nom" autofocus id="lastName" pInputText required type="text"/>
             <small *ngIf="submitted && !selected.nom" class="p-invalid">Last Name is required.</small>
         </div>
         <div class="p-field">
-            <label for="login">Username</label>
-            <input [(ngModel)]="selected.username" autofocus id="login" pInputText required type="text"/>
-            <small *ngIf="submitted && !selected.username" class="p-invalid">UserName is required.</small>
-        </div>
-        <div class="p-field">
-            <label for="pass">Password</label>
-            <input [(ngModel)]="selected.password" autofocus id="pass" pInputText required type="text"/>
-            <small *ngIf="submitted && !selected.username" class="p-invalid">Password is required.</small>
-        </div>
-        <div class="p-field">
             <label for="phoneNumber">Phone Number</label>
             <input [(ngModel)]="selected.numero" autofocus id="phoneNumber" pInputText required type="text"/>
             <small *ngIf="submitted && !selected.numero" class="p-invalid">Phone Number is required.</small>
         </div>
-
+ <div class="p-field">
+        <label>Level Max</label><br>
+        <p-dropdown  [options]="parcoursList" [(ngModel)]="selected.levelMax" optionLabel="libelle"></p-dropdown>
+    </div>
         <div class="p-field">
-            <label for="email">Email</label>
-            <input [(ngModel)]="selected.email" autofocus id="email" pInputText required type="text"/>
-            <small *ngIf="submitted && !selected.email" class="p-invalid">email is required.</small>
-        </div>
+            <label>Level Min</label><br>
+        <p-dropdown class="class1"  [options]="parcoursList2"  [(ngModel)]="selected.levelMin" optionLabel="libelle"></p-dropdown>
 
+    </div>
+            </p-tabPanel>
+            <p-tabPanel header="Information">
+                <label>Horaire</label>
+                   <div  class="p-field" >
+                <label>Start date</label>
+                    <p-calendar id="start" [(ngModel)]="trancheHoraireProf.dateDebut" [showTime]="true" name="StartTime"
+                                class="e-field input2 "
+                                data-name="startTime"
+                                [showIcon]="true"
+                                inputId="start">
 
+                    </p-calendar>
+                   </div>
+                <div  class="p-field" >
+                <label>End date</label>
+
+                <p-calendar id="start" [(ngModel)]="trancheHoraireProf.dateFin" [showTime]="true" name="StartTime"
+                            class="e-field"
+                            data-name="startTime"
+                            [showIcon]="true"
+                            inputId="start"></p-calendar>
+                </div>
+                <button (click)="addHoraire()" class="p-button-text table1" icon="pi pi-plus" label="Add Horaire"
+                        pButton   pRipple ></button>
+                <p-table [value]="selected.trancheHoraireProfList" >
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th pSortableColumn="datee"> Start Date
+                            </th>
+                            <th pSortableColumn="datee"> End Date
+                            </th>
+                            <th pSortableColumn="datee"> Action
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template let-e pTemplate="body">
+                        <tr>
+                            <td>{{e.dateDebut| date:' yyyy-MM-dd\' Time \'HH:mm:ss'}}</td>
+                            <td>{{e.dateFin| date:' yyyy-MM-dd\' Time \'HH:mm:ss'}}</td>
+                            <td>
+                                <button (click)="delete(e)" class="p-button-rounded p-button-danger" icon="pi pi-trash" pButton
+                                        pRipple></button>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </p-tabPanel>
+
+        </p-tabView>
     </ng-template>
 
     <ng-template pTemplate="footer">

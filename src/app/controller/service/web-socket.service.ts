@@ -11,10 +11,17 @@ import {HttpClient} from '@angular/common/http';
 import {User} from '../model/user.model';
 import {SimulateSectionService} from './simulate-section.service';
 import {AuthenticationService} from './authentication.service';
-import {ParcoursService} from "./parcours.service";
-import {Section} from "../model/section.model";
-import {Cours} from "../model/cours.model";
-import {Router} from "@angular/router";
+import {ParcoursService} from './parcours.service';
+import {Section} from '../model/section.model';
+import {Cours} from '../model/cours.model';
+import {Router} from '@angular/router';
+import {QuizEtudiant} from '../model/quiz-etudiant.model';
+import {Reponse} from '../model/reponse.model';
+import {QuizReponse} from '../model/quiz-reponse';
+import {LearnService} from './learn.service';
+import {Question} from '../model/question.model';
+import {GroupeEtudiant} from '../model/groupe-etudiant.model';
+import {GroupeEtudiantService} from './groupe-etudiant-service';
 
 @Injectable({
     providedIn: 'root'
@@ -22,19 +29,23 @@ import {Router} from "@angular/router";
 export class WebSocketService {
 
     publicUrl = environment.publicUrl;
+    private _prof: Prof = new Prof();
+    private _studentsEnLigne: Map<number, Etudiant> = new Map<number, Etudiant>();
     private socketUrl = environment.socketUrl;
     private baseUrl = environment.baseUrl;
     private profUrl = environment.profUrl;
     private synchronizationUrl = 'synchronization';
     index = 0;
-    webSocket: WebSocket ;
+    webSocket: WebSocket;
     chatMessages: ChatMessageDto[] = [];
     private _connectedUsers: any[] = [];
     actionType: Array<string> = new Array<string>();
     students: Etudiant[];
     idprof: number;
-    public isInSession = false ;
+    public isInSession = false;
     public sessionHasStarted = false;
+    private groupeEtudiant: GroupeEtudiant = new GroupeEtudiant();
+    private _grpStudentAnswers: Map<Etudiant, QuizReponse> = new Map<Etudiant, QuizReponse>();
 
 
     constructor(private serviceetudiant: EtudiantService,
@@ -43,63 +54,205 @@ export class WebSocketService {
                 private loginservice: LoginService, public serviceprof: ProfService,
                 private simulatesectionService: SimulateSectionService,
                 private parcoursService: ParcoursService,
-                private router: Router
-                ) {
+                private router: Router,
+                private groupeEtudiantService: GroupeEtudiantService,
+                private learnService: LearnService
+    ) {
     }
 
-    public openWebSocket(user: User) {
+
+    get grpStudentAnswers(): Map<Etudiant, QuizReponse> {
+        return this._grpStudentAnswers;
+    }
+
+    set grpStudentAnswers(value: Map<Etudiant, QuizReponse>) {
+        this._grpStudentAnswers = value;
+    }
+
+    get studentsEnLigne(): Map<number, Etudiant> {
+        return this._studentsEnLigne;
+    }
+
+    set studentsEnLigne(value: Map<number, Etudiant>) {
+        this._studentsEnLigne = value;
+    }
+
+    get prof(): Prof {
+        return this._prof;
+    }
+
+    set prof(value: Prof) {
+        this._prof = value;
+    }
+
+    get reponseQuiz(): QuizReponse {
+        return this.learnService.reponseQuiz;
+    }
+
+    set reponseQuiz(value: QuizReponse) {
+        this.learnService.reponseQuiz = value;
+    }
+
+
+    get participants(): Map<number, Array<Etudiant>> {
+        return this.learnService.participants;
+    }
+
+    set participants(value: Map<number, Array<Etudiant>>) {
+        this.learnService.participants = value;
+    }
+
+
+    get question(): Question {
+        return this.learnService.question;
+    }
+
+    set question(value: Question) {
+        this.learnService.question = value;
+    }
+
+    public closeWebSocket(user: any) {
+        this.webSocket.send(JSON.stringify(user));
+        this.webSocket.close();
+        this.webSocket.onclose = (event) => {
+            console.log('Clooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooose: ');
+            console.log(event);
+            console.log('================================================================================');
+        };
+    }
+
+    public openWebSocket(user: User, prof: Prof, grpEtudiant: GroupeEtudiant, sender: string) {
         this.webSocket = new WebSocket(this.socketUrl);
         this.webSocket.onopen = (event) => {
-            this.webSocket.send(JSON.stringify(user));
-            // this.connectedUsers.push(this.webSocket.)
+            if (sender === 'PROF') {
+                this.groupeEtudiant = grpEtudiant;
+                console.log('ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooopeeeeeeeeen');
+                this.participants.set(prof.id, this.connectedUsers);
+                console.log(this.participants);
+            } else {
+                this.prof = prof;
+                this.groupeEtudiantService.findAllGroupeEtudiantDetail(grpEtudiant.id).subscribe(
+                    data => {
+                        const groupeEtudiantDetails = data;
+                        for (let i = 0; i < groupeEtudiantDetails.length; i++) {
+                            this.connectedUsers.push({...groupeEtudiantDetails[i].etudiant});
+                        }
+                        this.participants.set(prof.id, this.connectedUsers);
+                    }
+                );
+                this.webSocket.send(JSON.stringify(user));
+            }
+            console.log('ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooopeeeeeeeeen');
         };
-        // this.findbynumero(this.loginservice.prof.id);
-        this.webSocket.onmessage = (event) => {
+        this.webSocket.onerror = (event) => {
             console.log(event);
-            const data = JSON.parse(event.data);
+            alert(event);
+        };
+        this.webSocket.onmessage = (event) => {
+
+            console.log(event.data);
+            const data: ChatMessageDto = JSON.parse(event.data);
             if (data.type === 'message') {
                 this.chatMessages.push(data);
                 console.log(data);
-            }
-            else if  (data.type === 'NEXT') {
+            } else if (data.type === 'NEXT') {
                 console.log('hani ghandir next l student');
                 this.simulatesectionService.nextSection();
 
-            }
-           else if (data.type === 'PREVIOUS') {
-               console.log('hani ghandir previous l student');
-               this.simulatesectionService.PreviousSection();
-            //   this.updateCurrentSection(this.loginservice.prof.id, this.simulatesectionService.selectedsection);
+            } else if (data.type === 'PREVIOUS') {
+                console.log('hani ghandir previous l student');
+                this.simulatesectionService.PreviousSection();
+                //   this.updateCurrentSection(this.loginservice.prof.id, this.simulatesectionService.selectedsection);
+            } else if (data.type === 'FOLLOW-QUIZ') {
+                this.reponseQuiz = data.quizReponse;
+                this.question = this.reponseQuiz?.question;
+                this.learnService.nextQuestionFct();
+            } else if (data.type === 'QUIZ') {
+                if (this.participants.get(this.loginservice.getConnecteUser().id)?.length === 1 ||
+                    data.quizReponse.sender === 'PROF') {
+                    this.reponseQuiz = data.quizReponse;
+                    console.log(this.reponseQuiz);
+                    if (this.reponseQuiz?.question?.typeDeQuestion?.ref === 't5') {
+                        this.trueOrFalse = this.reponseQuiz.lib !== 'false';
+                    }
+                    if (this.reponseQuiz.sender === 'PROF') {
+                        this.learnService.saveAnswers(this.question, 'TEACHER_ANSWER');
+                    } else if (this.reponseQuiz.sender === 'STUDENT') {
+                        this.learnService.saveAnswers(this.question, 'STUDENT_ANSWER');
+                    } else {
+                        this.learnService.saveAnswers(this.question, 'STUDENT_DONT_KNOW');
+                    }
+                } else {
+                    const rpsQuiz = data.quizReponse;
+                    this.grpStudentAnswers.set(rpsQuiz.student, rpsQuiz);
+                    console.log('===================================== GRPSTUDENTANSWERS ========================');
+                    console.log(this.grpStudentAnswers);
+                }
+
+
             } else {
-                console.log(data);
-                console.log(this.connectedUsers);
-                if (this.connectedUsers.length > 0) {
-                    for (let user of this.connectedUsers) {
-                        if (user.id === data.id) {
-                            return;
+                const mydata = JSON.parse(event.data);
+                console.log(mydata);
+                const studentList = this.participants.get(mydata?.prof?.id);
+                for (const student of studentList) {
+                    if (student.id === mydata.id) {
+                        if (this.studentsEnLigne.get(student.id) === undefined) {
+                            this.studentsEnLigne.set(student.id, student);
+                        } else {
+                            this.studentsEnLigne.delete(student.id);
+                            console.log('========== DELETE  STUDENT ========');
+                            console.log(this.studentsEnLigne);
+                            console.log('========== DELETE  STUDENT ========');
                         }
                     }
-                    this.connectedUsers.push({...data});
-
-                } else {
-                    console.log(this.connectedUsers);
-                    this.connectedUsers.push({...data});
-                    // this.connectedUsers = this.connectedUsers;
-                    // console.log(this.webSocket.readyState);
-                    console.log(this.connectedUsers);
                 }
             }
         };
 
+        if (this.webSocket.readyState === this.webSocket.CLOSING) {
+            alert('Wb socket is CLOSING !');
+        }
 
-        this.webSocket.onclose = (event) => {
-
-        };
     }
 
-    public sendMessage(chatMessageDto: ChatMessageDto) {
-        this.webSocket.send(JSON.stringify(chatMessageDto));
+    get trueOrFalse(): boolean {
+        return this.learnService.trueOrFalse;
     }
+
+    set trueOrFalse(value: boolean) {
+        this.learnService.trueOrFalse = value;
+    }
+
+    public sendMessage(chatMessageDto: ChatMessageDto, sender: string) {
+        console.log('===========================this.webSocket.readyState ===========================');
+        console.log(this.webSocket.readyState);
+        console.log(this.webSocket.OPEN);
+        console.log(this.webSocket.CONNECTING);
+        console.log(this.webSocket.CLOSED);
+        if (this.webSocket.readyState === this.webSocket.OPEN) {
+            console.log(chatMessageDto);
+            this.webSocket.send(JSON.stringify(chatMessageDto));
+            this.webSocket.onerror = (event) => {
+                console.log(event);
+                alert('erroor to send');
+            };
+        } else {
+            if (sender === 'PROF') {
+                this.openWebSocket(this.loginservice.getConnectedProf(), this.loginservice.getConnectedProf(),
+                    this.groupeEtudiant, 'PROF');
+                this.webSocket.onopen = (event) => {
+                    this.webSocket.send(JSON.stringify(chatMessageDto));
+                };
+            } else {
+                this.openWebSocket(this.loginservice.getConnectedStudent(), this.loginservice.getConnectedStudent().prof,
+                    this.groupeEtudiant, 'STUDENT');
+                this.webSocket.onopen = (event) => {
+                    this.webSocket.send(JSON.stringify(chatMessageDto));
+                };
+            }
+        }
+    }
+
 
     public findstudentlist(idprof: number): Etudiant[] {
         this.serviceetudiant.findetudiantProf1(idprof).subscribe(
@@ -134,12 +287,18 @@ export class WebSocketService {
         );
     }
 
-    public saveCurrentSection(id: number, section: Section){
-        this.http.post<number>(this.profUrl + this.synchronizationUrl + '/id/' + id, section ).subscribe(
+    get selectedsection(): Section {
+        return this.parcoursService.selectedsection;
+    }
+
+    public saveCurrentSection(id: number, section: Section) {
+        console.log(this.selectedsection);
+        this.http.post<number>(this.profUrl + this.synchronizationUrl + '/id/' + id, section).subscribe(
             data => {
-                if (data > 0){
+                if (data > 0) {
+                    console.log(section);
                     console.log('CurrentSection saved');
-                }else {
+                } else {
                     console.log('section not saved');
                 }
             }, error => {
@@ -148,12 +307,12 @@ export class WebSocketService {
         );
     }
 
-    public updateCurrentSection(id: number, section: Section){
-        this.http.post<number>(this.profUrl + this.synchronizationUrl + '/update/' + id, section ).subscribe(
+    public updateCurrentSection(id: number, section: Section) {
+        this.http.post<number>(this.profUrl + this.synchronizationUrl + '/update/' + id, section).subscribe(
             data => {
-                if (data > 0){
+                if (data > 0) {
                     console.log('CurrentSection updated');
-                }else {
+                } else {
                     console.log('section not updated');
                 }
             }, error => {
@@ -162,12 +321,12 @@ export class WebSocketService {
         );
     }
 
-    public deleteWhenSessionIsfiniched(id: number){
+    public deleteWhenSessionIsfiniched(id: number) {
         this.http.get<number>(this.profUrl + this.synchronizationUrl + '/remove/' + id).subscribe(
             data => {
-                if (data > 0){
+                if (data > 0) {
                     console.log('CurrentSection removed');
-                }else {
+                } else {
                     console.log('section not removed');
                 }
             }, error => {
@@ -176,10 +335,10 @@ export class WebSocketService {
         );
     }
 
-    public findCurrentSectionForstudent(cours: Cours){
+    public findCurrentSectionForstudent(cours: Cours) {
         this.http.get<Section>(this.profUrl + this.synchronizationUrl + '/id/' + this.loginservice.etudiant.prof.id).subscribe(
             async data => {
-                if (data !== null){
+                if (data !== null) {
                     this.parcoursService.selectedsection = data;
                     console.log('CurrentSection found');
                     console.log(this.parcoursService.selectedsection);
@@ -187,7 +346,7 @@ export class WebSocketService {
                     this.router.navigate(['etudiant/etudiant-simulate-sections']);
                     this.simulatesectionService.goToSection(this.parcoursService.selectedsection.categorieSection.libelle);
 
-                }else {
+                } else {
                     console.log('section not found');
                 }
             }, error => {
@@ -196,17 +355,9 @@ export class WebSocketService {
         );
     }
 
-    public closeWebSocket(user: any) {
-        this.webSocket.onclose = (event) => {
-            console.log('Close: ', event);
-            this.webSocket.close();
-        };
-        // this.webSocket.close();
-    }
-
 
     get connectedUsers(): any[] {
-        if (this._connectedUsers == null){
+        if (this._connectedUsers == null) {
             this._connectedUsers = [];
         }
         return this._connectedUsers;
@@ -215,4 +366,5 @@ export class WebSocketService {
     set connectedUsers(value: any[]) {
         this._connectedUsers = value;
     }
+
 }

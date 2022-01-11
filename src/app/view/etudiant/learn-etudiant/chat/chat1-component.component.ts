@@ -35,7 +35,7 @@ export class Chat1Component implements OnInit, OnDestroy {
         chatMessageDto.prof = this.servicelogin.etudiant.prof;
         chatMessageDto.type = 'message';
         console.log(chatMessageDto);
-        this.webSocketService.sendMessage(chatMessageDto);
+        this.webSocketService.sendMessage(chatMessageDto, 'STUDENT');
         sendForm.controls.message.reset();
     }
 }

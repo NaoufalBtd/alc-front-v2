@@ -6,6 +6,7 @@ import {Cours} from '../../../../controller/model/cours.model';
 import {Centre} from '../../../../controller/model/centre.model';
 import {ConfirmationService, MessageService} from 'primeng/api';
 import {Parcours} from '../../../../controller/model/parcours.model';
+import {LearnService} from '../../../../controller/service/learn.service';
 
 
 @Component({
@@ -16,9 +17,18 @@ import {Parcours} from '../../../../controller/model/parcours.model';
 export class ParcoursListComponent implements OnInit {
     cols: any[];
     couchedTd = null;
+
     // tslint:disable-next-line:max-line-length
-    constructor(private messageService: MessageService, private confirmationService: ConfirmationService, private service: ParcoursService) {
+    constructor(private messageService: MessageService,
+                private learnService: LearnService,
+                private confirmationService: ConfirmationService, private service: ParcoursService) {
     }
+
+
+    set parcourCurrent(value: Parcours) {
+        this.learnService.parcourCurrent = value;
+    }
+
 
     get submitted(): boolean {
         return this.service.submitted;
@@ -165,7 +175,8 @@ export class ParcoursListComponent implements OnInit {
     }
 
     public FindCours(parcour: Parcours) {
-        if (this.couchedTd === null){
+        this.parcourCurrent = parcour;
+        if (this.couchedTd === null) {
             document.getElementById(parcour.libelle).className = 'couchedTd';
         } else {
             document.getElementById(this.couchedTd).className = ' ';

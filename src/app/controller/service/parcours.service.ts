@@ -21,6 +21,7 @@ import {Prof} from '../model/prof.model';
     providedIn: 'root'
 })
 export class ParcoursService {
+    private _nameParcours: Parcours;
     private _index: number;
     private _contenuSection: Array<string>;
     private adminUrl = environment.adminUrl;
@@ -120,6 +121,18 @@ export class ParcoursService {
 
     set selecteddparcours(value: Parcours) {
         this._selecteddparcours = value;
+    }
+
+
+    get nameParcours(): Parcours {
+        if (this._nameParcours == null) {
+            this._nameParcours = new Parcours();
+        }
+        return this._nameParcours;
+    }
+
+    set nameParcours(value: Parcours) {
+        this._nameParcours = value;
     }
 
     private _itemsparcours: Array<Parcours>;
@@ -854,6 +867,11 @@ export class ParcoursService {
     afficheOneSection(): Observable<Section> {
         // tslint:disable-next-line:max-line-length
         return this.http.get<Section>(this.adminUrl + 'section/cours/id/' + this.selectedcours.id + '/numeroOrder/1');
+    }
+
+    afficheOneSectionByProf(cour: Cours): Observable<Section> {
+        // tslint:disable-next-line:max-line-length
+        return this.http.get<Section>(this.adminUrl + 'section/cours/id/' + cour.id + '/numeroOrder/1');
     }
 
     public findSectionByLibelle(libel: string): Observable<Array<Section>> {

@@ -3,7 +3,7 @@ import {ScheduleService} from '../../../controller/service/schedule.service';
 import {ConfirmationService, MessageService} from 'primeng/api';
 import {LoginService} from '../../../controller/service/login.service';
 import {L10n} from '@syncfusion/ej2-base';
-import {EventSettingsModel, PopupOpenEventArgs, ScheduleComponent} from '@syncfusion/ej2-angular-schedule';
+import {EventSettingsModel, PopupOpenEventArgs, ScheduleComponent, TimeScaleModel} from '@syncfusion/ej2-angular-schedule';
 import {ScheduleProf} from '../../../controller/model/calendrier-prof.model';
 import {Prof} from '../../../controller/model/prof.model';
 import {Etudiant} from '../../../controller/model/etudiant.model';
@@ -37,10 +37,11 @@ export class ScheduleStudentComponent implements OnInit {
     public scheduleObj: ScheduleComponent;
     display = false;
     private selectionTarget: Element;
-    // public selectedDate: Date = new Date(2021, 4, 18);
+    public timeScale: TimeScaleModel = { interval: 60, slotCount: 1 };
     public selectedDate: Date = new Date();
     public showWeekend = false;
     public eventSettings: EventSettingsModel;
+    public selectedMeeting: ScheduleProf = new ScheduleProf();
 
     constructor(private scheduleService: ScheduleService, private messageService: MessageService,
                 private confirmationService: ConfirmationService,
@@ -125,8 +126,16 @@ export class ScheduleStudentComponent implements OnInit {
     public onPopupOpen(args: PopupOpenEventArgs): void {
         this.selectionTarget = null;
         this.selectionTarget = args.target;
+        this.selectedMeeting.groupeEtudiant = args.data.groupeEtudiant;
+        this.selectedMeeting.id = args.data.id;
+        this.selectedMeeting.prof = args.data.prof;
+        this.selectedMeeting.grpName = args.data.grpName;
+        this.selectedMeeting.cours = args.data.cours;
+        this.selectedMeeting.subject = args.data.subject;
+        this.selectedMeeting.startTime = args.data.startTime;
+        this.selectedMeeting.endTime = args.data.endTime;
+        console.log(this.selectedMeeting);
         this.parcoursService.selectedcours = args.data.cours;
-        console.log(args.data);
     }
 
     public getData() {
@@ -135,8 +144,7 @@ export class ScheduleStudentComponent implements OnInit {
     }
 
     joinSession() {
-        //  this.simulateSection.findSectionOneByOne(this.parcoursService.selectedcours);
-        this.webSocketService.openWebSocket(this.etudiant);
+        this.webSocketService.openWebSocket(this.etudiant, this.selectedMeeting.prof, this.selectedMeeting.groupeEtudiant, 'STUDENT');
         this.webSocketService.isInSession = true;
         this.webSocketService.findCurrentSectionForstudent(this.parcoursService.selectedcours);
 

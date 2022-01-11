@@ -264,6 +264,9 @@ import {SyntheseSessionCours} from './controller/model/synthese-session-cours.mo
 import { ProfinscriptionComponent } from './view/public/profinscription/profinscription.component';
 import { EtudiantinscriptionComponent } from './view/public/etudiantinscription/etudiantinscription.component';
 import { BonusProfComponent } from './view/admin/bonus-prof/bonus-prof.component';
+import {ViewProfilEtudiantComponent} from './view/prof/synthese-session/view-profil-etudiant/view-profil-etudiant.component';
+
+
 @NgModule({
     imports: [
         BrowserModule,
@@ -527,6 +530,9 @@ import { BonusProfComponent } from './view/admin/bonus-prof/bonus-prof.component
         ProfinscriptionComponent,
         EtudiantinscriptionComponent,
         BonusProfComponent
+        EtudiantinscriptionComponent,
+        ViewProfilEtudiantComponent,
+        EtudiantinscriptionComponent
     ],
     providers: [
         {provide: LocationStrategy, useClass: HashLocationStrategy},

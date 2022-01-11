@@ -5,6 +5,7 @@ import {Role} from '../../enum/role.enum';
 import {User} from '../../controller/model/user.model';
 import {Router} from '@angular/router';
 import {AuthenticationService} from '../../controller/service/authentication.service';
+import {LearnService} from '../../controller/service/learn.service';
 
 @Component({
   selector: 'app-etudiant',
@@ -46,10 +47,20 @@ export class EtudiantComponent implements OnInit{
   inlineUserMenuActive = false;
 
 
+
   constructor(private menuService: MenuService,
               private router: Router,
               private authenticationService: AuthenticationService,
+              private learnService: LearnService,
               public app: AppComponent) {
+  }
+
+  get showAppMenu(): boolean {
+    return this.learnService.showAppMenu;
+  }
+
+  set showAppMenu(value: boolean) {
+    this.learnService.showAppMenu = value;
   }
 
   onLayoutClick() {

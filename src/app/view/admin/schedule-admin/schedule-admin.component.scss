@@ -4,9 +4,7 @@
 }
 
 ejs-schedule {
-  -webkit-box-shadow: -8px -5px 27px -6px rgba(92, 83, 92, 1);
-  -moz-box-shadow: -8px -5px 27px -6px rgba(92, 83, 92, 1);
-  box-shadow: -8px -5px 27px -6px rgba(92, 83, 92, 1);
+  margin-left: 3%;
 }
 
 .p-field {
@@ -82,5 +80,23 @@ label{
 }
 
 
-.top-bar{
+.meeting-type-wrap{
+  color: #3445a3;
+  font-size: large;
+  font-weight: 500;
+  padding: 2% 0 2% 1%;
+  font-family: "Roboto", "Segoe UI", "GeezaPro", "DejaVu Serif", "sans-serif", "-apple-system", "BlinkMacSystemFont";
 }
+
+
+
+.e-resource-details{
+  border-top: 2px solid #3f51b5;
+  padding: 2% 0 0 27px;
+  padding-bottom: -22px;
+  margin-bottom: -7px;
+}
+.quick-info-content{
+  background-color: #ffffff !important;
+}
+

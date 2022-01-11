@@ -146,6 +146,7 @@ import {AllSalaryComponent} from './view/admin/all-salary/all-salary.component';
                     {path: 'etudiant-cours', component: EtudiantCoursesComponent},
                     {path: 'quiz-view', component: QuizEtudiantViewComponent},
                     {path: 'quiz-take', component: QuizTakeComponent},
+                    {path: 'etudiant-simulate-sections/quiz-review', component: QuizEtudiantViewComponent},
                     {path: 'homeWorkEtudiant', component: HomeWorkEtudiantComponent},
                     {path: 'homeWorkEtudiantResult', component: HomeWorkResultComponent},
                     {path: 'profile', component: EtudiantProfileComponent}

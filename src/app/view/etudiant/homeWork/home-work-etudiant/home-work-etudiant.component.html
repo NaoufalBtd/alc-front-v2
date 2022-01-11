@@ -24,9 +24,25 @@
             </ng-template>
         </p-table>
     </div>
-    <div class="p-col">
+    <div class="p-col" >
+        <!-- --------------------- Correct The Mistake ---------------------------------->
+        <div class="grid" style="margin:10px;" *ngIf="homeWorkQuestion.typeDeQuestion.ref === 't4'">
+            <div class="p-col-6" class="question">
+                <h5 class="h5"> {{  questionSideLeft}}  </h5>
+                <span class="p-float-label">
+                       <input  id="inputDashedBorder"
+                               [(ngModel)]="inputAnswer" class="p-inputtext-sm " pInputText/>
+                    </span>
+                <h5 class="h5"> {{  questionSideRight}}  </h5>
+            </div>
+            <div class="p-col-4" style="margin-left: 5px;">
+                <button  [disabled]="disable"   pButton pRipple type="button" (click)="submitMistake()"  label="Check"  class="p-button-outlined p-button-success">
+                </button>
+            </div>
+        </div>
         <div class="p-grid" id="bodyRadio">
-            <div class="p-col-6" id="question">
+
+            <div *ngIf="!(homeWorkQuestion.typeDeQuestion.ref === 't4')" class="p-col-6" id="question">
                 <h3 style="margin-top: 100px;margin-bottom: 100px; text-align: center">
                     {{this.homeWorkQuestion.libelle}}</h3>
 <!--                    <span style="font-size: 2rem; text-align: center"  id="myAnswer" [style.visibility]="'hidden'">{{etudiantReponse.lib}}</span><span style="font-size: 1rem; margin-bottom: 20px" id="tooltiptext" [style.visibility]="'hidden'"> <div style="width: 100%" *ngFor="let r of this.correctanswers">{{r.lib}}</div></span>-->
@@ -83,25 +99,14 @@
 <!--                <p-button [disabled]="disable" class="p-button" (click)="showreponse()">Check</p-button>-->
             </div>
 
-            <div style="background-color: white; width: 100%" id="mistake" *ngIf="homeWorkQuestion.typeDeQuestion.lib == 'Correct the mistake'">
-                <!--<h3 style="margin-top: 100px;margin-bottom: 20px; text-align: center">{{this.selected.libelle}} </h3>-->
-                <span class="p-float-label" style="margin-left: 10%; margin-bottom: 20px">
-                    <textarea id="fuloat-inpt-correct-mistake" [disabled]="disable? true: null" [(ngModel)]="this.etudiantReponse.lib" (keyup)="correctMistake()" pInputTextarea></textarea>
-                    <div id="div-output">
-                        <output *ngFor="let i of numberofword" id="output-correct-mistake"> <span id="span-output-{{i}}" [style.visibility]="isChecked? 'visible' : 'hidden'"> </span> <span id="span-correct-{{i}}" class="span-correct" [style.visibility]="'visible'"> {{this.correctanswers[i]}} </span> </output>
-                    </div>
-                    <h3 id="translate-correct-mistake" style="text-align: right"> {{this.translate}}</h3>
-<!--                    <button pButton pRipple id="check-correct-mistake" type="button" style="width: 200px; margin-left: 30%; margin-top: 50px" label="Check"  class="p-button-outlined p-button-success"></button>-->
-                </span>
-            </div>
             <div class="p-col-6" id="on-off-question" style="background: white;" id="mistake" *ngIf="homeWorkQuestion.typeDeQuestion.lib == 'On/Off'">
-                <h3 id="question-on-off" style="margin-top: 100px;margin-bottom: 100px; text-align: center">{{this.etudiantReponse.lib}}</h3>
-                <h3 id="translate-on-off" style="text-align: right"> {{this.translate}}</h3>
-                <div id="on-off-answer" *ngIf="homeWorkQuestion.typeDeQuestion.lib == 'On/Off'"  >
-                    <div style="margin: 50px 50px">
-                        <output style="margin-left: 20px; margin-right: 10px; font-size: 30px; font-family: 'Goudy Old Style'">False </output><p-inputSwitch [(ngModel)]="on_off"></p-inputSwitch> <output style="margin-left: 10px; font-size: 30px; font-family: 'Goudy Old Style'">True</output>
-<!--                        <button pButton pRipple id="check-on-off" type="button" style="width: 200px; margin-left: 30%; margin-top: 50px" label="Check" class="p-button-outlined p-button-success"></button>-->
-
+                <div class="p-grid">
+                <div style="padding-top: 2%; margin-top: 100px" class="p-col-8">
+                    <p style="font-size: 15px">False <p-inputSwitch [ngModel]="trueorFalse" (click)="onOffTrue()" ></p-inputSwitch> True </p>
+                        </div>
+                    <div class="p-col-4" style="margin-left: 5px; margin-top:90px">
+                        <button  [disabled]="disable"   pButton pRipple type="button" (click)="submitOnOff()"  label="Check"  class="p-button-outlined p-button-success">
+                        </button>
                     </div>
                 </div>
             </div>
@@ -178,6 +183,7 @@
         </div>
 
     </div>
+
 
     <div class="p-col-3" (mouseup)="dict()">
         <div class="product-grid-item-content" style="margin-top: 0">

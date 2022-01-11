@@ -8,7 +8,7 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import {Prof} from '../../../controller/model/prof.model';
 import {L10n} from '@syncfusion/ej2-base';
-import {CurrentAction, EventSettingsModel, PopupOpenEventArgs, ScheduleComponent} from '@syncfusion/ej2-angular-schedule';
+import {CurrentAction, EventSettingsModel, PopupOpenEventArgs, ScheduleComponent, TimeScaleModel} from '@syncfusion/ej2-angular-schedule';
 import {ScheduleProf} from '../../../controller/model/calendrier-prof.model';
 import {GroupeEtudiantDetail} from '../../../controller/model/groupe-etudiant-detail.model';
 import {isNullOrUndefined} from 'util';
@@ -37,7 +37,8 @@ export class ScheduleAdminComponent implements OnInit {
     optionSelected: any = [
         {option: 'Never'},
     ];
-    repeatNumber: number = 1;
+    repeatNumber = 1;
+    grpEtudiant: GroupeEtudiant = new GroupeEtudiant();
     endDate: Date = new Date();
     selectedDays: any;
     deleteOption = false;
@@ -58,6 +59,7 @@ export class ScheduleAdminComponent implements OnInit {
         {option: 'Weekly'},
     ];
     public schedule: ScheduleProf = new ScheduleProf();
+    public timeScale: TimeScaleModel = { interval: 60, slotCount: 1 };
     @ViewChild('scheduleObj')
     public scheduleObj: ScheduleComponent;
     display = false;
@@ -219,6 +221,8 @@ export class ScheduleAdminComponent implements OnInit {
         const scheduleObj = this.scheduleObj;
         scheduleObj.eventSettings.dataSource = null;
         this.scheduleProf.subject = this.scheduleProf.cours.libelle;
+        this.scheduleProf.grpName = this.scheduleProf.groupeEtudiant.libelle;
+        this.scheduleProf.profName = this.scheduleProf.prof.nom + ' ' + this.scheduleProf.prof.prenom;
         console.log(this.scheduleProf);
         if (this.optionSelected.option === 'Daily') {
             while (this.scheduleProf.startTime < this.endDate) {
@@ -325,11 +329,20 @@ export class ScheduleAdminComponent implements OnInit {
 
 
     public onPopupOpen(args: PopupOpenEventArgs): void {
+        this.scheduleProf = new ScheduleProf();
         this.data.subject = args.data.subject;
         this.data.startTime = args.data.startTime;
         this.data.endTime = args.data.endTime;
         this.scheduleProf.startTime = args.data.startTime;
         this.scheduleProf.endTime = args.data.endTime;
+        this.scheduleProf.grpName = args.data?.groupeEtudiant.libelle;
+        this.scheduleProf.profName = args.data?.prof.nom;
+        this.scheduleProf.subject = args.data.subject;
+        this.scheduleProf.prof = args.data.prof;
+        this.scheduleProf.id = args.data.id;
+        console.log(this.scheduleProf.id);
+        this.scheduleProf.groupeEtudiant = args.data.groupeEtudiant;
+        this.grpEtudiant = this.scheduleProf.groupeEtudiant ;
         this.selectionTarget = null;
         this.selectionTarget = args.target;
     }
@@ -385,6 +398,7 @@ export class ScheduleAdminComponent implements OnInit {
     // public onCloseClick(): void {
     //     this.scheduleObj.closeEditor();
     // }
+    grpName = 'Group A';
 
     public onCloseClick(): void {
         this.scheduleObj.quickPopup.quickPopupHide(true);
