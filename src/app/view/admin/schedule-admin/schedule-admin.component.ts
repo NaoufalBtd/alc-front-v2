@@ -3,19 +3,22 @@ import {ScheduleService} from '../../../controller/service/schedule.service';
 import {ConfirmationService, MessageService} from 'primeng/api';
 import {EtatEtudiantSchedule} from '../../../controller/model/etat-etudiant-schedule.model';
 import {Etudiant} from '../../../controller/model/etudiant.model';
-import dayGridPlugin from '@fullcalendar/daygrid';
-import timeGridPlugin from '@fullcalendar/timegrid';
-import interactionPlugin from '@fullcalendar/interaction';
 import {Prof} from '../../../controller/model/prof.model';
 import {L10n} from '@syncfusion/ej2-base';
-import {CurrentAction, EventSettingsModel, PopupOpenEventArgs, ScheduleComponent, TimeScaleModel} from '@syncfusion/ej2-angular-schedule';
+import {
+    CurrentAction,
+    EventSettingsModel,
+    GroupModel,
+    PopupOpenEventArgs,
+    ScheduleComponent,
+    TimeScaleModel
+} from '@syncfusion/ej2-angular-schedule';
 import {ScheduleProf} from '../../../controller/model/calendrier-prof.model';
-import {GroupeEtudiantDetail} from '../../../controller/model/groupe-etudiant-detail.model';
-import {isNullOrUndefined} from 'util';
 import {GroupeEtudiant} from '../../../controller/model/groupe-etudiant.model';
-import {Parcours} from '../../../controller/model/parcours.model';
 import {ParcoursService} from '../../../controller/service/parcours.service';
 import {Cours} from '../../../controller/model/cours.model';
+import {extend, Internationalization} from '@syncfusion/ej2-base';
+import {TimePickerComponent} from '@syncfusion/ej2-angular-calendars';
 
 L10n.load({
     'en-US': {
@@ -59,9 +62,13 @@ export class ScheduleAdminComponent implements OnInit {
         {option: 'Weekly'},
     ];
     public schedule: ScheduleProf = new ScheduleProf();
-    public timeScale: TimeScaleModel = { interval: 60, slotCount: 1 };
+    public timeScale: TimeScaleModel = {interval: 60, slotCount: 1};
+    @ViewChild('startTime') public startTimeObj: TimePickerComponent;
+    @ViewChild('endTime') public endTimeObj: TimePickerComponent;
     @ViewChild('scheduleObj')
     public scheduleObj: ScheduleComponent;
+    public instance: Internationalization = new Internationalization();
+
     display = false;
     private selectionTarget: Element;
     public data: ScheduleProf = new ScheduleProf();
@@ -342,7 +349,7 @@ export class ScheduleAdminComponent implements OnInit {
         this.scheduleProf.id = args.data.id;
         console.log(this.scheduleProf.id);
         this.scheduleProf.groupeEtudiant = args.data.groupeEtudiant;
-        this.grpEtudiant = this.scheduleProf.groupeEtudiant ;
+        this.grpEtudiant = this.scheduleProf.groupeEtudiant;
         this.selectionTarget = null;
         this.selectionTarget = args.target;
     }
@@ -404,9 +411,36 @@ export class ScheduleAdminComponent implements OnInit {
         this.scheduleObj.quickPopup.quickPopupHide(true);
     }
 
+    public resourceDataSource: Object[] = [
+        {
+            text: this.scheduleProfs[0]?.prof?.nom,
+            id: 0,
+            color: '#ea7a57',
+            startHour: '08:00',
+            endHour: '15:00',
+        }
+    ];
+    public group: GroupModel = {byDate: true, resources: ['Profs']};
+    public workHours1: any = [
+        {startHour: '07:00', endHour: '16:00', groupIndex: 1}, // for Sunday
+        {startHour: '06:00', endHour: '17:00', groupIndex: 1}, // for Monday
+        {startHour: '05:00', endHour: '18:00', groupIndex: 1}, // for Tuesday
+        {startHour: '06:30', endHour: '19:00', groupIndex: 1}, // for Wednesday
+        {startHour: '05:30', endHour: '20:00', groupIndex: 1}, // for Thursday
+        {startHour: '10:00', endHour: '21:00', groupIndex: 1}, // for Friday
+        {startHour: '13:00', endHour: '22:00', groupIndex: 1}, // for Saturday
+    ];
+
     public getData() {
         this.scheduleObj.eventSettings.dataSource = null;
         this.findAll();
+        this.scheduleObj.resetWorkHours();
+        this.scheduleObj.workHours.end = undefined;
+        this.scheduleObj.workHours.start = undefined;
+        const dates = this.scheduleObj.activeView.getRenderDates();
+        for (const date of dates){
+            this.scheduleObj.setWorkHours([date], this.workHours1[date.getDay()].startHour, this.workHours1[date.getDay()].endHour);
+        }
     }
 
 
@@ -416,9 +450,6 @@ export class ScheduleAdminComponent implements OnInit {
 
     hideDialog() {
         this.display = false;
-    }
-
-    onAddClick($event: MouseEvent) {
     }
 
     getCourses(groupeEtudiant: GroupeEtudiant) {
@@ -434,5 +465,10 @@ export class ScheduleAdminComponent implements OnInit {
     getDaysSelected(data: any) {
         console.log(this.selectedDays);
         console.log(data);
+    }
+
+    public onSubmit(): void {
+        this.scheduleObj.workHours.start = this.instance.formatDate(this.startTimeObj.value, {skeleton: 'Hm'});
+        this.scheduleObj.workHours.end = this.instance.formatDate(this.endTimeObj.value, {skeleton: 'Hm'});
     }
 }

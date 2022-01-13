@@ -75,6 +75,7 @@ import {LoginComponent} from './view/public/login/login.component';
 import {ConnectedStudentComponent} from './view/prof/connected-student/connected-student.component';
 import {EtudiantinscriptionComponent} from './view/public/etudiantinscription/etudiantinscription.component';
 import {ProfinscriptionComponent} from './view/public/profinscription/profinscription.component';
+import {ScheduleProfComponent} from './view/admin/professeur/schedule-prof/schedule-prof.component';
 
 
 @NgModule({
@@ -93,6 +94,7 @@ import {ProfinscriptionComponent} from './view/public/profinscription/profinscri
                     {path: 'view-quiz-etudiant', component: ViewQuizEtudiantComponent},
                     {path: 'inscription', component: InscriptionsComponent},
                     {path: 'teacher-lists', component: ProfesseurListComponent},
+                    {path: 'teacher-lists/schedule', component: ScheduleProfComponent},
                     {path: 'recommend-admin', component: RecommendAdminComponent},
                     {path: 'paiement', component: PaiementComponent},
                     {path: 'sessioncours', component: SessioncoursComponent},
