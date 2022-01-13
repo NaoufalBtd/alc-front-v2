@@ -35,7 +35,6 @@ import {FaqAdminListComponent} from './view/admin/faq-admin/faq-admin-list/faq-a
 import {FaqContactListComponent} from './view/prof/faq/faq-contact-list/faq-contact-list.component';
 import {FaqStudentContactListeComponent} from './view/etudiant/FAQ-etudiant/faq-student-contact-liste/faq-student-contact-liste.component';
 import {NewsEtudiantListComponent} from './view/etudiant/news-etudiant/news-etudiant-list/news-etudiant-list.component';
-import {PaiementComponent} from './view/admin/paiement/paiement.component';
 import {ScheduleAdminComponent} from './view/admin/schedule-admin/schedule-admin.component';
 import {ScheduleStudentComponent} from './view/etudiant/schedule-student/schedule-student.component';
 import {QuizUpdateComponent} from './view/admin/quiz/quiz-update/quiz-update.component';
@@ -75,6 +74,8 @@ import {LoginComponent} from './view/public/login/login.component';
 import {ConnectedStudentComponent} from './view/prof/connected-student/connected-student.component';
 import {EtudiantinscriptionComponent} from './view/public/etudiantinscription/etudiantinscription.component';
 import {ProfinscriptionComponent} from './view/public/profinscription/profinscription.component';
+import {BonusProfComponent} from './view/admin/bonus-prof/bonus-prof.component';
+import {AllSalaryComponent} from './view/admin/all-salary/all-salary.component';
 import {ScheduleProfComponent} from './view/admin/professeur/schedule-prof/schedule-prof.component';
 
 
@@ -94,7 +95,6 @@ import {ScheduleProfComponent} from './view/admin/professeur/schedule-prof/sched
                     {path: 'view-quiz-etudiant', component: ViewQuizEtudiantComponent},
                     {path: 'inscription', component: InscriptionsComponent},
                     {path: 'teacher-lists', component: ProfesseurListComponent},
-                    {path: 'teacher-lists/schedule', component: ScheduleProfComponent},
                     {path: 'recommend-admin', component: RecommendAdminComponent},
                     {path: 'paiement', component: PaiementComponent},
                     {path: 'sessioncours', component: SessioncoursComponent},
