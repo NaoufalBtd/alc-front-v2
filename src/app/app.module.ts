@@ -531,7 +531,7 @@ import { ScheduleProfComponent } from './view/admin/professeur/schedule-prof/sch
         LoginComponent,
         ProfinscriptionComponent,
         EtudiantinscriptionComponent,
-        BonusProfComponent
+        BonusProfComponent,
         EtudiantinscriptionComponent,
         ViewProfilEtudiantComponent,
         EtudiantinscriptionComponent,

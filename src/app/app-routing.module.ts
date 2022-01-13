@@ -96,7 +96,7 @@ import {ScheduleProfComponent} from './view/admin/professeur/schedule-prof/sched
                     {path: 'inscription', component: InscriptionsComponent},
                     {path: 'teacher-lists', component: ProfesseurListComponent},
                     {path: 'recommend-admin', component: RecommendAdminComponent},
-                    {path: 'paiement', component: PaiementComponent},
+                    {path: 'paiement', component: PaiementlistComponent},
                     {path: 'sessioncours', component: SessioncoursComponent},
                     {path: 'faq-admin', component: FaqAnswerComponent},
                     {path: 'faq-admin-list', component: FaqAdminListComponent},
