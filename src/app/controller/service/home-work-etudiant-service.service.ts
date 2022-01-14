@@ -144,8 +144,8 @@ export class HomeWorkEtudiantServiceService {
   public findbyetudiantIdAndHomeWorkID(): Observable<HomeWOrkEtudiant>{
    return this.http.get<HomeWOrkEtudiant>(this.etudianturl + 'homeWorkEtudiant/etudiant/id/' + this.loginservice.etudiant.id + '/homeWork/id/' +  this.homeWork.id  );
   }
-  public findReponsesByQuestionId(): Observable<Array<HoweWorkQSTReponse>> {
-  return this.http.get<Array<HoweWorkQSTReponse>>(this.etudianturl + 'homeWorkqstReponse/question/' + this.homeWorkQuestion.id);
+  public findReponsesByQuestionId(id: number): Observable<Array<HoweWorkQSTReponse>> {
+  return this.http.get<Array<HoweWorkQSTReponse>>(this.etudianturl + 'homeWorkqstReponse/question/' + id);
   }
 
   public findByQuestionId(id: number){
