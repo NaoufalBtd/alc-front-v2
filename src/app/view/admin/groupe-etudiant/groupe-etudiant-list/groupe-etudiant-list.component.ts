@@ -51,6 +51,7 @@ export class GroupeEtudiantListComponent implements OnInit {
         console.log(this.groupeEtudiant.groupeEtudiantDetails);
         this.groupeEtudiantService.findAllGroupeEtudiantDetail(groupeEtudiant.id).subscribe(
             data => this.groupeEtudiant.groupeEtudiantDetails = data);
+
     }
 
     public delete(groupeEtudiant: GroupeEtudiant) {
@@ -113,6 +114,7 @@ export class GroupeEtudiantListComponent implements OnInit {
     public openCreateEtud() {
         this.selected = new GroupeEtudiant();
         this.submitted = false;
+        this.groupeEtudiant = new GroupeEtudiant();
         this.createDialogEtud = true;
     }
 

@@ -19,15 +19,28 @@ export class SessionCoursService {
     private adminUrlsessioncours = environment.adminUrl + 'session/';
     private adminUrletudiantCours = environment.adminUrl + 'etudiantCours/';
     private adminUrletudiant = environment.etudiantUrl + 'session/';
+    private profUrlSession = environment.profUrl + 'session/';
     private _sessioncours: SessionCours;
     private _sessioncourssearch: SessionCours;
     private _sessioncourslist: Array<SessionCours>;
+    private _sessioncourslistProf: Array<SessionCours>;
     public _testsessioncours: boolean = false;
 
     constructor(private http: HttpClient,
                 private messageService: MessageService,
                 private router: Router,
                 private review: EtudiantReviewService) {
+    }
+
+    get sessioncourslistProf(): Array<SessionCours> {
+        if (this._sessioncourslistProf == null) {
+            this._sessioncourslistProf = new Array<SessionCours>();
+        }
+        return this._sessioncourslistProf;
+    }
+
+    set sessioncourslistProf(value: Array<SessionCours>) {
+        this._sessioncourslistProf = value;
     }
 
     get sessioncourssearch(): SessionCours {
@@ -85,17 +98,11 @@ export class SessionCoursService {
     public savesessioncours(profid: number, etudiantid: number, coursid: number) {
         this.http.get(this.adminUrletudiant + profid + '/' + etudiantid + '/' + coursid).subscribe(
             data => {
-                if (data === 1) {
+                if (data > 0) {
                     this.coursecomplited = false;
-                    //    this.router.navigate(['/etudiant/etudiant-simulate-sections']);
-                } else if (data === 2) {
-                    this.coursecomplited = true;
-                    //     this.router.navigate(['/etudiant/etudiant-simulate-sections']);
-
                 } else {
-
+                    this.coursecomplited = true;
                 }
-
             }
         );
     }
@@ -105,7 +112,8 @@ export class SessionCoursService {
 
         this.http.get(this.adminUrletudiantCours + idprof + '/' + idetudiant + '/' + idcours).subscribe(
             data => {
-                    console.log('tzwji bya');
+                console.log('tzwji bya');
+                if (data > 0) {
                     this.messageService.add({
                         severity: 'info',
                         summary: 'Info',
@@ -114,6 +122,18 @@ export class SessionCoursService {
                     });
                     this.savesessioncours(idprof, idetudiant, idcours);
                     this.router.navigate(['/etudiant/etudiant-simulate-sections']);
+                } else {
+                    this.messageService.add({
+                        severity: 'info',
+                        summary: 'Info',
+                        detail: 'This Course is already completed',
+                        life: 3000
+                    });
+                    this.savesessioncours(idprof, idetudiant, idcours);
+
+                    this.router.navigate(['/etudiant/etudiant-simulate-sections']);
+
+                }
             }
         );
     }
@@ -142,20 +162,7 @@ export class SessionCoursService {
         this.http.get<SessionCours>(this.adminUrletudiant + 'idc/' + idcours + '/ids/' + idetudiant + '/idp/' + idprof).subscribe(
             data => {
                 if (data.payer) {
-                    /*   this.messageService.add({
-                           severity: 'info',
-                           summary: 'Info',
-                           detail: 'You need to contact your admin in order to start this cours again',
-                           life: 3000
-                       });*/
-                    /*
-                    <p-dialog header="Header" [(visible)]="displayBasic" [style]="{width: '50vw'}" [baseZIndex]="10000">
-    <p>You need to contact your admin in order to start this cours again</p>
-
-</p-dialog>
-                    */
                     this._testsessioncours = true;
-
                 } else {
                     this.messageService.add({
                         severity: 'info',
@@ -171,4 +178,13 @@ export class SessionCoursService {
         );
     }
 
+    // @ts-ignore
+    public findByProfId(idprof: number): number {
+        this.http.get<Array<SessionCours>>(this.profUrlSession + 'prof/id/' + idprof).subscribe(
+            data => {
+                this.sessioncourslistProf = data;
+                return data;
+            }
+        );
+    }
 }

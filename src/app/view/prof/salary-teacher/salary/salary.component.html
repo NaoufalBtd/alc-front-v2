@@ -1,13 +1,23 @@
 <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
-                 <span style="margin-left: 65%">
+                 <span style="margin-left: 55%">
+              <!--         <input pInputText placeholder="Month" style="width:25% ; margin-top: 10%" [(ngModel)]="mois"
+                            type="text">
 
-                     <input [(ngModel)]="mois" pInputText placeholder="Month" style="width:25% ; margin-top: 10%"
-                            type="text"/>
-                        <input [(ngModel)]="annee" pInputText placeholder="Year" style="margin-left: 2%; width:25% ; margin-top: 10%"
-                               type="text"/>
+                   <input pInputText placeholder="Year" [(ngModel)]="annee"
+                               style="margin-left: 2%; width:25% ; margin-top: 10%"
+                               type="text">
 
-                          <p-button (click)="findSalary()" icon="pi pi-search" style="margin-left: 2%;margin-top: 10%; "></p-button>
-
+-->
+                      <p-dropdown [options]="itemsMOIS" [(ngModel)]="mois" placeholder="Select Month"  [itemSize]="31" [showClear]="true"
+                                  [filter]="false" style="margin-right: 5px" ></p-dropdown>
+                     <p-dropdown [options]="itemsannee" [(ngModel)]="annee" placeholder="Select Year" [showClear]="true"  [itemSize]="31"
+                                 [filter]="false" ></p-dropdown>
+                          <p-button icon="pi pi-search" style="margin-left: 5px"
+                                    (click)="openSalary()"
+                                    (click)="findSalaryByMoisAndAnneeAndProfId(mois,annee,this.serviceUser.getConnectedProf().id)"
+                                    (click)="findAllWorkloadBonusProfByMoisAndAnneeAndProfId(mois,annee,this.serviceUser.getConnectedProf().id)"
+                                    (click)="findAllPaiementByMoisAndAnneeAndProfId(mois,annee,this.serviceUser.getConnectedProf().id)"
+                                    ></p-button>
                  </span>
 </div>
 <div class="p-grid-transparent p-col-10" style="margin-left: 15%; background-color: transparent">
@@ -15,8 +25,9 @@
         <div class="expenses card card-w-title" style="background-color: gainsboro">
             <div class="p-grid">
                 <div class="p-col "><h5 (click)="view()" style="color: #0c799f"> MyLevel: <u
-                        style="cursor: pointer"> {{this.selectedsalaryVo.prof.categorieProf.level}} </u></h5></div>
-                <div class="p-col"><p style="margin-left: 45%">EnglishDom Experience: <b>{{this.selectedsalaryVo.mois}}
+                        style="cursor: pointer">{{this.serviceUser.getConnectedProf().categorieProf.level}} </u></h5>
+                </div>
+                <div class="p-col"><p style="margin-left: 45%">EnglishDom Experience: <b>
                     months</b></p></div>
             </div>
         </div>
@@ -31,9 +42,9 @@
 
 
                     <h6>Current Month Pay</h6>
-                    <h1>{{this.selectedsalaryVo.nbrSessionMensuel * this.selectedsalaryVo.prof.categorieProf.lessonRate}}$</h1>
+                    <h1>{{this.currentMonthPay}} $</h1>
                     <h6>Global Pay</h6>
-                    <h1>{{this.selectedsalaryVo.nbrSessionGlobale * this.selectedsalaryVo.prof.categorieProf.lessonRate}}$</h1>
+                    <h1> {{this.monatantGlobale}}$</h1>
 
                 </div>
                 <div class="p-col">
@@ -50,20 +61,57 @@
                 </p-menubar>
 
             </div>
-            <div class="p-grid card" style="margin-top: 10%; border-color: #84bfdd; ">
-                <div class="p-col " style="margin-left: 5% ; height:50px ;"><h5> LessonComplete
-                    <br/><u><b> {{this.selectedsalaryVo.nbrSessionMensuel}} Lesson </b></u></h5></div>
-                <div class="p-col " style="margin-left: 4% ; height:50px ;"><h2> X </h2></div>
-                <div class="p-col" style="margin-right: 7% ; height:50px ;"><h5>LessonRate
-                    <br/><b><u>{{this.selectedsalaryVo.prof.categorieProf.lessonRate}}$ </u></b></h5></div>
-                <div class="p-col " style="margin-right: 10% ; height:50px ;"><h1> = </h1></div>
-                <div class="p-col" style="margin-right: 15% ; height:50px ;"><h5>Total
-                    <br/><b><u>{{this.selectedsalaryVo.nbrSessionMensuel * this.selectedsalaryVo.prof.categorieProf.lessonRate}}
-                        $ </u></b></h5></div>
+            <!--hona-->
+            <div class="p-grid card p-mt-3">
+                <div class="p-col-4">
+                    <h5>LessonComplete</h5>
+                    <h5>{{sessioncourslistProf.length}}</h5>
+                </div>
+                <div class="p-col-1">
+                    <h5>X</h5>
+                </div>
+                <div class="p-col-3">
+                    <h5>LessonRate</h5>
+                    <h5>{{this.serviceUser.getConnectedProf().categorieProf.lessonRate}} $</h5>
+                </div>
+                <div class="p-col-1">
+                    <h5>=</h5>
+                </div>
+                <div class="p-col-3">
+                    <h5>Total</h5>
+                    <h5>{{sessioncourslistProf.length * this.serviceUser.getConnectedProf().categorieProf.lessonRate}}
+                        $</h5>
+                </div>
             </div>
-
         </div>
     </div>
     <app-categorie-prof-view></app-categorie-prof-view>
 </div>
 
+<p-dialog header="My Salary" [(visible)]="displaySalary">
+    <div class="p-field">
+        Your details salary in this month is:
+    </div>
+    <div class="p-field">
+        <strong>My Payment : </strong> {{this.monatantPaiementProf}} $
+    </div>
+    <div class="p-field">
+    <span>
+         <strong>My Bonus : </strong>{{this.monatantworkloadBonusProf}}  $
+    </span>
+        <br>
+        <br>
+        <span style="margin-left: 10px;">
+         <strong style="color: #BFBFBF;"> Class Average Bonus : </strong>  $
+    </span>
+        <br>
+        <br>
+        <span style="margin-left: 10px;">
+         <strong style="color: #BFBFBF;">Workload Bonus : </strong> {{this.monatantworkloadBonusProf}}$
+    </span>
+    </div>
+
+    <div class="p-field">
+        <strong>My Salary : </strong> {{this.salaryMonth.montantMensuel}}$
+    </div>
+</p-dialog>

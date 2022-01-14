@@ -41,6 +41,7 @@ export class ScheduleStudentComponent implements OnInit {
     public selectedDate: Date = new Date();
     public showWeekend = false;
     public eventSettings: EventSettingsModel;
+    public selectedMeeting: ScheduleProf = new ScheduleProf();
 
     constructor(private scheduleService: ScheduleService, private messageService: MessageService,
                 private confirmationService: ConfirmationService,
@@ -125,8 +126,16 @@ export class ScheduleStudentComponent implements OnInit {
     public onPopupOpen(args: PopupOpenEventArgs): void {
         this.selectionTarget = null;
         this.selectionTarget = args.target;
+        this.selectedMeeting.groupeEtudiant = args.data.groupeEtudiant;
+        this.selectedMeeting.id = args.data.id;
+        this.selectedMeeting.prof = args.data.prof;
+        this.selectedMeeting.grpName = args.data.grpName;
+        this.selectedMeeting.cours = args.data.cours;
+        this.selectedMeeting.subject = args.data.subject;
+        this.selectedMeeting.startTime = args.data.startTime;
+        this.selectedMeeting.endTime = args.data.endTime;
+        console.log(this.selectedMeeting);
         this.parcoursService.selectedcours = args.data.cours;
-        console.log(args.data);
     }
 
     public getData() {
@@ -135,8 +144,7 @@ export class ScheduleStudentComponent implements OnInit {
     }
 
     joinSession() {
-        //  this.simulateSection.findSectionOneByOne(this.parcoursService.selectedcours);
-        this.webSocketService.openWebSocket(this.etudiant);
+        this.webSocketService.openWebSocket(this.etudiant, this.selectedMeeting.prof, this.selectedMeeting.groupeEtudiant, 'STUDENT');
         this.webSocketService.isInSession = true;
         this.webSocketService.findCurrentSectionForstudent(this.parcoursService.selectedcours);
 

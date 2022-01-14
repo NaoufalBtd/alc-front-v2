@@ -1,4 +1,4 @@
-import {Component, OnInit, Pipe, PipeTransform} from '@angular/core';
+import {Component, OnDestroy, OnInit, Pipe, PipeTransform} from '@angular/core';
 import {Section} from '../../../../controller/model/section.model';
 import {ConfirmationService, MenuItem, MessageService, TreeNode} from 'primeng/api';
 import {ParcoursService} from '../../../../controller/service/parcours.service';
@@ -17,6 +17,9 @@ import {ChatMessageDto} from '../../../../controller/model/chatMessageDto';
 import {LoginService} from '../../../../controller/service/login.service';
 import {Prof} from '../../../../controller/model/prof.model';
 import {WebSocketService} from '../../../../controller/service/web-socket.service';
+import {LearnService} from '../../../../controller/service/learn.service';
+import {GroupeEtudiant} from '../../../../controller/model/groupe-etudiant.model';
+import {Etudiant} from '../../../../controller/model/etudiant.model';
 
 @Pipe({name: 'safe'})
 export class SafePipe1 implements PipeTransform {
@@ -33,7 +36,7 @@ export class SafePipe1 implements PipeTransform {
     templateUrl: './section-simulate.component.html',
     styleUrls: ['./section-simulate.component.scss']
 })
-export class SectionSimulateComponent implements OnInit {
+export class SectionSimulateComponent implements OnInit, OnDestroy {
     prof: Prof = new Prof();
     nodes: TreeNode[];
     menu: MenuItem[];
@@ -41,13 +44,34 @@ export class SectionSimulateComponent implements OnInit {
     srcImg: string;
     value = 0;
     word: string;
+    showTakeQuiz = false;
+    showViewQuiz = false;
 
     // tslint:disable-next-line:max-line-length
     constructor(private sectionItemService: SectionItemService,
                 private loginService: LoginService,
                 public webSocketService: WebSocketService,
+                private learnService: LearnService,
                 private messageService: MessageService, private dictionnaryService: DictionaryService, private router: Router, private serviceQuiz: QuizService, private sanitizer: DomSanitizer, private quizService: QuizEtudiantService, private confirmationService: ConfirmationService, private service: ParcoursService, private http: HttpClient, private review: EtudiantReviewService) {
     }
+
+
+    get showAppMenu(): boolean {
+        return this.learnService.showAppMenu;
+    }
+
+    set showAppMenu(value: boolean) {
+        this.learnService.showAppMenu = value;
+    }
+
+    get participants(): Map<number, Array<Etudiant>> {
+        return this.learnService.participants;
+    }
+
+    set participants(value: Map<number, Array<Etudiant>>) {
+        this.learnService.participants = value;
+    }
+
 
     get image(): string {
         return this.service.image;
@@ -215,6 +239,7 @@ export class SectionSimulateComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.showAppMenu = false;
         this.prof = this.loginService.getConnectedProf();
         // this.webSocketService.openWebSocket();
 
@@ -299,8 +324,8 @@ export class SectionSimulateComponent implements OnInit {
                     this.showVocabulary = false;
                 }
                 this.quizService.findQuizBySection(this.selectedsection.id).subscribe(
-                    data => {
-                        this.selectedQuiz = data;
+                    dataQuiz => {
+                        this.selectedQuiz = dataQuiz;
                     });
             });
         } else {
@@ -331,7 +356,6 @@ export class SectionSimulateComponent implements OnInit {
         this.service.image = this.selectedsection.urlImage;
         //  }
         //  this.service.image += 'preview';
-        console.log(this.service.image);
         this.srcImg = this.service.image;
         return this.srcImg;
         // const blob = UrlFetch(this.image,{headers})
@@ -390,17 +414,16 @@ export class SectionSimulateComponent implements OnInit {
     }
 
     public goToSection(type: string, message: string) {
-        if (this.webSocketService.sessionHasStarted){
+        if (this.webSocketService.sessionHasStarted) {
             const chatMessageDto = new ChatMessageDto(this.prof.nom, message, false);
             chatMessageDto.student = this.prof.students;
             chatMessageDto.prof = this.prof;
             chatMessageDto.type = type;
-            this.webSocketService.sendMessage(chatMessageDto);
-        }
-        else {
-            if (type === 'NEXT'){
+            this.webSocketService.sendMessage(chatMessageDto, 'PROF');
+        } else {
+            if (type === 'NEXT') {
                 this.NextSection();
-            } else if (type === 'PREVIOUS'){
+            } else if (type === 'PREVIOUS') {
                 this.PreviousSection();
             }
         }
@@ -429,4 +452,36 @@ export class SectionSimulateComponent implements OnInit {
         this.showVocabulary = false;
     }
 
+    ngOnDestroy(): void {
+        this.showAppMenu = true;
+
+    }
+
+    closeSession() {
+        this.webSocketService.deleteWhenSessionIsfiniched(this.prof.id);
+        this.webSocketService.closeWebSocket(this.prof);
+        this.participants.delete(this.prof.id);
+        this.connectedUsers.splice(0, this.connectedUsers.length);
+        console.log(this.participants);
+        this.studentsEnLigne.clear();
+    }
+
+    get connectedUsers(): any[] {
+        return this.webSocketService.connectedUsers;
+    }
+
+    set connectedUsers(value: any[]) {
+        this.webSocketService.connectedUsers = value;
+    }
+
+    getData() {
+        const grp = this.participants.get(this.prof.id);
+        console.log(grp);
+        console.log(this.participants);
+    }
+
+
+    get studentsEnLigne(): Map<number, Etudiant> {
+        return this.webSocketService.studentsEnLigne;
+    }
 }

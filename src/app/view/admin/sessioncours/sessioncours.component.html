@@ -56,10 +56,8 @@
             <th>Student Name</th>
             <th>Course</th>
             <th>Date</th>
-            <th>Total Sessions</th>
             <th>Etat de Payement</th>
             <th>Payee</th>
-            <th>Refresh</th>
 
         </tr>
     </ng-template>
@@ -81,9 +79,7 @@
             <td>
                 {{c.dateFin}}
             </td>
-            <td>
-                {{c.totalheure}}
-            </td>
+
             <td>
                 {{c.payer}}
             </td>
@@ -95,12 +91,7 @@
 
             </td>
 
-            <td>
 
-                <button class="p-button-rounded p-button-info p-mr-2" icon="pi pi-refresh" pButton id="refresh"
-                        [disabled]="c.payer==false" (click)="updatesessioncours(c.id)"
-                        pRipple></button>
-            </td>
         </tr>
     </ng-template>
     <ng-template pTemplate="emptymessage">

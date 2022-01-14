@@ -82,6 +82,7 @@
                                     pRipple></button>
                             <button pButton pRipple type="button" icon="pi pi-calendar"
                                     (click)="showScheduleDialog(professor)"
+                                    routerLink="schedule"
                                     class="p-button-rounded p-button-secondary"></button>
                         </td>
                     </tr>
@@ -110,12 +111,12 @@
             class="p-button-rounded p-button-secondary "></button>
 
 
-    <ejs-schedule width='100%' height='600px' #scheduleObj  [selectedDate]="selectedDate" [readonly]="true"
+    <ejs-schedule width='100%' #scheduleObj  [selectedDate]="selectedDate" [readonly]="true"
                   [eventSettings]="eventSettings ">
         <e-views>
-            <e-view option="Week" startHour="07:00"></e-view>
-            <e-view option="WorkWeek" startHour="07:00"></e-view>
-            <e-view option="Month" [showWeekend]="showWeekend"></e-view>
+            <e-view option="Week" startHour="07:00" [timeScale]='timeScale'></e-view>
+            <e-view option="WorkWeek" startHour="07:00" [timeScale]='timeScale'></e-view>
+            <e-view option="Month" [showWeekend]="showWeekend" [timeScale]='timeScale'></e-view>
         </e-views>
     </ejs-schedule>
 </div>

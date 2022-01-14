@@ -493,7 +493,7 @@ export class HomeWorkEtudiantComponent implements OnInit {
                     // tslint:disable-next-line:no-shadowed-variable
                     data => {
                         this.selectedQuiz = data;
-                        this.quizService.findQuizEtudiant(this.loginservice.etudiant, this.selectedQuiz).subscribe(
+                        this.quizService.findQuizEtudanitByEtudiantIdAndQuizId(this.loginservice.etudiant, this.selectedQuiz).subscribe(
                             // tslint:disable-next-line:no-shadowed-variable
                             data => {
                                 this.quizEtudiantList = data;

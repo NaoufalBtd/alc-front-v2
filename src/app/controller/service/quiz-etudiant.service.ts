@@ -19,42 +19,6 @@ import {environment} from "../../../environments/environment";
 })
 export class QuizEtudiantService {
 
-  private adminUrl = environment.adminUrl;
-
-
-  private _etudiant: Etudiant;
-  private _quiz: Quiz;
-  private _section: Section;
-  private _quizSelct: Quiz;
-  private _quizItems: Array<Quiz>;
-  private _items: Array<Question> = new Array<Question>();
-  private _selected: Question;
-  private _reponses: Array<Reponse>;
-  private _quizsEtudiant: Array<QuizEtudiant>;
-  private _quizEtudiant: QuizEtudiant;
-  private _correctAnswers: Array<Reponse>;
-  private _reponseEtudiant: ReponseEtudiant;
-  private _reponsesEtudiant: Array<ReponseEtudiant>;
-  private _quizEtudiantList: QuizEtudiant;
-  private _etudiantsClassroom: Array<EtudiantClassRoom>;
-  private _quizsClassroom: Array<QuizClassRoom>;
-  private _selectedQuizClassroom: QuizClassRoom;
-  private _selectedClassroom: EtudiantClassRoom;
-  private _reponsesEtudiantList: Array<ReponseEtudiant>;
-  private _questionView: Question;
-  private _reponsesView: Array<Reponse>;
-  private _reponsesEtudiantView: Array<ReponseEtudiant>;
-  private _correctAnswerView: Array<Reponse>;
-  private _viewDialogQuiz: boolean;
-  private _selectedQuiz: Quiz;
-  private _myAnswer: Reponse;
-  private _numReponses= 0;
-  private _numCorrectAnswers= 0;
-  private _numQuestion: number;
-  private _passerQuiz: string;
-  private _quizView: boolean;
-  private _result: any;
-
 
   get result(): any {
     return this._result;
@@ -409,6 +373,45 @@ export class QuizEtudiantService {
   set quiz(value: Quiz) {
     this._quiz = value;
   }
+  constructor(private http: HttpClient) { }
+
+  private adminUrl = environment.adminUrl;
+
+
+  private _etudiant: Etudiant;
+  private _quiz: Quiz;
+  private _section: Section;
+  private _quizSelct: Quiz;
+  private _quizItems: Array<Quiz>;
+  private _items: Array<Question> = new Array<Question>();
+  private _selected: Question;
+  private _reponses: Array<Reponse>;
+  private _quizsEtudiant: Array<QuizEtudiant>;
+  private _quizEtudiant: QuizEtudiant;
+  private _correctAnswers: Array<Reponse>;
+  private _reponseEtudiant: ReponseEtudiant;
+  private _reponsesEtudiant: Array<ReponseEtudiant>;
+  private _quizEtudiantList: QuizEtudiant;
+  private _etudiantsClassroom: Array<EtudiantClassRoom>;
+  private _quizsClassroom: Array<QuizClassRoom>;
+  private _selectedQuizClassroom: QuizClassRoom;
+  private _selectedClassroom: EtudiantClassRoom;
+  private _reponsesEtudiantList: Array<ReponseEtudiant>;
+  private _questionView: Question;
+  private _reponsesView: Array<Reponse>;
+  private _reponsesEtudiantView: Array<ReponseEtudiant>;
+  private _correctAnswerView: Array<Reponse>;
+  private _viewDialogQuiz: boolean;
+  private _selectedQuiz: Quiz;
+  private _myAnswer: Reponse;
+  private _numReponses= 0;
+  private _numCorrectAnswers= 0;
+  private _numQuestion: number;
+  private _passerQuiz: string;
+  private _quizView: boolean;
+  private _result: any;
+
+  public urlStudent = environment.etudiantUrl;
 
   public findEtudiant(): Observable<Etudiant>
   {
@@ -454,6 +457,10 @@ export class QuizEtudiantService {
   public findQuizEtudiantByQuiz(ref: string): Observable<Array<QuizEtudiant>>
   {
     return this.http.get<Array<QuizEtudiant>>(this.adminUrl + 'quizEtudiant/quiz/ref/' + ref);
+  }
+  public findQuizEtudiantByQuizId(id: number): Observable<Array<QuizEtudiant>>
+  {
+    return this.http.get<Array<QuizEtudiant>>(this.adminUrl + 'quizEtudiant/quiz/id/' + id);
   }
 
   public deleteQuizEtudiant(quizEtudiant: QuizEtudiant): Observable<QuizEtudiant>
@@ -518,10 +525,16 @@ export class QuizEtudiantService {
   {
     return this.http.get<Array<QuizClassRoom>>(this.adminUrl + 'quiz-classRoom/id/' + classroom.id);
   }
+  //
+  // public findQuizEtudanitByEtudiantIdAndQuizId(etudiant: Etudiant, quiz: Quiz): Observable<QuizEtudiant>
+  // {
+  //   return this.http.get<QuizEtudiant>(this.adminUrl + 'quizEtudiant/etudiant/' + etudiant.ref + '/quiz/' + quiz.ref);
+  // }
 
-  public findQuizEtudiant(etudiant: Etudiant, quiz: Quiz): Observable<QuizEtudiant>
+
+  public findQuizEtudanitByEtudiantIdAndQuizId(etudiant: Etudiant, quiz: Quiz): Observable<QuizEtudiant>
   {
-    return this.http.get<QuizEtudiant>(this.adminUrl + 'quizEtudiant/etudiant/' + etudiant.ref + '/quiz/' + quiz.ref);
+    return this.http.get<QuizEtudiant>(this.adminUrl + 'quizEtudiant/etudiant/idEtudiant/' + etudiant.id + '/quiz/idQuiz/' + quiz.id);
   }
 
   public findReponseEtudiant(quizEtudiant: QuizEtudiant): Observable<Array<ReponseEtudiant>>
@@ -568,5 +581,13 @@ export class QuizEtudiantService {
     // @ts-ignore
     return this.http.get<string>(this.adminUrl + 'TranslateEnAr/text/' + word , {responseType: 'text'});
   }
-  constructor(private http: HttpClient) { }
+
+  save(quizStudent: QuizEtudiant): Observable<QuizEtudiant> {
+    return this.http.post<QuizEtudiant>(this.urlStudent + 'quizEtudiant/', quizStudent);
+  }
+
+
+  public findAllQuizByEtudiantId(id: number): Observable<Array<QuizEtudiant>> {
+    return this.http.get<Array<QuizEtudiant>>(this.adminUrl + 'quizEtudiant/etudiant/id/' + id);
+  }
 }

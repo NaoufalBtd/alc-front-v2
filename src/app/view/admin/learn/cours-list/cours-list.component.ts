@@ -5,6 +5,8 @@ import {Section} from '../../../../controller/model/section.model';
 import {Cours} from '../../../../controller/model/cours.model';
 import {QuizEtudiantService} from '../../../../controller/service/quiz-etudiant.service';
 import {Quiz} from '../../../../controller/model/quiz.model';
+import {LearnService} from '../../../../controller/service/learn.service';
+import {Parcours} from '../../../../controller/model/parcours.model';
 
 @Component({
     selector: 'app-cours-list',
@@ -16,12 +18,20 @@ export class CoursListComponent implements OnInit {
     cols: any[];
     couchedTd = null;
     // tslint:disable-next-line:max-line-length
-    constructor(private quizService: QuizEtudiantService, private messageService: MessageService, private confirmationService: ConfirmationService, private service: ParcoursService) {
+    constructor(private quizService: QuizEtudiantService,
+                private learnService: LearnService,
+                private messageService: MessageService,
+                private confirmationService: ConfirmationService,
+                private service: ParcoursService) {
     }
 
     // tslint:disable-next-line:adjacent-overload-signatures
     set submittedCours(value: boolean) {
         this.service.submittedCours = value;
+    }
+
+    set courseCurrent(value: Cours) {
+        this.learnService.courseCurrent = value;
     }
 
     get selectedQuiz(): Quiz {
@@ -107,6 +117,7 @@ export class CoursListComponent implements OnInit {
     }
 
     public FindSection(cour: Cours) {
+        this.courseCurrent = cour;
         if (this.couchedTd === null){
             document.getElementById(cour.libelle).className = 'couchedTd';
         } else {

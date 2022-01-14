@@ -5,8 +5,10 @@ import {Prof} from '../../../../controller/model/prof.model';
 import {EtudiantCours} from '../../../../controller/model/etudiant-cours.model';
 import {GroupeEtudiant} from '../../../../controller/model/groupe-etudiant.model';
 import {ScheduleProf} from '../../../../controller/model/calendrier-prof.model';
-import {EventSettingsModel, ScheduleComponent} from '@syncfusion/ej2-angular-schedule';
+import {EventSettingsModel, ScheduleComponent, TimeScaleModel} from '@syncfusion/ej2-angular-schedule';
 import {ScheduleService} from '../../../../controller/service/schedule.service';
+import {Islamic, TimePickerComponent} from '@syncfusion/ej2-angular-calendars';
+import {Internationalization} from '@syncfusion/ej2-base';
 
 
 @Component({
@@ -17,10 +19,15 @@ import {ScheduleService} from '../../../../controller/service/schedule.service';
 export class ProfesseurListComponent implements OnInit {
 
     cols: any[];
+    public timeScale: TimeScaleModel = {interval: 60, slotCount: 1};
     prof: Prof = new Prof();
     scheduleDialog = true;
     @ViewChild('scheduleObj')
     public scheduleObj: ScheduleComponent;
+    @ViewChild('startTime') public startTimeObj: TimePickerComponent;
+    @ViewChild('endTime') public endTimeObj: TimePickerComponent;
+    public instance: Internationalization = new Internationalization();
+    endDate: Date = new Date();
     display = false;
     private selectionTarget: Element;
     // public selectedDate: Date = new Date(2021, 4, 18);
@@ -204,11 +211,13 @@ export class ProfesseurListComponent implements OnInit {
 
         ];
     }
+
     public findByProfId(prof: Prof) {
         console.log(this.selected.trancheHoraireProfList);
         this.service.findByProfId(prof.id).subscribe(
             data => this.selected.trancheHoraireProfList = data);
     }
+
     showScheduleDialog(prof: Prof) {
         this.scheduleProfs.splice(0, this.scheduleProfs.length);
         this.scheduleDialog = false;
@@ -253,5 +262,6 @@ export class ProfesseurListComponent implements OnInit {
         this.scheduleObj.eventWindow.refresh();
 
     }
+
 
 }

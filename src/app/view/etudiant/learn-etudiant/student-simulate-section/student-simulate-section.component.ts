@@ -1,5 +1,5 @@
 /* tslint:disable:no-shadowed-variable whitespace */
-import {Component, OnInit, Pipe, PipeTransform} from '@angular/core';
+import {Component, OnDestroy, OnInit, Pipe, PipeTransform} from '@angular/core';
 import {DomSanitizer} from '@angular/platform-browser';
 import {Section} from '../../../../controller/model/section.model';
 import {Cours} from '../../../../controller/model/cours.model';
@@ -27,6 +27,11 @@ import {HomeworkService} from '../../../../controller/service/homework.service';
 import {HomeWork} from '../../../../controller/model/home-work.model';
 import {HomeWorkEtudiantServiceService} from '../../../../controller/service/home-work-etudiant-service.service';
 import {WebSocketService} from '../../../../controller/service/web-socket.service';
+import {LearnService} from '../../../../controller/service/learn.service';
+import {QuizReponse} from '../../../../controller/model/quiz-reponse';
+import {Prof} from '../../../../controller/model/prof.model';
+import {GroupeEtudiant} from '../../../../controller/model/groupe-etudiant.model';
+import {GroupeEtudiantService} from '../../../../controller/service/groupe-etudiant-service';
 
 @Pipe({name: 'safe'})
 export class SafePipe implements PipeTransform {
@@ -44,7 +49,9 @@ export class SafePipe implements PipeTransform {
     templateUrl: './student-simulate-section.component.html',
     styleUrls: ['./student-simulate-section.component.scss']
 })
-export class StudentSimulateSectionComponent implements OnInit {
+export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
+    showTakeQuiz = false;
+    showViewQuiz = false;
     nodes: TreeNode[];
     menu: MenuItem[];
     srcImg: string;
@@ -67,13 +74,15 @@ export class StudentSimulateSectionComponent implements OnInit {
                 private service: ParcoursService,
                 private http: HttpClient,
                 private quizService: QuizEtudiantService,
-                private loginService: LoginService,
+                public loginService: LoginService,
                 private vocab: VocabularyService,
                 private review: EtudiantReviewService,
                 private sectionItemService: SectionItemService,
                 private sessioncoursservice: SessionCoursService,
                 private homeWorkService: HomeworkService,
-                private homeWorkEtudiantService: HomeWorkEtudiantServiceService
+                private homeWorkEtudiantService: HomeWorkEtudiantServiceService,
+                private learnService: LearnService,
+                private grpEtudiantService: GroupeEtudiantService,
     ) {
     }
 
@@ -83,9 +92,16 @@ export class StudentSimulateSectionComponent implements OnInit {
 
     set coursecomplited(value: boolean) {
         this.review.coursecomplited = value;
-
     }
 
+
+    get participants(): Map<number, Array<Etudiant>> {
+        return this.learnService.participants;
+    }
+
+    set participants(value: Map<number, Array<Etudiant>>) {
+        this.learnService.participants = value;
+    }
 
     get viewDialog(): boolean {
         return this.review.viewDialog;
@@ -97,6 +113,14 @@ export class StudentSimulateSectionComponent implements OnInit {
 
     public finish() {
         this.viewDialog = true;
+    }
+
+    get showAppMenu(): boolean {
+        return this.learnService.showAppMenu;
+    }
+
+    set showAppMenu(value: boolean) {
+        this.learnService.showAppMenu = value;
     }
 
 
@@ -215,6 +239,7 @@ export class StudentSimulateSectionComponent implements OnInit {
     }
 
     // tslint:disable-next-line:adjacent-overload-signatures
+
     set selectedsection(value: Section) {
         this.service.selectedsection = value;
     }
@@ -342,19 +367,30 @@ export class StudentSimulateSectionComponent implements OnInit {
                 this.quizService.findQuizBySectionId(this.selectedsection).subscribe(
                     data => {
                         this.selectedQuiz = data;
-                        this.quizService.findQuizEtudiant(this.loginService.etudiant, this.selectedQuiz).subscribe(
+
+                        this.quizService.findQuizEtudanitByEtudiantIdAndQuizId(this.loginService.etudiant, this.selectedQuiz).subscribe(
                             data => {
                                 this.quizEtudiantList = data;
                                 console.log(this.quizEtudiantList);
                                 this.quizService.findAllQuestions(this.selectedQuiz.ref).subscribe(
                                     dataQuestions => {
-                                        if (data.questionCurrent > dataQuestions.length) {
-                                            this.passerQuiz = 'View Quiz';
-                                            this.quizView = true;
+                                        if (data === null) {
+                                            this.showTakeQuiz = true;
+                                            this.showViewQuiz = false;
                                         } else {
-                                            this.passerQuiz = 'Continue Quiz';
-                                            this.quizView = false;
+                                            console.log(dataQuestions);
+                                            if (data.questionCurrent > dataQuestions.length) {
+                                                this.showViewQuiz = true;
+                                                this.showTakeQuiz = false;
+                                                // this.passerQuiz = 'View Quiz';
+                                                // this.quizView = true;
+                                            } else {
+                                                this.showTakeQuiz = true;
+                                                this.showViewQuiz = false;
+                                                // this.quizView = false;
+                                            }
                                         }
+
                                     }
                                 );
                             }, error => {
@@ -409,7 +445,7 @@ export class StudentSimulateSectionComponent implements OnInit {
     }
 
     ngOnInit(): void {
-
+        this.showAppMenu = false;
         this.review.findReview(this.selectedcours.id).subscribe(
             data => {
                 this.selectedReview = data;
@@ -421,6 +457,38 @@ export class StudentSimulateSectionComponent implements OnInit {
         // this.photoURL();
         this.quizService.section.id = this.selectedsection.id;
         this.quizService.findQuizSection().subscribe(data => this.selectedQuiz = data);
+        this.quizService.findQuizBySectionId(this.selectedsection).subscribe(
+            data => {
+                this.selectedQuiz = data;
+
+                this.quizService.findQuizEtudanitByEtudiantIdAndQuizId(this.loginService.etudiant, this.selectedQuiz).subscribe(
+                    data => {
+                        this.quizEtudiantList = data;
+                        console.log(this.quizEtudiantList);
+                        this.quizService.findAllQuestions(this.selectedQuiz.ref).subscribe(
+                            dataQuestions => {
+                                if (data === null) {
+                                    this.showTakeQuiz = true;
+                                    this.showViewQuiz = false;
+                                } else {
+                                    if (data.questionCurrent === dataQuestions.length) {
+                                        // this.passerQuiz = 'View Quiz';
+                                        // this.quizView = true;
+                                        this.showTakeQuiz = false;
+                                        this.showViewQuiz = true;
+                                    } else {
+                                        this.showTakeQuiz = true;
+                                        this.showViewQuiz = false;
+                                    }
+                                }
+                            }
+                        );
+                    }, error => {
+                        this.passerQuiz = 'Take Quiz';
+                        this.quizView = false;
+                    }
+                );
+            });
         this.vocab.findAllVocabSection().subscribe(data => {
             this.vocab.nombreVocab = data.length;
         });
@@ -498,7 +566,7 @@ export class StudentSimulateSectionComponent implements OnInit {
             }
         ];
         this.findhomeworkbycours(this.sectionItemService.coursofsection);
-       if (this.webSocketService.isInSession){
+        if (this.webSocketService.isInSession) {
             this.webSocketService.findCurrentSectionForstudent(this.service.selectedcours);
             console.log('rh 9lbt eliha mn NgOnInit');
             console.log(this.service.selectedsection);
@@ -634,18 +702,25 @@ export class StudentSimulateSectionComponent implements OnInit {
                     this.quizService.findQuizBySectionId(this.selectedsection).subscribe(
                         data => {
                             this.selectedQuiz = data;
-                            this.quizService.findQuizEtudiant(this.loginService.etudiant, this.selectedQuiz).subscribe(
+                            this.quizService.findQuizEtudanitByEtudiantIdAndQuizId(this.loginService.etudiant, this.selectedQuiz).subscribe(
                                 data => {
                                     this.quizEtudiantList = data;
                                     console.log(this.quizEtudiantList);
                                     this.quizService.findAllQuestions(this.selectedQuiz.ref).subscribe(
                                         dataQuestions => {
-                                            if (data.questionCurrent > dataQuestions.length) {
-                                                this.passerQuiz = 'View Quiz';
-                                                this.quizView = true;
+                                            if (data === null) {
+                                                this.showTakeQuiz = true;
+                                                this.showViewQuiz = false;
                                             } else {
-                                                this.passerQuiz = 'Continue Quiz';
-                                                this.quizView = false;
+                                                if (data.questionCurrent === dataQuestions.length) {
+                                                    // this.passerQuiz = 'View Quiz';
+                                                    // this.quizView = true;
+                                                    this.showTakeQuiz = false;
+                                                    this.showViewQuiz = true;
+                                                } else {
+                                                    this.showTakeQuiz = true;
+                                                    this.showViewQuiz = false;
+                                                }
                                             }
                                         }
                                     );
@@ -725,18 +800,25 @@ export class StudentSimulateSectionComponent implements OnInit {
                         data => {
                             this.selectedQuiz = data;
 
-                            this.quizService.findQuizEtudiant(this.loginService.etudiant, this.selectedQuiz).subscribe(
+                            this.quizService.findQuizEtudanitByEtudiantIdAndQuizId(this.loginService.etudiant, this.selectedQuiz).subscribe(
                                 data => {
                                     this.quizEtudiantList = data;
                                     console.log(this.quizEtudiantList);
                                     this.quizService.findAllQuestions(this.selectedQuiz.ref).subscribe(
                                         dataQuestions => {
-                                            if (data.questionCurrent > dataQuestions.length) {
-                                                this.passerQuiz = 'View Quiz';
-                                                this.quizView = true;
+                                            if (data === null) {
+                                                this.showTakeQuiz = true;
+                                                this.showViewQuiz = false;
                                             } else {
-                                                this.passerQuiz = 'Continue Quiz';
-                                                this.quizView = false;
+                                                if (data.questionCurrent === dataQuestions.length) {
+                                                    // this.passerQuiz = 'View Quiz';
+                                                    // this.quizView = true;
+                                                    this.showTakeQuiz = false;
+                                                    this.showViewQuiz = true;
+                                                } else {
+                                                    this.showTakeQuiz = true;
+                                                    this.showViewQuiz = false;
+                                                }
                                             }
                                         }
                                     );
@@ -800,5 +882,43 @@ export class StudentSimulateSectionComponent implements OnInit {
         this.homeWorkEtudiantService.homeWork.questions = homeWork.questions;
         //  this.homeWorkEtudiantService.homeWorkQuestion = ;
         this.router.navigate(['etudiant/homeWorkEtudiant']);
+    }
+
+    ngOnDestroy(): void {
+        this.showAppMenu = true;
+    }
+
+    closeSession() {
+        this.webSocketService.closeWebSocket(this.loginService.getConnectedStudent());
+        this.participants.delete(this.prof.id);
+        this.connectedUsers.splice(0, this.connectedUsers.length);
+        console.log(this.participants);
+    }
+
+    get connectedUsers(): any[] {
+        return this.webSocketService.connectedUsers;
+    }
+
+    set connectedUsers(value: any[]) {
+        this.webSocketService.connectedUsers = value;
+    }
+
+    getData() {
+        const grp = this.participants.get(this.prof.id);
+        console.log(grp);
+        console.log(this.participants);
+    }
+
+    get prof(): Prof {
+        return this.webSocketService.prof;
+    }
+
+    set prof(value: Prof) {
+        this.webSocketService.prof = value;
+    }
+
+
+    get studentsEnLigne(): Map<number, Etudiant> {
+        return this.webSocketService.studentsEnLigne;
     }
 }

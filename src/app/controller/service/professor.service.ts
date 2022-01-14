@@ -10,7 +10,9 @@ import {LoginService} from './login.service';
 import {EtudiantCours} from '../model/etudiant-cours.model';
 import {Parcours} from '../model/parcours.model';
 import {TrancheHoraireProf} from '../model/tranche-horaire-prof.model';
-import {GroupeEtudiantDetail} from '../model/groupe-etudiant-detail.model';
+
+import {Etudiant} from '../model/etudiant.model';
+
 
 
 @Injectable({
@@ -35,6 +37,8 @@ export class ProfessorService {
     private urlParcours = '/admin/parcours/';
     private _trancheHoraireProfList: Array<TrancheHoraireProf>;
     private _trancheHoraireProf: TrancheHoraireProf;
+    private _etudiant: Etudiant;
+    private etudiantUrl = environment.etudiantUrl;
 
     public afficheSession(id: number): Observable<Array<EtudiantCours>> {
         return this.http.get<Array<EtudiantCours>>(this.adminUrl + 'etudiantCours/prof/id/' + id);
@@ -42,9 +46,9 @@ export class ProfessorService {
     public afficheSessionStd(id: number): Observable<Array<EtudiantCours>> {
         return this.http.get<Array<EtudiantCours>>(this.adminUrl + 'etudiantCours/prof/id/' + this.user.prof.id + '/etudiant/id/' + id );
     }
-    /*paiement*/
+    /*allSalary*/
     public paiementProf(): Observable<Array<Paiement>> {
-        return this.http.get<Array<Paiement>>(this.adminUrl + '/prof/paiement');
+        return this.http.get<Array<Paiement>>(this.adminUrl + '/prof/allSalary');
     }
 
     findByCriteria(prof: Prof): Observable<Array<Prof>> {
@@ -85,11 +89,14 @@ export class ProfessorService {
     }
 
     public payer(paiement: Paiement): Observable<Paiement> {
-        return this.http.post<Paiement>(this.adminUrl + 'paiement/', paiement);
+        return this.http.post<Paiement>(this.adminUrl + 'allSalary/', paiement);
     }
 
     public findSessionNonPayer(id: number): Observable<Array<EtudiantCours>> {
         return this.http.get<Array<EtudiantCours>>(this.adminUrl + 'prof/sessionNonPayer/prof/id/' + id);
+    }
+    public findEtudiantById(id: number): Observable<Etudiant> {
+        return this.http.get<Etudiant>(this.etudiantUrl + 'etudiant/id/' + id);
     }
 
     public findIndexById(id: number): number {
@@ -285,6 +292,12 @@ export class ProfessorService {
     set paiement(value: Paiement) {
         this._paiement = value;
     }
+    get etudiant(): Etudiant {
+        return this._etudiant;
+    }
 
+    set etudiant(value: Etudiant) {
+        this._etudiant = value;
+    }
 
 }

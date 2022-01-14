@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {QuizEtudiantService} from '../../../../controller/service/quiz-etudiant.service';
 import {LoginService} from '../../../../controller/service/login.service';
 import {Reponse} from '../../../../controller/model/reponse.model';
@@ -17,75 +17,95 @@ import {HttpClient} from '@angular/common/http';
 import {Dictionary} from '../../../../controller/model/dictionary.model';
 import {EtudiantCours} from '../../../../controller/model/etudiant-cours.model';
 import {Section} from '../../../../controller/model/section.model';
+import {ReponseEtudiantService} from '../../../../controller/service/reponse-etudiant.service';
+import {WebSocketService} from '../../../../controller/service/web-socket.service';
+import {QuizReponse} from '../../../../controller/model/quiz-reponse';
+import {LearnService} from '../../../../controller/service/learn.service';
+import {Role} from '../../../../enum/role.enum';
+import {ChatMessageDto} from '../../../../controller/model/chatMessageDto';
+import {Prof} from '../../../../controller/model/prof.model';
 
 @Component({
     selector: 'app-quiz-take',
     templateUrl: './quiz-take.component.html',
     styleUrls: ['./quiz-take.component.scss']
 })
-export class QuizTakeComponent implements OnInit {
-    showTakeQuiz = true;
-    showQuizReview = false;
-    answer: Reponse = new Reponse();
-    answerSelected: Reponse = new Reponse();
-    questionOptions = [{label: 'True', value: 'true'}, {label: 'False', value: 'false'}];
-    multiChoiceAnswer: Array<Reponse> = new Array<Reponse>();
-    disabledButtonCheck = false;
-    inputAnswer: string;
-    trueOrFalse = true;
-    disableToggleButton = false;
-    answersList: Map<Question, Array<Reponse>> = new Map<Question, Array<Reponse>>();
-    correctAnswersList: Map<number, Array<Reponse>> = new Map<number, Array<Reponse>>();
-    question: Question = new Question();
-    questionSideLeft: string;
-    questionSideRight: string;
-    numberOfQuestion = 0;
-    pourCentgage = 0;
-    value = 10;
-    nextQuestion: Question = new Question();
-    index = 1;
+export class QuizTakeComponent implements OnInit, OnDestroy {
 
-    showCheckButton = false;
-    saveDone = false;
-    showCorrectAnswerInput = false;
-    showFalseAnswerInput = false;
-    showDontKnowButton = true;
-    showNextButton = false;
+    questionOptions = [{label: 'True', value: 'true'}, {label: 'False', value: 'false'}];
 
     constructor(private service: QuizEtudiantService,
+                private learnService: LearnService,
+                private reponseEtudiantService: ReponseEtudiantService,
                 private login: LoginService,
                 private messageService: MessageService,
                 private router: Router,
                 private dictionnaryService: DictionaryService,
                 private sanitizer: DomSanitizer,
                 private confirmationService: ConfirmationService,
-                private parcoursservice: ParcoursService,) {
+                private webSocketService: WebSocketService,
+                private parcoursservice: ParcoursService) {
     }
 
-    private _noteQuiz: number;
+    get showTakeQuiz(): boolean {
+        return this.learnService.showTakeQuiz;
+    }
 
-    translateWord: string;
-    wordDictionnary: string;
+    set showTakeQuiz(value: boolean) {
+        this.learnService.showTakeQuiz = value;
+    }
 
-    son = '';
-    disableButtonSon = true;
+    get showQuizReview(): boolean {
+        return this.learnService.showQuizReview;
+    }
+
+    set showQuizReview(value: boolean) {
+        this.learnService.showQuizReview = value;
+    }
+
+    get myAnswer(): Reponse {
+        return this.learnService.myAnswer;
+    }
+
+    set myAnswer(value: Reponse) {
+        this.learnService.myAnswer = value;
+    }
+
+    get answerSelected(): Reponse {
+        return this.learnService.answerSelected;
+    }
+
+    set answerSelected(value: Reponse) {
+        this.learnService.answerSelected = value;
+    }
+
+    get inputAnswer(): string {
+        return this.learnService.inputAnswer;
+    }
+
+    set inputAnswer(value: string) {
+        this.learnService.inputAnswer = value;
+    }
+
+    get trueOrFalse(): boolean {
+        return this.learnService.trueOrFalse;
+    }
+
+    set trueOrFalse(value: boolean) {
+        this.learnService.trueOrFalse = value;
+    }
+
+    get disableToggleButton(): boolean {
+        return this.learnService.disableToggleButton;
+    }
+
+    set disableToggleButton(value: boolean) {
+        this.learnService.disableToggleButton = value;
+    }
 
 
     get noteQuiz(): number {
-        return this._noteQuiz;
-    }
-
-    set noteQuiz(value: number) {
-        this._noteQuiz = value;
-    }
-
-
-    get etudiant(): Etudiant {
-        return this.service.etudiant;
-    }
-
-    set etudiant(value: Etudiant) {
-        this.service.etudiant = value;
+        return this.learnService.noteQuiz;
     }
 
 
@@ -94,9 +114,6 @@ export class QuizTakeComponent implements OnInit {
         return this.service.items;
     }
 
-    set questionList(value: Array<Question>) {
-        this.service.items = value;
-    }
 
     get reponses(): Array<Reponse> {
         return this.service.reponses;
@@ -107,14 +124,100 @@ export class QuizTakeComponent implements OnInit {
     }
 
 
-    get numQuestion(): number {
-        return this.service.numQuestion;
+    get answersList(): Map<Question, Reponse> {
+        return this.learnService.answersList;
     }
 
-    set numQuestion(value: number) {
-        this.service.numQuestion = value;
+
+    get correctAnswersList(): Map<number, Array<Reponse>> {
+        return this.learnService.correctAnswersList;
     }
 
+    set correctAnswersList(value: Map<number, Array<Reponse>>) {
+        this.learnService.correctAnswersList = value;
+    }
+
+    get question(): Question {
+        return this.learnService.question;
+    }
+
+    set question(value: Question) {
+        this.learnService.question = value;
+    }
+
+    get questionSideLeft(): string {
+        return this.learnService.questionSideLeft;
+    }
+
+
+    get questionSideRight(): string {
+        return this.learnService.questionSideRight;
+    }
+
+    set questionSideRight(value: string) {
+        this.learnService.questionSideRight = value;
+    }
+
+    get numberOfQuestion(): number {
+        return this.learnService.numberOfQuestion;
+    }
+
+
+    get value(): number {
+        return this.learnService.value;
+    }
+
+    set value(value: number) {
+        this.learnService.value = value;
+    }
+
+    get index(): number {
+        return this.learnService.index;
+    }
+
+    set index(value: number) {
+        this.learnService.index = value;
+    }
+
+    get showCheckButton(): boolean {
+        return this.learnService.showCheckButton;
+    }
+
+    set showCheckButton(value: boolean) {
+        this.learnService.showCheckButton = value;
+    }
+
+    get saveDone(): boolean {
+        return this.learnService.saveDone;
+    }
+
+    set saveDone(value: boolean) {
+        this.learnService.saveDone = value;
+    }
+
+    get showDontKnowButton(): boolean {
+        return this.learnService.showDontKnowButton;
+    }
+
+    set showDontKnowButton(value: boolean) {
+        this.learnService.showDontKnowButton = value;
+    }
+
+    get showNextButton(): boolean {
+        return this.learnService.showNextButton;
+    }
+
+    set showNextButton(value: boolean) {
+        this.learnService.showNextButton = value;
+    }
+
+    get disableButtonSon(): boolean {
+        return this.learnService.disableButtonSon;
+    }
+
+    get translateWord(): string {
+        return this.learnService.translateWord;
+    }
 
     get selectedQuiz(): Quiz {
         return this.service.selectedQuiz;
@@ -124,299 +227,112 @@ export class QuizTakeComponent implements OnInit {
         this.service.selectedQuiz = value;
     }
 
-    get selectedDict(): Dictionary {
-        return this.dictionnaryService.selectedDict;
+    get answersPointStudent(): Map<Question, string> {
+        return this.learnService.answersPointStudent;
     }
 
-    set selectedDict(value: Dictionary) {
-        this.dictionnaryService.selectedDict = value;
-    }
-
-    get itemsDict(): Array<Dictionary> {
-        return this.dictionnaryService.itemsDict;
-    }
-
-    set itemsDict(value: Array<Dictionary>) {
-        this.dictionnaryService.itemsDict = value;
-    }
-
-    get submittedDict(): boolean {
-        return this.dictionnaryService.submittedDict;
-    }
-
-    set submittedDict(value: boolean) {
-        this.dictionnaryService.submittedDict = value;
-    }
-
-    get createDialogDict(): boolean {
-        return this.dictionnaryService.createDialogDict;
-    }
-
-    set createDialogDict(value: boolean) {
-        this.dictionnaryService.createDialogDict = value;
-    }
-
-    set itemssection2(value: Array<Section>) {
-        this.parcoursservice.itemssection2 = value;
-    }
-
-    get itemssection2(): Array<Section> {
-        return this.parcoursservice.itemssection2;
-    }
-
-    get selectedsection(): Section {
-        return this.parcoursservice.selectedsection;
+    set answersPointStudent(value: Map<Question, string>) {
+        this.learnService.answersPointStudent = value;
     }
 
 
-    // tslint:disable-next-line:adjacent-overload-signatures
-    set selectedsection(value: Section) {
-        this.parcoursservice.selectedsection = value;
+    get reponseQuiz(): QuizReponse {
+        return this.webSocketService.reponseQuiz;
     }
-
-
-    get passerQuiz(): string {
-        return this.service.passerQuiz;
-    }
-
-    set passerQuiz(value: string) {
-        this.service.passerQuiz = value;
-    }
-
-    get quizView(): boolean {
-        return this.service.quizView;
-    }
-
-    set quizView(value: boolean) {
-        this.service.quizView = value;
-    }
-
-
-    get editDialogDict(): boolean {
-        return this.dictionnaryService.editDialogDict;
-    }
-
-    set editDialogDict(value: boolean) {
-        this.dictionnaryService.editDialogDict = value;
-    }
-
 
     ngOnInit(): void {
-        this.numQuestion = 0;
-        this.noteQuiz = 0;
-        this.etudiant = this.login.etudiant;
-        this.service.findAllQuestions(this.selectedQuiz.ref).subscribe(
-            data => {
-                this.questionList = data;
-                this.numberOfQuestion = this.questionList.length;
-                this.pourCentgage = 100 / this.numberOfQuestion;
-                this.value = this.pourCentgage;
-                console.log(this.questionList);
-                for (let i = 0; i < this.questionList.length; i++) {
-                    this.question = this.questionList[0];
-                    console.log(this.question);
-                    console.log(this.questionSideLeft);
-                    console.log(this.questionSideRight);
-                    this.questionSideLeft = this.question.libelle.substring(0, this.question.libelle.indexOf('...'));
-                    this.questionSideRight = this.question.libelle.substring(this.question.libelle.lastIndexOf('...') + 3);
-                    this.nextQuestion = this.questionList[1];
-                    this.service.findReponses(this.questionList[i].id).subscribe(
-                        data => {
-                            this.questionList[i].reponses = data;
-                            this.correctAnswersList.set(this.questionList[i].id, data.filter(r => r.etatReponse === 'true'));
-                        }, error => {
-                            console.log(error);
-                        }
-                    );
-                }
-            }
-        );
-
+        this.learnService.onStart();
     }
 
 
-    public sound(qst: Question) {
-        if (qst.typeDeQuestion.ref === 't1' || qst.typeDeQuestion.ref === 't6' || qst.typeDeQuestion.ref === 't4') {
-            this.son = this.questionSideLeft + ' ' + this.correctAnswersList?.get(qst.id)[0].lib + ' ' + this.questionSideRight;
-            console.log(this.son);
-        } else if (qst.typeDeQuestion.ref === 't3') {
-            this.son = this.correctAnswersList?.get(qst.id)[0].lib;
-            console.log(this.son);
-        } else if (qst.typeDeQuestion.ref === 't5') {
-            this.son = qst.libelle;
+    hidePlaceHolder(type: string) {
+        if (type === 'HIDE') {
+            this.inputAnswer = '';
+            console.log(this.inputAnswer);
+        } else {
+            this.inputAnswer = this.question.libelle.substring(this.question.libelle.indexOf('@') + 1,
+                this.question.libelle.lastIndexOf('@'));
+            console.log(type + this.inputAnswer);
         }
-        const text = encodeURIComponent(this.son);
-        const url = 'https://www.translatedict.com/speak.php?word=' + this.son + '&lang=en';
-        const audio = new Audio(url);
-        audio.play();
     }
 
 
-    public translate(qst: Question) {
-        if (qst.typeDeQuestion.ref === 't1' || qst.typeDeQuestion.ref === 't6' || qst.typeDeQuestion.ref === 't4') {
-            this.wordDictionnary = this.questionSideLeft + ' ' + this.correctAnswersList?.get(qst.id)[0].lib + ' ' + this.questionSideRight;
-            console.log(this.son);
-        } else if (qst.typeDeQuestion.ref === 't3') {
-            this.wordDictionnary = this.correctAnswersList?.get(qst.id)[0].lib;
-            console.log(this.son);
-        } else if (qst.typeDeQuestion.ref === 't5') {
-            this.wordDictionnary = qst.libelle;
-        }
-        this.service.translate(this.wordDictionnary).subscribe(
-            data => {
-                this.translateWord = data;
-                console.log(data);
-            }
-        );
+    ngOnDestroy(): void {
     }
 
+    sound(question: Question) {
+        this.learnService.sound(question);
+    }
+
+    answerIsCorrect(answerSelected: Reponse, question: Question) {
+        return this.learnService.answerIsCorrect(answerSelected, question);
+    }
 
     saveAnswers(question: Question) {
-        this.translate(question);
-        this.disableButtonSon = false;
-        if (question.typeDeQuestion.ref === 't1') {
-            this.answerSelected = this.answer;
-            this.multiChoiceAnswer.push({...this.answerSelected});
-        } else if (question.typeDeQuestion.ref === 't3') {
-            if (this.answerIsCorrect(this.answer, question) === true) {
-                console.log(this.correctAnswersList.get(question.id)[0]);
-                this.answer = this.correctAnswersList.get(question.id)[0];
-            } else {
-                this.answer.etatReponse = 'false';
-                this.answer.question = question;
-                this.answer.numero = 2;
-            }
-
-            this.answerSelected = this.answer;
-            this.multiChoiceAnswer.push({...this.answerSelected});
-        } else if (question.typeDeQuestion.ref === 't4' || question.typeDeQuestion.ref === 't6') {
-            this.answerSelected.lib = this.inputAnswer;
-            if (this.answerIsCorrect(this.answerSelected, question) === true) {
-                this.answerSelected = this.correctAnswersList.get(question.id)[0];
-            } else {
-                this.answerSelected.etatReponse = 'false';
-                this.answerSelected.question = question;
-                this.answerSelected.numero = 2;
-            }
-            this.multiChoiceAnswer.push({...this.answerSelected});
-        } else if (question.typeDeQuestion.ref === 't5') {
-            this.disableToggleButton = true;
-            console.log(this.trueOrFalse);
-            console.log(this.correctAnswersList.get(question.id)[0].lib);
-            this.answerSelected.lib = String(this.trueOrFalse);
-            if (String(this.correctAnswersList.get(question.id)[0].lib) === String(this.answerSelected.lib)) {
-                this.answerSelected = this.correctAnswersList.get(question.id)[0];
-                document.getElementById('trueFalse').className = 'trueQst p-grid';
-            } else {
-                this.answerSelected.etatReponse = 'false';
-                this.answerSelected.question = question;
-                this.answerSelected.numero = 2;
-                document.getElementById('trueFalse').className = 'falseQst p-grid';
-            }
-            this.multiChoiceAnswer.push({...this.answerSelected});
-        }
-        console.log(this.multiChoiceAnswer);
-        this.answersList.set(question, this.multiChoiceAnswer);
-        console.log(this.answersList);
-        this.multiChoiceAnswer = new Array<Reponse>();
-        this.showNextButton = true;
-        this.showCheckButton = false;
-        this.saveDone = true;
-        this.showDontKnowButton = false;
-    }
-
-
-    nextQuestionFct() {
-        this.translateWord = String();
-        this.wordDictionnary = String();
-        this.disableButtonSon = true;
-        this.showCheckButton = false;
-        this.saveDone = false;
-        this.showDontKnowButton = true;
-        this.showNextButton = false;
-        this.value += this.pourCentgage;
-        this.disableToggleButton = false;
-        this.index += 1;
-        this.inputAnswer = String();
-        this.trueOrFalse = true;
-        this.answerSelected = new Reponse();
-        this.answer = new Reponse();
-        for (let i = 0; i < (this.questionList.length); i++) {
-            if (this.question.id === this.questionList[i].id) {
-                this.question = this.questionList[i + 1];
-
-                if (this.question.typeDeQuestion.ref === 't1') {
-                    this.questionSideLeft = this.question.libelle.substring(0, this.question.libelle.indexOf('...'));
-                    this.questionSideRight = this.question.libelle.substring(this.question.libelle.lastIndexOf('...') + 3);
-                } else if (this.question.typeDeQuestion.ref === 't4' || this.question.typeDeQuestion.ref === 't6') {
-                    this.questionSideLeft = this.question.libelle.substring(0, this.question.libelle.indexOf('@'));
-                    this.questionSideRight = this.question.libelle.substring(this.question.libelle.lastIndexOf('@') + 1);
-                    this.inputAnswer = this.question.libelle.substring(this.question.libelle.indexOf('@') + 1,
-                        this.question.libelle.lastIndexOf('@'));
-                }
-                break;
-            }
-        }
-
-
-    }
-
-    answerIsCorrect(ans: Reponse, qst: Question) {
-        let answerLib: string;
-        if (qst.typeDeQuestion.ref !== 't5') {
-            answerLib = ans.lib.replace(/\s/g, '');
-        } else {
-            answerLib = ans.lib;
-        }
-
-        for (const item of this.correctAnswersList.get(qst.id)) {
-            const answerCorrectLib = item?.lib.replace(/\s/g, '');
-            if (answerLib === answerCorrectLib) {
-                return true;
-            }
-        }
-        return false;
+        const reponse = this.learnService.saveAnswers(question, 'STUDENT_ANSWER');
+        this.reponseQuiz.lib = reponse.lib;
+        this.reponseQuiz.id = reponse.id;
+        this.reponseQuiz.question = reponse.question;
+        this.reponseQuiz.numero = reponse.numero;
+        this.reponseQuiz.type = 'QUIZ';
+        this.reponseQuiz.sender = 'STUDENT';
+        this.reponseQuiz.student = this.login.getConnectedStudent();
+        this.reponseQuiz.etatReponse = reponse.etatReponse;
+        const chatMessageDto: ChatMessageDto = new ChatMessageDto(this.login.getConnectedStudent().toString(), '', true);
+        chatMessageDto.quizReponse = this.reponseQuiz;
+        chatMessageDto.type = 'QUIZ';
+        this.webSocketService.sendMessage(chatMessageDto, 'STUDENT');
     }
 
     showAnswers(question: Question) {
-        this.disableButtonSon = false;
-        this.translate(question);
-        if (question.typeDeQuestion.ref === 't5') {
-            document.getElementById('trueFalse').className = 'trueQst p-grid';
-            if (this.correctAnswersList.get(question.id)[0].lib === 'true') {
-                this.trueOrFalse = true;
-            } else {
-                this.trueOrFalse = false;
-            }
+        const reponse = this.learnService.showAnswers(question);
+        this.reponseQuiz.lib = reponse.lib;
+        this.reponseQuiz.id = reponse.id;
+        this.reponseQuiz.question = reponse.question;
+        this.reponseQuiz.numero = reponse.numero;
+        this.reponseQuiz.type = 'QUIZ';
+        this.reponseQuiz.sender = 'STUDENT_DONT_KNOW';
+        this.reponseQuiz.student = this.login.getConnectedStudent();
+        this.reponseQuiz.etatReponse = reponse.etatReponse;
+        const chatMessageDto: ChatMessageDto = new ChatMessageDto(this.login.getConnectedStudent().toString(), '', true);
+        chatMessageDto.quizReponse = this.reponseQuiz;
+        chatMessageDto.type = 'QUIZ';
+        this.webSocketService.sendMessage(chatMessageDto, 'STUDENT');
+    }
 
-            console.log(this.inputAnswer);
-            this.disableToggleButton = true;
+    nextQuestionFct() {
+        const  question = this.learnService.nextQuestionFct();
+        if (this.participants.get(this.prof.id).length === 1){
+            this.followMeFct(question);
         }
-        this.answerSelected = this.correctAnswersList.get(question.id)[0];
-        this.multiChoiceAnswer.push({...this.answerSelected});
-        console.log(this.multiChoiceAnswer);
-        this.answersList.set(question, this.multiChoiceAnswer);
-        console.log(this.answersList);
-        this.multiChoiceAnswer = new Array<Reponse>();
-        this.answer = new Reponse();
-        this.showNextButton = true;
-        this.showCheckButton = false;
-        this.showDontKnowButton = false;
-        this.saveDone = true;
+    }
+
+    get prof(): Prof {
+        return this.webSocketService.prof;
+    }
+
+
+    get participants(): Map<number, Array<Etudiant>> {
+        return this.learnService.participants;
+    }
+
+
+    followMeFct(question: Question) {
+        const reponseQuiz: QuizReponse = new QuizReponse();
+        for (let i = 0; i < this.questionList.length; i++) {
+            if (this.questionList[i].id === question.id) {
+                reponseQuiz.question = this.questionList[i - 1];
+            }
+        }
+        reponseQuiz.type = 'FOLLOW-QUIZ';
+        reponseQuiz.student = this.login.getConnectedStudent();
+        const chatMessageDto: ChatMessageDto = new ChatMessageDto(this.login.getConnectedStudent().toString(), ' ', false);
+        chatMessageDto.quizReponse = reponseQuiz;
+        chatMessageDto.type = 'FOLLOW-QUIZ';
+        this.webSocketService.sendMessage(chatMessageDto, 'PROF');
     }
 
     finishQuiz() {
-        const threshold = this.answersList.size;
-        this.noteQuiz = 0;
-        for (const value of this.answersList.entries()) {
-            if ( value[1][0].etatReponse === 'true'){
-                this.noteQuiz += value[0].pointReponseJuste;
-            } else {
-                this.noteQuiz -= value[0].pointReponsefausse;
-            }
-        }
-        console.log(this.noteQuiz + ' / ' + threshold);
-        this.showTakeQuiz = false;
-        this.showQuizReview = true;
+        this.learnService.finishQuiz();
     }
 }

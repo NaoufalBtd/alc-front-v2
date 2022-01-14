@@ -6,6 +6,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {environment} from '../../../environments/environment';
 import {MenuItem} from 'primeng/api';
+import {User} from '../model/user.model';
 
 @Injectable({
     providedIn: 'root'
@@ -30,6 +31,10 @@ export class LoginService {
     }
 
     public getConnectedAdmin(): Admin {
+        return JSON.parse(localStorage.getItem('user'));
+    }
+
+    public getConnecteUser(): User {
         return JSON.parse(localStorage.getItem('user'));
     }
 
