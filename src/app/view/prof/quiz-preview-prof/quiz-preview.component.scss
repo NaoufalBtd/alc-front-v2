@@ -267,7 +267,7 @@ h4 {
   padding: 4px;
   font-weight: 500;
   color: white;
-  margin-left: 5%;
+  margin-left: 57px;
 }
 
 .float-answer-correct-triangle-down {
@@ -276,7 +276,7 @@ h4 {
   border-left: 10px solid transparent;
   border-right: 10px solid transparent;
   border-top: 10px solid #68c671;
-  margin-left: 32%;
+  margin-left: 44%;
   margin-top: -5px;
 }
 
@@ -288,6 +288,21 @@ h4 {
   display: block !important;
 }
 
+
+.pi-check-circle{
+  color: #52b788;
+}
+.pi-times-circle{
+  color: #fc1b1b;
+}
+
+.pi-exclamation-circle{
+  color: #ffa500;
+}
+
+.pi-users{
+  color: #ffa500;
+}
 
 //.trueOrFalseQst:hover +.float-answer-correct + .float-answer-correct-triangle-down {
 //  display: none !important;

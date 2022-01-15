@@ -23,6 +23,7 @@ import {Parcours} from '../../../controller/model/parcours.model';
 import {WebSocketService} from '../../../controller/service/web-socket.service';
 import {QuizReponse} from '../../../controller/model/quiz-reponse';
 import {ChatMessageDto} from '../../../controller/model/chatMessageDto';
+import {findIndexInData} from '@syncfusion/ej2-angular-schedule';
 
 @Component({
     selector: 'app-quiz-preview-prof',
@@ -30,17 +31,16 @@ import {ChatMessageDto} from '../../../controller/model/chatMessageDto';
     styleUrls: ['./quiz-preview.component.scss']
 })
 export class QuizPreviewProfComponent implements OnInit, OnDestroy {
-    questionOptions = [{label: 'True', value: 'true'}, {label: 'False', value: 'false'}];
-    showFollowButton = true;
 
     constructor(private service: QuizEtudiantService,
                 private learnService: LearnService,
                 private reponseEtudiantService: ReponseEtudiantService,
-                private login: LoginService,
+                public login: LoginService,
                 private messageService: MessageService,
                 private router: Router,
                 private dictionnaryService: DictionaryService,
                 private sanitizer: DomSanitizer,
+                private quizEtudiantService: QuizEtudiantService,
                 private confirmationService: ConfirmationService,
                 private webSocketService: WebSocketService,
                 private parcoursservice: ParcoursService) {
@@ -48,6 +48,10 @@ export class QuizPreviewProfComponent implements OnInit, OnDestroy {
 
     get showTakeQuiz(): boolean {
         return this.learnService.showTakeQuiz;
+    }
+
+    get grpStudentAnswers(): Map<Etudiant, QuizReponse> {
+        return this.webSocketService.grpStudentAnswers;
     }
 
     set showTakeQuiz(value: boolean) {
@@ -234,8 +238,44 @@ export class QuizPreviewProfComponent implements OnInit, OnDestroy {
         this.service.selectedQuiz = value;
     }
 
+
+    get reponseQuiz(): QuizReponse {
+        return this.webSocketService.reponseQuiz;
+    }
+
+    get participants(): Map<number, Array<Etudiant>> {
+        return this.learnService.participants;
+    }
+
+    reponseQuizList: Array<QuizEtudiant> = new Array<QuizEtudiant>();
+    listAnswers: Array<ReponseEtudiant> = new Array<ReponseEtudiant>();
+
+    questionOptions = [{label: 'True', value: 'true'}, {label: 'False', value: 'false'}];
+    showFollowButton = true;
+
+    test: string;
+
+    display: boolean = false;
+
     ngOnInit(): void {
-        this.learnService.onStart();
+        this.quizEtudiantService.findQuizEtudiantByQuizId(this.selectedQuiz.id).subscribe(
+            data => {
+                for (const student of this.participants.get(this.login.getConnectedProf().id)) {
+                    for (const reponse of data) {
+                        if (reponse.etudiant.id === student.id) {
+                            this.reponseQuizList.push({...reponse});
+                        }
+                    }
+                }
+                console.log(this.reponseQuizList);
+                if (this.reponseQuizList.length === 0) {
+                    this.learnService.onStart();
+                } else {
+                    this.showTakeQuiz = false;
+                    this.showQuizReview = true;
+                }
+            }
+        );
     }
 
 
@@ -265,17 +305,22 @@ export class QuizPreviewProfComponent implements OnInit, OnDestroy {
         const chatMessageDto: ChatMessageDto = new ChatMessageDto(this.login.getConnectedProf().toString(), ' ', false);
         chatMessageDto.quizReponse = this.reponseQuiz;
         chatMessageDto.type = 'QUIZ';
-        this.webSocketService.sendMessage(chatMessageDto);
+        this.webSocketService.sendMessage(chatMessageDto, 'PROF');
     }
-
 
     nextQuestionFct() {
-        this.showFollowButton = true;
-        this.learnService.nextQuestionFct();
+        this.grpStudentAnswers.clear();
+        const question = this.learnService.nextQuestionFct();
+        this.followMeFct(question);
     }
 
-    finishQuiz() {
-        this.learnService.finishQuiz();
+    previousQuestionFct() {
+        this.grpStudentAnswers.clear();
+        this.showFollowButton = true;
+        const qst = this.learnService.previousQuestionFct();
+        if (qst.id !== this.questionList[0].id) {
+            this.followMeFct(qst);
+        }
     }
 
 
@@ -292,21 +337,14 @@ export class QuizPreviewProfComponent implements OnInit, OnDestroy {
     }
 
 
-    get reponseQuiz(): QuizReponse {
-        return this.webSocketService.reponseQuiz;
-    }
-
-    previousQuestionFct() {
-        this.showFollowButton = true;
-        this.learnService.previousQuestionFct();
-    }
-
     followMeFct(question: Question) {
-        this.showFollowButton = false;
+        console.log(question);
+        // this.showFollowButton = false;
         const reponseQuiz: QuizReponse = new QuizReponse();
-        for (let i = 0; i < this.questionList.length; i++) {
+        for (let i = 0; i < (this.questionList.length); i++) {
             if (this.questionList[i].id === question.id) {
                 reponseQuiz.question = this.questionList[i - 1];
+                console.log(reponseQuiz.question);
             }
         }
         reponseQuiz.type = 'FOLLOW-QUIZ';
@@ -314,6 +352,40 @@ export class QuizPreviewProfComponent implements OnInit, OnDestroy {
         const chatMessageDto: ChatMessageDto = new ChatMessageDto(this.login.getConnectedProf().toString(), ' ', false);
         chatMessageDto.quizReponse = reponseQuiz;
         chatMessageDto.type = 'FOLLOW-QUIZ';
-        this.webSocketService.sendMessage(chatMessageDto);
+        this.webSocketService.sendMessage(chatMessageDto, 'PROF');
+    }
+
+    finishQuiz() {
+        this.showTakeQuiz = false;
+        this.showQuizReview = true;
+        this.quizEtudiantService.findQuizEtudiantByQuizId(this.selectedQuiz.id).subscribe(
+            data => {
+                for (const student of this.participants.get(this.login.getConnectedProf().id)) {
+                    for (const reponse of data) {
+                        if (reponse.etudiant.id === student.id) {
+                            this.reponseQuizList.push({...reponse});
+                        }
+                    }
+                }
+                console.log(this.reponseQuizList);
+            }
+        );
+    }
+
+    showDetails(quizEtudiant: QuizEtudiant) {
+        if (this.listAnswers.length !== 0) {
+            this.listAnswers.splice(0, this.listAnswers.length);
+        }
+        this.reponseEtudiantService.findByQuizStudent(quizEtudiant).subscribe(
+            data => {
+                this.listAnswers = data;
+                console.log(this.listAnswers);
+            }
+        );
+        this.showDialog();
+    }
+
+    showDialog() {
+        this.display = true;
     }
 }

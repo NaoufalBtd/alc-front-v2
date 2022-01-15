@@ -44,6 +44,8 @@ export class WebSocketService {
     idprof: number;
     public isInSession = false;
     public sessionHasStarted = false;
+    private groupeEtudiant: GroupeEtudiant = new GroupeEtudiant();
+    private _grpStudentAnswers: Map<Etudiant, QuizReponse> = new Map<Etudiant, QuizReponse>();
 
 
     constructor(private serviceetudiant: EtudiantService,
@@ -58,6 +60,14 @@ export class WebSocketService {
     ) {
     }
 
+
+    get grpStudentAnswers(): Map<Etudiant, QuizReponse> {
+        return this._grpStudentAnswers;
+    }
+
+    set grpStudentAnswers(value: Map<Etudiant, QuizReponse>) {
+        this._grpStudentAnswers = value;
+    }
 
     get studentsEnLigne(): Map<number, Etudiant> {
         return this._studentsEnLigne;
@@ -115,6 +125,7 @@ export class WebSocketService {
         this.webSocket = new WebSocket(this.socketUrl);
         this.webSocket.onopen = (event) => {
             if (sender === 'PROF') {
+                this.groupeEtudiant = grpEtudiant;
                 console.log('ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooopeeeeeeeeen');
                 this.participants.set(prof.id, this.connectedUsers);
                 console.log(this.participants);
@@ -133,9 +144,13 @@ export class WebSocketService {
             }
             console.log('ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooopeeeeeeeeen');
         };
-        this.webSocket.onmessage = (event) => {
-            
+        this.webSocket.onerror = (event) => {
             console.log(event);
+            alert(event);
+        };
+        this.webSocket.onmessage = (event) => {
+
+            console.log(event.data);
             const data: ChatMessageDto = JSON.parse(event.data);
             if (data.type === 'message') {
                 this.chatMessages.push(data);
@@ -153,41 +168,29 @@ export class WebSocketService {
                 this.question = this.reponseQuiz?.question;
                 this.learnService.nextQuestionFct();
             } else if (data.type === 'QUIZ') {
-                this.reponseQuiz = data.quizReponse;
-                console.log(this.reponseQuiz);
-                if (this.reponseQuiz?.question?.typeDeQuestion?.ref === 't5') {
-                    this.trueOrFalse = this.reponseQuiz.lib !== 'false';
-                    alert(this.trueOrFalse);
-                }
-                if (this.reponseQuiz.sender === 'PROF') {
-                    this.learnService.saveAnswers(this.question, 'TEACHER_ANSWER');
-                } else if (this.reponseQuiz.sender === 'STUDENT') {
-                    this.learnService.saveAnswers(this.question, 'STUDENT_ANSWER');
+                if (this.participants.get(this.loginservice.getConnecteUser().id)?.length === 1 ||
+                    data.quizReponse.sender === 'PROF') {
+                    this.reponseQuiz = data.quizReponse;
+                    console.log(this.reponseQuiz);
+                    if (this.reponseQuiz?.question?.typeDeQuestion?.ref === 't5') {
+                        this.trueOrFalse = this.reponseQuiz.lib !== 'false';
+                    }
+                    if (this.reponseQuiz.sender === 'PROF') {
+                        this.learnService.saveAnswers(this.question, 'TEACHER_ANSWER');
+                    } else if (this.reponseQuiz.sender === 'STUDENT') {
+                        this.learnService.saveAnswers(this.question, 'STUDENT_ANSWER');
+                    } else {
+                        this.learnService.saveAnswers(this.question, 'STUDENT_DONT_KNOW');
+                    }
                 } else {
-                    this.learnService.saveAnswers(this.question, 'STUDENT_DONT_KNOW');
+                    const rpsQuiz = data.quizReponse;
+                    this.grpStudentAnswers.set(rpsQuiz.student, rpsQuiz);
+                    console.log('===================================== GRPSTUDENTANSWERS ========================');
+                    console.log(this.grpStudentAnswers);
                 }
 
-            }
 
-
-                // else if (data.type === 'QUIZ') {
-                //     this.reponseQuiz = JSON.parse(event.data);
-                //     console.log(this.reponseQuiz);
-                //     if (this.reponseQuiz?.question?.typeDeQuestion?.ref === 't5') {
-                //         this.trueOrFalse = this.reponseQuiz.lib !== 'false';
-                //         alert(this.trueOrFalse);
-                //     }
-                //     if (this.reponseQuiz.sender === 'PROF') {
-                //         this.learnService.saveAnswers(this.question, 'TEACHER_ANSWER');
-                //     } else if (this.reponseQuiz.sender === 'STUDENT') {
-                //         this.learnService.saveAnswers(this.question, 'STUDENT_ANSWER');
-                //     }
-                //
-                // } else if (data.type === 'FOLLOW-QUIZ') {
-                //     this.reponseQuiz = JSON.parse(event.data);
-                //     this.question = this.reponseQuiz?.question;
-            //     this.learnService.nextQuestionFct();
-            else {
+            } else {
                 const mydata = JSON.parse(event.data);
                 console.log(mydata);
                 const studentList = this.participants.get(mydata?.prof?.id);
@@ -206,6 +209,10 @@ export class WebSocketService {
             }
         };
 
+        if (this.webSocket.readyState === this.webSocket.CLOSING) {
+            alert('Wb socket is CLOSING !');
+        }
+
     }
 
     get trueOrFalse(): boolean {
@@ -216,46 +223,34 @@ export class WebSocketService {
         this.learnService.trueOrFalse = value;
     }
 
-    public sendMessage(chatMessageDto: ChatMessageDto) {
+    public sendMessage(chatMessageDto: ChatMessageDto, sender: string) {
         console.log('===========================this.webSocket.readyState ===========================');
         console.log(this.webSocket.readyState);
         console.log(this.webSocket.OPEN);
+        console.log(this.webSocket.CONNECTING);
         console.log(this.webSocket.CLOSED);
-        if (this.webSocket.readyState === this.webSocket.OPEN){
+        if (this.webSocket.readyState === this.webSocket.OPEN) {
+            console.log(chatMessageDto);
             this.webSocket.send(JSON.stringify(chatMessageDto));
+            this.webSocket.onerror = (event) => {
+                console.log(event);
+                alert('erroor to send');
+            };
         } else {
-            this.webSocket = new WebSocket(this.socketUrl);
-            this.webSocket.send(JSON.stringify(chatMessageDto));
-
+            if (sender === 'PROF') {
+                this.openWebSocket(this.loginservice.getConnectedProf(), this.loginservice.getConnectedProf(),
+                    this.groupeEtudiant, 'PROF');
+                this.webSocket.onopen = (event) => {
+                    this.webSocket.send(JSON.stringify(chatMessageDto));
+                };
+            } else {
+                this.openWebSocket(this.loginservice.getConnectedStudent(), this.loginservice.getConnectedStudent().prof,
+                    this.groupeEtudiant, 'STUDENT');
+                this.webSocket.onopen = (event) => {
+                    this.webSocket.send(JSON.stringify(chatMessageDto));
+                };
+            }
         }
-    }
-
-    public sendReponseQuiz(reponse: QuizReponse) {
-        this.webSocket.send(JSON.stringify(reponse));
-        // this.webSocket.onmessage = (event) => {
-        //     this.reponseQuiz = JSON.parse(event.data);
-        //     console.log(this.reponseQuiz);
-        //     if (this.reponseQuiz.type === 'FOLLOW-QUIZ') {
-        //         this.reponseQuiz = JSON.parse(event.data);
-        //         this.question = this.reponseQuiz?.question;
-        //         this.learnService.nextQuestionFct();
-        //     } else if (this.reponseQuiz.type === 'QUIZ') {
-        //         this.reponseQuiz = JSON.parse(event.data);
-        //         console.log(this.reponseQuiz);
-        //         if (this.reponseQuiz?.question?.typeDeQuestion?.ref === 't5') {
-        //             this.trueOrFalse = this.reponseQuiz.lib !== 'false';
-        //             alert(this.trueOrFalse);
-        //         }
-        //         if (this.reponseQuiz.sender === 'PROF') {
-        //             this.learnService.saveAnswers(this.question, 'TEACHER_ANSWER');
-        //         } else if (this.reponseQuiz.sender === 'STUDENT') {
-        //             this.learnService.saveAnswers(this.question, 'STUDENT_ANSWER');
-        //         } else {
-        //             this.learnService.saveAnswers(this.question, 'STUDENT_DONT_KNOW');
-        //         }
-        //
-        //     }
-        // };
     }
 
 

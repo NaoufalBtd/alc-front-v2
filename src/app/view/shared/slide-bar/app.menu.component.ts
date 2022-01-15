@@ -9,8 +9,7 @@ import {PublicComponent} from '../../public/public.component';
 import {User} from '../../../controller/model/user.model';
 import {AuthenticationService} from '../../../controller/service/authentication.service';
 import {Role} from '../../../enum/role.enum';
-import {GroupeEtudeComponent} from '../../admin/groupe-etude/groupe-etude.component';
-import {GroupeEtudiantComponent} from '../../admin/groupe-etudiant/groupe-etudiant.component';
+
 
 @Component({
     selector: 'app-menu',
@@ -87,12 +86,12 @@ export class AppMenuComponent implements OnInit {
                     {label: 'Students Grpoups List', icon: 'pi pi-fw pi-list', routerLink: ['/admin/groups-students']},
                     {label: 'Professor', icon: 'pi pi-fw pi-user', routerLink: ['/admin/teacher-lists']},
                     {label: 'Recommendation', icon: 'pi pi-fw pi-user-plus', routerLink: ['/admin/recommend-admin']},
-                    {label: 'List of Payment', icon: 'pi pi-fw pi-wallet', routerLink: ['/admin/paiement']},
-                    {label: 'List of Session Course', icon: 'pi pi-fw pi-wallet', routerLink: ['/admin/sessioncours']},
+                     {label: 'List of Session Course', icon: 'pi pi-fw pi-wallet', routerLink: ['/admin/sessioncours']},
                     {label: 'FAQ ANSWER', icon: 'pi pi-fw pi-reply', routerLink: ['/admin/faq-admin']},
                     {label: 'FAQ List', icon: 'pi pi-fw pi-info-circle', routerLink: ['/admin/faq-admin-list']},
                     {label: 'CREATE NEWS', icon: 'pi pi-fw pi-calendar-times', routerLink: ['/admin/news-admin']},
                     {label: 'Schedule', icon: 'pi pi-fw pi-calendar-times', routerLink: ['/admin/schedule']},
+                    {label: 'Bonus', icon: 'pi pi-fw pi-wallet', routerLink: ['/admin/bonus']},
                 ];
             } // @ts-ignore
             else if (this.user.authorities[0].authority === Role.PROF) {
@@ -103,12 +102,8 @@ export class AppMenuComponent implements OnInit {
                     {label: 'Parcours', icon: 'pi pi-fw pi-list', routerLink: ['/prof/courses']},
                     {label: 'Classes', icon: 'pi pi-fw pi-table', routerLink: ['/prof/classes']},
                     {label: 'Synthese-Session-Cours', icon: 'pi pi-fw pi-briefcase', routerLink: ['/prof/synthese']},
-                    {label: 'My payment', icon: 'pi pi-fw pi-wallet', routerLink: ['/prof/paiementlist']},
                     {label: 'Students Review', icon: 'pi pi-fw pi-comment', routerLink: ['/prof/etudiantReviewcomment']},
                     {label: 'Schedule', icon: 'pi pi-fw pi-calendar-times', routerLink: ['/prof/schedule']},
-                   /* {label: 'Student connected', icon: 'pi pi-fw pi-calendar-times', routerLink: ['/prof/connected-student']},
-
-                    */
                     {label: 'News', icon: 'pi pi-fw pi-clock', routerLink: ['/prof/news-teacher']},
                     {label: 'Student HomeWork', icon: 'pi pi-sliders-h', routerLink: ['/prof/sudents-homework']},
                     {label: 'FAQ', icon: 'pi pi-fw pi-question-circle', routerLink: ['/prof/faq-teacher']},

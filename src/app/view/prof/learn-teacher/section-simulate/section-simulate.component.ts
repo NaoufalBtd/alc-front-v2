@@ -419,7 +419,7 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
             chatMessageDto.student = this.prof.students;
             chatMessageDto.prof = this.prof;
             chatMessageDto.type = type;
-            this.webSocketService.sendMessage(chatMessageDto);
+            this.webSocketService.sendMessage(chatMessageDto, 'PROF');
         } else {
             if (type === 'NEXT') {
                 this.NextSection();

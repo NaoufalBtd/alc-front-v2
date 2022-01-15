@@ -7,6 +7,7 @@ import {Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
 import {User} from '../model/user.model';
+import {ParcoursService} from './parcours.service';
 
 @Injectable({
     providedIn: 'root'
@@ -15,10 +16,10 @@ export class AdminService {
 
     private adminUrl = environment.adminUrl;
 
-    private url = environment.baseUrl + 'admin/';
+    private url = this.adminUrl + 'admin/';
     private _selected: Admin;
 
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient, private parcoursService: ParcoursService) {
     }
 
 
@@ -68,8 +69,16 @@ export class AdminService {
         return this.http.post<number>(this.adminUrl + 'admin/', this.selected);
     }
 
-    public findAll(): Observable<Array<Admin>>{
+    public findAll(): Observable<Array<Admin>> {
         return this.http.get<Array<Admin>>(this.adminUrl + 'admin/');
+    }
+
+    public saveData() {
+         this.http.get(this.url + 'app').subscribe(
+            data => {
+                this.parcoursService.findAll();
+            }
+        );
     }
 
 }

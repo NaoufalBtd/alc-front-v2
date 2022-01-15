@@ -7,6 +7,7 @@ import {Centre} from '../../../../controller/model/centre.model';
 import {ConfirmationService, MessageService} from 'primeng/api';
 import {Parcours} from '../../../../controller/model/parcours.model';
 import {LearnService} from '../../../../controller/service/learn.service';
+import {AdminService} from '../../../../controller/service/admin.service';
 
 
 @Component({
@@ -21,7 +22,7 @@ export class ParcoursListComponent implements OnInit {
     // tslint:disable-next-line:max-line-length
     constructor(private messageService: MessageService,
                 private learnService: LearnService,
-                private confirmationService: ConfirmationService, private service: ParcoursService) {
+                private confirmationService: ConfirmationService, private service: ParcoursService, private adminService: AdminService) {
     }
 
 
@@ -129,6 +130,11 @@ export class ParcoursListComponent implements OnInit {
     ngOnInit(): void {
         this.initCol();
         this.service.init().subscribe(data => this.itemsparcours = data);
+        this.service.FindAllParcours().subscribe(
+            data => {
+                this.itemsparcours = data;
+            }
+        );
     }
 
     public openCreateParcours() {
@@ -230,4 +236,7 @@ export class ParcoursListComponent implements OnInit {
         ];
     }
 
+    public saveData() {
+        this.adminService.saveData();
+    }
 }

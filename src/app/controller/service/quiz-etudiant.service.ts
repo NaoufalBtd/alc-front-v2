@@ -458,6 +458,10 @@ export class QuizEtudiantService {
   {
     return this.http.get<Array<QuizEtudiant>>(this.adminUrl + 'quizEtudiant/quiz/ref/' + ref);
   }
+  public findQuizEtudiantByQuizId(id: number): Observable<Array<QuizEtudiant>>
+  {
+    return this.http.get<Array<QuizEtudiant>>(this.adminUrl + 'quizEtudiant/quiz/id/' + id);
+  }
 
   public deleteQuizEtudiant(quizEtudiant: QuizEtudiant): Observable<QuizEtudiant>
   {
