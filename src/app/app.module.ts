@@ -265,6 +265,7 @@ import { ProfinscriptionComponent } from './view/public/profinscription/profinsc
 import { EtudiantinscriptionComponent } from './view/public/etudiantinscription/etudiantinscription.component';
 import { BonusProfComponent } from './view/admin/bonus-prof/bonus-prof.component';
 import {ViewProfilEtudiantComponent} from './view/prof/synthese-session/view-profil-etudiant/view-profil-etudiant.component';
+import { SalarylistComponent } from './view/admin/salarylist/salarylist.component';
 
 
 @NgModule({
@@ -529,10 +530,11 @@ import {ViewProfilEtudiantComponent} from './view/prof/synthese-session/view-pro
         LoginComponent,
         ProfinscriptionComponent,
         EtudiantinscriptionComponent,
-        BonusProfComponent
+        BonusProfComponent,
         EtudiantinscriptionComponent,
         ViewProfilEtudiantComponent,
-        EtudiantinscriptionComponent
+        EtudiantinscriptionComponent,
+        SalarylistComponent
     ],
     providers: [
         {provide: LocationStrategy, useClass: HashLocationStrategy},

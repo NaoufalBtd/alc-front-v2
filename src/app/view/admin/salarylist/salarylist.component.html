@@ -1,0 +1,59 @@
+<p-card style="margin-top: 10px">
+    <p-header>
+
+        <div class="p-grid p-ml-2">
+            <h3 style="margin-left: 5px;">Search</h3>
+            <div class="p-col-12">
+                <input pInputText type="text" placeholder="Search by Prof Name" [(ngModel)]="profNom"
+                       style="margin-right: 1%;">
+                <p-dropdown [options]="itemsMOIS" placeholder="Select Month" [itemSize]="31" [showClear]="true"
+                            [(ngModel)]="moisSearch"
+                            [filter]="false" style="margin-right: 1%;"></p-dropdown>
+                <p-dropdown [options]="itemsannee" placeholder="Select Year" [showClear]="true" [itemSize]="31"
+                            [(ngModel)]="anneeSearch"
+                            [filter]="false" style="margin-left: 1%"></p-dropdown>
+                <button pButton pRipple type="button" label="Search" class="p-button-info" style="margin-left: 1%"
+                        (click)="findAllByCriteria(profNom,moisSearch,anneeSearch)"></button>
+
+            </div>
+        </div>
+    </p-header>
+</p-card>
+
+<div style="margin-top: 10px">
+    <p-table style="margin-top: 10px" #dt [value]="salarySearchList" dataKey="id" styleClass="p-datatable-customers"
+             [rowHover]="true"
+             [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]"
+             [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+             [filterDelay]="0" [globalFilterFields]="['prof.nom','etudiant.nom','totalHeure','montant','datePaiement']">
+        <ng-template pTemplate="caption">
+            <div class="table-header">
+                List of Salary
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="prof.nom">Prof Name</th>
+                <th pSortableColumn="etudiant.nom">Monthly Amount</th>
+                <th></th>
+            </tr>
+
+        </ng-template>
+        <ng-template pTemplate="body" let-c>
+            <tr class="p-selectable-row">
+                <td>{{c.prof.nom}}</td>
+                <td>{{c.montantMensuel}}</td>
+                <td>
+                    <button pButton pRipple type="button" label="Details" class="p-button-info"
+                            style="margin-left: 1%"></button>
+
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="3">No customers found.</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

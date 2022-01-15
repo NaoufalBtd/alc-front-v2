@@ -75,7 +75,7 @@ import {ConnectedStudentComponent} from './view/prof/connected-student/connected
 import {EtudiantinscriptionComponent} from './view/public/etudiantinscription/etudiantinscription.component';
 import {ProfinscriptionComponent} from './view/public/profinscription/profinscription.component';
 import {BonusProfComponent} from './view/admin/bonus-prof/bonus-prof.component';
-import {AllSalaryComponent} from './view/admin/all-salary/all-salary.component';
+import {SalarylistComponent} from './view/admin/salarylist/salarylist.component';
 
 
 @NgModule({
@@ -95,7 +95,7 @@ import {AllSalaryComponent} from './view/admin/all-salary/all-salary.component';
                     {path: 'inscription', component: InscriptionsComponent},
                     {path: 'teacher-lists', component: ProfesseurListComponent},
                     {path: 'recommend-admin', component: RecommendAdminComponent},
-                    {path: 'allSalary', component: AllSalaryComponent},
+                    {path: 'allSalary', component: SalarylistComponent},
                     {path: 'sessioncours', component: SessioncoursComponent},
                     {path: 'faq-admin', component: FaqAnswerComponent},
                     {path: 'faq-admin-list', component: FaqAdminListComponent},

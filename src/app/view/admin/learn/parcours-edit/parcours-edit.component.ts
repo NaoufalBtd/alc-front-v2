@@ -3,6 +3,7 @@ import {ConfirmationService, MessageService} from 'primeng/api';
 import {ParcoursService} from '../../../../controller/service/parcours.service';
 import {Parcours} from '../../../../controller/model/parcours.model';
 import {Centre} from '../../../../controller/model/centre.model';
+import {AdminService} from '../../../../controller/service/admin.service';
 
 @Component({
     selector: 'app-parcours-edit',
@@ -11,7 +12,7 @@ import {Centre} from '../../../../controller/model/centre.model';
 })
 export class ParcoursEditComponent implements OnInit {
     // tslint:disable-next-line:max-line-length
-    constructor(private messageService: MessageService, private confirmationService: ConfirmationService, private service: ParcoursService) {
+    constructor(private messageService: MessageService, private confirmationService: ConfirmationService, private service: ParcoursService, private adminService: AdminService) {
     }
 
     get selectedparcours(): Parcours {
@@ -85,4 +86,6 @@ export class ParcoursEditComponent implements OnInit {
             this.itemscentre = data;
         });
     }
+
+
 }

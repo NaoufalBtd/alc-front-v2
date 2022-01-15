@@ -11,8 +11,11 @@ import {environment} from '../../../environments/environment';
 export class SalaryService {
     private _salary: Salary;
     private _salaryMonth: Salary;
+    private _salarySearch: Salary;
+    private _salarySearchList: Array<Salary>;
     private _salaryList: Array<Salary>;
     private profUrlSalary = environment.profUrl + 'salary';
+    private adminUrlSalary = environment.adminUrl + 'salary';
     private profUrlPaiement = environment.profUrl + 'paiement';
     private profUrlclassAverageBonusProf = environment.profUrl + 'classAverageBonusProf';
     private profUrlworkloadBonusProf = environment.profUrl + 'workloadBonusProf';
@@ -23,6 +26,28 @@ export class SalaryService {
     private _monatantPaiementProf: number;
     private _currentMonthPay: number;
 
+
+    get salarySearchList(): Array<Salary> {
+        if (this._salarySearchList == null) {
+            this._salarySearchList = new Array<Salary>();
+        }
+        return this._salarySearchList;
+    }
+
+    set salarySearchList(value: Array<Salary>) {
+        this._salarySearchList = value;
+    }
+
+    get salarySearch(): Salary {
+        if (this._salarySearch == null) {
+            this._salarySearch = new Salary();
+        }
+        return this._salarySearch;
+    }
+
+    set salarySearch(value: Salary) {
+        this._salarySearch = value;
+    }
 
     get monatantPaiementProf(): number {
         return this._monatantPaiementProf;
@@ -111,6 +136,7 @@ export class SalaryService {
             data => {
                 if (data != null) {
                     this.salaryList = data;
+                    this.salarySearchList = data;
                 }
             }
         );
@@ -182,6 +208,22 @@ export class SalaryService {
                 console.log('ha data');
                 console.log(data);
                 this.monatantPaiementProf = data;
+            }
+        );
+    }
+
+    public findAllByCriteria(profNom: string, moisSearch: string, anneeSearch: string) {
+        this.salarySearch.prof.nom = profNom;
+        this.salarySearch.mois = Number(moisSearch);
+        this.salarySearch.annee = Number(anneeSearch);
+        this.http.post<Array<Salary>>(this.adminUrlSalary + '/byCriteria', this.salarySearch).subscribe(
+            data => {
+                if (data === null) {
+                    this.findAllSalary();
+                } else {
+                    this.salarySearchList = data;
+                }
+
             }
         );
     }
