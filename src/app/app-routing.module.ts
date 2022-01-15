@@ -1,7 +1,6 @@
 import {RouterModule} from '@angular/router';
 import {NgModule} from '@angular/core';
 import {FormLayoutDemoComponent} from './view/public/Inscription-student/formlayoutdemo.component';
-
 import {LearnComponent} from './view/admin/learn/learn.component';
 import {SectionsComponent} from './view/prof/learn-teacher/sections/sections.component';
 import {CoursesComponent} from './view/prof/learn-teacher/courses/courses.component';
@@ -74,8 +73,6 @@ import {LoginComponent} from './view/public/login/login.component';
 import {ConnectedStudentComponent} from './view/prof/connected-student/connected-student.component';
 import {EtudiantinscriptionComponent} from './view/public/etudiantinscription/etudiantinscription.component';
 import {ProfinscriptionComponent} from './view/public/profinscription/profinscription.component';
-import {BonusProfComponent} from './view/admin/bonus-prof/bonus-prof.component';
-import {SalarylistComponent} from './view/admin/salarylist/salarylist.component';
 
 @NgModule({
     imports: [
@@ -94,8 +91,7 @@ import {SalarylistComponent} from './view/admin/salarylist/salarylist.component'
                     {path: 'inscription', component: InscriptionsComponent},
                     {path: 'teacher-lists', component: ProfesseurListComponent},
                     {path: 'recommend-admin', component: RecommendAdminComponent},
-               //     {path: 'allSalary', component: AllSalaryComponent},
-                    {path: 'sessioncours', component: SessioncoursComponent},
+                     {path: 'sessioncours', component: SessioncoursComponent},
                     {path: 'faq-admin', component: FaqAnswerComponent},
                     {path: 'faq-admin-list', component: FaqAdminListComponent},
                     {path: 'news-admin', component: NewsAdminListComponent},
