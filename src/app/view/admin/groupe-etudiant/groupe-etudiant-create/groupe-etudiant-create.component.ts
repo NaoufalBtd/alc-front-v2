@@ -6,6 +6,7 @@ import {MessageService} from 'primeng/api';
 import {Etudiant} from '../../../../controller/model/etudiant.model';
 import { GroupeEtudiantDetail} from '../../../../controller/model/groupe-etudiant-detail.model';
 import {Parcours} from '../../../../controller/model/parcours.model';
+import {Prof} from '../../../../controller/model/prof.model';
 
 @Component({
   selector: 'app-groupe-etudiant-create',
@@ -14,6 +15,7 @@ import {Parcours} from '../../../../controller/model/parcours.model';
 })
 export class GroupeEtudiantCreateComponent implements OnInit {
   constructor( private groupeEtudiantService: GroupeEtudiantService, private messageService: MessageService) { }
+  prof2 = new Prof();
   get createDialogEtud(): boolean {
     return this.groupeEtudiantService.createDialog;
   }
@@ -44,7 +46,19 @@ export class GroupeEtudiantCreateComponent implements OnInit {
   set groupeEtudiantDetail(value: GroupeEtudiantDetail) {
     this.groupeEtudiantService.groupeEtudiantDetail = value;
   }
+ get prof(): Prof{
+    return this.groupeEtudiantService.prof;
+}
+ set prof( value: Prof){
+    this.groupeEtudiantService.prof = value;
+}
+get profs(): Array<Prof>{
+    return  this.groupeEtudiantService.profs;
 
+}
+set profs( value: Array<Prof>){
+     this.groupeEtudiantService.profs = value;
+}
   get groupeEtudiantDetail(): GroupeEtudiantDetail {
     return this.groupeEtudiantService.groupeEtudiantDetail;
   }
@@ -110,7 +124,7 @@ export class GroupeEtudiantCreateComponent implements OnInit {
   public id3 = Number(this.libelle2);
   cols: any[];
   public full:boolean = false;
-  ngOnInit(): void {
+  ngOnInit(): void { this.findAllProf();
   }
   public findAllGroupeEtude() {
     this.groupeEtudiantService.findAllGroupeEtude().subscribe(data => this.groupeEtudeList = data);
@@ -121,7 +135,10 @@ export class GroupeEtudiantCreateComponent implements OnInit {
   public findAllEtudiant() {
     this.groupeEtudiantService.findAllEtudiant().subscribe(data => this.etudiantList = data);
   }
+public  findAllProf(){
+    this.groupeEtudiantService.findAllProf().subscribe(data => this.profs = data);
 
+}
   public findEtudiantListByParcoursLibelle(libelle2) {
     console.log(libelle2);
     console.log(this.etudiantList);
@@ -134,6 +151,7 @@ export class GroupeEtudiantCreateComponent implements OnInit {
     this.submitted = false;
   }
   public save() {
+    console.log(this.selected.prof);
     console.log(this.groupeEtudiant);
     this.submitted = true;
     this.groupeEtudiantService.save().subscribe(data => {
@@ -163,6 +181,10 @@ export class GroupeEtudiantCreateComponent implements OnInit {
   selectChangeGroupeEtude(event) {
     this.id3 = event.target.value.split(': ')[1];
   }
+  selectProf() {
+   console.log(this.selected.prof);
+  }
+
  public addEtudiant(){
     this.groupeEtudiant.groupeEtudiantDetails.push({...this.groupeEtudiantDetail});
     this.groupeEtudiantDetail = null ;

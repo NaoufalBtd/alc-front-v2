@@ -9,6 +9,7 @@ import {GroupeEtudiantDetail} from '../model/groupe-etudiant-detail.model';
 import {Quiz} from '../model/quiz.model';
 import {Parcours} from '../model/parcours.model';
 import {environment} from '../../../environments/environment';
+import {Prof} from '../model/prof.model';
 
 @Injectable({
   providedIn: 'root'
@@ -43,14 +44,19 @@ export class GroupeEtudiantService {
   private _etudiantList: Array<Etudiant>;
   private _etudiantList2: Array<Etudiant>;
   private _parcoursList: Array<Parcours>;
+  private _prof : Prof;
+   private _profs: Array<Prof>;
   private _parcours : Parcours;
   // tslint:disable-next-line:variable-name
   private _etudiant: Etudiant;
   private _etudiant2: Etudiant;
-
+  private adminUrl = environment.adminUrl;
 
   public save(): Observable<number>{
     return this.http.post<number>(this.urlBase + this.urlGroupeEtudiant, this.groupeEtudiant);
+  }
+  public findAllProf(): Observable<Array<Prof>> {
+    return this.http.get<Array<Prof>>(this.adminUrl + 'prof/');
   }
 
   public findAll(): Observable<Array<GroupeEtudiant>> {
@@ -140,6 +146,17 @@ public addEtudiant(){
   }
 
 
+  get prof(): Prof {
+    if (this._prof == null){
+      this._prof = new Prof();
+    }
+    return this._prof;
+  }
+
+  set prof(value: Prof) {
+    this._prof = value;
+  }
+
   get parcoursList(): Array<Parcours> {
     if (this._parcoursList == null)
     {
@@ -150,6 +167,18 @@ public addEtudiant(){
 
   set parcoursList(value: Array<Parcours>) {
     this._parcoursList = value;
+  }
+
+
+  get profs(): Array<Prof> {
+    if(this._profs == null){
+      this._profs = new Array<Prof>();
+    }
+    return this._profs;
+  }
+
+  set profs(value: Array<Prof>) {
+    this._profs = value;
   }
 
   get parcours(): Parcours {
@@ -246,7 +275,8 @@ public addEtudiant(){
     if (this._groupeEtudiant == null) {
       this._groupeEtudiant = new GroupeEtudiant();
     }
-    return this._groupeEtudiant;  }
+    return this._groupeEtudiant;
+  }
 
   set groupeEtudiant(value: GroupeEtudiant) {
     this._groupeEtudiant = value;

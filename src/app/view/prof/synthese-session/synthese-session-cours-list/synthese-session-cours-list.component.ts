@@ -77,11 +77,21 @@ export class SyntheseSessionCoursListComponent implements OnInit {
         });
 
     }
+
+    get sessionCours(): Array<SessionCours> {
+
+
+        return this.servicePrf.sessionCours;
+    }
+
+    set sessionCours(value: Array<SessionCours>) {
+        this.servicePrf.sessionCours = value;
+    }
     public findEtudiantById(etudiant: Etudiant) {
         this.submitted = false;
         this.profilDiaglog = true;
-
-
+        this.servicePrf.findCoursByEtudiantId(etudiant.id).subscribe(data =>{ this.sessionCours = data;
+        console.log( 'hahoa l cours ' + this.sessionCours); }) ;
         this.servicePrf.findEtudiantById(etudiant.id).subscribe(
             data =>
             {this.etudiant = data;

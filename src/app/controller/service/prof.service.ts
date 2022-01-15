@@ -9,6 +9,8 @@ import {Etudiant} from '../model/etudiant.model';
 import {User} from '../model/user.model';
 import {LoginService} from './login.service';
 import {Parcours} from '../model/parcours.model';
+import {GroupeEtudiantDetail} from '../model/groupe-etudiant-detail.model';
+import {SessionCours} from '../model/session-cours.model';
 
 @Injectable({
     providedIn: 'root'
@@ -33,6 +35,8 @@ export class ProfService {
     private _listprof: Array<Prof>;
 
 
+
+
     get listprof(): Array<Prof> {
         if (this._listprof == null) {
             this._listprof = new Array<Prof>();
@@ -43,6 +47,7 @@ export class ProfService {
     set listprof(value: Array<Prof>) {
         this._listprof = value;
     }
+
     public findAllParcours(): Observable<Array<Parcours>> {
         return this.http.get<Array<Parcours>>(this.urlBase + this.urlParcours);
     }

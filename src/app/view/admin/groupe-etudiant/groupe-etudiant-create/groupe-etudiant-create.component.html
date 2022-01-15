@@ -121,7 +121,6 @@
                 <label for="groupeEtude">Group</label><br>
                 <select (click)="findAllGroupeEtude() ; trouver(id3)" [(ngModel)]="selected.groupeEtude.id"
                         (change)="selectChangeGroupeEtude($event)"
-
                         class="btn btn-block btn-outline-light form-control" id="groupeEtude"
                         name="roupe Etude" pInputText style=" margin-left: 5px"
                         type="text">
@@ -129,6 +128,18 @@
                     </option>
                 </select>
             </div>
+            <div class="p-field">
+            <label for="profs">Prof</label><br>
+            <select
+                    (ngModelChange)="selectProf()"
+                    [(ngModel)]="selected.prof"
+                    class="btn btn-block btn-outline-light form-control" id="profs"
+                    name="roupe Etude" pInputText style=" margin-left: 5px"
+                    type="text">
+                <option *ngFor="let pr of profs" [ngValue]="pr" selected="selected">{{pr.nom}}
+                </option>
+            </select>
+        </div>
             <div class="p-field">
                 <label for="parcours">Level</label><br>
                 <select  (click)="findAllParcours()" [(ngModel)]="selected.parcours.libelle"

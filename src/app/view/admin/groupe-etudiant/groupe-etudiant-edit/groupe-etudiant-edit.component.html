@@ -14,7 +14,13 @@
                         </option>
                     </select>
                 </div>
+                <div class="p-field">
+                    <label for="groupeEtude">Prof</label><br>
 
+                    <p-dropdown [options]="profs" placeholder="Select teacher" [(ngModel)]="selected.prof"
+                                optionLabel="nom" [itemSize]="3"></p-dropdown>
+
+                </div>
                 <div class="p-field">
                     <label for="parcours">Level</label><br>
                     <select  disabled [(ngModel)]="groupeEtudiant.parcours.libelle"

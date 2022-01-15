@@ -47,6 +47,35 @@
             </p-tabPanel>
 
             <p-tabPanel header="Courses">
+                <p-table #dt    [paginator]="true"
+                         [rowHover]="true"
+                         [rows]="8" [showCurrentPageReport]="true" [value]="sessionCours"
+                         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                         dataKey="id"
+                         styleClass="p-datatable-customers">
+                    <ng-template pTemplate="caption">
+                        <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
+
+                        </div>
+                    </ng-template>
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th pSortableColumn="libelle"> Courses
+                                <p-sortIcon field="liebelle"></p-sortIcon>
+                            </th>
+                            <th pSortableColumn="libelle"> Date
+                                <p-sortIcon field="liebelle"></p-sortIcon>
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template let-session pTemplate="body">
+                        <tr>
+                            <td>{{session.cours.libelle}}</td>
+                            <td>{{session.dateFin}}</td>
+
+                        </tr>
+                    </ng-template>
+                </p-table>
             </p-tabPanel>
         </p-tabView>
     </ng-template>
