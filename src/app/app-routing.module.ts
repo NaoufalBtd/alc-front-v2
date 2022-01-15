@@ -76,9 +76,6 @@ import {EtudiantinscriptionComponent} from './view/public/etudiantinscription/et
 import {ProfinscriptionComponent} from './view/public/profinscription/profinscription.component';
 import {BonusProfComponent} from './view/admin/bonus-prof/bonus-prof.component';
 import {SalarylistComponent} from './view/admin/salarylist/salarylist.component';
-import {AllSalaryComponent} from './view/admin/all-salary/all-salary.component';
-import {ScheduleProfComponent} from './view/admin/professeur/schedule-prof/schedule-prof.component';
-
 
 @NgModule({
     imports: [
@@ -97,7 +94,7 @@ import {ScheduleProfComponent} from './view/admin/professeur/schedule-prof/sched
                     {path: 'inscription', component: InscriptionsComponent},
                     {path: 'teacher-lists', component: ProfesseurListComponent},
                     {path: 'recommend-admin', component: RecommendAdminComponent},
-                    {path: 'allSalary', component: AllSalaryComponent},
+               //     {path: 'allSalary', component: AllSalaryComponent},
                     {path: 'sessioncours', component: SessioncoursComponent},
                     {path: 'faq-admin', component: FaqAnswerComponent},
                     {path: 'faq-admin-list', component: FaqAdminListComponent},
