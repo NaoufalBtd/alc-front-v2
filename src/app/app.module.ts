@@ -230,7 +230,7 @@ import {
     WorkWeekService
 } from '@syncfusion/ej2-angular-schedule';
 import {DropDownListModule} from '@syncfusion/ej2-angular-dropdowns';
-import {DateTimePickerModule} from '@syncfusion/ej2-angular-calendars';
+import {DateTimePickerModule, TimePickerModule} from '@syncfusion/ej2-angular-calendars';
 import {GroupeEtudeCreateComponent} from './view/admin/groupe-etude/groupe-etude-create/groupe-etude-create.component';
 import {GroupeEtudeListeComponent} from './view/admin/groupe-etude/groupe-etude-liste/groupe-etude-liste.component';
 import {GroupeEtudeComponent} from './view/admin/groupe-etude/groupe-etude.component';
@@ -266,6 +266,7 @@ import { EtudiantinscriptionComponent } from './view/public/etudiantinscription/
 import { BonusProfComponent } from './view/admin/bonus-prof/bonus-prof.component';
 import {ViewProfilEtudiantComponent} from './view/prof/synthese-session/view-profil-etudiant/view-profil-etudiant.component';
 import { SalarylistComponent } from './view/admin/salarylist/salarylist.component';
+import { ScheduleProfComponent } from './view/admin/professeur/schedule-prof/schedule-prof.component';
 
 
 @NgModule({
@@ -275,7 +276,6 @@ import { SalarylistComponent } from './view/admin/salarylist/salarylist.componen
         ScheduleAllModule,
         RecurrenceEditorAllModule,
         FormsModule,
-        AppRoutingModule,
         HttpClientModule,
         BrowserAnimationsModule,
         AccordionModule,
@@ -363,7 +363,7 @@ import { SalarylistComponent } from './view/admin/salarylist/salarylist.componen
         DateTimePickerModule,
         DropdownModule,
         DateTimePickerModule,
-        FocusTrapModule,
+        FocusTrapModule
 
 
     ],
@@ -534,7 +534,8 @@ import { SalarylistComponent } from './view/admin/salarylist/salarylist.componen
         EtudiantinscriptionComponent,
         ViewProfilEtudiantComponent,
         EtudiantinscriptionComponent,
-        SalarylistComponent
+        SalarylistComponent,
+         ScheduleProfComponent
     ],
     providers: [
         {provide: LocationStrategy, useClass: HashLocationStrategy},
