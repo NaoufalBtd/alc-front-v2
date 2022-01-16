@@ -6,6 +6,7 @@ import {GroupeEtude} from '../../../../controller/model/groupe-etude.model';
 import {Parcours} from '../../../../controller/model/parcours.model';
 import {GroupeEtudiantDetail} from '../../../../controller/model/groupe-etudiant-detail.model';
 import {Etudiant} from '../../../../controller/model/etudiant.model';
+import {Prof} from '../../../../controller/model/prof.model';
 
 @Component({
   selector: 'app-groupe-etudiant-edit',
@@ -104,12 +105,19 @@ export class GroupeEtudiantEditComponent implements OnInit {
   public id1 = '';
   public id2 = Number(this.id1);
   cols: any[]; ngOnInit(): void {
+
+   this.findAllProf();
+
     this.groupeEtudiantService.findAllGroupeEtudiantDetail(this.groupeEtudiant.id).subscribe(
         data =>  this.groupeEtudiant.groupeEtudiantDetails = data);
     this.groupeEtudiantService.findAllParcours().subscribe(
         data => this.parcoursList = data);
     this.groupeEtudiantService.findAllGroupeEtude().subscribe(
         data => this.groupeEtudeList = data);
+  }
+  public  findAllProf(){
+    this.groupeEtudiantService.findAllProf().subscribe(data => this.profs = data);
+
   }
   public findAllGroupeEtude() {
     this.groupeEtudiantService.findAllGroupeEtude().subscribe(data => this.groupeEtudeList = data);
@@ -244,5 +252,20 @@ export class GroupeEtudiantEditComponent implements OnInit {
       }
     });
   }
+  selectProf() {
+    console.log(this.selected.prof);
+  }
+  get prof(): Prof{
+    return this.groupeEtudiantService.prof;
+  }
+  set prof( value: Prof){
+    this.groupeEtudiantService.prof = value;
+  }
+  get profs(): Array<Prof>{
+    return  this.groupeEtudiantService.profs;
 
+  }
+  set profs( value: Array<Prof>){
+    this.groupeEtudiantService.profs = value;
+  }
 }

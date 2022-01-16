@@ -1,6 +1,7 @@
 import {Parcours} from './parcours.model';
 import {GroupeEtude} from './groupe-etude.model';
 import {GroupeEtudiantDetail} from './groupe-etudiant-detail.model';
+import {Prof} from './prof.model';
 
 
 export class GroupeEtudiant {
@@ -13,5 +14,6 @@ export class GroupeEtudiant {
     public nombrePlaceNonVide: number ;
     public parcours = new Parcours();
     public groupeEtude = new GroupeEtude();
+    public prof = new Prof();
     public groupeEtudiantDetails = new  Array< GroupeEtudiantDetail>();
 }
