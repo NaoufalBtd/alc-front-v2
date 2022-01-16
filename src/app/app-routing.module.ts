@@ -73,6 +73,8 @@ import {LoginComponent} from './view/public/login/login.component';
 import {ConnectedStudentComponent} from './view/prof/connected-student/connected-student.component';
 import {EtudiantinscriptionComponent} from './view/public/etudiantinscription/etudiantinscription.component';
 import {ProfinscriptionComponent} from './view/public/profinscription/profinscription.component';
+import {BonusProfComponent} from './view/admin/bonus-prof/bonus-prof.component';
+import {SalarylistComponent} from './view/admin/salarylist/salarylist.component';
 
 @NgModule({
     imports: [
@@ -91,7 +93,7 @@ import {ProfinscriptionComponent} from './view/public/profinscription/profinscri
                     {path: 'inscription', component: InscriptionsComponent},
                     {path: 'teacher-lists', component: ProfesseurListComponent},
                     {path: 'recommend-admin', component: RecommendAdminComponent},
-                     {path: 'sessioncours', component: SessioncoursComponent},
+                    {path: 'sessioncours', component: SessioncoursComponent},
                     {path: 'faq-admin', component: FaqAnswerComponent},
                     {path: 'faq-admin-list', component: FaqAdminListComponent},
                     {path: 'news-admin', component: NewsAdminListComponent},
@@ -100,7 +102,9 @@ import {ProfinscriptionComponent} from './view/public/profinscription/profinscri
                     {path: 'students-List', component: EtudiantsComponent},
                     {path: 'groups-List', component: GroupeEtudeComponent},
                     {path: 'groups-students', component: GroupeEtudiantComponent},
-                    {path: 'homeWork', component: HomeWorkComponentComponent}
+                    {path: 'homeWork', component: HomeWorkComponentComponent},
+                    {path: 'bonus', component: BonusProfComponent},
+                    {path: 'salarylist', component: SalarylistComponent}
 
                 ]
             },
@@ -167,7 +171,7 @@ import {ProfinscriptionComponent} from './view/public/profinscription/profinscri
             {path: '**', component: PageNotFoundComponent},
         ], {scrollPositionRestoration: 'enabled'})
     ],
-    exports: [RouterModule]
+    exports: [RouterModule ]
 })
 export class AppRoutingModule {
 }
