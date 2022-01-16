@@ -84,15 +84,12 @@ import {TooltipModule} from 'primeng/tooltip';
 import {TreeModule} from 'primeng/tree';
 import {TreeTableModule} from 'primeng/treetable';
 import {VirtualScrollerModule} from 'primeng/virtualscroller';
-
 import {AppComponent} from './app.component';
-
 import {AppMenuComponent} from './view/shared/slide-bar/app.menu.component';
 import {AppMenuitemComponent} from './view/shared/slide-bar/app.menuitem.component';
 import {AppTopBarComponent} from './view/shared/top-bar/app.topbar.component';
 import {AppFooterComponent} from './view/shared/footer/app.footer.component';
 import {FormLayoutDemoComponent} from './view/public/Inscription-student/formlayoutdemo.component';
-
 import {MenuService} from './view/shared/slide-bar/app.menu.service';
 import {ParcoursEditComponent} from './view/admin/learn/parcours-edit/parcours-edit.component';
 import {CoursListComponent} from './view/admin/learn/cours-list/cours-list.component';
@@ -186,7 +183,6 @@ import {NewsEtudiantListComponent} from './view/etudiant/news-etudiant/news-etud
 import {NewsEtudiantViewComponent} from './view/etudiant/news-etudiant/news-etudiant-view/news-etudiant-view.component';
 import {NewsAdminEditComponent} from './view/admin/news-admin/news-admin-edit/news-admin-edit.component';
 import {NewsAdminDeleteComponent} from './view/admin/news-admin/news-admin-delete/news-admin-delete.component';
-// import {PaiementListComponent} from './view/admin/allSalary/allSalary-list/allSalary-list.component';
 import {ScheduleAdminComponent} from './view/admin/schedule-admin/schedule-admin.component';
 import {ScheduleStudentComponent} from './view/etudiant/schedule-student/schedule-student.component';
 import {QuizUpdateComponent} from './view/admin/quiz/quiz-update/quiz-update.component';
@@ -249,8 +245,6 @@ import {GroupeEtudiantCreateComponent} from './view/admin/groupe-etudiant/groupe
 import {
     GroupeEtudiantDetailListComponent
 } from './view/admin/groupe-etudiant/groupe-etudiant-detail-list/groupe-etudiant-detail-list.component';
-
-
 import {HomeWorkComponentComponent} from './view/admin/home-work-component/home-work-component.component';
 import {HomeWorkEtudiantComponent} from './view/etudiant/homeWork/home-work-etudiant/home-work-etudiant.component';
 import {SessioncoursComponent} from './view/admin/sessioncours/sessioncours.component';
@@ -273,6 +267,8 @@ import {BonusProfComponent} from './view/admin/bonus-prof/bonus-prof.component';
 import {ViewProfilEtudiantComponent} from './view/prof/synthese-session/view-profil-etudiant/view-profil-etudiant.component';
 import {SalarylistComponent} from './view/admin/salarylist/salarylist.component';
 import {ScheduleProfComponent} from './view/admin/professeur/schedule-prof/schedule-prof.component';
+import {RouterModule} from '@angular/router';
+import {AppRoutingModule} from './app-routing.module';
 
 
 @NgModule({
@@ -369,7 +365,8 @@ import {ScheduleProfComponent} from './view/admin/professeur/schedule-prof/sched
         DateTimePickerModule,
         DropdownModule,
         DateTimePickerModule,
-        FocusTrapModule
+        FocusTrapModule,
+        AppRoutingModule
     ],
     declarations: [
         AppComponent,
@@ -519,7 +516,6 @@ import {ScheduleProfComponent} from './view/admin/professeur/schedule-prof/sched
         GroupeEtudiantDetailListComponent,
         ResetPasswordComponent,
         GroupeEtudiantEditComponent,
-
         StudentsHomeworkComponent,
         ResetPasswordComponent,
         ResetPasswordComponent,
@@ -538,7 +534,8 @@ import {ScheduleProfComponent} from './view/admin/professeur/schedule-prof/sched
         ViewProfilEtudiantComponent,
         EtudiantinscriptionComponent,
         SalarylistComponent,
-        ScheduleProfComponent
+        ScheduleProfComponent,
+
     ],
     providers: [
         {provide: LocationStrategy, useClass: HashLocationStrategy},

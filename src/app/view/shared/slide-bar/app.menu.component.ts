@@ -86,6 +86,7 @@ export class AppMenuComponent implements OnInit {
                     {label: 'Students Grpoups List', icon: 'pi pi-fw pi-list', routerLink: ['/admin/groups-students']},
                     {label: 'Professor', icon: 'pi pi-fw pi-user', routerLink: ['/admin/teacher-lists']},
                     {label: 'Recommendation', icon: 'pi pi-fw pi-user-plus', routerLink: ['/admin/recommend-admin']},
+                    {label: 'All Salary', icon: 'pi pi-fw pi-user-plus', routerLink: ['/admin/salarylist']},
                      {label: 'List of Session Course', icon: 'pi pi-fw pi-wallet', routerLink: ['/admin/sessioncours']},
                     {label: 'FAQ ANSWER', icon: 'pi pi-fw pi-reply', routerLink: ['/admin/faq-admin']},
                     {label: 'FAQ List', icon: 'pi pi-fw pi-info-circle', routerLink: ['/admin/faq-admin-list']},
