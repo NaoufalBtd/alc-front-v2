@@ -1,4 +1,7 @@
 <div class="p-grid">
+    <div class="p-col-12">
+        <p-breadcrumb [model]="navigateItems" [home]="home"></p-breadcrumb>
+    </div>
     <div class="p-col-12 ">
         <p-toast></p-toast>
         <div class="card toolbar-demo">
@@ -39,6 +42,8 @@
                     </div>
                 </p-card>
             </ng-template>
+
+
             <div class="p-grid">
                 <div class="p-col-fixed" id="formCard" style="width: 60%">
                     <div class="card" styleClass="p-card-shadow">
@@ -76,7 +81,7 @@
                                 <label>Answer</label>
                                 <input [(ngModel)]="reponse.lib" pInputText type="text"/>
                             </div>
-                            <div class="p-field  p-col-2">
+                            <div style="padding-top: 25px" class="p-field  p-col-2">
                                 <p-button (click)="addReponse()" icon="pi pi-plus" iconPos="right" label="Add Answer"
                                           styleClass="p-button-sm"></p-button>
                             </div>

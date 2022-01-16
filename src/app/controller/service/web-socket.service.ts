@@ -15,8 +15,6 @@ import {ParcoursService} from './parcours.service';
 import {Section} from '../model/section.model';
 import {Cours} from '../model/cours.model';
 import {Router} from '@angular/router';
-import {QuizEtudiant} from '../model/quiz-etudiant.model';
-import {Reponse} from '../model/reponse.model';
 import {QuizReponse} from '../model/quiz-reponse';
 import {LearnService} from './learn.service';
 import {Question} from '../model/question.model';
@@ -150,8 +148,8 @@ export class WebSocketService {
         };
         this.webSocket.onmessage = (event) => {
 
-            console.log(event.data);
             const data: ChatMessageDto = JSON.parse(event.data);
+            console.log(data);
             if (data.type === 'message') {
                 this.chatMessages.push(data);
                 console.log(data);
@@ -188,11 +186,9 @@ export class WebSocketService {
                     console.log('===================================== GRPSTUDENTANSWERS ========================');
                     console.log(this.grpStudentAnswers);
                 }
-
-
             } else {
                 const mydata = JSON.parse(event.data);
-                console.log(mydata);
+                console.log(mydata.prof.id);
                 const studentList = this.participants.get(mydata?.prof?.id);
                 for (const student of studentList) {
                     if (student.id === mydata.id) {
@@ -224,13 +220,9 @@ export class WebSocketService {
     }
 
     public sendMessage(chatMessageDto: ChatMessageDto, sender: string) {
-        console.log('===========================this.webSocket.readyState ===========================');
-        console.log(this.webSocket.readyState);
-        console.log(this.webSocket.OPEN);
-        console.log(this.webSocket.CONNECTING);
-        console.log(this.webSocket.CLOSED);
         if (this.webSocket.readyState === this.webSocket.OPEN) {
             console.log(chatMessageDto);
+            console.log(this.webSocket.readyState);
             this.webSocket.send(JSON.stringify(chatMessageDto));
             this.webSocket.onerror = (event) => {
                 console.log(event);

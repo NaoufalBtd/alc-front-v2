@@ -1,10 +1,10 @@
 <div class="control-section">
-    <button class="instruction-button" (click)="onDataBound($event)" icon="pi pi-refresh" pButton pRipple></button>
+    <button class="instruction-button" (click)="onDataBound()" icon="pi pi-refresh" pButton pRipple></button>
 
     <ejs-schedule #scheduleObj cssClass='schedule-group-custom-work-days' width='100%'
                   [currentView]="currentView" [group]="group" [selectedDate]="selectedDate"
 
-                  (dataBound)="onDataBound($event)"
+                  (dataBound)="onDataBound()"
                   (actionComplete)="onActionComplete($event)"
                   (popupOpen)="onPopupOpen($event)"
                   [eventSettings]="eventSettings"

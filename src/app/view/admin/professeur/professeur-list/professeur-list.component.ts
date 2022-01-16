@@ -5,10 +5,19 @@ import {Prof} from '../../../../controller/model/prof.model';
 import {EtudiantCours} from '../../../../controller/model/etudiant-cours.model';
 import {GroupeEtudiant} from '../../../../controller/model/groupe-etudiant.model';
 import {ScheduleProf} from '../../../../controller/model/calendrier-prof.model';
-import {EventSettingsModel, ScheduleComponent, TimeScaleModel} from '@syncfusion/ej2-angular-schedule';
+import {
+    ActionEventArgs,
+    EventSettingsModel, GroupModel,
+    PopupOpenEventArgs, RenderCellEventArgs,
+    ResourceDetails,
+    ScheduleComponent,
+    TimeScaleModel, View
+} from '@syncfusion/ej2-angular-schedule';
 import {ScheduleService} from '../../../../controller/service/schedule.service';
 import {Islamic, TimePickerComponent} from '@syncfusion/ej2-angular-calendars';
-import {Internationalization} from '@syncfusion/ej2-base';
+import {addClass, Internationalization} from '@syncfusion/ej2-base';
+import {TrancheHoraireProfService} from '../../../../controller/service/tranche-horaire-prof.service';
+import {TrancheHoraireProf} from '../../../../controller/model/tranche-horaire-prof.model';
 
 
 @Component({
@@ -18,24 +27,8 @@ import {Internationalization} from '@syncfusion/ej2-base';
 })
 export class ProfesseurListComponent implements OnInit {
 
-    cols: any[];
-    public timeScale: TimeScaleModel = {interval: 60, slotCount: 1};
-    prof: Prof = new Prof();
-    scheduleDialog = true;
-    @ViewChild('scheduleObj')
-    public scheduleObj: ScheduleComponent;
-    @ViewChild('startTime') public startTimeObj: TimePickerComponent;
-    @ViewChild('endTime') public endTimeObj: TimePickerComponent;
-    public instance: Internationalization = new Internationalization();
-    endDate: Date = new Date();
-    display = false;
-    private selectionTarget: Element;
-    // public selectedDate: Date = new Date(2021, 4, 18);
-    public selectedDate: Date = new Date();
-    public showWeekend = false;
-    public eventSettings: EventSettingsModel;
-
     constructor(private messageService: MessageService,
+                private trancheHoraireProfService: TrancheHoraireProfService,
                 private scheduleService: ScheduleService,
                 private confirmationService: ConfirmationService,
                 private service: ProfessorService) {
@@ -112,6 +105,66 @@ export class ProfesseurListComponent implements OnInit {
     set selectes(value: Array<Prof>) {
         this.service.selectes = value;
     }
+
+    get scheduleProfs(): Array<ScheduleProf> {
+        return this.scheduleService.scheduleProfs;
+    }
+
+
+    set scheduleProfs(value: Array<ScheduleProf>) {
+        this.scheduleService.scheduleProfs = value;
+    }
+
+
+    get trancheHoraireProfList(): Array<TrancheHoraireProf> {
+        return this.trancheHoraireProfService.trancheHoraireProfList;
+    }
+
+    set trancheHoraireProfList(value: Array<TrancheHoraireProf>) {
+        this.trancheHoraireProfService.trancheHoraireProfList = value;
+    }
+
+    cols: any[];
+    public timeScale: TimeScaleModel = {interval: 60, slotCount: 1};
+    prof: Prof = new Prof();
+    scheduleDialog = true;
+    @ViewChild('scheduleObj')
+    public scheduleObj: ScheduleComponent;
+    @ViewChild('startTime') public startTimeObj: TimePickerComponent;
+    @ViewChild('endTime') public endTimeObj: TimePickerComponent;
+    public instance: Internationalization = new Internationalization();
+    endDate: Date = new Date();
+    display = false;
+    private selectionTarget: Element;
+    // public selectedDate: Date = new Date(2021, 4, 18);
+    public selectedDate: Date = new Date();
+    public showWeekend = false;
+    public eventSettings: EventSettingsModel;
+
+    public currentView: View = 'Week';
+    public allowDragDrop: boolean = false;
+    public resourceDataSource: Object[] = [
+        {
+            text: this.scheduleProfs[0]?.prof?.nom,
+            id: 0,
+            color: '#ea7a57',
+            startHour: '08:00',
+            endHour: '15:00',
+        }
+    ];
+    public group: GroupModel = {byDate: true, resources: ['Profs']};
+    // public eventSettings: EventSettingsModel = {
+    //     dataSource: this.scheduleProfs,
+    //     fields: {
+    //         id: 'id',
+    //         subject: {name: 'subject', title: 'subject'},
+    //         startTime: {name: 'startTime', title: 'startTime'},
+    //         endTime: {name: 'endTime', title: 'endTime'}
+    //     }
+    // };
+
+
+    public islayoutChanged: boolean = false;
 
     public findByCriteria() {
         return this.service.findByCriteria(this.prof).subscribe(data => this.items = data);
@@ -225,6 +278,16 @@ export class ProfesseurListComponent implements OnInit {
         const scheduleObj = this.scheduleObj;
         scheduleObj.eventSettings.dataSource = null;
         console.log(prof);
+        this.trancheHoraireProfService.findTrancheHoraireByProfId(prof).subscribe(
+            data => {
+                this.trancheHoraireProfList = data;
+                console.log(data);
+                this.onDataBound(data);
+            }, err => {
+                console.log(err);
+            }
+        );
+
         this.scheduleService.findByProf(prof).subscribe(
             scheduleData => {
                 console.log(this.scheduleProfs);
@@ -246,15 +309,6 @@ export class ProfesseurListComponent implements OnInit {
         this.scheduleObj.eventWindow.refresh();
     }
 
-    get scheduleProfs(): Array<ScheduleProf> {
-        return this.scheduleService.scheduleProfs;
-    }
-
-
-    set scheduleProfs(value: Array<ScheduleProf>) {
-        this.scheduleService.scheduleProfs = value;
-    }
-
     hideDialog() {
         this.scheduleDialog = true;
         const scheduleObj = this.scheduleObj;
@@ -262,6 +316,85 @@ export class ProfesseurListComponent implements OnInit {
         this.scheduleObj.eventWindow.refresh();
 
     }
+
+
+    isValidateTime(startDate: Date, endDate: Date, resIndex: number): boolean {
+        let resource: ResourceDetails = this.scheduleObj.getResourcesByIndex(resIndex);
+        let startHour: number = parseInt(
+            resource.resourceData.startHour.toString().slice(0, 2),
+            10
+        );
+        let endHour: number = parseInt(
+            resource.resourceData.endHour.toString().slice(0, 2),
+            10
+        );
+        return startHour <= startDate.getHours() && endHour >= endDate.getHours();
+    }
+
+    onPopupOpen(args: PopupOpenEventArgs): void {
+        console.log(this.scheduleObj.eventSettings.dataSource);
+        console.log(this.scheduleProfs);
+        if (args.target && args.target.classList.contains('e-work-cells')) {
+            args.cancel = !args.target.classList.contains('e-work-hours');
+        }
+    }
+
+    onDataBound(trancheHoraireProfList: Array<TrancheHoraireProf>): void {
+        console.log('==================== list tranche Horraire=============================');
+        console.log(trancheHoraireProfList);
+        this.scheduleObj.eventSettings.dataSource = this.scheduleProfs;
+        this.eventSettings = {
+            dataSource: this.scheduleProfs,
+            fields: {
+                id: 'id',
+                subject: {name: 'subject', title: 'subject'},
+                startTime: {name: 'startTime', title: 'startTime'},
+                endTime: {name: 'endTime', title: 'endTime'}
+            }
+        };
+        this.scheduleObj.resetWorkHours();
+        if (this.islayoutChanged) {
+            const dates = this.scheduleObj.activeView.getRenderDates();
+            for (const tranche of trancheHoraireProfList) {
+                for (const date of dates) {
+                    if (tranche.day === date.getDay()) {
+                        this.scheduleObj.setWorkHours(
+                            [date],
+                            tranche.startHour,
+                            tranche.endHour,
+                            tranche.groupIndex
+                        );
+                    }
+                }
+            }
+        }
+    }
+
+
+    onActionComplete(args: ActionEventArgs): void {
+        if (
+            args.requestType === 'toolBarItemRendered' ||
+            args.requestType === 'dateNavigate' ||
+            args.requestType === 'viewNavigate'
+        ) {
+            this.islayoutChanged = true;
+            this.onDataBound(this.trancheHoraireProfList);
+        }
+    }
+
+    onRenderCell(args: RenderCellEventArgs): void {
+        if (
+            args.element.classList.contains('e-work-hours') ||
+            args.element.classList.contains('e-work-cells')
+        ) {
+            addClass(
+                [args.element], 'willsmith'[
+                    parseInt(args.element.getAttribute('data-group-index'), 10)
+                    ]
+            );
+        }
+    }
+
 
 
 }

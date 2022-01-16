@@ -82,7 +82,6 @@
                                     pRipple></button>
                             <button pButton pRipple type="button" icon="pi pi-calendar"
                                     (click)="showScheduleDialog(professor)"
-                                    routerLink="schedule"
                                     class="p-button-rounded p-button-secondary"></button>
                         </td>
                     </tr>
@@ -111,12 +110,47 @@
             class="p-button-rounded p-button-secondary "></button>
 
 
-    <ejs-schedule width='100%' #scheduleObj  [selectedDate]="selectedDate" [readonly]="true"
-                  [eventSettings]="eventSettings ">
+<!--    <ejs-schedule width='100%' #scheduleObj  [selectedDate]="selectedDate" [readonly]="true"-->
+<!--                  [eventSettings]="eventSettings ">-->
+<!--        <e-views>-->
+<!--            <e-view option="Week" startHour="07:00" [timeScale]='timeScale'></e-view>-->
+<!--            <e-view option="WorkWeek" startHour="07:00" [timeScale]='timeScale'></e-view>-->
+<!--            <e-view option="Month" [showWeekend]="showWeekend" [timeScale]='timeScale'></e-view>-->
+<!--        </e-views>-->
+<!--    </ejs-schedule>-->
+
+    <ejs-schedule #scheduleObj cssClass='schedule-group-custom-work-days' width='100%'
+                  [currentView]="currentView" [group]="group" [selectedDate]="selectedDate"
+                  (actionComplete)="onActionComplete($event)"
+                  (popupOpen)="onPopupOpen($event)"
+                  [eventSettings]="eventSettings"
+                  [allowDragAndDrop]="allowDragDrop">
+        <ng-template #resourceHeaderTemplate let-data>
+            <div class='template-wrap'>
+                <!--                <div class="resource-image {{getDoctorImage(data)}}"></div>-->
+                <div class="resource-details">
+                    <!--                    <div class="resource-name">{{getDoctorName(data)}}</div>-->
+                    <!--                    <div class="resource-designation">{{getDoctorLevel(data)}}</div>-->
+                </div>
+            </div>
+        </ng-template>
         <e-views>
-            <e-view option="Week" startHour="07:00" [timeScale]='timeScale'></e-view>
-            <e-view option="WorkWeek" startHour="07:00" [timeScale]='timeScale'></e-view>
-            <e-view option="Month" [showWeekend]="showWeekend" [timeScale]='timeScale'></e-view>
+            <e-view option="Week" [timeScale]='timeScale'></e-view>
+            <e-view option="WorkWeek" [timeScale]='timeScale'></e-view>
+            <e-view option="Month" [timeScale]='timeScale'></e-view>
         </e-views>
+        <e-resources>
+            <e-resource field='DoctorId' title='nom' name='Profs' [dataSource]='resourceDataSource'
+                        textField='subject'>
+            </e-resource>
+        </e-resources>
+
+        <!--                <e-resources>-->
+        <!--                    <e-resource field='subject' title='profName' name='Profs' [dataSource]='scheduleProfs' textField='grpName'-->
+        <!--                                idField='id' colorField='#ffa500'>-->
+        <!--                    </e-resource>-->
+        <!--                </e-resources>-->
+
+
     </ejs-schedule>
 </div>

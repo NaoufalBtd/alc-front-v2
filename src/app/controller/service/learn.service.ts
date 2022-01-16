@@ -574,9 +574,21 @@ export class LearnService {
                 this.pourCentgage = 100 / this.numberOfQuestion;
                 this.value = this.pourCentgage;
                 console.log(this.questionList);
-                // tslint:disable-next-line:prefer-for-of
                 for (let i = 0; i < this.questionList.length; i++) {
                     this.question = this.questionList[0];
+                    this.service.findReponses(this.questionList[i].id).subscribe(
+                        data1 => {
+                            this.questionList[i].reponses = data1;
+                            this.correctAnswersList.set(this.questionList[i].id, data1.filter(r => r.etatReponse === 'true'));
+                            console.log(this.correctAnswersList);
+                            if (this.question.typeDeQuestion.ref === 't3') {
+                                console.log(this.correctAnswersList);
+                                this.placeHolderAnswer = this.correctAnswersList.get(this.question.id)[0]?.lib;
+                            }
+                        }, error => {
+                            console.log(error);
+                        }
+                    );
                     console.log(this.question);
                     console.log(this.questionSideLeft);
                     console.log(this.questionSideRight);
@@ -588,17 +600,7 @@ export class LearnService {
                         this.questionSideRight = this.question.libelle.substring(this.question.libelle.lastIndexOf('@') + 1);
                         this.inputAnswer = this.question.libelle.substring(this.question.libelle.indexOf('@') + 1,
                             this.question.libelle.lastIndexOf('@'));
-                    } else if (this.question.typeDeQuestion.ref === 't3') {
-                        this.placeHolderAnswer = this.correctAnswersList.get(this.question.id)[0].lib;
                     }
-                    this.service.findReponses(this.questionList[i].id).subscribe(
-                        data1 => {
-                            this.questionList[i].reponses = data1;
-                            this.correctAnswersList.set(this.questionList[i].id, data1.filter(r => r.etatReponse === 'true'));
-                        }, error => {
-                            console.log(error);
-                        }
-                    );
                 }
             }
         );
