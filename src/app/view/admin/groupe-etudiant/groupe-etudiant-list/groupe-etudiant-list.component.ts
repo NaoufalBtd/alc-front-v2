@@ -6,8 +6,10 @@ import {GroupeEtude} from '../../../../controller/model/groupe-etude.model';
 import {GroupeEtudiant} from '../../../../controller/model/groupe-etudiant.model';
 import {ScheduleProf} from '../../../../controller/model/calendrier-prof.model';
 import {ScheduleService} from '../../../../controller/service/schedule.service';
-import {EventSettingsModel, ScheduleComponent} from '@syncfusion/ej2-angular-schedule';
+import {EventSettingsModel, ScheduleComponent, TimeScaleModel} from '@syncfusion/ej2-angular-schedule';
 import {GroupeEtudiantDetail} from '../../../../controller/model/groupe-etudiant-detail.model';
+import {DropDownListComponent} from '@syncfusion/ej2-angular-dropdowns';
+import timezones from 'timezones-list';
 
 
 @Component({
@@ -17,6 +19,7 @@ import {GroupeEtudiantDetail} from '../../../../controller/model/groupe-etudiant
 })
 export class GroupeEtudiantListComponent implements OnInit {
     groupStudent: GroupeEtudiant = new GroupeEtudiant();
+    public timeScale: TimeScaleModel = {interval: 60, slotCount: 1};
     groupStudentDetail: GroupeEtudiantDetail = new GroupeEtudiantDetail();
     private submitted: boolean;
     cols: any[];
@@ -27,8 +30,12 @@ export class GroupeEtudiantListComponent implements OnInit {
     private selectionTarget: Element;
     // public selectedDate: Date = new Date(2021, 4, 18);
     public selectedDate: Date = new Date();
-    public showWeekend = false;
     public eventSettings: EventSettingsModel;
+
+    @ViewChild('timezoneDropdown') public timezoneDropdownObj: DropDownListComponent;
+    public dropDownValue = 'Africa/Casablanca';
+    public fields: Record<string, any> = {text: 'label', value: 'tzCode'};
+    public timezoneData: Record<string, any>[] = timezones;
 
     constructor(private messageService: MessageService,
                 private scheduleService: ScheduleService,
@@ -246,4 +253,14 @@ export class GroupeEtudiantListComponent implements OnInit {
         this.groupStudentDetail = new GroupeEtudiantDetail();
         this.groupStudent = new GroupeEtudiant();
     }
+    onActionComplete() {
+        this.scheduleObj.workHours.start = '00:00';
+        this.scheduleObj.workHours.end = '23:59';
+        this.scheduleObj.workHours.highlight = true;
+    }
+
+    public onTimezoneDropDownChange(args: any): void {
+        this.scheduleObj.timezone = this.timezoneDropdownObj.value.toString();
+    }
+
 }

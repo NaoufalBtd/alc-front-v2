@@ -1,28 +1,3 @@
-<!--<p-toast></p-toast>-->
-
-
-<div class="p-grid top-bar">
-    <div class="p-col-8">
-        <input class="searchValue" [(ngModel)]="schedule.groupeEtudiant.libelle" type="text" pInputText
-               placeholder="Search by group.."/>
-        <input class="searchValue" [(ngModel)]="schedule.prof.nom" type="text" pInputText
-               placeholder="Search by teacher firstName.."/>
-        <input class="searchValue" [(ngModel)]="schedule.prof.prenom" type="text" pInputText
-               placeholder="Search by teacher lastName.."/>
-        <input class="searchValue" [(ngModel)]="schedule.prof.username" type="text" pInputText
-               placeholder="Search by teacher username.."/>
-        <button pButton pRipple type="button" (click)="findAllByGroupOrTeahcer()"
-                icon="pi pi-search" class="p-button-rounded p-button-success"></button>
-    </div>
-    <div class="p-col-4">
-        <button class="instruction-button" (click)="getData()" icon="pi pi-refresh" pButton pRipple></button>
-        <button class="instruction-button" (click)="showBasicDialog()" icon="pi pi-question" label="Instruction" pButton
-                pRipple></button>
-    </div>
-
-</div>
-
-
 <div class="p-col">
 
     <p-dialog [(visible)]="displayBasic" [baseZIndex]="10000" [style]="{width: '30vw'}">
@@ -35,25 +10,52 @@
     </p-dialog>
 </div>
 <div class="control-section">
-    <div class="col-lg-12 content-wrapper">
-        <table style="padding: 0 22px 10px 0;float: right;" class="property-table">
-            <tbody>
-            <tr>
-                <td style="width: 80%;">
-                    <div>
-                        <ejs-dropdownlist width='250px' id='scheduletimezone' #timezoneDropdown
-                                          [dataSource]='timezoneData'
-                                          (change)='onTimezoneDropDownChange($event)' [value]='dropDownValue'
-                                          [allowFiltering]="true"
-                                          [fields]='fields'
-                                          popupWidth='250'></ejs-dropdownlist>
-                    </div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+    <div class="p-grid" style="background-color: #ff8800; border-radius: 5px;">
+        <div class="p-col-8">
+            <input class="searchValue" [(ngModel)]="schedule.groupeEtudiant.libelle" type="text" pInputText
+                   placeholder="Search by group.."/>
+            <input class="searchValue" [(ngModel)]="schedule.prof.nom" type="text" pInputText
+                   placeholder="Search by teacher firstName.."/>
+            <input class="searchValue" [(ngModel)]="schedule.prof.prenom" type="text" pInputText
+                   placeholder="Search by teacher lastName.."/>
+            <input class="searchValue" [(ngModel)]="schedule.prof.username" type="text" pInputText
+                   placeholder="Search by teacher username.."/>
+            <button pButton pRipple type="button" (click)="findAllByGroupOrTeahcer()"
+                    icon="pi pi-search" class="p-button-rounded p-button-text"></button>
+        </div>
 
-        <ejs-schedule #scheduleObj width='90%' [selectedDate]="selectedDate" [readonly]="false"
+
+        <div class="p-col-3">
+            <table style="float: right" class="property-table">
+                <tbody>
+                <tr>
+                    <td style="width: 80%;">
+                        <div>
+                            <ejs-dropdownlist width='250px' id='scheduletimezone' #timezoneDropdown
+                                              [dataSource]='timezoneData'
+                                              (change)='onTimezoneDropDownChange($event)' [value]='dropDownValue'
+                                              [allowFiltering]="true"
+                                              [fields]='fields'
+                                              popupWidth='250'></ejs-dropdownlist>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+        <div style="text-align: end" class="p-col-1">
+            <button class="instruction-button p-button-text" (click)="showBasicDialog()" icon="pi pi-question"
+                    label="Instruction"
+                    iconPos="right"
+                    pButton
+                    pRipple></button>
+        </div>
+
+
+
+        <ejs-schedule #scheduleObj width='100%' [selectedDate]="selectedDate" [readonly]="false"
                       [showQuickInfo]="true"
                       (actionComplete)="onActionComplete()"
                       [eventSettings]="eventSettings"

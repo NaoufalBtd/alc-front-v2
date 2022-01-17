@@ -18,6 +18,8 @@ import {Islamic, TimePickerComponent} from '@syncfusion/ej2-angular-calendars';
 import {addClass, Internationalization} from '@syncfusion/ej2-base';
 import {TrancheHoraireProfService} from '../../../../controller/service/tranche-horaire-prof.service';
 import {TrancheHoraireProf} from '../../../../controller/model/tranche-horaire-prof.model';
+import {DropDownListComponent} from '@syncfusion/ej2-angular-dropdowns';
+import timezones from 'timezones-list';
 
 
 @Component({
@@ -26,6 +28,12 @@ import {TrancheHoraireProf} from '../../../../controller/model/tranche-horaire-p
     styleUrls: ['./professeur-list.component.scss']
 })
 export class ProfesseurListComponent implements OnInit {
+
+    @ViewChild('timezoneDropdown') public timezoneDropdownObj: DropDownListComponent;
+    public dropDownValue = 'Africa/Casablanca';
+    public fields: Record<string, any> = {text: 'label', value: 'tzCode'};
+    public timezoneData: Record<string, any>[] = timezones;
+
 
     constructor(private messageService: MessageService,
                 private trancheHoraireProfService: TrancheHoraireProfService,
@@ -396,5 +404,8 @@ export class ProfesseurListComponent implements OnInit {
     }
 
 
+    public onTimezoneDropDownChange(args: any): void {
+        this.scheduleObj.timezone = this.timezoneDropdownObj.value.toString();
+    }
 
 }

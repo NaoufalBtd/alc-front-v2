@@ -107,7 +107,7 @@
 <div [hidden]="scheduleDialog" class="p-col-md-12">
     <button pButton (click)="hideDialog()" pRipple style="float:right!important; margin: 1%  2px"
             type="button" icon="pi pi-times"
-            class="p-button-rounded p-button-secondary "></button>
+            class="p-button-rounded p-button-text "></button>
 
 
 <!--    <ejs-schedule width='100%' #scheduleObj  [selectedDate]="selectedDate" [readonly]="true"-->
@@ -118,6 +118,22 @@
 <!--            <e-view option="Month" [showWeekend]="showWeekend" [timeScale]='timeScale'></e-view>-->
 <!--        </e-views>-->
 <!--    </ejs-schedule>-->
+    <table style="padding: 0 22px 10px 0;float: left;" class="property-table">
+        <tbody>
+        <tr>
+            <td style="width: 80%;">
+                <div>
+                    <ejs-dropdownlist width='250px' id='scheduletimezone' #timezoneDropdown
+                                      [dataSource]='timezoneData'
+                                      (change)='onTimezoneDropDownChange($event)' [value]='dropDownValue'
+                                      [allowFiltering]="true"
+                                      [fields]='fields'
+                                      popupWidth='250'></ejs-dropdownlist>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 
     <ejs-schedule #scheduleObj cssClass='schedule-group-custom-work-days' width='100%'
                   [currentView]="currentView" [group]="group" [selectedDate]="selectedDate"

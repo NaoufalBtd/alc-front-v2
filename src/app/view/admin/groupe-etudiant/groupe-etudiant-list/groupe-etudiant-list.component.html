@@ -142,15 +142,33 @@
 <div [hidden]="scheduleDialog" class="p-col-md-12">
     <button pButton (click)="hideDialog()" pRipple style="float:right!important; margin: 1%  2px"
             type="button" icon="pi pi-times"
-            class="p-button-rounded p-button-secondary "></button>
+            class="p-button-rounded p-button-text "></button>
+    <table style="padding: 0 22px 10px 0;float: left;" class="property-table">
+        <tbody>
+        <tr>
+            <td style="width: 80%;">
+                <div>
+                    <ejs-dropdownlist width='250px' id='scheduletimezone' #timezoneDropdown
+                                      [dataSource]='timezoneData'
+                                      (change)='onTimezoneDropDownChange($event)' [value]='dropDownValue'
+                                      [allowFiltering]="true"
+                                      [fields]='fields'
+                                      popupWidth='250'></ejs-dropdownlist>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 
-
-    <ejs-schedule width='100%' height='600px' #scheduleObj [selectedDate]="selectedDate" [readonly]="true"
+    <ejs-schedule width='100%'  #scheduleObj [selectedDate]="selectedDate"
+                  [timeScale]='timeScale'
+                  (actionComplete)="onActionComplete()"
+                  [readonly]="true"
                   [eventSettings]="eventSettings ">
         <e-views>
-            <e-view option="Week" startHour="07:00"></e-view>
-            <e-view option="WorkWeek" startHour="07:00"></e-view>
-            <e-view option="Month" [showWeekend]="showWeekend"></e-view>
+            <e-view option="Week" ></e-view>
+            <e-view option="WorkWeek" ></e-view>
+            <e-view option="Month"></e-view>
         </e-views>
     </ejs-schedule>
 </div>

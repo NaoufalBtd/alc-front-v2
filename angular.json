@@ -40,7 +40,8 @@
               "@fullcalendar/daygrid",
               "@fullcalendar/timegrid",
               "@fullcalendar/interaction",
-              "chart.js"
+              "chart.js",
+              "lodash"
             ]
           },
           "configurations": {

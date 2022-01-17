@@ -48,17 +48,7 @@ export class ScheduleAdminComponent implements OnInit {
     @ViewChild('timezoneDropdown') public timezoneDropdownObj: DropDownListComponent;
     public dropDownValue = 'Africa/Casablanca';
     public fields: Record<string, any> = {text: 'label', value: 'tzCode'};
-    public timezoneData: Record<string, any>[] = timezones
-
-    //     [
-    //     {timezone: 'America/New_York', text: '(UTC-05:00) Eastern Time'},
-    //     {timezone: 'UTC', text: 'UTC'},
-    //     {timezone: 'Europe/Moscow', text: '(UTC+03:00) Moscow+00 - Moscow'},
-    //     {timezone: 'Asia/Kolkata', text: '(UTC+05:30) India Standard Time'},
-    //     {timezone: 'Australia/Perth', text: '(UTC+08:00) Western Time - Pert'}
-    // ]
-        ;
-
+    public timezoneData: Record<string, any>[] = timezones;
 
     get scheduleProfs(): Array<ScheduleProf> {
         return this.scheduleService.scheduleProfs;
