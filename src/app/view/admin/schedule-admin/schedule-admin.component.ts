@@ -11,7 +11,7 @@ import {
     GroupModel,
     PopupOpenEventArgs,
     ScheduleComponent,
-    TimeScaleModel
+    TimeScaleModel, WorkHoursModel
 } from '@syncfusion/ej2-angular-schedule';
 import {ScheduleProf} from '../../../controller/model/calendrier-prof.model';
 import {GroupeEtudiant} from '../../../controller/model/groupe-etudiant.model';
@@ -19,6 +19,8 @@ import {ParcoursService} from '../../../controller/service/parcours.service';
 import {Cours} from '../../../controller/model/cours.model';
 import {extend, Internationalization} from '@syncfusion/ej2-base';
 import {TimePickerComponent} from '@syncfusion/ej2-angular-calendars';
+import {DropDownListComponent} from '@syncfusion/ej2-angular-dropdowns';
+import timezones from 'timezones-list';
 
 L10n.load({
     'en-US': {
@@ -37,6 +39,78 @@ L10n.load({
     styleUrls: ['./schedule-admin.component.scss'],
 })
 export class ScheduleAdminComponent implements OnInit {
+
+    constructor(private scheduleService: ScheduleService,
+                private parcourService: ParcoursService,
+                private messageService: MessageService) {
+    }
+
+    @ViewChild('timezoneDropdown') public timezoneDropdownObj: DropDownListComponent;
+    public dropDownValue = 'Africa/Casablanca';
+    public fields: Record<string, any> = {text: 'label', value: 'tzCode'};
+    public timezoneData: Record<string, any>[] = timezones;
+
+    get scheduleProfs(): Array<ScheduleProf> {
+        return this.scheduleService.scheduleProfs;
+    }
+
+    set scheduleProfs(value: Array<ScheduleProf>) {
+        this.scheduleService.scheduleProfs = value;
+    }
+
+    get scheduleProf(): ScheduleProf {
+        return this.scheduleService.scheduleProf;
+    }
+
+    set scheduleProf(value: ScheduleProf) {
+        this.scheduleService.scheduleProf = value;
+    }
+
+    get professors(): Array<Prof> {
+
+        return this.scheduleService.professors;
+    }
+
+    set professors(value: Array<Prof>) {
+        this.scheduleService.professors = value;
+    }
+
+    get displayBasic(): boolean {
+        return this.scheduleService.displayBasic;
+    }
+
+    set displayBasic(value: boolean) {
+        this.scheduleService.displayBasic = value;
+    }
+
+    get createDialog(): boolean {
+        return this.scheduleService.createDialog;
+    }
+
+    set createDialog(value: boolean) {
+        this.scheduleService.createDialog = value;
+    }
+
+    get students(): Array<Etudiant> {
+        return this.scheduleService.students;
+    }
+
+    set students(value: Array<Etudiant>) {
+        this.scheduleService.students = value;
+    }
+
+    get etatEtudiantSchedule(): Array<EtatEtudiantSchedule> {
+        return this.scheduleService.etatEtudiantSchedule;
+    }
+
+    get submitted(): boolean {
+        return this.scheduleService.submitted;
+    }
+
+    set submitted(value: boolean) {
+        this.scheduleService.submitted = value;
+    }
+
     optionSelected: any = [
         {option: 'Never'},
     ];
@@ -85,56 +159,29 @@ export class ScheduleAdminComponent implements OnInit {
         }
     };
 
+    // public onCloseClick(): void {
+    //     this.scheduleObj.closeEditor();
+    // }
+    grpName = 'Group A';
 
-    constructor(private scheduleService: ScheduleService,
-                private parcourService: ParcoursService,
-                private messageService: MessageService) {
-    }
-
-
-    get scheduleProfs(): Array<ScheduleProf> {
-        return this.scheduleService.scheduleProfs;
-    }
-
-    set scheduleProfs(value: Array<ScheduleProf>) {
-        this.scheduleService.scheduleProfs = value;
-    }
-
-    get scheduleProf(): ScheduleProf {
-        return this.scheduleService.scheduleProf;
-    }
-
-    set scheduleProf(value: ScheduleProf) {
-        this.scheduleService.scheduleProf = value;
-    }
-
-    get professors(): Array<Prof> {
-
-        return this.scheduleService.professors;
-    }
-
-    set professors(value: Array<Prof>) {
-        this.scheduleService.professors = value;
-    }
-
-    get displayBasic(): boolean {
-        return this.scheduleService.displayBasic;
-    }
-
-    set displayBasic(value: boolean) {
-        this.scheduleService.displayBasic = value;
-    }
+    public resourceDataSource: Object[] = [
+        {
+            text: this.scheduleProfs[0]?.prof?.nom,
+            id: 0,
+            color: '#ea7a57',
+            startHour: '08:00',
+            endHour: '15:00',
+        }
+    ];
+    public group: GroupModel = {byDate: true, resources: ['Profs']};
+    public workHours: WorkHoursModel = new class implements WorkHoursModel {
+        end: '07:00';
+        highlight: false;
+        start: '20:00';
+    };
 
     showBasicDialog() {
         this.displayBasic = true;
-    }
-
-    get createDialog(): boolean {
-        return this.scheduleService.createDialog;
-    }
-
-    set createDialog(value: boolean) {
-        this.scheduleService.createDialog = value;
     }
 
     public openCreate() {
@@ -147,28 +194,8 @@ export class ScheduleAdminComponent implements OnInit {
         this.submitted = false;
     }
 
-    get students(): Array<Etudiant> {
-        return this.scheduleService.students;
-    }
-
-    set students(value: Array<Etudiant>) {
-        this.scheduleService.students = value;
-    }
-
     public getProf() {
         this.scheduleService.getProf().subscribe(data => this.professors = data);
-    }
-
-    get etatEtudiantSchedule(): Array<EtatEtudiantSchedule> {
-        return this.scheduleService.etatEtudiantSchedule;
-    }
-
-    get submitted(): boolean {
-        return this.scheduleService.submitted;
-    }
-
-    set submitted(value: boolean) {
-        this.scheduleService.submitted = value;
     }
 
     findAll() {
@@ -402,45 +429,16 @@ export class ScheduleAdminComponent implements OnInit {
         this.deleteOption = false;
     }
 
-    // public onCloseClick(): void {
-    //     this.scheduleObj.closeEditor();
-    // }
-    grpName = 'Group A';
-
     public onCloseClick(): void {
         this.scheduleObj.quickPopup.quickPopupHide(true);
     }
 
-    public resourceDataSource: Object[] = [
-        {
-            text: this.scheduleProfs[0]?.prof?.nom,
-            id: 0,
-            color: '#ea7a57',
-            startHour: '08:00',
-            endHour: '15:00',
-        }
-    ];
-    public group: GroupModel = {byDate: true, resources: ['Profs']};
-    public workHours1: any = [
-        {startHour: '07:00', endHour: '16:00', groupIndex: 1}, // for Sunday
-        {startHour: '06:00', endHour: '17:00', groupIndex: 1}, // for Monday
-        {startHour: '05:00', endHour: '18:00', groupIndex: 1}, // for Tuesday
-        {startHour: '06:30', endHour: '19:00', groupIndex: 1}, // for Wednesday
-        {startHour: '05:30', endHour: '20:00', groupIndex: 1}, // for Thursday
-        {startHour: '10:00', endHour: '21:00', groupIndex: 1}, // for Friday
-        {startHour: '13:00', endHour: '22:00', groupIndex: 1}, // for Saturday
-    ];
-
     public getData() {
         this.scheduleObj.eventSettings.dataSource = null;
         this.findAll();
-        this.scheduleObj.resetWorkHours();
-        this.scheduleObj.workHours.end = undefined;
-        this.scheduleObj.workHours.start = undefined;
-        const dates = this.scheduleObj.activeView.getRenderDates();
-        for (const date of dates){
-            this.scheduleObj.setWorkHours([date], this.workHours1[date.getDay()].startHour, this.workHours1[date.getDay()].endHour);
-        }
+        this.scheduleObj.workHours.start = '00:00';
+        this.scheduleObj.workHours.end = '23:59';
+        this.scheduleObj.workHours.highlight = true;
     }
 
 
@@ -467,8 +465,14 @@ export class ScheduleAdminComponent implements OnInit {
         console.log(data);
     }
 
-    public onSubmit(): void {
-        this.scheduleObj.workHours.start = this.instance.formatDate(this.startTimeObj.value, {skeleton: 'Hm'});
-        this.scheduleObj.workHours.end = this.instance.formatDate(this.endTimeObj.value, {skeleton: 'Hm'});
+
+    onActionComplete() {
+        this.scheduleObj.workHours.start = '00:00';
+        this.scheduleObj.workHours.end = '23:59';
+        this.scheduleObj.workHours.highlight = true;
+    }
+
+    public onTimezoneDropDownChange(args: any): void {
+        this.scheduleObj.timezone = this.timezoneDropdownObj.value.toString();
     }
 }

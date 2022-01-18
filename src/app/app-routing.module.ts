@@ -75,6 +75,8 @@ import {ConnectedStudentComponent} from './view/prof/connected-student/connected
 import {EtudiantinscriptionComponent} from './view/public/etudiantinscription/etudiantinscription.component';
 import {ProfinscriptionComponent} from './view/public/profinscription/profinscription.component';
 import {BonusProfComponent} from './view/admin/bonus-prof/bonus-prof.component';
+import {SalarylistComponent} from './view/admin/salarylist/salarylist.component';
+import { ScheduleProfComponent } from './view/admin/professeur/schedule-prof/schedule-prof.component';
 import {AllSalaryComponent} from './view/admin/all-salary/all-salary.component';
 import {ScheduleProfComponent} from './view/admin/professeur/schedule-prof/schedule-prof.component';
 import {PackStudentComponent} from "./view/admin/pack-student/pack-student.component";
@@ -96,8 +98,8 @@ import {PackStudentComponent} from "./view/admin/pack-student/pack-student.compo
                     {path: 'view-quiz-etudiant', component: ViewQuizEtudiantComponent},
                     {path: 'inscription', component: InscriptionsComponent},
                     {path: 'teacher-lists', component: ProfesseurListComponent},
+                    {path: 'teacher-lists/schedule', component: ScheduleProfComponent},
                     {path: 'recommend-admin', component: RecommendAdminComponent},
-                    {path: 'paiement', component: PaiementlistComponent},
                     {path: 'sessioncours', component: SessioncoursComponent},
                     {path: 'faq-admin', component: FaqAnswerComponent},
                     {path: 'faq-admin-list', component: FaqAdminListComponent},
@@ -109,6 +111,9 @@ import {PackStudentComponent} from "./view/admin/pack-student/pack-student.compo
                     {path: 'groups-students', component: GroupeEtudiantComponent},
                     {path: 'homeWork', component: HomeWorkComponentComponent},
                     {path: 'PackStudent', component: PackStudentComponent}
+                    {path: 'homeWork', component: HomeWorkComponentComponent},
+                    {path: 'bonus', component: BonusProfComponent},
+                    {path: 'salarylist', component: SalarylistComponent}
 
                 ]
             },

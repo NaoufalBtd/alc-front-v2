@@ -13,6 +13,8 @@ import {WebSocketService} from '../../../controller/service/web-socket.service';
 import {Router} from '@angular/router';
 import {SimulateSectionService} from '../../../controller/service/simulate-section.service';
 import {ParcoursService} from '../../../controller/service/parcours.service';
+import {DropDownListComponent} from '@syncfusion/ej2-angular-dropdowns';
+import timezones from 'timezones-list';
 
 
 L10n.load({
@@ -42,6 +44,13 @@ export class ScheduleStudentComponent implements OnInit {
     public showWeekend = false;
     public eventSettings: EventSettingsModel;
     public selectedMeeting: ScheduleProf = new ScheduleProf();
+
+
+    @ViewChild('timezoneDropdown') public timezoneDropdownObj: DropDownListComponent;
+    public dropDownValue = 'Africa/Casablanca';
+    public fields: Record<string, any> = {text: 'label', value: 'tzCode'};
+    public timezoneData: Record<string, any>[] = timezones;
+
 
     constructor(private scheduleService: ScheduleService, private messageService: MessageService,
                 private confirmationService: ConfirmationService,
@@ -148,5 +157,15 @@ export class ScheduleStudentComponent implements OnInit {
         this.webSocketService.isInSession = true;
         this.webSocketService.findCurrentSectionForstudent(this.parcoursService.selectedcours);
 
+    }
+
+    onActionComplete() {
+        this.scheduleObj.workHours.start = '00:00';
+        this.scheduleObj.workHours.end = '23:59';
+        this.scheduleObj.workHours.highlight = true;
+    }
+
+    public onTimezoneDropDownChange(args: any): void {
+        this.scheduleObj.timezone = this.timezoneDropdownObj.value.toString();
     }
 }

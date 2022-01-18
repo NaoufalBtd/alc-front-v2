@@ -35,11 +35,16 @@ export class ProfessorService {
     private urlBase = environment.baseApi;
     private _parcoursList: Array<Parcours>;
     private urlParcours = '/admin/parcours/';
+    private profUrl = environment.profUrl;
     private _trancheHoraireProfList: Array<TrancheHoraireProf>;
     private _trancheHoraireProf: TrancheHoraireProf;
     private _etudiant: Etudiant;
     private etudiantUrl = environment.etudiantUrl;
+    private _sessionCours : Array<SessionCours>;
 
+    public  findCoursByEtudiantId(id: number): Observable<Array<SessionCours>> {
+        return this.http.get<Array<SessionCours>>(this.profUrl  + 'etudiant/sessionCours/id/' + id);
+    }
     public afficheSession(id: number): Observable<Array<EtudiantCours>> {
         return this.http.get<Array<EtudiantCours>>(this.adminUrl + 'etudiantCours/prof/id/' + id);
     }
@@ -122,6 +127,17 @@ export class ProfessorService {
     constructor(private http: HttpClient, private user: LoginService) {
     }
 
+
+    get sessionCours(): Array<SessionCours> {
+        if (this._sessionCours == null){
+            this._sessionCours =  new Array<SessionCours>();
+        }
+        return this._sessionCours;
+    }
+
+    set sessionCours(value: Array<SessionCours>) {
+        this._sessionCours = value;
+    }
     get trancheHoraireProfList(): Array<TrancheHoraireProf> {
         if( this._trancheHoraireProfList == null){
             this._trancheHoraireProfList = new Array<TrancheHoraireProf>();

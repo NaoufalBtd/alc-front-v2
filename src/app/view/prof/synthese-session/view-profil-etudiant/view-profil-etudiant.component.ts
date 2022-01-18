@@ -3,6 +3,7 @@ import {ConfirmationService, MessageService} from 'primeng/api';
 import {SyntheseSessionCoursService} from '../../../../controller/service/synthese-session-cours.service';
 import {ProfessorService} from '../../../../controller/service/professor.service';
 import {Etudiant} from '../../../../controller/model/etudiant.model';
+import {SessionCours} from '../../../../controller/model/session-cours.model';
 
 @Component({
   selector: 'app-view-profil-etudiant',
@@ -16,7 +17,18 @@ export class ViewProfilEtudiantComponent implements OnInit {
 
   ngOnInit(): void { this.servicePrf.findEtudiantById(this.etudiant.id).subscribe(
       data => this.etudiant = data);
+
+       this.servicePrf.findCoursByEtudiantId(this.etudiant.id).subscribe(data => this.sessionCours = data);
   }
+    get sessionCours(): Array<SessionCours> {
+
+
+      return this.servicePrf.sessionCours;
+    }
+
+    set sessionCours(value: Array<SessionCours>) {
+        this.servicePrf.sessionCours = value;
+    }
  get etudiant(): Etudiant{
     return  this.servicePrf.etudiant;
  }

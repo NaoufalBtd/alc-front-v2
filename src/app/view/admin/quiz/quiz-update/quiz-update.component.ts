@@ -8,6 +8,9 @@ import {Quiz} from '../../../../controller/model/quiz.model';
 import {Reponse} from '../../../../controller/model/reponse.model';
 import {TypeDeQuestion} from '../../../../controller/model/type-de-question.model';
 import {Section} from '../../../../controller/model/section.model';
+import {Cours} from '../../../../controller/model/cours.model';
+import {Parcours} from '../../../../controller/model/parcours.model';
+import {LearnService} from '../../../../controller/service/learn.service';
 
 @Component({
     selector: 'app-quiz-update',
@@ -31,8 +34,26 @@ export class QuizUpdateComponent implements OnInit {
     onOff_true = true;
     onOff_false = false;
 
-    constructor(private service: QuizService, private messageService: MessageService, private confirmationService: ConfirmationService, private router: Router, private serviceParcours: ParcoursService) {
+    constructor(private service: QuizService,
+                private learnService: LearnService,
+                private messageService: MessageService, private confirmationService: ConfirmationService, private router: Router, private serviceParcours: ParcoursService) {
     }
+    get courseCurrent(): Cours {
+        return this.learnService.courseCurrent;
+    }
+    get sectionCurrent(): Section {
+        return this.learnService.sectionCurrent;
+    }
+
+    get parcourCurrent(): Parcours {
+        return this.learnService.parcourCurrent;
+    }
+    home = {icon: 'pi pi-home', routerLink:  '/admin/parcours'};
+    navigateItems = [
+        {label: this.parcourCurrent.libelle, routerLink:  '/admin/parcours'},
+        {label: this.courseCurrent.libelle, routerLink:  '/admin/parcours'},
+        {label: this.sectionCurrent.libelle, routerLink:  '/admin/parcours'},
+    ];
 
     private _answer: Reponse;
 

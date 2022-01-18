@@ -16,6 +16,8 @@ import {
 } from '@syncfusion/ej2-angular-schedule';
 import {ScheduleProf} from '../../../../controller/model/calendrier-prof.model';
 import {ScheduleService} from '../../../../controller/service/schedule.service';
+import {TrancheHoraireProfService} from '../../../../controller/service/tranche-horaire-prof.service';
+import {TrancheHoraireProf} from '../../../../controller/model/tranche-horaire-prof.model';
 
 @Component({
     selector: 'app-schedule-prof',
@@ -25,7 +27,6 @@ import {ScheduleService} from '../../../../controller/service/schedule.service';
 export class ScheduleProfComponent implements OnInit {
     public selectedDate: Date = new Date();
     public currentView: View = 'Week';
-    public allowResizing: boolean = false;
     public allowDragDrop: boolean = false;
     public timeScale: TimeScaleModel = {interval: 60, slotCount: 1};
     public resourceDataSource: Object[] = [
@@ -47,15 +48,7 @@ export class ScheduleProfComponent implements OnInit {
             endTime: {name: 'endTime', title: 'endTime'}
         }
     };
-    public workHours1: any = [
-        {startHour: '07:00', endHour: '16:00', groupIndex: 0}, // for Sunday
-        {startHour: '06:00', endHour: '17:00', groupIndex: 0}, // for Monday
-        {startHour: '05:00', endHour: '18:00', groupIndex: 0}, // for Tuesday
-        {startHour: '06:30', endHour: '19:00', groupIndex: 0}, // for Wednesday
-        {startHour: '05:30', endHour: '20:00', groupIndex: 0}, // for Thursday
-        {startHour: '10:00', endHour: '21:00', groupIndex: 0}, // for Friday
-        {startHour: '13:00', endHour: '22:00', groupIndex: 0}, // for Saturday
-    ];
+
 
     get scheduleProfs(): Array<ScheduleProf> {
         return this.scheduleService.scheduleProfs;
@@ -70,36 +63,15 @@ export class ScheduleProfComponent implements OnInit {
     @ViewChild('scheduleObj')
     public scheduleObj: ScheduleComponent;
 
-    constructor(private scheduleService: ScheduleService) {
+    constructor(private scheduleService: ScheduleService,
+                private trancheHoraireService: TrancheHoraireProfService) {
     }
 
 
-    onActionBegin(args: ActionEventArgs): void {
-        let isEventChange: boolean = args.requestType === 'eventChange';
-        if (
-            (args.requestType === 'eventCreate' &&
-                (<Object[]> args.data).length > 0) ||
-            isEventChange
-        ) {
-            let eventData: { [key: string]: Object } = isEventChange
-                ? (args.data as { [key: string]: Object })
-                : (args.data[0] as { [key: string]: Object });
-            let eventField: EventFieldsMapping = this.scheduleObj.eventFields;
-            let startDate: Date = eventData[eventField.startTime] as Date;
-            let endDate: Date = eventData[eventField.endTime] as Date;
-            let resourceIndex: number = [1, 2, 3].indexOf(
-                eventData.DoctorId as number
-            );
-            args.cancel = !this.isValidateTime(startDate, endDate, resourceIndex);
-            if (!args.cancel) {
-                args.cancel = !this.scheduleObj.isSlotAvailable(
-                    startDate,
-                    endDate,
-                    resourceIndex
-                );
-            }
-        }
+    get trancheHoraireProfList(): Array<TrancheHoraireProf> {
+        return this.trancheHoraireService.trancheHoraireProfList;
     }
+
 
     isValidateTime(startDate: Date, endDate: Date, resIndex: number): boolean {
         let resource: ResourceDetails =
@@ -123,7 +95,9 @@ export class ScheduleProfComponent implements OnInit {
         }
     }
 
-    onDataBound(args): void {
+    onDataBound(): void {
+        console.log('==================== list tranche Horraire=============================');
+        console.log(this.trancheHoraireProfList);
         this.scheduleObj.eventSettings.dataSource = this.scheduleProfs;
         this.eventSettings = {
             dataSource: this.scheduleProfs,
@@ -137,13 +111,18 @@ export class ScheduleProfComponent implements OnInit {
         this.scheduleObj.resetWorkHours();
         if (this.islayoutChanged) {
             const dates = this.scheduleObj.activeView.getRenderDates();
-            for (const date of dates) {
-                this.scheduleObj.setWorkHours(
-                    [date],
-                    this.workHours1[date.getDay()].startHour,
-                    this.workHours1[date.getDay()].endHour,
-                    this.workHours1[date.getDay()].groupIndex
-                );
+            for (const tranche of this.trancheHoraireProfList) {
+                for (const date of dates) {
+                    if (tranche.day === date.getDay()) {
+                        this.scheduleObj.setWorkHours(
+                            [date],
+                            tranche.startHour,
+                            tranche.endHour,
+                            tranche.groupIndex
+                        );
+                    }
+                }
+
             }
 
         }
@@ -175,6 +154,9 @@ export class ScheduleProfComponent implements OnInit {
 
     ngOnInit(): void {
         console.log(this.scheduleProfs);
+        console.log('==================== list tranche Horraire=============================');
+        console.log(this.trancheHoraireProfList);
+        this.onDataBound();
     }
 
 }

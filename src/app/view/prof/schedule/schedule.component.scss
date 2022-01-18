@@ -1,7 +1,3 @@
-.instruction-button {
-  float: right;
-  margin: 0 1% 1% 0;
-}
 
 ejs-schedule {
 
@@ -57,4 +53,12 @@ ejs-schedule {
 
 .delete-btn{
   color: floralwhite !important;
+}
+
+.p-button-success{
+  margin-left: 5px;
+}
+.p-button-text{
+  color: white;
+  font-weight: bold;
 }

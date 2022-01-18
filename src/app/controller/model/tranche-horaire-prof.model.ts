@@ -1,10 +1,11 @@
 import DateTimeFormat = Intl.DateTimeFormat;
+import {Prof} from './prof.model';
 
 export class TrancheHoraireProf {
-    public id: number;
-
-    public dateDebut: Date = new Date()  ;
-    public dateFin: Date = new Date()  ;
-
-
+    public id = Number(0);
+    public prof: Prof = new Prof();
+    public  startHour: string ;
+    public  endHour: string;
+    public  day: number;
+    public  groupIndex: number;
 }
