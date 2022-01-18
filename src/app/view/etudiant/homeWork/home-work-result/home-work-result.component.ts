@@ -279,7 +279,7 @@ export class HomeWorkResultComponent implements OnInit {
     }
   }
   public findReponseByQuestion(){
-    this.homeWorkEtudiantservice.findReponsesByQuestionId().subscribe(
+    this.homeWorkEtudiantservice.findReponsesByQuestionId(this.homeWorkQuestion.id).subscribe(
         data => {
           this.homeWorkQstReponses = data;
         }

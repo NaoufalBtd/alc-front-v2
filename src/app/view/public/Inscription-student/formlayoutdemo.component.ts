@@ -8,6 +8,8 @@ import {Centre} from '../../../controller/model/centre.model';
 import {Router} from '@angular/router';
 import {EtudiantService} from '../../../controller/service/etudiant.service';
 import {GroupeEtude} from '../../../controller/model/groupe-etude.model';
+import {PackStudentService} from "../../../controller/service/pack-student.service";
+import {PackStudent} from "../../../controller/model/pack-student.model";
 
 @Component({
     selector: 'app-formlayoutdemo',
@@ -20,14 +22,17 @@ export class FormLayoutDemoComponent implements OnInit {
         {name: 'non-native'},
     ];
     id: number;
+    showdialog = false;
 
     constructor(private messageService: MessageService,
-                private etudiantService: EtudiantService,
+                public etudiantService: EtudiantService,
                 private confirmationService: ConfirmationService,
+                public packStudentService: PackStudentService,
                 private service: InscriptionService, private router: Router) {
     }
 
     Undefinded: string;
+    packChossen: PackStudent = new PackStudent();
 
     get createDialog(): boolean {
         return this.service.createDialog;
@@ -111,6 +116,20 @@ export class FormLayoutDemoComponent implements OnInit {
     ngOnInit(): void {
         this.selected = new Inscription();
         this.selected.datedebutinscription = new Date();
+
+    }
+
+    showdialogPacks(){
+        this.getgroupechosen(this.etudiant.groupeEtude.id);
+        this.showdialog = true;
+        if (this.etudiantService.groupeEtude.nombreEtudiant > 1){
+            this.packStudentService.findPackIndividualOrgroupe(true);
+
+        }else {
+            this.packStudentService.findPackIndividualOrgroupe(false);
+        }
+        console.log(this.packStudentService.packstudentgroupeList);
+        console.log(this.packStudentService.packstudentIndividialList);
     }
 
     public save() {
@@ -191,5 +210,16 @@ export class FormLayoutDemoComponent implements OnInit {
     affecterParcours(idParcours: any) {
         this.etudiant.parcours.id = idParcours.target.value;
         console.log(idParcours.target.value);
+    }
+
+    selectedPack(pack: PackStudent) {
+        this.etudiantService.packCode = pack.code ;
+        this.packChossen = pack;
+        this.showdialog = false;
+        console.log(this.etudiantService.packCode);
+    }
+
+    getgroupechosen(id: number) {
+        this.etudiantService.findGroupeById(id);
     }
 }

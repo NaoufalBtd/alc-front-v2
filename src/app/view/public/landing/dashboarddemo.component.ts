@@ -10,6 +10,7 @@ import {Etudiant} from '../../../controller/model/etudiant.model';
 import {Prof} from '../../../controller/model/prof.model';
 import {ParcoursService} from '../../../controller/service/parcours.service';
 import {Cours} from '../../../controller/model/cours.model';
+import {PackStudentService} from "../../../controller/service/pack-student.service";
 
 
 @Component({
@@ -42,7 +43,10 @@ export class DashboardDemoComponent implements OnInit {
     ];
 
     // tslint:disable-next-line:max-line-length
-    constructor(private login: LoginService, public profservice: ProfService, public studentservice: EtudiantService, public parcoursService: ParcoursService) {}
+    showdialogindiv = false;
+    showdialoggroupe = false;
+    constructor(private login: LoginService, public profservice: ProfService, public studentservice: EtudiantService, public parcoursService: ParcoursService,
+                public packStudentService: PackStudentService) {}
 
     get model(): any[] {
         return this.login.model;
@@ -126,5 +130,14 @@ export class DashboardDemoComponent implements OnInit {
                 descreption5: '> Facebook: @alccasablanaofficial'
             }
         ];
+    }
+
+    showPacks(b: boolean) {
+          if (b){
+            this.showdialoggroupe = true;
+           }else {
+              this.showdialogindiv = true;
+          }
+          this.packStudentService.findPackIndividualOrgroupe(b);
     }
 }

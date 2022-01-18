@@ -1,6 +1,7 @@
 import {RouterModule} from '@angular/router';
 import {NgModule} from '@angular/core';
 import {FormLayoutDemoComponent} from './view/public/Inscription-student/formlayoutdemo.component';
+
 import {LearnComponent} from './view/admin/learn/learn.component';
 import {SectionsComponent} from './view/prof/learn-teacher/sections/sections.component';
 import {CoursesComponent} from './view/prof/learn-teacher/courses/courses.component';
@@ -76,6 +77,10 @@ import {ProfinscriptionComponent} from './view/public/profinscription/profinscri
 import {BonusProfComponent} from './view/admin/bonus-prof/bonus-prof.component';
 import {SalarylistComponent} from './view/admin/salarylist/salarylist.component';
 import { ScheduleProfComponent } from './view/admin/professeur/schedule-prof/schedule-prof.component';
+import {AllSalaryComponent} from './view/admin/all-salary/all-salary.component';
+import {ScheduleProfComponent} from './view/admin/professeur/schedule-prof/schedule-prof.component';
+import {PackStudentComponent} from "./view/admin/pack-student/pack-student.component";
+
 
 @NgModule({
     imports: [
@@ -104,6 +109,8 @@ import { ScheduleProfComponent } from './view/admin/professeur/schedule-prof/sch
                     {path: 'students-List', component: EtudiantsComponent},
                     {path: 'groups-List', component: GroupeEtudeComponent},
                     {path: 'groups-students', component: GroupeEtudiantComponent},
+                    {path: 'homeWork', component: HomeWorkComponentComponent},
+                    {path: 'PackStudent', component: PackStudentComponent}
                     {path: 'homeWork', component: HomeWorkComponentComponent},
                     {path: 'bonus', component: BonusProfComponent},
                     {path: 'salarylist', component: SalarylistComponent}
@@ -173,7 +180,7 @@ import { ScheduleProfComponent } from './view/admin/professeur/schedule-prof/sch
             {path: '**', component: PageNotFoundComponent},
         ], {scrollPositionRestoration: 'enabled'})
     ],
-    exports: [RouterModule ]
+    exports: [RouterModule]
 })
 export class AppRoutingModule {
 }
