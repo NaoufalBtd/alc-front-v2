@@ -5,7 +5,6 @@ import {HttpClientModule} from '@angular/common/http';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {CommonModule, HashLocationStrategy, LocationStrategy} from '@angular/common';
-import {AppRoutingModule} from './app-routing.module';
 import {AccordionModule} from 'primeng/accordion';
 import {AutoCompleteModule} from 'primeng/autocomplete';
 import {AvatarModule} from 'primeng/avatar';
