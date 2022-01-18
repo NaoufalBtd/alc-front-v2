@@ -74,6 +74,10 @@ export class LearnService {
         return this._placeHolderAnswer;
     }
 
+    set placeHolderAnswer(value: string) {
+        this._placeHolderAnswer = value;
+    }
+
 
     get participants(): Map<number, Array<Etudiant>> {
         return this._participants;
@@ -83,9 +87,6 @@ export class LearnService {
         this._participants = value;
     }
 
-    set placeHolderAnswer(value: string) {
-        this._placeHolderAnswer = value;
-    }
 
     get pourCentgage(): number {
         return this._pourCentgage;
@@ -338,7 +339,7 @@ export class LearnService {
 
 
     saveAnswers(question: Question, type: string): Reponse {
-        this.translate(question);
+        // this.translate(question);
         this.disableButtonSon = false;
         if (question.typeDeQuestion.ref === 't1') {
             for (const item of question.reponses) {
@@ -391,23 +392,24 @@ export class LearnService {
         return this.answerSelected;
     }
 
-    public translate(qst: Question) {
-        if (qst.typeDeQuestion.ref === 't1' || qst.typeDeQuestion.ref === 't6' || qst.typeDeQuestion.ref === 't4') {
-            this.wordDictionnary = this.questionSideLeft + ' ' + this.correctAnswersList?.get(qst.id)[0].lib + ' ' + this.questionSideRight;
-            console.log(this.son);
-        } else if (qst.typeDeQuestion.ref === 't3') {
-            this.wordDictionnary = this.correctAnswersList?.get(qst.id)[0].lib;
-            console.log(this.son);
-        } else if (qst.typeDeQuestion.ref === 't5') {
-            this.wordDictionnary = qst.libelle;
-        }
-        this.service.translate(this.wordDictionnary).subscribe(
-            data => {
-                this.translateWord = data;
-                console.log(data);
-            }
-        );
-    }
+    //
+    // public translate(qst: Question) {
+    //     if (qst.typeDeQuestion.ref === 't1' || qst.typeDeQuestion.ref === 't6' || qst.typeDeQuestion.ref === 't4') {
+    //         this.wordDictionnary = this.questionSideLeft + ' ' + this.correctAnswersList?.get(qst.id)[0].lib + ' ' + this.questionSideRight;
+    //         console.log(this.son);
+    //     } else if (qst.typeDeQuestion.ref === 't3') {
+    //         this.wordDictionnary = this.correctAnswersList?.get(qst.id)[0].lib;
+    //         console.log(this.son);
+    //     } else if (qst.typeDeQuestion.ref === 't5') {
+    //         this.wordDictionnary = qst.libelle;
+    //     }
+    //     this.service.translate(this.wordDictionnary).subscribe(
+    //         data => {
+    //             this.translateWord = data;
+    //             console.log(data);
+    //         }
+    //     );
+    // }
 
 
     answerIsCorrect(ans: Reponse, qst: Question) {
@@ -515,7 +517,7 @@ export class LearnService {
 
     showAnswers(question: Question): Reponse {
         this.disableButtonSon = false;
-        this.translate(question);
+        // this.translate(question);
         if (question.typeDeQuestion.ref === 't5') {
             document.getElementById('trueFalse').className = 'trueQst p-grid';
             this.trueOrFalse = this.correctAnswersList.get(question.id)[0].lib === 'true';

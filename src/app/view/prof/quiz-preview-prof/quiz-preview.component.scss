@@ -281,26 +281,28 @@ h4 {
 }
 
 
-#trueFalse >  .hideThisDiv {
+#trueFalse > .hideThisDiv {
   display: none !important;
 }
-#trueFalse:hover >  .hideThisDiv {
+
+#trueFalse:hover > .hideThisDiv {
   display: block !important;
 }
 
 
-.pi-check-circle{
+.pi-check-circle {
   color: #52b788;
 }
-.pi-times-circle{
+
+.pi-times-circle {
   color: #fc1b1b;
 }
 
-.pi-exclamation-circle{
+.pi-exclamation-circle {
   color: #ffa500;
 }
 
-.pi-users{
+.pi-users {
   color: #ffa500;
 }
 
@@ -308,3 +310,8 @@ h4 {
 //  display: none !important;
 //}
 
+.p-tooltip {
+  .p-tooltip-text {
+    background: #68c671 !important;
+  }
+}

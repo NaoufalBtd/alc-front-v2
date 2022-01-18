@@ -23,7 +23,8 @@
             </div>
 
 
-            <div style="float:right;display: inline-block;text-align: center">{{question.numero}}/{{numberOfQuestion}}</div>
+            <div style="float:right;display: inline-block;text-align: center">{{question.numero}}
+                /{{numberOfQuestion}}</div>
         </div>
     </div>
 
@@ -42,8 +43,8 @@
                     icon="pi pi-volume-up" class="p-button-rounded sonButton "></button>
             <h5 class="h5"> {{  questionSideLeft}}  </h5>
             <span class="p-float-label">
-            <input *ngIf="answerSelected.lib === undefined" disabled id="inputDashedBorder" inputId="inputDashedBorder"
-                   type="text"
+            <input *ngIf="answerSelected.lib === undefined" id="inputDashedBorder" inputId="inputDashedBorder"
+                   type="text" disabled
                    [(ngModel)]="reponseQuiz.lib"
                    class="p-inputtext-sm " pInputText/>
 
@@ -53,17 +54,17 @@
                    [(ngModel)]="answerSelected.lib"
                    class="p-inputtext-sm " pInputText/>
 
-            <input *ngIf="answerSelected.lib !== undefined && !answerIsCorrect(answerSelected, question)" disabled
-                   id="inputFalseAnswer" inputId="inputDashedBorder" type="text"
-                   [(ngModel)]="answerSelected.lib"
-                   class="p-inputtext-sm " pInputText/>
+                                <input *ngIf="answerSelected.lib !== undefined && !answerIsCorrect(answerSelected, question)"
+                                       id="inputFalseAnswer" inputId="inputDashedBorder" type="text"
+                                       disabled
+                                       [(ngModel)]="answerSelected.lib"
+                                       class="p-inputtext-sm " pInputText/>
 
-            <label [hidden]="answerSelected.lib === undefined || answerIsCorrect(answerSelected, question)"
-                   class="correctAnswer" for="inputDashedBorder"
-                   *ngFor="let ans of correctAnswersList?.get(question.id)">{{ ans.lib}}</label>
-            <label [hidden]="answerSelected.lib === undefined || answerIsCorrect(answerSelected, question)"
-                   id="triangle-down" for="inputDashedBorder">
-            </label>
+
+                            <label [hidden]="answerSelected.lib === undefined || answerIsCorrect(answerSelected, question)"
+                                   class="correctAnswer" for="inputDashedBorder"
+                                   *ngFor="let ans of correctAnswersList?.get(question.id)">{{ ans.lib}}</label>
+
 
         </span>
             <h5 class="h5"> {{  questionSideRight}}  </h5>
@@ -112,15 +113,16 @@
                    id="input-answer-correct" type="text"
                    [(ngModel)]="answerSelected.lib" pInputText>
 
-            <input style="text-decoration: 2px line-through red;" disabled *ngIf="answerSelected.lib !== undefined && !answerIsCorrect(answerSelected, question)"
+            <input style="text-decoration: 2px line-through red;" disabled
+                   *ngIf="answerSelected.lib !== undefined && !answerIsCorrect(answerSelected, question)"
                    id="input-answer-incorrect" type="text"
                    [(ngModel)]="answerSelected.lib" pInputText>
             <label style="
                margin-left: 150px;
-                font-size: large;
+                font-size: medium;
                  color: green;
                  padding: 0;
-                width: 50%;
+                width: auto;
                  margin-top: 9px;
                  font-weight: 800;"
                    [hidden]="answerSelected.lib === undefined || answerIsCorrect(answerSelected, question)"
@@ -177,9 +179,7 @@
             <label [hidden]="answerSelected.lib === undefined || answerIsCorrect(answerSelected, question)"
                    class="correctAnswer" for="inputDashedBorder"
                    *ngFor="let ans of correctAnswersList?.get(question.id)">{{ ans.lib}}</label>
-            <label [hidden]="answerSelected.lib === undefined || answerIsCorrect(answerSelected, question)"
-                   id="triangle-down" for="inputDashedBorder">
-            </label>
+
         </span>
             <h5 class="h5"> {{  questionSideRight}}  </h5>
             <h4 *ngIf="translateWord !== undefined">{{translateWord}}</h4>
@@ -233,9 +233,7 @@
             <label [hidden]="answerSelected.lib === undefined || answerIsCorrect(answerSelected, question)"
                    class="correctAnswer" for="inputDashedBorder"
                    *ngFor="let ans of correctAnswersList?.get(question.id)">{{ ans.lib}}</label>
-            <label [hidden]="answerSelected.lib === undefined || answerIsCorrect(answerSelected, question)"
-                   id="triangle-down" for="inputDashedBorder">
-            </label>
+
         </span>
             <h5 class="h5"> {{  questionSideRight}}  </h5>
             <h4 *ngIf="translateWord !== undefined">{{translateWord}}</h4>
@@ -302,10 +300,9 @@
         </div>
 
         <div class="p-col-6"></div>
-
+        <!-- -->
         <div class="p-col-3">
-            <button *ngIf="showNextButton && question.id !== questionList[questionList.length -1]?.id &&
-                            this.participants.get(this.prof.id).length === 1"
+            <button *ngIf="showNextButton && question.id !== questionList[questionList.length -1]?.id && this.participants.get(this.prof.id).length === 1 "
                     style="float:right"
                     pButton pRipple
                     type="button" icon="pi pi-arrow-right" iconPos="right"
@@ -366,8 +363,10 @@
 
 
                 <td *ngIf="value.value.etatReponse === 'true'  && (answersPointStudent.get(value.key))?.toString() === 'STUDENT_ANSWER'">{{value?.key?.pointReponseJuste}}</td>
-                <td *ngIf="value.value.etatReponse === 'true'  && (answersPointStudent.get(value.key))?.toString() === 'TEACHER_ANSWER'">{{(value?.key?.pointReponseJuste)/2}}</td>
-                <td *ngIf="value.value.etatReponse === 'true'  && (answersPointStudent.get(value.key))?.toString() === 'STUDENT_DONT_KNOW'">0</td>
+                <td *ngIf="value.value.etatReponse === 'true'  && (answersPointStudent.get(value.key))?.toString() === 'TEACHER_ANSWER'">{{(value?.key?.pointReponseJuste) / 2}}</td>
+                <td *ngIf="value.value.etatReponse === 'true'  && (answersPointStudent.get(value.key))?.toString() === 'STUDENT_DONT_KNOW'">
+                    0
+                </td>
                 <td *ngIf="value.value.etatReponse === 'false'">{{value?.key?.pointReponsefausse}}</td>
             </tr>
         </ng-template>
@@ -376,4 +375,5 @@
                 final: </h4>  {{  noteQuiz}} / {{answersList.size}}</th>
         </ng-template>
     </p-table>
+
 </div>
