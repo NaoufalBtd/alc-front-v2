@@ -1,1 +1,232 @@
-<p>pack-student works!</p>
+<div class="p-grid">
+    <div class="p-col-6">
+        <div class="p-card">
+            <div class="p-card-title ">
+                <h3 style="text-align: center;">Individual Pack</h3>
+            </div>
+            <div class="p-card-body">
+                <div class="p-grid">
+                    <div class="p-col-2">
+                        <button class="p-button-primary p-mr-2 p-mb-2 " icon="pi pi-plus" label="New"
+                                pButton
+                                (click)="showindividual()"
+                                pRipple style="width: 90px"></button>
+                    </div>
+                    <div class="p-col-3">
+                        <input [(ngModel)]="this.packStudentServie.packstudentVo.code" style="margin: 5px" type="text" pInputText placeholder="code">
+                    </div>
+                    <div class="p-col-3">
+                        <input [(ngModel)]="this.packStudentServie.packstudentVo.prix" style="margin: 5px" type="number" pInputText placeholder="prix">
+                    </div>
+                    <div class="p-col-3">
+                        <input [(ngModel)]="this.packStudentServie.packstudentVo.nombreCours" style="margin: 5px" type="number" pInputText placeholder="nombre cours">
+                    </div>
+                    <div class="p-col-1">
+                        <p-button icon="pi pi-search" (click)="findBycreteria(false)"></p-button>
+                    </div>
+
+
+                </div>
+                <div class="p-grid">
+                    <p-table responsiveLayout="scroll" [value]="packstudentIndividialList">
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th>Code</th>
+                                <th>libelle</th>
+                                <th>Nombre de cours</th>
+                                <th>Prix</th>
+                                <th>Action</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-c>
+                            <tr>
+                                <td>{{c.code}}</td>
+                                <td>{{c.libelle}}</td>
+                                <td>{{c.nombreCours}}</td>
+                                <td>{{c.prix}}</td>
+                                <td>
+                                    <button class="p-button-rounded p-button-success p-mr-2" icon="pi pi-pencil" pButton
+                                            (click)="showindividualforupdate(c)"
+                                            pRipple></button>
+                                    <button class="p-button-rounded p-button-danger p-mr-2" icon="pi pi-trash" pButton
+                                            (click)="deletebycode(c.code)"
+                                            pRipple></button>
+                                </td>
+
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </div>
+            <div></div>
+        </div>
+    </div>
+    <div class="p-col-6">
+        <div class="p-card">
+            <div class="p-card-title ">
+                <h3 style="text-align: center;">Groupe Pack</h3>
+            </div>
+            <div class="p-card-body">
+                <div class="p-grid">
+                    <div class="p-col-2">
+                        <button class="p-button-primary p-mr-2 p-mb-2 " icon="pi pi-plus" label="New"
+                                pButton
+                                (click)="showgroupe()"
+                                pRipple style="width: 90px"></button>
+                    </div>
+                    <div class="p-col-3">
+                        <input [(ngModel)]="this.packStudentServie.packstudentVo.code" style="margin: 5px" type="text" pInputText placeholder="code">
+                    </div>
+                    <div class="p-col-3">
+                        <input [(ngModel)]="this.packStudentServie.packstudentVo.prix" style="margin: 5px" type="number" pInputText placeholder="prix">
+                    </div>
+                    <div class="p-col-3">
+                        <input [(ngModel)]="this.packStudentServie.packstudentVo.nombreCours" style="margin: 5px" type="number" pInputText placeholder="nombre cours">
+                    </div>
+                    <div class="p-col-1">
+                        <p-button (click)="findBycreteria(true)" icon="pi pi-search"></p-button>
+                    </div>
+                </div>
+                <div class="p-grid">
+                    <p-table responsiveLayout="scroll" [value]="packstudentgroupeList">
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th>Code</th>
+                                <th>libelle</th>
+                                <th>Nombre de cours</th>
+                                <th>Prix</th>
+                                <th>Action</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-c>
+                            <tr>
+                                <td>{{c.code}}</td>
+                                <td>{{c.libelle}}</td>
+                                <td>{{c.nombreCours}}</td>
+                                <td>{{c.prix}}</td>
+                                <td>
+                                    <button class="p-button-rounded p-button-success p-mr-2" icon="pi pi-pencil" pButton
+                                            (click)="showgroupeforUpdate(c)"
+                                            pRipple></button>
+                                    <button class="p-button-rounded p-button-danger p-mr-2" icon="pi pi-trash" pButton
+                                            (click)="deletebycode(c.code)"
+                                            pRipple></button>
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </div>
+            <div></div>
+        </div>
+    </div>
+
+</div>
+<p-dialog header="Add pack for one student" [(visible)]="displayPackIndividual">
+    <div class="p-field">
+        <label for="1"><strong>code</strong></label>
+        <input class="p-mb-2 p-mr-2" type="text" pInputText placeholder="code"
+               [(ngModel)]="this.packStudentServie.packstudentIndividial.code" required autofocus>
+    </div>
+    <div class="p-field">
+        <label for="1"><strong>libelle</strong></label>
+        <input class="p-mb-2 p-mr-2" type="text" pInputText placeholder="code"
+               [(ngModel)]="this.packStudentServie.packstudentIndividial.libelle" required autofocus>
+    </div>
+    <div class="p-field">
+        <label for="1"><strong>nombre de cours</strong></label>
+        <input class="p-mb-2 p-mr-2" type="number" pInputText placeholder="Nombre de cours"
+               [(ngModel)]="this.packStudentServie.packstudentIndividial.nombreCours" required autofocus>
+    </div>
+    <div class="p-field">
+        <label for="2"><strong>Prix</strong></label>
+        <input class="p-mb-2 p-mr-2" type="number" pInputText placeholder="Prix"
+               [(ngModel)]="this.packStudentServie.packstudentIndividial.prix" required autofocus>
+    </div>
+    <div class="p-field">
+        <button class="p-button-primary p-mr-2 p-mb-2 " icon="pi pi-plus" label="Add"
+                pButton
+                (click)="saveIndividualPack()"
+                pRipple style="width: 90px"></button>
+    </div>
+</p-dialog>
+<p-dialog header="Update pack for one student" [(visible)]="displayPackIndividualforUpdate">
+    <div class="p-field">
+        <label for="1"><strong>libelle</strong></label>
+        <input class="p-mb-2 p-mr-2" type="text" pInputText placeholder="code"
+               [(ngModel)]="this.packStudentServie.packstudentIndividial.libelle" required autofocus>
+    </div>
+    <div class="p-field">
+        <label for="2"><strong>Prix</strong></label>
+        <input class="p-mb-2 p-mr-2" type="number" pInputText placeholder="Prix"
+               [(ngModel)]="this.packStudentServie.packstudentIndividial.prix"
+               required autofocus>
+    </div>
+    <div class="p-field">
+        <label for="2"><strong>nombre de cours</strong></label>
+        <input class="p-mb-2 p-mr-2" type="number" pInputText placeholder="nombre de cours"
+               [(ngModel)]="this.packStudentServie.packstudentIndividial.nombreCours"
+               required autofocus>
+    </div>
+    <div class="p-field">
+        <button class="p-button-primary p-mr-2 p-mb-2 " icon="pi pi-plus" label="Update"
+                pButton
+                (click)="updatepack()"
+                pRipple style="width: 90px" ></button>
+    </div>
+</p-dialog>
+<p-dialog header="Add pack for group of student" [(visible)]="displayPackgroupe">
+
+    <div class="p-field">
+        <label for="1"><strong>code</strong></label>
+        <input class="p-mb-2 p-mr-2" type="text" pInputText placeholder="code" id="0"
+               [(ngModel)]="this.packStudentServie.packstudentIndividial.code" required autofocus>
+    </div>
+    <div class="p-field">
+        <label for="1"><strong>libelle</strong></label>
+        <input class="p-mb-2 p-mr-2" type="text" pInputText placeholder="code"
+               [(ngModel)]="this.packStudentServie.packstudentIndividial.libelle" required autofocus>
+    </div>
+    <div class="p-field">
+        <label for="1"><strong>Nombre de cours</strong></label>
+        <input class="p-mb-2 p-mr-2" type="number" pInputText placeholder="Nombre de cours" id="1"
+               [(ngModel)]="this.packStudentServie.packstudentIndividial.nombreCours" required autofocus>
+    </div>
+    <div class="p-field">
+        <label for="2"><strong>Prix</strong></label>
+        <input class="p-mb-2 p-mr-2" type="number" pInputText placeholder="Prix" id="2"
+               [(ngModel)]="this.packStudentServie.packstudentIndividial.prix" required autofocus>
+    </div>
+    <div class="p-field">
+        <button class="p-button-primary p-mr-2 p-mb-2 " icon="pi pi-plus" label="Add"
+                pButton
+                (click)="savegroupePack()"
+                pRipple style="width: 90px" ></button>
+    </div>
+</p-dialog>
+<p-dialog header="Update pack for groupe of student" [(visible)]="displayPackgroupeforUpdate">
+    <div class="p-field">
+        <label for="1"><strong>libelle</strong></label>
+        <input class="p-mb-2 p-mr-2" type="text" pInputText placeholder="code"
+               [(ngModel)]="this.packStudentServie.packstudentIndividial.libelle" required autofocus>
+    </div>
+
+    <div class="p-field">
+        <label for="2"><strong>Prix</strong></label>
+        <input class="p-mb-2 p-mr-2" type="number" pInputText placeholder="Prix" id="6"
+               [(ngModel)]="this.packStudentServie.packstudentIndividial.prix"
+               required autofocus>
+    </div>
+    <div class="p-field">
+        <label for="2"><strong>nombre de cours</strong></label>
+        <input class="p-mb-2 p-mr-2" type="number" pInputText placeholder="nombre de cours" id="5"
+               [(ngModel)]="this.packStudentServie.packstudentIndividial.nombreCours"
+               required autofocus>
+    </div>
+    <div class="p-field">
+        <button class="p-button-primary p-mr-2 p-mb-2 " icon="pi pi-plus" label="Update"
+                pButton
+                (click)="updatepack()"
+                pRipple style="width: 90px" ></button>
+    </div>
+</p-dialog>

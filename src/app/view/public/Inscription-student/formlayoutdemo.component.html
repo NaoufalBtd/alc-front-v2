@@ -373,13 +373,14 @@
                             class="btn btn-block btn-outline-light form-control" id="groupeEtude"
                             name="roupe Etude" pInputText style=" margin-left: 5px"
                             type="text">
-                        <option [ngValue]="Undefinded" selected="selected">Select a group</option>
+                        <option  [ngValue]="Undefinded" selected="selected">Select a group</option>
 
-                        <option *ngFor="let p of groupeEtudeList" [ngValue]="p.id" selected="selected">{{p.libelle}}
+                        <option  *ngFor="let p of groupeEtudeList" [ngValue]="p.id" selected="selected">{{p.libelle}}
                         </option>
                     </select>
                 </div>
-
+                <p-button (click)="showdialogPacks()" type="button" >Select your Pack : </p-button>
+                <p-button style="margin-left: 40px" *ngIf="packChossen.prix > 0"   class="p-button-danger" > {{packChossen.nombreCours}}h : {{packChossen.prix}}$</p-button>
                 <!--
                 <div class="p-field">
                     <label >Level</label><br>
@@ -410,6 +411,52 @@
     </div>
 
 </div>
+
+<p-dialog header="packs and prices" [(visible)]="this.showdialog">
+    <div class="row" *ngIf="this.etudiantService.groupeEtude.nombreEtudiant == 1">
+        <div class="card-1" *ngFor="let p of this.packStudentService.packstudentIndividialList">
+            <div class="card-header-1">
+                <h1>{{p.libelle}}</h1>
+            </div>
+            <div class="card-body-1">
+                <p>
+                    Perfect for studying
+                </p>
+                <a class="btn-1" (click)="selectedPack(p)">{{p.nombreCours}}h  | {{p.prix}}$</a>
+            </div>
+        </div>
+    </div>
+    <div class="row" *ngIf="this.etudiantService.groupeEtude.nombreEtudiant > 1">
+        <div class="card-1" *ngFor="let p of this.packStudentService.packstudentgroupeList">
+            <div class="card-header-1">
+                <h1>{{p.libelle}}</h1>
+            </div>
+            <div class="card-body-1">
+                <p>
+                    Perfect for studying
+                </p>
+                <a class="btn-1" (click)="selectedPack(p)">{{p.nombreCours}}h  | {{p.prix}}$</a>
+            </div>
+        </div>
+    </div>
+<!--    <div class="p-field" style="color: black">
+        <label >Select your choosen Pack:</label><br>
+        <div *ngIf="this.etudiantService.groupeEtude.nombreEtudiant == 1">
+
+
+        <label >Individual Packs:</label><br>
+                <div *ngFor="let p of this.packStudentService.packstudentIndividialList" style="margin: 10px">
+                <p-button (click)="selectedPack(p)"  type="button" >{{p.libelle}} : {{p.nombreCours}}h  | {{p.prix}}$</p-button></div>
+                <br>
+        </div>
+        <div *ngIf="this.etudiantService.groupeEtude.nombreEtudiant > 1">
+        <label >Packs for groups:</label><br>
+        <div *ngFor="let p of this.packStudentService.packstudentgroupeList " style="margin: 10px">
+            <p-button (click)="selectedPack(p)"  type="button" >{{p.libelle}} : {{p.nombreCours}}h  | {{p.prix}}$</p-button></div>
+        <br>
+        </div>
+    </div>-->
+</p-dialog>
 
 </body>
 </html>

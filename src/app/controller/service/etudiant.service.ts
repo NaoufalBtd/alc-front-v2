@@ -38,9 +38,21 @@ export class EtudiantService {
     private _etudiantVo: EtudiantVo;
     private _parcoursList: Array<Parcours>;
     private _connectedStudent: Map<number, User> = new Map<number, User>();
+    private _selecteetudiant: Array<Etudiant>;
+    public packCode: string;
+    private _groupeEtude: GroupeEtude;
 
 
+    get groupeEtude(): GroupeEtude {
+        if (this._groupeEtude == null){
+            this._groupeEtude = new GroupeEtude();
+        }
+        return this._groupeEtude;
+    }
 
+    set groupeEtude(value: GroupeEtude) {
+        this._groupeEtude = value;
+    }
 
     private _groupeEtudeList: Array<GroupeEtude>;
 
@@ -245,7 +257,7 @@ export class EtudiantService {
         this._prof = value;
     }
 
-    private _selecteetudiant: Array<Etudiant>;
+
 
     get selecteetudiant(): Array<Etudiant> {
         if (this._selecteetudiant == null) {
@@ -288,7 +300,7 @@ export class EtudiantService {
     }
 
     public create(): Observable<number> {
-        return this.http.post<number>(this.etudiantUrl + 'etudiant/save/', this.selected);
+        return this.http.post<number>(this.etudiantUrl + 'etudiant/save/pack/' + this.packCode, this.selected);
     }
 
     get groupeEtudeList(): Array<GroupeEtude> {
@@ -310,5 +322,13 @@ export class EtudiantService {
 
     set connectedStudent(value: Map<number, User>) {
         this._connectedStudent = value;
+    }
+
+    findGroupeById(id: number) {
+        this.http.get<GroupeEtude>(this.adminUrl + 'groupeEtude/id/' + id ).subscribe(
+            data => {
+                this.groupeEtude = data ;
+            }
+        );
     }
 }

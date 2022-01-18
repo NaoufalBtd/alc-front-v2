@@ -1,9 +1,10 @@
 export class PackStudent {
 
-    private id: number;
+    public id: number;
 
-    private nombreCours: number;
-    private forGroupe: boolean;
-    private code: string;
-    private prix: number;
+    public nombreCours: number;
+    public forGroupe: boolean;
+    public code: string;
+    public libelle: string;
+    public prix: number;
 }
