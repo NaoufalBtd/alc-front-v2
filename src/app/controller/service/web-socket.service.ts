@@ -147,7 +147,7 @@ export class WebSocketService {
             alert(event);
         };
         this.webSocket.onmessage = (event) => {
-
+            console.log('DAZ DAZ   DAZ   DAZ   DAZ   DAZ   DAZ   DAZ   DAZ   DAZ  DAZ DAZ');
             const data: ChatMessageDto = JSON.parse(event.data);
             console.log(data);
             if (data.type === 'message') {
@@ -183,8 +183,6 @@ export class WebSocketService {
                 } else {
                     const rpsQuiz = data.quizReponse;
                     this.grpStudentAnswers.set(rpsQuiz.student, rpsQuiz);
-                    console.log('===================================== GRPSTUDENTANSWERS ========================');
-                    console.log(this.grpStudentAnswers);
                 }
             } else {
                 const mydata = JSON.parse(event.data);
@@ -196,19 +194,17 @@ export class WebSocketService {
                             this.studentsEnLigne.set(student.id, student);
                         } else {
                             this.studentsEnLigne.delete(student.id);
-                            console.log('========== DELETE  STUDENT ========');
-                            console.log(this.studentsEnLigne);
-                            console.log('========== DELETE  STUDENT ========');
                         }
                     }
                 }
             }
+            console.log('==================== Last readyState==============');
+            console.log(this.webSocket.readyState);
         };
 
         if (this.webSocket.readyState === this.webSocket.CLOSING) {
             alert('Wb socket is CLOSING !');
         }
-
     }
 
     get trueOrFalse(): boolean {
@@ -220,15 +216,20 @@ export class WebSocketService {
     }
 
     public sendMessage(chatMessageDto: ChatMessageDto, sender: string) {
+        console.log('----------------- STATE ------------------------------------------');
+        console.log('-------------------------------------------------------------------');
+        console.log(this.webSocket.readyState);
         if (this.webSocket.readyState === this.webSocket.OPEN) {
-            console.log(chatMessageDto);
-            console.log(this.webSocket.readyState);
-            this.webSocket.send(JSON.stringify(chatMessageDto));
+            chatMessageDto.quizReponse.question.quiz = null;
+            chatMessageDto.quizReponse.question.reponses = null;
+            const myData = JSON.stringify((chatMessageDto));
+            this.webSocket.send(myData);
             this.webSocket.onerror = (event) => {
                 console.log(event);
                 alert('erroor to send');
             };
         } else {
+            console.log('=========WEB SOCKET WAS CLOSED===============');
             if (sender === 'PROF') {
                 this.openWebSocket(this.loginservice.getConnectedProf(), this.loginservice.getConnectedProf(),
                     this.groupeEtudiant, 'PROF');

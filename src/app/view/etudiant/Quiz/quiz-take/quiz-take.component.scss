@@ -79,13 +79,24 @@ h5, .textQuestion {
   background-color: #68c671;
   height: 25px;
   text-align: center;
-  width: 50%;
+  width: auto;
   border-radius: 6px;
-  padding-top: 2%;
-  color: white;
+  color: black;
   margin-top: -26px;
   font-weight: bold;
   margin-left: 23%;
+  padding: 5px;
+}
+
+.correctAnswer::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #68c671 transparent transparent transparent;
 }
 
 .check-button {
