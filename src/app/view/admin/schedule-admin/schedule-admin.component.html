@@ -125,14 +125,6 @@
 
             <ng-template #editorTemplate pTemplate="content editorTemplate">
 
-                <!--        <div class="p-field">-->
-                <!--            <label>Subject </label>-->
-                <!--            <input id="Subject" class="e-field e-input" type="text" [(ngModel)]="scheduleProf.subject"-->
-                <!--                   data-name="subject"-->
-                <!--                   style="width: 100%"/>-->
-                <!--        </div>-->
-
-
                 <div class="p-field">
                     <label>Teacher Name </label>
                     <p-dropdown (click)="getProf()" [(ngModel)]="scheduleProf.prof" [options]="professors"
@@ -167,13 +159,7 @@
                            data-name="reference"/>
                     <small *ngIf="submitted && !scheduleProf.ref" class="p-invalid">ref is required.</small>
                 </div>
-                <!--        <div class="p-field">-->
-                <!--            <label>State </label>-->
-                <!--            <p-dropdown [(ngModel)]="scheduleProf.groupeEtudiant.etatEtudiantSchedule" [options]="etatEtudiantSchedule"-->
-                <!--                        name="EventType" class="e-field" data-name="EventType"-->
-                <!--                        inputId="etat" optionLabel="libelle"-->
-                <!--                        placeholder="Etat Etudiant"></p-dropdown>-->
-                <!--        </div>-->
+
                 <div class="p-field">
                     <label for="start">Debut Date</label>
                     <p-calendar id="start" [(ngModel)]="scheduleProf.startTime" [showTime]="true" name="StartTime"

@@ -515,7 +515,6 @@ import {AppRoutingModule} from './app-routing.module';
         GroupeEtudiantDetailListComponent,
         ResetPasswordComponent,
         GroupeEtudiantEditComponent,
-
         StudentsHomeworkComponent,
         ResetPasswordComponent,
         ResetPasswordComponent,
