@@ -114,6 +114,8 @@ export class HomeWorkEtudiantComponent implements OnInit {
             this.homeWorkQuestion.libelle.lastIndexOf('@'));
     }
     ngOnInit(): void {
+        this.correctanswers = new Array<HomeWorkReponse>();
+        this.homeworkEtudiantservice.result = 0;
         console.log(this.homeWorkList);
         this.findbyetudiantIdAndHomeWorkID();
         console.log(this.homeworkEtudiantservice.isUpdate);
@@ -129,7 +131,12 @@ export class HomeWorkEtudiantComponent implements OnInit {
                 if (this.homeWorkQuestion.typeDeQuestion.ref =='t4'){
                     this.substractQuestionT4();
                 }
-                this.findReponseByQuestion();
+                const correctreponseforqst = this.findReponseByQuestion(this.homeWorkQuestion.id);
+                    for (let _j = 0 ; _j < correctreponseforqst.length; _j++){
+                        if (correctreponseforqst[_j].etatReponse === 'true'){
+                            this.correctanswers.push(correctreponseforqst[_j]);
+                        }
+                    }
             }
         );
         this.selectedsection = this.sectionStandard[0];
@@ -421,6 +428,8 @@ export class HomeWorkEtudiantComponent implements OnInit {
         this.sectionItemService.showVocabulary = value;
     }
     sendhomeWork(homeWork: HomeWork) {
+        this.homeworkEtudiantservice.result = 0;
+        this.correctanswers = new Array<HomeWorkReponse>();
         this.hasNext = false;
         this.hasprevious = false;
         console.log(homeWork);
@@ -434,11 +443,13 @@ export class HomeWorkEtudiantComponent implements OnInit {
                 this.homeWorkQuestion = data[0];
                 this.disable = false;
                 this.etudiantReponse = new HoweWorkQSTReponse();
-                this.correctanswers = new Array<HomeWorkReponse>();
-                this.findReponseByQuestion();
+
+                this.findReponseByQuestion(this.homeWorkQuestion.id);
+
                 document.getElementById('myAnswer').style.visibility = 'hidden';
             }
         );
+
         this.findbyetudiantIdAndHomeWorkID();
         //  this.homeWorkEtudiantService.homeWorkQuestion = ;
     }
@@ -451,19 +462,13 @@ export class HomeWorkEtudiantComponent implements OnInit {
         );
     }
 
-    public findReponseByQuestion() {
-        this.correctanswers = new Array<HomeWorkReponse>();
-        this.homeworkEtudiantservice.findReponsesByQuestionId().subscribe(
+    public findReponseByQuestion(id: number): Array<HomeWorkReponse>{
+        this.homeworkEtudiantservice.findReponsesByQuestionId(id).subscribe(
             data => {
                 this.homeWorkQstReponses = data;
-                for (let _i = 0; _i < data.length; _i++) {
-                    if (data[_i].etatReponse === 'true') {
-                        this.correctanswers.push(data[_i]);
-                        document.getElementById('tooltiptext').style.visibility = 'hidden';
-                    }
-                }
             }
         );
+        return this.homeWorkQstReponses;
     }
     Vocab(section: Section) {
         this.sectionItemService.sectionSelected = section;
@@ -536,10 +541,7 @@ export class HomeWorkEtudiantComponent implements OnInit {
         this.homeWorkQuestion = quetions;
         this.etudiantReponse = new HoweWorkQSTReponse();
         this.disable = false;
-        this.correctanswers = new Array<HomeWorkReponse>();
         document.getElementById('myAnswer').style.visibility = 'hidden';
-        this.findReponseByQuestion();
-
     }
 
     public findByWord() {
@@ -640,10 +642,6 @@ export class HomeWorkEtudiantComponent implements OnInit {
         }
     }
 
-    correctMistake() {
-
-    }
-
     showvalueInput() {
         this.disable = true;
         for (let _i = 0; _i < this.homeWorkQstReponses.length; _i++) {
@@ -711,7 +709,6 @@ export class HomeWorkEtudiantComponent implements OnInit {
     nextQuestion() {
 
         this.homeWorkQuestion = this.homeWork.questions[this.i + 1];
-        this.findReponseByQuestion();
         if (this.homeWorkQuestion.typeDeQuestion.ref == 't4'){
             this.substractQuestionT4();
         }
@@ -719,6 +716,14 @@ export class HomeWorkEtudiantComponent implements OnInit {
         this.etudiantReponse = new HoweWorkQSTReponse();
         this.reponseInput = '';
         this.disable = false;
+
+        const correctreponseforqst = this.findReponseByQuestion(this.homeWorkQuestion.id);
+        for (let _j = 0 ; _j < correctreponseforqst.length; _j++){
+                if (correctreponseforqst[_j].etatReponse === 'true'){
+                    this.correctanswers.push(correctreponseforqst[_j]);
+                }
+            }
+
 
         /*    document.getElementById('myAnswer').style.visibility = 'hidden';
             document.getElementById('tooltiptext').style.visibility = 'hidden';*/
@@ -732,7 +737,7 @@ export class HomeWorkEtudiantComponent implements OnInit {
     previousQuestion() {
         if (this.i > 0) {
             this.homeWorkQuestion = this.homeWork.questions[this.i - 1];
-            this.findReponseByQuestion();
+            this.findReponseByQuestion(this.homeWorkQuestion.id);
             if (this.homeWorkQuestion.typeDeQuestion.ref == 't4'){
                 this.substractQuestionT4();
             }
@@ -766,26 +771,40 @@ export class HomeWorkEtudiantComponent implements OnInit {
         }
     }
     submithomeWork() {
-        this.homeWorkEtudiant.homeWork = this.homeWork;
-        this.homeWorkEtudiant.etudiant = this.loginservice.etudiant;
-        this.homeWorkEtudiant.reponseEtudiantHomeWork = this.etudiantreponseList;
-        if (this.homeworkEtudiantservice.isUpdate === false) {
-            this.save();
-        } else {
-            console.log('hani ghandir lik update');
-            this.homeworkEtudiantservice.update();
-        }
 
-        for (let _i = 0; _i < this.homeWorkEtudiant.reponseEtudiantHomeWork.length; _i++) {
-            for (let _j = 0; _j < this.homeWorkQstReponses.length; _j++) {
-                if (this.homeWorkEtudiant.reponseEtudiantHomeWork[_i].answer === this.homeWorkQstReponses[_j].lib) {
-                    if (this.homeWorkQstReponses[_j].etatReponse === 'true') {
-                        this.homeworkEtudiantservice.result++;
+        const correctreponseforqst = this.findReponseByQuestion(this.homeWorkQuestion.id);
+            for (let _j = 0 ; _j < correctreponseforqst.length; _j++){
+                if (correctreponseforqst[_j].etatReponse === 'true'){
+                    this.correctanswers.push(correctreponseforqst[_j]);
+                }
+            }
+
+        for (let _i = 0; _i < this.etudiantreponseList.length; _i++) {
+
+            for (let _j = 0; _j < this.correctanswers.length; _j++) {
+                if (this.etudiantreponseList[_i].question.id === this.correctanswers[_j].homeWorkQuestion.id){
+                    if (this.etudiantreponseList[_i].answer === this.correctanswers[_j].lib) {
+                        if (this.correctanswers[_j].etatReponse === 'true') {
+                            this.homeworkEtudiantservice.result++;
+                        }
                     }
                 }
             }
         }
+        this.homeWorkEtudiant.homeWork = this.homeWork;
+        this.homeWorkEtudiant.etudiant = this.loginservice.etudiant;
+        this.homeWorkEtudiant.note = this.homeworkEtudiantservice.result;
+        this.homeWorkEtudiant.reponseEtudiantHomeWork = this.etudiantreponseList;
+        if(this.homeWorkEtudiant.id == null){
+            this.save();
+        } else {
+            this.homeworkEtudiantservice.update();
+        }
+
         this.router.navigate(['etudiant/homeWorkEtudiantResult']);
+        this.correctanswers = new Array<HomeWorkReponse>();
+
+
     }
 
     valider() {

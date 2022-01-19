@@ -1,6 +1,7 @@
 import {RouterModule} from '@angular/router';
 import {NgModule} from '@angular/core';
 import {FormLayoutDemoComponent} from './view/public/Inscription-student/formlayoutdemo.component';
+
 import {LearnComponent} from './view/admin/learn/learn.component';
 import {SectionsComponent} from './view/prof/learn-teacher/sections/sections.component';
 import {CoursesComponent} from './view/prof/learn-teacher/courses/courses.component';
@@ -75,6 +76,9 @@ import {EtudiantinscriptionComponent} from './view/public/etudiantinscription/et
 import {ProfinscriptionComponent} from './view/public/profinscription/profinscription.component';
 import {BonusProfComponent} from './view/admin/bonus-prof/bonus-prof.component';
 import {SalarylistComponent} from './view/admin/salarylist/salarylist.component';
+import { ScheduleProfComponent } from './view/admin/professeur/schedule-prof/schedule-prof.component';
+import {PackStudentComponent} from './view/admin/pack-student/pack-student.component';
+
 
 @NgModule({
     imports: [
@@ -92,6 +96,7 @@ import {SalarylistComponent} from './view/admin/salarylist/salarylist.component'
                     {path: 'view-quiz-etudiant', component: ViewQuizEtudiantComponent},
                     {path: 'inscription', component: InscriptionsComponent},
                     {path: 'teacher-lists', component: ProfesseurListComponent},
+                    {path: 'teacher-lists/schedule', component: ScheduleProfComponent},
                     {path: 'recommend-admin', component: RecommendAdminComponent},
                     {path: 'sessioncours', component: SessioncoursComponent},
                     {path: 'faq-admin', component: FaqAnswerComponent},
@@ -102,6 +107,8 @@ import {SalarylistComponent} from './view/admin/salarylist/salarylist.component'
                     {path: 'students-List', component: EtudiantsComponent},
                     {path: 'groups-List', component: GroupeEtudeComponent},
                     {path: 'groups-students', component: GroupeEtudiantComponent},
+                    {path: 'homeWork', component: HomeWorkComponentComponent},
+                    {path: 'PackStudent', component: PackStudentComponent},
                     {path: 'homeWork', component: HomeWorkComponentComponent},
                     {path: 'bonus', component: BonusProfComponent},
                     {path: 'salarylist', component: SalarylistComponent}
@@ -171,7 +178,7 @@ import {SalarylistComponent} from './view/admin/salarylist/salarylist.component'
             {path: '**', component: PageNotFoundComponent},
         ], {scrollPositionRestoration: 'enabled'})
     ],
-    exports: [RouterModule ]
+    exports: [RouterModule]
 })
 export class AppRoutingModule {
 }

@@ -84,13 +84,17 @@ import {TooltipModule} from 'primeng/tooltip';
 import {TreeModule} from 'primeng/tree';
 import {TreeTableModule} from 'primeng/treetable';
 import {VirtualScrollerModule} from 'primeng/virtualscroller';
+
 import {AppComponent} from './app.component';
+
 import {AppMenuComponent} from './view/shared/slide-bar/app.menu.component';
 import {AppMenuitemComponent} from './view/shared/slide-bar/app.menuitem.component';
 import {AppTopBarComponent} from './view/shared/top-bar/app.topbar.component';
 import {AppFooterComponent} from './view/shared/footer/app.footer.component';
 import {FormLayoutDemoComponent} from './view/public/Inscription-student/formlayoutdemo.component';
+
 import {MenuService} from './view/shared/slide-bar/app.menu.service';
+
 import {ParcoursEditComponent} from './view/admin/learn/parcours-edit/parcours-edit.component';
 import {CoursListComponent} from './view/admin/learn/cours-list/cours-list.component';
 import {CoursEditComponent} from './view/admin/learn/cours-edit/cours-edit.component';
@@ -155,12 +159,8 @@ import {RecommendListComponent} from './view/prof/recommend/recommend-list/recom
 import {RecommendViewComponent} from './view/prof/recommend/recommend-view/recommend-view.component';
 import {QuizCreateComponent} from './view/admin/quiz/quiz-create/quiz-create.component';
 import {QuizEtudiantViewComponent} from './view/etudiant/Quiz/quiz-etudiant-view/quiz-etudiant-view.component';
-import {
-    SyntheseSessionCoursListComponent
-} from './view/prof/synthese-session/synthese-session-cours-list/synthese-session-cours-list.component';
-import {
-    SyntheseSessionCoursEditComponent
-} from './view/prof/synthese-session/synthese-session-cours-edit/synthese-session-cours-edit.component';
+import {SyntheseSessionCoursListComponent} from './view/prof/synthese-session/synthese-session-cours-list/synthese-session-cours-list.component';
+import {SyntheseSessionCoursEditComponent} from './view/prof/synthese-session/synthese-session-cours-edit/synthese-session-cours-edit.component';
 import {ProfesseurListComponent} from './view/admin/professeur/professeur-list/professeur-list.component';
 import {ProfesseurCreateComponent} from './view/admin/professeur/professeur-create/professeur-create.component';
 import {ProfesseurEditComponent} from './view/admin/professeur/professeur-edit/professeur-edit.component';
@@ -183,6 +183,7 @@ import {NewsEtudiantListComponent} from './view/etudiant/news-etudiant/news-etud
 import {NewsEtudiantViewComponent} from './view/etudiant/news-etudiant/news-etudiant-view/news-etudiant-view.component';
 import {NewsAdminEditComponent} from './view/admin/news-admin/news-admin-edit/news-admin-edit.component';
 import {NewsAdminDeleteComponent} from './view/admin/news-admin/news-admin-delete/news-admin-delete.component';
+ // import {PaiementListComponent} from './view/admin/allSalary/allSalary-list/allSalary-list.component';
 import {ScheduleAdminComponent} from './view/admin/schedule-admin/schedule-admin.component';
 import {ScheduleStudentComponent} from './view/etudiant/schedule-student/schedule-student.component';
 import {QuizUpdateComponent} from './view/admin/quiz/quiz-update/quiz-update.component';
@@ -200,9 +201,7 @@ import {EtudiantReviewViewComponent} from './view/etudiant/learn-etudiant/etudia
 import {SyntheseSessionHistoryComponent} from './view/prof/synthese-session/synthese-session-history/synthese-session-history.component';
 import {RecommendationTeacherComponent} from './view/prof/recommendation-teacher/recommendation-teacher.component';
 import {VocabularySectionComponent} from './view/etudiant/learn-etudiant/vocabulary-section/vocabulary-section.component';
-import {
-    VocabularySectionItemComponent
-} from './view/etudiant/learn-etudiant/vocabulary-section/vocabulary-section-item/vocabulary-section-item.component';
+import {VocabularySectionItemComponent} from './view/etudiant/learn-etudiant/vocabulary-section/vocabulary-section-item/vocabulary-section-item.component';
 import {ScrollingModule} from '@angular/cdk/scrolling';
 import {DashboardDemoComponent} from './view/public/landing/dashboarddemo.component';
 import {AdminComponent} from './view/admin/admin.component';
@@ -210,13 +209,9 @@ import {EtudiantComponent} from './view/etudiant/etudiant.component';
 import {ProfComponent} from './view/prof/prof.component';
 import {PublicComponent} from './view/public/public.component';
 import {VocabularySectionProfComponent} from './view/prof/learn-teacher/vocabulary-section-prof/vocabulary-section-prof.component';
-import {
-    VocabularySectionItemProfComponent
-} from './view/prof/learn-teacher/vocabulary-section-prof/vocabulary-section-item-prof/vocabulary-section-item-prof.component';
+import {VocabularySectionItemProfComponent} from './view/prof/learn-teacher/vocabulary-section-prof/vocabulary-section-item-prof/vocabulary-section-item-prof.component';
 import {SyntheseSessionComponent} from './view/prof/synthese-session/synthese-session.component';
-import {
-    SyntheseSessionCoursCreateComponent
-} from './view/prof/synthese-session/synthese-session-cours-create/synthese-session-cours-create.component';
+import {SyntheseSessionCoursCreateComponent} from './view/prof/synthese-session/synthese-session-cours-create/synthese-session-cours-create.component';
 import {ProfReviewViewComponent} from './view/prof/learn-teacher/prof-review-view/prof-review-view.component';
 import {QuizPreviewProfComponent} from './view/prof/quiz-preview-prof/quiz-preview.component';
 import {
@@ -242,9 +237,10 @@ import {GroupeEtudeEditComponent} from './view/admin/groupe-etude/groupe-etude-e
 import {GroupeEtudiantComponent} from './view/admin/groupe-etudiant/groupe-etudiant.component';
 import {GroupeEtudiantListComponent} from './view/admin/groupe-etudiant/groupe-etudiant-list/groupe-etudiant-list.component';
 import {GroupeEtudiantCreateComponent} from './view/admin/groupe-etudiant/groupe-etudiant-create/groupe-etudiant-create.component';
-import {
-    GroupeEtudiantDetailListComponent
-} from './view/admin/groupe-etudiant/groupe-etudiant-detail-list/groupe-etudiant-detail-list.component';
+
+import {GroupeEtudiantDetailListComponent} from './view/admin/groupe-etudiant/groupe-etudiant-detail-list/groupe-etudiant-detail-list.component';
+
+
 import {HomeWorkComponentComponent} from './view/admin/home-work-component/home-work-component.component';
 import {HomeWorkEtudiantComponent} from './view/etudiant/homeWork/home-work-etudiant/home-work-etudiant.component';
 import {SessioncoursComponent} from './view/admin/sessioncours/sessioncours.component';
@@ -261,9 +257,11 @@ import {ResetPasswordComponent} from './view/public/reset-password/reset-passwor
 import {LoginComponent} from './view/public/login/login.component';
 import {GroupeEtudiantEditComponent} from './view/admin/groupe-etudiant/groupe-etudiant-edit/groupe-etudiant-edit.component';
 import {ConnectedStudentComponent} from './view/prof/connected-student/connected-student.component';
-import {ProfinscriptionComponent} from './view/public/profinscription/profinscription.component';
-import {EtudiantinscriptionComponent} from './view/public/etudiantinscription/etudiantinscription.component';
-import {BonusProfComponent} from './view/admin/bonus-prof/bonus-prof.component';
+import {SyntheseSessionCours} from './controller/model/synthese-session-cours.model';
+import { ProfinscriptionComponent } from './view/public/profinscription/profinscription.component';
+import { EtudiantinscriptionComponent } from './view/public/etudiantinscription/etudiantinscription.component';
+import { PackStudentComponent } from './view/admin/pack-student/pack-student.component';
+import { BonusProfComponent } from './view/admin/bonus-prof/bonus-prof.component';
 import {ViewProfilEtudiantComponent} from './view/prof/synthese-session/view-profil-etudiant/view-profil-etudiant.component';
 import {SalarylistComponent} from './view/admin/salarylist/salarylist.component';
 import {ScheduleProfComponent} from './view/admin/professeur/schedule-prof/schedule-prof.component';
@@ -444,6 +442,7 @@ import {AppRoutingModule} from './app-routing.module';
         SyntheseSessionCoursCreateComponent,
         SyntheseSessionCoursEditComponent,
         SyntheseSessionCoursListComponent,
+        // ProfesseurComponent,
         ProfesseurListComponent,
         ProfesseurCreateComponent,
         ProfesseurEditComponent,
@@ -464,7 +463,7 @@ import {AppRoutingModule} from './app-routing.module';
         NewsEtudiantViewComponent,
         NewsAdminEditComponent,
         NewsAdminDeleteComponent,
-        ScheduleAdminComponent,
+         ScheduleAdminComponent,
         ScheduleStudentComponent,
         QuizUpdateComponent,
         SectionCreateComponent,
@@ -516,6 +515,7 @@ import {AppRoutingModule} from './app-routing.module';
         GroupeEtudiantDetailListComponent,
         ResetPasswordComponent,
         GroupeEtudiantEditComponent,
+
         StudentsHomeworkComponent,
         ResetPasswordComponent,
         ResetPasswordComponent,
@@ -529,12 +529,13 @@ import {AppRoutingModule} from './app-routing.module';
         LoginComponent,
         ProfinscriptionComponent,
         EtudiantinscriptionComponent,
+        PackStudentComponent,
         BonusProfComponent,
         EtudiantinscriptionComponent,
         ViewProfilEtudiantComponent,
         EtudiantinscriptionComponent,
         SalarylistComponent,
-        ScheduleProfComponent,
+        ScheduleProfComponent
 
     ],
     providers: [

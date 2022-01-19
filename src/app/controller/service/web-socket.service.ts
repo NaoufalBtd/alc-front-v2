@@ -15,8 +15,6 @@ import {ParcoursService} from './parcours.service';
 import {Section} from '../model/section.model';
 import {Cours} from '../model/cours.model';
 import {Router} from '@angular/router';
-import {QuizEtudiant} from '../model/quiz-etudiant.model';
-import {Reponse} from '../model/reponse.model';
 import {QuizReponse} from '../model/quiz-reponse';
 import {LearnService} from './learn.service';
 import {Question} from '../model/question.model';
@@ -149,9 +147,9 @@ export class WebSocketService {
             alert(event);
         };
         this.webSocket.onmessage = (event) => {
-
-            console.log(event.data);
+            console.log('DAZ DAZ   DAZ   DAZ   DAZ   DAZ   DAZ   DAZ   DAZ   DAZ  DAZ DAZ');
             const data: ChatMessageDto = JSON.parse(event.data);
+            console.log(data);
             if (data.type === 'message') {
                 this.chatMessages.push(data);
                 console.log(data);
@@ -185,14 +183,10 @@ export class WebSocketService {
                 } else {
                     const rpsQuiz = data.quizReponse;
                     this.grpStudentAnswers.set(rpsQuiz.student, rpsQuiz);
-                    console.log('===================================== GRPSTUDENTANSWERS ========================');
-                    console.log(this.grpStudentAnswers);
                 }
-
-
             } else {
                 const mydata = JSON.parse(event.data);
-                console.log(mydata);
+                console.log(mydata.prof.id);
                 const studentList = this.participants.get(mydata?.prof?.id);
                 for (const student of studentList) {
                     if (student.id === mydata.id) {
@@ -200,19 +194,17 @@ export class WebSocketService {
                             this.studentsEnLigne.set(student.id, student);
                         } else {
                             this.studentsEnLigne.delete(student.id);
-                            console.log('========== DELETE  STUDENT ========');
-                            console.log(this.studentsEnLigne);
-                            console.log('========== DELETE  STUDENT ========');
                         }
                     }
                 }
             }
+            console.log('==================== Last readyState==============');
+            console.log(this.webSocket.readyState);
         };
 
         if (this.webSocket.readyState === this.webSocket.CLOSING) {
             alert('Wb socket is CLOSING !');
         }
-
     }
 
     get trueOrFalse(): boolean {
@@ -224,19 +216,20 @@ export class WebSocketService {
     }
 
     public sendMessage(chatMessageDto: ChatMessageDto, sender: string) {
-        console.log('===========================this.webSocket.readyState ===========================');
+        console.log('----------------- STATE ------------------------------------------');
+        console.log('-------------------------------------------------------------------');
         console.log(this.webSocket.readyState);
-        console.log(this.webSocket.OPEN);
-        console.log(this.webSocket.CONNECTING);
-        console.log(this.webSocket.CLOSED);
         if (this.webSocket.readyState === this.webSocket.OPEN) {
-            console.log(chatMessageDto);
-            this.webSocket.send(JSON.stringify(chatMessageDto));
+            chatMessageDto.quizReponse.question.quiz = null;
+            chatMessageDto.quizReponse.question.reponses = null;
+            const myData = JSON.stringify((chatMessageDto));
+            this.webSocket.send(myData);
             this.webSocket.onerror = (event) => {
                 console.log(event);
                 alert('erroor to send');
             };
         } else {
+            console.log('=========WEB SOCKET WAS CLOSED===============');
             if (sender === 'PROF') {
                 this.openWebSocket(this.loginservice.getConnectedProf(), this.loginservice.getConnectedProf(),
                     this.groupeEtudiant, 'PROF');

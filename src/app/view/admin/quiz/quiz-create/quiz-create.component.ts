@@ -11,6 +11,9 @@ import {Section} from '../../../../controller/model/section.model';
 import {HomeWork} from "../../../../controller/model/home-work.model";
 import {HomeWorkQST} from "../../../../controller/model/home-work-qst.model";
 import {HomeWorkReponse} from "../../../../controller/model/home-work-reponse.model";
+import {LearnService} from '../../../../controller/service/learn.service';
+import {Cours} from '../../../../controller/model/cours.model';
+import {Parcours} from '../../../../controller/model/parcours.model';
 
 
 @Component({
@@ -33,8 +36,26 @@ export class QuizCreateComponent implements OnInit {
     onOff_true = true;
     onOff_false = false;
     // tslint:disable-next-line:max-line-length
-    constructor(private service: QuizService, private messageService: MessageService, private confirmationService: ConfirmationService, private router: Router, private serviceParcours: ParcoursService) {
+    constructor(private service: QuizService,
+                private learnService: LearnService,
+                private messageService: MessageService, private confirmationService: ConfirmationService, private router: Router, private serviceParcours: ParcoursService) {
     }
+    get courseCurrent(): Cours {
+        return this.learnService.courseCurrent;
+    }
+    get sectionCurrent(): Section {
+        return this.learnService.sectionCurrent;
+    }
+
+    get parcourCurrent(): Parcours {
+        return this.learnService.parcourCurrent;
+    }
+    home = {icon: 'pi pi-home', routerLink:  '/admin/parcours'};
+    navigateItems = [
+        {label: this.parcourCurrent.libelle, routerLink:  '/admin/parcours'},
+        {label: this.courseCurrent.libelle, routerLink:  '/admin/parcours'},
+        {label: this.sectionCurrent.libelle, routerLink:  '/admin/parcours'},
+    ];
 
     get homeworkReponse(): HomeWorkReponse{
         return this.service.homeworkReponse;
@@ -360,6 +381,8 @@ export class QuizCreateComponent implements OnInit {
         this.selected.section.id = this.selectedsection.id;
         console.log(this.selected.section.id);
         this.service.refQuiz = this.service.selected.ref;
+        console.log('========================= QUIZ ====================================');
+        console.log(this.selected);
         this.service.save().subscribe(
             data => {
                 this.items.push({...data});
@@ -432,7 +455,7 @@ export class QuizCreateComponent implements OnInit {
     }
 
     chooseType(){
-        if (this.question.typeDeQuestion.ref == 't5')
+        if (this.question.typeDeQuestion.ref === 't5')
         {
             this.viewOnOffDialog = true;
         }

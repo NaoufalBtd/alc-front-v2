@@ -84,8 +84,9 @@
                     icon="pi pi-volume-up" class="p-button-rounded sonButton "></button>
             <h5 class="h5"> {{  questionSideLeft}}  </h5>
             <span class="p-float-label">
-            <input *ngIf="answerSelected.lib === undefined" disabled id="inputDashedBorder" inputId="inputDashedBorder"
+            <input *ngIf="answerSelected.lib === undefined"  id="inputDashedBorder" inputId="inputDashedBorder"
                    type="text"
+                   [pTooltip]="correctAnswersList.get(question.id)[0]?.lib" tooltipPosition="top"
                    [(ngModel)]="reponseQuiz.lib"
                    (ngModelChange)="saveAnswers(question)"
                    class="p-inputtext-sm " pInputText/>
@@ -99,13 +100,6 @@
                    id="inputFalseAnswer" inputId="inputDashedBorder" type="text"
                    [(ngModel)]="answerSelected.lib"
                    class="p-inputtext-sm " pInputText/>
-
-            <label
-                    class="correctAnswer showLabel"
-                    for="inputDashedBorder">{{ correctAnswersList.get(question.id)[0]?.lib}}
-            </label>
-            <label id="triangle-down" for="inputDashedBorder">
-            </label>
 
         </span>
             <h5 class="h5"> {{  questionSideRight}}  </h5>
@@ -141,10 +135,8 @@
             </button>
 
             <input *ngIf="answerSelected.lib === undefined" id="input-answer" type="text"
+                   [pTooltip]="correctAnswersList.get(question.id)[0]?.lib" tooltipPosition="top"
                    (focus)="showDontKnowButton = false ; showCheckButton=true"
-                   (focusin)="hidePlaceHolder('HIDE')"
-                   (focusout)="hidePlaceHolder('SHOW')"
-                   [placeholder]="placeHolderAnswer"
                    [(ngModel)]="reponseQuiz.lib" pInputText>
 
             <input disabled *ngIf="answerSelected.lib !== undefined && answerIsCorrect(answerSelected, question)"
@@ -153,6 +145,7 @@
 
             <input style="text-decoration: 2px line-through red;" disabled
                    *ngIf="answerSelected.lib !== undefined && !answerIsCorrect(answerSelected, question)"
+                   [pTooltip]="correctAnswersList.get(question.id)[0]?.lib" tooltipPosition="top"
                    id="input-answer-incorrect" type="text"
                    [(ngModel)]="answerSelected.lib" pInputText>
         </span>
@@ -181,6 +174,8 @@
             <span class="p-float-label">
                 <input style="font-weight: normal;" *ngIf="answerSelected.lib === undefined" id="inputQstT4"
                        (focus)="showDontKnowButton =false; showCheckButton=true;"
+                       [pTooltip]="correctAnswersList.get(question.id)[0]?.lib" tooltipPosition="top"
+
                        (focusin)="hidePlaceHolder('HIDE')"
                        (focusout)="hidePlaceHolder('SHOW')"
                        inputId="inputDashedBorder" type="text"
@@ -195,15 +190,10 @@
 
             <input *ngIf="answerSelected.lib !== undefined && !answerIsCorrect(answerSelected, question)" disabled
                    id="inputFalseAnswer" inputId="inputDashedBorder" type="text"
+                   [pTooltip]="correctAnswersList.get(question.id)[0]?.lib" tooltipPosition="top"
                    [(ngModel)]="answerSelected.lib"
                    class="p-inputtext-sm " pInputText/>
 
-            <label
-                    class="correctAnswer showLabel"
-                    for="inputDashedBorder">{{ correctAnswersList.get(question.id)[0]?.lib}}
-            </label>
-            <label id="triangle-down" for="inputDashedBorder">
-            </label>
 
         </span>
             <h5 class="h5"> {{  questionSideRight}}  </h5>
@@ -231,6 +221,7 @@
                        (focus)="showDontKnowButton =false; showCheckButton=true;"
                        (focusin)="hidePlaceHolder('HIDE')"
                        (focusout)="hidePlaceHolder('SHOW')"
+                       [pTooltip]="correctAnswersList.get(question.id)[0]?.lib" tooltipPosition="top"
                        inputId="inputDashedBorder" type="text"
                        [placeholder]="inputAnswer"
                        [(ngModel)]="reponseQuiz.lib" class="p-inputtext-sm " pInputText/>
@@ -246,12 +237,6 @@
                    [(ngModel)]="answerSelected.lib"
                    class="p-inputtext-sm " pInputText/>
 
-            <label
-                    class="correctAnswer showLabel"
-                    for="inputDashedBorder">{{ correctAnswersList.get(question.id)[0]?.lib}}
-            </label>
-            <label id="triangle-down" for="inputDashedBorder">
-            </label>
 
         </span>
             <h5 class="h5"> {{  questionSideRight}}  </h5>
@@ -272,11 +257,6 @@
     <div *ngIf="question.typeDeQuestion.ref === 't5'" class="p-grid">
         <div class="p-col-12  question ">
             <div id="trueFalse" class="p-grid trueOrFalseQst">
-                <div class="p-col-9 hideThisDiv"></div>
-                <div class="p-col-3 hideThisDiv">
-                    <div class="float-answer-correct">{{this.correctAnswersList.get(question.id)[0]?.lib}}</div>
-                    <div class="float-answer-correct-triangle-down"></div>
-                </div>
                 <div class="p-col-9">
                     {{  question?.libelle}}
                 </div>
@@ -285,6 +265,7 @@
                                     id="toggleButton"
                                     [disabled]="disableToggleButton"
                                     (ngModelChange)="showCheckButton=true; showDontKnowButton=false"
+                                    [pTooltip]="correctAnswersList.get(question.id)[0]?.lib" tooltipPosition="top"
                                     offLabel="False" onIcon="pi pi-check"
                                     offIcon="pi pi-times"
                                     [style]="{'width': '7em',
@@ -382,13 +363,20 @@
         </ng-template>
         <ng-template pTemplate="body" let-answer>
             <tr>
-                <th scope="row" *ngIf="answer.answer === answer?.reponse?.lib && answer.note !== 0.5 "><i class="pi pi-check-circle"></i></th>
+                <th scope="row" *ngIf="answer.answer === answer?.reponse?.lib && answer.note !== 0.5 ">
+                    <i class="pi pi-check-circle" pTooltip="Correct answer" tooltipPosition="top"></i>
+                </th>
 
-                <th scope="row" *ngIf="answer.answer !== answer.reponse.lib"><i class="pi pi-times-circle"></i></th>
+                <th scope="row" *ngIf="answer.answer !== answer.reponse.lib && answer.answer !== null || undefined">
+                    <i pTooltip="Incorrect answer" tooltipPosition="top" class="pi pi-times-circle"></i></th>
 
-                <th scope="row" *ngIf="answer.note === 0.5"><i class="pi pi-users"></i></th>
+                <th scope="row" *ngIf="answer.note === 0.5">
+                    <i pTooltip="Professor is answered" tooltipPosition="top" class="pi pi-users"></i>
+                </th>
 
-                <th scope="row" *ngIf="answer.answer === null || undefined"><i class="pi pi-exclamation-circle"></i></th>
+                <th scope="row" *ngIf="answer.answer === null || undefined">
+                    <i pTooltip="Student don't know" tooltipPosition="top" class="pi pi-exclamation-circle"></i>
+                </th>
 
                 <th scope="row">{{answer?.question?.numero}}</th>
                 <td>{{answer?.question?.typeDeQuestion?.lib}}</td>
