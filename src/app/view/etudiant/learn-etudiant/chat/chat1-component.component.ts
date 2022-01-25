@@ -4,6 +4,7 @@ import {ChatMessageDto} from '../../../../controller/model/chatMessageDto';
 import {LoginService} from '../../../../controller/service/login.service';
 import {ProfService} from '../../../../controller/service/prof.service';
 import {WebSocketService} from '../../../../controller/service/web-socket.service';
+import {GroupeEtudiant} from '../../../../controller/model/groupe-etudiant.model';
 
 @Component({
     selector: 'app-chat1',
@@ -30,12 +31,24 @@ export class Chat1Component implements OnInit, OnDestroy {
     }
 
     sendMessage(sendForm: NgForm) {
-        const chatMessageDto = new ChatMessageDto(this.servicelogin.etudiant.nom, sendForm.value.message, true);
-        console.log(this.servicelogin.etudiant.prof.chatMessageDto);
-        chatMessageDto.prof = this.servicelogin.etudiant.prof;
+        const chatMessageDto = new ChatMessageDto(this.servicelogin.etudiant.nom + ' ' + this.servicelogin.etudiant.prenom,
+            sendForm.value.message, true);
+        console.log('___________________________ GRP ET PROF _____________________________');
+        console.log(this.groupeEtudiant);
+        console.log('___________________________ GRP ET PROF _____________________________');
+        chatMessageDto.prof = this.groupeEtudiant.prof;
+        chatMessageDto.grpStudent = this.groupeEtudiant;
+        chatMessageDto.student = null;
+        chatMessageDto.quizReponse = null;
         chatMessageDto.type = 'message';
         console.log(chatMessageDto);
         this.webSocketService.sendMessage(chatMessageDto, 'STUDENT');
         sendForm.controls.message.reset();
     }
+
+    get groupeEtudiant(): GroupeEtudiant {
+        return this.webSocketService.groupeEtudiant;
+    }
+
+
 }

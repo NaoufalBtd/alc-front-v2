@@ -76,8 +76,7 @@ export class AppMenuComponent implements OnInit {
             return;
         } else {
 
-            // @ts-ignore
-            if (this.user.authorities[0].authority === Role.ADMIN) {
+            if (this.user.role === 'ADMIN') {
                 this.model = [
                     {label: 'Manage Parcours', icon: 'pi pi-fw pi-table', routerLink: ['/admin/parcours']},
                     {label: 'Inscriptions List', icon: 'pi pi-fw pi-check-square', routerLink: ['/admin/inscription']},
@@ -95,8 +94,8 @@ export class AppMenuComponent implements OnInit {
                     {label: 'Bonus', icon: 'pi pi-fw pi-wallet', routerLink: ['/admin/bonus']},
                     {label: 'Packs', icon: 'pi pi-briefcase', routerLink: ['/admin/PackStudent']}
                 ];
-            } // @ts-ignore
-            else if (this.user.authorities[0].authority === Role.PROF) {
+            }
+            else if (this.user.role === 'TEACHER') {
                 this.model = [
                     {label: 'HomeTeacher', icon: 'pi pi-fw pi-home', routerLink: ['/prof/home']},
                     {label: 'Recommend A teacher', icon: 'pi pi-fw pi-comment', routerLink: ['/prof/recommendation-teacher']},

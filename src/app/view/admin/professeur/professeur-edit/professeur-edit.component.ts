@@ -234,8 +234,8 @@ export class ProfesseurEditComponent implements OnInit {
         this.trancheEdit.groupIndex = 0;
         this.trancheEdit.prof = this.selected;
         console.log(this.selectedDay);
-        if (this.selectedDay !== null && undefined){
-           this.trancheEdit.day = this.selectedDay.value;
+        if (this.trancheEdit.id === 0) {
+            this.trancheEdit.day = this.selectedDay.value;
         }
         console.log(this.trancheEdit);
         this.trancheHoraireService.edit(this.trancheEdit).subscribe(
@@ -265,7 +265,7 @@ export class ProfesseurEditComponent implements OnInit {
     }
 
     hideDialog() {
-        this.displayModal=false
+        this.displayModal = false;
         this.trancheEdit = new TrancheHoraireProf();
     }
 }

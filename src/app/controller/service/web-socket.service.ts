@@ -42,7 +42,7 @@ export class WebSocketService {
     idprof: number;
     public isInSession = false;
     public sessionHasStarted = false;
-    private groupeEtudiant: GroupeEtudiant = new GroupeEtudiant();
+    private _groupeEtudiant: GroupeEtudiant = new GroupeEtudiant();
     private _grpStudentAnswers: Map<Etudiant, QuizReponse> = new Map<Etudiant, QuizReponse>();
 
 
@@ -58,6 +58,14 @@ export class WebSocketService {
     ) {
     }
 
+
+    get groupeEtudiant(): GroupeEtudiant {
+        return this._groupeEtudiant;
+    }
+
+    set groupeEtudiant(value: GroupeEtudiant) {
+        this._groupeEtudiant = value;
+    }
 
     get grpStudentAnswers(): Map<Etudiant, QuizReponse> {
         return this._grpStudentAnswers;
@@ -110,6 +118,7 @@ export class WebSocketService {
     }
 
     public closeWebSocket(user: any) {
+        this.chatMessages = [];
         this.webSocket.send(JSON.stringify(user));
         this.webSocket.close();
         this.webSocket.onclose = (event) => {
@@ -122,13 +131,13 @@ export class WebSocketService {
     public openWebSocket(user: User, prof: Prof, grpEtudiant: GroupeEtudiant, sender: string) {
         this.webSocket = new WebSocket(this.socketUrl);
         this.webSocket.onopen = (event) => {
+            console.log('ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooopeeeeeeeeen');
+            this.prof = prof;
+            this.groupeEtudiant = grpEtudiant;
             if (sender === 'PROF') {
-                this.groupeEtudiant = grpEtudiant;
-                console.log('ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooopeeeeeeeeen');
                 this.participants.set(prof.id, this.connectedUsers);
                 console.log(this.participants);
             } else {
-                this.prof = prof;
                 this.groupeEtudiantService.findAllGroupeEtudiantDetail(grpEtudiant.id).subscribe(
                     data => {
                         const groupeEtudiantDetails = data;
@@ -140,7 +149,6 @@ export class WebSocketService {
                 );
                 this.webSocket.send(JSON.stringify(user));
             }
-            console.log('ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooopeeeeeeeeen');
         };
         this.webSocket.onerror = (event) => {
             console.log(event);
@@ -151,8 +159,16 @@ export class WebSocketService {
             const data: ChatMessageDto = JSON.parse(event.data);
             console.log(data);
             if (data.type === 'message') {
-                this.chatMessages.push(data);
-                console.log(data);
+                for (const students of this.participants.values()) {
+                    for (const etd of students) {
+                        if (this.loginservice.getConnectedStudent().id === etd.id) {
+                            this.chatMessages.push({...data});
+                        }
+                    }
+                }
+                if (data.prof.id === this.loginservice.getConnecteUser().id) {
+                    this.chatMessages.push({...data});
+                }
             } else if (data.type === 'NEXT') {
                 console.log('hani ghandir next l student');
                 this.simulatesectionService.nextSection();
@@ -186,8 +202,12 @@ export class WebSocketService {
                 }
             } else {
                 const mydata = JSON.parse(event.data);
-                console.log(mydata.prof.id);
-                const studentList = this.participants.get(mydata?.prof?.id);
+                console.log(mydata);
+                console.log('=============== prof ======================');
+                console.log(this.prof);
+                console.log('=============== prof ======================');
+
+                const studentList = this.participants.get(this.prof.id);
                 for (const student of studentList) {
                     if (student.id === mydata.id) {
                         if (this.studentsEnLigne.get(student.id) === undefined) {
@@ -220,15 +240,23 @@ export class WebSocketService {
         console.log('-------------------------------------------------------------------');
         console.log(this.webSocket.readyState);
         if (this.webSocket.readyState === this.webSocket.OPEN) {
-            chatMessageDto.quizReponse.question.quiz = null;
-            chatMessageDto.quizReponse.question.reponses = null;
-            const myData = JSON.stringify((chatMessageDto));
-            this.webSocket.send(myData);
+            if (chatMessageDto.type === 'message') {
+                this.webSocket.send(JSON.stringify((chatMessageDto)));
+            } else {
+                chatMessageDto.quizReponse.question.quiz = null;
+                chatMessageDto.quizReponse.question.reponses = null;
+                const myData = JSON.stringify((chatMessageDto));
+                this.webSocket.send(myData);
+            }
             this.webSocket.onerror = (event) => {
                 console.log(event);
                 alert('erroor to send');
             };
         } else {
+            if (chatMessageDto.type !== 'message') {
+                chatMessageDto.quizReponse.question.quiz = null;
+                chatMessageDto.quizReponse.question.reponses = null;
+            }
             console.log('=========WEB SOCKET WAS CLOSED===============');
             if (sender === 'PROF') {
                 this.openWebSocket(this.loginservice.getConnectedProf(), this.loginservice.getConnectedProf(),
@@ -328,8 +356,8 @@ export class WebSocketService {
         );
     }
 
-    public findCurrentSectionForstudent(cours: Cours) {
-        this.http.get<Section>(this.profUrl + this.synchronizationUrl + '/id/' + this.loginservice.etudiant.prof.id).subscribe(
+    public findCurrentSectionForstudent(cours: Cours, prof: Prof) {
+        this.http.get<Section>(this.profUrl + this.synchronizationUrl + '/id/' + prof.id).subscribe(
             async data => {
                 if (data !== null) {
                     this.parcoursService.selectedsection = data;
@@ -359,5 +387,18 @@ export class WebSocketService {
     set connectedUsers(value: any[]) {
         this._connectedUsers = value;
     }
+    //
+    // private studentIsInGroup(grpStudent: GroupeEtudiant): string {
+    //     this.groupeEtudiantService.findAllGroupeEtudiantDetail(grpStudent.id).subscribe(data => {
+    //         this.groupeEtudiant.groupeEtudiantDetails = data;
+    //         for (const grpEtudiantDetails of data) {
+    //             if (this.loginservice.getConnectedStudent().id === grpEtudiantDetails.etudiant.id) {
+    //                 console.log('============ ANA F TRUE ==================');
+    //                 return 'true';
+    //             }
+    //         }
+    //     });
+    //     console.log('============ ANA F FALSE ==================');
+    // }
 
 }

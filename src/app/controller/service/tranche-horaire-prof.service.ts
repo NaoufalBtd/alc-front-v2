@@ -31,6 +31,9 @@ export class TrancheHoraireProfService {
     public findTrancheHoraireByProfId(prof: Prof): Observable<Array<TrancheHoraireProf>> {
         return this.http.get<Array<TrancheHoraireProf>>(this.adminUrl + 'trancheHoraireProfRest/id/' + prof.id);
     }
+    public findAll(): Observable<Array<TrancheHoraireProf>> {
+        return this.http.get<Array<TrancheHoraireProf>>(this.adminUrl + 'trancheHoraireProfRest/');
+    }
 
     edit(trancheEdit: TrancheHoraireProf): Observable<TrancheHoraireProf> {
         return this.http.post<TrancheHoraireProf>(this.adminUrl + 'trancheHoraireProfRest/', trancheEdit);

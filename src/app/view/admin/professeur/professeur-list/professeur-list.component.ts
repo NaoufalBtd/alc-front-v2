@@ -13,6 +13,8 @@ import {
     ScheduleComponent,
     TimeScaleModel, View
 } from '@syncfusion/ej2-angular-schedule';
+import { DropDownList } from '@syncfusion/ej2-dropdowns';
+import { DateTimePicker } from '@syncfusion/ej2-calendars';
 import {ScheduleService} from '../../../../controller/service/schedule.service';
 import {Islamic, TimePickerComponent} from '@syncfusion/ej2-angular-calendars';
 import {addClass, Internationalization} from '@syncfusion/ej2-base';
@@ -32,12 +34,13 @@ import {ParcoursService} from '../../../../controller/service/parcours.service';
     styleUrls: ['./professeur-list.component.scss']
 })
 export class ProfesseurListComponent implements OnInit {
-
+    public profs: Array<Prof> = new Array<Prof>();
     @ViewChild('timezoneDropdown') public timezoneDropdownObj: DropDownListComponent;
     public dropDownValue = 'Africa/Casablanca';
     public fields: Record<string, any> = {text: 'label', value: 'tzCode'};
     public timezoneData: Record<string, any>[] = timezones;
-
+    public profsDataSource: Record<string, any> = this.profs;
+    public group: GroupModel = {enableCompactView: false, resources: ['profs']};
 
     constructor(private messageService: MessageService,
                 private parcourService: ParcoursService,
@@ -152,38 +155,17 @@ export class ProfesseurListComponent implements OnInit {
     // public selectedDate: Date = new Date(2021, 4, 18);
     public selectedDate: Date = new Date();
     public showWeekend = false;
-    public eventSettings: EventSettingsModel =  {
-    dataSource: this.scheduleProfs,
-    fields: {
-        id: 'Id',
-        subject: {name: 'subject', title: 'subject'},
-        startTime: {name: 'startTime', title: 'startTime'},
-        endTime: {name: 'endTime', title: 'endTime'}
-    }
-};
-
-    public currentView: View = 'Week';
-    public allowDragDrop: boolean = false;
-    public resourceDataSource: Object[] = [
-        {
-            text: 'Youssef Elmoudene',
-            subject: ' ',
-            id: 0,
-            startHour: '08:00',
-            endHour: '15:00',
+    public eventSettings: EventSettingsModel = {
+        dataSource: this.scheduleProfs,
+        fields: {
+            id: 'Id',
+            subject: {name: 'subject', title: 'subject'},
+            startTime: {name: 'startTime', title: 'startTime'},
+            endTime: {name: 'endTime', title: 'endTime'}
         }
-    ];
-    public group: GroupModel = {byDate: true, resources: ['Profs']};
-    // public eventSettings: EventSettingsModel = {
-    //     dataSource: this.scheduleProfs,
-    //     fields: {
-    //         id: 'id',
-    //         subject: {name: 'subject', title: 'subject'},
-    //         startTime: {name: 'startTime', title: 'startTime'},
-    //         endTime: {name: 'endTime', title: 'endTime'}
-    //     }
-    // };
-
+    };
+    public data: ScheduleProf = new ScheduleProf();
+    public currentView: View = 'Day';
 
     public islayoutChanged: boolean = false;
 
@@ -197,7 +179,10 @@ export class ProfesseurListComponent implements OnInit {
         this.findAll();
         this.selectedDate = new Date();
         this.scheduleService.getAllStudentsGroup().subscribe(data => this.groupeStudent = data);
-        this.scheduleService.getProf().subscribe(data => this.professors = data);
+        this.scheduleService.getProf().subscribe(data => {
+            this.professors = data;
+            this.profsDataSource = this.professors;
+        });
         this.scheduleService.findEtat().subscribe(data => this.scheduleService.etatEtudiantSchedule = data);
         console.log(this.scheduleProfs);
     }
@@ -299,11 +284,14 @@ export class ProfesseurListComponent implements OnInit {
     }
 
     showScheduleDialog(prof: Prof) {
+        this.selected = prof;
+        this.profs = new Array<Prof>();
         this.scheduleProfs.splice(0, this.scheduleProfs.length);
         this.scheduleDialog = false;
         this.scheduleProfs.splice(0, this.scheduleProfs.length);
         const scheduleObj = this.scheduleObj;
         scheduleObj.eventSettings.dataSource = null;
+        this.scheduleProf.prof = prof;
         console.log(prof);
         this.trancheHoraireProfService.findTrancheHoraireByProfId(prof).subscribe(
             data => {
@@ -320,17 +308,21 @@ export class ProfesseurListComponent implements OnInit {
                 console.log(this.scheduleProfs);
                 for (const item1 of scheduleData) {
                     this.scheduleProfs.push({...item1});
-                    this.eventSettings = {
-                        dataSource: this.scheduleProfs,
-                        fields: {
-                            id: 'Id',
-                            subject: {name: 'subject', title: 'subject'},
-                            startTime: {name: 'startTime', title: 'startTime'},
-                            endTime: {name: 'endTime', title: 'endTime'}
-                        }
-                    };
                 }
                 console.log(this.scheduleProfs);
+                this.eventSettings = {
+                    dataSource: this.scheduleProfs,
+                    fields: {
+                        id: 'id',
+                        subject: {name: 'subject', title: 'subject'},
+                        startTime: {name: 'startTime', title: 'startTime'},
+                        endTime: {name: 'endTime', title: 'endTime'}
+                    }
+                };
+                this.profs.push({...prof});
+                console.log(this.profs);
+                this.profsDataSource = this.profs;
+
             }
         );
 
@@ -343,6 +335,10 @@ export class ProfesseurListComponent implements OnInit {
         scheduleObj.eventSettings.dataSource = null;
         this.scheduleObj.eventWindow.refresh();
 
+    }
+
+    hideDeleteDialog() {
+        this.display = false;
     }
 
 
@@ -362,14 +358,24 @@ export class ProfesseurListComponent implements OnInit {
     onPopupOpen(args: PopupOpenEventArgs): void {
         console.log(this.scheduleObj.eventSettings.dataSource);
         console.log(this.scheduleProfs);
-        if (args.target && args.target.classList.contains('e-work-cells')) {
-            args.cancel = !args.target.classList.contains('e-work-hours');
-        }
+        this.data.subject = args.data.subject;
+        this.data.startTime = args.data.startTime;
+        this.data.endTime = args.data.endTime;
+        this.scheduleProf.startTime = args.data.startTime;
+        this.scheduleProf.endTime = args.data.endTime;
+        this.scheduleProf.grpName = args.data?.groupeEtudiant.libelle;
+        this.scheduleProf.profName = args.data?.prof.nom;
+        this.scheduleProf.subject = args.data.subject;
+        this.scheduleProf.prof = args.data.prof;
+        this.scheduleProf.id = args.data.id;
+        console.log(this.scheduleProf.id);
+        this.scheduleProf.groupeEtudiant = args.data.groupeEtudiant;
+        this.grpEtudiant = this.scheduleProf.groupeEtudiant;
+        this.selectionTarget = null;
+        this.selectionTarget = args.target;
     }
 
     onDataBound(trancheHoraireProfList: Array<TrancheHoraireProf>): void {
-        console.log('==================== list tranche Horraire=============================');
-        console.log(trancheHoraireProfList);
         this.scheduleObj.eventSettings.dataSource = this.scheduleProfs;
         this.eventSettings = {
             dataSource: this.scheduleProfs,
@@ -408,12 +414,15 @@ export class ProfesseurListComponent implements OnInit {
             this.islayoutChanged = true;
             this.onDataBound(this.trancheHoraireProfList);
         }
+        this.scheduleObj.eventSettings.dataSource = null;
+        this.scheduleObj.eventSettings.dataSource = this.scheduleProfs;
+        console.log(this.scheduleObj.eventSettings.dataSource);
     }
 
     onRenderCell(args: RenderCellEventArgs): void {
         if (
-            args.element.classList.contains('e-work-hours') ||
-            args.element.classList.contains('e-work-cells')
+            args.element?.classList?.contains('e-work-hours') ||
+            args.element?.classList?.contains('e-work-cells')
         ) {
             addClass(
                 [args.element], 'willsmith'[
@@ -433,6 +442,8 @@ export class ProfesseurListComponent implements OnInit {
     }
 
     save() {
+        console.log(this.selected);
+        this.scheduleProf.prof = this.scheduleProf.groupeEtudiant.prof;
         const fixedRef = this.scheduleProf.ref;
         const startedDate = this.scheduleProf.startTime;
         const endedDate = this.scheduleProf.endTime;
@@ -487,8 +498,6 @@ export class ProfesseurListComponent implements OnInit {
         this.scheduleObj.eventWindow.refresh();
         this.optionSelected = 'Never';
     }
-
-
 
 
     get scheduleProf(): ScheduleProf {
@@ -659,6 +668,8 @@ export class ProfesseurListComponent implements OnInit {
 
     public onDetailsClick(event: any): void {
         this.scheduleProf = new ScheduleProf();
+        this.scheduleProf.prof = this.selected;
+        console.log(this.scheduleProf.prof);
         const data: Object = this.scheduleObj.getCellDetails(this.scheduleObj.getSelectedElements()) as Object;
         this.scheduleObj.openEditor(data, 'Add');
     }
@@ -666,11 +677,14 @@ export class ProfesseurListComponent implements OnInit {
     public getProf() {
         this.scheduleService.getProf().subscribe(data => this.professors = data);
     }
+
     getCourses(groupeEtudiant: GroupeEtudiant) {
         this.parcourService.FindCoursByParcours(groupeEtudiant.parcours.id).subscribe(data => this.courses = data);
-        console.log(this.courses);
+        console.log(this.scheduleProf.prof);
     }
+
     findAll() {
+        this.getProf();
         this.scheduleService.findAll().subscribe(data => {
                 this.scheduleProfs = data;
                 this.eventSettings = {

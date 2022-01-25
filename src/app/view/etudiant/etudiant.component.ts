@@ -142,7 +142,7 @@ export class EtudiantComponent implements OnInit{
       this.router.navigate(['#/']);
     } else {
       // @ts-ignore
-      if (this.user.authorities[0].authority === Role.ADMIN || this.user.authorities[0].authority === Role.PROF
+      if (this.user.role === Role.ADMIN || this.user.role === Role.PROF
           || this.user.authorities.length === 0) {
         this.router.navigate([' ']);
       }
