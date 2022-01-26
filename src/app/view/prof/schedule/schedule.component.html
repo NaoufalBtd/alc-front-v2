@@ -12,91 +12,227 @@
     </p-dialog>
 </div>
 
-<div class="control-section">
-    <div class="p-grid" style="background-color: #ff8800; border-radius: 5px;">
-        <div class="p-col-5">
-            <input class="searchValue" [(ngModel)]="schedule.groupeEtudiant.libelle" type="text" pInputText
-                   placeholder="Search by group.."/>
-            <button pButton pRipple type="button" (click)="findByCriteriaStudent()"
-                    icon="pi pi-search" class=" searchButton p-button-rounded p-button-text"></button>
-        </div>
 
-
-        <div class="p-col-5">
-            <table style="float: right" class="property-table">
-                <tbody>
-                <tr>
-                    <td style="width: 80%;">
-                        <div>
-                            <ejs-dropdownlist width='250px' id='scheduletimezone' #timezoneDropdown
-                                              [dataSource]='timezoneData'
-                                              (change)='onTimezoneDropDownChange($event)' [value]='dropDownValue'
-                                              [allowFiltering]="true"
-                                              [fields]='fields'
-                                              popupWidth='250'></ejs-dropdownlist>
-                        </div>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-
-
-        <div style="text-align: end" class="p-col-2">
-            <button class="instruction-button p-button-text" (click)="showBasicDialog()" icon="pi pi-question"
-                    label="Instruction"
-                    iconPos="right"
-                    pButton
-                    pRipple></button>
-        </div>
-
-
-        <ejs-schedule #scheduleObj width='100%' [selectedDate]="selectedDate" [readonly]="true"
-                      [eventSettings]="eventSettings "
-                      (actionComplete)="onActionComplete()"
-                      (popupOpen)="onPopupOpen($event)">
-            <e-views>
-                <e-view option="Day"></e-view>
-                <e-view option="Week" [timeScale]='timeScale'></e-view>
-                <e-view option="WorkWeek" [timeScale]='timeScale'></e-view>
-                <e-view option="Month" [timeScale]='timeScale'></e-view>
-            </e-views>
-
-            <e-resources>
-                <e-resource field='id' title='grpName' name='grpName' [dataSource]='scheduleProfs'
-                            textField='grpName'
-                            idField='id' colorField='#68c671'>
-                </e-resource>
-            </e-resources>
-
-            <ng-template #quickInfoTemplatesHeader>
-                <div>
-                    <div class="e-popup-header">
-                        <div class="e-header-icon-wrapper">
-                            <button disabled class="e-edit e-control e-btn e-lib e-flat e-round e-small e-icon-btn"
-                                    title="Edit">
-                            </button>
-                            <button [disabled]="true"
-                                    class=" e-control e-btn e-lib e-flat e-round delete-btn e-small e-icon-btn"
-                                    title="Delete">
-                                <span class="e-btn-icon e-icons e-delete-icon"></span>
-                            </button>
-                            <button class="e-close e-control e-btn e-lib e-flat e-round e-small e-icon-btn"
-                                    title="Close">
-                            </button>
-                        </div>
-                        <div class="e-subject-wrap">
-                            <button (click)="startSession()"
-                                    style="float:right; background-color:#3f51b5 ;   margin: 12% -7% 0 0;" pButton
-                                    pRipple
-                                    type="button" label="Start" class="p-button-rounded p-button-lg "></button>
-
-                        </div>
-                    </div>
-
+<p-tabView [style]="{backgroundColor: '#ffa500'}">
+    <p-tabPanel header="Schedule">
+        <div class="control-section">
+            <div class="p-grid" style="background-color: #ff8800; border-radius: 5px;">
+                <div class="p-col-5">
+                    <input class="searchValue" [(ngModel)]="schedule.groupeEtudiant.libelle" type="text" pInputText
+                           placeholder="Search by group.."/>
+                    <button pButton pRipple type="button" (click)="findByCriteriaStudent()"
+                            icon="pi pi-search" class=" searchButton p-button-rounded p-button-text"></button>
                 </div>
-            </ng-template>
-        </ejs-schedule>
-    </div>
-</div>
 
+
+                <div class="p-col-5">
+                    <table style="float: right" class="property-table">
+                        <tbody>
+                        <tr>
+                            <td style="width: 80%;">
+                                <div>
+                                    <ejs-dropdownlist width='250px' id='scheduletimezone' #timezoneDropdown
+                                                      [dataSource]='timezoneData'
+                                                      (change)='onTimezoneDropDownChange($event)'
+                                                      [value]='dropDownValue'
+                                                      [allowFiltering]="true"
+                                                      [fields]='fields'
+                                                      popupWidth='250'></ejs-dropdownlist>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+
+                <div style="text-align: end" class="p-col-2">
+                    <button class="instruction-button p-button-text" (click)="showBasicDialog()" icon="pi pi-question"
+                            label="Instruction"
+                            iconPos="right"
+                            pButton
+                            pRipple></button>
+                </div>
+
+
+                <ejs-schedule #scheduleObj width='100%' [selectedDate]="selectedDate" [readonly]="true"
+                              [eventSettings]="eventSettings "
+                              (actionComplete)="onActionComplete()"
+                              (popupOpen)="onPopupOpen($event)">
+                    <e-views>
+                        <e-view option="Day"></e-view>
+                        <e-view option="Week" [timeScale]='timeScale'></e-view>
+                        <e-view option="WorkWeek" [timeScale]='timeScale'></e-view>
+                        <e-view option="Month" [timeScale]='timeScale'></e-view>
+                    </e-views>
+
+                    <e-resources>
+                        <e-resource field='id' title='grpName' name='grpName' [dataSource]='scheduleProfs'
+                                    textField='grpName'
+                                    idField='id' colorField='#68c671'>
+                        </e-resource>
+                    </e-resources>
+
+                    <ng-template #quickInfoTemplatesHeader>
+                        <div>
+                            <div class="e-popup-header">
+                                <div class="e-header-icon-wrapper">
+                                    <button disabled
+                                            class="e-edit e-control e-btn e-lib e-flat e-round e-small e-icon-btn"
+                                            title="Edit">
+                                    </button>
+                                    <button [disabled]="true"
+                                            class=" e-control e-btn e-lib e-flat e-round delete-btn e-small e-icon-btn"
+                                            title="Delete">
+                                        <span class="e-btn-icon e-icons e-delete-icon"></span>
+                                    </button>
+                                    <button class="e-close e-control e-btn e-lib e-flat e-round e-small e-icon-btn"
+                                            title="Close">
+                                    </button>
+                                </div>
+                                <div class="e-subject-wrap">
+                                    <button (click)="startSession()"
+                                            style="float:right; background-color:#3f51b5 ;   margin: 12% -7% 0 0;"
+                                            pButton
+                                            pRipple
+                                            type="button" label="Start" class="p-button-rounded p-button-lg "></button>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </ng-template>
+                </ejs-schedule>
+            </div>
+        </div>
+    </p-tabPanel>
+    <p-tabPanel header="Work hours">
+        <div *ngIf="!showAddTranche" class="card">
+            <p-table [value]="trancheHoraireProfs">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pSortableColumn="day">Day
+                            <p-sortIcon field="day"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="startHour">Start hour
+                            <p-sortIcon field="startHour"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="endHour">End hour
+                            <p-sortIcon field="endHour"></p-sortIcon>
+                        </th>
+                        <th>
+                            <button (click)="addNewTranche()"
+                                    class="p-button-rounded   p-button-outlined p-button-sm p-button-success"
+                                    label="New schedule"
+                                    pButton pRipple></button>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-tranche>
+                    <tr>
+                        <td>{{getDay(tranche.day)}}</td>
+                        <td>{{tranche.startHour}}</td>
+                        <td>{{tranche.endHour}}</td>
+                        <td>
+                            <button (click)="editTranche(tranche)"
+                                    class="p-button-rounded p-button-success p-mr-2" icon="pi pi-pencil" pButton
+                                    pRipple></button>
+                            <button (click)="displayDeleteDialogFct(tranche)"
+                                    class="p-button-rounded p-button-danger p-mr-2" icon="pi pi-trash" pButton
+                                    pRipple></button>
+                        </td>
+
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+
+
+        <div *ngIf="showAddTranche" class="card">
+            <div class="p-grid">
+                <div class="p-col-12">
+                    <p-dropdown [options]="daysOptions" [(ngModel)]="selectedDay" optionLabel="name"></p-dropdown>
+                </div>
+                <div class="p-col-6">
+                    <label for="startHour">Start hour</label>
+                    <p-calendar [(ngModel)]="dateDebut" [timeOnly]="true" [hourFormat]="24"
+                                id="startHour"></p-calendar>
+                </div>
+
+                <div class="p-col-6">
+                    <label for="endHour">End hour</label>
+                    <p-calendar [(ngModel)]="dateFin" [timeOnly]="true" [hourFormat]="24"
+                                id="endHour"></p-calendar>
+                </div>
+            </div>
+
+
+            <button [disabled]="(dateFin === undefined )|| (dateFin === undefined)"
+                    (click)="addHoraire()" class="p-button-text table1" icon="pi pi-plus" label="Add Horaire"
+                    pButton pRipple></button>
+
+
+            <p-table [value]="trancheHoraireProfList">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Day</th>
+                        <th pSortableColumn="datee"> Start hour</th>
+                        <th pSortableColumn="datee"> End hour</th>
+                    </tr>
+                </ng-template>
+                <ng-template let-e pTemplate="body">
+                    <tr>
+                        <td>{{getDay(e?.day)}}</td>
+                        <td>{{e?.startHour}}</td>
+                        <td>{{e?.endHour}}</td>
+                        <td>
+                            <button (click)="displayDeleteDialogFct(e)" class="p-button-rounded p-button-danger" icon="pi pi-trash"
+                                    pButton
+                                    pRipple></button>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </p-tabPanel>
+</p-tabView>
+
+
+<p-dialog header="Edit" [(visible)]="displayModal" [modal]="true" [style]="{width: '25vw'}"
+          [draggable]="false" [resizable]="false">
+    <ng-template pTemplate="content">
+
+        <div class="p-grid">
+            <div *ngIf="trancheEdit.id === 0" class="p-col-12">
+                <label for="startHour">Day</label>
+                <p-dropdown [style]="{width:'100%'}" [options]="daysOptions" [(ngModel)]="selectedDay"
+                            optionLabel="name"></p-dropdown>
+            </div>
+            <div class="p-col-12">
+                <label for="startHour2">Start hour</label><br>
+                <p-calendar [style]="{width: '100%'}" [(ngModel)]="dateDebut" [timeOnly]="true" [hourFormat]="24"
+                            id="startHour2"></p-calendar>
+            </div>
+
+            <div class="p-col-12">
+                <label for="endHour2">End hour</label><br>
+                <p-calendar [style]="{width: '100%'}" [(ngModel)]="dateFin" [timeOnly]="true" [hourFormat]="24"
+                            id="endHour2"></p-calendar>
+            </div>
+        </div>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-times" (click)="hideTrancheDialog()" label="Cancel"
+                  styleClass="p-button-text p-button-warning"></p-button>
+        <p-button icon="pi pi-check" (click)="saveTranche(); displayModal=false" label="Save"
+                  styleClass="p-button-text"></p-button>
+    </ng-template>
+</p-dialog>
+
+<p-dialog [(visible)]="displayDeleteDialog" [baseZIndex]="10000" [style]="{width: '30vw'}">
+    <h5>Are you sure you want to delete this date ?</h5>
+    <ng-template pTemplate="footer">
+        <p-button (click)="deleteTranche()" icon="pi pi-check" label="Confirm" styleClass="p-button-text"></p-button>
+    </ng-template>
+</p-dialog>
