@@ -57,7 +57,6 @@
             <th>Course</th>
             <th>Date</th>
             <th>Etat de Payement</th>
-            <th>Payee</th>
 
         </tr>
     </ng-template>
@@ -83,13 +82,7 @@
             <td>
                 {{c.payer}}
             </td>
-            <td>
-                <button pButton pRipple type="button" label="Payer" class="p-button-success" id="payee"
-                        (click)="savepaiement(c.id)"
-                        [disabled]="c.payer==true || c.totalheure==0"
-                ></button>
 
-            </td>
 
 
         </tr>

@@ -28,6 +28,7 @@ import {Section} from '../../../controller/model/section.model';
 import {ParcoursService} from '../../../controller/service/parcours.service';
 import {DropDownListComponent} from '@syncfusion/ej2-angular-dropdowns';
 import timezones from 'timezones-list';
+import {SessionCoursService} from '../../../controller/service/session-cours.service';
 
 L10n.load({
     'en-US': {
@@ -77,6 +78,7 @@ export class ScheduleLocalComponent implements OnInit {
 
 
     constructor(private scheduleService: ScheduleService, private messageService: MessageService,
+                private sessionservice: SessionCoursService,
                 private parcoursService: ParcoursService,
                 private confirmationService: ConfirmationService, private loginService: LoginService,
                 private groupeEtudiantService: GroupeEtudiantService, private webSocketService: WebSocketService,
@@ -371,6 +373,7 @@ export class ScheduleLocalComponent implements OnInit {
         console.log(this.data.groupeEtudiant.id);
         this.webSocketService.sessionHasStarted = true;
         this.findAllGroupeEtudiantDetail(this.data.groupeEtudiant.id);
+        this.sessionservice._idgroup = this.data.groupeEtudiant.id;
         console.log(this.data);
         this.simulateSectionService.findSectionOneByOne(this.data.cours);
         this.parcoursService.afficheOneSectionByProf(this.data.cours).subscribe(

@@ -1,117 +1,191 @@
-<div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
-                 <span style="margin-left: 55%">
-              <!--         <input pInputText placeholder="Month" style="width:25% ; margin-top: 10%" [(ngModel)]="mois"
-                            type="text">
+<div class="p-grid">
+    <div class="p-col-12">
+        <p-toast></p-toast>
+        <div class="card">
+            <p-toolbar styleClass="p-mb-4">
+                <ng-template pTemplate="left">
+                    <h5 (click)="view()"> MyLevel: <span
+                            style="cursor: pointer;color: #0c799f">{{this.serviceUser.getConnectedProf().categorieProf.level}} </span>
+                    </h5>
+                </ng-template>
+                <ng-template pTemplate="right">
+                    <p-dropdown [options]="itemsMOIS" [(ngModel)]="mois" placeholder="Select Month" [itemSize]="31"
+                                [showClear]="true"
+                                [filter]="false" style="margin-right: 5px"></p-dropdown>
+                    <p-dropdown [options]="itemsannee" [(ngModel)]="annee" placeholder="Select Year" [showClear]="true"
+                                [itemSize]="31"
+                                [filter]="false"></p-dropdown>
+                    <button pButton pRipple label="Search" icon="pi pi-search" class="p-button-primary p-ml-2 "
+                            (click)="findAllByCriteria(this.serviceUser.getConnectedProf().nom,mois,annee)"
+                    ></button>
+                </ng-template>
+            </p-toolbar>
+            <p-toolbar styleClass="p-mb-4">
+                <ng-template pTemplate="left">
+                    <h5>Number of Sessions Completed: <span
+                            style="cursor: pointer;color: #0c799f">{{sessioncourslistProf.length}} </span></h5>
 
-                   <input pInputText placeholder="Year" [(ngModel)]="annee"
-                               style="margin-left: 2%; width:25% ; margin-top: 10%"
-                               type="text">
+                </ng-template>
+                <ng-template pTemplate="right">
 
--->
-                      <p-dropdown [options]="itemsMOIS" [(ngModel)]="mois" placeholder="Select Month"  [itemSize]="31" [showClear]="true"
-                                  [filter]="false" style="margin-right: 5px" ></p-dropdown>
-                     <p-dropdown [options]="itemsannee" [(ngModel)]="annee" placeholder="Select Year" [showClear]="true"  [itemSize]="31"
-                                 [filter]="false" ></p-dropdown>
-                          <p-button icon="pi pi-search" style="margin-left: 5px"
-                                    (click)="openSalary()"
-                                    (click)="findSalaryByMoisAndAnneeAndProfId(mois,annee,this.serviceUser.getConnectedProf().id)"
-                                    (click)="findAllWorkloadBonusProfByMoisAndAnneeAndProfId(mois,annee,this.serviceUser.getConnectedProf().id)"
-                                    (click)="findAllPaiementByMoisAndAnneeAndProfId(mois,annee,this.serviceUser.getConnectedProf().id)"
-                                    ></p-button>
-                 </span>
-</div>
-<div class="p-grid-transparent p-col-10" style="margin-left: 15%; background-color: transparent">
-    <div class="p-col-10 ">
-        <div class="expenses card card-w-title" style="background-color: gainsboro">
-            <div class="p-grid">
-                <div class="p-col "><h5 (click)="view()" style="color: #0c799f"> MyLevel: <u
-                        style="cursor: pointer">{{this.serviceUser.getConnectedProf().categorieProf.level}} </u></h5>
-                </div>
-                <div class="p-col"><p style="margin-left: 45%">EnglishDom Experience: <b>
-                    months</b></p></div>
-            </div>
+                    <h5>Total Salaries: <span style="cursor: pointer;color: #0c799f">{{this.monatantGlobale}} $</span>
+                    </h5>
+
+                </ng-template>
+            </p-toolbar>
+            <p-table #dt [rows]="4" [paginator]="true" [value]="salaryList"
+                     [globalFilterFields]="['reference','total','totalPaye']"
+                     [rowHover]="true" dataKey="id" styleClass="p-datatable-customers"
+                     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                     [showCurrentPageReport]="true">
+                <ng-template pTemplate="caption">
+                    <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
+                        <h5 class="p-m-0">List of Salary</h5>
+
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 3rem">
+                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                        </th>
+                        <th pSortableColumn="code">Code</th>
+                        <th pSortableColumn="annee">Year</th>
+                        <th pSortableColumn="mois">Month</th>
+                        <th pSortableColumn="nbrSessionMensuel">Number of Monthly Sessions</th>
+                        <th pSortableColumn="montantMensuel">Monthly Amount</th>
+                        <th>Details</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-salary>
+                    <tr>
+                        <td>
+                            <p-tableCheckbox [value]="salary"></p-tableCheckbox>
+                        </td>
+                        <td>{{salary.code}}</td>
+                        <td>{{salary.annee}}</td>
+                        <td>{{salary.mois}}</td>
+                        <td>{{salary.nbrSessionMensuel}}</td>
+                        <td>{{salary.montantMensuel}}</td>
+                        <td>
+                            <button pButton pRipple icon="pi pi-list" class="p-button-rounded p-button-info p-mr-2"
+                                    (click)="showDetails(salary.mois,salary.annee,this.serviceUser.getConnectedProf().id)"
+
+                            ></button>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="summary">
+
+                </ng-template>
+            </p-table>
         </div>
-    </div>
-
-
-    <div class="p-col-10 ">
-        <div class="expenses card card-w-title" style="background-color: gainsboro;">
-            <h5>Salary</h5>
-            <div class="p-grid" style="margin-left: 15%">
-                <div class="p-col">
-
-
-                    <h6>Current Month Pay</h6>
-                    <h1>{{this.currentMonthPay}} $</h1>
-                    <h6>Global Pay</h6>
-                    <h1> {{this.monatantGlobale}}$</h1>
-
-                </div>
-                <div class="p-col">
-                    <p-chart [data]="data" type="pie"></p-chart>
-                </div>
-
-
-            </div>
-
-
-            <div class="p-col " style="margin-left: 2% ">
-                <p-menubar [model]="items">
-
-                </p-menubar>
-
-            </div>
-            <!--hona-->
-            <div class="p-grid card p-mt-3">
-                <div class="p-col-4">
-                    <h5>LessonComplete</h5>
-                    <h5>{{sessioncourslistProf.length}}</h5>
-                </div>
-                <div class="p-col-1">
-                    <h5>X</h5>
-                </div>
-                <div class="p-col-3">
-                    <h5>LessonRate</h5>
-                    <h5>{{this.serviceUser.getConnectedProf().categorieProf.lessonRate}} $</h5>
-                </div>
-                <div class="p-col-1">
-                    <h5>=</h5>
-                </div>
-                <div class="p-col-3">
-                    <h5>Total</h5>
-                    <h5>{{sessioncourslistProf.length * this.serviceUser.getConnectedProf().categorieProf.lessonRate}}
-                        $</h5>
-                </div>
-            </div>
-        </div>
+        <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
     </div>
     <app-categorie-prof-view></app-categorie-prof-view>
 </div>
 
-<p-dialog header="My Salary" [(visible)]="displaySalary">
-    <div class="p-field">
-        Your details salary in this month is:
-    </div>
-    <div class="p-field">
-        <strong>My Payment : </strong> {{this.monatantPaiementProf}} $
-    </div>
-    <div class="p-field">
-    <span>
-         <strong>My Bonus : </strong>{{this.monatantworkloadBonusProf}}  $
-    </span>
-        <br>
-        <br>
-        <span style="margin-left: 10px;">
-         <strong style="color: #BFBFBF;"> Class Average Bonus : </strong>  $
-    </span>
-        <br>
-        <br>
-        <span style="margin-left: 10px;">
-         <strong style="color: #BFBFBF;">Workload Bonus : </strong> {{this.monatantworkloadBonusProf}}$
-    </span>
-    </div>
+<p-dialog header="Details Salary" [(visible)]="displayDetails" [style]="{width: '50vw'}" [baseZIndex]="10000">
+    <p-tabView>
+        <p-tabPanel header="Payment">
+            <p-table #dat [rows]="4" [value]="salarypaymentList"
+                     [globalFilterFields]="['reference','total','totalPaye']"
+                     dataKey="id" styleClass="p-datatable-customers">
 
-    <div class="p-field">
-        <strong>My Salary : </strong> {{this.salaryMonth.montantMensuel}}$
-    </div>
+                <ng-template pTemplate="caption">
+                    <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
+                        <h5 class="p-m-0">List of Payment</h5>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pSortableColumn="Amount">Amount</th>
+                        <th pSortableColumn="Studentgroup">Student group</th>
+
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-payment>
+                    <tr>
+                        <td>{{payment.montant}}</td>
+                        <td>{{payment.groupeEtudiant.libelle}}</td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="footer">
+                    <h5 style="margin-top: 15px">Total Payment: <span
+                            style="color: #0d67ce">{{this.monatantPaiementProf}}</span></h5>
+                </ng-template>
+            </p-table>
+
+
+        </p-tabPanel>
+        <p-tabPanel header="Bonus">
+            <p-tabView>
+                <p-tabPanel header="ClassAverage Bonus">
+                    <p-table #dat [rows]="4" [value]="salaryclassAverageBonusProf"
+                             [globalFilterFields]="['reference','total','totalPaye']"
+                             dataKey="id" styleClass="p-datatable-customers">
+
+                        <ng-template pTemplate="caption">
+                            <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
+                                <h5 class="p-m-0">List of ClassAverage Bonus</h5>
+                            </div>
+                        </ng-template>
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th pSortableColumn="Amount">Amount</th>
+                                <th pSortableColumn="ClassAverage Bonus">ClassAverage Bonus</th>
+
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-classAverageBonusProf>
+                            <tr>
+                                <td>{{classAverageBonusProf.classAverageBonus.prix}}</td>
+                                <td>{{classAverageBonusProf.classAverageBonus.id}}</td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="footer">
+                            <h5 style="margin-top: 15px">Total ClassAverage Bonus: <span
+                                    style="color: #0d67ce">{{this.monatantClassAverageBonus}}</span></h5>
+                        </ng-template>
+                    </p-table>
+
+                </p-tabPanel>
+                <p-tabPanel header="Workload Bonus">
+                    <p-table #dat [rows]="4" [value]="salaryworkloadBonusProf"
+                             [globalFilterFields]="['reference','total','totalPaye']"
+                             dataKey="id" styleClass="p-datatable-customers">
+
+                        <ng-template pTemplate="caption">
+                            <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
+                                <h5 class="p-m-0">List of ClassAverage Bonus</h5>
+                            </div>
+                        </ng-template>
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th pSortableColumn="Amount">Amount</th>
+                                <th pSortableColumn="ClassAverage Bonus">ClassAverage Bonus</th>
+
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-workloadBonusProf>
+                            <tr>
+                                <td>{{workloadBonusProf.workloadBonus.prix}}</td>
+                                <td>{{workloadBonusProf.workloadBonus.id}}</td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="footer">
+                            <h5 style="margin-top: 15px">Total WorkloadBonus Bonus: <span
+                                    style="color: #0d67ce">{{this.monatantworkloadBonusProf}}</span></h5>
+                        </ng-template>
+                    </p-table>
+                </p-tabPanel>
+
+
+            </p-tabView>
+        </p-tabPanel>
+
+    </p-tabView>
+    <ng-template pTemplate="footer">
+
+    </ng-template>
 </p-dialog>
