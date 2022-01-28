@@ -154,7 +154,7 @@ export class UserProfileComponent implements OnInit {
             return false;
         } else {
             // @ts-ignore
-            return user.authorities[0].authority === Role.ADMIN;
+            return user.role === Role.ADMIN;
 
         }
     }
@@ -172,7 +172,7 @@ export class UserProfileComponent implements OnInit {
             return false;
         } else {
             // @ts-ignore
-            return user.authorities[0].authority === Role.PROF;
+            return user.role === Role.PROF;
 
         }
     }
@@ -182,7 +182,7 @@ export class UserProfileComponent implements OnInit {
             return false;
         } else {
             // @ts-ignore
-            return user.authorities[0].authority === Role.STUDENT;
+            return user.role === Role.STUDENT;
 
         }
     }

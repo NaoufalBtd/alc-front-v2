@@ -28,7 +28,9 @@ import {Section} from '../../../controller/model/section.model';
 import {ParcoursService} from '../../../controller/service/parcours.service';
 import {DropDownListComponent} from '@syncfusion/ej2-angular-dropdowns';
 import timezones from 'timezones-list';
-import {SessionCoursService} from '../../../controller/service/session-cours.service';
+import {TrancheHoraireProf} from '../../../controller/model/tranche-horaire-prof.model';
+import {TrancheHoraireProfService} from '../../../controller/service/tranche-horaire-prof.service';
+import {ProfessorService} from '../../../controller/service/professor.service';
 
 L10n.load({
     'en-US': {
@@ -49,40 +51,19 @@ L10n.load({
 
 })
 export class ScheduleLocalComponent implements OnInit {
-    public currentDate: Date = new Date();
-    private prof: Prof = new Prof();
-    @ViewChild('scheduleObj')
-    public scheduleObj: ScheduleComponent;
-    display = false;
-    private selectionTarget: Element;
-    public data: ScheduleProf = new ScheduleProf();
-    public timeScale: TimeScaleModel = {interval: 60, slotCount: 1};
-    public selectedDate: Date = new Date();
-    public showWeekend = true;
-    public groupeEtudiantDetails = new Array<GroupeEtudiantDetail>();
-    public sessionHasStarted = false;
-    public eventSettings: EventSettingsModel = {
-        dataSource: this.scheduleProfs,
-        fields: {
-            id: 'Id',
-            subject: {name: 'subject', title: 'subject'},
-            startTime: {name: 'startTime', title: 'startTime'},
-            endTime: {name: 'endTime', title: 'endTime'}
-        }
-    };
-
-    @ViewChild('timezoneDropdown') public timezoneDropdownObj: DropDownListComponent;
-    public dropDownValue = 'Africa/Casablanca';
-    public fields: Record<string, any> = {text: 'label', value: 'tzCode'};
-    public timezoneData: Record<string, any>[] = timezones;
 
 
-    constructor(private scheduleService: ScheduleService, private messageService: MessageService,
-                private sessionservice: SessionCoursService,
+    constructor(private scheduleService: ScheduleService,
+                private messageService: MessageService,
+                private trancheHoraireService: TrancheHoraireProfService,
+                private service: ProfessorService,
                 private parcoursService: ParcoursService,
-                private confirmationService: ConfirmationService, private loginService: LoginService,
-                private groupeEtudiantService: GroupeEtudiantService, private webSocketService: WebSocketService,
-                private router: Router, private simulateSectionService: SimulateSectionService) {
+                private confirmationService: ConfirmationService,
+                private loginService: LoginService,
+                private groupeEtudiantService: GroupeEtudiantService,
+                private webSocketService: WebSocketService,
+                private router: Router,
+                private simulateSectionService: SimulateSectionService) {
     }
 
 
@@ -119,10 +100,6 @@ export class ScheduleLocalComponent implements OnInit {
         this.scheduleService.displayBasic = value;
     }
 
-    showBasicDialog() {
-        this.displayBasic = true;
-    }
-
     get createDialog(): boolean {
         return this.scheduleService.createDialog;
     }
@@ -131,26 +108,12 @@ export class ScheduleLocalComponent implements OnInit {
         this.scheduleService.createDialog = value;
     }
 
-    public openCreate() {
-        this.submitted = false;
-        this.createDialog = true;
-    }
-
-    public hideCreateDialog() {
-        this.createDialog = false;
-        this.submitted = false;
-    }
-
     get students(): Array<Etudiant> {
         return this.scheduleService.students;
     }
 
     set students(value: Array<Etudiant>) {
         this.scheduleService.students = value;
-    }
-
-    public getProf() {
-        this.scheduleService.getProf().subscribe(data => this.professors = data);
     }
 
     get etatEtudiantSchedule(): Array<EtatEtudiantSchedule> {
@@ -165,6 +128,98 @@ export class ScheduleLocalComponent implements OnInit {
         this.scheduleService.submitted = value;
     }
 
+    get selectedsection(): Section {
+        return this.parcoursService.selectedsection;
+    }
+
+    // tslint:disable-next-line:adjacent-overload-signatures
+    set selectedsection(value: Section) {
+        this.parcoursService.selectedsection = value;
+    }
+
+    get trancheHoraireProfList(): Array<TrancheHoraireProf> {
+        return this.service.trancheHoraireProfList;
+    }
+
+    set trancheHoraireProfList(value: Array<TrancheHoraireProf>) {
+        this.service.trancheHoraireProfList = value;
+    }
+
+    get trancheHoraireProf(): TrancheHoraireProf {
+        return this.service.trancheHoraireProf;
+    }
+
+    set trancheHoraireProf(value: TrancheHoraireProf) {
+        this.service.trancheHoraireProf = value;
+    }
+
+    showAddTranche: boolean;
+    displayModal: boolean;
+    trancheEdit: TrancheHoraireProf = new TrancheHoraireProf();
+    public trancheHoraireProfs: Array<TrancheHoraireProf> = new Array<TrancheHoraireProf>();
+    daysOptions = [
+        {name: 'Select a day', value: -1},
+        {name: 'Sun', value: 0},
+        {name: 'Mon', value: 1},
+        {name: 'Tue', value: 2},
+        {name: 'Wed', value: 3},
+        {name: 'Thu', value: 4},
+        {name: 'Fri', value: 5},
+        {name: 'Sat', value: 6},
+    ];
+    selectedDay: any;
+    dateDebut: Date;
+    dateFin: Date;
+
+
+    private prof: Prof = new Prof();
+    @ViewChild('scheduleObj')
+    public scheduleObj: ScheduleComponent;
+    display = false;
+    private selectionTarget: Element;
+    public data: ScheduleProf = new ScheduleProf();
+    public timeScale: TimeScaleModel = {interval: 60, slotCount: 1};
+    public selectedDate: Date = new Date();
+    public showWeekend = true;
+    public groupeEtudiantDetails = new Array<GroupeEtudiantDetail>();
+    public sessionHasStarted = false;
+    public eventSettings: EventSettingsModel = {
+        dataSource: this.scheduleProfs,
+        fields: {
+            id: 'Id',
+            subject: {name: 'subject', title: 'subject'},
+            startTime: {name: 'startTime', title: 'startTime'},
+            endTime: {name: 'endTime', title: 'endTime'}
+        }
+    };
+
+    @ViewChild('timezoneDropdown') public timezoneDropdownObj: DropDownListComponent;
+    public dropDownValue = 'Africa/Casablanca';
+    public fields: Record<string, any> = {text: 'label', value: 'tzCode'};
+    public timezoneData: Record<string, any>[] = timezones;
+
+    public schedule: ScheduleProf = new ScheduleProf();
+    displayDeleteDialog: boolean;
+    deletedTranche: TrancheHoraireProf = new TrancheHoraireProf();
+
+    showBasicDialog() {
+        this.displayBasic = true;
+    }
+
+    public openCreate() {
+        this.submitted = false;
+        this.createDialog = true;
+    }
+
+    public hideCreateDialog() {
+        this.createDialog = false;
+        this.submitted = false;
+    }
+
+    public getProf() {
+        this.scheduleService.getProf().subscribe(data => this.professors = data);
+    }
+
 
     ngOnInit() {
         this.prof = this.loginService.getConnectedProf();
@@ -174,6 +229,7 @@ export class ScheduleLocalComponent implements OnInit {
         this.scheduleService.getProf().subscribe(data => this.professors = data);
         this.scheduleService.findEtat().subscribe(data => this.scheduleService.etatEtudiantSchedule = data);
         console.log(this.scheduleProfs);
+        this.showTranche();
     }
 
     findByProf() {
@@ -304,8 +360,6 @@ export class ScheduleLocalComponent implements OnInit {
         this.hideDialog();
     }
 
-    public schedule: ScheduleProf = new ScheduleProf();
-
     findByCriteriaStudent() {
         const scheduleObj = this.scheduleObj;
         scheduleObj.eventSettings.dataSource = null;
@@ -345,6 +399,7 @@ export class ScheduleLocalComponent implements OnInit {
         this.display = false;
     }
 
+
     onAddClick($event: MouseEvent) {
     }
 
@@ -360,20 +415,10 @@ export class ScheduleLocalComponent implements OnInit {
         );
     }
 
-    get selectedsection(): Section {
-        return this.parcoursService.selectedsection;
-    }
-
-    // tslint:disable-next-line:adjacent-overload-signatures
-    set selectedsection(value: Section) {
-        this.parcoursService.selectedsection = value;
-    }
-
     startSession() {
         console.log(this.data.groupeEtudiant.id);
         this.webSocketService.sessionHasStarted = true;
         this.findAllGroupeEtudiantDetail(this.data.groupeEtudiant.id);
-        this.sessionservice._idgroup = this.data.groupeEtudiant.id;
         console.log(this.data);
         this.simulateSectionService.findSectionOneByOne(this.data.cours);
         this.parcoursService.afficheOneSectionByProf(this.data.cours).subscribe(
@@ -398,5 +443,125 @@ export class ScheduleLocalComponent implements OnInit {
 
     public onTimezoneDropDownChange(args: any): void {
         this.scheduleObj.timezone = this.timezoneDropdownObj.value.toString();
+    }
+
+    addNewTranche() {
+        this.trancheEdit = new TrancheHoraireProf();
+        this.displayModal = true;
+    }
+
+    getDay(day: number): string {
+        for (const item of this.daysOptions) {
+            if (item.value === day) {
+                return item.name;
+            }
+        }
+    }
+
+    editTranche(tranche: TrancheHoraireProf) {
+        this.trancheEdit = new TrancheHoraireProf();
+        this.showModalDialog();
+        console.log(tranche);
+        this.trancheEdit = tranche;
+    }
+
+    deleteTranche() {
+        const index = this.trancheHoraireProfs.indexOf(this.deletedTranche);
+        this.trancheHoraireProfs.splice(index, 1);
+        this.trancheHoraireService.deleteTrancheById(this.deletedTranche.id);
+        this.displayDeleteDialog = false;
+    }
+
+    showModalDialog() {
+        this.displayModal = true;
+    }
+
+    public addHoraire() {
+
+        if (this.dateFin.getMinutes() < 10) {
+            this.trancheHoraireProf.endHour = String(this.dateFin.getHours() + ':' + '0' + this.dateFin.getMinutes());
+        } else {
+            this.trancheHoraireProf.endHour = String(this.dateFin.getHours() + ':' + this.dateFin.getMinutes());
+        }
+
+        if (this.dateDebut.getMinutes() < 10) {
+            this.trancheHoraireProf.startHour = String(this.dateDebut.getHours() + ':' + '0' + this.dateDebut.getMinutes());
+        } else {
+            this.trancheHoraireProf.startHour = String(this.dateDebut.getHours() + ':' + this.dateDebut.getMinutes());
+        }
+        this.trancheHoraireProf.day = this.selectedDay.value;
+        this.trancheHoraireProf.groupIndex = 0;
+        console.log(this.trancheHoraireProf);
+        this.trancheHoraireProfList.push({...this.trancheHoraireProf});
+        this.trancheHoraireProf = new TrancheHoraireProf();
+        this.dateFin = undefined;
+        this.dateDebut = undefined;
+    }
+
+    showTranche() {
+        this.trancheHoraireService.findTrancheHoraireByProfId(this.loginService.prof).subscribe(
+            dataTranche => {
+                this.trancheHoraireProfs = dataTranche;
+                console.log(this.trancheHoraireProfs);
+                if (dataTranche.length <= 0) {
+                    this.showAddTranche = true;
+                } else {
+                    this.showAddTranche = false;
+                }
+            }, error => {
+                console.log(error);
+            }
+        );
+    }
+
+    saveTranche() {
+        if (this.dateFin.getMinutes() < 10) {
+            this.trancheEdit.endHour = String(this.dateFin.getHours() + ':' + '0' + this.dateFin.getMinutes());
+        } else {
+            this.trancheEdit.endHour = String(this.dateFin.getHours() + ':' + this.dateFin.getMinutes());
+        }
+
+        if (this.dateDebut.getMinutes() < 10) {
+            this.trancheEdit.startHour = String(this.dateDebut.getHours() + ':' + '0' + this.dateDebut.getMinutes());
+        } else {
+            this.trancheEdit.startHour = String(this.dateDebut.getHours() + ':' + this.dateDebut.getMinutes());
+        }
+        this.trancheEdit.groupIndex = 0;
+        this.trancheEdit.prof = this.prof;
+        console.log(this.selectedDay);
+        if (this.trancheEdit.id === 0) {
+            this.trancheEdit.day = this.selectedDay.value;
+        }
+        console.log(this.trancheEdit);
+        this.trancheHoraireService.edit(this.trancheEdit).subscribe(
+            data => {
+                for (let tr of this.trancheHoraireProfs) {
+                    if (tr.id === data.id) {
+                        tr = data;
+                        break;
+                    } else if (tr.id === this.trancheHoraireProfs[this.trancheHoraireProfs.length - 1].id) {
+                        this.trancheHoraireProfs.push(data);
+                        break;
+                    }
+                }
+
+            }, error => {
+                console.log(error);
+            }
+        );
+        this.selectedDay = undefined;
+        this.dateFin = undefined;
+        this.dateDebut = undefined;
+    }
+
+    hideTrancheDialog() {
+        this.displayModal = false;
+        this.trancheEdit = new TrancheHoraireProf();
+    }
+
+    displayDeleteDialogFct(e: TrancheHoraireProf) {
+        this.displayDeleteDialog = true;
+        console.log(e);
+        this.deletedTranche = e;
     }
 }

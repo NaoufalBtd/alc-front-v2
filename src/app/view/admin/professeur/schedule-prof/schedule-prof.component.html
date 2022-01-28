@@ -1,40 +1,51 @@
 <div class="control-section">
-    <button class="instruction-button" (click)="onDataBound()" icon="pi pi-refresh" pButton pRipple></button>
-
-    <ejs-schedule #scheduleObj cssClass='schedule-group-custom-work-days' width='100%'
-                  [currentView]="currentView" [group]="group" [selectedDate]="selectedDate"
-
-                  (dataBound)="onDataBound()"
-                  (actionComplete)="onActionComplete($event)"
-                  (popupOpen)="onPopupOpen($event)"
-                  [eventSettings]="eventSettings"
-                  [allowDragAndDrop]="allowDragDrop">
-        <ng-template #resourceHeaderTemplate let-data>
-            <div class='template-wrap'>
-                <!--                <div class="resource-image {{getDoctorImage(data)}}"></div>-->
-                <div class="resource-details">
-                    <!--                    <div class="resource-name">{{getDoctorName(data)}}</div>-->
-                    <!--                    <div class="resource-designation">{{getDoctorLevel(data)}}</div>-->
-                </div>
-            </div>
-        </ng-template>
-        <e-views>
-            <e-view option="Week" [timeScale]='timeScale'></e-view>
-            <e-view option="WorkWeek" [timeScale]='timeScale'></e-view>
-            <e-view option="Month" [timeScale]='timeScale'></e-view>
-        </e-views>
-        <e-resources>
-            <e-resource field='DoctorId' title='nom' name='Profs' [dataSource]='resourceDataSource'
-                        textField='subject'>
-            </e-resource>
-        </e-resources>
-
-<!--                <e-resources>-->
-<!--                    <e-resource field='subject' title='profName' name='Profs' [dataSource]='scheduleProfs' textField='grpName'-->
-<!--                                idField='id' colorField='#ffa500'>-->
-<!--                    </e-resource>-->
-<!--                </e-resources>-->
-
-
-    </ejs-schedule>
+    <p-dropdown [options]="allProfs" [(ngModel)]="selectedProf" optionLabel="nom" [filter]="true" filterBy="nom"
+                (ngModelChange)="filterProf()"
+                [showClear]="false" placeholder="Select a Teacher">
+    </p-dropdown>
+    <div class="drag-sample-wrapper">
+        <div class="schedule-container">
+            <ejs-schedule #scheduleObj cssClass='schedule-block-events'
+                          width='100%'
+                          [group]="group"
+                          (actionComplete)="onActionComplete($event)"
+                          [timeScale]='timeScale'
+                          (popupOpen)="onPopupOpen($event)"
+                          [currentView]="currentView" [selectedDate]="selectedDate" [eventSettings]="eventSettings">
+                <e-resources>
+                    <e-resource field='profsId' title='prenom' name='profs' [dataSource]='profsDataSource'
+                                [allowMultiple]='allowMultiple' groupIDField="prenom"  textField='prenom' idField='id' colorField='#ff8800'>
+                    </e-resource>
+                </e-resources>
+                <ng-template #resourceHeaderTemplate let-data>
+                    <div class="template-wrap">
+                        <div class="employee-category">
+                            <div>
+                                <img [src]="data.resourceData.image" class="employee-image"/>
+                                {{data.nom}}
+                            </div>
+                            <div class="employee-name">{{data.resourceData.nom }} {{ data.resourceData.prenom}}</div>
+                        </div>
+                    </div>
+                </ng-template>
+<!--                <ng-template #eventSettingsTemplate let-data>-->
+<!--                    <div class='template-wrap'>-->
+<!--                        <div class="subject">{{data.Subject}}</div>-->
+<!--                    </div>-->
+<!--                </ng-template>-->
+                <e-views>
+                    <e-view option="Day"></e-view>
+                    <e-view option="Week"></e-view>
+                    <e-view option="Month"></e-view>
+                    <e-view option="WorkWeek"></e-view>
+                    <e-view option="TimelineDay"></e-view>
+                    <e-view option="TimelineWeek"></e-view>
+                    <e-view option="TimelineMonth"></e-view>
+                </e-views>
+            </ejs-schedule>
+        </div>
+    </div>
 </div>
+
+
+

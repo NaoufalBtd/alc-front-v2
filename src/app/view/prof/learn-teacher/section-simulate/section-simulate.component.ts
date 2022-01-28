@@ -296,17 +296,6 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
                     document.getElementById('chat').style.visibility = 'visible';
                 }
             },
-            {
-                icon: 'pi pi-fw pi-users', command: (event) => {
-                    document.getElementById('categoriess').style.visibility = 'hidden';
-                    document.getElementById('chat').style.visibility = 'hidden';
-                    document.getElementById('categoriess').style.height = '0px';
-                    document.getElementById('categ').style.height = '0px';
-                    //   document.getElementById('word').style.visibility = 'hidden';
-                    //   document.getElementById('word').style.height = '0px';
-                    document.getElementById('connectedStudent').style.visibility = 'visible';
-                }
-            }
         ];
     }
 
