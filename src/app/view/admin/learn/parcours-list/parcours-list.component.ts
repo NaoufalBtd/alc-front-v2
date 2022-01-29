@@ -185,7 +185,9 @@ export class ParcoursListComponent implements OnInit {
         if (this.couchedTd === null) {
             document.getElementById(parcour.libelle).className = 'couchedTd';
         } else {
-            document.getElementById(this.couchedTd).className = ' ';
+            if (document.getElementById(this.couchedTd) !== null) {
+                document.getElementById(this.couchedTd).className = ' ';
+            }
             document.getElementById(parcour.libelle).className = 'couchedTd';
         }
         this.couchedTd = parcour.libelle;
