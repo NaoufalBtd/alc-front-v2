@@ -8,6 +8,7 @@ import {ConfirmationService, MessageService} from 'primeng/api';
 import {Parcours} from '../../../../controller/model/parcours.model';
 import {LearnService} from '../../../../controller/service/learn.service';
 import {AdminService} from '../../../../controller/service/admin.service';
+import {Router, RouterLink} from '@angular/router';
 
 
 @Component({
@@ -21,6 +22,7 @@ export class ParcoursListComponent implements OnInit {
 
     // tslint:disable-next-line:max-line-length
     constructor(private messageService: MessageService,
+                private router: Router,
                 private learnService: LearnService,
                 private confirmationService: ConfirmationService, private service: ParcoursService, private adminService: AdminService) {
     }
@@ -240,5 +242,10 @@ export class ParcoursListComponent implements OnInit {
 
     public saveData() {
         this.adminService.saveData();
+    }
+
+
+    openSite() {
+        window.open('http://localhost:8036/admin/admin/googlesignin', '_blank');
     }
 }
