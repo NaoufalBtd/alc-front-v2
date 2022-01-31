@@ -8,4 +8,5 @@ export class TrancheHoraireProf {
     public  endHour: string;
     public  day: number;
     public  groupIndex: number;
+    public  profsId: number;
 }

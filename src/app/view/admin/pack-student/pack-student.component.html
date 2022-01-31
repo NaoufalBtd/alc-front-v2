@@ -6,12 +6,14 @@
             </div>
             <div class="p-card-body">
                 <div class="p-grid">
-                    <div class="p-col-2">
+                    <div class="p-col-4">
                         <button class="p-button-primary p-mr-2 p-mb-2 " icon="pi pi-plus" label="New"
                                 pButton
                                 (click)="showindividual()"
                                 pRipple style="width: 90px"></button>
                     </div>
+                    </div>
+                <div class="p-grid">
                     <div class="p-col-3">
                         <input [(ngModel)]="this.packStudentServie.packstudentVo.code" style="margin: 5px" type="text" pInputText placeholder="code">
                     </div>
@@ -21,11 +23,15 @@
                     <div class="p-col-3">
                         <input [(ngModel)]="this.packStudentServie.packstudentVo.nombreCours" style="margin: 5px" type="number" pInputText placeholder="nombre cours">
                     </div>
+                    <div class="p-col-3">
+                        <input [(ngModel)]="this.packStudentServie.packstudentVo.libelle" style="margin: 5px" type="text" pInputText placeholder="libelle">
+                    </div>
+                    <div class="p-col-3">
+                        <input [(ngModel)]="this.packStudentServie.packstudentVo.totalStudents" style="margin: 5px" type="number" pInputText placeholder="total Students">
+                    </div>
                     <div class="p-col-1">
                         <p-button icon="pi pi-search" (click)="findBycreteria(false)"></p-button>
                     </div>
-
-
                 </div>
                 <div class="p-grid">
                     <p-table responsiveLayout="scroll" [value]="packstudentIndividialList">
@@ -35,6 +41,7 @@
                                 <th>libelle</th>
                                 <th>Nombre de cours</th>
                                 <th>Prix</th>
+                                <th>Total Students</th>
                                 <th>Action</th>
                             </tr>
                         </ng-template>
@@ -44,6 +51,7 @@
                                 <td>{{c.libelle}}</td>
                                 <td>{{c.nombreCours}}</td>
                                 <td>{{c.prix}}</td>
+                                <td>{{c.totalStudents}}</td>
                                 <td>
                                     <button class="p-button-rounded p-button-success p-mr-2" icon="pi pi-pencil" pButton
                                             (click)="showindividualforupdate(c)"
@@ -68,12 +76,14 @@
             </div>
             <div class="p-card-body">
                 <div class="p-grid">
-                    <div class="p-col-2">
+                    <div class="p-col-4">
                         <button class="p-button-primary p-mr-2 p-mb-2 " icon="pi pi-plus" label="New"
                                 pButton
                                 (click)="showgroupe()"
                                 pRipple style="width: 90px"></button>
                     </div>
+                </div>
+                <div class="p-grid">
                     <div class="p-col-3">
                         <input [(ngModel)]="this.packStudentServie.packstudentVo.code" style="margin: 5px" type="text" pInputText placeholder="code">
                     </div>
@@ -83,8 +93,14 @@
                     <div class="p-col-3">
                         <input [(ngModel)]="this.packStudentServie.packstudentVo.nombreCours" style="margin: 5px" type="number" pInputText placeholder="nombre cours">
                     </div>
+                    <div class="p-col-3">
+                        <input [(ngModel)]="this.packStudentServie.packstudentVo.libelle" style="margin: 5px" type="text" pInputText placeholder="libelle">
+                    </div>
+                    <div class="p-col-3">
+                        <input [(ngModel)]="this.packStudentServie.packstudentVo.totalStudents" style="margin: 5px" type="number" pInputText placeholder="total Students">
+                    </div>
                     <div class="p-col-1">
-                        <p-button (click)="findBycreteria(true)" icon="pi pi-search"></p-button>
+                        <p-button icon="pi pi-search" (click)="findBycreteria(true)"></p-button>
                     </div>
                 </div>
                 <div class="p-grid">
@@ -95,6 +111,7 @@
                                 <th>libelle</th>
                                 <th>Nombre de cours</th>
                                 <th>Prix</th>
+                                <th>Total Students</th>
                                 <th>Action</th>
                             </tr>
                         </ng-template>
@@ -104,6 +121,7 @@
                                 <td>{{c.libelle}}</td>
                                 <td>{{c.nombreCours}}</td>
                                 <td>{{c.prix}}</td>
+                                <td>{{c.totalStudents}}</td>
                                 <td>
                                     <button class="p-button-rounded p-button-success p-mr-2" icon="pi pi-pencil" pButton
                                             (click)="showgroupeforUpdate(c)"

@@ -2,6 +2,10 @@
           styleClass="p-fluid">
     <ng-template pTemplate="content">
         <div class="p-field">
+            <div style="font-size: 20px"><label class="label"><strong>Pack choosen: </strong></label>  {{ selected.packStudent.libelle}} : {{selected.packStudent.nombreCours}}h | {{selected.packStudent.prix}}$</div>
+
+        </div>
+        <div class="p-field">
             <label for="nom">LastName</label>
             <input [(ngModel)]="selected.etudiant.nom" disabled id="nom" pInputText type="text"/>
         </div>
@@ -23,6 +27,7 @@
             <input [(ngModel)]="selected.parcours.libelle" disabled id="libelle" pInputText
                     ="text"/>
         </div>
+
         <div class="p-field">
             <label for="datedebutinscription">Registration Start date</label>
             <input [(ngModel)]="selected.datedebutinscription" disabled id="datedebutinscription" pInputText

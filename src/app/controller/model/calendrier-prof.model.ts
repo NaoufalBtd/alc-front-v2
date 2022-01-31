@@ -14,4 +14,5 @@ export class ScheduleProf {
     public profName: string;
     public prof = new Prof();
     public cours: Cours = new Cours();
+    public ProfsId: number;
 }

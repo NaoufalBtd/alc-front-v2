@@ -137,16 +137,12 @@ export class ScheduleAdminComponent implements OnInit {
     ];
     public schedule: ScheduleProf = new ScheduleProf();
     public timeScale: TimeScaleModel = {interval: 60, slotCount: 1};
-    @ViewChild('startTime') public startTimeObj: TimePickerComponent;
-    @ViewChild('endTime') public endTimeObj: TimePickerComponent;
     @ViewChild('scheduleObj')
     public scheduleObj: ScheduleComponent;
-    public instance: Internationalization = new Internationalization();
 
     display = false;
     private selectionTarget: Element;
     public data: ScheduleProf = new ScheduleProf();
-    // public selectedDate: Date = new Date(2021, 4, 18);
     public selectedDate: Date = new Date();
     public showWeekend = true;
     public eventSettings: EventSettingsModel = {
@@ -159,26 +155,7 @@ export class ScheduleAdminComponent implements OnInit {
         }
     };
 
-    // public onCloseClick(): void {
-    //     this.scheduleObj.closeEditor();
-    // }
-    grpName = 'Group A';
-
-    public resourceDataSource: Object[] = [
-        {
-            text: this.scheduleProfs[0]?.prof?.nom,
-            id: 0,
-            color: '#ea7a57',
-            startHour: '08:00',
-            endHour: '15:00',
-        }
-    ];
     public group: GroupModel = {byDate: true, resources: ['Profs']};
-    public workHours: WorkHoursModel = new class implements WorkHoursModel {
-        end: '07:00';
-        highlight: false;
-        start: '20:00';
-    };
 
     showBasicDialog() {
         this.displayBasic = true;
@@ -453,11 +430,17 @@ export class ScheduleAdminComponent implements OnInit {
     getCourses(groupeEtudiant: GroupeEtudiant) {
         this.parcourService.FindCoursByParcours(groupeEtudiant.parcours.id).subscribe(data => this.courses = data);
         console.log(this.courses);
+        console.log(this.scheduleProf.startTime);
+        console.log(this.scheduleProf.endTime);
+        console.log(this.scheduleProf.groupeEtudiant);
+        for (const prof of this.professors) {
+            if (this.scheduleProf.groupeEtudiant.prof.id === prof.id) {
+                this.scheduleProf.prof = prof;
+            }
+        }
     }
 
     repeatOption(selected: any) {
-        // alert(selected.option);
-        // alert(this.optionSelected.option);
     }
 
     getDaysSelected(data: any) {

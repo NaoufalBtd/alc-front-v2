@@ -553,21 +553,10 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
 
                 }
             },
-            {
-                icon: 'pi pi-fw pi-users', command: (event) => {
-                    document.getElementById('categoriess').style.visibility = 'hidden';
-                    document.getElementById('chat').style.visibility = 'hidden';
-                    document.getElementById('categoriess').style.height = '0px';
-                    document.getElementById('categ').style.height = '0px';
-                    //   document.getElementById('word').style.visibility = 'hidden';
-                    //   document.getElementById('word').style.height = '0px';
-                    document.getElementById('connectedStudent').style.visibility = 'visible';
-                }
-            }
         ];
         this.findhomeworkbycours(this.sectionItemService.coursofsection);
         if (this.webSocketService.isInSession) {
-            this.webSocketService.findCurrentSectionForstudent(this.service.selectedcours);
+            this.webSocketService.findCurrentSectionForstudent(this.service.selectedcours, this.prof);
             console.log('rh 9lbt eliha mn NgOnInit');
             console.log(this.service.selectedsection);
         }
