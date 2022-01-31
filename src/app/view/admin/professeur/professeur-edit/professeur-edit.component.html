@@ -32,7 +32,7 @@
             </p-tabPanel>
 
 
-            <p-tabPanel *ngIf="!showAddTranche" header="Professor schedule">
+            <p-tabPanel *ngIf="!showAddTranche" header="Work hours">
                 <div class="card">
                     <p-table [value]="trancheHoraireProfs">
                         <ng-template pTemplate="header">
@@ -74,7 +74,7 @@
                 </div>
             </p-tabPanel>
 
-            <p-tabPanel *ngIf="showAddTranche" header="Professor schedule">
+            <p-tabPanel *ngIf="showAddTranche" header="Work hours">
                 <div class="p-grid">
                     <div class="p-col-12">
                         <p-dropdown [options]="daysOptions" [(ngModel)]="selectedDay" optionLabel="name"></p-dropdown>

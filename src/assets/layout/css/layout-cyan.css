@@ -1868,7 +1868,9 @@ a {
   }
   .layout-wrapper.layout-slim .layout-menu-container .menu-scroll-content {
     width: 100%;
+    height: 90%;
     padding: 0;
+    overflow: auto;
   }
 }
 @media screen and (max-width: 896px) {

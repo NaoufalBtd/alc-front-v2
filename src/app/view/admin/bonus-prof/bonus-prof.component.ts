@@ -65,6 +65,8 @@ export class BonusProfComponent implements OnInit {
 
     public saveWorkloadBonus() {
         this.bonusProfService.saveWorkloadBonus();
+        this.displayWorkloadBonus = false;
+
 
     }
 
@@ -86,6 +88,8 @@ export class BonusProfComponent implements OnInit {
 
     public saveclassAverageBonus() {
         this.bonusProfService.saveclassAverageBonus();
+        this.displayClassAverageBonus = false;
+
     }
 
     public updateclassAverageBonus(newprix: number) {

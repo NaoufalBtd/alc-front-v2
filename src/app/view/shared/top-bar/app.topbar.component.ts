@@ -31,19 +31,8 @@ export class AppTopBarComponent implements OnInit, OnDestroy {
     }
 
 
-    private getUserRole(): string {
-        if (this.user.authorities.length > 0) {
-            // @ts-ignore
-            return this.authenticationService.getUserFromLocalCache().authorities[0].authority;
-        } else {
-            return null;
-        }
-    }
-
     ngOnInit(): void {
         this.user = this.authenticationService.getUserFromLocalCache();
-        // // @ts-ignore
-        // console.log(this.user.authorities[0].authority); // get role
     }
 
     public logOut() {
@@ -59,8 +48,7 @@ export class AppTopBarComponent implements OnInit, OnDestroy {
         if (this.user == null) {
             return false;
         } else {
-            // @ts-ignore
-            return this.user.authorities[0].authority === Role.ADMIN;
+            return this.user.role === 'ADMIN';
 
         }
     }
@@ -69,8 +57,7 @@ export class AppTopBarComponent implements OnInit, OnDestroy {
         if (this.user == null) {
             return false;
         } else {
-            // @ts-ignore
-            return this.user.authorities[0].authority === Role.PROF;
+            return this.user.role === 'TEACHER';
 
         }
     }
@@ -79,8 +66,7 @@ export class AppTopBarComponent implements OnInit, OnDestroy {
         if (this.user == null) {
             return false;
         } else {
-            // @ts-ignore
-            return this.user.authorities[0].authority === Role.STUDENT;
+            return this.user.role === 'STUDENT';
 
         }
     }

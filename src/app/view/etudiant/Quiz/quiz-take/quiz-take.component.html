@@ -342,14 +342,15 @@
         <ng-template pTemplate="body" let-value>
             <tr>
                 <td *ngIf="value.value.etatReponse === 'true' && (answersPointStudent.get(value.key))?.toString() === 'STUDENT_ANSWER'">
-                    <i class="pi pi-check-circle"></i></td>
-                <td *ngIf="value.value.etatReponse === 'false'"><i class="pi pi-times-circle"></i></td>
+                    <i class="pi pi-check-circle" pTooltip="Correct answer" tooltipPosition="top"></i></td>
+                <td *ngIf="value.value.etatReponse === 'false'">
+                    <i pTooltip="Incorrect answer" tooltipPosition="top" class="pi pi-times-circle"></i></td>
 
                 <td *ngIf="value.value.etatReponse === 'true' && answersPointStudent.get(value.key)?.toString() === 'TEACHER_ANSWER'">
-                    <i class="pi pi-users"></i></td>
+                    <i pTooltip="Professor is answered" tooltipPosition="top" class="pi pi-users"></i></td>
 
                 <td *ngIf="value.value.etatReponse === 'true' && answersPointStudent.get(value.key)?.toString() === 'STUDENT_DONT_KNOW'">
-                    <i class="pi pi-exclamation-circle"></i></td>
+                    <i pTooltip="Student don't know" tooltipPosition="top" class="pi pi-exclamation-circle"></i></td>
 
 
                 <td>{{value?.key?.numero}}</td>
