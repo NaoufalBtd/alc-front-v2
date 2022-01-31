@@ -41,14 +41,14 @@ export class SalaryComponent implements OnInit {
         this.itemsMOIS = [];
         for (let i = 1; i < 13; i++) {
             // @ts-ignore
-            this.itemsMOIS.push({label:   + i, value:   + i});
+            this.itemsMOIS.push({label: +i, value: +i});
         }
-/*        // @ts-ignore
-        this.itemsMOIS.push({label: 10, value: 10});
-        // @ts-ignore
-        this.itemsMOIS.push({label: 11, value: 11});
-        // @ts-ignore
-        this.itemsMOIS.push({label: 12, value: 12});*/
+        /*        // @ts-ignore
+                this.itemsMOIS.push({label: 10, value: 10});
+                // @ts-ignore
+                this.itemsMOIS.push({label: 11, value: 11});
+                // @ts-ignore
+                this.itemsMOIS.push({label: 12, value: 12});*/
 
 
         this.data = {
@@ -175,6 +175,10 @@ export class SalaryComponent implements OnInit {
         console.log(this.monatant);
     }
 
+    get salarySearch(): Salary {
+        return this.salaryservice.salarySearch;
+    }
+
     get monatant(): number {
         return this.salaryservice.monatant;
     }
@@ -248,7 +252,7 @@ export class SalaryComponent implements OnInit {
         this.findAllWorkloadBonusProfByMoisAndAnneeAndProfId(mois, annee, profid);
     }
 
-    public findAllByCriteria(profNom: string, moisSearch: string, anneeSearch: string) {
-        this.salaryservice.findAllByCriteria(profNom, moisSearch, anneeSearch);
+    public findAllByCriteria(profNom: string) {
+        this.salaryservice.findAllByCriteria(profNom);
     }
 }

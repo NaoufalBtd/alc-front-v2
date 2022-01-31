@@ -13,6 +13,8 @@ import {WorkloadBonusProf} from '../model/workload-bonus-prof.model';
 })
 export class SalaryService {
     private _salary: Salary;
+    private _paiementListAdmin: Array<Paiement>;
+    private _salarySearchAdmin: Salary;
     private _salarypayment: Paiement;
     private _salarypaymentList: Array<Paiement>;
     private _salaryclassAverageBonusProf: Array<ClassAverageBonusProf>;
@@ -21,18 +23,107 @@ export class SalaryService {
     private _salarySearch: Salary;
     private _salarySearchList: Array<Salary>;
     private _salaryList: Array<Salary>;
+    private _salaryListAdmin: Array<Salary>;
     private profUrlSalary = environment.profUrl + 'salary';
     private adminUrlSalary = environment.adminUrl + 'salary';
     private profUrlPaiement = environment.profUrl + 'paiement';
+    private adminUrlPaiement = environment.adminUrl + 'paiement/';
     private profUrlclassAverageBonusProf = environment.profUrl + 'classAverageBonusProf';
+    private adminUrlclassAverageBonusProf = environment.adminUrl + 'classAverageBonusProf';
     private profUrlworkloadBonusProf = environment.profUrl + 'workloadBonusProf';
+    private adminUrlworkloadBonusProf = environment.adminUrl + 'workloadBonusProf';
     private _monatant: number;
     private _monatantGlobale: number;
     private _monatantClassAverageBonus: number;
     private _monatantworkloadBonusProf: number;
     private _monatantPaiementProf: number;
     private _currentMonthPay: number;
+    private _monatantAllPaimentSelected: number;
+    private _monatantAllclassAverageBonusProf: number;
+    private _monatantAllworkloadBonusProf: number;
+    private _salaryclassAverageBonusProfByAdmin: Array<ClassAverageBonusProf>;
 
+    private _salaryworkloadBonusProfByAdmin: Array<WorkloadBonusProf>;
+
+
+    get salaryclassAverageBonusProfByAdmin(): Array<ClassAverageBonusProf> {
+        if (this._salaryclassAverageBonusProfByAdmin == null) {
+            this._salaryclassAverageBonusProfByAdmin = new Array<ClassAverageBonusProf>();
+        }
+        return this._salaryclassAverageBonusProfByAdmin;
+    }
+
+    set salaryclassAverageBonusProfByAdmin(value: Array<ClassAverageBonusProf>) {
+        this._salaryclassAverageBonusProfByAdmin = value;
+    }
+
+    get salaryworkloadBonusProfByAdmin(): Array<WorkloadBonusProf> {
+        if (this._salaryworkloadBonusProfByAdmin == null) {
+            this._salaryworkloadBonusProfByAdmin = new Array<WorkloadBonusProf>();
+        }
+        return this._salaryworkloadBonusProfByAdmin;
+    }
+
+    set salaryworkloadBonusProfByAdmin(value: Array<WorkloadBonusProf>) {
+        this._salaryworkloadBonusProfByAdmin = value;
+    }
+
+    get monatantAllclassAverageBonusProf(): number {
+        return this._monatantAllclassAverageBonusProf;
+    }
+
+    set monatantAllclassAverageBonusProf(value: number) {
+        this._monatantAllclassAverageBonusProf = value;
+    }
+
+    get monatantAllworkloadBonusProf(): number {
+        return this._monatantAllworkloadBonusProf;
+    }
+
+    set monatantAllworkloadBonusProf(value: number) {
+        this._monatantAllworkloadBonusProf = value;
+    }
+
+    get monatantAllPaimentSelected(): number {
+        return this._monatantAllPaimentSelected;
+    }
+
+    set monatantAllPaimentSelected(value: number) {
+        this._monatantAllPaimentSelected = value;
+    }
+
+    get paiementListAdmin(): Array<Paiement> {
+        if (this._paiementListAdmin == null) {
+            this._paiementListAdmin = new Array<Paiement>();
+        }
+        return this._paiementListAdmin;
+    }
+
+    set paiementListAdmin(value: Array<Paiement>) {
+        this._paiementListAdmin = value;
+    }
+
+    get salarySearchAdmin(): Salary {
+        if (this._salarySearchAdmin == null) {
+            this._salarySearchAdmin = new Salary();
+        }
+        return this._salarySearchAdmin;
+    }
+
+    set salarySearchAdmin(value: Salary) {
+        this._salarySearchAdmin = value;
+    }
+
+    get salaryListAdmin(): Array<Salary> {
+        if (this._salaryListAdmin == null) {
+            this._salaryListAdmin = new Array<Salary>();
+        }
+        return this._salaryListAdmin;
+    }
+
+    set salaryListAdmin(value: Array<Salary>) {
+        this._salaryListAdmin = value;
+    }
 
     get salaryworkloadBonusProf(): Array<WorkloadBonusProf> {
         if (this._salaryworkloadBonusProf == null) {
@@ -186,7 +277,7 @@ export class SalaryService {
         return this.http.get<Array<Salary>>(this.profUrlSalary + '/').subscribe(
             data => {
                 if (data != null) {
-                    this.salaryList = data;
+                    this.salaryListAdmin = data;
                 }
             }
         );
@@ -197,6 +288,17 @@ export class SalaryService {
             data => {
                 if (data != null) {
                     this.salaryList = data;
+                }
+            }
+        );
+    }
+
+    public findAllByCriteriaAdmin() {
+
+        return this.http.post<Array<Salary>>(this.adminUrlSalary + '/byCriteria', this.salarySearchAdmin).subscribe(
+            data => {
+                if (data != null) {
+                    this.salaryListAdmin = data;
                 }
             }
         );
@@ -313,18 +415,71 @@ export class SalaryService {
         );
     }
 
-    public findAllByCriteria(profNom: string, moisSearch: string, anneeSearch: string) {
+    public findAllByCriteria(profNom: string) {
         this.salarySearch.prof.nom = profNom;
-        this.salarySearch.mois = Number(moisSearch);
-        this.salarySearch.annee = Number(anneeSearch);
         this.http.post<Array<Salary>>(this.adminUrlSalary + '/byCriteria', this.salarySearch).subscribe(
             data => {
-                console.log('hoha');
-                if (this.salarySearch.mois == null && this.salarySearch.annee) {
-                    this.findAllSalaryProfID(this.salarySearch.id);
+                this.salaryList = data;
+            }
+        );
+    }
+
+    findPaiementByMoisAndAnneeAndProfIDAdmin(mois: number, annee: number, profid: number) {
+        this.http.get<Array<Paiement>>(this.adminUrlPaiement + 'detailspaiementByidProf/' + mois + '/' + annee + '/' + profid).subscribe(
+            data => {
+                this.paiementListAdmin = data;
+            }
+        );
+    }
+
+    findAllPaiementByMoisAndAnneeAndProfID(mois: number, annee: number, profid: number) {
+        this.http.get<number>(this.adminUrlPaiement + 'allMontant/' + mois + '/' + annee + '/' + profid).subscribe(
+            data => {
+                if (data != null) {
+                    this.monatantAllPaimentSelected = data;
                 } else {
-                    this.salaryList = data;
+                    this.monatantAllPaimentSelected = 0;
                 }
+            }
+        );
+    }
+
+    findAllMontantWorkloadBonusAdminByMoisAndAnneeAndProfID(mois: number, annee: number, profid: number) {
+        this.http.get<number>(this.adminUrlworkloadBonusProf + '/montant/' + mois + '/' + annee + '/' + profid).subscribe(
+            data => {
+                if (data != null) {
+                    this.monatantAllworkloadBonusProf = data;
+                } else {
+                    this.monatantAllworkloadBonusProf = 0;
+                }
+            }
+        );
+    }
+
+    findAllMontantClassAverageBonusAdminByMoisAndAnneeAndProfID(mois: number, annee: number, profid: number) {
+        this.http.get<number>(this.adminUrlclassAverageBonusProf + '/montant/' + mois + '/' + annee + '/' + profid).subscribe(
+            data => {
+                if (data != null) {
+                    this.monatantAllclassAverageBonusProf = data;
+                } else {
+                    this.monatantAllclassAverageBonusProf = 0;
+                }
+            }
+        );
+    }
+
+    findAllClassAverageBonusAdminByMoisAndAnneeAndProfID(mois: number, annee: number, profid: number) {
+        this.http.get<Array<ClassAverageBonusProf>>(this.adminUrlclassAverageBonusProf + '/' + mois + '/' + annee + '/' + profid).subscribe(
+            data => {
+                this.salaryclassAverageBonusProfByAdmin = data;
+            }
+        );
+    }
+
+    findAllWorkloadBonusAdminByMoisAndAnneeAndProfID(mois: number, annee: number, profid: number) {
+        this.http.get<Array<WorkloadBonusProf>>(this.adminUrlworkloadBonusProf + '/' + mois + '/' + annee + '/' + profid).subscribe(
+            data => {
+                this.salaryworkloadBonusProfByAdmin = data;
 
             }
         );

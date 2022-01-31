@@ -9,14 +9,16 @@
                     </h5>
                 </ng-template>
                 <ng-template pTemplate="right">
-                    <p-dropdown [options]="itemsMOIS" [(ngModel)]="mois" placeholder="Select Month" [itemSize]="31"
+                    <p-dropdown [options]="itemsMOIS" [(ngModel)]="salarySearch.mois" placeholder="Select Month"
+                                [itemSize]="31"
                                 [showClear]="true"
                                 [filter]="false" style="margin-right: 5px"></p-dropdown>
-                    <p-dropdown [options]="itemsannee" [(ngModel)]="annee" placeholder="Select Year" [showClear]="true"
+                    <p-dropdown [options]="itemsannee" [(ngModel)]="salarySearch.annee" placeholder="Select Year"
+                                [showClear]="true"
                                 [itemSize]="31"
                                 [filter]="false"></p-dropdown>
                     <button pButton pRipple label="Search" icon="pi pi-search" class="p-button-primary p-ml-2 "
-                            (click)="findAllByCriteria(this.serviceUser.getConnectedProf().nom,mois,annee)"
+                            (click)="findAllByCriteria(this.serviceUser.getConnectedProf().nom)"
                     ></button>
                 </ng-template>
             </p-toolbar>
@@ -140,7 +142,7 @@
                         <ng-template pTemplate="body" let-classAverageBonusProf>
                             <tr>
                                 <td>{{classAverageBonusProf.classAverageBonus.prix}}</td>
-                                <td>{{classAverageBonusProf.classAverageBonus.id}}</td>
+                                <td>{{classAverageBonusProf.code}}</td>
                             </tr>
                         </ng-template>
                         <ng-template pTemplate="footer">
@@ -170,7 +172,7 @@
                         <ng-template pTemplate="body" let-workloadBonusProf>
                             <tr>
                                 <td>{{workloadBonusProf.workloadBonus.prix}}</td>
-                                <td>{{workloadBonusProf.workloadBonus.id}}</td>
+                                <td>{{workloadBonusProf.workloadBonus.code}}</td>
                             </tr>
                         </ng-template>
                         <ng-template pTemplate="footer">

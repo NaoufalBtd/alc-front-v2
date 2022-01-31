@@ -31,6 +31,7 @@ import timezones from 'timezones-list';
 import {TrancheHoraireProf} from '../../../controller/model/tranche-horaire-prof.model';
 import {TrancheHoraireProfService} from '../../../controller/service/tranche-horaire-prof.service';
 import {ProfessorService} from '../../../controller/service/professor.service';
+import {SessionCoursService} from '../../../controller/service/session-cours.service';
 
 L10n.load({
     'en-US': {
@@ -57,6 +58,7 @@ export class ScheduleLocalComponent implements OnInit {
                 private messageService: MessageService,
                 private trancheHoraireService: TrancheHoraireProfService,
                 private service: ProfessorService,
+                private sessionService: SessionCoursService,
                 private parcoursService: ParcoursService,
                 private confirmationService: ConfirmationService,
                 private loginService: LoginService,
@@ -432,6 +434,7 @@ export class ScheduleLocalComponent implements OnInit {
         );
         console.log(this.selectedsection);
         this.webSocketService.openWebSocket(this.prof, this.prof, this.data.groupeEtudiant, 'PROF');
+        this.sessionService._idgroup = this.data.groupeEtudiant.id;
         this.router.navigate(['prof/sections-simulate']);
     }
 
