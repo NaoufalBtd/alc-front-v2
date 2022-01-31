@@ -1001,8 +1001,8 @@ footer .btn:hover {
   padding: 3rem;
 }
 .card:hover {
-  background-color: #F78C26 ;
-  border-color: #F78a00;
+/*  background-color: #F78C26 ;
+  border-color: #F78a00;*/
 }
 
 .card-header {
@@ -1042,7 +1042,8 @@ footer .btn:hover {
 
 .card-btn:hover,
 .card-btn:active {
-  background-color: #c2cffc;
+  background-color: darkorange;
+  color: #0d0d0d;
 }
 
 .card-btn:hover span,
