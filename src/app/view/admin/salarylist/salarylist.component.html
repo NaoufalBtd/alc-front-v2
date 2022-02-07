@@ -1,59 +1,184 @@
-<p-card style="margin-top: 10px">
-    <p-header>
+<div class="p-grid">
+    <div class="p-col-12">
+        <p-toast></p-toast>
+        <div class="card">
+            <p-toolbar styleClass="p-mb-4">
+                <ng-template pTemplate="left">
+                    <h5> Search
+                    </h5>
+                </ng-template>
+                <ng-template pTemplate="right">
+                    <input pInputText type="text" placeholder="Search by Prof Name"
+                           [(ngModel)]="salarySearchAdmin.prof.nom"
+                           style="margin-right: 5px">
+                    <input pInputText type="text" placeholder="Search by Code Salary"
+                           [(ngModel)]="salarySearchAdmin.code"
+                           style="margin-right: 5px">
+                    <p-dropdown [options]="itemsMOIS" placeholder="Select Month" [itemSize]="31"
+                                [(ngModel)]="salarySearchAdmin.mois"
+                                [showClear]="true"
+                                [filter]="false" style="margin-right: 5px"></p-dropdown>
+                    <p-dropdown [options]="itemsannee" placeholder="Select Year" [showClear]="true"
+                                [(ngModel)]="salarySearchAdmin.annee"
+                                [itemSize]="31"
+                                [filter]="false"></p-dropdown>
+                    <button pButton pRipple label="Search" icon="pi pi-search" class="p-button-primary p-ml-2 "
+                            (click)="findAllByCriteriaAdmin()"></button>
+                </ng-template>
+            </p-toolbar>
+            <p-table #dt [rows]="4" [paginator]="true" [value]="salaryListAdmin"
+                     [globalFilterFields]="['reference','total','totalPaye']"
+                     [rowHover]="true" dataKey="id" styleClass="p-datatable-customers"
+                     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                     [showCurrentPageReport]="true">
+                <ng-template pTemplate="caption">
+                    <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
+                        <h5 class="p-m-0">List of Salary</h5>
 
-        <div class="p-grid p-ml-2">
-            <h3 style="margin-left: 5px;">Search</h3>
-            <div class="p-col-12">
-                <input pInputText type="text" placeholder="Search by Prof Name" [(ngModel)]="profNom"
-                       style="margin-right: 1%;">
-                <p-dropdown [options]="itemsMOIS" placeholder="Select Month" [itemSize]="31" [showClear]="true"
-                            [(ngModel)]="moisSearch"
-                            [filter]="false" style="margin-right: 1%;"></p-dropdown>
-                <p-dropdown [options]="itemsannee" placeholder="Select Year" [showClear]="true" [itemSize]="31"
-                            [(ngModel)]="anneeSearch"
-                            [filter]="false" style="margin-left: 1%"></p-dropdown>
-                <button pButton pRipple type="button" label="Search" class="p-button-info" style="margin-left: 1%"
-                        (click)="findAllByCriteria(profNom,moisSearch,anneeSearch)"></button>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
 
-            </div>
+                        <th pSortableColumn="prof">Prof</th>
+                        <th pSortableColumn="code">Code</th>
+                        <th pSortableColumn="annee">Year</th>
+                        <th pSortableColumn="mois">Month</th>
+                        <th pSortableColumn="nbrSessionMensuel">Number of Monthly Sessions</th>
+                        <th pSortableColumn="montantMensuel">Monthly Amount</th>
+                        <th>Details</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-salary>
+                    <tr>
+
+                        <td>{{salary.prof.nom}} {{salary.prof.prenom}}</td>
+                        <td>{{salary.code}}</td>
+                        <td>{{salary.annee}}</td>
+                        <td>{{salary.mois}}</td>
+                        <td>{{salary.nbrSessionMensuel}}</td>
+                        <td>{{salary.montantMensuel}}</td>
+                        <td>
+                            <button pButton pRipple icon="pi pi-list" class="p-button-rounded p-button-info p-mr-2"
+                                    (click)="showDetails(salary.mois,salary.annee,salary.prof.id)"
+
+                            ></button>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="summary">
+
+                </ng-template>
+            </p-table>
         </div>
-    </p-header>
-</p-card>
-
-<div style="margin-top: 10px">
-    <p-table style="margin-top: 10px" #dt [value]="salarySearchList" dataKey="id" styleClass="p-datatable-customers"
-             [rowHover]="true"
-             [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]"
-             [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-             [filterDelay]="0" [globalFilterFields]="['prof.nom','etudiant.nom','totalHeure','montant','datePaiement']">
-        <ng-template pTemplate="caption">
-            <div class="table-header">
-                List of Salary
-            </div>
-        </ng-template>
-        <ng-template pTemplate="header">
-            <tr>
-                <th pSortableColumn="prof.nom">Prof Name</th>
-                <th pSortableColumn="etudiant.nom">Monthly Amount</th>
-                <th></th>
-            </tr>
-
-        </ng-template>
-        <ng-template pTemplate="body" let-c>
-            <tr class="p-selectable-row">
-                <td>{{c.prof.nom}}</td>
-                <td>{{c.montantMensuel}}</td>
-                <td>
-                    <button pButton pRipple type="button" label="Details" class="p-button-info"
-                            style="margin-left: 1%"></button>
-
-                </td>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="emptymessage">
-            <tr>
-                <td colspan="3">No customers found.</td>
-            </tr>
-        </ng-template>
-    </p-table>
+        <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+    </div>
+    <app-categorie-prof-view></app-categorie-prof-view>
 </div>
+
+<p-dialog header="Details Salary" [(visible)]="displayDetails" [style]="{width: '50vw'}" [baseZIndex]="10000">
+    <p-tabView>
+        <p-tabPanel header="Payment">
+            <p-table #dat [rows]="4" [value]="paiementListAdmin"
+                     [globalFilterFields]="['reference','total','totalPaye']"
+                     dataKey="id" styleClass="p-datatable-customers">
+
+                <ng-template pTemplate="caption">
+                    <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
+                        <h5 class="p-m-0">List of Payment</h5>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pSortableColumn="Amount">Amount</th>
+                        <th pSortableColumn="Studentgroup">Student group</th>
+                        <th pSortableColumn="Studentgroup">Date</th>
+
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-payment>
+                    <tr>
+                        <td>{{payment.montant}}</td>
+                        <td>{{payment.groupeEtudiant.libelle}}</td>
+                        <td>{{payment.datePaiement}}</td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="footer">
+                    <h5 style="margin-top: 15px">Total Payment: <span
+                            style="color: #0d67ce"> {{this.monatantAllPaimentSelected}}</span></h5>
+                </ng-template>
+            </p-table>
+
+
+        </p-tabPanel>
+        <p-tabPanel header="Bonus">
+            <p-tabView>
+                <p-tabPanel header="ClassAverage Bonus">
+                    <p-table #dat [rows]="4" [value]="salaryclassAverageBonusProfByAdmin"
+                             [globalFilterFields]="['reference','total','totalPaye']"
+                             dataKey="id" styleClass="p-datatable-customers">
+
+                        <ng-template pTemplate="caption">
+                            <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
+                                <h5 class="p-m-0">List of ClassAverage Bonus</h5>
+                            </div>
+                        </ng-template>
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th pSortableColumn="Amount">Amount</th>
+                                <th pSortableColumn="ClassAverage Bonus">ClassAverage Bonus</th>
+
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-classAverageBonusProf>
+                            <tr>
+                                <td>{{classAverageBonusProf.classAverageBonus.prix}}</td>
+                                <td>{{classAverageBonusProf.classAverageBonus.code}}</td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="footer">
+                            <h5 style="margin-top: 15px">Total ClassAverage Bonus: <span
+                                    style="color: #0d67ce"> {{this.monatantAllclassAverageBonusProf}}</span></h5>
+                        </ng-template>
+                    </p-table>
+
+                </p-tabPanel>
+                <p-tabPanel header="Workload Bonus">
+                    <p-table #dat [rows]="4" [value]="salaryworkloadBonusProfByAdmin"
+                             [globalFilterFields]="['reference','total','totalPaye']"
+                             dataKey="id" styleClass="p-datatable-customers">
+
+                        <ng-template pTemplate="caption">
+                            <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
+                                <h5 class="p-m-0">List of ClassAverage Bonus</h5>
+                            </div>
+                        </ng-template>
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th pSortableColumn="Amount">Amount</th>
+                                <th pSortableColumn="ClassAverage Bonus">ClassAverage Bonus</th>
+
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-workloadBonusProf>
+                            <tr>
+                                <td>{{workloadBonusProf.workloadBonus.prix}}</td>
+                                <td>{{workloadBonusProf.workloadBonus.code}}</td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="footer">
+                            <h5 style="margin-top: 15px">Total WorkloadBonus Bonus: <span
+                                    style="color: #0d67ce"> {{this.monatantAllworkloadBonusProf}}</span></h5>
+                        </ng-template>
+                    </p-table>
+                </p-tabPanel>
+
+
+            </p-tabView>
+        </p-tabPanel>
+
+    </p-tabView>
+    <ng-template pTemplate="footer">
+
+    </ng-template>
+</p-dialog>

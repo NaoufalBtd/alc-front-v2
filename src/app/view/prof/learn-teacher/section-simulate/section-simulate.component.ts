@@ -20,6 +20,7 @@ import {WebSocketService} from '../../../../controller/service/web-socket.servic
 import {LearnService} from '../../../../controller/service/learn.service';
 import {GroupeEtudiant} from '../../../../controller/model/groupe-etudiant.model';
 import {Etudiant} from '../../../../controller/model/etudiant.model';
+import {SessionCoursService} from '../../../../controller/service/session-cours.service';
 
 @Pipe({name: 'safe'})
 export class SafePipe1 implements PipeTransform {
@@ -49,10 +50,14 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
 
     // tslint:disable-next-line:max-line-length
     constructor(private sectionItemService: SectionItemService,
-                private loginService: LoginService,
+                private sessionservice: SessionCoursService,
+                public loginService: LoginService,
                 public webSocketService: WebSocketService,
                 private learnService: LearnService,
-                private messageService: MessageService, private dictionnaryService: DictionaryService, private router: Router, private serviceQuiz: QuizService, private sanitizer: DomSanitizer, private quizService: QuizEtudiantService, private confirmationService: ConfirmationService, private service: ParcoursService, private http: HttpClient, private review: EtudiantReviewService) {
+                private messageService: MessageService,
+                private dictionnaryService: DictionaryService,
+                private router: Router,
+                private serviceQuiz: QuizService, private sanitizer: DomSanitizer, private quizService: QuizEtudiantService, private confirmationService: ConfirmationService, private service: ParcoursService, private http: HttpClient, private review: EtudiantReviewService) {
     }
 
 
@@ -472,5 +477,9 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
 
     get studentsEnLigne(): Map<number, Etudiant> {
         return this.webSocketService.studentsEnLigne;
+    }
+
+    public saveSessionCoursForGroupEtudiant(idprof: number, idcours: number) {
+        this.sessionservice.saveSessionCoursForGroupEtudiant( idprof, idcours);
     }
 }

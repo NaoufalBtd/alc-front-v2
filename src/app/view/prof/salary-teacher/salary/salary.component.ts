@@ -8,6 +8,9 @@ import {Salary} from '../../../../controller/model/salary.model';
 import {SessionCours} from '../../../../controller/model/session-cours.model';
 import {SessionCoursService} from '../../../../controller/service/session-cours.service';
 import {DateTimePicker} from '@syncfusion/ej2-angular-calendars';
+import {Paiement} from '../../../../controller/model/paiement.model';
+import {ClassAverageBonusProf} from '../../../../controller/model/class-average-bonus-prof.model';
+import {WorkloadBonusProf} from '../../../../controller/model/workload-bonus-prof.model';
 
 
 @Component({
@@ -20,12 +23,12 @@ export class SalaryComponent implements OnInit {
     items: MenuItem[];
     itemsannee: MenuItem[];
     activeItem: MenuItem;
-    mois: number;
-    annee: number;
+    mois: string;
+    annee: string;
     globalAnnee: number;
     displaySalary: boolean = false;
     itemsMOIS: MenuItem[];
-
+    displayDetails: boolean = false;
 
     constructor(private messageService: MessageService, private confirmationService: ConfirmationService,
                 private service: ClassRoomService, private serviceUser: LoginService, private salaryservice: SalaryService, private sessionCoursService: SessionCoursService) {
@@ -36,16 +39,16 @@ export class SalaryComponent implements OnInit {
             this.itemsannee.push({label: +i, value: +i});
         }
         this.itemsMOIS = [];
-        for (let i = 1; i < 10; i++) {
+        for (let i = 1; i < 13; i++) {
             // @ts-ignore
-            this.itemsMOIS.push({label: '0' + i, value: '0' + i});
+            this.itemsMOIS.push({label: +i, value: +i});
         }
-        // @ts-ignore
-        this.itemsMOIS.push({label: 10, value: 10});
-        // @ts-ignore
-        this.itemsMOIS.push({label: 11, value: 11});
-        // @ts-ignore
-        this.itemsMOIS.push({label: 12, value: 12});
+        /*        // @ts-ignore
+                this.itemsMOIS.push({label: 10, value: 10});
+                // @ts-ignore
+                this.itemsMOIS.push({label: 11, value: 11});
+                // @ts-ignore
+                this.itemsMOIS.push({label: 12, value: 12});*/
 
 
         this.data = {
@@ -104,6 +107,16 @@ export class SalaryComponent implements OnInit {
         this.service.viewDialogCategorie = value;
     }
 
+    get salarypayment(): Paiement {
+        return this.salaryservice.salarypayment;
+    }
+
+    get salarypaymentList(): Array<Paiement> {
+        return this.salaryservice.salarypaymentList;
+
+    }
+
+
     public findSalaryByDate() {
         this.selectedsalaryVo.prof.id = this.serviceUser.prof.id;
         this.service.findSalaryByDateAndProf().subscribe(data => {
@@ -117,6 +130,9 @@ export class SalaryComponent implements OnInit {
 
 
     ngOnInit() {
+        this.salaryservice.findAllSalaryProfID(this.serviceUser.getConnectedProf().id);
+        console.log('salaaaaaaaaaaaaaaaaaaaaaaaaaaaaam');
+        console.log(this.salaryList);
         this.salaryservice.findCurrentSalaryByMoisAndAnneeAndProfId(this.serviceUser.getConnectedProf().id);
         this.sessionCoursService.findByProfId(this.serviceUser.getConnectedProf().id);
         this.salaryservice.findMontantProfId(this.serviceUser.getConnectedProf().id);
@@ -159,6 +175,10 @@ export class SalaryComponent implements OnInit {
         console.log(this.monatant);
     }
 
+    get salarySearch(): Salary {
+        return this.salaryservice.salarySearch;
+    }
+
     get monatant(): number {
         return this.salaryservice.monatant;
     }
@@ -170,6 +190,14 @@ export class SalaryComponent implements OnInit {
 
     get sessioncourslistProf(): Array<SessionCours> {
         return this.sessionCoursService.sessioncourslistProf;
+    }
+
+    get salaryclassAverageBonusProf(): Array<ClassAverageBonusProf> {
+        return this.salaryservice.salaryclassAverageBonusProf;
+    }
+
+    get salaryworkloadBonusProf(): Array<WorkloadBonusProf> {
+        return this.salaryservice.salaryworkloadBonusProf;
     }
 
     openSalary() {
@@ -194,9 +222,37 @@ export class SalaryComponent implements OnInit {
         return this.salaryservice.monatantPaiementProf;
     }
 
-    public findAllPaiementByMoisAndAnneeAndProfId(mois: number, annee: number, profid: number) {
-        this.salaryservice.findAllPaiementByMoisAndAnneeAndProfId(mois, annee, profid);
+    public findAllMonatantPaiementByMoisAndAnneeAndProfId(mois: number, annee: number, profid: number) {
+        this.salaryservice.findAllMonatantPaiementByMoisAndAnneeAndProfId(mois, annee, profid);
     }
 
+    findPaiementByMoisAndAnneeAndProfID(mois: number, annee: number, profid: number) {
+        this.salaryservice.findPaiementByMoisAndAnneeAndProfID(mois, annee, profid);
+    }
 
+    findClassAverageBonusProfByMoisAndAnneeAndProfID(mois: number, annee: number, profid: number) {
+        this.salaryservice.findClassAverageBonusProfByMoisAndAnneeAndProfID(mois, annee, profid);
+    }
+
+    findMontantClassAverageBonusProfByMoisAndAnneeAndProfID(mois: number, annee: number, profid: number) {
+        this.salaryservice.findMontantClassAverageBonusProfByMoisAndAnneeAndProfID(mois, annee, profid);
+    }
+
+    findWorkloadBonusProfByMoisAndAnneeAndProfID(mois: number, annee: number, profid: number) {
+        this.salaryservice.findWorkloadBonusProfByMoisAndAnneeAndProfID(mois, annee, profid);
+    }
+
+    showDetails(mois: number, annee: number, profid: number) {
+        this.displayDetails = true;
+        this.findPaiementByMoisAndAnneeAndProfID(mois, annee, profid);
+        this.findAllMonatantPaiementByMoisAndAnneeAndProfId(mois, annee, profid);
+        this.findClassAverageBonusProfByMoisAndAnneeAndProfID(mois, annee, profid);
+        this.findMontantClassAverageBonusProfByMoisAndAnneeAndProfID(mois, annee, profid);
+        this.findWorkloadBonusProfByMoisAndAnneeAndProfID(mois, annee, profid);
+        this.findAllWorkloadBonusProfByMoisAndAnneeAndProfId(mois, annee, profid);
+    }
+
+    public findAllByCriteria(profNom: string) {
+        this.salaryservice.findAllByCriteria(profNom);
+    }
 }

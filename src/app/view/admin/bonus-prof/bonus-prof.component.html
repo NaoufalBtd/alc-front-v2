@@ -1,4 +1,5 @@
 <div class="p-grid">
+    <!--List Workload Bonus-->
     <div class="p-col-6">
         <div class="p-card">
             <div class="p-card-title ">
@@ -17,6 +18,7 @@
                     <p-table responsiveLayout="scroll" [value]="workloadBonusList">
                         <ng-template pTemplate="header">
                             <tr>
+                                <th>Code</th>
                                 <th>Nombre Session</th>
                                 <th>Prix</th>
                                 <th>Update</th>
@@ -24,6 +26,7 @@
                         </ng-template>
                         <ng-template pTemplate="body" let-c>
                             <tr>
+                                <td>{{c.code}}</td>
                                 <td>{{c.nombreSession}}</td>
                                 <td>{{c.prix}}</td>
                                 <td>
@@ -40,13 +43,7 @@
             <div></div>
         </div>
     </div>
-
-
-
-
-
-
-
+    <!--List ClassAverage Bonus-->
     <div class="p-col-6">
         <div class="p-card">
             <div class="p-card-title">
@@ -69,6 +66,7 @@
                         <p-table responsiveLayout="scroll" [value]="classAverageBonusList">
                             <ng-template pTemplate="header">
                                 <tr>
+                                    <th>Code</th>
                                     <th>Nombre Session</th>
                                     <th>Prix</th>
                                     <th>Update</th>
@@ -76,6 +74,7 @@
                             </ng-template>
                             <ng-template pTemplate="body" let-c>
                                 <tr>
+                                    <td>{{c.code}}</td>
                                     <td>{{c.nombreSession}}</td>
                                     <td>{{c.prix}}</td>
                                     <td>
@@ -93,69 +92,97 @@
         </div>
     </div>
 </div>
+<!--Add Workload Bonus-->
 <p-dialog header="Add Workload Bonus" [(visible)]="displayWorkloadBonus">
+    <div class="p-grid p-fluid p-mt-1">
+        <div class="p-field p-md-4">
+            <label for="1"><strong>Nombre Session</strong></label>
+        </div>
+        <div class="p-field  p-md-8">
+            <input class="p-mr-2" type="number" pInputText placeholder="Nombre Session"
+                   [(ngModel)]="workloadBonus.nombreSession" required autofocus>        </div>
+    </div>
+    <div class="p-grid p-fluid p-mt-1">
+        <div class="p-field p-md-4">
+            <label for="2"><strong>Prix</strong></label>
+        </div>
+        <div class="p-field  p-md-8">
+            <input class=" p-mr-2" type="number" pInputText placeholder="Prix" id="2"
+                   [(ngModel)]="workloadBonus.prix" required autofocus>
+        </div>
+    </div>
+    <div class="p-field p-fluid">
+        <div class="p-field p-md-1">
+            <button class="p-button-primary p-mr-2" icon="pi pi-plus" label="Add" (click)="saveWorkloadBonus()"
+                    pButton
+                    pRipple style="width: 90px"></button>
+        </div>
 
-    <div class="p-field">
-        <label for="1"><strong>Nombre Session</strong></label>
-        <input class="p-mb-2 p-mr-2" type="number" pInputText placeholder="Nombre Session" id="1"
-               [(ngModel)]="workloadBonus.nombreSession" required autofocus>
-    </div>
-    <div class="p-field">
-        <label for="2"><strong>Prix</strong></label>
-        <input class="p-mb-2 p-mr-2" type="number" pInputText placeholder="Prix" id="2"
-               [(ngModel)]="workloadBonus.prix" required autofocus>
-    </div>
-    <div class="p-field">
-        <button class="p-button-primary p-mr-2 p-mb-2 " icon="pi pi-plus" label="Add" (click)="saveWorkloadBonus()"
-                pButton
-                pRipple style="width: 90px"></button>
     </div>
 </p-dialog>
+<!--Update Workload Bonus-->
 <p-dialog header="Update Workload Bonus" [(visible)]="displayWorkloadBonusupate">
-
-
-    <div class="p-field">
-        <label for="2"><strong>Prix</strong></label>
-        <input class="p-mb-2 p-mr-2" type="number" pInputText placeholder="Prix" id="2"
-               [(ngModel)]="newprix"
-               required autofocus>
+    <div class="p-grid p-fluid p-mt-1">
+        <div class="p-field p-md-4">
+            <label for="2"><strong>Prix</strong></label>
+        </div>
+        <div class="p-field p-md-8">
+            <input class="p-mr-2" type="number" pInputText placeholder="Prix"
+                   [(ngModel)]="newprix"
+                   required autofocus>
+        </div>
     </div>
-    <div class="p-field">
+    <div class="p-grid p-fluid p-mt-1">
+
         <button class="p-button-primary p-mr-2 p-mb-2 " icon="pi pi-plus" label="Update"
                 pButton
                 pRipple style="width: 90px" (click)="updateworkloadBonus(newprix)"></button>
     </div>
 </p-dialog>
+<!--Add ClassAverage Bonus-->
 <p-dialog header="Add ClassAverage Bonus" [(visible)]="displayClassAverageBonus">
-
-    <div class="p-field">
-        <label for="1"><strong>Nombre Session</strong></label>
-        <input class="p-mb-2 p-mr-2" type="number" pInputText placeholder="Nombre Session" id="1"
-               [(ngModel)]="classAverageBonus.nombreSession" required autofocus>
+    <div class="p-grid p-fluid p-mt-1">
+        <div class="p-field p-md-4">
+            <label for="1"><strong>Nombre Session</strong></label>
+        </div>
+        <div class="p-field  p-md-8">
+            <input class="p-mr-2" type="number" pInputText placeholder="Nombre Session" id="1"
+                   [(ngModel)]="classAverageBonus.nombreSession" required autofocus>
+        </div>
     </div>
-    <div class="p-field">
-        <label for="2"><strong>Prix</strong></label>
-        <input class="p-mb-2 p-mr-2" type="number" pInputText placeholder="Prix" id="2"
-               [(ngModel)]="classAverageBonus.prix" required autofocus>
+    <div class="p-grid p-fluid p-mt-1">
+        <div class="p-field p-md-4">
+            <label for="22"><strong>Prix</strong></label>
+        </div>
+        <div class="p-field  p-md-8">
+            <input class="p-mr-2" type="number" pInputText placeholder="Prix" id="22"
+                   [(ngModel)]="classAverageBonus.prix" required autofocus>
+        </div>
     </div>
-    <div class="p-field">
-        <button class="p-button-primary p-mr-2 p-mb-2 " icon="pi pi-plus" label="Add"
-                pButton
-                pRipple style="width: 90px" (click)="saveclassAverageBonus()"></button>
+    <div class="p-grid p-fluid p-mt-1">
+        <div class="p-field p-md-4">
+            <button class="p-button-primary p-mr-2  " icon="pi pi-plus" label="Add"
+                    pButton
+                    pRipple style="width: 90px" (click)="saveclassAverageBonus()"></button>        </div>
     </div>
 </p-dialog>
+<!--Update Class Average Bonus-->
 <p-dialog header="Update Class Average Bonus" [(visible)]="displayClassAverageBonusupdate">
 
-
-    <div class="p-field">
-        <label for="2"><strong>Prix</strong></label>
-        <input class="p-mb-2 p-mr-2" type="number" pInputText placeholder="Prix" id="2"
-               [(ngModel)]="newprix"
-               required autofocus>
+    <div class="p-grid p-fluid p-mt-1">
+        <div class="p-field p-md-4">
+            <label for="222"><strong>Prix</strong></label>
+        </div>
+        <div class="p-field  p-md-8">
+            <input class="p-mr-2" type="number" pInputText placeholder="Prix" id="222"
+                   [(ngModel)]="newprix"
+                   required autofocus>
+        </div>
     </div>
-    <div class="p-field">
-        <button class="p-button-primary p-mr-2 p-mb-2 " icon="pi pi-plus" label="Update"
-                pButton
-                pRipple style="width: 90px" (click)="updateclassAverageBonus(newprix)"></button>
+    <div class="p-grid p-fluid p-mt-1">
+        <div class="p-field p-md-4">
+            <button class="p-button-primary p-mr-2" icon="pi pi-plus" label="Update"
+                    pButton
+                    pRipple style="width: 90px" (click)="updateclassAverageBonus(newprix)"></button>        </div>
     </div>
 </p-dialog>

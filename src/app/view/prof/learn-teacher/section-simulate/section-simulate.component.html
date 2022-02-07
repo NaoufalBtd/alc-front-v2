@@ -22,12 +22,14 @@
                                     <tr>
                                         <td>{{etudiant?.nom }} {{ etudiant?.prenom }}</td>
                                         <td>
-                                            <button *ngIf="studentsEnLigne.get(etudiant.id) === undefined" style="width: 15px;height: 0" pButton pRipple
+                                            <button *ngIf="studentsEnLigne.get(etudiant.id) === undefined"
+                                                    style="width: 15px;height: 0" pButton pRipple
                                                     type="button" icon="pi pi-circle-fill"
                                                     class="p-button-rounded p-button-danger">
 
-                                             </button>
-                                            <button *ngIf="studentsEnLigne.get(etudiant.id) !== undefined" style="width: 15px;height: 0" pButton pRipple
+                                            </button>
+                                            <button *ngIf="studentsEnLigne.get(etudiant.id) !== undefined"
+                                                    style="width: 15px;height: 0" pButton pRipple
                                                     type="button" icon="pi pi-circle-fill"
                                                     class="p-button-rounded p-button-success">
                                             </button>
@@ -114,6 +116,20 @@
                                         pButton pRipple
                                         style=" width: 120px ; background-color: orange;  position: absolute;right: 15px;"
                                         type="button"></button>
+                        <button (click)="goToSection('NEXT', 'next')"
+                                [style.visibility]="(this.selectedsection.numeroOrder < this.itemssection2.length)? 'visible':'hidden'"
+                                class="p-button-rounded" icon="pi pi-caret-right" id="next" label="Next"
+                                pButton pRipple
+                                style=" width: 120px ; background-color: orange;  position: absolute;right: 15px;"
+                                type="button"></button>
+                        <button
+                                [style.visibility]="(this.selectedsection.numeroOrder == this.itemssection2.length)? 'visible':'hidden'"
+                                class="p-button-rounded" icon="pi pi-caret-right" id="finish" label="Finish"
+                                routerLink="/prof/home"
+                                (click)="saveSessionCoursForGroupEtudiant(loginService.getConnectedProf().id,selectedsection.cours.id)"
+                                pButton pRipple
+                                style=" width: 120px ; background-color: orange;  position: absolute;right: 15px;"
+                                type="button"></button>
 
                             </div>
                         </p-tabPanel>

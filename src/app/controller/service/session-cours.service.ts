@@ -25,6 +25,8 @@ export class SessionCoursService {
     private _sessioncourslist: Array<SessionCours>;
     private _sessioncourslistProf: Array<SessionCours>;
     public _testsessioncours: boolean = false;
+    public _idgroup: number;
+
 
     constructor(private http: HttpClient,
                 private messageService: MessageService,
@@ -184,6 +186,15 @@ export class SessionCoursService {
             data => {
                 this.sessioncourslistProf = data;
                 return data;
+            }
+        );
+    }
+
+    // this._idgroup + '/' + idprof + '/' + idcours
+    public saveSessionCoursForGroupEtudiant(idprof: number, idcours: number) {
+        this.http.get(this.profUrlSession + idprof + '/' + this._idgroup + '/' + idcours).subscribe(
+            data => {
+
             }
         );
     }
