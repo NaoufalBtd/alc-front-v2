@@ -1,313 +1,407 @@
-<div class="p-grid" id="header">
-    <div class="p-col-6">{{this.homeWorkQuestion.typeDeQuestion.lib}}</div>
-    <div class="p-col-6">{{this.homeWorkQuestion.numero}} out of {{this.homeWork.questions.length}}</div>
-</div>
-<div class="p-grid" (mouseup)="dict()">
-    <div class="p-col-fixed" style="width: 8%">
-        <p-table [value]="this.homeWork.questions">
-            <ng-template pTemplate="header">
-                <tr>
+<h4 *ngIf="homeWorkList.length ===0" style="text-align: center; color: #ffa500">Home work not found !</h4>
+<div *ngIf="homeWorkList.length !==0" class="p-grid HomeWorkcontainer">
+    <div class="p-col-9 rightBar">
 
-                    <th pSortableColumn="libelle" style="text-align: center">Question's number
-                        <p-sortIcon field="libelle"></p-sortIcon>
-                    </th>
-                </tr>
-            </ng-template>
-            <ng-template let-quetions pTemplate="body">
-                <tr>
-                    <td
-                        [style.color]="(quetions.numero) == (this.homeWorkQuestion.numero)? 'green' :'orange' "
-                        style="text-align: center"
-                        (click)="findquestion(quetions)"
-                        style="cursor: pointer; text-align: center"><u>{{quetions.numero}}</u></td>
+        <p-tabView>
+            <p-tabPanel header="Home Work">
+                <div *ngIf="showTakeQuiz" class="p-field">
+                    <div class="p-grid">
+                        <div *ngIf="showTypeOfQstBar" style=" background-color: #ffffff;  text-align: center;"
+                             class="p-col-12">
+                            <div style="float:left; display: inline-block; text-align: center">
+                                {{homeWorkQuestion?.typeDeQuestion?.lib}}
+                            </div>
+
+                            <div style="float:right;display: inline-block;text-align: center">{{homeWorkQuestion.numero}}
+                                /{{numberOfQuestion}}</div>
+                        </div>
+                    </div>
+
+                    <div *ngIf="showTypeOfQstBar" style="background-color: #dee2e6" class="p-grid">
+                        <div style="  background-color: transparent!important;" class="p-col-12">
+                            <p-progressBar [style]="{'height': '6px'}" [showValue]="false"
+                                           [value]="progressBarValue"></p-progressBar>
+                        </div>
+                    </div>
+
+                    <!--------------------------------- UNIQUE CHOICE-------------------------------------------------------->
+
+                    <div *ngIf="homeWorkQuestion.typeDeQuestion.ref === 't1'" class="p-grid">
+                        <div class="p-col-12 question">
+                            <button [disabled]="disableButtonSon" pButton pRipple type="button"
+                                    (click)="sound(homeWorkQuestion)"
+                                    icon="pi pi-volume-up" class="p-button-rounded sonButton "></button>
+                            <h5 class="h5"> {{  questionSideLeft}}  </h5>
+                            <span class="p-float-label">
+            <input *ngIf="answerSelected.lib === undefined" id="inputDashedBorder" inputId="inputDashedBorder"
+                   type="text" disabled
+                   [(ngModel)]="homeWorkReponse.lib"
+                   class="p-inputtext-sm " pInputText/>
+
+
+            <input *ngIf="answerSelected.lib !== undefined && answerIsCorrect(answerSelected, homeWorkQuestion) "
+                   disabled
+                   id="inputCorrectAnswer" inputId="inputDashedBorder" type="text"
+                   [(ngModel)]="answerSelected.lib"
+                   class="p-inputtext-sm " pInputText/>
+
+                                <input *ngIf="answerSelected.lib !== undefined && !answerIsCorrect(answerSelected, homeWorkQuestion)"
+                                       id="inputFalseAnswer" inputId="inputDashedBorder" type="text"
+                                       disabled
+                                       [(ngModel)]="answerSelected.lib"
+                                       class="p-inputtext-sm " pInputText/>
+
+
+                            <label [hidden]="answerSelected.lib === undefined || answerIsCorrect(answerSelected, homeWorkQuestion)"
+                                   class="correctAnswer" for="inputDashedBorder"
+                                   *ngFor="let ans of correctAnswersList?.get(homeWorkQuestion.id)">{{ ans.lib}}</label>
+
+
+        </span>
+                            <h5 class="h5"> {{  questionSideRight}}  </h5>
+                            <h4 *ngIf="translateWord !== undefined">{{translateWord}}</h4>
+                        </div>
+                        <div class="p-col-12 answers">
+                            <div *ngFor="let reponse of homeWorkQuestion?.reponses"
+                                 class="p-field-checkbox textQuestion">
+                                <p-radioButton [inputId]="reponse.lib" name="category" [(ngModel)]="homeWorkReponse.lib"
+                                               (onClick)="showDontKnowButton = false; showCheckButton = true"
+                                               [value]="reponse.lib"></p-radioButton>
+                                <label [for]="reponse.lib">{{reponse.lib}}</label>
+                            </div>
+                            <button *ngIf="showCheckButton && !saveDone" pButton pRipple type="button"
+                                    icon="pi pi-check" iconPos="right"
+                                    label="Check answer" class="p-button-raised check-button "
+                                    (click)="saveAnswers(homeWorkQuestion)">
+                            </button>
+
+                            <button *ngIf="showDontKnowButton" pButton pRipple type="button"
+                                    icon="pi pi-question" iconPos="right"
+                                    label="DON'T KNOW" class="p-button-rounded dont-know-button "
+                                    (click)="showAnswers(homeWorkQuestion)">
+                            </button>
+                        </div>
+                    </div>
+
+
+                    <!--------------------------------- TRANSLATE THE PHRASE -------------------------------------------------------->
+
+
+                    <div *ngIf="homeWorkQuestion.typeDeQuestion.ref === 't3'" class="p-grid">
+                        <div class="p-col-12 question">
+                            <h5 style="margin-top: -20px;"
+                                class="translateQuestion"> {{  homeWorkQuestion?.libelle}}  </h5>
+
+                            <span style="margin: 0" class="p-float-label">
+            <button *ngIf="answerSelected.lib !== undefined"
+                    [disabled]="disableButtonSon" pButton pRipple type="button" (click)="sound(homeWorkQuestion)"
+                    icon="pi pi-volume-up" class="p-button-rounded sonButton ">
+            </button>
+
+            <input *ngIf="answerSelected.lib === undefined" id="input-answer" type="text"
+                   (focus)="showDontKnowButton = false ; showCheckButton=true"
+                   [(ngModel)]="homeWorkReponse.lib" pInputText>
+
+            <input disabled
+                   *ngIf="answerSelected.lib !== undefined && answerIsCorrect(answerSelected, homeWorkQuestion)"
+                   id="input-answer-correct" type="text"
+                   [(ngModel)]="answerSelected.lib" pInputText>
+
+            <input style="text-decoration: 2px line-through red;" disabled
+                   *ngIf="answerSelected.lib !== undefined && !answerIsCorrect(answerSelected, homeWorkQuestion)"
+                   id="input-answer-incorrect" type="text"
+                   [(ngModel)]="answerSelected.lib" pInputText>
+            <label style="
+               margin-left: 150px;
+                font-size: medium;
+                 color: green;
+                 padding: 0;
+                width: auto;
+                 margin-top: 9px;
+                 font-weight: 800;"
+                   [hidden]="answerSelected.lib === undefined || answerIsCorrect(answerSelected, homeWorkQuestion)"
+                   class="" for="inputDashedBorder"
+                   *ngFor="let ans of correctAnswersList?.get(homeWorkQuestion.id)">{{ ans.lib}}
+            </label>
+        </span>
+                        </div>
+
+                        <div class="p-col-12 answers">
+                            <button *ngIf="showCheckButton && !saveDone" pButton pRipple type="button"
+                                    icon="pi pi-check" iconPos="right"
+                                    label="Check answer" class="p-button-raised check-button "
+                                    (click)="saveAnswers(homeWorkQuestion)">
+                            </button>
+
+                            <button *ngIf="showDontKnowButton" pButton pRipple type="button"
+                                    icon="pi pi-question" iconPos="right"
+                                    label="DON'T KNOW" class="p-button-rounded dont-know-button "
+                                    (click)="showAnswers(homeWorkQuestion)">
+                            </button>
+                        </div>
+                    </div>
+
+
+                    <!--------------------------------- CORRECT THE MISTAKE -------------------------------------------------------->
+
+                    <div *ngIf="homeWorkQuestion.typeDeQuestion.ref === 't4'" class="p-grid">
+                        <div class="p-col-12 question">
+                            <button [disabled]="disableButtonSon" pButton pRipple type="button"
+                                    (click)="sound(homeWorkQuestion)"
+                                    icon="pi pi-volume-up" class="p-button-rounded sonButton ">
+                            </button>
+                            <h5 class="h5"> {{  questionSideLeft}}  </h5>
+                            <span class="p-float-label">
+            <input style="font-weight: normal;" *ngIf="answerSelected.lib === undefined" id="inputQstT4"
+                   (focus)="showDontKnowButton =false; showCheckButton=true;"
+                   (focusin)="hidePlaceHolder('HIDE')"
+                   (focusout)="hidePlaceHolder('SHOW')"
+                   inputId="inputDashedBorder" type="text"
+                   [placeholder]="inputAnswer"
+                   [(ngModel)]="homeWorkReponse.lib" class="p-inputtext-sm " pInputText/>
+
+
+            <input *ngIf="answerSelected.lib !== undefined && answerIsCorrect(answerSelected, homeWorkQuestion) "
+                   disabled
+                   id="inputCorrectAnswer" inputId="inputDashedBorder" type="text"
+                   [(ngModel)]="answerSelected.lib"
+                   class="p-inputtext-sm " pInputText/>
+
+            <input *ngIf="answerSelected.lib !== undefined && !answerIsCorrect(answerSelected, homeWorkQuestion)"
+                   disabled
+                   id="inputFalseAnswer" inputId="inputDashedBorder" type="text"
+                   [(ngModel)]="answerSelected.lib"
+                   class="p-inputtext-sm " pInputText/>
+
+            <label [hidden]="answerSelected.lib === undefined || answerIsCorrect(answerSelected, homeWorkQuestion)"
+                   class="correctAnswer" for="inputDashedBorder"
+                   *ngFor="let ans of correctAnswersList?.get(homeWorkQuestion.id)">{{ ans.lib}}</label>
+
+        </span>
+                            <h5 class="h5"> {{  questionSideRight}}  </h5>
+                            <h4 *ngIf="translateWord !== undefined">{{translateWord}}</h4>
+
+                        </div>
+                        <div class="p-col-12 answers">
+
+                            <button *ngIf="showCheckButton && !saveDone" pButton pRipple type="button"
+                                    icon="pi pi-check" iconPos="right"
+                                    label="Check answer" class="p-button-raised check-button "
+                                    (click)="saveAnswers(homeWorkQuestion)">
+                            </button>
+
+                            <button *ngIf="showDontKnowButton" pButton pRipple type="button"
+                                    icon="pi pi-question" iconPos="right"
+                                    label="DON'T KNOW" class="p-button-rounded dont-know-button "
+                                    (click)="showAnswers(homeWorkQuestion)">
+                            </button>
+                        </div>
+                    </div>
+
+
+                    <!--------------------------------- WRITE  THE CORRECT FORM -------------------------------------------------------->
+
+                    <div style="font-weight: normal;" *ngIf="homeWorkQuestion.typeDeQuestion.ref === 't6'"
+                         class="p-grid">
+                        <div class="p-col-12 question">
+                            <button [disabled]="disableButtonSon" pButton pRipple type="button"
+                                    (click)="sound(homeWorkQuestion)"
+                                    icon="pi pi-volume-up" class="p-button-rounded sonButton ">
+                            </button>
+                            <h5 class="h5"> {{  questionSideLeft}}  </h5>
+                            <span class="p-float-label">
+            <input *ngIf="answerSelected.lib === undefined" id="inputQstT6"
+                   (focus)="showDontKnowButton =false; showCheckButton=true"
+                   (focusin)="hidePlaceHolder('HIDE')"
+                   (focusout)="hidePlaceHolder('SHOW')"
+                   inputId="inputDashedBorder" type="text"
+                   [placeholder]="inputAnswer"
+                   [(ngModel)]="homeWorkReponse.lib" class="p-inputtext-sm " pInputText/>
+
+
+            <input *ngIf="answerSelected.lib !== undefined && answerIsCorrect(answerSelected, homeWorkQuestion) "
+                   disabled
+                   id="inputCorrectAnswer" inputId="inputDashedBorder" type="text"
+                   [(ngModel)]="answerSelected.lib"
+                   class="p-inputtext-sm " pInputText/>
+
+            <input *ngIf="answerSelected.lib !== undefined && !answerIsCorrect(answerSelected, homeWorkQuestion)"
+                   disabled
+                   id="inputFalseAnswer" inputId="inputDashedBorder" type="text"
+                   [(ngModel)]="answerSelected.lib"
+                   class="p-inputtext-sm " pInputText/>
+
+            <label [hidden]="answerSelected.lib === undefined || answerIsCorrect(answerSelected, homeWorkQuestion)"
+                   class="correctAnswer" for="inputDashedBorder"
+                   *ngFor="let ans of correctAnswersList?.get(homeWorkQuestion.id)">{{ ans.lib}}</label>
+
+        </span>
+                            <h5 class="h5"> {{  questionSideRight}}  </h5>
+                            <h4 *ngIf="translateWord !== undefined">{{translateWord}}</h4>
+
+                        </div>
+                        <div class="p-col-12 answers">
+
+                            <button *ngIf="showCheckButton && !saveDone" pButton pRipple type="button"
+                                    icon="pi pi-check" iconPos="right"
+                                    label="Check answer" class="p-button-raised check-button "
+                                    (click)="saveAnswers(homeWorkQuestion)">
+                            </button>
+
+                            <button *ngIf="showDontKnowButton" pButton pRipple type="button"
+                                    icon="pi pi-question" iconPos="right"
+                                    label="DON'T KNOW" class="p-button-rounded dont-know-button "
+                                    (click)="showAnswers(homeWorkQuestion)">
+                            </button>
+                        </div>
+                    </div>
+
+
+                    <!--------------------------------- TRUE OR FALSE -------------------------------------------------------->
+
+                    <div *ngIf="homeWorkQuestion.typeDeQuestion.ref === 't5'" class="p-grid">
+                        <div class="p-col-12 question ">
+                            <div id="trueFalse" class="p-grid trueOrFalseQst">
+                                <div class="p-col-9">
+                                    {{  homeWorkQuestion?.libelle}}
+                                </div>
+                                <div style="padding-top: 2%;" class="p-col-3">
+                                    <p-toggleButton [(ngModel)]="trueOrFalse" onLabel="True"
+                                                    [disabled]="disableToggleButton"
+                                                    (ngModelChange)="showCheckButton=true; showDontKnowButton=false"
+                                                    offLabel="False" onIcon="pi pi-check"
+                                                    offIcon="pi pi-times"
+                                                    [style]="{'width': '7em',
+                                 'height': '23px'
+                                 }">
+                                    </p-toggleButton>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="p-col-12 answers">
+
+                            <button *ngIf="showCheckButton && !saveDone" pButton pRipple type="button"
+                                    icon="pi pi-check" iconPos="right"
+                                    label="Check answer" class="p-button-raised check-button "
+                                    (click)="saveAnswers(homeWorkQuestion)">
+                            </button>
+
+                            <button *ngIf="showDontKnowButton" pButton pRipple type="button"
+                                    icon="pi pi-question" iconPos="right"
+                                    label="DON'T KNOW" class="p-button-rounded dont-know-button "
+                                    (click)="showAnswers(homeWorkQuestion)">
+                            </button>
+                        </div>
+                    </div>
+
+
+                    <div class="p-grid sideBar">
+                        <div class="p-col-3">
+                        </div>
+
+                        <div class="p-col-6"></div>
+                        <!-- -->
+                        <div class="p-col-3">
+                            <button *ngIf="showNextButton && homeWorkQuestion.id !== homeWorkQuestionList[homeWorkQuestionList.length -1]?.id"
+                                    style="float:right"
+                                    pButton pRipple
+                                    type="button" icon="pi pi-arrow-right" iconPos="right"
+                                    label="Next" (click)="nextQuestionFct()"
+                                    class="p-button-rounded p-button-secondary"></button>
+
+
+                            <button *ngIf="homeWorkQuestion.id === homeWorkQuestionList[homeWorkQuestionList.length -1]?.id "
+                                    style="float:right" pButton
+                                    pRipple
+                                    (click)="finishHomeWork()"
+                                    type="button" icon="pi pi-save" iconPos="right"
+                                    label="Finish"
+                                    class="p-button-rounded p-button-success"></button>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="showQuizReview" class="card">
+                    <p-table [value]="answersList | keyvalue" styleClass="p-datatable-sm" responsiveLayout="scroll">
+                        <ng-template pTemplate="caption">
+                        </ng-template>
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th style="width: 20px;"></th>
+                                <th>Number</th>
+                                <th>Your answer</th>
+                                <th>Correct answer</th>
+                                <th>Note</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-value>
+                            <tr>
+                                <td *ngIf="value.value.etatReponse === 'true' && (answersPointStudent.get(value.key))?.toString() === 'STUDENT_ANSWER'">
+                                    <i class="pi pi-check-circle" pTooltip="Correct answer" tooltipPosition="top"></i>
+                                </td>
+                                <td *ngIf="value.value.etatReponse === 'false'">
+                                    <i pTooltip="Incorrect answer" tooltipPosition="top" class="pi pi-times-circle"></i>
+                                </td>
+
+                                <td *ngIf="value.value.etatReponse === 'true' && answersPointStudent.get(value.key)?.toString() === 'STUDENT_DONT_KNOW'">
+                                    <i pTooltip="Student don't know" tooltipPosition="top"
+                                       class="pi pi-exclamation-circle"></i></td>
+
+
+                                <td>{{value?.key?.numero}}</td>
+
+
+                                <td *ngIf="(answersPointStudent.get(value.key))?.toString() === 'STUDENT_ANSWER'">{{value?.value?.lib}}</td>
+                                <td *ngIf="(answersPointStudent.get(value.key))?.toString() !== 'STUDENT_ANSWER'"></td>
+
+
+                                <td>{{correctAnswersList?.get(value.key.id)[0].lib}}</td>
+
+
+                                <td *ngIf="value.value.etatReponse === 'true'  && (answersPointStudent.get(value.key))?.toString() === 'STUDENT_ANSWER'">{{value?.key?.pointReponseJuste}}</td>
+                                <td *ngIf="value.value.etatReponse === 'true'  && (answersPointStudent.get(value.key))?.toString() === 'STUDENT_DONT_KNOW'">
+                                    0
+                                </td>
+                                <td *ngIf="value.value.etatReponse === 'false'">{{value?.key?.pointReponsefausse}}</td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="footer">
+                            <th colspan="5" style="padding: 3% 0 10px 9%;text-align: center;"><h4 class="noteFinal">Note
+                                final: </h4>  {{  noteQuiz}} / {{answersList.size}}</th>
+                        </ng-template>
+                    </p-table>
+
+                </div>
+            </p-tabPanel>
+
+
+            <p-tabPanel *ngIf="showHomeWorkEtudiantResult" header="Home Work Result">
+                <app-home-work-result></app-home-work-result>
+            </p-tabPanel>
+
+        </p-tabView>
+
+    </div>
+
+
+    <div class="p-col-2">
+        <p-table [value]="homeWorkList" id="categ">
+
+            <ng-template let-homeWork pTemplate="body">
+
+                <tr class="timeline">
+
+                    <li style="margin-top: 20px">
+                        <td (click)="homeWorkSelected(homeWork)"
+                            [style.color]="(homeWork.id) == (this.selectedHomeWork?.id)? 'orange' :'black' "
+                            style="cursor: pointer; font-weight: 600;margin-left: 5px; font-size: 15px">
+                            <u style="margin-left: 33px">{{homeWork?.libelle}}</u>
+                        </td>
+                    </li>
                 </tr>
             </ng-template>
         </p-table>
     </div>
-    <div class="p-col" >
-        <!-- --------------------- Correct The Mistake ---------------------------------->
-        <div class="grid" style="margin:10px;" *ngIf="homeWorkQuestion.typeDeQuestion.ref === 't4'">
-            <div class="p-col-6" class="question">
-                <h5 class="h5"> {{  questionSideLeft}}  </h5>
-                <span class="p-float-label">
-                       <input  id="inputDashedBorder"
-                               [(ngModel)]="inputAnswer" class="p-inputtext-sm " pInputText/>
-                    </span>
-                <h5 class="h5"> {{  questionSideRight}}  </h5>
-            </div>
-            <div class="p-col-4" style="margin-left: 5px;">
-                <button  [disabled]="disable"   pButton pRipple type="button" (click)="submitMistake()"  label="Check"  class="p-button-outlined p-button-success">
-                </button>
-            </div>
-        </div>
-        <div class="p-grid" id="bodyRadio">
-
-            <div *ngIf="!(homeWorkQuestion.typeDeQuestion.ref === 't4')" class="p-col-6" id="question">
-                <h3 style="margin-top: 100px;margin-bottom: 100px; text-align: center">
-                    {{this.homeWorkQuestion.libelle}}</h3>
-<!--                    <span style="font-size: 2rem; text-align: center"  id="myAnswer" [style.visibility]="'hidden'">{{etudiantReponse.lib}}</span><span style="font-size: 1rem; margin-bottom: 20px" id="tooltiptext" [style.visibility]="'hidden'"> <div style="width: 100%" *ngFor="let r of this.correctanswers">{{r.lib}}</div></span>-->
-            </div>
-           <!-- <div class="p-col-6" id="answers">
-                <div style="margin: 50px 50px" *ngIf="homeWorkQuestion.typeDeQuestion.lib == 'Choix unique'">
-                    <div  *ngFor="let r of homeWorkQstReponses" id="answers-radio" >
-                        <input (click)="etudiantReponse=r" [attr.disabled]="disable? true: null" class="option-input radio" type="radio" value="{{r.id}}" name="groupname">
-                        <label>{{r.lib}}</label><br>
-
-                    </div>
-                    <button (click)="showreponse()">submit</button>
-                </div>
-                <div style="margin: 50px 50px" *ngIf="homeWorkQuestion.typeDeQuestion.lib == 'Choix multiple'">
-                    <div  *ngFor="let r of homeWorkQstReponses" id="answers-checkbox" >
-                        <input (click)="etudiantReponse=r" class="option-input radio" type="checkbox" value="{{r.id}}" name="groupname">
-                       <label>{{r.lib}}</label><br>
-
-                    </div>
-                    <button (click)="showreponse()">submit</button>
-                </div>
-                <div style="margin: 50px 50px" *ngIf="homeWorkQuestion.typeDeQuestion.lib == 'input'">
-                    <div  *ngFor="let r of homeWorkQstReponses" id="answers-input" >
-                        <input (click)="etudiantReponse=r" class="option-input radio" type="text" value="{{r.id}}"  name="groupname">
-                     &lt;!&ndash;   <label>{{r.lib}}</label><br>&ndash;&gt;
-
-                    </div>
-                    <button (click)="showreponse()">submit</button>
-                </div>
-                <div style="margin: 50px 50px" *ngIf="homeWorkQuestion.typeDeQuestion.lib == 'Correct the mistake'">
-                    <div  *ngFor="let r of homeWorkQstReponses" id="answers-correctmistake" >
-                        <input (click)="etudiantReponse=r" class="option-input radio" type="text" value="{{r.id}}"  name="groupname">
-                        <label>{{r.lib}}</label><br>
-
-                    </div>
-                    <button (click)="showreponse()">submit</button>
-                </div>
-                <div style="margin: 50px 50px" *ngIf="homeWorkQuestion.typeDeQuestion.lib == 'On/Off'">
-                    <div  *ngFor="let r of homeWorkQstReponses" id="answers-on/off" >
-                        <input (click)="etudiantReponse=r" class="option-input radio" type="" value="{{r.id}}" name="groupname">
-                        <label>{{r.lib}}</label><br>
-
-                    </div>
-                    <button (click)="showreponse()">submit</button>
-                </div>
-            </div>-->
-            <div class="p-col-6" id="answers" *ngIf="homeWorkQuestion.typeDeQuestion.lib == 'Choix unique'" >
-                <div style="margin: 50px 50px">
-                    <div  *ngFor="let r of homeWorkQstReponses" id="answers-radio">
-                        <input class="option-input radio" type="radio" value="{{r.id}}" name="groupname" [disabled]="this.disable" (click)="sauvegarderReponse(r)" >
-                        <label>{{r.lib}}</label><br>
-                    </div>
-                </div>
-<!--                <p-button [disabled]="disable" class="p-button" (click)="showreponse()">Check</p-button>-->
-            </div>
-
-            <div class="p-col-6" id="on-off-question" style="background: white;" id="mistake" *ngIf="homeWorkQuestion.typeDeQuestion.lib == 'On/Off'">
-                <div class="p-grid">
-                <div style="padding-top: 2%; margin-top: 100px" class="p-col-8">
-                    <p style="font-size: 15px">False <p-inputSwitch [ngModel]="trueorFalse" (click)="onOffTrue()" ></p-inputSwitch> True </p>
-                        </div>
-                    <div class="p-col-4" style="margin-left: 5px; margin-top:90px">
-                        <button  [disabled]="disable"   pButton pRipple type="button" (click)="submitOnOff()"  label="Check"  class="p-button-outlined p-button-success">
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="p-col-6" id="type-input" style="background-color: white;" *ngIf="homeWorkQuestion.typeDeQuestion.lib == 'input'" >
-                <div   style="margin-top: 100px;margin-bottom: 100px; text-align: center">
-                <input [disabled]="disable" pInputText type="text" id="type-question-input" [(ngModel)]="this.etudiantReponse.lib" ><span id="tooltiptext-input" [style.visibility]="input_true_false? 'hidden' : 'visible'">{{this.reponseInput}}</span>
-               <button [disabled]="disable"  style="margin-left: 5px;" (click)="valider()" pButton pRipple id="check-input" type="button"  label="Check"  class="p-button-outlined p-button-success"></button>
-                </div>
-
-            </div>
-            <div style="margin: 50px 50px" *ngIf="homeWorkQuestion.typeDeQuestion.lib == 'Choix multiple'">
-                <div  class="p-field-checkbox"  *ngFor="let r of homeWorkQstReponses" id="answers-checkbox" >
-                        <p-checkbox [disabled]="disable"  (click)="sauvegarderReponse(r)" inputId="v_option1"></p-checkbox>
-                    <label style="margin: 5px; font-size: 15px" >{{r.lib}}</label><br>
-                </div>
-<!--                <p-button [disabled]="disable" (click)="showreponseMultiple()" label="Submit" icon="pi pi-check"></p-button>-->
-            </div>
-
-<!--
-            <div style="background-color: white; width: 100%" id="mistake">
-                <span class="p-float-label" style="margin-left: 10%; margin-bottom: 20px; margin-top: 100px">
-                    <div id="div-output">
-                        <output *ngFor="let i of numberofword" id="output-correct-mistake"> <span id="span-output-{{i}}"  >  {{this.myanswers[i]}} </span> <span id="span-correct-{{i}}" class="span-correct" > {{this.correctanswers[i]}} </span> </output>
-                        <h3 id="translate-correct-mistake" style="text-align: right"> {{this.translate}}</h3>
-                    </div>
-                </span>
-            </div>
-            <div class="p-col-6" id="on-off-question" style="background: white;">
-                <h3 id="question-on-off" style="margin-top: 100px;margin-bottom: 100px; text-align: center">{{this.selected.libelle}}</h3>
-                <h3 id="translate-on-off" style="text-align: right"> {{this.translate}}</h3>
-            </div>
-            <div class="p-col-6" id="on-off-answer" >
-                <div style="margin: 50px 50px">
-                    <output style="margin-left: 20px; margin-right: 10px; font-size: 30px; font-family: 'Goudy Old Style'">False </output><p-inputSwitch [(ngModel)]="on_off"></p-inputSwitch> <output style="margin-left: 10px; font-size: 30px; font-family: 'Goudy Old Style'">True</output>
-
-                </div>
-            </div>
-
-            <div id="type-input" style="background-color: white; width: 100%; ">
-                <h3 style="text-align: center; margin-top: 100px; margin-bottom: 100px">{{this.question1}} <input type="text" id="type-question-input" disabled style="margin-left: 5px; margin-right: 5px; color: #0a80bb; border: 1px solid #4d646f; width: 120px; height: 30px; font-size: 25px" [(ngModel)]="this.reponseInput"> <span id="tooltiptext-input" [style.visibility]="input_true_false? 'hidden' : 'visible'">{{this.correctAnswers[0].lib}}</span> {{this.question2}}</h3>
-                <h3 id="translate-input" [style.visibility]="disableInput? 'visible' : 'hidden'" style="text-align: right"> {{this.translate}}</h3>
-            </div>
-            <div style="margin-left: 40%; margin-top: 50px">
-                <button pButton pRipple type="button" style="width: 200px;" label="{{this.button}}" (click)="start()" class="p-button-outlined p-button-success"></button>
-            </div>-->
-                <div class="p-col-4" *ngIf="this.hasprevious">
-                <button
-                        [disabled]="!hasprevious"
-                        (click)="previousQuestion()"
-                        class="p-button-rounded" icon="pi pi-caret-left" id="previous"
-                        label="Previous" pButton pRipple
-                        style=" background-color: orange"
-                        type="button"></button>
-                </div>
-            <div class="p-col-4" *ngIf="!this.hasNext">
-                <button
-                        (click)="submithomeWork()"
-                        class="p-button-rounded" icon="pi pi-check" id="submit"
-                        label="submit" pButton pRipple
-                        style=" background-color: orange"
-                        type="button"></button>
-                </div>
-                <div class="p-col-4" *ngIf="this.hasNext">
-                <button [disabled]="!hasNext"
-                        (click)="nextQuestion()"
-                        class="p-button-rounded" icon="pi pi-caret-right" id="next" label="Next"
-                        pButton pRipple
-                        style="background-color: orange;"
-                        type="button"></button>
-                </div>
 
 
-        </div>
-
-    </div>
-
-
-    <div class="p-col-3" (mouseup)="dict()">
-        <div class="product-grid-item-content" style="margin-top: 0">
-            <div style="margin-top: 0px">
-                <div id="dictionnair"  class="p-inputgroup" style="width: 0%; height: 0px; visibility: hidden; margin-bottom: 10px">
-                    <h5 style="margin-left: 5px; font-size: 25px; text-align: center"><b style="font-size: 20px; color: orange;" >+</b>
-                        <u style="color: #8b8b90; margin-left: 10px">{{this.selectedDict.word}}</u> :  {{this.selectedDict.definition}}
-                    </h5>
-                </div>
-                <div class="p-inputgroup" style="width: 100%; align-content: center">
-                    <p-autoComplete (completeMethod)="filterDict($event)" [(ngModel)]="word"
-                                    [minLength]="1" [suggestions]="filteredDict"
-                                    field="word" ></p-autoComplete>
-                    <button (click)="findByWord()" style="background-color: orange" icon="pi pi-search" pButton pRipple type="button"></button>
-                    <button (click)="openCreateDict()" icon="pi pi-plus" pButton pRipple style="background-color: #8b8b90"
-                            type="button"></button>
-                </div>
-                <!-- <input  [(ngModel)]="word" pInputText placeholder="Search" style="width: 180px;" type="text"/>
-                 <button pButton pRipple type="button" icon="pi pi-search"  (click)="findByWord()" style="margin-left: 2px;" ></button>
-
-                 <p-button (click)="openCreateDict()" icon="pi pi-plus" style="margin-left: 2px;" ></p-button>
-          -->
-
-            </div>
-            <div class="card" style="margin-top: 15px">
-                <p-tabMenu [activeItem]="menu[3]" [model]="menu" style="width: 100%;background-color: orange"></p-tabMenu>
-                <div id="categoriess" [style.visibility]="'hidden'" style="width: 100%;margin-top: 15px">
-                    <div style="background-color: orange"><h6 style="color: black ">Obligatory</h6></div>
-                    <p-table [value]="sectionStandard" id="categ" style="margin-top: 20px; margin-right: 30px;">
-                        <ng-template let-section pTemplate="body">
-                            <tr class="timeline">
-                                <li>
-                                    <td (click)="Section(section.categorieSection.libelle)"
-                                        [style.color]="(section.categorieSection.libelle) == (this.selectedsection.categorieSection.libelle)? 'orange' :'black' "
-                                        style="cursor: pointer; font-weight: 600;margin-left: 5px; font-size: 15px">
-                                        <u>{{section.categorieSection.libelle}}</u></td>
-                                </li>
-                            </tr>
-                        </ng-template>
-                    </p-table>
-                    <div style="background-color: orange"><h6 style="color: black ">Additional</h6></div>
-                    <p-table [value]="sectionAdditional" id="cate" style="margin-top: 20px; margin-right: 30px;">
-
-                        <ng-template let-section pTemplate="body">
-                            <tr class="timeline">
-                                <li>
-                                    <td (click)="Section(section.categorieSection.libelle)"
-                                        [style.color]="(section.categorieSection.libelle) == (this.selectedsection.categorieSection.libelle)? 'orange' :'black' "
-                                        style="cursor: pointer; font-weight: 600;margin-left: 5px; font-size: 15px">
-                                        <u>{{section.categorieSection.libelle}}</u></td>
-                                </li>
-                            </tr>
-                        </ng-template>
-                    </p-table>
-                </div>
-                <div [style.visibility]="'hidden'" id="word" style="margin-top: 5px; width: 0px; height: 0px">
-
-                    <p-table [paginator]="true" [rowHover]="true" [rows]="5" [value]="itemsDict" dataKey="id"
-                             id="wrd" style="margin-top: 20px; width: 0px">
-
-                        <ng-template let-dict pTemplate="body">
-                            <tr>
-
-                                <td (click)="dictEdit(dict)"
-                                    style="font-weight: 800; text-align: center; cursor: pointer"><b style="font-size: 20px; color: black;">{{dict.word}}</b> : <b style="font-size: 20px; color: orange;">{{dict.definition}}</b></td>
-                            </tr>
-                        </ng-template>
-
-                    </p-table>
-                </div>
-                <app-chat1 [style.visibility]="'hidden'" id="chat"></app-chat1>
-                <div [style.visibility]="'visible'"  id="homeWork" style="width: 100%;margin-top: 15px">
-                    <p-table [value]="homeWorkList" id="categg" style="margin-top: 20px; margin-right: 30px;">
-                        <ng-template let-homeWork pTemplate="body">
-                            <tr class="timeline">
-                                <li>
-                                    <td (click)="sendhomeWork(homeWork)"
-                                        style="cursor: pointer; font-weight: 600;margin-left: 5px; font-size: 15px">
-                                        <u>{{homeWork.section.libelle}}</u></td>
-                                </li>
-                            </tr>
-                        </ng-template>
-                    </p-table>
-                </div>
-                <!--<div [style.visibility]="'visible'"  id="homeWork">
-                    <p-table [value]="homeWorkList">
-                        <ng-template let-homeWork pTemplate="body">
-                            <tr class="timeline">
-                                <li>
-                                    <td
-                                            (click)="sendhomeWork(homeWork)"
-                                            style="cursor: pointer; font-weight: 600;margin-left: 5px; font-size: 15px">
-                                        <u>{{homeWork.section.libelle}}</u></td>
-                                </li>
-                            </tr>
-                        </ng-template>
-                    </p-table>
-                    <b *ngIf="this.homeWorkList.length == 0">No HomeWork found </b>
-                </div>-->
-
-            </div>
-            <!-- <div class="card" style="margin-top: 15px">
-                 <p-tabMenu [model]="menuchat"  [activeItem]="menuchat[0]" style="width: 100%;" ></p-tabMenu>
-                 <app-chat></app-chat>
-
-             </div>
-               <div class="card" style="margin-top: 10px"> <h5 style="margin-top: 20px; margin-bottom: 10px"><u style="color: #0a80bb">Categorie</u></h5>
-         <p-timeline align="alternate"  [value]="itemssection2">
-
-             <ng-template let-section pTemplate="content" style="margin-top: 20px">
-                 <tr>
-
-                     <td (click)="Section(section.categorieSection.libelle)"
-                         [style.color]="(section.categorieSection.libelle) == (this.selectedsection.categorieSection.libelle)? 'green' :'black' "
-                         style="cursor: pointer; text-align: center"><u>{{section.categorieSection.libelle}}</u></td>
-                 </tr>
-             </ng-template>
-         </p-timeline>
-              </div>-->
-        </div>
-    </div>
-
-    <app-dictionary-create></app-dictionary-create>
-    <app-dictionary-edit></app-dictionary-edit>
-    <app-translate></app-translate>
 </div>
-

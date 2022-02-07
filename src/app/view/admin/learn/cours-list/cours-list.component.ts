@@ -7,6 +7,7 @@ import {QuizEtudiantService} from '../../../../controller/service/quiz-etudiant.
 import {Quiz} from '../../../../controller/model/quiz.model';
 import {LearnService} from '../../../../controller/service/learn.service';
 import {Parcours} from '../../../../controller/model/parcours.model';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-cours-list',
@@ -21,6 +22,7 @@ export class CoursListComponent implements OnInit {
     // tslint:disable-next-line:max-line-length
     constructor(private quizService: QuizEtudiantService,
                 private learnService: LearnService,
+                private router: Router,
                 private messageService: MessageService,
                 private confirmationService: ConfirmationService,
                 private service: ParcoursService) {
@@ -224,5 +226,10 @@ export class CoursListComponent implements OnInit {
             {field: 'numeroOrder', header: 'NumeroOrder'},
             {field: 'parcours', header: 'Parcours'}
         ];
+    }
+
+    showme(cours: Cours) {
+        this.learnService.courseSelected = cours;
+        this.router.navigate(['admin/homeWork']);
     }
 }

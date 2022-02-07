@@ -1,6 +1,7 @@
 import {Section} from './section.model';
 
 import {HomeWorkQST} from './home-work-qst.model';
+import {Cours} from './cours.model';
 
 export class HomeWork {
 
@@ -8,9 +9,8 @@ export class HomeWork {
     public libelle: string;
     public urlImage: string;
     public urlVideo: string;
-    public section = new Section();
+    public cours: Cours = new Cours();
     public questions = new Array<HomeWorkQST>();
     public homeWorkEtudiant: string;
-    public typeHomeWork: string;
 }
 

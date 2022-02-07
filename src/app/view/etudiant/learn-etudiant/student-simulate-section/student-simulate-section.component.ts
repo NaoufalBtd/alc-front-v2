@@ -50,6 +50,8 @@ export class SafePipe implements PipeTransform {
     styleUrls: ['./student-simulate-section.component.scss']
 })
 export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
+
+    showLesson = true;
     showTakeQuiz = false;
     showViewQuiz = false;
     nodes: TreeNode[];
@@ -503,6 +505,8 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
                         });
                     document.getElementById('word').style.visibility = 'hidden';
                     document.getElementById('homeWork').style.visibility = 'hidden';
+                    document.getElementById('chat').style.visibility = 'hidden';
+
                     document.getElementById('word').style.height = '0px';
 
                     document.getElementById('categoriess').style.visibility = 'visible';
@@ -542,29 +546,19 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
                     document.getElementById('connectedStudent').style.visibility = 'hidden';
 
                 }
-            }, {
-                icon: 'pi pi-sliders-h', style: {width: '50%'}, command: (event) => {
-                    document.getElementById('categoriess').style.visibility = 'hidden';
-                    document.getElementById('categoriess').style.height = '0px';
-                    document.getElementById('homeWork').style.visibility = 'visible';
-                    document.getElementById('chat').style.visibility = 'hidden';
-                    document.getElementById('word').style.visibility = 'hidden';
-                    document.getElementById('connectedStudent').style.visibility = 'hidden';
-
-                }
-            },
+            }
         ];
+
         this.findhomeworkbycours(this.sectionItemService.coursofsection);
         if (this.webSocketService.isInSession) {
             this.webSocketService.findCurrentSectionForstudent(this.service.selectedcours, this.prof);
-            console.log('rh 9lbt eliha mn NgOnInit');
             console.log(this.service.selectedsection);
         }
     }
 
     public findhomeworkbycours(cours: Cours) {
         console.log(cours);
-        this.homeWorkService.findhomeworkbysection(cours).subscribe(
+        this.homeWorkService.findhomeworkbyCoursId(cours).subscribe(
             data => {
                 console.log(data);
                 this.homeWorkService.homeWorkList = data;
@@ -572,6 +566,7 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
                 console.log('orsinakh');
             }
         );
+
     }
 
     public findCoursEtudiant(cours: Cours) {
@@ -854,24 +849,7 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
         this.showVocabulary = false;
     }
 
-    sendhomeWork(homeWork: HomeWork) {
-        console.log(homeWork);
-        this.homeWorkEtudiantService.homeWork = homeWork;
-        this.homeWorkEtudiantService.findbyetudiantIdAndHomeWorkID().subscribe(
-            data => {
-                if (data != null) {
-                    this.homeWorkEtudiantService.isUpdate = true;
-                    this.homeWorkEtudiantService.homeWorkEtudiant = data;
-                }
 
-            }, error => {
-                console.log('makayn tachi homeWork');
-            }
-        );
-        this.homeWorkEtudiantService.homeWork.questions = homeWork.questions;
-        //  this.homeWorkEtudiantService.homeWorkQuestion = ;
-        this.router.navigate(['etudiant/homeWorkEtudiant']);
-    }
 
     ngOnDestroy(): void {
         this.showAppMenu = true;
