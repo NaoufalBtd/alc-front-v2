@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {User} from '../../../controller/model/user.model';
 import {FileUploadStatus} from '../../../controller/model/FileUploadStatus';
-import {Subscription} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import {MenuService} from '../../shared/slide-bar/app.menu.service';
 import {AuthenticationService} from '../../../controller/service/authentication.service';
 import {UserService} from '../../../controller/service/user.service';
@@ -17,6 +17,16 @@ import {PackStudentService} from "../../../controller/service/pack-student.servi
 import {MessageService} from "primeng/api";
 import {Inscription} from "../../../controller/model/inscription.model";
 import {GroupeEtudeService} from "../../../controller/service/groupe-etude.service";
+import {InteretEtudiant} from '../../../controller/model/interet-etudiant.model';
+import {Fonction} from '../../../controller/model/fonction.model';
+import {StatutSocial} from '../../../controller/model/statut-social.model';
+import {NiveauEtude} from '../../../controller/model/niveau-etude.model';
+import {LoginComponent} from '../../public/login/login.component';
+import {LoginService} from '../../../controller/service/login.service';
+import {Etudiant} from '../../../controller/model/etudiant.model';
+import {Inscription} from '../../../controller/model/inscription.model';
+import {InscriptionService} from '../../../controller/service/inscription.service';
+import {EtudiantService} from '../../../controller/service/etudiant.service';
 
 @Component({
   selector: 'app-etudiant-profile',
@@ -28,6 +38,7 @@ export class EtudiantProfileComponent implements OnInit {
   user: User = new User();
   public users: User[];
   allUsers: User[];
+  public etudiant = new Etudiant();
   public fileName: string;
   public profileImage: File;
   public fileStatus = new FileUploadStatus();
@@ -42,32 +53,81 @@ export class EtudiantProfileComponent implements OnInit {
 
   constructor(private menuService: MenuService,
               private authenticationService: AuthenticationService,
-              private userService: UserService, public etudiantService: EtudiantService, private service: InscriptionService,
+              public userService: UserService,
+              public loginService: LoginService, private etudiantService: EtudiantService,
+              private service: InscriptionService,
               public packStudentService: PackStudentService, private messageService: MessageService,
               public groupeEtudeService: GroupeEtudeService) {
   }
+  get selected(): Etudiant {
+    return this.userService.selected;
+  }
 
 
+  set selected(value: Etudiant) {
+    this.userService.selected = value;
+  }
+
+  public edit(){
+    console.log(this.etudiant);
+    this.userService.edit(this.etudiant).subscribe(data => {
+      this.etudiant  = data;
+    });
+  }
   ngOnInit(): void {
-    this.user = this.authenticationService.getUserFromLocalCache();
-    this.etudiantService.findAllParcours().subscribe(
+  this.etudiantService.findAllEtudiant().subscribe(data =>
+  this.etudiant = data );
+  this.user = this.authenticationService.getUserFromLocalCache();
+  this.etudiantService.findAllParcours().subscribe(
         data => {
           this.parcoursList = data ;
         }
     );
-    this.service.findByEtudiantId(this.user.id).subscribe(
+  this.service.findByEtudiantId(this.user.id).subscribe(
         data => {
           this.inscription = data;
           this.packChossen = this.inscription.packStudent;
         }
     );
-    this.groupeEtudeService.findAll().subscribe(
+  this.groupeEtudeService.findAll().subscribe(
         data => {
           this.groupeEtudeList = data ;
         }
     );
-    this.packStudentService.findPackIndividualOrgroupe(true);
-    this.packStudentService.findPackIndividualOrgroupe(false);
+  this.packStudentService.findPackIndividualOrgroupe(true);
+  this.packStudentService.findPackIndividualOrgroupe(false);
+    this.userService.findAllStatutSocial().subscribe(
+        data => {
+          this.statutSocials = data;
+          console.log(data);
+        }, error => {
+          console.log(error);
+        }
+    );
+    this.userService.findAllFonction().subscribe(
+        data => {
+          this.fonctions = data;
+          console.log(data);
+        }, error => {
+          console.log(error);
+        }
+    );
+    this.userService.findAllInteretEtudiant().subscribe(
+        data => {
+          this.interetEtudiants = data;
+          console.log(data);
+        }, error => {
+          console.log(error);
+        }
+    );
+    this.userService.findAllNiveauEtude().subscribe(
+        data => {
+          this.niveauEtudes = data;
+          console.log(data);
+        }, error => {
+          console.log(error);
+        }
+    );
   }
 
   get groupeEtudeList(): Array<GroupeEtude> {
@@ -80,18 +140,13 @@ export class EtudiantProfileComponent implements OnInit {
 
   get parcoursList(): Array<Parcours> {
     return this.service.parcoursList;
+
   }
 
   set parcoursList(value: Array<Parcours>) {
     this.service.parcoursList = value;
   }
-  get etudiant(): Etudiant {
-    return this.etudiantService.selected;
-  }
 
-  set etudiant(etudiant1){
-    this.etudiantService.selected = etudiant1;
-  }
 
   public onProfileImageChange(event: any): void {
     const target = event.target as HTMLInputElement;
@@ -162,6 +217,59 @@ export class EtudiantProfileComponent implements OnInit {
   private clickButton(buttonId: string): void {
     document.getElementById(buttonId).click();
   }
+  get interetEtudiant(): InteretEtudiant {
+    return this.userService.interetEtudiant;
+  }
+
+  set interetEtudiant(value: InteretEtudiant) {
+    this.userService.interetEtudiant = value;
+  }
+
+  get interetEtudiants(): Array<InteretEtudiant> {
+    return this.userService.interetEtudiants;
+  }
+
+  set interetEtudiants(value: Array<InteretEtudiant>) {
+    this.userService.interetEtudiants = value;
+  }
+  get fonctions(): Array<Fonction> {
+    return this.userService.fonctions;
+  }
+  set fonctions(value: Array<Fonction>) {
+    this.userService.fonctions = value;
+  }
+  get fonction(): Fonction {
+    return this.userService.fonction;
+  }
+  set fonction(value: Fonction) {
+    this.userService.fonction = value;
+  }
+  get statutSocial(): StatutSocial {
+    return this.userService.statutSocial;
+  }
+  set statutSocial(value: StatutSocial) {
+    this.userService.statutSocial = value;
+  }
+  get statutSocials(): Array<StatutSocial> {
+    return this.userService.statutSocials;
+  }
+  set statutSocials(value: Array<StatutSocial>) {
+    this.userService.statutSocials = value;
+  }
+  get niveauEtudes(): Array<NiveauEtude> {
+    return this.userService.niveauEtudes;
+  }
+  set niveauEtudes(value: Array<NiveauEtude>) {
+    this.userService.niveauEtudes = value;
+  }
+  get niveauEtude(): NiveauEtude {
+    return this.userService.niveauEtude;
+  }
+
+  set niveauEtude(value: NiveauEtude) {
+    this.userService.niveauEtude = value;
+  }
+
 
   public findAllGroupeEtude() {
     this.etudiantService.findAllGroupeEtude().subscribe(data => this.groupeEtudeList = data);

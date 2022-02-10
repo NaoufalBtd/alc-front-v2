@@ -15,6 +15,10 @@ import {GroupeEtude} from '../../../../controller/model/groupe-etude.model';
 import {GroupeEtudeService} from '../../../../controller/service/groupe-etude.service';
 import {PackStudent} from "../../../../controller/model/pack-student.model";
 import {PackStudentService} from "../../../../controller/service/pack-student.service";
+import {NiveauEtude} from '../../../../controller/model/niveau-etude.model';
+import {InteretEtudiant} from '../../../../controller/model/interet-etudiant.model';
+import {Fonction} from '../../../../controller/model/fonction.model';
+import {StatutSocial} from '../../../../controller/model/statut-social.model';
 
 @Component({
     selector: 'app-inscription-list',
@@ -126,6 +130,58 @@ export class InscriptionListComponent implements OnInit {
     get etudiantVo(): EtudiantVo {
         return this.service.etudiantVo;
     }
+    get niveauEtudes(): Array<NiveauEtude> {
+        return this.service.niveauEtudes;
+    }
+    set niveauEtudes(value: Array<NiveauEtude>) {
+        this.service.niveauEtudes = value;
+    }
+    get niveauEtude(): NiveauEtude {
+        return this.service.niveauEtude;
+    }
+
+    set niveauEtude(value: NiveauEtude) {
+        this.service.niveauEtude = value;
+    }
+    get interetEtudiant(): InteretEtudiant {
+        return this.service.interetEtudiant;
+    }
+
+    set interetEtudiant(value: InteretEtudiant) {
+        this.service.interetEtudiant = value;
+    }
+
+    get interetEtudiants(): Array<InteretEtudiant> {
+        return this.service.interetEtudiants;
+    }
+
+    set interetEtudiants(value: Array<InteretEtudiant>) {
+        this.service.interetEtudiants = value;
+    }
+    get fonctions(): Array<Fonction> {
+        return this.service.fonctions;
+    }
+    set fonctions(value: Array<Fonction>) {
+        this.service.fonctions = value;
+    }
+    get fonction(): Fonction {
+        return this.service.fonction;
+    }
+    set fonction(value: Fonction) {
+        this.service.fonction = value;
+    }
+    get statutSocial(): StatutSocial {
+        return this.service.statutSocial;
+    }
+    set statutSocial(value: StatutSocial) {
+        this.service.statutSocial = value;
+    }
+    get statutSocials(): Array<StatutSocial> {
+        return this.service.statutSocials;
+    }
+    set statutSocials(value: Array<StatutSocial>) {
+        this.service.statutSocials = value;
+    }
 
     ngOnInit(): void {
         this.packStudentService.findPackIndividualOrgroupe(true);
@@ -139,7 +195,38 @@ export class InscriptionListComponent implements OnInit {
                 this.parcours = data;
             }
         );
-
+        this.service.findAllNiveauEtude().subscribe(
+            data => {
+                this.niveauEtudes = data;
+                console.log(data);
+            }, error => {
+                console.log(error);
+            }
+        );
+        this.service.findAllStatutSocial().subscribe(
+            data => {
+                this.statutSocials = data;
+                console.log(data);
+            }, error => {
+                console.log(error);
+            }
+        );
+        this.service.findAllFonction().subscribe(
+            data => {
+                this.fonctions = data;
+                console.log(data);
+            }, error => {
+                console.log(error);
+            }
+        );
+        this.service.findAllInteretEtudiant().subscribe(
+            data => {
+                this.interetEtudiants = data;
+                console.log(data);
+            }, error => {
+                console.log(error);
+            }
+        );
         this.service.findAllEtat().subscribe(
             data => {
                 this.etatInsc = data;
@@ -157,8 +244,6 @@ export class InscriptionListComponent implements OnInit {
                 this.groupEtudes = data;
             }
         );
-
-
     }
 
     findAll() {

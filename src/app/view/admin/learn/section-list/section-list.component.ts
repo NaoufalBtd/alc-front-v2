@@ -26,7 +26,10 @@ export class SectionListComponent implements OnInit {
     // tslint:disable-next-line:max-line-length no-shadowed-variable
     constructor(private homeworkService: HomeworkService,
                 private learnService: LearnService,
-                private serviceQuiz: QuizService, private quizService: QuizEtudiantService, private messageService: MessageService, private confirmationService: ConfirmationService, private service: ParcoursService, private router: Router, private VocabularyService: VocabularyService, private sectionItemService: SectionItemService) {
+                private serviceQuiz: QuizService, private quizService: QuizEtudiantService,
+                private messageService: MessageService, private confirmationService: ConfirmationService,
+                private service: ParcoursService, private router: Router,
+                private VocabularyService: VocabularyService, private sectionItemService: SectionItemService) {
     }
 
     set sectionCurrent(value: Section) {
@@ -255,8 +258,5 @@ export class SectionListComponent implements OnInit {
         ];
     }
 
-    showme(section: Section) {
-        this.homeworkService.section = section;
-        this.router.navigate(['admin/homeWork']);
-    }
+
 }

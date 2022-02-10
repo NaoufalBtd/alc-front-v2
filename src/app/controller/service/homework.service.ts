@@ -110,8 +110,11 @@ export class HomeworkService {
   public findType(): Observable<Array<TypeDeQuestion>> {
     return this.http.get<Array<TypeDeQuestion>>(this.adminUrl + 'TypeDeQuestion/');
   }
-  public findhomeworkbysection(cours: Cours): Observable<Array<HomeWork>>{
-    console.log(cours.id);
-    return this.http.get<Array<HomeWork>>(this.adminUrl + 'homeWork/cours/' + cours.id );
+
+  public findhomeworkbyCoursId(cours: Cours): Observable<Array<HomeWork>>{
+    console.log(cours);
+    return this.http.get<Array<HomeWork>>(this.adminUrl + 'homeWork/cours/id/' + cours.id );
   }
+
+  public
 }

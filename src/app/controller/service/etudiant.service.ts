@@ -69,7 +69,9 @@ export class EtudiantService {
 
     }
 
-
+    public findAllEtudiant(): Observable<Etudiant> {
+        return this.http.get<Etudiant>(this.etudiantUrl + 'etudiant/id/' + this.serviceUser.getConnectedStudent().id + '/');
+    }
 
     public findAllProf(): Observable<Array<Prof>> {
         return this.http.get<Array<Prof>>(this.adminUrl + 'prof/');

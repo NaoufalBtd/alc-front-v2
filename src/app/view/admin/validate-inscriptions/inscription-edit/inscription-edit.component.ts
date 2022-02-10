@@ -5,10 +5,10 @@ import {Inscription} from '../../../../controller/model/inscription.model';
 import {Parcours} from '../../../../controller/model/parcours.model';
 import {EtatInscription} from '../../../../controller/model/etat-inscription.model';
 import {Prof} from '../../../../controller/model/prof.model';
-import {PackStudentService} from "../../../../controller/service/pack-student.service";
-import {PackStudent} from "../../../../controller/model/pack-student.model";
-import {GroupeEtudeService} from "../../../../controller/service/groupe-etude.service";
-import {GroupeEtude} from "../../../../controller/model/groupe-etude.model";
+import {InteretEtudiant} from '../../../../controller/model/interet-etudiant.model';
+import {Fonction} from '../../../../controller/model/fonction.model';
+import {StatutSocial} from '../../../../controller/model/statut-social.model';
+import {NiveauEtude} from '../../../../controller/model/niveau-etude.model';
 
 @Component({
     selector: 'app-inscription-edit',
@@ -110,6 +110,38 @@ export class InscriptionEditComponent implements OnInit {
                 console.log(error);
             }
         );
+        this.service.findAllStatutSocial().subscribe(
+            data => {
+                this.statutSocials = data;
+                console.log(data);
+            }, error => {
+                console.log(error);
+            }
+        );
+        this.service.findAllFonction().subscribe(
+            data => {
+                this.fonctions = data;
+                console.log(data);
+            }, error => {
+                console.log(error);
+            }
+        );
+        this.service.findAllInteretEtudiant().subscribe(
+            data => {
+                this.interetEtudiants = data;
+                console.log(data);
+            }, error => {
+                console.log(error);
+            }
+        );
+        this.service.findAllNiveauEtude().subscribe(
+            data => {
+                this.niveauEtudes = data;
+                console.log(data);
+            }, error => {
+                console.log(error);
+            }
+        );
         this.service.findAllEtat().subscribe(
             data => {
                 this.etatinscriptionslist = data;
@@ -124,7 +156,7 @@ export class InscriptionEditComponent implements OnInit {
             data => {
                 console.log(data);
                 this.parcoursList = data;
-            }, error => {
+            },error => {
                  console.log(error);
             }
         );
@@ -206,5 +238,58 @@ export class InscriptionEditComponent implements OnInit {
             this.packStudents = this.packStudentService.packstudentIndividialList;
         }
     }
+    get interetEtudiant(): InteretEtudiant {
+        return this.service.interetEtudiant;
+    }
+
+    set interetEtudiant(value: InteretEtudiant) {
+        this.service.interetEtudiant = value;
+    }
+
+    get interetEtudiants(): Array<InteretEtudiant> {
+        return this.service.interetEtudiants;
+    }
+
+    set interetEtudiants(value: Array<InteretEtudiant>) {
+        this.service.interetEtudiants = value;
+    }
+    get fonctions(): Array<Fonction> {
+        return this.service.fonctions;
+    }
+    set fonctions(value: Array<Fonction>) {
+        this.service.fonctions = value;
+    }
+    get fonction(): Fonction {
+        return this.service.fonction;
+    }
+    set fonction(value: Fonction) {
+        this.service.fonction = value;
+    }
+    get statutSocial(): StatutSocial {
+        return this.service.statutSocial;
+    }
+    set statutSocial(value: StatutSocial) {
+        this.service.statutSocial = value;
+    }
+    get statutSocials(): Array<StatutSocial> {
+        return this.service.statutSocials;
+    }
+    set statutSocials(value: Array<StatutSocial>) {
+        this.service.statutSocials = value;
+    }
+    get niveauEtudes(): Array<NiveauEtude> {
+        return this.service.niveauEtudes;
+    }
+    set niveauEtudes(value: Array<NiveauEtude>) {
+        this.service.niveauEtudes = value;
+    }
+    get niveauEtude(): NiveauEtude {
+        return this.service.niveauEtude;
+    }
+
+    set niveauEtude(value: NiveauEtude) {
+        this.service.niveauEtude = value;
+    }
+
 
 }

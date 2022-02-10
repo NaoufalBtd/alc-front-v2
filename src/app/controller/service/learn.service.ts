@@ -12,16 +12,26 @@ import {QuizReponse} from '../model/quiz-reponse';
 import {Quiz} from '../model/quiz.model';
 import {QuizEtudiant} from '../model/quiz-etudiant.model';
 import {Etudiant} from '../model/etudiant.model';
+import {HomeworkService} from './homework.service';
+import {HomeWorkEtudiantServiceService} from './home-work-etudiant-service.service';
+import {HomeWork} from '../model/home-work.model';
 
 @Injectable({
     providedIn: 'root'
 })
 export class LearnService {
+    constructor(private service: QuizEtudiantService,
+                private homeWorkService: HomeworkService,
+                private homeWorkEtudiantService: HomeWorkEtudiantServiceService,
+                private reponseEtudiantService: ReponseEtudiantService,
+                private login: LoginService) {
+    }
 
     private _participants: Map<number, Array<Etudiant>> = new Map<number, Array<Etudiant>>();
     private _parcourCurrent: Parcours = new Parcours();
     private _sectionCurrent: Section = new Section();
     private _courseCurrent: Cours = new Cours();
+    private _courseSelected: Cours = new Cours();
     private _noteQuiz: number;
     private _showTakeQuiz = true;
     private _showQuizReview = false;
@@ -48,11 +58,28 @@ export class LearnService {
     private _placeHolderAnswer: string;
     private _reponseQuiz: QuizReponse = new QuizReponse();
     private _showAppMenu = true;
+    private _homeWorkList: Array<HomeWork> = new Array<HomeWork>();
 
     wordDictionnary: string;
     son = '';
     private _answersPointStudent: Map<Question, string> = new Map<Question, string>();
 
+
+    get homeWorkList(): Array<HomeWork> {
+        return this._homeWorkList;
+    }
+
+    set homeWorkList(value: Array<HomeWork>) {
+        this._homeWorkList = value;
+    }
+
+    get courseSelected(): Cours {
+        return this._courseSelected;
+    }
+
+    set courseSelected(value: Cours) {
+        this._courseSelected = value;
+    }
 
     get showAppMenu(): boolean {
         return this._showAppMenu;
@@ -291,11 +318,6 @@ export class LearnService {
         this._courseCurrent = value;
     }
 
-
-    constructor(private service: QuizEtudiantService,
-                private reponseEtudiantService: ReponseEtudiantService,
-                private login: LoginService) {
-    }
 
     get reponseQuiz(): QuizReponse {
         return this._reponseQuiz;
@@ -538,6 +560,44 @@ export class LearnService {
         return this.answerSelected;
     }
 
+    public onStartHomeWork(course: Cours) {
+        this.reponseQuiz = new QuizReponse();
+        this.translateWord = String();
+        this.parcourCurrent = new Parcours();
+        this.sectionCurrent = new Section();
+        this.courseCurrent = new Cours();
+        this.noteQuiz = 0;
+        this.showTakeQuiz = true;
+        this.showQuizReview = false;
+        this.myAnswer = new Reponse();
+        this.answerSelected = new Reponse();
+        this.inputAnswer = String();
+        this.trueOrFalse = true;
+        this.disableToggleButton = false;
+        this.answersList = new Map<Question, Reponse>();
+        this.correctAnswersList = new Map<number, Array<Reponse>>();
+        this.answersPointStudent = new Map<Question, string>();
+        this.question = new Question();
+        this.numberOfQuestion = 0;
+        this.value = 10;
+        this.index = 1;
+        this.showCheckButton = false;
+        this.saveDone = false;
+        this.showDontKnowButton = true;
+        this.showNextButton = false;
+        this.disableButtonSon = true;
+        this.pourCentgage = 0;
+        console.log(this.showDontKnowButton);
+        console.log(this.showCheckButton);
+        this.noteQuiz = 0;
+        this.homeWorkService.findhomeworkbyCoursId(course).subscribe(homeWorkData => {
+            console.log(homeWorkData);
+            this.homeWorkList = homeWorkData;
+
+        }, error => {
+            console.log(error);
+        });
+    }
 
     public onStart() {
         this.reponseQuiz = new QuizReponse();
@@ -670,7 +730,7 @@ export class LearnService {
         this.showQuizReview = true;
     }
 
-    public sound(qst: Question) {
+    public sound(qst: any) {
         if (qst.typeDeQuestion.ref === 't1' || qst.typeDeQuestion.ref === 't6' || qst.typeDeQuestion.ref === 't4') {
             this.son = this.questionSideLeft + ' ' + this.correctAnswersList?.get(qst.id)[0].lib + ' ' + this.questionSideRight;
             console.log(this.son);

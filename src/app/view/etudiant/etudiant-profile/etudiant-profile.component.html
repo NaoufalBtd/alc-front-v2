@@ -1,12 +1,11 @@
-<div class="p-grid p-shadow-5">
-
-
-    <div class="p-col-2" style="text-align: center;">
+<div class="container p-grid p-shadow-5">
+    <h2>Your Profil</h2>
+    <div class="p-col-2 yourprofil" style="text-align: center;">
         <img [src]="user?.image" alt="Image" width="250">
     </div>
-    <div class="p-col-6">
+    <div class="p-col-6 yourprofil">
         <h3>{{ user?.nom}} {{ user?.prenom}}</h3>
-        <h5>Student</h5>
+
         <button pButton pRipple type="button" icon="pi pi-image " class="p-button-rounded p-button-secondary"
                 (click)="updateProfileImage()"
         ></button>
@@ -20,69 +19,72 @@
     <div class="p-col-12">
         <div class="p-grid">
             <div class="p-col-4">
-            <span class="p-float-label">
-                 <input id="float-input" type="text" pInputText [(ngModel)]="user.prenom"><label for="float-input">First name</label>
-            </span>
+                <label for="float-input">First name</label>
+                 <input id="float-input" type="text" pInputText [(ngModel)]="user.prenom">
             </div>
-
             <div class="p-col-4">
-            <span class="p-float-label">
-                 <input id="float-input" type="text" pInputText [(ngModel)]="user.nom"><label for="float-input">Last name</label>
-            </span>
+                <label for="float-input">Last name</label>
+                 <input id="float-input" type="text" pInputText [(ngModel)]="user.nom">
             </div>
-
-
             <div class="p-col-4">
-            <span class="p-float-label">
-                 <input id="float-input" disabled type="text" pInputText [(ngModel)]="user.username"><label
-                    for="float-input">Username</label>
-            </span>
+                <label for="float-input">Username</label>
+                 <input id="float-input" disabled type="text" pInputText [(ngModel)]="user.username">
             </div>
-
-
             <div class="p-col-4">
-            <span class="p-float-label">
-                 <input id="float-input" type="number" pInputText [(ngModel)]="user.age"><label
-                    for="float-input">Age</label>
-            </span>
+                <label for="float-input">Age</label>
+                 <input id="float-input" type="number" pInputText [(ngModel)]="user.age">
             </div>
-
-
+            <div class="p-col-4 ">
+                <label for="float-input">Address</label>
+                 <input id="float-input" type="text" pInputText [(ngModel)]="user.addresse">
+            </div>
             <div class="p-col-4">
-            <span class="p-float-label">
-                 <input id="float-input" type="text" pInputText [(ngModel)]="user.addresse"><label for="float-input">Address</label>
-            </span>
+                <label for="float-input">Phone</label>
+                 <input id="float-input" type="text" pInputText [(ngModel)]="user.numero">
             </div>
-
-
-            <div class="p-col-4">
-            <span class="p-float-label">
-                 <input id="float-input" type="text" pInputText [(ngModel)]="user.numero"><label
-                    for="float-input">Phone</label>
-            </span>
+            <div class=" p-col-4">
+                <label for="float-input">City</label>
+                 <input id="float-input" type="text" pInputText [(ngModel)]="user.ville">
             </div>
-
-            <div class="p-col-4">
-            <span class="p-float-label">
-                 <input id="float-input" type="text" pInputText [(ngModel)]="user.ville"><label
-                    for="float-input">City</label>
-            </span>
+        </div>
+    </div>
+    <h2> Further information </h2>
+    <div class="p-col-12">
+        <div class="p-grid">
+            <div class=" p-col-4">
+            <label for="float-input"  class="status">Social statuts</label>
+                <p-dropdown  id="float-input" [options]="statutSocials"  [(ngModel)]="etudiant.statutSocial" optionLabel="libelle" ></p-dropdown>
             </div>
-
-            <div class="p-col-4">
+            <div  class=" p-col-4">
+                <div *ngIf="etudiant.statutSocial.libelle == 'Employed'" >
+                <label for="float-input" class="status">Area of work</label>
+                <p-dropdown    [options]="fonctions" placeholder="List of areas of work" [(ngModel)]="etudiant.fonction"
+                            optionLabel="libelle" ></p-dropdown>
+                </div>
+                <div *ngIf="etudiant.statutSocial.libelle == 'Student'" >
+                    <label  class="status" for="float-input">Study Level</label>
+                <p-dropdown  [options]="niveauEtudes"  [(ngModel)]="etudiant.niveauEtude"
+                            optionLabel="libelle" ></p-dropdown>
             </div>
-
-            <div class="p-col-4">
-                <button pButton pRipple type="button" icon="pi pi-save" label="save changes"
-                        (click)="updateUser(user)"
-                        class="p-button-raised-primary"></button>
-
-            </div>
-
+        </div>
 
         </div>
     </div>
+                 <div class="class4">
+                <label   class="status2" for="float-input"> Your main goal with learning English</label>
+                <p-dropdown [options]="interetEtudiants"  [(ngModel)]="etudiant.interetEtudiant"
+                            optionLabel="libelle" ></p-dropdown>
+                 </div>
 
+
+
+
+    <DIV class="class3  p-col-4" >
+        <button  pButton pRipple type="button" icon="pi pi-save" label="save changes"
+                (click)="updateUser(user) ; edit()"
+                class="p-button-raised-primary"></button>
+
+    </DIV>
 </div>
 
 <div class="p-grid p-shadow-5">
