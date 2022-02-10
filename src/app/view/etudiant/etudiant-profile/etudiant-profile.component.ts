@@ -23,10 +23,7 @@ import {StatutSocial} from '../../../controller/model/statut-social.model';
 import {NiveauEtude} from '../../../controller/model/niveau-etude.model';
 import {LoginComponent} from '../../public/login/login.component';
 import {LoginService} from '../../../controller/service/login.service';
-import {Etudiant} from '../../../controller/model/etudiant.model';
-import {Inscription} from '../../../controller/model/inscription.model';
-import {InscriptionService} from '../../../controller/service/inscription.service';
-import {EtudiantService} from '../../../controller/service/etudiant.service';
+
 
 @Component({
   selector: 'app-etudiant-profile',
