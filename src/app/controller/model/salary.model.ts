@@ -7,5 +7,10 @@ export class Salary {
     public nbrSessionMensuel: number;
     public mois: number;
     public annee: number;
+    public totalPayment: number;
+    public totalBonus: number;
+    public totalBonusClassAverage: number;
+    public totalBonusWorkload: number;
     public prof = new Prof();
+    public payer: boolean;
 }

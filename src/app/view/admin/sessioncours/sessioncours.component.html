@@ -1,95 +1,186 @@
-<p-card>
-    <p-header>
-        <h3>Search</h3>
-        <div class="p-grid">
-            <div class="p-col-2">
-                <input pInputText type="text" placeholder="Search by Reference"
-                       [(ngModel)]="sessioncourssearch.reference">
+<div class="p-grid">
+    <div class="p-col-12">
+        <p-toast></p-toast>
+        <div class="card">
+            <p-toolbar styleClass="p-mb-4">
+                <ng-template pTemplate="left">
+                    <h5> Search
+                    </h5>
+                </ng-template>
+                <ng-template pTemplate="right">
+                    <input pInputText type="text" placeholder="Search by Code"
+                           [(ngModel)]="salaryAdminSearch.code"
 
-            </div>
-            <div class="p-col-2"><input pInputText type="text" placeholder="Search by Prof Name"
-                                        [(ngModel)]="sessioncourssearch.prof.nom">
-            </div>
-            <div class="p-col-2"><input pInputText type="text" placeholder="Search by Student Name"
-                                        [(ngModel)]="sessioncourssearch.etudiant.nom">
-            </div>
-            <div class="p-col-2"><input pInputText type="text" placeholder="Search by Course Name"
-                                        [(ngModel)]="sessioncourssearch.cours.libelle">
-            </div>
-            <div class="p-col-2">
+                           style="margin-right: 5px">
 
-                <input pInputText type="text" placeholder="yyyy-mm-dd"
-                       style="width: 80%" [(ngModel)]="sessioncourssearch.dateFin">
-            </div>
-            <div class="p-col-2">
-                <button pButton pRipple type="button" label="Search" class="p-button-rounded p-button-success"
-                        style="margin-left:4px;background-color: #F48C76;border-color: #F48C76;"
-                        (click)="findAllByCriteria()"></button>
-            </div>
+                    <p-dropdown placeholder="Search by Prof Name"
+                                [itemSize]="31"
+                                [(ngModel)]="salaryAdminSearch.prof.nom"
+                                [showClear]="true" [options]="profs" optionLabel="nom"
+                                optionValue="nom"
+                                [filter]="false" style="margin-right: 5px"></p-dropdown>
 
+
+                    <p-dropdown [options]="itemsMOIS" placeholder="Select Month"
+                                [(ngModel)]="salaryAdminSearch.mois"
+                                [itemSize]="31"
+                                [showClear]="true"
+                                [filter]="false" style="margin-right: 5px"></p-dropdown>
+                    <p-dropdown [options]="itemsannee" placeholder="Select Year"
+                                [(ngModel)]="salaryAdminSearch.annee"
+                                [showClear]="true" style="margin-right: 5px"
+                                [itemSize]="31"
+                                [filter]="false"></p-dropdown>
+                    <p-dropdown [options]="etatPay" placeholder="Payment Status" [itemSize]="2"
+                                [(ngModel)]="salaryAdminSearch.payer"
+
+                                [showClear]="true"
+                                [filter]="false" style="margin-right: 5px"></p-dropdown>
+
+                    <button pButton pRipple label="Search" icon="pi pi-search" class="p-button-primary p-ml-2 "
+                            (click)="findAllSalaryByCriteria()"
+                    ></button>
+                </ng-template>
+            </p-toolbar>
+            <p-table #dt [rows]="10" [paginator]="true"
+                     [value]="salaryListAdmin"
+                     [globalFilterFields]="['reference','total','totalPaye']"
+                     [rowHover]="true" dataKey="id" styleClass="p-datatable-customers"
+                     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                     [showCurrentPageReport]="true">
+                <ng-template pTemplate="caption">
+                    <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
+                        <h5 class="p-m-0">List of Sessions</h5>
+                        <button pButton type="button" icon="pi pi-paypal" label="Pay"
+
+                                class="p-button-warning p-mr-2"></button>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 3rem">
+                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                        </th>
+                        <th pSortableColumn="Code">Code</th>
+                        <th pSortableColumn="prof">Prof</th>
+                        <th pSortableColumn="prof">Niveau Prof</th>
+                        <th pSortableColumn="Date">Date</th>
+                        <th pSortableColumn="Number Of Sessions">Number Of Sessions</th>
+                        <th pSortableColumn="Total Payment">Total Sessions</th>
+                        <th pSortableColumn="Total Bonus">Total Bonus</th>
+                        <th pSortableColumn="Number Of Sessions">Monthly Amount</th>
+
+                        <th pSortableColumn="Payment Status">Payment Status</th>
+                        <th>Action</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-salary>
+                    <tr>
+                        <td>
+                            <p-tableCheckbox [value]="salary"></p-tableCheckbox>
+                        </td>
+                        <td>{{salary.code}}</td>
+                        <td>{{salary.prof.nom}} {{salary.prof.prenom}}</td>
+                        <td><strong style="color: blue"> {{salary.prof.categorieProf.level}} :</strong> <strong style="color: #0a80bb"> {{salary.prof.categorieProf.lessonRate}} $</strong> </td>
+                        <td>{{salary.mois}}/{{salary.annee}}</td>
+                        <td>{{salary.nbrSessionMensuel}}</td>
+                        <td>
+                            <strong style="color: #2D1E81"> {{salary.totalPayment}} $</strong>
+
+                        </td>
+                        <td>
+                            <strong style="color: #2D1E81"> {{salary.totalBonusClassAverage+salary.totalBonusWorkload}} $</strong>
+
+                        </td>
+                        <td >
+                            <strong style="color: red" *ngIf="!salary.payer">{{salary.totalPayment+salary.totalBonusClassAverage+salary.totalBonusWorkload}} $</strong>
+                            <strong style="color: green" *ngIf="salary.payer">{{salary.totalPayment+salary.totalBonusClassAverage+salary.totalBonusWorkload}} $</strong>
+
+                        </td>
+
+                        <td>
+                            <strong style="color: red" *ngIf="!salary.payer">
+                                <i class="pi pi-times-circle"></i>  {{salary.payer}}
+                            </strong>
+                            <strong style="color: green" *ngIf="salary.payer">
+                                <i
+                                        class="pi pi-check-circle"></i> {{salary.payer}}
+                            </strong>
+
+                        </td>
+                        <td>
+                            <button pButton type="button" icon="pi pi-paypal" [disabled]="salary.payer"
+                                    (click)="savePaiement(salary.id)"
+                                    class="p-button-warning p-mr-2"></button>
+                            <button pButton type="button" class="p-button-info p-mr-2" (click)="showDetails(salary.id)"
+                                    icon="pi pi-align-justify"></button>
+
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="summary">
+
+                </ng-template>
+            </p-table>
         </div>
-
-    </p-header>
-</p-card>
-<p-table #dt [value]="sessioncourslist" dataKey="id" styleClass="p-datatable-customers" [rowHover]="true"
-         [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]"
-         [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-         [filterDelay]="0"
-         [globalFilterFields]="['reference','prof.nom','etudiant.nom','cours.libelle','dateFin','totalheure','payer']">>
-    <ng-template pTemplate="caption">
-        <div class="table-header">
-            <div class="row">
-                <div class="col-md-2">List of Session Course</div>
-                <div class="col-md-2"></div>
+        <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+    </div>
+    <app-categorie-prof-view></app-categorie-prof-view>
+</div>
 
 
-            </div>
+<p-dialog header="Student Group Details" [(visible)]="displayDetails" [style]="{width: '50vw'}"
+          [baseZIndex]="10000">
+    <p-tabView>
+        <p-tabPanel header="Payment">
+            <p-table responsiveLayout="scroll" [value]="sessioncoursList">
 
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Student Group</th>
+                        <th>Cours</th>
+                        <th>Date</th>
+                        <th>Payment Status</th>
 
-        </div>
-    </ng-template>
-    <ng-template pTemplate="header">
-        <tr>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-sessionCours>
+                    <tr>
+                        <td>{{sessionCours.groupeEtudiant.libelle}}</td>
+                        <td>{{sessionCours.cours.libelle}}</td>
+                        <td>{{sessionCours.dateFin}}</td>
+                        <td>
+                            <strong style="color: red" *ngIf="!sessionCours.payer">
+                                <i class="pi pi-times"></i>  {{sessionCours.payer}}
+                            </strong>
+                            <strong style="color: green" *ngIf="sessionCours.payer">
+                                <i
+                                        class="pi pi-times"></i> {{sessionCours.payer}}
+                            </strong>
 
-            <th>Reference</th>
-            <th>Prof Name</th>
-            <th>Student Name</th>
-            <th>Course</th>
-            <th>Date</th>
-            <th>Etat de Payement</th>
-
-        </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-c>
-        <tr class="p-selectable-row">
-
-            <td>
-                {{c.reference}}
-            </td>
-            <td>
-                {{c.prof.nom}}
-            </td>
-            <td>
-                {{c.etudiant.nom}}
-            </td>
-            <td>
-                {{c.cours.libelle}}
-            </td>
-            <td>
-                {{c.dateFin}}
-            </td>
-
-            <td>
-                {{c.payer}}
-            </td>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </p-tabPanel>
 
 
 
-        </tr>
-    </ng-template>
-    <ng-template pTemplate="emptymessage">
-        <tr>
-            <td colspan="9">No customers found.</td>
-        </tr>
-    </ng-template>
-</p-table>
+
+
+        <p-tabPanel header="ClassAverage Bonus">
+
+            <strong style="font-size: 20px;color: #0d0d0d">Amount: </strong><strong style="font-size: 20px;color: #0c799f">{{classAverageBonusProf.classAverageBonus.prix}}</strong>
+            <br>
+            <strong style="font-size: 20px;color: #0d0d0d">Class Average Bonus Code: </strong><strong style="font-size: 20px;color: #0c799f">{{classAverageBonusProf.classAverageBonus.code}}</strong>
+
+        </p-tabPanel>
+        <p-tabPanel header="Workload Bonus">
+            <strong style="font-size: 20px;color: #0d0d0d">Amount: </strong><strong style="font-size: 20px;color: #0c799f">{{workloadBonusProf.workloadBonus.prix}}</strong>
+            <br>
+            <strong style="font-size: 20px;color: #0d0d0d">Workload Bonus Code: </strong><strong style="font-size: 20px;color: #0c799f">{{workloadBonusProf.workloadBonus.code}}</strong>
+
+        </p-tabPanel>
+    </p-tabView>
+
+</p-dialog>

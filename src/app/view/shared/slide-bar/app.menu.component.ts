@@ -85,8 +85,7 @@ export class AppMenuComponent implements OnInit {
                     {label: 'Students Group List', icon: 'pi pi-fw pi-list', routerLink: ['/admin/groups-students']},
                     {label: 'Professors', icon: 'pi pi-fw pi-user', routerLink: ['/admin/teacher-lists']},
                     {label: 'Recommendation', icon: 'pi pi-fw pi-user-plus', routerLink: ['/admin/recommend-admin']},
-                    {label: 'All Salary', icon: 'pi pi-fw pi-wallet', routerLink: ['/admin/salarylist']},
-                     {label: 'Sessions Course List ', icon: 'pi pi-fw pi-paperclip', routerLink: ['/admin/sessioncours']},
+                    {label: 'Sessions List ', icon: 'pi pi-fw pi-paperclip', routerLink: ['/admin/sessioncours']},
                     {label: 'FAQ ANSWER', icon: 'pi pi-fw pi-reply', routerLink: ['/admin/faq-admin']},
                     {label: 'FAQ List', icon: 'pi pi-fw pi-info-circle', routerLink: ['/admin/faq-admin-list']},
                     {label: 'CREATE NEWS', icon: 'pi pi-fw pi-calendar-times', routerLink: ['/admin/news-admin']},
@@ -94,8 +93,7 @@ export class AppMenuComponent implements OnInit {
                     {label: 'Bonus', icon: 'pi pi-fw pi-wallet', routerLink: ['/admin/bonus']},
                     {label: 'Packs', icon: 'pi pi-briefcase', routerLink: ['/admin/PackStudent']}
                 ];
-            }
-            else if (this.user.role === 'TEACHER') {
+            } else if (this.user.role === 'TEACHER') {
                 this.model = [
                     {label: 'HomeTeacher', icon: 'pi pi-fw pi-home', routerLink: ['/prof/home']},
                     {label: 'Recommend A teacher', icon: 'pi pi-fw pi-comment', routerLink: ['/prof/recommendation-teacher']},
