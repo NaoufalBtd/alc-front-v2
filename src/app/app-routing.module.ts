@@ -78,6 +78,7 @@ import {BonusProfComponent} from './view/admin/bonus-prof/bonus-prof.component';
 import {SalarylistComponent} from './view/admin/salarylist/salarylist.component';
 import {ScheduleProfComponent} from './view/admin/professeur/schedule-prof/schedule-prof.component';
 import {PackStudentComponent} from './view/admin/pack-student/pack-student.component';
+import {DriveApiComponent} from './view/admin/drive-api/drive-api.component';
 
 
 @NgModule({
@@ -111,6 +112,7 @@ import {PackStudentComponent} from './view/admin/pack-student/pack-student.compo
                     {path: 'PackStudent', component: PackStudentComponent},
                     {path: 'homeWork', component: HomeWorkComponentComponent},
                     {path: 'bonus', component: BonusProfComponent},
+                    {path: 'driveApi', component: DriveApiComponent},
                     {path: 'salarylist', component: SalarylistComponent}
 
                 ]

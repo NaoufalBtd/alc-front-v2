@@ -92,7 +92,8 @@ export class AppMenuComponent implements OnInit {
                     {label: 'CREATE NEWS', icon: 'pi pi-fw pi-calendar-times', routerLink: ['/admin/news-admin']},
                     {label: 'Schedule', icon: 'pi pi-fw pi-calendar-times', routerLink: ['/admin/schedule']},
                     {label: 'Bonus', icon: 'pi pi-fw pi-wallet', routerLink: ['/admin/bonus']},
-                    {label: 'Packs', icon: 'pi pi-briefcase', routerLink: ['/admin/PackStudent']}
+                    {label: 'Packs', icon: 'pi pi-briefcase', routerLink: ['/admin/PackStudent']},
+                    {label: 'Cloud', icon: 'pi pi-cloud', routerLink: ['/admin/driveApi']}
                 ];
             }
             else if (this.user.role === 'TEACHER') {

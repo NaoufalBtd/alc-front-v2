@@ -204,6 +204,10 @@ export class HomeWorkEtudiantComponent implements OnInit {
         return this.learnService.participants;
     }
 
+    set homeWorkEtudiantList(value: Array<HomeWOrkEtudiant>) {
+        this.homeWorkEtudiantService.homeWorkEtudiantList = value;
+    }
+
     public homeWorkQuestionList: Array<HomeWorkQST> = new Array<HomeWorkQST>();
     public homeWorkQuestion: HomeWorkQST = new HomeWorkQST();
     public homeWorkAnswersList: Array<HomeWorkReponse> = new Array<HomeWorkReponse>();
@@ -222,6 +226,8 @@ export class HomeWorkEtudiantComponent implements OnInit {
     public selectedHomeWork: HomeWork = new HomeWork();
     wordDictionnary: string;
 
+    son = '';
+
     ngOnInit(): void {
         console.log(this.selectedcours);
         this.learnService.onStartHomeWork(this.selectedcours);
@@ -239,9 +245,20 @@ export class HomeWorkEtudiantComponent implements OnInit {
         }
     }
 
-
-    sound(question: HomeWorkQST) {
-        this.learnService.sound(question);
+    sound(qst: HomeWorkQST) {
+        if (qst.typeDeQuestion.ref === 't1' || qst.typeDeQuestion.ref === 't6' || qst.typeDeQuestion.ref === 't4') {
+            this.son = this.questionSideLeft + ' ' + this.correctAnswersList?.get(qst.id)[0].lib + ' ' + this.questionSideRight;
+            console.log(this.son);
+        } else if (qst.typeDeQuestion.ref === 't3') {
+            this.son = this.correctAnswersList?.get(qst.id)[0].lib;
+            console.log(this.son);
+        } else if (qst.typeDeQuestion.ref === 't5') {
+            this.son = qst.libelle;
+        }
+        const text = encodeURIComponent(this.son);
+        const url = 'https://www.translatedict.com/speak.php?word=' + this.son + '&lang=ar';
+        const audio = new Audio(url);
+        audio.play();
     }
 
 
@@ -396,37 +413,24 @@ export class HomeWorkEtudiantComponent implements OnInit {
 
 
     finishHomeWork() {
-        const homeWorkEtudiant: HomeWOrkEtudiant = new HomeWOrkEtudiant();
-        const threshold = this.answersList.size;
-        this.noteQuiz = 0;
-        console.log(this.answersPointStudent);
-        for (const value of this.answersList.entries()) {
-            if (value[1].etatReponse === 'true') {
-                if (this.answersPointStudent.get(value[0]) === 'STUDENT_ANSWER') {
-                    this.noteQuiz += value[0].pointReponseJuste;
-                } else if (this.answersPointStudent.get(value[0]) === 'TEACHER_ANSWER') {
-                    this.noteQuiz += value[0].pointReponseJuste / 2;
-                } else {
-                    this.noteQuiz += 0;
-                }
-            } else {
-                this.noteQuiz -= value[0].pointReponsefausse;
-            }
-        }
-        homeWorkEtudiant.homeWork = this.selectedHomeWork;
-        homeWorkEtudiant.etudiant = this.login.getConnectedStudent();
-        homeWorkEtudiant.note = this.noteQuiz;
-        homeWorkEtudiant.resultat = String(this.noteQuiz + ' / ' + threshold);
-        console.log(homeWorkEtudiant);
-        this.homeWorkEtudiantService.save(homeWorkEtudiant).subscribe(
-            homeWorkEtudiantData => {
-                console.log(homeWorkEtudiantData);
-                for (const entry of this.answersList.entries()) {
+
+        if (this.homeWorkQuestion.typeDeQuestion.ref === 't2') {
+            const homeWorkEtudiant: HomeWOrkEtudiant = new HomeWOrkEtudiant();
+            homeWorkEtudiant.etudiant = this.login.getConnectedStudent();
+            homeWorkEtudiant.homeWork = this.selectedHomeWork;
+            homeWorkEtudiant.note = 0;
+            homeWorkEtudiant.resultat = '-';
+            homeWorkEtudiant.date = new Date();
+            this.homeWorkEtudiantService.save(homeWorkEtudiant).subscribe(
+                homeWorkEtudiantData => {
+                    console.log(homeWorkEtudiantData);
                     const answer: ReponseEtudiantHomeWork = new ReponseEtudiantHomeWork();
-                    answer.question = entry[0];
                     answer.homeWorkEtudiant = homeWorkEtudiantData;
-                    answer.reponse = this.correctAnswersList.get(entry[0].id)[0];
-                    answer.answer = entry[1].lib;
+                    answer.answer = this.homeWorkReponse.lib;
+                    answer.note = 0;
+                    answer.question = this.homeWorkQuestion;
+                    answer.reponse = null;
+                    console.log(answer);
                     this.homeWorkEtudiantService.saveHomeWorkEtudiantReponse(answer).subscribe(
                         reponse => {
                             console.log(reponse);
@@ -434,17 +438,75 @@ export class HomeWorkEtudiantComponent implements OnInit {
                             console.log(error);
                         }
                     );
+                }, error => {
+                    console.log(error);
                 }
-            }, error => {
-                console.log(error);
+            );
+
+        } else {
+
+
+            const homeWorkEtudiant: HomeWOrkEtudiant = new HomeWOrkEtudiant();
+            const threshold = this.answersList.size;
+            this.noteQuiz = 0;
+            console.log(this.answersPointStudent);
+            for (const value of this.answersList.entries()) {
+                if (value[1].etatReponse === 'true') {
+                    if (this.answersPointStudent.get(value[0]) === 'STUDENT_ANSWER') {
+                        this.noteQuiz += value[0].pointReponseJuste;
+                    } else if (this.answersPointStudent.get(value[0]) === 'TEACHER_ANSWER') {
+                        this.noteQuiz += value[0].pointReponseJuste / 2;
+                    } else {
+                        this.noteQuiz += 0;
+                    }
+                } else {
+                    this.noteQuiz -= value[0].pointReponsefausse;
+                }
             }
-        );
-        console.log(this.noteQuiz + ' / ' + threshold);
-        this.showTakeQuiz = false;
-        this.showQuizReview = true;
+            homeWorkEtudiant.homeWork = this.selectedHomeWork;
+            homeWorkEtudiant.etudiant = this.login.getConnectedStudent();
+            homeWorkEtudiant.note = this.noteQuiz;
+            homeWorkEtudiant.resultat = String(this.noteQuiz + ' / ' + threshold);
+            homeWorkEtudiant.date = new Date();
+            console.log(homeWorkEtudiant);
+            this.homeWorkEtudiantService.save(homeWorkEtudiant).subscribe(
+                homeWorkEtudiantData => {
+                    console.log(homeWorkEtudiantData);
+                    for (const entry of this.answersList.entries()) {
+                        const answer: ReponseEtudiantHomeWork = new ReponseEtudiantHomeWork();
+                        answer.question = entry[0];
+                        answer.homeWorkEtudiant = homeWorkEtudiantData;
+                        answer.reponse = this.correctAnswersList.get(entry[0].id)[0];
+                        answer.answer = entry[1].lib;
+                        if (entry[1].etatReponse === 'true') {
+                            if (this.answersPointStudent.get(entry[0]) === 'STUDENT_ANSWER') {
+                                answer.note = entry[0].pointReponseJuste;
+                            } else {
+                                answer.note = 0;
+                                answer.answer = null;
+                            }
+                        } else {
+                            answer.note = entry[0].pointReponsefausse;
+                        }
+                        this.homeWorkEtudiantService.saveHomeWorkEtudiantReponse(answer).subscribe(
+                            reponse => {
+                                console.log(reponse);
+                            }, error => {
+                                console.log(error);
+                            }
+                        );
+                    }
+                }, error => {
+                    console.log(error);
+                }
+            );
+            console.log(this.noteQuiz + ' / ' + threshold);
+            this.showTakeQuiz = false;
+            this.showQuizReview = true;
+        }
     }
 
-    homeWorkSelected(homeWork: HomeWork) {
+    homeWorkSelectedFct(homeWork: HomeWork) {
         this.showTypeOfQstBar = true;
         this.homeWorkReponse = new HomeWorkReponse();
         this.answersList = new Map<HomeWorkQST, HomeWorkReponse>();
@@ -489,11 +551,10 @@ export class HomeWorkEtudiantComponent implements OnInit {
             }
         });
         console.log(homeWork);
-
         this.homeWorkEtudiantService.findbyetudiantIdAndHomeWorkID(homeWork).subscribe(homeWorkEtudianData => {
-            if (homeWorkEtudianData !== null) {
+            if (homeWorkEtudianData.length !== 0) {
                 this.showHomeWorkEtudiantResult = true;
-                this.homeWorkEtudiant = homeWorkEtudianData;
+                this.homeWorkEtudiantList = homeWorkEtudianData;
             } else {
                 this.showHomeWorkEtudiantResult = false;
 
@@ -503,9 +564,5 @@ export class HomeWorkEtudiantComponent implements OnInit {
         });
 
 
-    }
-
-    set homeWorkEtudiant(value: HomeWOrkEtudiant) {
-        this.homeWorkEtudiantService.homeWorkEtudiant = value;
     }
 }

@@ -73,12 +73,8 @@ export class AdminService {
         return this.http.get<Array<Admin>>(this.adminUrl + 'admin/');
     }
 
-    public saveData() {
-         this.http.get(this.url + 'app').subscribe(
-            data => {
-                this.parcoursService.findAll();
-            }
-        );
+    public saveData(): Observable<string> {
+         return this.http.get<string>(this.url + 'app');
     }
 
     signInWithGoogle() {

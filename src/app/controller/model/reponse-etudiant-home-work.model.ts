@@ -9,4 +9,5 @@ export class ReponseEtudiantHomeWork {
     public homeWorkEtudiant = new HomeWOrkEtudiant();
     public question = new HomeWorkQST();
     public reponse: HomeWorkReponse = new HomeWorkReponse();
+    public note: number;
 }

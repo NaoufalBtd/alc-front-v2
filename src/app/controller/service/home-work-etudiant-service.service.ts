@@ -19,6 +19,7 @@ export class HomeWorkEtudiantServiceService {
 
     private etudianturl = environment.etudiantUrl;
     private _homeWorkEtudiant: HomeWOrkEtudiant;
+    private _homeWorkEtudiantList: Array<HomeWOrkEtudiant> = new Array<HomeWOrkEtudiant>();
     private _HomeWorkEtudiantReponse: ReponseEtudiantHomeWork;
     private _homeWork: HomeWork;
     private _homeWorkQuestion: HomeWorkQST;
@@ -126,6 +127,18 @@ export class HomeWorkEtudiantServiceService {
         return this._homeWork;
     }
 
+
+    get homeWorkEtudiantList(): Array<HomeWOrkEtudiant> {
+        if (this._homeWorkEtudiantList == null) {
+            this._homeWorkEtudiantList = new Array<HomeWOrkEtudiant>();
+        }
+        return this._homeWorkEtudiantList;
+    }
+
+    set homeWorkEtudiantList(value: Array<HomeWOrkEtudiant>) {
+        this._homeWorkEtudiantList = value;
+    }
+
     set homeWork(value: HomeWork) {
         this._homeWork = value;
     }
@@ -149,8 +162,8 @@ export class HomeWorkEtudiantServiceService {
         return this.http.post<number>(this.etudianturl + 'homeWorkEtudiant/update', this.homeWorkEtudiant);
     }
 
-    public findbyetudiantIdAndHomeWorkID(homeWork: HomeWork): Observable<HomeWOrkEtudiant> {
-        return this.http.get<HomeWOrkEtudiant>(this.etudianturl + 'homeWorkEtudiant/etudiant/id/' + this.loginservice.etudiant.id + '/homeWork/id/' + homeWork.id);
+    public findbyetudiantIdAndHomeWorkID(homeWork: HomeWork): Observable<Array<HomeWOrkEtudiant>> {
+        return this.http.get<Array<HomeWOrkEtudiant>>(this.etudianturl + 'homeWorkEtudiant/etudiant/id/' + this.loginservice.etudiant.id + '/homeWork/id/' + homeWork.id);
     }
 
     public findReponsesByQuestionId(id: number): Observable<Array<HoweWorkQSTReponse>> {

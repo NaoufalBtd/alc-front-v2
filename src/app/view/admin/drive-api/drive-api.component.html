@@ -1,0 +1,20 @@
+<div *ngIf="!displayLoadDialog" class="p-grid ">
+    <div class="p-col-3">
+        <button pButton pRipple type="button" (click)="openSite()" iconPos="left" icon="pi pi-google"
+                label="Sign in with google" class="p-button-raised p-button-help"></button>
+
+    </div>
+
+    <div class="p-col-9">
+        <button pButton type="button" (click)="saveData()" class="p-mt-6"
+                label="Merci de créer un dossier nommé Kam dans disque C et de inserer les parcours dans ce dossier"></button>
+    </div>
+</div>
+
+
+<div *ngIf="displayLoadDialog" class="card loadingPage">
+    <img loading="lazy" width="586" height="272" src="https://design.netcorecloud.com/wp-content/uploads/2020/09/infinity-loader.gif" alt="" class="wp-image-269">
+    <h3>Please wait until the process end !</h3>
+</div>
+
+

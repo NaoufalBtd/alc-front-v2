@@ -240,12 +240,5 @@ export class ParcoursListComponent implements OnInit {
         ];
     }
 
-    public saveData() {
-        this.adminService.saveData();
-    }
 
-
-    openSite() {
-        window.open('http://localhost:8036/admin/admin/googlesignin', '_blank');
-    }
 }

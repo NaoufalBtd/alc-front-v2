@@ -9,5 +9,6 @@ export class HomeWOrkEtudiant {
     public homeWork = new  HomeWork();
     public reponseEtudiantHomeWork = new Array<ReponseEtudiantHomeWork>() ;
     public note: number;
+    public date: Date;
     public resultat: string;
 }
