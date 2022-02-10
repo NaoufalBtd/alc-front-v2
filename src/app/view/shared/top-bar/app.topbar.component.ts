@@ -11,6 +11,8 @@ import {Role} from '../../../enum/role.enum';
 import {Subscription} from 'rxjs';
 import {ProfService} from '../../../controller/service/prof.service';
 import {EtudiantService} from '../../../controller/service/etudiant.service';
+import {Menu} from "primeng/menu";
+import {backgroundColor} from "html2canvas/dist/types/css/property-descriptors/background-color";
 
 @Component({
     selector: 'app-topbar',
@@ -23,6 +25,8 @@ export class AppTopBarComponent implements OnInit, OnDestroy {
     items: MenuItem[];
     user: User = new User();
     hidePopUp = true;
+    itemstopBar: MenuItem[];
+
 
     constructor(public app: AppComponent, public appMain: PublicComponent,
                 private router: Router,
@@ -33,6 +37,25 @@ export class AppTopBarComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.user = this.authenticationService.getUserFromLocalCache();
+        this.itemstopBar = [
+      {
+            style : 'background-color: #FF5733',
+            label: 'sign In',
+                items: [
+                    {
+                        label: 'admin',
+                        routerLink: 'public/login-admin'
+                    },
+                    {
+                        label: 'Teacher',
+                        routerLink: 'public/login-prof'
+                    },                    {
+                        label: 'Student',
+                        routerLink: 'public/login-etudiant'
+                    }
+                ]
+            }
+        ];
     }
 
     public logOut() {

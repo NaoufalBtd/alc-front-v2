@@ -1,3 +1,8 @@
+import {InteretEtudiant} from './interet-etudiant.model';
+import {NiveauEtude} from './niveau-etude.model';
+import {Fonction} from './fonction.model';
+import {StatutSocial} from './statut-social.model';
+
 export class User {
     public id: number = Number(0);
     public username: string = String();
@@ -17,4 +22,8 @@ export class User {
     public  dateNaissance: string;
     public  age: number;
     public  image: string;
+    public interetEtudiant = new InteretEtudiant();
+    public niveauEtude = new NiveauEtude();
+    public fonction = new Fonction();
+    public statutSocial =  new StatutSocial();
 }

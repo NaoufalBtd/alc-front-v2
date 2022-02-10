@@ -11,6 +11,7 @@ import {User} from '../model/user.model';
 @Injectable({
     providedIn: 'root'
 })
+
 export class LoginService {
     private adminUrl = environment.adminUrl;
     private _prof: Prof;

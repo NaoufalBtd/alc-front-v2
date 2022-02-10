@@ -5,6 +5,10 @@ import {Inscription} from '../../../../controller/model/inscription.model';
 import {Parcours} from '../../../../controller/model/parcours.model';
 import {EtatInscription} from '../../../../controller/model/etat-inscription.model';
 import {Prof} from '../../../../controller/model/prof.model';
+import {InteretEtudiant} from '../../../../controller/model/interet-etudiant.model';
+import {Fonction} from '../../../../controller/model/fonction.model';
+import {StatutSocial} from '../../../../controller/model/statut-social.model';
+import {NiveauEtude} from '../../../../controller/model/niveau-etude.model';
 
 @Component({
     selector: 'app-inscription-edit',
@@ -15,9 +19,13 @@ export class InscriptionEditComponent implements OnInit {
 
     // tslint:disable-next-line:max-line-length
     sel =' ';
+    packStudents = new Array<PackStudent>();
+    allgroupes: Array<GroupeEtude>;
     constructor(private messageService: MessageService,
                 private service: InscriptionService,
-                private confirmationService: ConfirmationService) {
+                private confirmationService: ConfirmationService,
+                public packStudentService: PackStudentService,
+                public groupeEtudeService: GroupeEtudeService) {
     }
     public view(inscription: Inscription) {
         this.selected = {...inscription};
@@ -102,6 +110,38 @@ export class InscriptionEditComponent implements OnInit {
                 console.log(error);
             }
         );
+        this.service.findAllStatutSocial().subscribe(
+            data => {
+                this.statutSocials = data;
+                console.log(data);
+            }, error => {
+                console.log(error);
+            }
+        );
+        this.service.findAllFonction().subscribe(
+            data => {
+                this.fonctions = data;
+                console.log(data);
+            }, error => {
+                console.log(error);
+            }
+        );
+        this.service.findAllInteretEtudiant().subscribe(
+            data => {
+                this.interetEtudiants = data;
+                console.log(data);
+            }, error => {
+                console.log(error);
+            }
+        );
+        this.service.findAllNiveauEtude().subscribe(
+            data => {
+                this.niveauEtudes = data;
+                console.log(data);
+            }, error => {
+                console.log(error);
+            }
+        );
         this.service.findAllEtat().subscribe(
             data => {
                 this.etatinscriptionslist = data;
@@ -119,7 +159,14 @@ export class InscriptionEditComponent implements OnInit {
             },error => {
                  console.log(error);
             }
-        )
+        );
+        this.groupeEtudeService.findAll().subscribe(
+            data => {
+                this.allgroupes = data;
+            }
+        );
+        this.packStudentService.findPackIndividualOrgroupe(true);
+        this.packStudentService.findPackIndividualOrgroupe(false);
     }
 
     findAllProf(): void {
@@ -183,6 +230,65 @@ export class InscriptionEditComponent implements OnInit {
 
     public hideEditDialog() {
         this.editDialog = false;
+    }
+    public findTypeOfPack(){
+        if (this.selected.groupeEtude.nombreEtudiant > 1){
+            this.packStudents = this.packStudentService.packstudentgroupeList;
+        }else {
+            this.packStudents = this.packStudentService.packstudentIndividialList;
+        }
+    }
+    get interetEtudiant(): InteretEtudiant {
+        return this.service.interetEtudiant;
+    }
+
+    set interetEtudiant(value: InteretEtudiant) {
+        this.service.interetEtudiant = value;
+    }
+
+    get interetEtudiants(): Array<InteretEtudiant> {
+        return this.service.interetEtudiants;
+    }
+
+    set interetEtudiants(value: Array<InteretEtudiant>) {
+        this.service.interetEtudiants = value;
+    }
+    get fonctions(): Array<Fonction> {
+        return this.service.fonctions;
+    }
+    set fonctions(value: Array<Fonction>) {
+        this.service.fonctions = value;
+    }
+    get fonction(): Fonction {
+        return this.service.fonction;
+    }
+    set fonction(value: Fonction) {
+        this.service.fonction = value;
+    }
+    get statutSocial(): StatutSocial {
+        return this.service.statutSocial;
+    }
+    set statutSocial(value: StatutSocial) {
+        this.service.statutSocial = value;
+    }
+    get statutSocials(): Array<StatutSocial> {
+        return this.service.statutSocials;
+    }
+    set statutSocials(value: Array<StatutSocial>) {
+        this.service.statutSocials = value;
+    }
+    get niveauEtudes(): Array<NiveauEtude> {
+        return this.service.niveauEtudes;
+    }
+    set niveauEtudes(value: Array<NiveauEtude>) {
+        this.service.niveauEtudes = value;
+    }
+    get niveauEtude(): NiveauEtude {
+        return this.service.niveauEtude;
+    }
+
+    set niveauEtude(value: NiveauEtude) {
+        this.service.niveauEtude = value;
     }
 
 

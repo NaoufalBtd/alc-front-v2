@@ -78,7 +78,7 @@ export class AppMenuComponent implements OnInit {
 
             if (this.user.role === 'ADMIN') {
                 this.model = [
-                    {label: 'Manage Parcours', icon: 'pi pi-fw pi-table', routerLink: ['/admin/parcours']},
+                    {label: 'Manage Levels', icon: 'pi pi-fw pi-table', routerLink: ['/admin/parcours']},
                     {label: 'Inscriptions List', icon: 'pi pi-fw pi-check-square', routerLink: ['/admin/inscription']},
                     {label: 'Students List', icon: 'pi pi-fw pi-list', routerLink: ['/admin/students-List']},
                     {label: 'Groups List', icon: 'pi pi-fw pi-list', routerLink: ['/admin/groups-List']},
@@ -95,7 +95,7 @@ export class AppMenuComponent implements OnInit {
                 ];
             } else if (this.user.role === 'TEACHER') {
                 this.model = [
-                    {label: 'HomeTeacher', icon: 'pi pi-fw pi-home', routerLink: ['/prof/home']},
+                    {label: 'Home', icon: 'pi pi-fw pi-home', routerLink: ['/prof/home']},
                     {label: 'Recommend A teacher', icon: 'pi pi-fw pi-comment', routerLink: ['/prof/recommendation-teacher']},
                     {label: 'Salary', icon: 'pi pi-fw pi-money-bill', routerLink: ['/prof/salary']},
                     {label: 'Levels', icon: 'pi pi-fw pi-list', routerLink: ['/prof/courses']},

@@ -325,7 +325,7 @@ export class ProfesseurListComponent implements OnInit {
 
             }
         );
-
+        this.groupeStudent = this.groupeStudent.filter( e => e.prof.id === prof.id);
         this.scheduleObj.eventWindow.refresh();
     }
 
@@ -334,7 +334,7 @@ export class ProfesseurListComponent implements OnInit {
         const scheduleObj = this.scheduleObj;
         scheduleObj.eventSettings.dataSource = null;
         this.scheduleObj.eventWindow.refresh();
-
+        this.scheduleService.getAllStudentsGroup().subscribe(data => this.groupeStudent = data);
     }
 
     hideDeleteDialog() {

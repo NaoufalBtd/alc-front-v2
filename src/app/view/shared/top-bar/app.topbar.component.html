@@ -1,6 +1,7 @@
-<div class="layout-topbar">
 
-    <a class="layout-topbar-logo" href="#">
+<div class="layout-topbar" *ngIf="user!=null" >
+
+    <a [hidden]="user == null" class="layout-topbar-logo" href="#">
         <span id="topbar-logo" style="color: white; font-family: 'Lucida Bright'"><h1>American Center</h1></span>
     </a>
 
@@ -41,7 +42,7 @@
     </ul>
 
 
-    <ul [hidden]="user != null" class="topbar-menu">
+<!--    <ul [hidden]="user != null" class="topbar-menu">
 
         <li [ngClass]="{'active-topmenuitem fadeInDown': appMain.topbarUserMenuActive}" class="user-profile"
             style="margin-top: 4px">
@@ -115,34 +116,63 @@
         </li>
 
 
-    </ul>
+    </ul>-->
+
 </div>
 
-
-<nav *ngIf="user === null">
+<nav class="mainnav" *ngIf="user === null" >
     <div class="logo"><img src="assets/picture/icon/logo.png" alt="logo"></div>
-    <ul>
-        <li><a class="active" routerLink="">Home</a></li>
-         <li routerLink="public/inscriptionTeacher" ><a >Sign Up Prof</a></li>
-        <li routerLink="public/inscriptionEtudiant"><a >Sign Up Student</a></li>
-    </ul>
-    <a class="get-started"  routerLink="login" >Sign in</a>
-    <img src="assets/picture/icon/menu.png" class="menu" onclick="sideMenu(0)" alt="menu">
-</nav>
-<div [hidden]="user != null">
-    <nav >
-        <div class="logo"><img src="assets/picture/icon/logo.png" alt="logo"></div>
-        <ul>
-            <li><a class="active" routerLink="">Home</a></li>
-            <li routerLink="public/inscriptionTeacher"><a >Sign Up Prof</a></li>
-            <li routerLink="public/inscriptionEtudiant"><a >Sign Up Student</a></li>
 
-        </ul>
-        <a class="get-started"  routerLink="login" >Sign in</a>
-        <img src="assets/picture/icon/menu.png" class="menu" onclick="sideMenu(0)" alt="menu">
+    <ul>
+        <li>
+            <a class="get-started" routerLink="">Home</a>
+        </li>
+        <li>
+            <a class="get-started" >Free Trial Lesson</a>
+
+        </li>
+        <li style="margin-top: 5px">
+            <p-menubar [model]="itemstopBar" >
+
+            </p-menubar>
+        </li>
+    </ul>
+
+</nav>
+
+
+
+
+
+<script type="text/javascript" src="src/script.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+<!--<div [hidden]="user != null">
+    <nav id="header" class="fixed w-full z-30 top-0 text-white" style="background:linear-gradient(90deg, #d53369 0%, #daae51 100%) ">
+        <div class="w-full container mx-auto flex flex-wrap items-center justify-between mt-0 py-2">
+            <div class="pl-4 flex items-center">
+                <a class="toggleColour text-white no-underline hover:no-underline font-bold text-2xl lg:text-4xl" href="#">
+                    &lt;!&ndash;Icon from: http://www.potlabicons.com/ &ndash;&gt;
+                    <svg class="h-8 fill-current inline" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512.005 512.005">
+                        <rect fill="#2a2a31" x="16.539" y="425.626" width="479.767" height="50.502" transform="matrix(1,0,0,1,0,0)" />
+                        <path
+                                class="plane-take-off"
+                                d=" M 510.7 189.151 C 505.271 168.95 484.565 156.956 464.365 162.385 L 330.156 198.367 L 155.924 35.878 L 107.19 49.008 L 211.729 230.183 L 86.232 263.767 L 36.614 224.754 L 0 234.603 L 45.957 314.27 L 65.274 347.727 L 105.802 336.869 L 240.011 300.886 L 349.726 271.469 L 483.935 235.486 C 504.134 230.057 516.129 209.352 510.7 189.151 Z "
+                        />
+                    </svg>
+                    English-Learning
+                </a>
+            </div>
+            <div >
+                <button id="nav-toggle" class="btn btn-danger">
+                    <a style="color: white; outline: none;  text-decoration:none; text-underline-style: none " href="#sign">Free Trial Lesson</a>
+                </button>
+            </div>
+
+        </div>
+        <hr class="border-b border-gray-100 opacity-25 my-0 py-0" />
     </nav>
 
-</div>
+</div>-->
 
 <script type="text/javascript" src="src/script.js"></script>
 <script src="https://code.jquery.com/jquery-3.2.1.js"></script>

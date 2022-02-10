@@ -266,7 +266,8 @@ import {ViewProfilEtudiantComponent} from './view/prof/synthese-session/view-pro
 import {SalarylistComponent} from './view/admin/salarylist/salarylist.component';
 import {ScheduleProfComponent} from './view/admin/professeur/schedule-prof/schedule-prof.component';
 import {RouterModule} from '@angular/router';
-import {AppRoutingModule} from './app-routing.module';
+import {AppRoutingModule} from "./app-routing.module";
+
 
 
 @NgModule({

@@ -251,7 +251,8 @@
 <!------------------------ edit inscription Dialog -------------------------------------------------->
 
 
-<p-dialog header="Admin information" [(visible)]="editInscDialog" [style]="{width: '70vw'}">
+<p-dialog header="Registration Details" [(visible)]="editInscDialog" [style]="{width: '70vw'}">
+
 
     <div class="p-grid">
 
@@ -305,6 +306,13 @@
                  <label>Group option</label>
             </span>
         </div>
+        <div class="p-col-4">
+            <span class="p-float-label">
+                 <p-dropdown (click)="findTypeOfPack(inscription)" [options]="packStudents" [(ngModel)]="inscription.packStudent" optionLabel="libelle"></p-dropdown>
+                <label>Pack option</label>
+            </span>
+
+        </div>
 
 
 
@@ -328,6 +336,27 @@
                       inputId="start"></p-calendar> <label> Finish date</label>
             </span>
         </div>
+
+
+        <div class="p-col-12 p-md-6 p-lg-4">
+            <p-dropdown [options]="statutSocials" placeholder="social status" [(ngModel)]="inscription.statutSocial"
+                        optionLabel="libelle" [itemSize]="3"></p-dropdown>
+        </div>
+        <div class="p-col-12 p-md-6 p-lg-4">
+            <p-dropdown [options]="fonctions" placeholder="List of areas of work" [(ngModel)]="inscription.fonction"
+                        optionLabel="libelle" [itemSize]="3"></p-dropdown>
+        </div>
+
+        <div class="p-col-12 p-md-6 p-lg-4">
+            <p-dropdown [options]="niveauEtudes" placeholder="Study Level" [(ngModel)]="inscription.niveauEtude"
+                        optionLabel="libelle" [itemSize]="3"></p-dropdown>
+        </div>
+        <div class="p-col-12 p-md-6 p-lg-4">
+            <p-dropdown [options]="interetEtudiants" placeholder="Interest" [(ngModel)]="inscription.interetEtudiant"
+                        optionLabel="libelle" [itemSize]="3"></p-dropdown>
+        </div>
+
+
 
 <!--        <div class="p-col-4">-->
 <!--            <span class="p-float-label">-->
