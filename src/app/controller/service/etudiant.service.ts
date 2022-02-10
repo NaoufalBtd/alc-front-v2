@@ -12,11 +12,13 @@ import {Parcours} from '../model/parcours.model';
 import {LoginService} from './login.service';
 import {GroupeEtude} from '../model/groupe-etude.model';
 import {User} from '../model/user.model';
+import {MessageService} from "primeng/api";
+import {error} from "protractor";
 @Injectable({
     providedIn: 'root'
 })
 export class EtudiantService {
-    constructor(private http: HttpClient, public serviceUser: LoginService) {
+    constructor(private http: HttpClient, public serviceUser: LoginService, private messageService: MessageService) {
     }
     private adminUrl = environment.adminUrl;
 
@@ -41,6 +43,7 @@ export class EtudiantService {
     private _selecteetudiant: Array<Etudiant>;
     public packCode: string;
     private _groupeEtude: GroupeEtude;
+    private etudiant: Etudiant;
 
 
     get groupeEtude(): GroupeEtude {
@@ -93,6 +96,12 @@ export class EtudiantService {
 
     public findAll(): Observable<Array<Etudiant>> {
         return this.http.get<Array<Etudiant>>(this.adminUrl + 'etudiant/');
+    }
+
+    public updateInscriptionByStudent(code: string): Observable<number>{
+        this.selected.id = this.serviceUser.getConnectedStudent().id;
+        console.log(this.selected.id);
+        return this.http.post<number>(this.etudiantUrl + 'inscription/update/pack/' + code, this.selected);
     }
 
     public deleteMultipleByNom(): Observable<number> {

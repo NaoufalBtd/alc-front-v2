@@ -85,4 +85,98 @@
 
 </div>
 
+<div class="p-grid p-shadow-5">
 
+
+    <div class="p-col-6">
+        <h3 *ngIf="this.inscription.packStudent != null">Registration Details</h3>
+        <h3 *ngIf="this.inscription.packStudent == null">Complete my registration!</h3>
+    </div>
+
+    <div class="p-col-12">
+        <div class="p-grid">
+            <div class="p-col-4">
+            <span>
+                <p-dropdown (onClick)="getgroupechosen(inscription.groupeEtude.id)" [disabled]="this.inscription.packStudent != null" (click)="findAllGroupeEtude() ; " [options]="groupeEtudeList" placeholder="Select Option"
+                                            [(ngModel)]="etudiant.groupeEtude"
+                                            optionLabel="libelle" ></p-dropdown>
+            </span>
+            </div>
+
+            <div class="p-col-4">
+            <span>
+                <p-dropdown [disabled]="this.inscription.packStudent != null" (click)="findAllParcoursList() ; " [options]="parcoursList" placeholder="Select Option"
+                            [(ngModel)]="etudiant.parcours"
+                            optionLabel="libelle" ></p-dropdown>
+            </span>
+            </div>
+
+            <div class="p-col-4">
+            <span>
+                <select [disabled]="this.inscription.packStudent != null" required name="role" id="" [(ngModel)]="etudiant.teacherLocality" >
+                    <option selected value=" ">Teacher</option>
+                    <option value="native">Native</option>
+                    <option value="non-native">Non-native</option>
+                </select>
+            </span>
+            </div>
+
+
+
+            <div class="p-col-4" >
+                <p-button  (click)="showdialogPacks()" type="button" >Select your Pack : </p-button>
+            </div>
+            <div class="p-col-4">
+                <p-button *ngIf="packChossen!=null"  style="margin-left: 40px" class="p-button-danger" > {{packChossen.nombreCours}}h : {{packChossen.prix}}$</p-button>
+            </div>
+
+            <div class="p-col-4">
+                <button *ngIf="this.inscription.packStudent == null" pButton pRipple type="button" icon="pi pi-save" label="save changes"
+                        (click)="updateInscriptionByStudent()"
+                        class="p-button-raised-primary"></button>
+                <h5 *ngIf="this.inscription.packStudent != null"> you can Add new Registration once this one is Completed </h5>
+            </div>
+
+
+        </div>
+    </div>
+
+</div>
+
+
+<p-dialog header="packs and prices" [(visible)]="this.showdialog">
+    <div class="row" *ngIf="this.etudiantService.groupeEtude.nombreEtudiant == 1">
+        <div class="card-1" *ngFor="let p of this.packStudentService.packstudentIndividialList">
+            <div class="card-header-1">
+                <h1>{{p.libelle}}</h1>
+            </div>
+            <div class="card-body-1">
+                <p>
+                    <strong>{{p.totalStudents}} Students</strong><br>
+                    have bought this pack
+                </p>
+                <a class="btn-1" (click)="selectedPack(p)">{{p.nombreCours}}h  | {{p.prix}}$</a>
+            </div>
+        </div>
+    </div>
+    <div class="row" *ngIf="this.etudiantService.groupeEtude.nombreEtudiant > 1">
+        <div class="card-1" *ngFor="let p of this.packStudentService.packstudentgroupeList">
+            <div class="card-header-1">
+                <h1>{{p.libelle}}</h1>
+            </div>
+            <div class="card-body-1">
+                <p>
+                    <strong>{{p.totalStudents}} Students</strong><br>
+                    have bought this pack
+                </p>
+                <a class="btn-1" (click)="selectedPack(p)">{{p.nombreCours}}h  | {{p.prix}}$</a>
+            </div>
+        </div>
+    </div>
+
+</p-dialog>
+<p-dialog header="info" [(visible)]="this.updated">
+
+    <h1 style="color: #0c6439; font-size: 20px;  text-align: center">Registration Updated Successfully</h1>
+
+</p-dialog>

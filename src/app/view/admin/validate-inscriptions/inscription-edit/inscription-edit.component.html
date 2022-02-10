@@ -7,7 +7,7 @@
             <div class="p-col-12 p-md-6 p-lg-4"><label class="label" >{{selected?.etudiant?.nom }} {{ selected?.etudiant?.prenom}}</label></div>
             <div class="p-col-12 p-md-6 p-lg-4"><label class="label">Teacher locality:</label>  {{ selected?.etudiant?.teacherLocality}}</div>
             <div class="p-col-12 p-md-6 p-lg-4"><label  class="label">Group option:</label>  {{ selected?.etudiant?.groupOption}}</div>
-            <div class="p-col-12 p-md-6 p-lg-4"><label  class="label">Pack choosen:</label>  {{ selected.packStudent.libelle}} : {{selected.packStudent.nombreCours}}h | {{selected.packStudent.prix}}$</div>
+            <div *ngIf="selected.packStudent!= null" class="p-col-12 p-md-6 p-lg-4"><label  class="label">Pack choosen:</label>  {{ selected.packStudent.libelle}} : {{selected.packStudent.nombreCours}}h | {{selected.packStudent.prix}}$</div>
         </div>
 
 
@@ -22,6 +22,17 @@
                             optionLabel="nom" [itemSize]="3"></p-dropdown>
 
             </div>
+            <div class="p-col-12 p-md-6 p-lg-4">
+                <p-dropdown (click)="findTypeOfPack()" [options]="allgroupes" placeholder="Select groupe" [(ngModel)]="selected.groupeEtude"
+                            optionLabel="libelle"></p-dropdown>
+
+            </div>
+            <div class="p-col-12 p-md-6 p-lg-4">
+                <p-dropdown [options]="packStudents" placeholder="Select pack" [(ngModel)]="selected.packStudent"
+                            optionLabel="libelle" ></p-dropdown>
+
+            </div>
+
             <div class="p-col-12 p-md-6 p-lg-4">
                 <p-dropdown [options]="etatinscriptionslist" placeholder="Select Option"
                             [(ngModel)]="selected.etatInscription"

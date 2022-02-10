@@ -13,6 +13,8 @@ import {Prof} from '../../../../controller/model/prof.model';
 import {ProfService} from '../../../../controller/service/prof.service';
 import {GroupeEtude} from '../../../../controller/model/groupe-etude.model';
 import {GroupeEtudeService} from '../../../../controller/service/groupe-etude.service';
+import {PackStudent} from "../../../../controller/model/pack-student.model";
+import {PackStudentService} from "../../../../controller/service/pack-student.service";
 
 @Component({
     selector: 'app-inscription-list',
@@ -30,13 +32,15 @@ export class InscriptionListComponent implements OnInit {
     etatInsc: Array<EtatInscription> = new Array<EtatInscription>();
     teachers: Array<Prof> = new Array<Prof>();
     groupEtudes: Array<GroupeEtude> = new Array<GroupeEtude>();
+    packStudents = new Array<PackStudent>();
 
     constructor(private messageService: MessageService,
                 private profService: ProfService,
                 private parcourService: ParcoursService,
                 private groupeEtudeService: GroupeEtudeService,
                 private confirmationService: ConfirmationService,
-                private service: InscriptionService) {
+                private service: InscriptionService,
+                private packStudentService: PackStudentService) {
     }
 
     get valideDialog(): boolean {
@@ -124,6 +128,10 @@ export class InscriptionListComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.packStudentService.findPackIndividualOrgroupe(true);
+        this.packStudentService.findPackIndividualOrgroupe(false);
+        console.log(this.packStudentService.packstudentIndividialList);
+        console.log(this.packStudentService.packstudentgroupeList);
         this.initCol();
         this.findAll();
         this.parcourService.FindAllParcours().subscribe(
@@ -149,6 +157,8 @@ export class InscriptionListComponent implements OnInit {
                 this.groupEtudes = data;
             }
         );
+
+
     }
 
     findAll() {
@@ -219,6 +229,7 @@ export class InscriptionListComponent implements OnInit {
     }
 
     public edit(inscriptions: Inscription) {
+        this.findTypeOfPack(inscriptions);
         this.selected = {...inscriptions};
         this.editDialog = true;
     }
@@ -269,6 +280,15 @@ export class InscriptionListComponent implements OnInit {
     showEditDialog(inscription: Inscription) {
         this.editInscDialog = true;
         this.inscription = inscription;
+        this.findTypeOfPack(this.inscription);
         console.log(inscription);
+    }
+    public findTypeOfPack(inscription: Inscription){
+        if (inscription.groupeEtude.nombreEtudiant > 1){
+            this.packStudents = this.packStudentService.packstudentgroupeList;
+        }else {
+            this.packStudents = this.packStudentService.packstudentIndividialList;
+        }
+        console.log(this.packStudents);
     }
 }

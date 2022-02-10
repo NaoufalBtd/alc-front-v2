@@ -6,6 +6,17 @@ import {MenuService} from '../../shared/slide-bar/app.menu.service';
 import {AuthenticationService} from '../../../controller/service/authentication.service';
 import {UserService} from '../../../controller/service/user.service';
 import {HttpErrorResponse, HttpEvent, HttpEventType} from '@angular/common/http';
+import {GroupeEtude} from "../../../controller/model/groupe-etude.model";
+import {EtudiantService} from "../../../controller/service/etudiant.service";
+import {Parcours} from "../../../controller/model/parcours.model";
+import {ParcoursService} from "../../../controller/service/parcours.service";
+import {InscriptionService} from "../../../controller/service/inscription.service";
+import {Etudiant} from "../../../controller/model/etudiant.model";
+import {PackStudent} from "../../../controller/model/pack-student.model";
+import {PackStudentService} from "../../../controller/service/pack-student.service";
+import {MessageService} from "primeng/api";
+import {Inscription} from "../../../controller/model/inscription.model";
+import {GroupeEtudeService} from "../../../controller/service/groupe-etude.service";
 
 @Component({
   selector: 'app-etudiant-profile',
@@ -21,19 +32,66 @@ export class EtudiantProfileComponent implements OnInit {
   public profileImage: File;
   public fileStatus = new FileUploadStatus();
   private subscriptions: Subscription[] = [];
+  showdialog = false;
+  packChossen: PackStudent = new PackStudent();
+  inscription: Inscription = new Inscription();
+    updated = false;
+
+
 
 
   constructor(private menuService: MenuService,
               private authenticationService: AuthenticationService,
-              private userService: UserService) {
+              private userService: UserService, public etudiantService: EtudiantService, private service: InscriptionService,
+              public packStudentService: PackStudentService, private messageService: MessageService,
+              public groupeEtudeService: GroupeEtudeService) {
   }
 
 
   ngOnInit(): void {
     this.user = this.authenticationService.getUserFromLocalCache();
+    this.etudiantService.findAllParcours().subscribe(
+        data => {
+          this.parcoursList = data ;
+        }
+    );
+    this.service.findByEtudiantId(this.user.id).subscribe(
+        data => {
+          this.inscription = data;
+          this.packChossen = this.inscription.packStudent;
+        }
+    );
+    this.groupeEtudeService.findAll().subscribe(
+        data => {
+          this.groupeEtudeList = data ;
+        }
+    );
+    this.packStudentService.findPackIndividualOrgroupe(true);
+    this.packStudentService.findPackIndividualOrgroupe(false);
   }
 
+  get groupeEtudeList(): Array<GroupeEtude> {
+    return this.etudiantService.groupeEtudeList;
+  }
 
+  set groupeEtudeList(value: Array<GroupeEtude>) {
+    this.etudiantService.groupeEtudeList = value;
+  }
+
+  get parcoursList(): Array<Parcours> {
+    return this.service.parcoursList;
+  }
+
+  set parcoursList(value: Array<Parcours>) {
+    this.service.parcoursList = value;
+  }
+  get etudiant(): Etudiant {
+    return this.etudiantService.selected;
+  }
+
+  set etudiant(etudiant1){
+    this.etudiantService.selected = etudiant1;
+  }
 
   public onProfileImageChange(event: any): void {
     const target = event.target as HTMLInputElement;
@@ -105,4 +163,61 @@ export class EtudiantProfileComponent implements OnInit {
     document.getElementById(buttonId).click();
   }
 
+  public findAllGroupeEtude() {
+    this.etudiantService.findAllGroupeEtude().subscribe(data => this.groupeEtudeList = data);
+  }
+
+  public findAllParcoursList() {
+    this.etudiantService.findAllParcoursList().subscribe(data => {
+          this.parcoursList = data;
+          console.log(this.parcoursList);
+        }
+    );
+
+  }
+
+  showdialogPacks(){
+    this.getgroupechosen(this.etudiant.groupeEtude.id);
+    this.showdialog = true;
+    if (this.etudiantService.groupeEtude.nombreEtudiant > 1){
+      this.packStudentService.findPackIndividualOrgroupe(true);
+      console.log(this.packStudentService.packstudentgroupeList);
+
+    }else {
+      this.packStudentService.findPackIndividualOrgroupe(false);
+      console.log(this.packStudentService.packstudentIndividialList);
+    }
+  }
+  getgroupechosen(id: number) {
+    this.etudiantService.findGroupeById(id);
+  }
+  selectedPack(pack: PackStudent) {
+    this.etudiantService.packCode = pack.code ;
+    this.packChossen = pack;
+    this.showdialog = false;
+    console.log(this.etudiantService.packCode);
+  }
+  updateInscriptionByStudent(){
+    this.etudiantService.updateInscriptionByStudent(this.packChossen.code).subscribe(
+        data => {
+          if (data > 0){
+            this.updated = true;
+          }
+          this.messageService.add({
+              severity: 'success',
+              summary: 'Successful',
+              detail: 'Registration updated Successfully',
+              life: 3000}
+            );
+        }, error => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Update canceled',
+            life: 3000}
+          );
+        }
+        );
+
+  }
 }

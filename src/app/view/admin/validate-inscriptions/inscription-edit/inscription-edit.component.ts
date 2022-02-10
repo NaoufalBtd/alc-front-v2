@@ -5,6 +5,10 @@ import {Inscription} from '../../../../controller/model/inscription.model';
 import {Parcours} from '../../../../controller/model/parcours.model';
 import {EtatInscription} from '../../../../controller/model/etat-inscription.model';
 import {Prof} from '../../../../controller/model/prof.model';
+import {PackStudentService} from "../../../../controller/service/pack-student.service";
+import {PackStudent} from "../../../../controller/model/pack-student.model";
+import {GroupeEtudeService} from "../../../../controller/service/groupe-etude.service";
+import {GroupeEtude} from "../../../../controller/model/groupe-etude.model";
 
 @Component({
     selector: 'app-inscription-edit',
@@ -15,9 +19,13 @@ export class InscriptionEditComponent implements OnInit {
 
     // tslint:disable-next-line:max-line-length
     sel =' ';
+    packStudents = new Array<PackStudent>();
+    allgroupes: Array<GroupeEtude>;
     constructor(private messageService: MessageService,
                 private service: InscriptionService,
-                private confirmationService: ConfirmationService) {
+                private confirmationService: ConfirmationService,
+                public packStudentService: PackStudentService,
+                public groupeEtudeService: GroupeEtudeService) {
     }
     public view(inscription: Inscription) {
         this.selected = {...inscription};
@@ -116,10 +124,17 @@ export class InscriptionEditComponent implements OnInit {
             data => {
                 console.log(data);
                 this.parcoursList = data;
-            },error => {
+            }, error => {
                  console.log(error);
             }
-        )
+        );
+        this.groupeEtudeService.findAll().subscribe(
+            data => {
+                this.allgroupes = data;
+            }
+        );
+        this.packStudentService.findPackIndividualOrgroupe(true);
+        this.packStudentService.findPackIndividualOrgroupe(false);
     }
 
     findAllProf(): void {
@@ -184,6 +199,12 @@ export class InscriptionEditComponent implements OnInit {
     public hideEditDialog() {
         this.editDialog = false;
     }
-
+    public findTypeOfPack(){
+        if (this.selected.groupeEtude.nombreEtudiant > 1){
+            this.packStudents = this.packStudentService.packstudentgroupeList;
+        }else {
+            this.packStudents = this.packStudentService.packstudentIndividialList;
+        }
+    }
 
 }

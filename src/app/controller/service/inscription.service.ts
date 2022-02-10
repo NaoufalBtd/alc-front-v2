@@ -19,6 +19,7 @@ export class InscriptionService {
     constructor(private http: HttpClient) {
     }
     private adminUrl = environment.adminUrl;
+    private etudiantUrl = environment.etudiantUrl;
     private _items: Array<Inscription>;
     private _selected: Inscription;
     private _etatInscription: EtatInscription;
@@ -41,7 +42,7 @@ export class InscriptionService {
 
 
     findByCriteria(student: Etudiant): Observable<Array<Inscription>> {
-        let inscription: Inscription = new Inscription();
+        const inscription: Inscription = new Inscription();
         inscription.etudiant = student;
         console.log(student);
         return this.http.post<Array<Inscription>>(this.adminUrl + 'inscription/search', inscription);
@@ -304,6 +305,9 @@ export class InscriptionService {
 
     findByEtatInscription(pending: string): Observable<Array<Inscription>> {
         return this.http.get<Array<Inscription>>(this.adminUrl + 'inscription/etat/libelle/' + pending);
+    }
+    public findByEtudiantId(id: number): Observable<Inscription>{
+        return this.http.get<Inscription>(this.etudiantUrl + 'inscription/id/' + id );
     }
 }
 

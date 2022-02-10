@@ -251,7 +251,7 @@
 <!------------------------ edit inscription Dialog -------------------------------------------------->
 
 
-<p-dialog header="Admin information" [(visible)]="editInscDialog" [style]="{width: '70vw'}">
+<p-dialog header="Registration Details" [(visible)]="editInscDialog" [style]="{width: '70vw'}">
 
     <div class="p-grid">
 
@@ -304,6 +304,13 @@
                  <p-dropdown [options]="groupEtudes" [(ngModel)]="inscription.groupeEtude" optionLabel="libelle"></p-dropdown>
                  <label>Group option</label>
             </span>
+        </div>
+        <div class="p-col-4">
+            <span class="p-float-label">
+                 <p-dropdown (click)="findTypeOfPack(inscription)" [options]="packStudents" [(ngModel)]="inscription.packStudent" optionLabel="libelle"></p-dropdown>
+                <label>Pack option</label>
+            </span>
+
         </div>
 
 
