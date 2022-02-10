@@ -7,23 +7,25 @@
             <div class="p-col-12 p-md-6 p-lg-4"><label class="label" >{{selected?.etudiant?.nom }} {{ selected?.etudiant?.prenom}}</label></div>
             <div class="p-col-12 p-md-6 p-lg-4"><label class="label">Teacher locality:</label>  {{ selected?.etudiant?.teacherLocality}}</div>
             <div class="p-col-12 p-md-6 p-lg-4"><label  class="label">Group option:</label>  {{ selected?.etudiant?.groupOption}}</div>
-            <div class="p-col-12 p-md-6 p-lg-4"><label  class="label">Pack choosen:</label>  {{ selected.packStudent.libelle}} : {{selected.packStudent.nombreCours}}h | {{selected.packStudent.prix}}$</div>
+            <div *ngIf="selected.packStudent!= null" class="p-col-12 p-md-6 p-lg-4"><label  class="label">Pack choosen:</label>  {{ selected.packStudent.libelle}} : {{selected.packStudent.nombreCours}}h | {{selected.packStudent.prix}}$</div>
         </div>
-
 
         <div class="p-grid">
             <div class="p-col-12 p-md-6 p-lg-4">
-                <p-dropdown [options]="parcoursList" placeholder="Select  course" [(ngModel)]="selected.parcours"
+                <label for="dateformat1">Course</label>
+                <p-dropdown [options]="parcoursList" editable="true"[(ngModel)]="selected.parcours"
                             optionLabel="libelle" [itemSize]="3"></p-dropdown>
-
             </div>
+
             <div class="p-col-12 p-md-6 p-lg-4">
-                <p-dropdown [options]="profList" placeholder="Select teacher" [(ngModel)]="selected.prof"
+                <label for="dateformat1">Teacher</label>
+                <p-dropdown [options]="profList" editable="true" [(ngModel)]="selected.prof"
                             optionLabel="nom" [itemSize]="3"></p-dropdown>
 
             </div>
             <div class="p-col-12 p-md-6 p-lg-4">
-                <p-dropdown [options]="etatinscriptionslist" placeholder="Select Option"
+                <label for="dateformat1">Study level</label>
+                <p-dropdown editable="true" [options]="etatinscriptionslist"
                             [(ngModel)]="selected.etatInscription"
                             optionLabel="libelle" [itemSize]="5"></p-dropdown>
             </div>
@@ -39,7 +41,30 @@
                 <p-calendar [(ngModel)]="selected.datefininscription" dateFormat="mm-dd-yy" [showIcon]="true"
                             id="dateformat1"></p-calendar>
             </div>
+
+                <div class="p-col-12 p-md-6 p-lg-4">
+                    <label for="dateformat1">Social status</label>
+                    <p-dropdown [options]="statutSocials" editable="true" [(ngModel)]="selected.statutSocial"
+                                optionLabel="libelle" [itemSize]="3"></p-dropdown>
+                </div>
+            <div class="p-col-12 p-md-6 p-lg-4">
+                <label for="dateformat1">Niveau d'etude</label>
+                <p-dropdown [options]="niveauEtudes" editable="true" [(ngModel)]="selected.niveauEtude"
+                            optionLabel="libelle" [itemSize]="3"></p-dropdown>
+            </div>
+            <div class="p-col-12 p-md-6 p-lg-4">
+                <label for="dateformat1">Areas of work</label>
+                <p-dropdown [options]="fonctions"  editable="true" [(ngModel)]="selected.fonction"
+                            optionLabel="libelle" [itemSize]="3"></p-dropdown>
+            </div>
+            <div class="p-col-12 p-md-6 p-lg-4">
+                <label for="dateformat1">Interest</label>
+                <p-dropdown [options]="interetEtudiants" editable="true" [(ngModel)]="selected.interetEtudiant"
+                            optionLabel="libelle" [itemSize]="3"></p-dropdown>
+            </div>
+
         </div>
+
     </ng-template>
 
     <ng-template pTemplate="footer">

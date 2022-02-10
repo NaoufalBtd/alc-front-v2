@@ -189,9 +189,14 @@
                                     <th pSortableColumn="mail">E-mail
                                         <p-sortIcon field="mail"></p-sortIcon>
                                     </th>
+
                                     <th>Validate Registration</th>
+                                    <th pSortableColumn="mail">Action
+                                        <p-sortIcon field="mail"></p-sortIcon>
+                                    </th>
                                     <th>View Details</th>
                                     <th>Delete Registration</th>
+
 
                                 </tr>
                             </ng-template>
@@ -251,7 +256,7 @@
 <!------------------------ edit inscription Dialog -------------------------------------------------->
 
 
-<p-dialog header="Admin information" [(visible)]="editInscDialog" [style]="{width: '70vw'}">
+<p-dialog header="Inscription information" [(visible)]="editInscDialog" [style]="{width: '70vw'}">
 
     <div class="p-grid">
 
@@ -274,6 +279,7 @@
                  <label>Level</label>
             </span>
         </div>
+
 
 <!--        <div class="p-col-4">-->
 <!--            <span class="p-float-label">-->
@@ -300,15 +306,12 @@
 
 
         <div class="p-col-4">
+
             <span class="p-float-label">
                  <p-dropdown [options]="groupEtudes" [(ngModel)]="inscription.groupeEtude" optionLabel="libelle"></p-dropdown>
                  <label>Group option</label>
             </span>
         </div>
-
-
-
-
         <div class="p-col-4">
             <span class="p-float-label">
           <p-calendar id="start" [(ngModel)]="inscription.datedebutinscription" [showTime]="true" name="StartTime"
@@ -328,6 +331,27 @@
                       inputId="start"></p-calendar> <label> Finish date</label>
             </span>
         </div>
+
+
+        <div class="p-col-12 p-md-6 p-lg-4">
+            <p-dropdown [options]="statutSocials" placeholder="social status" [(ngModel)]="inscription.statutSocial"
+                        optionLabel="libelle" [itemSize]="3"></p-dropdown>
+        </div>
+        <div class="p-col-12 p-md-6 p-lg-4">
+            <p-dropdown [options]="fonctions" placeholder="List of areas of work" [(ngModel)]="inscription.fonction"
+                        optionLabel="libelle" [itemSize]="3"></p-dropdown>
+        </div>
+
+        <div class="p-col-12 p-md-6 p-lg-4">
+            <p-dropdown [options]="niveauEtudes" placeholder="Study Level" [(ngModel)]="inscription.niveauEtude"
+                        optionLabel="libelle" [itemSize]="3"></p-dropdown>
+        </div>
+        <div class="p-col-12 p-md-6 p-lg-4">
+            <p-dropdown [options]="interetEtudiants" placeholder="Interest" [(ngModel)]="inscription.interetEtudiant"
+                        optionLabel="libelle" [itemSize]="3"></p-dropdown>
+        </div>
+
+
 
 <!--        <div class="p-col-4">-->
 <!--            <span class="p-float-label">-->
