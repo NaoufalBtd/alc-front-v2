@@ -7,6 +7,7 @@ import {QuizEtudiantService} from '../../../../controller/service/quiz-etudiant.
 import {Quiz} from '../../../../controller/model/quiz.model';
 import {LearnService} from '../../../../controller/service/learn.service';
 import {Parcours} from '../../../../controller/model/parcours.model';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-cours-list',
@@ -16,10 +17,12 @@ import {Parcours} from '../../../../controller/model/parcours.model';
 })
 export class CoursListComponent implements OnInit {
     cols: any[];
-    couchedTd = null;
+    couchedTd: any;
+
     // tslint:disable-next-line:max-line-length
     constructor(private quizService: QuizEtudiantService,
                 private learnService: LearnService,
+                private router: Router,
                 private messageService: MessageService,
                 private confirmationService: ConfirmationService,
                 private service: ParcoursService) {
@@ -117,11 +120,14 @@ export class CoursListComponent implements OnInit {
     }
 
     public FindSection(cour: Cours) {
+        console.log(this.couchedTd);
         this.courseCurrent = cour;
-        if (this.couchedTd === null){
+        if (this.couchedTd === undefined) {
             document.getElementById(cour.libelle).className = 'couchedTd';
         } else {
-            document.getElementById(this.couchedTd).className = ' ';
+            if (document.getElementById(this.couchedTd) !== null) {
+                document.getElementById(this.couchedTd).className = ' ';
+            }
             document.getElementById(cour.libelle).className = 'couchedTd';
         }
         this.couchedTd = cour.libelle;
@@ -220,5 +226,10 @@ export class CoursListComponent implements OnInit {
             {field: 'numeroOrder', header: 'NumeroOrder'},
             {field: 'parcours', header: 'Parcours'}
         ];
+    }
+
+    showme(cours: Cours) {
+        this.learnService.courseSelected = cours;
+        this.router.navigate(['admin/homeWork']);
     }
 }

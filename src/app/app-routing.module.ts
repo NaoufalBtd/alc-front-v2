@@ -152,6 +152,7 @@ import {PackStudentComponent} from './view/admin/pack-student/pack-student.compo
                     {path: 'quiz-view', component: QuizEtudiantViewComponent},
                     {path: 'quiz-take', component: QuizTakeComponent},
                     {path: 'etudiant-simulate-sections/quiz-review', component: QuizEtudiantViewComponent},
+                    {path: 'etudiant-simulate-sections/homeWork', component: HomeWorkEtudiantComponent},
                     {path: 'homeWorkEtudiant', component: HomeWorkEtudiantComponent},
                     {path: 'homeWorkEtudiantResult', component: HomeWorkResultComponent},
                     {path: 'profile', component: EtudiantProfileComponent}

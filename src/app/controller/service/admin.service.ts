@@ -81,4 +81,11 @@ export class AdminService {
         );
     }
 
+    signInWithGoogle() {
+        this.http.get(this.url + 'googlesignin').subscribe(
+            data => {
+                console.log(data);
+            }
+        );
+    }
 }

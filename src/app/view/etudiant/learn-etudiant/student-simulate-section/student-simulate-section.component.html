@@ -2,7 +2,31 @@
     <div class="p-grid" style="margin-top: 5rem; padding:10px">
         <div class="p-col-12 toopBar">
             <div class="p-grid">
-                <div class="p-col-8"></div>
+                <div class="p-col-8">
+                    <button *ngIf="!showLesson" pButton pRipple type="button" icon="pi pi-briefcase" label="LESSON"
+                            (click)="showLesson = true"
+                            class=" p-button-secondary  Topbutton p-button-outlined">
+                    </button>
+
+                    <button *ngIf="showLesson" pButton pRipple type="button" icon="pi pi-briefcase" label="LESSON"
+                            class=" clickedButton p-button-outlined  Topbutton">
+                    </button>
+
+
+                    <button *ngIf="showLesson" pButton pRipple type="button" icon="pi pi-book" label="HOMEWORK"
+                            (click)="showLesson = false"
+                            class=" p-button-secondary Topbutton p-button-outlined">
+                    </button>
+
+                    <button *ngIf="!showLesson" pButton pRipple type="button" icon="pi pi-book" label="HOMEWORK"
+                            class=" clickedButton Topbutton  p-button-outlined ">
+                    </button>
+
+
+                </div>
+
+
+
                 <div class="p-col-3">
                     <p-overlayPanel #op [style]="{width: '400px'}"
                                     [showTransitionOptions]="'0ms'" [hideTransitionOptions]="'0ms'" [dismissable]="true"
@@ -47,18 +71,18 @@
 
                     </button>
                 </div>
+
+
                 <div class="p-col-1">
                     <button pButton pRipple type="button" icon="pi pi-fw pi-power-off" label="Quit"
                             (click)="closeSession()" routerLink="/"
                             class="p-button-rounded p-button-secondary  p-button-outlined">
+
                     </button>
                 </div>
             </div>
-
         </div>
-
-
-        <div class="p-col-12 middleBar">
+        <div *ngIf="showLesson" class="p-col-12 middleBar">
             <div class="p-grid">
                 <p-toast></p-toast>
                 <div class="p-col-9">
@@ -113,6 +137,8 @@
                                             label="Previous" pButton pRipple
                                             style="margin-left: 15px; width: 120px; background-color: orange"
                                             type="button"></button>
+
+
                                     <button (click)="NextSection()"
                                             [style.visibility]="(this.selectedsection.numeroOrder < this.sectionStandard.length)? 'visible':'hidden'"
                                             class="p-button-rounded" icon="pi pi-caret-right" id="next" label="Next"
@@ -136,192 +162,124 @@
                                 </div>
                             </div>
                         </p-tabPanel>
-                        <button (click)="NextSection()"
-                                [style.visibility]="(this.selectedsection.numeroOrder < this.sectionStandard.length)? 'visible':'hidden'"
-                                class="p-button-rounded" icon="pi pi-caret-right" id="next" label="Next"
-                                pButton pRipple
-                                style=" width: 120px; background-color: orange; position: absolute;right: 15px;"
-                                type="button"></button>
-                        <button *ngIf="!this.coursecomplited"
-                                (click)="finish()"
-                                [style.visibility]="(this.selectedsection.numeroOrder < this.itemssection2.length)? 'hidden':'visible'"
-                                class="p-button-rounded" icon="pi pi-check" label="Finish" pButton pRipple
-                                style=" width: 130px; background-color: orange; position: absolute;right: 15px;"
-                                type="button"></button>
-                        <button *ngIf="this.coursecomplited"
-                                routerLink="/"
-                                [style.visibility]="(this.selectedsection.numeroOrder < this.itemssection2.length)? 'hidden':'visible'"
-                                class="p-button-rounded" icon="pi pi-check" label="Back to All Course" pButton
-                                pRipple
-                                style=" width: 160px; background-color: orange; position: absolute;right: 15px;"
-                                type="button"></button>
+
+                        <p-tabPanel header="QUIZ">
+                            <div *ngIf="this.selectedQuiz.section.id == this.selectedsection.id" class="p-col quiz">
+                                <app-quiz-take *ngIf="showTakeQuiz"></app-quiz-take>
+                                <app-quiz-etudiant-view *ngIf="showViewQuiz"></app-quiz-etudiant-view>
+                            </div>
+                        </p-tabPanel>
+
                     </p-tabView>
+                </div>
 
-          </div>
+
+                <div class="p-col-3 product-grid-item">
+                    <div class="product-grid-item-content" style="margin-top: 0">
+                        <div style="margin-top: 0px">
+                            <div id="dictionnair" class="p-inputgroup"
+                                 style="width: 0%; height: 0px; visibility: hidden; margin-bottom: 10px">
+                                <h5 style="margin-left: 5px; font-size: 25px; text-align: center"><b
+                                        style="font-size: 20px; color: orange;">+</b>
+                                    <u style="color: #8b8b90; margin-left: 10px">{{this.selectedDict.word}}</u>
+                                    :  {{this.selectedDict.definition}}
+                                </h5>
+                            </div>
+                            <div class="p-inputgroup" style="width: 100%; align-content: center">
+                                <p-autoComplete (completeMethod)="filterDict($event)" [(ngModel)]="word"
+                                                [minLength]="1" [suggestions]="filteredDict"
+                                                field="word"></p-autoComplete>
+                                <button (click)="findByWord()" style="background-color: orange" icon="pi pi-search"
+                                        pButton
+                                        pRipple type="button"></button>
+                                <button (click)="openCreateDict()" icon="pi pi-plus" pButton pRipple
+                                        style="background-color: #8b8b90"
+                                        type="button"></button>
+                            </div>
+                            <!-- <input  [(ngModel)]="word" pInputText placeholder="Search" style="width: 180px;" type="text"/>
+                             <button pButton pRipple type="button" icon="pi pi-search"  (click)="findByWord()" style="margin-left: 2px;" ></button>
+
+                             <p-button (click)="openCreateDict()" icon="pi pi-plus" style="margin-left: 2px;" ></p-button>
+                      -->
+                        </div>
+                        <div class="card" style="margin-top: 15px">
+                            <p-tabMenu [activeItem]="menu[0]" [model]="menu"
+                                       style="width: 100%;background-color: orange"></p-tabMenu>
+                            <div id="categoriess" style="width: 100%;margin-top: 15px">
+                                <div style="background-color: orange"><h6 style="color: black ">Obligatory</h6></div>
+                                <p-table [value]="sectionStandard" id="categ"
+                                         style="margin-top: 20px; margin-right: 30px;">
+
+                                    <ng-template let-section pTemplate="body">
+
+                                        <tr class="timeline">
+
+                                            <li>
+                                                <td (click)="Section(section.categorieSection.libelle)"
+                                                    [style.color]="(section.categorieSection.libelle) == (this.selectedsection.categorieSection.libelle)? 'orange' :'black' "
+                                                    style="cursor: pointer; font-weight: 600;margin-left: 5px; font-size: 15px">
+                                                    <u>{{section.categorieSection.libelle}}</u></td>
+                                            </li>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                                <div style="background-color: orange"><h6 style="color: black ">Additional</h6></div>
+                                <p-table [value]="sectionAdditional" id="cate"
+                                         style="margin-top: 20px; margin-right: 30px;">
+
+                                    <ng-template let-section pTemplate="body">
+
+                                        <tr class="timeline">
+
+                                            <li>
+                                                <td (click)="Section(section.categorieSection.libelle)"
+                                                    [style.color]="(section.categorieSection.libelle) == (this.selectedsection.categorieSection.libelle)? 'orange' :'black' "
+                                                    style="cursor: pointer; font-weight: 600;margin-left: 5px; font-size: 15px">
+                                                    <u>{{section.categorieSection.libelle}}</u></td>
+                                            </li>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                            </div>
+                            <div [style.visibility]="'hidden'" id="word"
+                                 style="margin-top: 5px; width: 0px; height: 0px">
+
+                                <p-table [paginator]="true" [rowHover]="true" [rows]="5" [value]="itemsDict"
+                                         dataKey="id"
+                                         id="wrd" style="margin-top: 20px; width: 0px">
+
+                                    <ng-template let-dict pTemplate="body">
+                                        <tr>
+
+                                            <td (click)="dictEdit(dict)"
+                                                style="font-weight: 800; text-align: center; cursor: pointer"><b
+                                                    style="font-size: 20px; color: black;">{{dict.word}}</b> : <b
+                                                    style="font-size: 20px; color: orange;">{{dict.definition}}</b></td>
+                                        </tr>
+                                    </ng-template>
+
+                                </p-table>
+                            </div>
+
+
+                            <app-chat1 [style.visibility]="'hidden'" id="chat"></app-chat1>
+
+
+                        </div>
+
+                    </div>
+                </div>
             </div>
-
-    <p-tabPanel header="QUIZ">
-        <div *ngIf="this.selectedQuiz.section.id == this.selectedsection.id" class="p-col quiz">
-            <app-quiz-take *ngIf="showTakeQuiz"></app-quiz-take>
-            <app-quiz-etudiant-view *ngIf="showViewQuiz"></app-quiz-etudiant-view>
         </div>
-    </p-tabPanel>
-
-</div>
-
-
-<div class="p-col-3 product-grid-item">
-    <div class="product-grid-item-content" style="margin-top: 0">
-        <div style="margin-top: 0px">
-            <div id="dictionnair" class="p-inputgroup"
-                 style="width: 0%; height: 0px; visibility: hidden; margin-bottom: 10px">
-                <h5 style="margin-left: 5px; font-size: 25px; text-align: center"><b
-                        style="font-size: 20px; color: orange;">+</b>
-                    <u style="color: #8b8b90; margin-left: 10px">{{this.selectedDict.word}}</u>
-                    :  {{this.selectedDict.definition}}
-                </h5>
-            </div>
-            <div class="p-inputgroup" style="width: 100%; align-content: center">
-                <p-autoComplete (completeMethod)="filterDict($event)" [(ngModel)]="word"
-                                [minLength]="1" [suggestions]="filteredDict"
-                                field="word"></p-autoComplete>
-                <button (click)="findByWord()" style="background-color: orange" icon="pi pi-search"
-                        pButton
-                        pRipple type="button"></button>
-                <button (click)="openCreateDict()" icon="pi pi-plus" pButton pRipple
-                        style="background-color: #8b8b90"
-                        type="button"></button>
-            </div>
-            <!-- <input  [(ngModel)]="word" pInputText placeholder="Search" style="width: 180px;" type="text"/>
-             <button pButton pRipple type="button" icon="pi pi-search"  (click)="findByWord()" style="margin-left: 2px;" ></button>
-
-             <p-button (click)="openCreateDict()" icon="pi pi-plus" style="margin-left: 2px;" ></p-button>
-      -->
+        <div *ngIf="!showLesson" class="p-col-12">
+            <app-home-work-etudiant></app-home-work-etudiant>
         </div>
-        <div class="card" style="margin-top: 15px">
-            <p-tabMenu [activeItem]="menu[0]" [model]="menu"
-                       style="width: 100%;background-color: orange"></p-tabMenu>
-            <div id="categoriess" style="width: 100%;margin-top: 15px">
-                <div style="background-color: orange"><h6 style="color: black ">Obligatory</h6></div>
-                <p-table [value]="sectionStandard" id="categ"
-                         style="margin-top: 20px; margin-right: 30px;">
 
-                    <ng-template let-section pTemplate="body">
-
-                        <tr class="timeline">
-
-                            <li>
-                                <td (click)="Section(section.categorieSection.libelle)"
-                                    [style.color]="(section.categorieSection.libelle) == (this.selectedsection.categorieSection.libelle)? 'orange' :'black' "
-                                    style="cursor: pointer; font-weight: 600;margin-left: 5px; font-size: 15px">
-                                    <u>{{section.categorieSection.libelle}}</u></td>
-                            </li>
-                        </tr>
-                    </ng-template>
-                </p-table>
-                <div style="background-color: orange"><h6 style="color: black ">Additional</h6></div>
-                <p-table [value]="sectionAdditional" id="cate"
-                         style="margin-top: 20px; margin-right: 30px;">
-
-                    <ng-template let-section pTemplate="body">
-
-                        <tr class="timeline">
-
-                            <li>
-                                <td (click)="Section(section.categorieSection.libelle)"
-                                    [style.color]="(section.categorieSection.libelle) == (this.selectedsection.categorieSection.libelle)? 'orange' :'black' "
-                                    style="cursor: pointer; font-weight: 600;margin-left: 5px; font-size: 15px">
-                                    <u>{{section.categorieSection.libelle}}</u></td>
-                            </li>
-                        </tr>
-                    </ng-template>
-                </p-table>
-            </div>
-            <div [style.visibility]="'hidden'" id="word"
-                 style="margin-top: 5px; width: 0px; height: 0px">
-
-                <p-table [paginator]="true" [rowHover]="true" [rows]="5" [value]="itemsDict"
-                         dataKey="id"
-                         id="wrd" style="margin-top: 20px; width: 0px">
-
-                    <ng-template let-dict pTemplate="body">
-                        <tr>
-
-                            <td (click)="dictEdit(dict)"
-                                style="font-weight: 800; text-align: center; cursor: pointer"><b
-                                    style="font-size: 20px; color: black;">{{dict.word}}</b> : <b
-                                    style="font-size: 20px; color: orange;">{{dict.definition}}</b></td>
-                        </tr>
-                    </ng-template>
-
-                </p-table>
-            </div>
-            <app-chat1 [style.visibility]="'hidden'" id="chat"></app-chat1>
-            <div class="card" [style.visibility]="'hidden'" id="homeWork">
-                <p-table *ngIf="this.homeWorkList.length!==0" [value]="homeWorkList"
-                         style="margin-top: 20px; margin-right: 30px;">
-                    <ng-template let-homeWork pTemplate="body">
-                        <tr class="timeline">
-                            <li>
-                                <td
-                                        (click)="sendhomeWork(homeWork)"
-                                        style="cursor: pointer; font-weight: 600;margin-left: 5px; font-size: 15px">
-                                    <u>{{homeWork.section.libelle}}</u></td>
-                            </li>
-                        </tr>
-                    </ng-template>
-                </p-table>
-                <b *ngIf="this.homeWorkList.length == 0">No HomeWork found </b>
-            </div>
-            <div id="connectedStudent" [style.visibility]="'hidden'">
-                <p-table [value]="this.webSocketService.connectedUsers" responsiveLayout="scroll">
-                    <ng-template pTemplate="header">
-                        <tr>
-                            <th>Connected Student</th>
-
-                        </tr>
-                    </ng-template>
-                    <ng-template pTemplate="body" let-student>
-                        <tr>
-                            <td>{{student.nom }} {{ student.prenom}}</td>
-
-                        </tr>
-                    </ng-template>
-                </p-table>
-            </div>
-
-        </div>
-        <!-- <div class="card" style="margin-top: 15px">
-             <p-tabMenu [model]="menuchat"  [activeItem]="menuchat[0]" style="width: 100%;" ></p-tabMenu>
-             <app-chat></app-chat>
-
-         </div>
-           <div class="card" style="margin-top: 10px"> <h5 style="margin-top: 20px; margin-bottom: 10px"><u style="color: #0a80bb">Categorie</u></h5>
-     <p-timeline align="alternate"  [value]="itemssection2">
-
-         <ng-template let-section pTemplate="content" style="margin-top: 20px">
-             <tr>
-
-                 <td (click)="Section(section.categorieSection.libelle)"
-                     [style.color]="(section.categorieSection.libelle) == (this.selectedsection.categorieSection.libelle)? 'green' :'black' "
-                     style="cursor: pointer; text-align: center"><u>{{section.categorieSection.libelle}}</u></td>
-             </tr>
-         </ng-template>
-     </p-timeline>
-          </div>-->
     </div>
-</div>
-</div>
 
 
-<!--    <div class="card-footer "  style="position: relative;">-->
-<!--        <button pButton pRipple type="button" id="previous" icon="pi pi-caret-left" style="margin-left: 15px; width: 120px" label="Previous"  class="p-button-rounded" [style.visibility]="(this.selectedsection.numeroOrder != 1)? 'visible':'hidden'"  (click)="PreviousSection()" ></button>-->
-<!--        <button pButton pRipple type="button" style="margin-left: 360px; width: 120px" id="quiz" *ngIf="this.selectedsection.categorieSection.libelle != 'Vocabulary'  " [style.visibility]="(this.selectedQuiz.section.id == this.selectedsection.id )? 'visible':'hidden'"  label="{{this.passerQuiz}}"  class="p-button-rounded" [routerLink]="quizView? ['/pages/quiz-view']: ['/pages/quiz-etudiant']"></button>-->
-<!--        <button pButton pRipple type="button" icon="pi pi-caret-right" label="Next" id="next" style=" width: 120px;  position: absolute;right: 25%;" class="p-button-rounded" [style.visibility]="(this.selectedsection.numeroOrder < this.itemssection2.length)? 'visible':'hidden'"  (click)="NextSection()" ></button>-->
-<!--        <button pButton pRipple type="button" icon="pi pi-caret-right"  label="Vocabulary" style="margin-left: 360px; width: 120px" *ngIf="this.selectedsection.categorieSection.libelle == 'Vocabulary'" class="p-button-rounded" (click)="Vocab(this.selectedsection.id)" ></button>-->
-<!--    </div>-->
-<app-etudiant-review-view></app-etudiant-review-view>
-<app-dictionary-create></app-dictionary-create>
-<app-dictionary-edit></app-dictionary-edit>
-<app-translate></app-translate>
+    <app-etudiant-review-view></app-etudiant-review-view>
+    <app-dictionary-create></app-dictionary-create>
+    <app-dictionary-edit></app-dictionary-edit>
+    <app-translate></app-translate>
 </div>

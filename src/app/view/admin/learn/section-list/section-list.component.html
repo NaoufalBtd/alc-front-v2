@@ -49,6 +49,7 @@
                         <td [style.color]="(section.url+section.content) == 2? 'green' :(section.url+section.content) == 1? 'orange': 'red'">{{section.numeroOrder}}
                             -{{section.libelle}} (c:{{section.content}}; L:{{section.url}})
                         </td>
+                        <td>{{section.id}}</td>
                         <td>{{section.categorieSection.libelle}}</td>
 
                         <td>
@@ -69,11 +70,9 @@
 
 
 
-                            <button (click)="showme(section)" class="p-button-rounded p-button-sm "
-                                    icon="pi pi-book "
-                                    pButton
-                                    pRipple></button>
-                            <button (click)="createVocab(section)" *ngIf="this.section.categorieSection.libelle == 'Vocabulary'" class="p-button-rounded p-button-lg " icon="pi pi-image"
+
+                            <button (click)="createVocab(section)" *ngIf="this.section.categorieSection.libelle == 'Vocabulary'"
+                                    class="p-button-rounded p-button-lg " icon="pi pi-image"
                                     pButton
                                     pRipple style="background-color: #0C8990"></button>
                         </td>

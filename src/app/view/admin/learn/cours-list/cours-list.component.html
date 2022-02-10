@@ -52,14 +52,30 @@
                             L:{{ cours.nombreLinkFinalise}})
                         </td>
                         <td>
-                            <button (click)="editCours(cours)" class="p-button-rounded p-button-success p-mr-2" icon="pi pi-pencil" pButton
+                            <button (click)="editCours(cours)" class="p-button-rounded
+                            p-button-success p-mr-2"
+                                    pTooltip="Edit course" tooltipPosition="top"
+                                    icon="pi pi-pencil" pButton
                                     pRipple></button>
-                            <button (click)="FindSection(cours)" class="p-button-rounded p-button-info p-mr-2" icon="pi pi-list" pButton
+                            <button (click)="FindSection(cours)" class="p-button-rounded p-button-info p-mr-2"
+                                    pTooltip="Details" tooltipPosition="top"
+                                    icon="pi pi-list" pButton
                                     pRipple></button>
-                            <button (click)="AjoutSection(cours)" class="p-button-rounded p-button-icon p-mr-2" icon="pi pi-plus-circle"
+
+                            <button (click)="AjoutSection(cours)" class="p-button-rounded p-button-icon p-mr-2"
+                                    pTooltip="Create Section" tooltipPosition="top"
+                                    icon="pi pi-plus-circle"
                                     pButton
                                     pRipple></button>
-                            <button (click)="delete(cours)" class="p-button-rounded p-button-danger" icon="pi pi-trash" pButton
+                            <button (click)="delete(cours)" class="p-button-rounded p-button-danger"
+                                    icon="pi pi-trash" pButton
+                                    pTooltip="Remove course" tooltipPosition="top"
+                                    pRipple></button>
+
+                            <button (click)="showme(cours)" class="p-button-rounded p-button-help "
+                                    pTooltip="Create homework" tooltipPosition="top"
+                                    icon="pi pi-book "
+                                    pButton
                                     pRipple></button>
                         </td>
                     </tr>
