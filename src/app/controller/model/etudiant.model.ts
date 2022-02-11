@@ -16,9 +16,7 @@ export class Etudiant extends User {
     public groupeEtude = new GroupeEtude();
     public etatEtudiantSchedule = new EtatEtudiantSchedule();
     public prof = new Prof();
-    public chatMessageDto = new Array<ChatMessageDto>();
     public groupeEtudiantDetails = new  Array< GroupeEtudiantDetail>();
-
-
+    public langue: string;
 
 }
