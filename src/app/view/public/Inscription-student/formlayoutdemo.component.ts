@@ -133,7 +133,7 @@ export class FormLayoutDemoComponent implements OnInit {
     }
 
     public save() {
-        if (this.etudiant.parcours.id === 0 || this.etudiant.parcours.id === undefined || this.etudiant.parcours.id === null) {
+/*        if (this.etudiant.parcours.id === 0 || this.etudiant.parcours.id === undefined || this.etudiant.parcours.id === null) {
             this.messageService.add({
                 severity: 'info',
                 summary: 'Warning',
@@ -150,7 +150,7 @@ export class FormLayoutDemoComponent implements OnInit {
                 life: 5000
             });
             return;
-        }
+        }*/
         console.log(this.etudiant);
         this.submitted = true;
         console.log(this.etudiant.parcours.id);

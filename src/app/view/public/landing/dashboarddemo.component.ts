@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {MenuItem} from 'primeng/api';
+import {MenuItem, MessageService} from 'primeng/api';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
@@ -10,7 +10,7 @@ import {Etudiant} from '../../../controller/model/etudiant.model';
 import {Prof} from '../../../controller/model/prof.model';
 import {ParcoursService} from '../../../controller/service/parcours.service';
 import {Cours} from '../../../controller/model/cours.model';
-import {PackStudentService} from "../../../controller/service/pack-student.service";
+import {PackStudentService} from '../../../controller/service/pack-student.service';
 
 
 @Component({
@@ -45,8 +45,68 @@ export class DashboardDemoComponent implements OnInit {
     // tslint:disable-next-line:max-line-length
     showdialogindiv = false;
     showdialoggroupe = false;
+    showdialog = false;
+    message = '';
     constructor(private login: LoginService, public profservice: ProfService, public studentservice: EtudiantService, public parcoursService: ParcoursService,
-                public packStudentService: PackStudentService) {}
+                public packStudentService: PackStudentService,
+                public etudiantService: EtudiantService,
+                public messageService: MessageService,
+                public profService: ProfService) {}
+    public progress = 0;
+    public next = false;
+    public previous = false;
+    public progressgroup = 0;
+    public nextgroup = false;
+    public previousgroup = false;
+    title = 'landingDemo';
+    value = 10;
+
+    public showNext(){
+        if (this.progress >= 0 && this.progress < 3){
+            if (this.previous){
+                this.previous = false;
+            }
+            this.next = true;
+            this.progress++;
+            this.value += 33;
+            console.log(this.progress);
+        }
+
+    }
+    public showPrevious(){
+        if (this.progress > 0){
+            if (this.next){
+                this.next = false;
+            }
+            this.previous = true;
+            this.progress--;
+            this.value -= 33;
+
+        }
+
+    }
+    public showNextgroup(){
+        if (this.progressgroup >= 0 && this.progressgroup < 3){
+            if (this.previousgroup){
+                this.previousgroup = false;
+            }
+            this.nextgroup = true;
+            this.progressgroup++;
+            console.log(this.progress);
+        }
+
+    }
+    public showPreviousgroup(){
+        if (this.progressgroup > 0){
+            if (this.nextgroup){
+                this.nextgroup = false;
+            }
+            this.previousgroup = true;
+            this.progressgroup--;
+        }
+
+    }
+
 
     get model(): any[] {
         return this.login.model;
@@ -139,5 +199,54 @@ export class DashboardDemoComponent implements OnInit {
               this.showdialogindiv = true;
           }
           this.packStudentService.findPackIndividualOrgroupe(b);
+    }
+
+    createEtudiant(){
+        this.etudiantService.create().subscribe(
+            data => {
+                if (data != null){
+                    console.log("waqila dazt");
+                    this.showdialog = true;
+                    this.message = 'Registration added, please check your email to get your password.';
+                    this.messageService.add({
+                        severity: 'success',
+                        summary: 'Successful',
+                        detail: 'Registration added, please check your email to get your password.',
+                        life: 4000
+                    });
+                }
+            }, error => {
+                console.log("error a m3lm");
+                this.showdialog = true;
+                this.message = 'Registration Canceled, there was an error during saving your registration!!.';
+                this.messageService.add({
+                    severity: 'error',
+                    summary: 'Error',
+                    detail: 'Registration Canceled',
+                    life: 4000
+                });
+            }
+        );
+    }
+    createProf(){
+        this.profService.save().subscribe(
+            data => {
+                if (data != null){
+                    this.messageService.add({
+                        severity: 'success',
+                        summary: 'Successful',
+                        detail: 'Registration added, please check your email to get your password.',
+                        life: 4000
+                    });
+                }
+            }, error => {
+                this.messageService.add({
+                    severity: 'error',
+                    summary: 'Error',
+                    detail: 'Registration Canceled',
+                    life: 4000
+                });
+            }
+        );
     }
 }

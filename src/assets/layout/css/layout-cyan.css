@@ -1575,7 +1575,7 @@ a {
   min-height: 100vh;
 }
 .layout-wrapper .layout-main .layout-content {
-  padding: 16px;
+  padding: 0px;
   flex: 1 1 0;
 }
 

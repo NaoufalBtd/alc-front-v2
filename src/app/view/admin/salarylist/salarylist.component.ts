@@ -48,7 +48,8 @@ export class SalarylistComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.salaryService.findAllSalary();
+        //    this.salaryService.findAllSalary();
+        this.salaryService.findSalaryByPayer();
     }
 
     get salaryList(): Array<Salary> {

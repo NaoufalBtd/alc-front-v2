@@ -21,6 +21,7 @@ import {WorkloadBonusProf} from '../../../../controller/model/workload-bonus-pro
 export class SalaryComponent implements OnInit {
     data: any;
     items: MenuItem[];
+    etatPay: MenuItem[];
     itemsannee: MenuItem[];
     activeItem: MenuItem;
     mois: string;
@@ -32,7 +33,11 @@ export class SalaryComponent implements OnInit {
 
     constructor(private messageService: MessageService, private confirmationService: ConfirmationService,
                 private service: ClassRoomService, private serviceUser: LoginService, private salaryservice: SalaryService, private sessionCoursService: SessionCoursService) {
-
+        this.etatPay = [];
+        // @ts-ignore
+        this.etatPay.push({label: 'True', value: 1});
+        // @ts-ignore
+        this.etatPay.push({label: 'False', value: 0});
         this.itemsannee = [];
         for (let i = 2022; i < 2050; i++) {
             // @ts-ignore
@@ -69,6 +74,22 @@ export class SalaryComponent implements OnInit {
                     ]
                 }]
         };
+    }
+
+    get profClassAverageBonusProf(): ClassAverageBonusProf {
+        return this.salaryservice.profClassAverageBonusProf;
+    }
+
+    set profClassAverageBonusProf(value: ClassAverageBonusProf) {
+        this.salaryservice.profClassAverageBonusProf = value;
+    }
+
+    get profWorkloadBonusProf(): WorkloadBonusProf {
+        return this.salaryservice.profWorkloadBonusProf;
+    }
+
+    set profWorkloadBonusProf(value: WorkloadBonusProf) {
+        this.salaryservice.profWorkloadBonusProf = value;
     }
 
     get currentMonthPay(): number {
@@ -200,6 +221,14 @@ export class SalaryComponent implements OnInit {
         return this.salaryservice.salaryworkloadBonusProf;
     }
 
+    get sessions(): Array<SessionCours> {
+
+        return this.salaryservice.sessions;
+    }
+
+    set sessions(value: Array<SessionCours>) {
+        this.salaryservice.sessions = value;
+    }
     openSalary() {
         this.displaySalary = true;
     }
@@ -242,17 +271,32 @@ export class SalaryComponent implements OnInit {
         this.salaryservice.findWorkloadBonusProfByMoisAndAnneeAndProfID(mois, annee, profid);
     }
 
-    showDetails(mois: number, annee: number, profid: number) {
+    showDetails(idprof: number, idsalary: number) {
         this.displayDetails = true;
-        this.findPaiementByMoisAndAnneeAndProfID(mois, annee, profid);
-        this.findAllMonatantPaiementByMoisAndAnneeAndProfId(mois, annee, profid);
-        this.findClassAverageBonusProfByMoisAndAnneeAndProfID(mois, annee, profid);
-        this.findMontantClassAverageBonusProfByMoisAndAnneeAndProfID(mois, annee, profid);
-        this.findWorkloadBonusProfByMoisAndAnneeAndProfID(mois, annee, profid);
-        this.findAllWorkloadBonusProfByMoisAndAnneeAndProfId(mois, annee, profid);
+        // this.findPaiementByMoisAndAnneeAndProfID(mois, annee, profid);
+        this.findWorkloadBonusProfByProfIdAndSalaryId(idprof, idsalary);
+
+        this.findClassAverageBonusProfByProfIdAndSalaryId(idprof, idsalary);
+        this.findSessionCoursByProfIdAndSalaryId(idprof, idsalary);
+
+
     }
 
     public findAllByCriteria(profNom: string) {
         this.salaryservice.findAllByCriteria(profNom);
     }
+
+    public findWorkloadBonusProfByProfIdAndSalaryId(idprof: number, idsalary: number) {
+        this.salaryservice.findWorkloadBonusProfByProfIdAndSalaryId(idprof, idsalary);
+    }
+
+    public findClassAverageBonusProfByProfIdAndSalaryId(idprof: number, idsalary: number) {
+        this.salaryservice.findClassAverageBonusProfByProfIdAndSalaryId(idprof, idsalary);
+
+    }
+    public findSessionCoursByProfIdAndSalaryId(idprof: number, idsalary: number) {
+        this.salaryservice.findSessionCoursByProfIdAndSalaryId(idprof, idsalary);
+    }
+
+
 }
