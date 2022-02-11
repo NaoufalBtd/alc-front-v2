@@ -9,6 +9,10 @@ import {InteretEtudiant} from '../../../../controller/model/interet-etudiant.mod
 import {Fonction} from '../../../../controller/model/fonction.model';
 import {StatutSocial} from '../../../../controller/model/statut-social.model';
 import {NiveauEtude} from '../../../../controller/model/niveau-etude.model';
+import {GroupeEtudeService} from '../../../../controller/service/groupe-etude.service';
+import {PackStudentService} from '../../../../controller/service/pack-student.service';
+import {PackStudent} from '../../../../controller/model/pack-student.model';
+import {GroupeEtude} from '../../../../controller/model/groupe-etude.model';
 
 @Component({
     selector: 'app-inscription-edit',
@@ -18,7 +22,7 @@ import {NiveauEtude} from '../../../../controller/model/niveau-etude.model';
 export class InscriptionEditComponent implements OnInit {
 
     // tslint:disable-next-line:max-line-length
-    sel =' ';
+    sel = ' ';
     packStudents = new Array<PackStudent>();
     allgroupes: Array<GroupeEtude>;
     constructor(private messageService: MessageService,

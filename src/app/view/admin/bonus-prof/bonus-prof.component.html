@@ -1,65 +1,68 @@
-<div class="p-grid">
-    <!--List Workload Bonus-->
-    <div class="p-col-6">
-        <div class="p-card">
-            <div class="p-card-title ">
-                <h3 style="text-align: center;">Workload Bonus</h3>
-            </div>
-            <div class="p-card-body">
-                <div class="p-grid">
-                    <div class="p-col-2">
+<div class="control-section" style="margin-right: 1%;">
 
-                        <button class="p-button-primary p-mr-2 p-mb-2 " icon="pi pi-plus" label="New"
-                                (click)="showDialog()" pButton
-                                pRipple style="width: 90px"></button>
+    <div class="p-grid">
+        <!--List Workload Bonus-->
+        <div class="p-col-6">
+            <div class="p-card">
+                <div class="p-card-title ">
+                    <h3 style="text-align: center;">Workload Bonus</h3>
+                </div>
+                <div class="p-card-body">
+                    <div class="p-grid">
+                        <div class="p-col-2">
+
+                            <button class="p-button-primary p-mr-2 p-mb-2 " icon="pi pi-plus" label="New"
+                                    (click)="showDialog()" pButton
+                                    pRipple style="width: 90px"></button>
+                        </div>
+                    </div>
+                    <div class="p-grid">
+                        <p-table responsiveLayout="scroll" [value]="workloadBonusList">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th>Code</th>
+                                    <th>Nombre Session</th>
+                                    <th>Prix</th>
+                                    <th>Update</th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-c>
+                                <tr>
+                                    <td>{{c.code}}</td>
+                                    <td>{{c.nombreSession}}</td>
+                                    <td>{{c.prix}}</td>
+                                    <td>
+                                        <button class="p-button-rounded p-button-success p-mr-2" icon="pi pi-pencil"
+                                                pButton
+                                                (click)="showDialogUpdate(c.id)"
+                                                pRipple></button>
+                                    </td>
+
+                                </tr>
+                            </ng-template>
+                        </p-table>
                     </div>
                 </div>
-                <div class="p-grid">
-                    <p-table responsiveLayout="scroll" [value]="workloadBonusList">
-                        <ng-template pTemplate="header">
-                            <tr>
-                                <th>Code</th>
-                                <th>Nombre Session</th>
-                                <th>Prix</th>
-                                <th>Update</th>
-                            </tr>
-                        </ng-template>
-                        <ng-template pTemplate="body" let-c>
-                            <tr>
-                                <td>{{c.code}}</td>
-                                <td>{{c.nombreSession}}</td>
-                                <td>{{c.prix}}</td>
-                                <td>
-                                    <button class="p-button-rounded p-button-success p-mr-2" icon="pi pi-pencil" pButton
-                                            (click)="showDialogUpdate(c.id)"
-                                            pRipple></button>
-                                </td>
-
-                            </tr>
-                        </ng-template>
-                    </p-table>
-                </div>
+                <div></div>
             </div>
-            <div></div>
         </div>
-    </div>
-    <!--List ClassAverage Bonus-->
-    <div class="p-col-6">
-        <div class="p-card">
-            <div class="p-card-title">
-                <h3 style="text-align: center">Class Average Bonus</h3>
-            </div>
-            <div class="p-card-body">
-                <div class="p-grid">
-                    <div class="p-col-2">
+        <!--List ClassAverage Bonus-->
+        <div class="p-col-6">
+            <div class="p-card">
+                <div class="p-card-title">
+                    <h3 style="text-align: center">Class Average Bonus</h3>
+                </div>
+                <div class="p-card-body">
+                    <div class="p-grid">
+                        <div class="p-col-2">
 
-                        <button class="p-button-primary p-mr-2 p-mb-2 " icon="pi pi-plus" label="New" pButton
-                                pRipple style="width: 90px" (click)="showDialogClassAverageBonus()"></button>
+                            <button class="p-button-primary p-mr-2 p-mb-2 " icon="pi pi-plus" label="New" pButton
+                                    pRipple style="width: 90px" (click)="showDialogClassAverageBonus()"></button>
+
+                        </div>
+
 
                     </div>
-
-
-                </div>
 
 
                     <div class="p-grid">
@@ -78,7 +81,8 @@
                                     <td>{{c.nombreSession}}</td>
                                     <td>{{c.prix}}</td>
                                     <td>
-                                        <button class="p-button-rounded p-button-success p-mr-2" icon="pi pi-pencil" pButton
+                                        <button class="p-button-rounded p-button-success p-mr-2" icon="pi pi-pencil"
+                                                pButton
                                                 (click)="showDialogClassAverageBonusUpdate(c.id)"
                                                 pRipple></button>
                                     </td>
@@ -87,10 +91,12 @@
                             </ng-template>
                         </p-table>
                     </div>
+                </div>
+                <div></div>
             </div>
-            <div></div>
         </div>
     </div>
+
 </div>
 <!--Add Workload Bonus-->
 <p-dialog header="Add Workload Bonus" [(visible)]="displayWorkloadBonus">
@@ -100,7 +106,7 @@
         </div>
         <div class="p-field  p-md-8">
             <input class="p-mr-2" type="number" pInputText placeholder="Nombre Session"
-                   [(ngModel)]="workloadBonus.nombreSession" required autofocus>        </div>
+                   [(ngModel)]="workloadBonus.nombreSession" required autofocus></div>
     </div>
     <div class="p-grid p-fluid p-mt-1">
         <div class="p-field p-md-4">
@@ -163,7 +169,8 @@
         <div class="p-field p-md-4">
             <button class="p-button-primary p-mr-2  " icon="pi pi-plus" label="Add"
                     pButton
-                    pRipple style="width: 90px" (click)="saveclassAverageBonus()"></button>        </div>
+                    pRipple style="width: 90px" (click)="saveclassAverageBonus()"></button>
+        </div>
     </div>
 </p-dialog>
 <!--Update Class Average Bonus-->
@@ -183,6 +190,7 @@
         <div class="p-field p-md-4">
             <button class="p-button-primary p-mr-2" icon="pi pi-plus" label="Update"
                     pButton
-                    pRipple style="width: 90px" (click)="updateclassAverageBonus(newprix)"></button>        </div>
+                    pRipple style="width: 90px" (click)="updateclassAverageBonus(newprix)"></button>
+        </div>
     </div>
 </p-dialog>
