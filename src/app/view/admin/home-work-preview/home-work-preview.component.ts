@@ -23,6 +23,7 @@ export class HomeWorkPreviewComponent implements OnInit {
     public cours: Array<Cours> = new Array<Cours>();
     public homeWorks: Array<HomeWork> = new Array<HomeWork>();
     public qstList: Array<HomeWorkQST> = new Array<HomeWorkQST>();
+    public qstWriteItUp: HomeWorkQST = new HomeWorkQST();
     public selectedHomeWork: HomeWork = new HomeWork();
     public homeWork: HomeWork = new HomeWork();
     visibleSidebar: boolean;
@@ -35,6 +36,7 @@ export class HomeWorkPreviewComponent implements OnInit {
     showAnswersDialog: boolean;
     categorieSections: Array<CategorieSection> = new Array<CategorieSection>();
     answers: Array<HomeWorkReponse> = new Array<HomeWorkReponse>();
+    showEditWriteItUpDialog: boolean;
 
     constructor(private parcoursService: ParcoursService,
                 private homeWorkService: HomeworkService,
@@ -119,7 +121,11 @@ export class HomeWorkPreviewComponent implements OnInit {
         this.courseSelected = this.selectedcours;
         this.parcourCurrent = this.selectedparcours;
         this.homeWorkSelected = homework;
-        this.router.navigate(['/admin/homeWork']);
+        if (homework.libelle === 'WRITE IT UP') {
+            this.editWriteItUp(homework);
+        } else {
+            this.router.navigate(['/admin/homeWork']);
+        }
     }
 
 
@@ -150,4 +156,26 @@ export class HomeWorkPreviewComponent implements OnInit {
         this.homeWorkService.HomeWork = homeWork1;
     }
 
+    editWriteItUp(homeWork: HomeWork) {
+        this.selectedHomeWork = homeWork;
+        this.homeWorkEtudiantService.findQuestions(homeWork).subscribe(data => {
+            console.log(data);
+            this.qstWriteItUp = data[0];
+            console.log(this.qstWriteItUp);
+        });
+        this.showEditWriteItUpDialog = true;
+    }
+
+    updateHomeWork() {
+        this.selectedHomeWork.questions = new Array<HomeWorkQST>();
+        this.selectedHomeWork.questions.push({...this.qstWriteItUp});
+        console.log(this.selectedHomeWork);
+        this.homeWorkService.updateHomeWork(this.selectedHomeWork).subscribe(data => {
+            console.log(data);
+
+        }, error => {
+            console.log(error);
+        });
+        this.showEditWriteItUpDialog = false;
+    }
 }
