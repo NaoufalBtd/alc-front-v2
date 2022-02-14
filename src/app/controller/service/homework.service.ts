@@ -105,6 +105,7 @@ export class HomeworkService {
     this._homeWork = homeWork;
   }
   public saveHomeWork(): Observable<HomeWork> {
+    console.log(this.HomeWork.questions);
     return this.http.post<HomeWork>(this.adminUrl + 'homeWork/', this.HomeWork);
   }
   public findType(): Observable<Array<TypeDeQuestion>> {
@@ -116,5 +117,4 @@ export class HomeworkService {
     return this.http.get<Array<HomeWork>>(this.adminUrl + 'homeWork/cours/id/' + cours.id );
   }
 
-  public
 }

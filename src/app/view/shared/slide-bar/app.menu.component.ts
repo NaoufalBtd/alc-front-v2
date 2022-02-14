@@ -79,17 +79,19 @@ export class AppMenuComponent implements OnInit {
             if (this.user.role === 'ADMIN') {
                 this.model = [
                     {label: 'Manage Levels', icon: 'pi pi-fw pi-table', routerLink: ['/admin/parcours']},
+                    {label: 'Manage Section', icon: 'pi pi-briefcase', routerLink: ['/admin/manage-section']},
                     {label: 'Inscriptions List', icon: 'pi pi-fw pi-check-square', routerLink: ['/admin/inscription']},
                     {label: 'Students List', icon: 'pi pi-fw pi-list', routerLink: ['/admin/students-List']},
                     {label: 'Groups List', icon: 'pi pi-fw pi-list', routerLink: ['/admin/groups-List']},
                     {label: 'Students Group List', icon: 'pi pi-fw pi-list', routerLink: ['/admin/groups-students']},
                     {label: 'Professors', icon: 'pi pi-fw pi-user', routerLink: ['/admin/teacher-lists']},
                     {label: 'Recommendation', icon: 'pi pi-fw pi-user-plus', routerLink: ['/admin/recommend-admin']},
+                    {label: 'Home Work', icon: 'pi pi-question-circle', routerLink: ['/admin/home-work-review']},
                     {label: 'Sessions List ', icon: 'pi pi-fw pi-paperclip', routerLink: ['/admin/sessioncours']},
                     {label: 'FAQ ANSWER', icon: 'pi pi-fw pi-reply', routerLink: ['/admin/faq-admin']},
                     {label: 'FAQ List', icon: 'pi pi-fw pi-info-circle', routerLink: ['/admin/faq-admin-list']},
                     {label: 'CREATE NEWS', icon: 'pi pi-fw pi-calendar-times', routerLink: ['/admin/news-admin']},
-                    {label: 'Schedule', icon: 'pi pi-fw pi-calendar-times', routerLink: ['/admin/schedule']},
+                    {label: 'Schedule', icon: 'pi pi-calendar', routerLink: ['/admin/schedule']},
                     {label: 'Bonus', icon: 'pi pi-fw pi-wallet', routerLink: ['/admin/bonus']},
                     {label: 'Packs', icon: 'pi pi-briefcase', routerLink: ['/admin/PackStudent']},
                     {label: 'Cloud', icon: 'pi pi-cloud', routerLink: ['/admin/driveApi']}
