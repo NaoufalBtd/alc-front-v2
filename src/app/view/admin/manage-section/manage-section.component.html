@@ -88,30 +88,30 @@
 
 <p-dialog header="Edit Section" [(visible)]="showEditDialog" [style]="{width: '70vw'}">
     <div class="p-grid">
-        <div class="p-col-4 ">
+        <div class="p-col-3 ">
             <h6>ID</h6>
             <input disabled type="text" pInputText [(ngModel)]="sectionSelected.id">
         </div>
 
-        <div class="p-col-4 ">
+        <div class="p-col-3 ">
             <h6>Number</h6>
-            <input type="number" pInputText [(ngModel)]="sectionSelected.content">
+            <input type="number" pInputText [(ngModel)]="sectionSelected.numeroOrder">
         </div>
 
 
-        <div class="p-col-4 ">
+        <div class="p-col-3 ">
             <h6>Title</h6>
             <input type="text" pInputText [(ngModel)]="sectionSelected.libelle">
         </div>
 
 
-        <div class="p-col-4 ">
+        <div class="p-col-3 ">
             <h6>Code</h6>
             <input type="text" pInputText [(ngModel)]="sectionSelected.code">
         </div>
 
 
-        <div class="p-col-4 ">
+        <div class="p-col-3 ">
             <h6>Category</h6>
             <p-dropdown [options]="categorieSections" [(ngModel)]="sectionSelected.categorieSection.libelle"
                         optionLabel="libelle" [filter]="true" filterBy="libelle"
@@ -121,7 +121,7 @@
         </div>
 
 
-        <div class="p-col-4 ">
+        <div class="p-col-3 ">
             <h6>Course</h6>
             <p-dropdown [options]="cours" [(ngModel)]="sectionSelected.cours.libelle"
                         optionLabel="libelle" [filter]="true" filterBy="libelle"
@@ -131,48 +131,45 @@
         </div>
 
 
-        <div class="p-col-4 ">
+        <div class="p-col-3 ">
             <h6>Indication of Teacher's</h6>
             <input type="text" pInputText [(ngModel)]="sectionSelected.indicationProf">
         </div>
 
 
-        <div class="p-col-4 ">
-            <h6>Number</h6>
-            <input type="number" pInputText [(ngModel)]="sectionSelected.numeroOrder">
-        </div>
 
 
-        <div class="p-col-4 ">
+
+        <div class="p-col-3 ">
             <h6>Question</h6>
             <input type="text" pInputText [(ngModel)]="sectionSelected.questions">
         </div>
 
 
-        <div class="p-col-4 ">
+        <div class="p-col-3 ">
             <h6>Url image</h6>
             <input type="text" pInputText [(ngModel)]="sectionSelected.urlImage">
         </div>
 
 
-        <div class="p-col-4 ">
+        <div class="p-col-3 ">
             <h6>Url image 2</h6>
             <input type="text" pInputText [(ngModel)]="sectionSelected.urlImage2">
         </div>
 
 
-        <div class="p-col-4 ">
+        <div class="p-col-3 ">
             <h6>Url image 3</h6>
             <input type="text" pInputText [(ngModel)]="sectionSelected.urlImage3">
         </div>
 
 
-        <div class="p-col-4 ">
+        <div class="p-col-3 ">
             <h6>Url video</h6>
             <input type="text" pInputText [(ngModel)]="sectionSelected.urlVideo">
         </div>
 
-        <div class="p-col-8 ">
+        <div class="p-col-12">
             <h6>Content</h6>
             <textarea rows="5" cols="100%" [(ngModel)]="sectionSelected.contenu" pInputTextarea
                       autoResize="autoResize"></textarea>
