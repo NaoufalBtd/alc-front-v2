@@ -75,7 +75,6 @@ export class PaiementService {
             }
         );
     }
-
     public findallPaiment() {
         return this.http.get<Array<Paiement>>(this.adminUrlpaiement).subscribe(
             data => {

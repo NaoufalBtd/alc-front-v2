@@ -1,0 +1,187 @@
+<div class="p-grid topBar">
+    <div class="p-col-3 ">
+        <h5>Levels</h5>
+        <p-dropdown [options]="parcours" [(ngModel)]="selectedparcours"
+                    (ngModelChange)="getCours()"
+                    [style]="{'width': '100%'}"
+                    optionLabel="libelle" [filter]="true" filterBy="libelle" [showClear]="true"
+                    placeholder="Select a Level">
+        </p-dropdown>
+
+    </div>
+
+    <div class="p-col-3 ">
+        <h5>Courses</h5>
+        <p-dropdown [options]="cours" [(ngModel)]="selectedcours"
+                    (ngModelChange)="getSections()"
+                    [style]="{'width': '100%'}"
+                    optionLabel="libelle" [filter]="true" filterBy="libelle" [showClear]="true"
+                    placeholder="Select a Course">
+        </p-dropdown>
+    </div>
+</div>
+
+<div class="p-grid contentBar">
+    <div class="p-col-12">
+        <p-table [value]="sections" responsiveLayout="scroll" [paginator]="true" [rows]="rows"
+                 [showCurrentPageReport]="true"
+                 [(first)]="first"
+                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                 [rowsPerPageOptions]="[10,25,50]">
+            <ng-template pTemplate="caption">
+
+                <div class="p-grid">
+                    <div class="p-col-3">
+                        <input class="searchValue" [(ngModel)]="section.libelle" type="text" pInputText
+                               placeholder="Search by Title.."/>
+                    </div>
+                    <div class="p-col-3">
+                        <input class="searchValue" [(ngModel)]="section.categorieSection.libelle" type="text" pInputText
+                               placeholder="Search by Category.."/>
+                    </div>
+                    <div class="p-col-3">
+                        <button pButton pRipple type="button" (click)="findSection()"
+                                icon="pi pi-search" class="p-button-rounded p-button-text"></button>
+                    </div>
+                </div>
+
+            </ng-template>
+
+
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>ID</th>
+                    <th>title</th>
+                    <th>Category</th>
+                    <th>Image</th>
+                    <th>Status</th>
+                    <th>Edit</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-section>
+                <tr>
+                    <td>{{section?.id}}</td>
+                    <td>{{section?.libelle}}</td>
+                    <td>{{section?.categorieSection?.libelle}}</td>
+                    <td><img [src]="section?.urlImage" width="90%" (click)="showImage(section.urlImage)"
+                             class="shadow-4"/></td>
+                    <td><span class="badge">VALIDATED</span></td>
+                    <td>
+                        <button pButton pRipple type="button" icon="pi pi-pencil" (click)="showEditDialogFct(section)"
+                                class="p-button-rounded "></button>
+                    </td>
+
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="summary">
+                <div class="flex align-items-center justify-content-between">
+                    In total there are {{ sections?.length }} sections.
+                </div>
+            </ng-template>
+        </p-table>
+    </div>
+</div>
+
+<p-sidebar [(visible)]="visibleSidebar" [fullScreen]="true" [baseZIndex]="10000">
+    <img [src]="imgUrl" width="100%" height="100%" class="shadow-5"/>
+</p-sidebar>
+
+<p-dialog header="Edit Section" [(visible)]="showEditDialog" [style]="{width: '70vw'}">
+    <div class="p-grid">
+        <div class="p-col-3 ">
+            <h6>ID</h6>
+            <input disabled type="text" pInputText [(ngModel)]="sectionSelected.id">
+        </div>
+
+        <div class="p-col-3 ">
+            <h6>Number</h6>
+            <input type="number" pInputText [(ngModel)]="sectionSelected.numeroOrder">
+        </div>
+
+
+        <div class="p-col-3 ">
+            <h6>Title</h6>
+            <input type="text" pInputText [(ngModel)]="sectionSelected.libelle">
+        </div>
+
+
+        <div class="p-col-3 ">
+            <h6>Code</h6>
+            <input type="text" pInputText [(ngModel)]="sectionSelected.code">
+        </div>
+
+
+        <div class="p-col-3 ">
+            <h6>Category</h6>
+            <p-dropdown [options]="categorieSections" [(ngModel)]="sectionSelected.categorieSection.libelle"
+                        optionLabel="libelle" [filter]="true" filterBy="libelle"
+                        [style]="{'width': '100%'}"
+                        [showClear]="false">
+            </p-dropdown>
+        </div>
+
+
+        <div class="p-col-3 ">
+            <h6>Course</h6>
+            <p-dropdown [options]="cours" [(ngModel)]="sectionSelected.cours.libelle"
+                        optionLabel="libelle" [filter]="true" filterBy="libelle"
+                        [style]="{'width': '100%'}"
+                        [showClear]="false">
+            </p-dropdown>
+        </div>
+
+
+        <div class="p-col-3 ">
+            <h6>Indication of Teacher's</h6>
+            <input type="text" pInputText [(ngModel)]="sectionSelected.indicationProf">
+        </div>
+
+
+
+
+
+        <div class="p-col-3 ">
+            <h6>Question</h6>
+            <input type="text" pInputText [(ngModel)]="sectionSelected.questions">
+        </div>
+
+
+        <div class="p-col-3 ">
+            <h6>Url image</h6>
+            <input type="text" pInputText [(ngModel)]="sectionSelected.urlImage">
+        </div>
+
+
+        <div class="p-col-3 ">
+            <h6>Url image 2</h6>
+            <input type="text" pInputText [(ngModel)]="sectionSelected.urlImage2">
+        </div>
+
+
+        <div class="p-col-3 ">
+            <h6>Url image 3</h6>
+            <input type="text" pInputText [(ngModel)]="sectionSelected.urlImage3">
+        </div>
+
+
+        <div class="p-col-3 ">
+            <h6>Url video</h6>
+            <input type="text" pInputText [(ngModel)]="sectionSelected.urlVideo">
+        </div>
+
+        <div class="p-col-12">
+            <h6>Content</h6>
+            <textarea rows="5" cols="100%" [(ngModel)]="sectionSelected.contenu" pInputTextarea
+                      autoResize="autoResize"></textarea>
+        </div>
+
+    </div>
+
+
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-check" (click)="showEditDialog=false" label="save changes"
+                  styleClass="p-button-text"></p-button>
+    </ng-template>
+</p-dialog>
+
+

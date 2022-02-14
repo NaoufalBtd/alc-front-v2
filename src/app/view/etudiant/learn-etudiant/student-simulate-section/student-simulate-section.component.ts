@@ -504,14 +504,9 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
                             // tslint:disable-next-line:no-shadowed-variable
                         });
                     document.getElementById('word').style.visibility = 'hidden';
-                    document.getElementById('homeWork').style.visibility = 'hidden';
                     document.getElementById('chat').style.visibility = 'hidden';
-
                     document.getElementById('word').style.height = '0px';
-
                     document.getElementById('categoriess').style.visibility = 'visible';
-                    document.getElementById('connectedStudent').style.visibility = 'hidden';
-
                     document.getElementById('categoriess').style.width = '100%';
                     document.getElementById('categoriess').style.height = '100%';
                     document.getElementById('categ').style.height = '100%';
@@ -520,12 +515,10 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
             }, {
                 icon: 'pi pi-fw pi-comments', command: (event) => {
                     document.getElementById('categoriess').style.visibility = 'hidden';
-                    document.getElementById('homeWork').style.visibility = 'hidden';
                     document.getElementById('categoriess').style.height = '0px';
                     document.getElementById('word').style.visibility = 'hidden';
                     document.getElementById('word').style.height = '0px';
                     document.getElementById('chat').style.visibility = 'visible';
-                    document.getElementById('connectedStudent').style.visibility = 'hidden';
 
                 }
             },
@@ -536,14 +529,12 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
                             this.itemsDict = data;
                         });
                     document.getElementById('categoriess').style.visibility = 'hidden';
-                    document.getElementById('homeWork').style.visibility = 'hidden';
                     document.getElementById('categoriess').style.height = '0px';
                     document.getElementById('word').style.visibility = 'visible';
                     document.getElementById('word').style.width = '100%';
                     document.getElementById('word').style.height = '100%';
                     document.getElementById('wrd').style.height = '100%';
                     document.getElementById('chat').style.visibility = 'hidden';
-                    document.getElementById('connectedStudent').style.visibility = 'hidden';
 
                 }
             }

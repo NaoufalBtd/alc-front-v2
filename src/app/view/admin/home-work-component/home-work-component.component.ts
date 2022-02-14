@@ -8,6 +8,7 @@ import {TypeDeQuestion} from '../../../controller/model/type-de-question.model';
 import {LearnService} from '../../../controller/service/learn.service';
 import {Cours} from '../../../controller/model/cours.model';
 import {Parcours} from '../../../controller/model/parcours.model';
+import {HomeWorkEtudiantServiceService} from '../../../controller/service/home-work-etudiant-service.service';
 
 
 @Component({
@@ -21,13 +22,14 @@ export class HomeWorkComponentComponent implements OnInit {
     viewOnOffDialog = false;
     onOff_true = true;
     onOff_false = false;
-    home = {icon: 'pi pi-home', routerLink:  '/admin/parcours'};
+    home = {icon: 'pi pi-home', routerLink: '/admin/parcours'};
     navigateItems = [
-        {label: this.parcourCurrent.libelle, routerLink:  '/admin/parcours'},
-        {label: this.courseSelected.libelle, routerLink:  '/admin/parcours'},
+        {label: this.parcourCurrent.libelle, routerLink: '/admin/parcours'},
+        {label: this.courseSelected.libelle, routerLink: '/admin/parcours'},
     ];
 
     constructor(private service: HomeworkService,
+                private homeWorkEtudiantService: HomeWorkEtudiantServiceService,
                 private learnService: LearnService,
                 private messageService: MessageService) {
     }
@@ -35,18 +37,55 @@ export class HomeWorkComponentComponent implements OnInit {
     get courseSelected(): Cours {
         return this.learnService.courseSelected;
     }
+
     get parcourCurrent(): Parcours {
         return this.learnService.parcourCurrent;
     }
 
     ngOnInit(): void {
-        this.questionTypes();
-        this.homeworkQST.reponses = new Array<HomeWorkReponse>();
-        this.homeworkQST.numero = 1;
-        this.homeWork.questions = new Array<HomeWorkQST>();
         this.homeWork.cours = this.courseSelected;
-        this.homeworkReponse.numero = 1;
-        console.log(this.homeWork.cours);
+        this.questionTypes();
+        if (this.homeWork.id !== undefined) {
+            this.homeWorkEtudiantService.findQuestions(this.homeWork).subscribe(data => {
+                this.homeWork.questions = data;
+                for (let i = 0; i < this.homeWork.questions.length; i++) {
+                    this.homeWorkEtudiantService.findReponsesByQuestionId(this.homeWork.questions[i].id).subscribe(
+                        rpsData => {
+                            console.log(rpsData);
+                            this.homeWork.questions[i].reponses = rpsData;
+                            this.nodes = [];
+                            for (let i = 0; i < this.homeWork.questions.length; i++) {
+                                const list = [];
+                                for (let j = 0; j < this.homeWork.questions[i].reponses.length; j++) {
+                                    const item = {
+                                        label: this.homeWork.questions[i].reponses[j].lib + '\t (' + this.homeWork.questions[i].reponses[j].etatReponse + ' )',
+                                        type: 'url'
+                                    };
+                                    list.push(item);
+                                }
+
+                                this.nodes.push(
+                                    {
+                                        key: i.toString(),
+                                        label: 'Question ' + this.homeWork.questions[i].numero + ' : ' + this.homeWork.questions[i].libelle + ' ( ' + this.homeWork.questions[i].typeDeQuestion.lib + ' ) ',
+                                        children: list
+                                    },
+                                );
+                                this.reponses = new Array<HomeWorkReponse>();
+                            }
+                        }, error => {
+                            console.log(error);
+                        });
+                }
+            });
+
+        } else {
+            this.homeworkQST.reponses = new Array<HomeWorkReponse>();
+            this.homeworkQST.numero = 1;
+            this.homeWork.questions = new Array<HomeWorkQST>();
+            this.homeworkReponse.numero = 1;
+        }
+        console.log(this.homeWork);
     }
 
     get reponses(): Array<HomeWorkReponse> {
@@ -91,6 +130,7 @@ export class HomeWorkComponentComponent implements OnInit {
 
     public clonequestion(question: HomeWorkQST): HomeWorkQST {
         const myclone = new HomeWorkQST();
+        myclone.id = question.id;
         myclone.pointReponsefausse = question.pointReponsefausse;
         myclone.pointReponseJuste = question.pointReponseJuste;
         myclone.libelle = question.libelle;
@@ -104,6 +144,7 @@ export class HomeWorkComponentComponent implements OnInit {
 
     public cloneReponse(reponse: HomeWorkReponse): HomeWorkReponse {
         const myclone = new HomeWorkReponse();
+        myclone.id = reponse.id;
         myclone.etatReponse = reponse.etatReponse;
         myclone.lib = reponse.lib;
         myclone.numero = reponse.numero;
@@ -113,13 +154,21 @@ export class HomeWorkComponentComponent implements OnInit {
     }
 
     public addQuestion() {
-
         this.homeworkQST.reponses = this.reponses;
-        this.homeWork.questions.push(this.clonequestion(this.homeworkQST));
+        this.homeWork.questions.push({...this.homeworkQST});
+        this.addToNode();
+        this.homeworkQST = new HomeWorkQST();
+        this.homeworkQST.numero = this.homeWork.questions.length + 1;
+        this.homeworkQST.reponses = new Array<HomeWorkReponse>();
+        this.homeworkReponse.numero = 1;
+    }
+
+    private addToNode() {
+        console.log('-----------------------------------------------------------------');
+        console.log(this.homeWork);
         this.nodes = [];
         for (let i = 0; i < this.homeWork.questions.length; i++) {
             const list = [];
-
             for (let j = 0; j < this.homeWork.questions[i].reponses.length; j++) {
                 const item = {
                     label: this.homeWork.questions[i].reponses[j].lib + '\t (' + this.homeWork.questions[i].reponses[j].etatReponse + ' )',
@@ -137,20 +186,16 @@ export class HomeWorkComponentComponent implements OnInit {
             );
             this.reponses = new Array<HomeWorkReponse>();
         }
-
-        this.homeworkQST = new HomeWorkQST();
-        this.homeworkQST.numero = this.homeWork.questions.length + 1;
-        this.homeworkQST.reponses = new Array<HomeWorkReponse>();
-        this.homeworkReponse.numero = 1;
     }
 
     public addAnswer() {
-        this.reponses.push(this.cloneReponse(this.homeworkReponse));
+        this.reponses.push({...this.homeworkReponse});
         this.homeworkReponse = new HomeWorkReponse();
         this.homeworkReponse.numero = this.reponses.length + 1;
     }
 
     public save() {
+        console.log(this.homeWork);
         this.homeWork.cours = this.courseSelected;
         this.service.saveHomeWork().subscribe(
             data => {
@@ -173,6 +218,7 @@ export class HomeWorkComponentComponent implements OnInit {
     }
 
     deleteReponse(reponse: any) {
+        this.homeworkReponse = reponse;
         this.reponses.splice(this.reponses.indexOf(reponse), 1);
     }
 
@@ -205,6 +251,7 @@ export class HomeWorkComponentComponent implements OnInit {
         const updateNumber = Number(key);
         this.homeworkQST = this.homeWork.questions[updateNumber];
         this.reponses = this.homeworkQST.reponses;
+        console.log(this.reponses);
         this.deleteQuestion(key);
     }
 

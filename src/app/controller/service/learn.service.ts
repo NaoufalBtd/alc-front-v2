@@ -730,7 +730,7 @@ export class LearnService {
         this.showQuizReview = true;
     }
 
-    public sound(qst: any) {
+    public sound(qst: Question) {
         if (qst.typeDeQuestion.ref === 't1' || qst.typeDeQuestion.ref === 't6' || qst.typeDeQuestion.ref === 't4') {
             this.son = this.questionSideLeft + ' ' + this.correctAnswersList?.get(qst.id)[0].lib + ' ' + this.questionSideRight;
             console.log(this.son);

@@ -39,7 +39,7 @@ export class ScheduleStudentComponent implements OnInit {
     public scheduleObj: ScheduleComponent;
     display = false;
     private selectionTarget: Element;
-    public timeScale: TimeScaleModel = { interval: 60, slotCount: 1 };
+    public timeScale: TimeScaleModel = {interval: 60, slotCount: 1};
     public selectedDate: Date = new Date();
     public showWeekend = false;
     public eventSettings: EventSettingsModel;
@@ -58,6 +58,7 @@ export class ScheduleStudentComponent implements OnInit {
                 private authenticationService: AuthenticationService,
                 private webSocketService: WebSocketService,
                 private router: Router,
+                private simulatesectionService: SimulateSectionService,
                 private simulateSection: SimulateSectionService,
                 private parcoursService: ParcoursService) {
     }
@@ -155,7 +156,10 @@ export class ScheduleStudentComponent implements OnInit {
     joinSession() {
         this.webSocketService.openWebSocket(this.etudiant, this.selectedMeeting.prof, this.selectedMeeting.groupeEtudiant, 'STUDENT');
         this.webSocketService.isInSession = true;
-        this.webSocketService.findCurrentSectionForstudent(this.parcoursService.selectedcours, this.selectedMeeting.prof );
+        this.simulatesectionService.findSectionOneByOne(this.selectedMeeting.cours);
+        this.router.navigate(['etudiant/etudiant-simulate-sections']);
+
+        // this.webSocketService.findCurrentSectionForstudent(this.parcoursService.selectedcours, this.selectedMeeting.prof );
     }
 
     onActionComplete() {

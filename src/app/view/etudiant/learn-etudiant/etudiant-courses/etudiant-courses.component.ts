@@ -14,6 +14,7 @@ import {EtudiantReviewService} from '../../../../controller/service/etudiant-rev
 import {SectionItemService} from '../../../../controller/service/section-item.service';
 import {HttpClient} from '@angular/common/http';
 import {SessionCoursService} from '../../../../controller/service/session-cours.service';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-etudiant-courses',
@@ -33,6 +34,7 @@ export class EtudiantCoursesComponent implements OnInit {
                 private confirmationService: ConfirmationService,
                 private service: ParcoursService,
                 private http: HttpClient,
+                private router: Router,
                 private sectionItemService: SectionItemService,
                 public sessioncoursservice: SessionCoursService
     ) {
@@ -91,7 +93,7 @@ export class EtudiantCoursesComponent implements OnInit {
         this.service.afficheOneSection().subscribe(
             data => {
                 this.selectedsection = data;
-                if (data.categorieSection.libelle === 'Vocabulary') {
+                if (data?.categorieSection?.libelle === 'Vocabulary') {
                     this.Vocab(data);
                 } else {
                     this.showVocabulary = false;
@@ -136,6 +138,7 @@ export class EtudiantCoursesComponent implements OnInit {
                     }, error => document.getElementById('quiz').style.visibility = 'hidden'
                 );
             });
+        this.router.navigate(['etudiant/etudiant-simulate-sections']);
     }
 
 

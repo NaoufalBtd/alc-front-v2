@@ -670,6 +670,10 @@ export class ParcoursService {
         }
     }
 
+    public findByCriteria(section: Section): Observable<Array<Section>> {
+        return this.http.post<Array<Section>>(this.adminUrl + 'section/search/', section);
+    }
+
     public saveEtudiantCours(): Observable<number> {
         return this.http.post<number>(this.adminUrl + 'etudiantCours/', this.selectedEtudiantCours);
     }

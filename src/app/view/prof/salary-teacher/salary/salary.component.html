@@ -1,6 +1,5 @@
 <div class="p-grid">
     <div class="p-col-12">
-        <p-toast></p-toast>
         <div class="card">
             <p-toolbar styleClass="p-mb-4">
                 <ng-template pTemplate="left">
@@ -14,18 +13,30 @@
                                 [showClear]="true"
                                 [filter]="false" style="margin-right: 5px"></p-dropdown>
                     <p-dropdown [options]="itemsannee" [(ngModel)]="salarySearch.annee" placeholder="Select Year"
+                                style="margin-right: 5px"
                                 [showClear]="true"
                                 [itemSize]="31"
                                 [filter]="false"></p-dropdown>
+                    <p-dropdown [options]="etatPay" placeholder="Payment Status" [itemSize]="2"
+                                [(ngModel)]="salarySearch.payer"
+                                [showClear]="true"
+                                [filter]="false" style="margin-right: 5px"></p-dropdown>
                     <button pButton pRipple label="Search" icon="pi pi-search" class="p-button-primary p-ml-2 "
                             (click)="findAllByCriteria(this.serviceUser.getConnectedProf().nom)"
                     ></button>
                 </ng-template>
             </p-toolbar>
+<!--
             <p-toolbar styleClass="p-mb-4">
                 <ng-template pTemplate="left">
-                    <h5>Number of Sessions Completed: <span
-                            style="cursor: pointer;color: #0c799f">{{sessioncourslistProf.length}} </span></h5>
+                    <h5>Number of Sessions Paid <span
+                            style="cursor: pointer;color: green">{{sessioncourslistProf.length}} </span>
+                        <br>
+                        Number of Sessions Not Paid: <span
+                                style="cursor: pointer;color: red">{{sessioncourslistProf.length}} </span>
+                    </h5>
+                    <br>
+
 
                 </ng-template>
                 <ng-template pTemplate="right">
@@ -35,6 +46,7 @@
 
                 </ng-template>
             </p-toolbar>
+-->
             <p-table #dt [rows]="4" [paginator]="true" [value]="salaryList"
                      [globalFilterFields]="['reference','total','totalPaye']"
                      [rowHover]="true" dataKey="id" styleClass="p-datatable-customers"
@@ -48,30 +60,54 @@
                 </ng-template>
                 <ng-template pTemplate="header">
                     <tr>
-                        <th style="width: 3rem">
-                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-                        </th>
+
                         <th pSortableColumn="code">Code</th>
-                        <th pSortableColumn="annee">Year</th>
-                        <th pSortableColumn="mois">Month</th>
+                        <th pSortableColumn="annee">Date</th>
                         <th pSortableColumn="nbrSessionMensuel">Number of Monthly Sessions</th>
-                        <th pSortableColumn="montantMensuel">Monthly Amount</th>
+                        <th pSortableColumn="Total Payment">Total Sessions</th>
+                        <th pSortableColumn="Total Bonus">Total Bonus</th>
+                        <th pSortableColumn="Number Of Sessions">Monthly Amount</th>
+                        <th pSortableColumn="Number Of Sessions">Payment Status</th>
                         <th>Details</th>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-salary>
                     <tr>
-                        <td>
-                            <p-tableCheckbox [value]="salary"></p-tableCheckbox>
-                        </td>
+
                         <td>{{salary.code}}</td>
-                        <td>{{salary.annee}}</td>
-                        <td>{{salary.mois}}</td>
+                        <td>{{salary.mois}}/{{salary.annee}}</td>
                         <td>{{salary.nbrSessionMensuel}}</td>
-                        <td>{{salary.montantMensuel}}</td>
+                        <td>
+                            <strong style="color: #2D1E81"> {{salary.totalPayment}} $</strong>
+
+                        </td>
+                        <td>
+                            <strong style="color: #2D1E81"> {{salary.totalBonusClassAverage + salary.totalBonusWorkload}}
+                                $</strong>
+
+                        </td>
+                        <td>
+                            <strong style="color: red"
+                                    *ngIf="!salary.payer">{{salary.totalPayment + salary.totalBonusClassAverage + salary.totalBonusWorkload}}
+                                $</strong>
+                            <strong style="color: green"
+                                    *ngIf="salary.payer">{{salary.totalPayment + salary.totalBonusClassAverage + salary.totalBonusWorkload}}
+                                $</strong>
+
+                        </td>
+                        <td>
+                            <strong style="color: red" *ngIf="!salary.payer">
+                                <i class="pi pi-times-circle"></i>  {{salary.payer}}
+                            </strong>
+                            <strong style="color: green" *ngIf="salary.payer">
+                                <i
+                                        class="pi pi-check-circle"></i> {{salary.payer}}
+                            </strong>
+
+                        </td>
                         <td>
                             <button pButton pRipple icon="pi pi-list" class="p-button-rounded p-button-info p-mr-2"
-                                    (click)="showDetails(salary.mois,salary.annee,this.serviceUser.getConnectedProf().id)"
+                                    (click)="showDetails(this.serviceUser.getConnectedProf().id,salary.id)"
 
                             ></button>
                         </td>
@@ -82,7 +118,6 @@
                 </ng-template>
             </p-table>
         </div>
-        <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
     </div>
     <app-categorie-prof-view></app-categorie-prof-view>
 </div>
@@ -90,26 +125,24 @@
 <p-dialog header="Details Salary" [(visible)]="displayDetails" [style]="{width: '50vw'}" [baseZIndex]="10000">
     <p-tabView>
         <p-tabPanel header="Payment">
-            <p-table #dat [rows]="4" [value]="salarypaymentList"
+            <p-table #dat [rows]="4" [value]="sessions"
                      [globalFilterFields]="['reference','total','totalPaye']"
                      dataKey="id" styleClass="p-datatable-customers">
 
-                <ng-template pTemplate="caption">
-                    <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
-                        <h5 class="p-m-0">List of Payment</h5>
-                    </div>
-                </ng-template>
+
                 <ng-template pTemplate="header">
                     <tr>
                         <th pSortableColumn="Amount">Amount</th>
                         <th pSortableColumn="Studentgroup">Student group</th>
+                        <th pSortableColumn="Studentgroup">Date</th>
 
                     </tr>
                 </ng-template>
-                <ng-template pTemplate="body" let-payment>
+                <ng-template pTemplate="body" let-sessions>
                     <tr>
-                        <td>{{payment.montant}}</td>
-                        <td>{{payment.groupeEtudiant.libelle}}</td>
+                        <td>{{sessions.prof.categorieProf.lessonRate}}</td>
+                        <td>{{sessions.groupeEtudiant.libelle}}</td>
+                        <td>{{sessions.dateFin}}</td>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="footer">
@@ -120,74 +153,24 @@
 
 
         </p-tabPanel>
-        <p-tabPanel header="Bonus">
-            <p-tabView>
-                <p-tabPanel header="ClassAverage Bonus">
-                    <p-table #dat [rows]="4" [value]="salaryclassAverageBonusProf"
-                             [globalFilterFields]="['reference','total','totalPaye']"
-                             dataKey="id" styleClass="p-datatable-customers">
 
-                        <ng-template pTemplate="caption">
-                            <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
-                                <h5 class="p-m-0">List of ClassAverage Bonus</h5>
-                            </div>
-                        </ng-template>
-                        <ng-template pTemplate="header">
-                            <tr>
-                                <th pSortableColumn="Amount">Amount</th>
-                                <th pSortableColumn="ClassAverage Bonus">ClassAverage Bonus</th>
+        <p-tabPanel header="ClassAverage Bonus">
 
-                            </tr>
-                        </ng-template>
-                        <ng-template pTemplate="body" let-classAverageBonusProf>
-                            <tr>
-                                <td>{{classAverageBonusProf.classAverageBonus.prix}}</td>
-                                <td>{{classAverageBonusProf.code}}</td>
-                            </tr>
-                        </ng-template>
-                        <ng-template pTemplate="footer">
-                            <h5 style="margin-top: 15px">Total ClassAverage Bonus: <span
-                                    style="color: #0d67ce">{{this.monatantClassAverageBonus}}</span></h5>
-                        </ng-template>
-                    </p-table>
+            <strong style="font-size: 20px;color: #0d0d0d">Amount: </strong><strong
+                style="font-size: 20px;color: #0c799f">{{this.profClassAverageBonusProf.classAverageBonus.prix}}</strong>
+            <br>
+            <strong style="font-size: 20px;color: #0d0d0d">Class Average Bonus Code: </strong><strong
+                style="font-size: 20px;color: #0c799f">{{this.profClassAverageBonusProf.classAverageBonus.code}}</strong>
 
-                </p-tabPanel>
-                <p-tabPanel header="Workload Bonus">
-                    <p-table #dat [rows]="4" [value]="salaryworkloadBonusProf"
-                             [globalFilterFields]="['reference','total','totalPaye']"
-                             dataKey="id" styleClass="p-datatable-customers">
-
-                        <ng-template pTemplate="caption">
-                            <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
-                                <h5 class="p-m-0">List of ClassAverage Bonus</h5>
-                            </div>
-                        </ng-template>
-                        <ng-template pTemplate="header">
-                            <tr>
-                                <th pSortableColumn="Amount">Amount</th>
-                                <th pSortableColumn="ClassAverage Bonus">ClassAverage Bonus</th>
-
-                            </tr>
-                        </ng-template>
-                        <ng-template pTemplate="body" let-workloadBonusProf>
-                            <tr>
-                                <td>{{workloadBonusProf.workloadBonus.prix}}</td>
-                                <td>{{workloadBonusProf.workloadBonus.code}}</td>
-                            </tr>
-                        </ng-template>
-                        <ng-template pTemplate="footer">
-                            <h5 style="margin-top: 15px">Total WorkloadBonus Bonus: <span
-                                    style="color: #0d67ce">{{this.monatantworkloadBonusProf}}</span></h5>
-                        </ng-template>
-                    </p-table>
-                </p-tabPanel>
-
-
-            </p-tabView>
         </p-tabPanel>
+        <p-tabPanel header="Workload Bonus">
+            <strong style="font-size: 20px;color: #0d0d0d">Amount: </strong><strong
+                style="font-size: 20px;color: #0c799f">{{this.profWorkloadBonusProf.workloadBonus.prix}}</strong>
+            <br>
+            <strong style="font-size: 20px;color: #0d0d0d">Workload Bonus Code: </strong><strong
+                style="font-size: 20px;color: #0c799f">{{this.profWorkloadBonusProf.workloadBonus.code}}</strong>
 
+        </p-tabPanel>
     </p-tabView>
-    <ng-template pTemplate="footer">
 
-    </ng-template>
 </p-dialog>

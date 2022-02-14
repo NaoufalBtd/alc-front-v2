@@ -257,6 +257,31 @@
                     </div>
 
 
+                    <!--------------------------------- Write It Up -------------------------------------------------------->
+
+
+                    <div style="background-color: white;" *ngIf="homeWorkQuestion.typeDeQuestion.ref === 't2'" class="p-grid">
+
+                        <div class="p-col-12">
+                            <img [src]="selectedHomeWork.urlImage" alt="Image Not Found !" width="100%">
+
+                        </div>
+                        <div class="p-col-12">
+                            <p>{{homeWorkQuestion?.libelle}}</p>
+                        </div>
+
+                        <div class="p-col-12">
+                            <span class="p-float-label">
+                                <textarea id="float-input" rows="5" cols="100"
+                                          [(ngModel)]="homeWorkReponse.lib"
+                                          pInputTextarea></textarea>
+                                <label for="float-input">Your answer</label>
+                            </span>
+                        </div>
+
+                    </div>
+
+
                     <!--------------------------------- TRUE OR FALSE -------------------------------------------------------->
 
                     <div *ngIf="homeWorkQuestion.typeDeQuestion.ref === 't5'" class="p-grid">
@@ -392,7 +417,7 @@
                 <tr class="timeline">
 
                     <li style="margin-top: 20px">
-                        <td (click)="homeWorkSelected(homeWork)"
+                        <td (click)="homeWorkSelectedFct(homeWork)"
                             [style.color]="(homeWork.id) == (this.selectedHomeWork?.id)? 'orange' :'black' "
                             style="cursor: pointer; font-weight: 600;margin-left: 5px; font-size: 15px">
                             <u style="margin-left: 33px">{{homeWork?.libelle}}</u>

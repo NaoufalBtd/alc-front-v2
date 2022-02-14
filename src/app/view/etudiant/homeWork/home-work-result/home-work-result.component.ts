@@ -21,35 +21,31 @@ import {Router} from '@angular/router';
 })
 export class HomeWorkResultComponent implements OnInit {
 
-    public homeWorkEtudiantList: Array<HomeWOrkEtudiant> = new Array<HomeWOrkEtudiant>();
     public homeWorkEtudiantReponseList: Array<ReponseEtudiantHomeWork> = new Array<ReponseEtudiantHomeWork>();
+    displayDetailsDialog: boolean;
 
     constructor(
         public homeWorkEtudiantservice: HomeWorkEtudiantServiceService,) {
     }
 
-    set homeWorkEtudiant(value: HomeWOrkEtudiant) {
-        this.homeWorkEtudiantservice.homeWorkEtudiant = value;
-    }
 
-    get homeWorkEtudiant(): HomeWOrkEtudiant {
-        return this.homeWorkEtudiantservice.homeWorkEtudiant;
-
+    get homeWorkEtudiantList(): Array<HomeWOrkEtudiant> {
+        return this.homeWorkEtudiantservice.homeWorkEtudiantList;
     }
 
     ngOnInit(): void {
         console.log('+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
-        console.log(this.homeWorkEtudiant);
-        this.homeWorkEtudiantList.push({...this.homeWorkEtudiant});
-
+        console.log(this.homeWorkEtudiantList);
     }
 
 
     showDetails(homeWork: HomeWOrkEtudiant) {
+        this.homeWorkEtudiantReponseList = new Array<ReponseEtudiantHomeWork>();
         console.log(homeWork);
         this.homeWorkEtudiantservice.findHomeWorkEtudiantReponseByHomeWorkEtudiantId(homeWork.id).subscribe(homeWorkRps => {
             this.homeWorkEtudiantReponseList = homeWorkRps;
             console.log(homeWorkRps);
+            this.displayDetailsDialog = true;
         }, error => {
             console.log(error);
         });

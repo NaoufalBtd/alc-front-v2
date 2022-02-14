@@ -1,16 +1,17 @@
-
 <div class="card">
     <p-table [value]="homeWorkEtudiantList" styleClass="p-datatable-striped">
         <ng-template pTemplate="header">
             <tr>
+                <th>Date</th>
                 <th>Full name</th>
-                <th>Result </th>
+                <th>Result</th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-homeWorkEtudiant>
             <tr>
-               <td>{{homeWorkEtudiant?.etudiant?.nom }}{{ homeWorkEtudiant?.etudiant?.prenom}}</td>
-               <td>{{homeWorkEtudiant?.resultat}}</td>
+                <td>{{homeWorkEtudiant?.date |date:'yyyy-MM-dd'}}</td>
+                <td>{{homeWorkEtudiant?.etudiant?.nom }}{{ homeWorkEtudiant?.etudiant?.prenom}}</td>
+                <td>{{homeWorkEtudiant?.resultat}}</td>
 
                 <td>
                     <button pButton pRipple type="button" icon="pi pi-info"
@@ -24,3 +25,39 @@
     </p-table>
 
 </div>
+
+<p-dialog [(visible)]="displayDetailsDialog" [style]="{width: '80vw'}">
+    <p-table [value]="homeWorkEtudiantReponseList" styleClass="p-datatable-striped">
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width: 20px;"></th>
+                <th style="width: 20px;"></th>
+                <th>Question type</th>
+                <th>Your answer</th>
+                <th>Correct answer</th>
+                <th>Note</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-answer>
+            <tr>
+                <th scope="row" *ngIf="answer.answer === answer?.reponse?.lib && answer.note !== 0.5 ">
+                    <i class="pi pi-check-circle" pTooltip="Correct answer" tooltipPosition="top"></i>
+                </th>
+
+                <th scope="row" *ngIf="answer.answer !== answer?.reponse?.lib && answer.answer !== null || undefined">
+                    <i pTooltip="Incorrect answer" tooltipPosition="top" class="pi pi-times-circle"></i></th>
+
+
+                <th scope="row" *ngIf="answer.answer === null || undefined">
+                    <i pTooltip="Student don't know" tooltipPosition="top" class="pi pi-exclamation-circle"></i>
+                </th>
+
+                <th scope="row">{{answer?.question?.numero}}</th>
+                <td>{{answer?.question?.typeDeQuestion?.lib}}</td>
+                <td>{{answer?.answer}}</td>
+                <td>{{answer?.reponse?.lib}}</td>
+                <td>{{answer?.note}}</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</p-dialog>

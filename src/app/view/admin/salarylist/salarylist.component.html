@@ -42,8 +42,7 @@
 
                         <th pSortableColumn="prof">Prof</th>
                         <th pSortableColumn="code">Code</th>
-                        <th pSortableColumn="annee">Year</th>
-                        <th pSortableColumn="mois">Month</th>
+                        <th pSortableColumn="annee">Date</th>
                         <th pSortableColumn="nbrSessionMensuel">Number of Monthly Sessions</th>
                         <th pSortableColumn="montantMensuel">Monthly Amount</th>
                         <th>Details</th>
@@ -54,10 +53,9 @@
 
                         <td>{{salary.prof.nom}} {{salary.prof.prenom}}</td>
                         <td>{{salary.code}}</td>
-                        <td>{{salary.annee}}</td>
-                        <td>{{salary.mois}}</td>
+                        <td>{{salary.mois}}/{{salary.annee}}</td>
                         <td>{{salary.nbrSessionMensuel}}</td>
-                        <td>{{salary.montantMensuel}}</td>
+                        <td>{{salary.totalBonusWorkload+salary.totalPayment+ salary.totalBonusClassAverage}}</td>
                         <td>
                             <button pButton pRipple icon="pi pi-list" class="p-button-rounded p-button-info p-mr-2"
                                     (click)="showDetails(salary.mois,salary.annee,salary.prof.id)"
@@ -83,11 +81,7 @@
                      [globalFilterFields]="['reference','total','totalPaye']"
                      dataKey="id" styleClass="p-datatable-customers">
 
-                <ng-template pTemplate="caption">
-                    <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
-                        <h5 class="p-m-0">List of Payment</h5>
-                    </div>
-                </ng-template>
+
                 <ng-template pTemplate="header">
                     <tr>
                         <th pSortableColumn="Amount">Amount</th>
@@ -98,14 +92,14 @@
                 </ng-template>
                 <ng-template pTemplate="body" let-payment>
                     <tr>
-                        <td>{{payment.montant}}</td>
+                        <td>{{payment.prof.categorieProf.lessonRate}}</td>
                         <td>{{payment.groupeEtudiant.libelle}}</td>
                         <td>{{payment.datePaiement}}</td>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="footer">
                     <h5 style="margin-top: 15px">Total Payment: <span
-                            style="color: #0d67ce"> {{this.monatantAllPaimentSelected}}</span></h5>
+                            style="color: #0d67ce"> </span></h5>
                 </ng-template>
             </p-table>
 

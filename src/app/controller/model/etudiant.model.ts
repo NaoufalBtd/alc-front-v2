@@ -20,13 +20,11 @@ export class Etudiant extends User {
     public groupeEtude = new GroupeEtude();
     public etatEtudiantSchedule = new EtatEtudiantSchedule();
     public prof = new Prof();
-    public chatMessageDto = new Array<ChatMessageDto>();
     public groupeEtudiantDetails = new  Array< GroupeEtudiantDetail>();
     public interetEtudiant = new InteretEtudiant();
     public niveauEtude = new NiveauEtude();
     public fonction = new Fonction();
     public statutSocial =  new StatutSocial();
-
-
+    public langue: string;
 
 }
