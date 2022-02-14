@@ -9,6 +9,10 @@ import {InteretEtudiant} from '../../../../controller/model/interet-etudiant.mod
 import {Fonction} from '../../../../controller/model/fonction.model';
 import {StatutSocial} from '../../../../controller/model/statut-social.model';
 import {NiveauEtude} from '../../../../controller/model/niveau-etude.model';
+import {PackStudent} from "../../../../controller/model/pack-student.model";
+import {GroupeEtude} from "../../../../controller/model/groupe-etude.model";
+import {PackStudentService} from "../../../../controller/service/pack-student.service";
+import {GroupeEtudeService} from "../../../../controller/service/groupe-etude.service";
 
 @Component({
     selector: 'app-inscription-edit',
