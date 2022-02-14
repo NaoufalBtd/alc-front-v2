@@ -45,6 +45,8 @@ export class ManageSectionComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.selectedparcours = new Parcours();
+        this.selectedcours = new Cours();
         this.parcoursService.FindAllParcours().subscribe(
             data => {
                 this.parcours = data;
