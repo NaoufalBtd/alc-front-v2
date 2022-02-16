@@ -1,0 +1,44 @@
+.p-grid {
+  margin: 1% 1% 0 0 !important;
+}
+
+
+.topBar {
+  background-color: #ff792e;
+  border-radius: 5px;
+}
+
+img.shadow-4 {
+  cursor: pointer;
+  border-radius: 5px;
+  height: 60px;
+}
+
+.badge {
+  background: #C8E6C9;
+  color: #256029;
+  border-radius: 2px;
+  padding: 0.25em 0.5rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: .3px;
+}
+
+.contentBar {
+  //border: 3px solid #ff8800;
+  border-radius: 5px;
+}
+
+th {
+  color: #ff792e !important;
+}
+
+.searchButton{
+  background-color: #ff792e !important;
+  border: none!important;
+  color: white;
+}
+input{
+  width: 100% !important;
+}

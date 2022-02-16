@@ -268,6 +268,20 @@ import {ScheduleProfComponent} from './view/admin/professeur/schedule-prof/sched
 import {RouterModule} from '@angular/router';
 import {AppRoutingModule} from "./app-routing.module";
 import { DriveApiComponent } from './view/admin/drive-api/drive-api.component';
+import { ManageSectionComponent } from './view/admin/manage-section/manage-section.component';
+import { HomeWorkPreviewComponent } from './view/admin/home-work-preview/home-work-preview.component';
+import { ComplaintComponent } from './view/admin/complaint/complaint.component';
+import { ComplaintListComponent } from './view/admin/complaint/complaint-list/complaint-list.component';
+import {TypeReclamationEtudiantComponent} from './view/admin/typeReclamation/type-reclamation-etudiant/type-reclamation-etudiant.component';
+import {TypeReclamationProfComponent} from './view/admin/typeReclamation/type-reclamation-prof/type-reclamation-prof.component';
+import { ReclamationProfComponent } from './view/prof/reclamation-prof/reclamation-prof.component';
+import { ReclamationEtudiantComponent } from './view/etudiant/reclamation-etudiant/reclamation-etudiant.component';
+import { ReclamationEtudiantCreateComponent } from './view/etudiant/reclamationEtudiant/reclamation-etudiant-create/reclamation-etudiant-create.component';
+import { ReclamationProfCreateComponent } from './view/prof/reclamation-prof/reclamation-prof-create/reclamation-prof-create.component';
+import {
+    ComplaintViewEtudiantComponent
+} from './view/admin/complaint/complaint-view/complaint-view-etudiant/complaint-view-etudiant.component';
+import {ComplaintViewProfComponent} from './view/admin/complaint/complaint-view/complaint-view-prof/complaint-view-prof.component';
 import {ProfileComponent} from './view/etudiant/profile/profile.component';
 
 
@@ -466,7 +480,7 @@ import {ProfileComponent} from './view/etudiant/profile/profile.component';
         NewsEtudiantViewComponent,
         NewsAdminEditComponent,
         NewsAdminDeleteComponent,
-         ScheduleAdminComponent,
+        ScheduleAdminComponent,
         ScheduleStudentComponent,
         QuizUpdateComponent,
         SectionCreateComponent,
@@ -540,6 +554,19 @@ import {ProfileComponent} from './view/etudiant/profile/profile.component';
         ScheduleProfComponent,
         DriveApiComponent,
        ProfileComponent
+        DriveApiComponent,
+        ManageSectionComponent,
+        HomeWorkPreviewComponent,
+        ComplaintComponent,
+        ComplaintListComponent,
+        TypeReclamationEtudiantComponent,
+        TypeReclamationProfComponent,
+        ReclamationProfComponent,
+        ReclamationEtudiantComponent,
+        ReclamationEtudiantCreateComponent,
+        ReclamationProfCreateComponent,
+        ComplaintViewEtudiantComponent,
+        ComplaintViewProfComponent
 
     ],
     providers: [

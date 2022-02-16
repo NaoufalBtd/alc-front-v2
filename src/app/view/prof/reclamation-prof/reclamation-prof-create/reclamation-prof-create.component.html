@@ -1,0 +1,21 @@
+<p-dialog [(visible)]="displayReclamationProf" [modal]="true" [style]="{width: '450px'}"
+          header="Reclamation" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <div class="p-field">
+            <label for="message" >Message</label>
+            <textarea id="message" pInputTextarea [(ngModel)]="reclamationProf.message"></textarea>
+        </div>
+        <div class="p-field">
+            <label for="type">Type Reclamation</label>
+            <p-dropdown [options]="typeReclamationProfList" [(ngModel)]="reclamationProf.typeReclamationProf"  placeholder="Select a Type" id="type" optionLabel="code"
+                        [showClear]="true"></p-dropdown>
+
+        </div>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button (click)="hideCreateDialog()" class="p-button-text" icon="pi pi-times" label="Cancel" pButton
+                pRipple></button>
+        <button class="p-button-text" (click)="saveReclamationProf()" icon="pi pi-check" label="Save" pButton pRipple></button>
+    </ng-template>
+</p-dialog>

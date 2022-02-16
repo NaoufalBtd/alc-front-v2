@@ -1,7 +1,6 @@
 import {RouterModule} from '@angular/router';
 import {NgModule} from '@angular/core';
 import {FormLayoutDemoComponent} from './view/public/Inscription-student/formlayoutdemo.component';
-
 import {LearnComponent} from './view/admin/learn/learn.component';
 import {SectionsComponent} from './view/prof/learn-teacher/sections/sections.component';
 import {CoursesComponent} from './view/prof/learn-teacher/courses/courses.component';
@@ -79,6 +78,11 @@ import {SalarylistComponent} from './view/admin/salarylist/salarylist.component'
 import {ScheduleProfComponent} from './view/admin/professeur/schedule-prof/schedule-prof.component';
 import {PackStudentComponent} from './view/admin/pack-student/pack-student.component';
 import {DriveApiComponent} from './view/admin/drive-api/drive-api.component';
+import {ManageSectionComponent} from './view/admin/manage-section/manage-section.component';
+import {HomeWorkPreviewComponent} from './view/admin/home-work-preview/home-work-preview.component';
+import {ComplaintComponent} from './view/admin/complaint/complaint.component';
+import {ReclamationProf} from './controller/model/reclamation-prof.model';
+import {ReclamationProfComponent} from './view/prof/reclamation-prof/reclamation-prof.component';
 import {ProfileComponent} from './view/etudiant/profile/profile.component';
 
 
@@ -114,8 +118,10 @@ import {ProfileComponent} from './view/etudiant/profile/profile.component';
                     {path: 'homeWork', component: HomeWorkComponentComponent},
                     {path: 'bonus', component: BonusProfComponent},
                     {path: 'driveApi', component: DriveApiComponent},
-                    {path: 'salarylist', component: SalarylistComponent}
-
+                    {path: 'salarylist', component: SalarylistComponent},
+                    {path: 'manage-section', component: ManageSectionComponent},
+                    {path: 'home-work-review', component: HomeWorkPreviewComponent},
+                    {path: 'complaint', component: ComplaintComponent}
                 ]
             },
             {
@@ -140,7 +146,8 @@ import {ProfileComponent} from './view/etudiant/profile/profile.component';
                     {path: 'etudiantReviewcomment', component: EtudiantcommentreviewComponent},
                     {path: 'sudents-homework', component: StudentsHomeworkComponent},
                     {path: 'paiementlist', component: PaiementlistComponent},
-                    {path: 'connected-student', component: ConnectedStudentComponent}
+                    {path: 'connected-student', component: ConnectedStudentComponent},
+                    {path: 'reclamation-prof', component: ReclamationProfComponent}
                 ]
             },
             {
