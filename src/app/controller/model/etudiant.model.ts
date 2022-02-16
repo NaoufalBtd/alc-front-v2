@@ -10,6 +10,7 @@ import {InteretEtudiant} from './interet-etudiant.model';
 import {NiveauEtude} from './niveau-etude.model';
 import {Fonction} from './fonction.model';
 import {StatutSocial} from './statut-social.model';
+import {Skill} from './skill.model';
 
 export class Etudiant extends User {
     public ref: string;
@@ -25,6 +26,7 @@ export class Etudiant extends User {
     public niveauEtude = new NiveauEtude();
     public fonction = new Fonction();
     public statutSocial =  new StatutSocial();
+    public skill =  new Skill();
     public langue: string;
 
 }

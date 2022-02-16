@@ -79,6 +79,7 @@ import {SalarylistComponent} from './view/admin/salarylist/salarylist.component'
 import {ScheduleProfComponent} from './view/admin/professeur/schedule-prof/schedule-prof.component';
 import {PackStudentComponent} from './view/admin/pack-student/pack-student.component';
 import {DriveApiComponent} from './view/admin/drive-api/drive-api.component';
+import {ProfileComponent} from './view/etudiant/profile/profile.component';
 
 
 @NgModule({
@@ -157,7 +158,8 @@ import {DriveApiComponent} from './view/admin/drive-api/drive-api.component';
                     {path: 'etudiant-simulate-sections/homeWork', component: HomeWorkEtudiantComponent},
                     {path: 'homeWorkEtudiant', component: HomeWorkEtudiantComponent},
                     {path: 'homeWorkEtudiantResult', component: HomeWorkResultComponent},
-                    {path: 'profile', component: EtudiantProfileComponent}
+                    {path: 'profile', component: EtudiantProfileComponent},
+                    {path: 'profileEdit', component: ProfileComponent}
 
                 ]
             },

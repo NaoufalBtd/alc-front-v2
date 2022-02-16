@@ -268,6 +268,8 @@ import {ScheduleProfComponent} from './view/admin/professeur/schedule-prof/sched
 import {RouterModule} from '@angular/router';
 import {AppRoutingModule} from "./app-routing.module";
 import { DriveApiComponent } from './view/admin/drive-api/drive-api.component';
+import {ProfileComponent} from './view/etudiant/profile/profile.component';
+
 
 
 @NgModule({
@@ -536,7 +538,8 @@ import { DriveApiComponent } from './view/admin/drive-api/drive-api.component';
         EtudiantinscriptionComponent,
         SalarylistComponent,
         ScheduleProfComponent,
-        DriveApiComponent
+        DriveApiComponent,
+       ProfileComponent
 
     ],
     providers: [

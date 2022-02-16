@@ -1,3 +1,82 @@
+/*
+.yourprofil{
+  margin-top: 30px;
+}
+
+
+img {
+  width: 111px;
+  background-color: #607d8b;
+  border-radius: 25%;
+}
+
+.hiba {
+  border-top: 2px solid #607d8b;
+}
+
+.p-grid {
+  margin-top: 10px;
+}
+.p-dialog-content {
+  height: 400px !important;
+}
+body {
+  padding: 1em;
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 15px;
+  color: #b9b9b9;
+  background-color: #e3e3e3;
+}
+
+.status{
+  margin-right :10px;
+}
+.status2{
+  margin-right :10px;
+  margin-top:9px;
+}
+.class3{
+  margin-left:890px;
+  margin-top: 20px;
+}
+.class4{
+  margin-left: 10px;
+}
+button{
+  color: #f0a500;
+}
+h2 {
+  color: #f0a500;
+}
+input,
+input[type="combobox"] + label,
+input[type="checkbox"] + label:before,
+select option,
+
+select {
+  width: 100%;
+  padding: 1em;
+  line-height: 1.4;
+  background-color: #f9f9f9;
+  border: 1px solid #e5e5e5;
+  border-radius: 3px;
+  -webkit-transition: 0.35s ease-in-out;
+  -moz-transition: 0.35s ease-in-out;
+  -o-transition: 0.35s ease-in-out;
+  transition: 0.35s ease-in-out;
+  transition: all 0.35s ease-in-out;
+}
+.container {
+  max-width: 90em;
+  padding: 1em 3em 2em 3em;
+  margin: 0em auto;
+  background-color: #fff;
+  border-radius: 4.2px;
+  box-shadow: 0px 3px 10px -2px rgba(0, 0, 0, 0.2);
+}
+
+
+ */
 body {
   color: #797979;
   background: #f1f2f7;
@@ -385,52 +464,7 @@ ul.summary-list > li:last-child  {
   box-shadow: 0 1px 20px 0 rgb(69, 79, 100);
   border: none;
   margin-bottom: 30px;
-  width: 1000px;
+  width: 1500px;
   margin-top: 15px;
   margin-left: 70px;
-}
-.row {
- display: flex;
-flex-direction: row;
-justify-content: space-around;
- flex-flow: wrap;
- }
-
-.card-1 {
-  /*
-  width: 20%;
-  */
-  background: #fff;
-  border: 1px solid #ccc;
-  margin: 10px;
-  transition: 0.3s;
-}
-
-.card-header-1 {
-  text-align: center;
-  padding: 50px 10px;
-  background: linear-gradient(to right, #ff416c, #ff4b2b);
-  color: #fff;
-}
-
-.card-body-1 {
-  padding: 30px 20px;
-  text-align: center;
-  font-size: 18px;
-}
-
-.card-body-1 .btn-1 {
-  display: block;
-  color: #fff;
-  text-align: center;
-  background: linear-gradient(to right, #ff416c, #ff4b2b);
-  margin-top: 30px;
-  text-decoration: none;
-  padding: 10px 5px;
-  cursor: pointer;
-}
-
-.card-1:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 40px -10px rgba(0, 0, 0, 0.25);
 }

@@ -19,6 +19,7 @@ import {NiveauEtude} from '../../../../controller/model/niveau-etude.model';
 import {InteretEtudiant} from '../../../../controller/model/interet-etudiant.model';
 import {Fonction} from '../../../../controller/model/fonction.model';
 import {StatutSocial} from '../../../../controller/model/statut-social.model';
+import {Skill} from '../../../../controller/model/skill.model';
 
 @Component({
     selector: 'app-inscription-list',
@@ -203,6 +204,14 @@ export class InscriptionListComponent implements OnInit {
                 console.log(error);
             }
         );
+        this.service.findAllSkill().subscribe(
+            data => {
+                this.skills = data;
+                console.log(data);
+            }, error => {
+                console.log(error);
+            }
+        );
         this.service.findAllStatutSocial().subscribe(
             data => {
                 this.statutSocials = data;
@@ -375,5 +384,19 @@ export class InscriptionListComponent implements OnInit {
             this.packStudents = this.packStudentService.packstudentIndividialList;
         }
         console.log(this.packStudents);
+    }
+    get skills(): Array<Skill> {
+
+        return this.service.skills;
+    }
+    set skill(value: Skill) {
+        this.service.skill = value;
+    }
+
+    set skills(value: Array<Skill>) {
+        this.service.skills = value;
+    }
+    get skill(): Skill {
+        return this.service.skill;
     }
 }
