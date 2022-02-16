@@ -188,3 +188,58 @@
         </p-table>
     </div>
 </p-dialog>
+
+
+<!-----------------------------------------------------Edit write It Up  Dialog ------------------------------------>
+
+<p-dialog header="Questions" [(visible)]="showEditWriteItUpDialog" [style]="{width: '50vw'}">
+    <div class="p-grid">
+
+        <div class="p-col-4 ">
+            <h6>Type of Homework</h6>
+            <input disabled type="text" pInputText [(ngModel)]="selectedHomeWork.libelle">
+        </div>
+
+        <div class="p-col-4 ">
+            <h6>Url Image</h6>
+            <input  type="text" pInputText [(ngModel)]="selectedHomeWork.urlImage">
+        </div>
+
+        <div class="p-col-4 ">
+            <h6>Url Video</h6>
+            <input  type="text" pInputText [(ngModel)]="selectedHomeWork.urlVideo">
+        </div>
+
+
+        <div class="p-col-4 ">
+            <h6>Number of question</h6>
+            <input  type="text" pInputText [(ngModel)]="qstWriteItUp.numero">
+        </div>
+
+
+        <div class="p-col-4 ">
+            <h6>Correct answer</h6>
+            <input  type="number" pInputText [(ngModel)]="qstWriteItUp.pointReponseJuste">
+        </div>
+
+
+        <div class="p-col-4 ">
+            <h6>Incorrect answer</h6>
+            <input  type="number" pInputText [(ngModel)]="qstWriteItUp.pointReponsefausse">
+        </div>
+
+        <div class="p-col-8">
+            <h6>Question</h6>
+            <textarea rows="5" cols="90%" [(ngModel)]="qstWriteItUp.libelle" pInputTextarea
+                      autoResize="autoResize"></textarea>
+        </div>
+
+
+
+    </div>
+
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-check" (click)="updateHomeWork()" label="save changes"
+                  styleClass="p-button-text"></p-button>
+    </ng-template>
+</p-dialog>
