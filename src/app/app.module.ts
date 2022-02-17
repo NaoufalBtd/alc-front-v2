@@ -553,7 +553,7 @@ import {ProfileComponent} from './view/etudiant/profile/profile.component';
         SalarylistComponent,
         ScheduleProfComponent,
         DriveApiComponent,
-       ProfileComponent
+       ProfileComponent,
         DriveApiComponent,
         ManageSectionComponent,
         HomeWorkPreviewComponent,
