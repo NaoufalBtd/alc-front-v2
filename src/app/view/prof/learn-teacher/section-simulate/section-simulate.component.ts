@@ -21,6 +21,7 @@ import {LearnService} from '../../../../controller/service/learn.service';
 import {GroupeEtudiant} from '../../../../controller/model/groupe-etudiant.model';
 import {Etudiant} from '../../../../controller/model/etudiant.model';
 import {SessionCoursService} from '../../../../controller/service/session-cours.service';
+import {AppComponent} from '../../../../app.component';
 
 @Pipe({name: 'safe'})
 export class SafePipe1 implements PipeTransform {
@@ -57,6 +58,7 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
                 private messageService: MessageService,
                 private dictionnaryService: DictionaryService,
                 private router: Router,
+                private app: AppComponent,
                 private serviceQuiz: QuizService, private sanitizer: DomSanitizer, private quizService: QuizEtudiantService, private confirmationService: ConfirmationService, private service: ParcoursService, private http: HttpClient, private review: EtudiantReviewService) {
     }
 
@@ -481,5 +483,21 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
 
     public saveSessionCoursForGroupEtudiant(idprof: number, idcours: number) {
         this.sessionservice.saveSessionCoursForGroupEtudiant( idprof, idcours);
+    }
+    getLanguages(): Array<any> {
+        return this.app.languages;
+    }
+
+    getSelectedLanguage() {
+        console.log(this.selectedLanguage);
+
+    }
+
+    get selectedLanguage(): any {
+        return this.learnService.selectedLanguage;
+    }
+
+    set selectedLanguage(value: any) {
+        this.learnService.selectedLanguage = value;
     }
 }

@@ -1,3 +1,8 @@
+.p-grid{
+  margin-top: -12px!important; ;
+}
+
+
 :host ::ng-deep {
 
 
@@ -134,4 +139,18 @@ h14 {
 
 .pi-heart-fill{
   color: red;
+}
+.p-col-1{
+  text-align: right;
+}
+
+.leftButton{
+  background: linear-gradient(90deg, #d53369 0%, #daae51 100%)!important;
+  color: white;
+  border: none!important;
+}
+.leftButton:hover{
+  background: linear-gradient(90deg, #d53369 0%, #daae51 100%)!important;
+  color: black;
+  border: none!important;
 }

@@ -1,25 +1,8 @@
 <div *ngIf="showTakeQuiz" class="p-field">
     <div class="p-grid">
         <div style="text-align: start;" class="p-col-4">
-            <div *ngIf="question.typeDeQuestion.ref === 't1'"
-                 style="font-size: medium;font-weight: 600;">
-                Choose the correct alternative
-            </div>
-            <div *ngIf="question.typeDeQuestion.ref === 't3'"
-                 style="font-size: medium;font-weight: 600;">
-                Translate the phrase
-            </div>
-            <div *ngIf="question.typeDeQuestion.ref === 't4'"
-                 style="font-size: medium;font-weight: 600;">
-                Correct the mistake
-            </div>
-            <div *ngIf="question.typeDeQuestion.ref === 't6'"
-                 style="font-size: medium;font-weight: 600;">
-                Write the correct form
-            </div>
-            <div *ngIf="question.typeDeQuestion.ref === 't5'"
-                 style="font-size: medium;font-weight: 600;">
-                True or False
+            <div style="font-size: medium;font-weight: 600;">
+                {{question?.typeDeQuestion?.lib}}
             </div>
         </div>
         <div class="p-col-4" style="text-align:center">
@@ -149,6 +132,8 @@
                    id="input-answer-incorrect" type="text"
                    [(ngModel)]="answerSelected.lib" pInputText>
         </span>
+            <h4 *ngIf="translateWord !== undefined">{{translateWord}}</h4>
+
 
         </div>
 
@@ -274,6 +259,10 @@
                     </p-toggleButton>
                 </div>
             </div>
+        </div>
+        <div style="text-align: center!important;" class="p-col-12">
+            <h4 *ngIf="translateWord !== undefined">{{translateWord}}</h4>
+
         </div>
 
         <div class="p-col-12 answers">

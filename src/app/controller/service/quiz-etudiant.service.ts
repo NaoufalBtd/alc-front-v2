@@ -582,6 +582,11 @@ export class QuizEtudiantService {
     return this.http.get<string>(this.adminUrl + 'TranslateEnAr/text/' + word , {responseType: 'text'});
   }
 
+  public translateEnFr(word: string): Observable<any> {
+    // @ts-ignore
+    return this.http.get<string>(this.adminUrl + 'TranslateEnAr/text/en-fr/' + word , {responseType: 'text'});
+  }
+
   save(quizStudent: QuizEtudiant): Observable<QuizEtudiant> {
     return this.http.post<QuizEtudiant>(this.urlStudent + 'quizEtudiant/', quizStudent);
   }

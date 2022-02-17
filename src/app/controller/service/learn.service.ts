@@ -15,6 +15,7 @@ import {Etudiant} from '../model/etudiant.model';
 import {HomeworkService} from './homework.service';
 import {HomeWorkEtudiantServiceService} from './home-work-etudiant-service.service';
 import {HomeWork} from '../model/home-work.model';
+import {AppComponent} from '../../app.component';
 
 @Injectable({
     providedIn: 'root'
@@ -59,11 +60,21 @@ export class LearnService {
     private _reponseQuiz: QuizReponse = new QuizReponse();
     private _showAppMenu = true;
     private _homeWorkList: Array<HomeWork> = new Array<HomeWork>();
+    private _selectedLanguage: any = {code: 'ar', name: 'Arabic', nativeName: 'العربية'};
+
 
     wordDictionnary: string;
     son = '';
     private _answersPointStudent: Map<Question, string> = new Map<Question, string>();
 
+
+    get selectedLanguage(): any {
+        return this._selectedLanguage;
+    }
+
+    set selectedLanguage(value: any) {
+        this._selectedLanguage = value;
+    }
 
     get homeWorkList(): Array<HomeWork> {
         return this._homeWorkList;
@@ -361,7 +372,7 @@ export class LearnService {
 
 
     saveAnswers(question: Question, type: string): Reponse {
-        // this.translate(question);
+        this.translate(question);
         this.disableButtonSon = false;
         if (question.typeDeQuestion.ref === 't1') {
             for (const item of question.reponses) {
@@ -414,24 +425,36 @@ export class LearnService {
         return this.answerSelected;
     }
 
-    //
-    // public translate(qst: Question) {
-    //     if (qst.typeDeQuestion.ref === 't1' || qst.typeDeQuestion.ref === 't6' || qst.typeDeQuestion.ref === 't4') {
-    //         this.wordDictionnary = this.questionSideLeft + ' ' + this.correctAnswersList?.get(qst.id)[0].lib + ' ' + this.questionSideRight;
-    //         console.log(this.son);
-    //     } else if (qst.typeDeQuestion.ref === 't3') {
-    //         this.wordDictionnary = this.correctAnswersList?.get(qst.id)[0].lib;
-    //         console.log(this.son);
-    //     } else if (qst.typeDeQuestion.ref === 't5') {
-    //         this.wordDictionnary = qst.libelle;
-    //     }
-    //     this.service.translate(this.wordDictionnary).subscribe(
-    //         data => {
-    //             this.translateWord = data;
-    //             console.log(data);
-    //         }
-    //     );
-    // }
+
+    public translate(qst: Question) {
+        if (qst.typeDeQuestion.ref === 't1' || qst.typeDeQuestion.ref === 't6' || qst.typeDeQuestion.ref === 't4') {
+            this.wordDictionnary = this.questionSideLeft + ' ' + this.correctAnswersList?.get(qst.id)[0].lib + ' ' + this.questionSideRight;
+            console.log(this.son);
+        } else if (qst.typeDeQuestion.ref === 't3') {
+            this.wordDictionnary = this.correctAnswersList?.get(qst.id)[0].lib;
+            console.log(this.son);
+        } else if (qst.typeDeQuestion.ref === 't5') {
+            this.wordDictionnary = qst.libelle;
+        }
+
+        console.log(this.selectedLanguage);
+
+        if (this.selectedLanguage.code === 'ar') {
+            this.service.translate(this.wordDictionnary).subscribe(
+                data => {
+                    this.translateWord = data;
+                    console.log(data);
+                }
+            );
+        } else if (this.selectedLanguage.code === 'fr') {
+            this.service.translateEnFr(this.wordDictionnary).subscribe(
+                data => {
+                    this.translateWord = data;
+                    console.log(data);
+                }
+            );
+        }
+    }
 
 
     answerIsCorrect(ans: Reponse, qst: Question) {
@@ -539,7 +562,7 @@ export class LearnService {
 
     showAnswers(question: Question): Reponse {
         this.disableButtonSon = false;
-        // this.translate(question);
+        this.translate(question);
         if (question.typeDeQuestion.ref === 't5') {
             document.getElementById('trueFalse').className = 'trueQst p-grid';
             this.trueOrFalse = this.correctAnswersList.get(question.id)[0].lib === 'true';

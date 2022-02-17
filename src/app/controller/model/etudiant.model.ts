@@ -25,6 +25,6 @@ export class Etudiant extends User {
     public niveauEtude = new NiveauEtude();
     public fonction = new Fonction();
     public statutSocial =  new StatutSocial();
-    public langue: string;
+    public langue = String('ar');
 
 }

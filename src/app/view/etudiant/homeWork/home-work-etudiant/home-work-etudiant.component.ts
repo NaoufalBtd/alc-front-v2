@@ -32,6 +32,7 @@ import {ReponseEtudiantHomeWork} from '../../../../controller/model/reponse-etud
     styleUrls: ['./home-work-etudiant.component.scss']
 })
 export class HomeWorkEtudiantComponent implements OnInit {
+    partOfStory: string = String('Part 0');
 
     constructor(
         private learnService: LearnService,
@@ -547,6 +548,23 @@ export class HomeWorkEtudiantComponent implements OnInit {
                     this.questionSideRight = this.homeWorkQuestion.libelle.substring(this.homeWorkQuestion.libelle.lastIndexOf('@') + 1);
                     this.inputAnswer = this.homeWorkQuestion.libelle.substring(this.homeWorkQuestion.libelle.indexOf('@') + 1,
                         this.homeWorkQuestion.libelle.lastIndexOf('@'));
+                } else if (this.homeWorkQuestion.typeDeQuestion.ref === 't8') {
+                    if (this.homeWorkQuestion.ref !== undefined) {
+                        const ref = this.homeWorkQuestion.ref.substring((this.homeWorkQuestion.ref.length - 10),
+                            this.homeWorkQuestion.ref.length);
+                        const index = this.homeWorkQuestion.libelle.lastIndexOf(ref);
+                        if (index !== 0 && index !== -1) {
+                            this.homeWorkQuestion.libelle = this.homeWorkQuestion.libelle.substring(index + ref.length,
+                                this.homeWorkQuestion.libelle.length);
+                        }
+                        let part = this.homeWorkQuestion.libelle.substring(0, 5);
+                        part = part.replace(/\s/g, '');
+                        if (part.toUpperCase() === 'PART') {
+                            this.partOfStory = this.homeWorkQuestion.libelle.substring(0, 8);
+                            this.homeWorkQuestion.libelle = this.homeWorkQuestion.libelle.substring(this.partOfStory.length,
+                                this.homeWorkQuestion.libelle.length);
+                        }
+                    }
                 }
             }
         });
@@ -564,5 +582,11 @@ export class HomeWorkEtudiantComponent implements OnInit {
         });
 
 
+    }
+
+    dict() {
+        const selection = window.getSelection();
+        let textSeleted = selection.toString();
+        console.log(textSeleted);
     }
 }
