@@ -1,0 +1,111 @@
+<div class="p-grid">
+    <div class="p-col-12">
+        <p-toast></p-toast>
+        <div class="card">
+            <p-toolbar styleClass="p-mb-4">
+                <ng-template pTemplate="left">
+                    <button pButton pRipple type="button" icon="pi pi-plus" label="Type Reclamation Prof" class="p-mr-2"
+                            (click)="showTypeReclamationProf()"></button>
+                    <button pButton pRipple type="button" icon="pi pi-plus" label="Type Reclamation Etudiant"
+                            class="p-button-warning" (click)="showTypeReclamationEtudiant()"></button>
+                </ng-template>
+                <ng-template pTemplate="right">
+
+                </ng-template>
+            </p-toolbar>
+            <p-tabView>
+                <p-tabPanel header="Complaint Prof">
+
+                    <p-table #dt [rows]="10" [paginator]="true"
+                             [value]="reclamationProfList"
+                             [globalFilterFields]="['reference','total','totalPaye']"
+                             [rowHover]="true" dataKey="id" styleClass="p-datatable-customers"
+                             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                             [showCurrentPageReport]="true">
+
+                        <ng-template pTemplate="header">
+                            <tr>
+
+                                <th pSortableColumn="Code">Code</th>
+                                <th pSortableColumn="prof">Prof</th>
+                                <th pSortableColumn="Date">Date Reclamation</th>
+                                <th pSortableColumn="Number Of Sessions">Etat</th>
+                                <th>Action</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-reclamationProf>
+                            <tr>
+                                <td>{{reclamationProf.reference}}</td>
+                                <td>{{reclamationProf.prof.nom}} {{reclamationProf.prof.prenom}}</td>
+                                <td>{{reclamationProf.dateReclamation}}</td>
+                                <td *ngIf="!reclamationProf.traite">
+                                    <strong style="background-color: red">    <i class="pi pi-times" style="font-size: 1rem;color: white"></i> <span style="color: white">  Non Traiter</span></strong>
+                                </td>
+                                <td *ngIf="reclamationProf.traite">
+                                    <strong style="background-color: green">    <i class="pi pi-check" style="color: white"></i> <span style="color: white"> Traiter</span></strong>
+                                </td>
+                                <td>
+
+                                    <button pButton type="button" class="p-button-info p-mr-2" (click)="showReclamationViewProf()"
+                                            icon="pi pi-align-justify"></button>
+                                </td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="summary">
+
+                        </ng-template>
+                    </p-table>
+                </p-tabPanel>
+
+                <p-tabPanel header="Complaint Student">
+
+                    <p-table #dt [rows]="10" [paginator]="true"
+
+                             [globalFilterFields]="['reference','total','totalPaye']"
+                             [rowHover]="true" dataKey="id" styleClass="p-datatable-customers"
+                             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                             [showCurrentPageReport]="true">
+
+                        <ng-template pTemplate="header">
+                            <tr>
+
+                                <th pSortableColumn="Code">Code</th>
+                                <th pSortableColumn="prof">Student</th>
+                                <th pSortableColumn="prof">Message</th>
+                                <th pSortableColumn="Date">Date Reclamation</th>
+                                <th pSortableColumn="Number Of Sessions">Etat</th>
+                                <th>Action</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-reclamationProf>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+
+                                <td>
+
+                                    <button pButton type="button" class="p-button-info p-mr-2"
+                                            icon="pi pi-align-justify"></button>
+                                </td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="summary">
+
+                        </ng-template>
+                    </p-table>
+                </p-tabPanel>
+
+            </p-tabView>
+
+        </div>
+        <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+    </div>
+    <app-type-reclamation-etudiant></app-type-reclamation-etudiant>
+    <app-type-reclamation-prof></app-type-reclamation-prof>
+    <app-complaint-view-prof></app-complaint-view-prof>
+    <app-complaint-view-etudiant></app-complaint-view-etudiant>
+</div>
+

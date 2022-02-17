@@ -15,6 +15,7 @@ import {NiveauEtude} from '../model/niveau-etude.model';
 import {StatutSocial} from '../model/statut-social.model';
 import {Fonction} from '../model/fonction.model';
 import {InteretEtudiant} from '../model/interet-etudiant.model';
+import {Skill} from '../model/skill.model';
 
 @Injectable({
     providedIn: 'root'
@@ -23,7 +24,7 @@ export class InscriptionService {
     constructor(private http: HttpClient) {
     }
     private adminUrl = environment.adminUrl;
-   private  etudiantUrl= environment.etudiantUrl;
+   private  etudiantUrl = environment.etudiantUrl;
     private _items: Array<Inscription>;
     private _selected: Inscription;
     private _etatInscription: EtatInscription;
@@ -51,7 +52,8 @@ export class InscriptionService {
     private _fonction: Fonction;
     private _interetEtudiant: InteretEtudiant;
     private _interetEtudiants: Array<InteretEtudiant>;
-
+    private _skill: Skill;
+    private _skills: Array<Skill>;
 
     public findAllNiveauEtude(): Observable<Array<NiveauEtude>> {
         return this.http.get<Array<NiveauEtude>>(this.etudiantUrl + 'niveauEtude/');
@@ -67,7 +69,10 @@ export class InscriptionService {
 
     }
 
+    public findAllSkill(): Observable<Array<Parcours>> {
+        return this.http.get<Array<Parcours>>(this.etudiantUrl + 'skill/');
 
+    }
 
     findByCriteria(student: Etudiant): Observable<Array<Inscription>> {
         const inscription: Inscription = new Inscription();
@@ -379,7 +384,7 @@ export class InscriptionService {
     }
 
     get statutSocial(): StatutSocial {
-        if(this._statutSocial == null ){
+        if (this._statutSocial == null ){
             this._statutSocial = new StatutSocial();
         }
         return this._statutSocial;
@@ -390,7 +395,7 @@ export class InscriptionService {
     }
 
     get statutSocials(): Array<StatutSocial> {
-        if(this._statutSocials == null ){
+        if (this._statutSocials == null ){
             this._statutSocials = new Array<StatutSocial>();
         }
         return this._statutSocials;
@@ -401,7 +406,7 @@ export class InscriptionService {
     }
 
     get niveauEtudes(): Array<NiveauEtude> {
-        if(this._niveauEtudes == null)
+        if (this._niveauEtudes == null)
         {
             this._niveauEtudes = new Array<NiveauEtude>();
         }
@@ -426,5 +431,31 @@ export class InscriptionService {
     public findByEtudiantId(id: number): Observable<Inscription>{
         return this.http.get<Inscription>(this.etudiantUrl + 'inscription/id/' + id );
     }
+
+    get skills(): Array<Skill> {
+        if (this._skills == null)
+        {
+            this._skills = new Array<Skill>();
+        }
+        return this._skills;
+    }
+    set skill(value: Skill) {
+        this._skill = value;
+    }
+
+    set skills(value: Array<Skill>) {
+        this._skills = value;
+    }
+
+    get skill(): Skill {
+        if (this._skills == null)
+        {
+            this._skill = new Skill();
+        }
+        return this._skill;
+    }
+
+
+
 }
 

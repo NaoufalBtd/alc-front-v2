@@ -1,4 +1,4 @@
- ng s o <p-dialog [(visible)]="editDialog" [modal]="true" [style]="{width: '450px'}" header="Etudiant Edit"
+ <p-dialog [(visible)]="editDialog" [modal]="true" [style]="{width: '450px'}" header="Etudiant Edit"
           styleClass="p-fluid">
     <ng-template pTemplate="content">
         <div class="p-field">
@@ -35,7 +35,32 @@
             </select>
             <small *ngIf="submitted && !selected.parcours.libelle" class="p-invalid">parcours is required.</small>
         </div>
+        <div class="p-col-12 p-md-6 p-lg-4">
+            <label for="dateformat1">Social status</label>
+            <p-dropdown [options]="statutSocials" editable="true" [(ngModel)]="selected.statutSocial"
+                        optionLabel="libelle" [itemSize]="3"></p-dropdown>
+        </div>
+        <div class="p-col-12 p-md-6 p-lg-4">
+            <label for="dateformat1">Niveau d'etude</label>
+            <p-dropdown [options]="niveauEtudes" editable="true" [(ngModel)]="selected.niveauEtude"
+                        optionLabel="libelle" [itemSize]="3"></p-dropdown>
+        </div>
+        <div class="p-col-12 p-md-6 p-lg-4">
+            <label for="dateformat1">Areas of work</label>
+            <p-dropdown [options]="fonctions"  editable="true" [(ngModel)]="selected.fonction"
+                        optionLabel="libelle" [itemSize]="3"></p-dropdown>
+        </div>
+        <div class="p-col-12 p-md-6 p-lg-4">
+            <label for="dateformat1">Interest</label>
+            <p-dropdown [options]="interetEtudiants" editable="true" [(ngModel)]="selected.interetEtudiant"
+                        optionLabel="libelle" [itemSize]="3"></p-dropdown>
+        </div>
 
+        <div class="p-col-12 p-md-6 p-lg-4">
+            <label for="dateformat1">Skill</label>
+            <p-dropdown [options]="skills" editable="true" [(ngModel)]="selected.skill"
+                        optionLabel="libelle" [itemSize]="3"></p-dropdown>
+        </div>
 
     </ng-template>
 

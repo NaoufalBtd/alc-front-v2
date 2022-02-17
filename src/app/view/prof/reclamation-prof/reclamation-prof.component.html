@@ -1,0 +1,55 @@
+<div class="p-grid">
+    <div class="p-col-12">
+        <p-toast></p-toast>
+        <div class="card">
+            <p-toolbar styleClass="p-mb-4">
+                <ng-template pTemplate="left">
+                    <button pButton pRipple type="button" icon="pi pi-plus" label="Reclamation" class="p-mr-2" (click)="showReclamationProf()"
+                           ></button>
+
+                </ng-template>
+                <ng-template pTemplate="right">
+
+                </ng-template>
+            </p-toolbar>
+                    <p-table #dt [rows]="10" [paginator]="true" [value]="reclamationProfList"
+                             [globalFilterFields]="['reference','total','totalPaye']"
+                             [rowHover]="true" dataKey="id" styleClass="p-datatable-customers"
+                             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                             [showCurrentPageReport]="true">
+
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th pSortableColumn="prof">Message</th>
+                                <th pSortableColumn="Date">Date Reclamation</th>
+                                <th pSortableColumn="Number Of Sessions">Etat</th>
+                                <th>Action</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-reclamationProf>
+                            <tr>
+                                <td>{{reclamationProf.message}}</td>
+                                <td>{{reclamationProf.dateReclamation}}</td>
+                                <td *ngIf="!reclamationProf.traite">
+                                    <strong style="background-color: orangered">    <i class="pi pi-spin pi-spinner" style="font-size: 1rem;color: black"></i> <span style="color: white">  En cours de traitement</span></strong>
+                                </td>
+                                <td *ngIf="reclamationProf.traite">
+                                    <strong style="background-color: green">    <i class="pi pi-check" style="color: white"></i> <span style="color: white"> Traiter</span></strong>
+                                </td>
+                                <td>
+                                    <button pButton type="button" class="p-button-info p-mr-2"
+                                            icon="pi pi-align-justify"></button>
+
+                                </td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="summary">
+
+                        </ng-template>
+                    </p-table>
+        </div>
+        <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+    </div>
+<app-reclamation-prof-create></app-reclamation-prof-create>
+</div>
+
