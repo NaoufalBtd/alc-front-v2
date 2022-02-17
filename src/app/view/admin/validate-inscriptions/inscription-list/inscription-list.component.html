@@ -64,7 +64,7 @@
                                     <th style="width: 3rem">
                                         <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                                     </th>
-                                    <th pSortableColumn="id">Id
+                                    <th pSortableColumn="id">Phone
                                         <p-sortIcon field="id"></p-sortIcon>
                                     </th>
                                     <th pSortableColumn="nom">LastName
@@ -91,7 +91,7 @@
                                     <td>
                                         <p-tableCheckbox [value]="inscription"></p-tableCheckbox>
                                     </td>
-                                    <td>{{inscription.id}}</td>
+                                    <td>{{inscription.etudiant.numero}}</td>
                                     <td>{{inscription.etudiant.nom}}</td>
                                     <td>{{inscription.etudiant.prenom}}</td>
                                     <td>{{inscription.etudiant.addresse}}</td>

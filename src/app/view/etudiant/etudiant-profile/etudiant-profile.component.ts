@@ -44,6 +44,7 @@ export class EtudiantProfileComponent implements OnInit {
   packChossen: PackStudent = new PackStudent();
   inscription: Inscription = new Inscription();
     updated = false;
+    showpackInput = false;
 
 
 
@@ -295,6 +296,7 @@ export class EtudiantProfileComponent implements OnInit {
   }
   getgroupechosen(id: number) {
     this.etudiantService.findGroupeById(id);
+    this.showpackInput = true;
   }
   selectedPack(pack: PackStudent) {
     this.etudiantService.packCode = pack.code ;
@@ -303,7 +305,7 @@ export class EtudiantProfileComponent implements OnInit {
     console.log(this.etudiantService.packCode);
   }
   updateInscriptionByStudent(){
-    this.etudiantService.updateInscriptionByStudent(this.packChossen.code).subscribe(
+    this.etudiantService.updateInscriptionByStudent(this.packChossen.code, this.etudiant).subscribe(
         data => {
           if (data > 0){
             this.updated = true;

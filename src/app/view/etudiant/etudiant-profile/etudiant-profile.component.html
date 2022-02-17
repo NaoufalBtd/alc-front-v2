@@ -56,12 +56,12 @@
                 <p-dropdown  id="float-input" [options]="statutSocials"  [(ngModel)]="etudiant.statutSocial" optionLabel="libelle" ></p-dropdown>
             </div>
             <div  class=" p-col-4">
-                <div *ngIf="etudiant.statutSocial.libelle == 'Employed'" >
+                <div  >
                 <label for="float-input" class="status">Area of work</label>
                 <p-dropdown    [options]="fonctions" placeholder="List of areas of work" [(ngModel)]="etudiant.fonction"
                             optionLabel="libelle" ></p-dropdown>
                 </div>
-                <div *ngIf="etudiant.statutSocial.libelle == 'Student'" >
+                <div  >
                     <label  class="status" for="float-input">Study Level</label>
                 <p-dropdown  [options]="niveauEtudes"  [(ngModel)]="etudiant.niveauEtude"
                             optionLabel="libelle" ></p-dropdown>
@@ -98,40 +98,37 @@
     <div class="p-col-12">
         <div class="p-grid">
             <div class="p-col-4">
-            <span>
-                <p-dropdown (onClick)="getgroupechosen(inscription.groupeEtude.id)" [disabled]="this.inscription.packStudent != null" (click)="findAllGroupeEtude() ; " [options]="groupeEtudeList" placeholder="Select Option"
+                <label for="group-option">Group Option</label>
+                <span>
+                <p-dropdown id="group-option" (onClick)="getgroupechosen(inscription.groupeEtude.id)" [disabled]="this.inscription.packStudent != null" (click)="findAllGroupeEtude() ; " [options]="groupeEtudeList" placeholder="Select Option"
                                             [(ngModel)]="etudiant.groupeEtude"
                                             optionLabel="libelle" ></p-dropdown>
             </span>
             </div>
+            <div class="p-col-4"  >
+                <p-button  (click)="showdialogPacks()" type="button" >Select your Pack : </p-button>
+                <p-button *ngIf="packChossen!=null"  style="margin-left: 40px" class="p-button-danger" > {{packChossen.nombreCours}}h : {{packChossen.prix}}$</p-button>
+            </div>
 
             <div class="p-col-4">
-            <span>
-                <p-dropdown [disabled]="this.inscription.packStudent != null" (click)="findAllParcoursList() ; " [options]="parcoursList" placeholder="Select Option"
+                <label for="level-option">level Option</label>
+                <span>
+                <p-dropdown id="level-option" [disabled]="this.inscription.packStudent != null" (click)="findAllParcoursList() ; " [options]="parcoursList" placeholder="Select Option"
                             [(ngModel)]="etudiant.parcours"
                             optionLabel="libelle" ></p-dropdown>
             </span>
             </div>
 
             <div class="p-col-4">
-            <span>
-                <select [disabled]="this.inscription.packStudent != null" required name="role" id="" [(ngModel)]="etudiant.teacherLocality" >
+                <label for="teacher">Teacher Locality</label>
+                <span>
+                <select [disabled]="this.inscription.packStudent != null" required name="role" id="teacher" [(ngModel)]="etudiant.teacherLocality" >
                     <option selected value=" ">Teacher</option>
                     <option value="native">Native</option>
                     <option value="non-native">Non-native</option>
                 </select>
             </span>
             </div>
-
-
-
-            <div class="p-col-4" >
-                <p-button  (click)="showdialogPacks()" type="button" >Select your Pack : </p-button>
-            </div>
-            <div class="p-col-4">
-                <p-button *ngIf="packChossen!=null"  style="margin-left: 40px" class="p-button-danger" > {{packChossen.nombreCours}}h : {{packChossen.prix}}$</p-button>
-            </div>
-
             <div class="p-col-4">
                 <button *ngIf="this.inscription.packStudent == null" pButton pRipple type="button" icon="pi pi-save" label="save changes"
                         (click)="updateInscriptionByStudent()"

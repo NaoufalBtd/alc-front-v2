@@ -100,10 +100,10 @@ export class EtudiantService {
         return this.http.get<Array<Etudiant>>(this.adminUrl + 'etudiant/');
     }
 
-    public updateInscriptionByStudent(code: string): Observable<number>{
-        this.selected.id = this.serviceUser.getConnectedStudent().id;
+    public updateInscriptionByStudent(code: string, etudiant: Etudiant): Observable<number>{
+        etudiant.id = this.serviceUser.getConnectedStudent().id;
         console.log(this.selected.id);
-        return this.http.post<number>(this.etudiantUrl + 'inscription/update/pack/' + code, this.selected);
+        return this.http.post<number>(this.etudiantUrl + 'inscription/update/pack/' + code, etudiant);
     }
 
     public deleteMultipleByNom(): Observable<number> {
