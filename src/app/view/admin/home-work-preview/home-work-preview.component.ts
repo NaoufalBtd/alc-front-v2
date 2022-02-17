@@ -11,6 +11,7 @@ import {HomeWorkQST} from '../../../controller/model/home-work-qst.model';
 import {HomeWorkReponse} from '../../../controller/model/home-work-reponse.model';
 import {Router} from '@angular/router';
 import {LearnService} from '../../../controller/service/learn.service';
+import {MessageService} from 'primeng/api';
 
 @Component({
     selector: 'app-home-work-preview',
@@ -23,6 +24,7 @@ export class HomeWorkPreviewComponent implements OnInit {
     public cours: Array<Cours> = new Array<Cours>();
     public homeWorks: Array<HomeWork> = new Array<HomeWork>();
     public qstList: Array<HomeWorkQST> = new Array<HomeWorkQST>();
+    public qstWriteItUp: HomeWorkQST = new HomeWorkQST();
     public selectedHomeWork: HomeWork = new HomeWork();
     public homeWork: HomeWork = new HomeWork();
     visibleSidebar: boolean;
@@ -35,10 +37,12 @@ export class HomeWorkPreviewComponent implements OnInit {
     showAnswersDialog: boolean;
     categorieSections: Array<CategorieSection> = new Array<CategorieSection>();
     answers: Array<HomeWorkReponse> = new Array<HomeWorkReponse>();
+    showEditWriteItUpDialog: boolean;
 
     constructor(private parcoursService: ParcoursService,
                 private homeWorkService: HomeworkService,
                 private router: Router,
+                private messageService: MessageService,
                 private learnService: LearnService,
                 private homeWorkEtudiantService: HomeWorkEtudiantServiceService) {
     }
@@ -60,6 +64,8 @@ export class HomeWorkPreviewComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.selectedparcours = new Parcours();
+        this.selectedcours = new Cours();
         this.parcoursService.FindAllParcours().subscribe(
             data => {
                 this.parcours = data;
@@ -117,7 +123,11 @@ export class HomeWorkPreviewComponent implements OnInit {
         this.courseSelected = this.selectedcours;
         this.parcourCurrent = this.selectedparcours;
         this.homeWorkSelected = homework;
-        this.router.navigate(['/admin/homeWork']);
+        if (homework.libelle === 'WRITE IT UP' || homework.libelle === 'READING') {
+            this.editWriteItUp(homework);
+        } else {
+            this.router.navigate(['/admin/homeWork']);
+        }
     }
 
 
@@ -148,4 +158,42 @@ export class HomeWorkPreviewComponent implements OnInit {
         this.homeWorkService.HomeWork = homeWork1;
     }
 
+    editWriteItUp(homeWork: HomeWork) {
+        this.selectedHomeWork = homeWork;
+        this.homeWorkEtudiantService.findQuestions(homeWork).subscribe(data => {
+            console.log(data);
+            if (data.length === 0) {
+                this.qstWriteItUp = new HomeWorkQST();
+            } else {
+                this.qstWriteItUp = data[0];
+
+            }
+        });
+        this.showEditWriteItUpDialog = true;
+    }
+
+    updateHomeWork() {
+        this.selectedHomeWork.questions = new Array<HomeWorkQST>();
+        this.selectedHomeWork.questions.push({...this.qstWriteItUp});
+        console.log(this.selectedHomeWork);
+        this.homeWorkService.updateHomeWork(this.selectedHomeWork).subscribe(data => {
+            console.log(data);
+            this.messageService.add({
+                severity: 'info',
+                summary: 'Successful',
+                detail: 'Home Work Updated',
+                life: 3000
+            });
+
+        }, error => {
+            console.log(error);
+            this.messageService.add({
+                severity: 'error',
+                summary: 'Error!',
+                detail: 'Error to update Home Work please try again !',
+                life: 3000
+            });
+        });
+        this.showEditWriteItUpDialog = false;
+    }
 }

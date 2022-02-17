@@ -94,7 +94,8 @@ export class AppMenuComponent implements OnInit {
                     {label: 'Schedule', icon: 'pi pi-calendar', routerLink: ['/admin/schedule']},
                     {label: 'Bonus', icon: 'pi pi-fw pi-wallet', routerLink: ['/admin/bonus']},
                     {label: 'Packs', icon: 'pi pi-briefcase', routerLink: ['/admin/PackStudent']},
-                    {label: 'Cloud', icon: 'pi pi-cloud', routerLink: ['/admin/driveApi']}
+                    {label: 'Cloud', icon: 'pi pi-cloud', routerLink: ['/admin/driveApi']},
+                    {label: 'Complaint', icon: 'pi pi-bell', routerLink: ['/admin/complaint']}
                 ];
             } else if (this.user.role === 'TEACHER') {
                 this.model = [
@@ -109,6 +110,7 @@ export class AppMenuComponent implements OnInit {
                     {label: 'News', icon: 'pi pi-fw pi-clock', routerLink: ['/prof/news-teacher']},
                     {label: 'Student HomeWork', icon: 'pi pi-sliders-h', routerLink: ['/prof/sudents-homework']},
                     {label: 'FAQ', icon: 'pi pi-fw pi-question-circle', routerLink: ['/prof/faq-teacher']},
+                    {label: 'Reclamation', icon: 'pi pi-fw pi-exclamation-triangle', routerLink: ['/prof/reclamation-prof']},
                 ];
             } else {
                 this.model = [
@@ -116,6 +118,8 @@ export class AppMenuComponent implements OnInit {
                     {label: 'FAQ ', icon: 'pi pi-fw pi-question-circle', routerLink: ['/etudiant/faq-student']},
                     {label: 'News ', icon: 'pi pi-fw pi-clock', routerLink: ['/etudiant/news-student']},
                     {label: 'Schedule', icon: 'pi pi-fw pi-calendar-times', routerLink: ['/etudiant/schedule-student']},
+                    {label: 'Reclamation', icon: 'pi pi-fw pi-exclamation-triangle', routerLink: ['/etudiant/reclamation-prof']},
+
 
                 ];
             }

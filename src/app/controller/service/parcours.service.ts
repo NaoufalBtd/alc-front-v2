@@ -649,8 +649,9 @@ export class ParcoursService {
         return this.http.get<number>(this.adminUrl + 'cours/id/' + id);
     }
 
-    public updateSection(): Observable<Section> {
-        return this.http.put<Section>(this.adminUrl + 'section/', this.selectedsection);
+    public updateSection(section: Section): Observable<Section> {
+        console.log(section);
+        return this.http.put<Section>(this.adminUrl + 'section/', section);
 
     }
 
@@ -669,6 +670,7 @@ export class ParcoursService {
             return this.http.post<number>(this.adminUrl + 'section/', this.selectedsection);
         }
     }
+
 
     public findByCriteria(section: Section): Observable<Array<Section>> {
         return this.http.post<Array<Section>>(this.adminUrl + 'section/search/', section);

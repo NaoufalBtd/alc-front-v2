@@ -4,6 +4,7 @@ import {Parcours} from '../../../controller/model/parcours.model';
 import {Cours} from '../../../controller/model/cours.model';
 import {Section} from '../../../controller/model/section.model';
 import {CategorieSection} from '../../../controller/model/categorie-section.model';
+import {MessageService} from 'primeng/api';
 
 @Component({
     selector: 'app-manage-section',
@@ -24,7 +25,7 @@ export class ManageSectionComponent implements OnInit {
     showEditDialog: boolean;
     categorieSections: Array<CategorieSection> = new Array<CategorieSection>();
 
-    constructor(private parcoursService: ParcoursService) {
+    constructor(private parcoursService: ParcoursService, private messageService: MessageService,) {
     }
 
     get selectedparcours(): Parcours {
@@ -44,6 +45,8 @@ export class ManageSectionComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.selectedparcours = new Parcours();
+        this.selectedcours = new Cours();
         this.parcoursService.FindAllParcours().subscribe(
             data => {
                 this.parcours = data;
@@ -100,5 +103,27 @@ export class ManageSectionComponent implements OnInit {
         }, error => {
             console.log(error);
         });
+    }
+
+    save() {
+        this.showEditDialog = false;
+        this.parcoursService.updateSection(this.sectionSelected).subscribe(data => {
+            this.messageService.add({
+                severity: 'info',
+                summary: 'Successful',
+                detail: 'Section Updated',
+                life: 3000
+            });
+        }, error => {
+            console.log(error);
+            this.messageService.add({
+                severity: 'error',
+                summary: 'Error!',
+                detail: 'Error to update section please try again !',
+                life: 3000
+            });
+
+        });
+
     }
 }

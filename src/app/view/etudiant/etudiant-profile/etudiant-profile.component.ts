@@ -23,6 +23,8 @@ import {StatutSocial} from '../../../controller/model/statut-social.model';
 import {NiveauEtude} from '../../../controller/model/niveau-etude.model';
 import {LoginComponent} from '../../public/login/login.component';
 import {LoginService} from '../../../controller/service/login.service';
+import {Router} from '@angular/router';
+import {Skill} from '../../../controller/model/skill.model';
 
 
 @Component({
@@ -46,8 +48,10 @@ export class EtudiantProfileComponent implements OnInit {
     updated = false;
     showpackInput = false;
 
+ Student =false;
+  Employed = false;
 
-
+    private submitted: boolean;
 
   constructor(private menuService: MenuService,
               private authenticationService: AuthenticationService,
@@ -55,7 +59,7 @@ export class EtudiantProfileComponent implements OnInit {
               public loginService: LoginService, private etudiantService: EtudiantService,
               private service: InscriptionService,
               public packStudentService: PackStudentService, private messageService: MessageService,
-              public groupeEtudeService: GroupeEtudeService) {
+              public groupeEtudeService: GroupeEtudeService,public router: Router) {
   }
   get selected(): Etudiant {
     return this.userService.selected;
@@ -73,8 +77,10 @@ export class EtudiantProfileComponent implements OnInit {
     });
   }
   ngOnInit(): void {
-  this.etudiantService.findAllEtudiant().subscribe(data =>
-  this.etudiant = data );
+
+  this.etudiantService.findAllEtudiant().subscribe(data =>{
+  this.etudiant = data ;
+  this.getValue();});
   this.user = this.authenticationService.getUserFromLocalCache();
   this.etudiantService.findAllParcours().subscribe(
         data => {
@@ -102,6 +108,14 @@ export class EtudiantProfileComponent implements OnInit {
           console.log(error);
         }
     );
+      this.service.findAllSkill().subscribe(
+          data => {
+              this.skills = data;
+              console.log(data);
+          }, error => {
+              console.log(error);
+          }
+      );
     this.userService.findAllFonction().subscribe(
         data => {
           this.fonctions = data;
@@ -156,12 +170,21 @@ export class EtudiantProfileComponent implements OnInit {
 
 
   public updateUser(user: User) {
+      this.submitted = true;
     this.subscriptions.push(
         this.userService.updateUser(user).subscribe(
             data => {
               this.user = data;
               this.authenticationService.addUserToLocalCache(this.user);
               console.log(data);
+                this.messageService.add({
+                    severity: 'success',
+                    summary: 'Successful',
+                    detail: 'profile updated',
+                    life: 3000,
+
+                });
+                console.log('salut');
             }, err => {
               console.log(err);
             }
@@ -327,4 +350,40 @@ export class EtudiantProfileComponent implements OnInit {
         );
 
   }
+
+  navigateToProfilEdit() {
+    this.router.navigate(['etudiant/profileEdit']);
+
+  }
+
+  getValue() {
+    if(this.etudiant.statutSocial.libelle == 'Student'){
+      this.Student = true;
+      this.Employed= false;
+    }
+    else if (this.etudiant.statutSocial.libelle == 'Employed')
+    {
+      this.Student = false;
+      this.Employed= true;
+    }
+    else {
+      this.Student = false;
+      this.Employed= false;
+    }
+
+  }
+    get skills(): Array<Skill> {
+
+        return this.service.skills;
+    }
+    set skill(value: Skill) {
+        this.service.skill = value;
+    }
+
+    set skills(value: Array<Skill>) {
+        this.service.skills = value;
+    }
+    get skill(): Skill {
+        return this.service.skill;
+    }
 }

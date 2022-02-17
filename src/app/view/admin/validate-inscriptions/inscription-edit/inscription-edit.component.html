@@ -75,6 +75,12 @@
                             optionLabel="libelle" [itemSize]="3"></p-dropdown>
             </div>
 
+            <div class="p-col-12 p-md-6 p-lg-4">
+                <label for="dateformat1">Skill</label>
+                <p-dropdown [options]="skills" editable="true" [(ngModel)]="selected.skill"
+                            optionLabel="libelle" [itemSize]="3"></p-dropdown>
+            </div>
+
         </div>
     </ng-template>
 

@@ -1,3 +1,7 @@
+.p-grid{
+  margin-top: -12px!important; ;
+}
+
 :host ::ng-deep {
 
 
@@ -145,4 +149,18 @@ tr.timeline > li:before {
   border: none !important;
   font-weight: 500!important;
   font-family: "Inter UI", sans-serif;
+}
+.p-col-1{
+  text-align: right;
+}
+
+.leftButton{
+  background: linear-gradient(90deg, #d53369 0%, #daae51 100%)!important;
+  color: white;
+  border: none!important;
+}
+.leftButton:hover{
+  background: linear-gradient(90deg, #d53369 0%, #daae51 100%)!important;
+  color: black;
+  border: none!important;
 }

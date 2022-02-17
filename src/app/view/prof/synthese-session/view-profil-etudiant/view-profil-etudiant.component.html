@@ -43,6 +43,24 @@
                          <label >Phone : {{etudiant.numero}}</label>
                      </div>
                 </div>
+                    <div  class="p-grid p-fluid class2 ">
+                        <div *ngIf="etudiant.statutSocial.libelle!=null" class=" p-field" >
+                            <label >Status Social : {{etudiant.statutSocial.libelle}}</label>
+                        </div>
+                        <div *ngIf="etudiant.fonction.libelle!=null" class=" p-field numero ">
+                            <label >Fonction : {{etudiant.fonction.libelle}}</label>
+                        </div>
+
+                    </div>
+                    <div class="p-grid p-fluid class2 ">
+                        <div *ngIf="etudiant.skill.libelle!=null" class=" p-field" >
+                            <label >Skill : {{etudiant.skill.libelle}}</label>
+                        </div>
+                        <div *ngIf="etudiant.interetEtudiant.libelle!=null" class=" p-field numero ">
+                            <label >Main goal  : {{etudiant.interetEtudiant.libelle}}</label>
+                        </div>
+
+                    </div>
                 </div>
             </p-tabPanel>
 
