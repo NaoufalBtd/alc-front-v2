@@ -72,12 +72,7 @@ export class EtudiantProfileComponent implements OnInit {
     console.log(this.etudiant);
     this.userService.edit(this.etudiant).subscribe(data => {
       this.etudiant  = data;
-        this.messageService.add({
-            severity: 'success',
-            summary: 'Successful',
-            detail: 'group updated',
-            life: 3000
-        });
+
     });
   }
   ngOnInit(): void {
@@ -225,7 +220,7 @@ export class EtudiantProfileComponent implements OnInit {
                 this.messageService.add({
                     severity: 'success',
                     summary: 'Successful',
-                    detail: 'group updated',
+                    detail: 'profile updated',
                     life: 3000,
 
                 });
