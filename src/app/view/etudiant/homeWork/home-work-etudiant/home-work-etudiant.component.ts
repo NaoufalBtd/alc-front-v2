@@ -549,10 +549,13 @@ export class HomeWorkEtudiantComponent implements OnInit {
                     this.inputAnswer = this.homeWorkQuestion.libelle.substring(this.homeWorkQuestion.libelle.indexOf('@') + 1,
                         this.homeWorkQuestion.libelle.lastIndexOf('@'));
                 } else if (this.homeWorkQuestion.typeDeQuestion.ref === 't8') {
-                    if (this.homeWorkQuestion.ref !== undefined) {
+                    console.log(this.homeWorkQuestion.libelle);
+                    if (this.homeWorkQuestion.ref !== '') {
                         const ref = this.homeWorkQuestion.ref.substring((this.homeWorkQuestion.ref.length - 10),
                             this.homeWorkQuestion.ref.length);
                         const index = this.homeWorkQuestion.libelle.lastIndexOf(ref);
+                        console.log(index);
+                        console.log(ref);
                         if (index !== 0 && index !== -1) {
                             this.homeWorkQuestion.libelle = this.homeWorkQuestion.libelle.substring(index + ref.length,
                                 this.homeWorkQuestion.libelle.length);

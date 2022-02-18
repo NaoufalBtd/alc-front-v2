@@ -13,11 +13,14 @@
     <div class="p-col-3 ">
         <h5>Courses</h5>
         <p-dropdown [options]="cours" [(ngModel)]="selectedcours"
-                    (ngModelChange)="getHomeWorks()"
                     [style]="{'width': '100%'}"
                     optionLabel="libelle" [filter]="true" filterBy="libelle" [showClear]="true"
                     placeholder="Select a Course">
         </p-dropdown>
+    </div>
+    <div style="padding-top: 43px;" class="p-col-1">
+        <button pButton pRipple type="button" (click)="getHomeWorks()"
+                icon="pi pi-search" class="p-button-rounded p-button-outlined p-button-info searchHomeWork "></button>
     </div>
 </div>
 
