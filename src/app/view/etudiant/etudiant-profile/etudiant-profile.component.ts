@@ -46,6 +46,8 @@ export class EtudiantProfileComponent implements OnInit {
   packChossen: PackStudent = new PackStudent();
   inscription: Inscription = new Inscription();
     updated = false;
+    showpackInput = false;
+
  Student =false;
   Employed = false;
 
@@ -72,7 +74,6 @@ export class EtudiantProfileComponent implements OnInit {
     console.log(this.etudiant);
     this.userService.edit(this.etudiant).subscribe(data => {
       this.etudiant  = data;
-
     });
   }
   ngOnInit(): void {
@@ -167,54 +168,13 @@ export class EtudiantProfileComponent implements OnInit {
     console.log(this.fileName);
   }
 
-/*
- public save() {
-    console.log(this.selected.prof);
-    console.log(this.groupeEtudiant);
-    this.submitted = true;
-    this.groupeEtudiantService.save().subscribe(data => {
-      this.groupeEtudiants.push({...this.groupeEtudiant});
-      // tslint:disable-next-line:no-shadowed-variable
-      this.groupeEtudiantService.findAll().subscribe(data => this.groupeEtudiants = data);
-      this.messageService.add({
-        severity: 'success',
-        summary: 'Successful',
-        detail: 'group Created',
-        life: 3000
-      });
-    });
-    this.createDialogEtud = false;
-    this.selected = new GroupeEtudiant();
 
-  }
- */
-    /*
-    public edit() {
-
-        this.groupeEtudiants[this.groupeEtudiantService.findIndexById(this.groupeEtudiant.id)] = this.groupeEtudiant;
-        this.groupeEtudiantService.edit().subscribe(data => {
-            this.groupeEtudiantService.findAll().subscribe(data => {
-                    this.groupeEtudiants = data;
-                    console.log( this.groupeEtudiants);
-                }
-            );
-
-            this.messageService.add({
-                severity: 'success',
-                summary: 'Successful',
-                detail: 'Etudiant Updated',
-                life: 3000
-            });
-        });
-
-     */
   public updateUser(user: User) {
       this.submitted = true;
     this.subscriptions.push(
         this.userService.updateUser(user).subscribe(
             data => {
               this.user = data;
-
               this.authenticationService.addUserToLocalCache(this.user);
               console.log(data);
                 this.messageService.add({
@@ -359,6 +319,7 @@ export class EtudiantProfileComponent implements OnInit {
   }
   getgroupechosen(id: number) {
     this.etudiantService.findGroupeById(id);
+    this.showpackInput = true;
   }
   selectedPack(pack: PackStudent) {
     this.etudiantService.packCode = pack.code ;
@@ -367,7 +328,7 @@ export class EtudiantProfileComponent implements OnInit {
     console.log(this.etudiantService.packCode);
   }
   updateInscriptionByStudent(){
-    this.etudiantService.updateInscriptionByStudent(this.packChossen.code).subscribe(
+    this.etudiantService.updateInscriptionByStudent(this.packChossen.code, this.etudiant).subscribe(
         data => {
           if (data > 0){
             this.updated = true;
@@ -409,7 +370,7 @@ export class EtudiantProfileComponent implements OnInit {
       this.Student = false;
       this.Employed= false;
     }
-    
+
   }
     get skills(): Array<Skill> {
 

@@ -1,5 +1,5 @@
 
-<div class="layout-topbar" *ngIf="user!=null" >
+<div class="layout-topbar" *ngIf="user!=null"  >
 
     <a [hidden]="user == null" class="layout-topbar-logo" href="#">
         <span id="topbar-logo" style="color: white; font-family: 'Lucida Bright'"><h1>American Center</h1></span>
@@ -118,27 +118,59 @@
 
     </ul>-->
 
+
 </div>
+<div class="layout-topbar" style="background-color: #ffffff" *ngIf="user==null">
+    <div class="mainnav">
+    <img [routerLink]="['']" style="width: 120px; height: auto"  src="assets/picture/icon/logo.png" alt="logo">
+    <a style="margin-left: 35px; padding: 10px"  class="get-started">courses</a>
+    <a  class="get-started" style="padding: 10px">prices</a>
+    </div>
 
-<nav class="mainnav" *ngIf="user === null" >
-    <div class="logo"><img src="assets/picture/icon/logo.png" alt="logo"></div>
+    <ul *ngIf="user == null" class="topbar-menu" >
+        <li  [ngClass]="{'active-topmenuitem fadeInDown': appMain.topbarUserMenuActive}"  class="user-profile">
+            <a  class="get-started" style="border-radius: 5px; top: 0">Free Trial Lesson</a>
+            <a  class="get-started" style="border-radius: 5px; top: 0" (click)="appMain.onTopbarUserMenuButtonClick($event); hidePopUp=false" *ngIf="!app.inlineUser">
+                sign-in
+            </a>
+            <ul *ngIf="hidePopUp === false" class="fadeInDown">
 
-    <ul>
-        <li>
-            <a class="get-started" routerLink="">Home</a>
-        </li>
-        <li>
-            <a class="get-started" >Free Trial Lesson</a>
+                <li class="user-profile-drop-dawn">
+                    <a [routerLink]="['public/login-admin']" style="height: 52px" (click)="appMain.onTopbarUserMenuButtonClick($event)" class="user-profile-drop-dawn-text">
+                        <span>Admin</span>
+                    </a>
+                </li>
+                <li class="user-profile-drop-dawn">
+                    <a [routerLink]="['public/login-prof']" style="height: 52px" (click)="appMain.onTopbarUserMenuButtonClick($event)" class="user-profile-drop-dawn-text">
+                        <span>Teacher</span>
+                    </a>
+                </li>
+                <li class="user-profile-drop-dawn">
+                    <a [routerLink]="['public/login-etudiant']" style="height: 52px" (click)="appMain.onTopbarUserMenuButtonClick($event)" class="user-profile-drop-dawn-text">
+                        <span>Student</span>
+                    </a>
+                </li>
 
-        </li>
-        <li style="margin-top: 5px">
-            <p-menubar [model]="itemstopBar" >
 
-            </p-menubar>
+            </ul>
+
         </li>
     </ul>
 
-</nav>
+</div>
+<!--    <div class="p-grid">
+        <div class="p-col-8">
+            <div class="logo">
+            </div>
+        </div>
+        <div class="p-col-4">
+            <p-menubar  [model]="itemstopBar" >
+
+            </p-menubar>
+        </div>
+    </div>-->
+
+
 
 
 

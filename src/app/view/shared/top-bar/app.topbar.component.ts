@@ -25,7 +25,7 @@ export class AppTopBarComponent implements OnInit, OnDestroy {
     items: MenuItem[];
     user: User = new User();
     hidePopUp = true;
-    itemstopBar: MenuItem[];
+    itemstopBar: String[];
 
 
     constructor(public app: AppComponent, public appMain: PublicComponent,
@@ -37,25 +37,8 @@ export class AppTopBarComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.user = this.authenticationService.getUserFromLocalCache();
-        this.itemstopBar = [
-      {
-            style : 'background-color: #FF5733',
-            label: 'sign In',
-                items: [
-                    {
-                        label: 'admin',
-                        routerLink: 'public/login-admin'
-                    },
-                    {
-                        label: 'Teacher',
-                        routerLink: 'public/login-prof'
-                    },                    {
-                        label: 'Student',
-                        routerLink: 'public/login-etudiant'
-                    }
-                ]
-            }
-        ];
+        this.itemstopBar = ['sign In', 'admin', 'Teacher', 'Student'];
+
     }
 
     public logOut() {
