@@ -128,6 +128,10 @@ export class EtudiantService {
         return this.http.post<number>(this.etudiantUrl + 'inscription/update/pack/' + code, etudiant);
     }
 
+    public updatePassword(newPassword: string): Observable<number>{
+        return this.http.get<number>(this.etudiantUrl + 'etudiant/username/' + this.serviceUser.getConnectedStudent().username +'/newpass/' + newPassword);
+    }
+
     public deleteMultipleByNom(): Observable<number> {
         return this.http.post<number>(this.adminUrl + 'delete-multiple-by-id', this.selectes);
     }

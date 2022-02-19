@@ -67,22 +67,22 @@
                                     <th pSortableColumn="id">Phone
                                         <p-sortIcon field="id"></p-sortIcon>
                                     </th>
-                                    <th pSortableColumn="nom">LastName
+                                    <th pSortableColumn="nom">Full Name
                                         <p-sortIcon field="nom"></p-sortIcon>
                                     </th>
 
-                                    <th pSortableColumn="prenom">FirstName
+                                    <th pSortableColumn="prenom">E-mail
                                         <p-sortIcon field="prenom"></p-sortIcon>
                                     </th>
-                                    <th pSortableColumn="Address">Address
-                                        <p-sortIcon field="Address"></p-sortIcon>
-                                    </th>
-                                    <th pSortableColumn="mail">E-mail
+                                    <th></th>
+
+                                    <th pSortableColumn="mail">Date
                                         <p-sortIcon field="mail"></p-sortIcon>
                                     </th>
-                                    <th>Validate Registration</th>
+                                    <th>Status</th>
 <!--                                    <th>View Details</th>-->
 <!--                                    <th>Delete Registration</th>-->
+                                    <th> Action</th>
 
                                 </tr>
                             </ng-template>
@@ -92,16 +92,15 @@
                                         <p-tableCheckbox [value]="inscription"></p-tableCheckbox>
                                     </td>
                                     <td>{{inscription.etudiant.numero}}</td>
-                                    <td>{{inscription.etudiant.nom}}</td>
-                                    <td>{{inscription.etudiant.prenom}}</td>
-                                    <td>{{inscription.etudiant.addresse}}</td>
+                                    <td>{{inscription.etudiant.nom}} {{inscription.etudiant.prenom}}</td>
                                     <td>{{inscription.etudiant.username}}</td>
+                                    <td></td>
+                                    <td> {{inscription.dateRegistration}} </td>
                                     <td>
-                                        <button *ngIf="inscription.etatInscription.libelle !== 'Validated'"
-                                                (click)="edit(inscription)"
-                                                class=" p-button-success " label="Validate" pButton
-                                                pRipple></button>
+                                        <span *ngIf="inscription.etatInscription.libelle == 'Validated'" class="badge-v">VALIDATED</span>
+                                        <span *ngIf="inscription.etatInscription.libelle !== 'Validated'" class="badge-nv">Pending</span>
                                     </td>
+
                                     <td>
                                         <button (click)="view(inscription)"
                                                 class="p-button-rounded p-button-info p-mr-2" icon="pi pi-list" pButton
@@ -173,23 +172,22 @@
                                     <th style="width: 3rem">
                                         <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                                     </th>
-                                    <th pSortableColumn="id">Id
+                                    <th pSortableColumn="id">Phone
                                         <p-sortIcon field="id"></p-sortIcon>
                                     </th>
-                                    <th pSortableColumn="nom">LastName
+                                    <th pSortableColumn="nom">Full Name
                                         <p-sortIcon field="nom"></p-sortIcon>
                                     </th>
 
-                                    <th pSortableColumn="prenom">FirstName
+                                    <th pSortableColumn="prenom">E-mail
                                         <p-sortIcon field="prenom"></p-sortIcon>
                                     </th>
-                                    <th pSortableColumn="Address">Address
-                                        <p-sortIcon field="Address"></p-sortIcon>
-                                    </th>
-                                    <th pSortableColumn="mail">E-mail
+                                    <th></th>
+
+                                    <th pSortableColumn="mail">Date
                                         <p-sortIcon field="mail"></p-sortIcon>
                                     </th>
-                                    <th>Validate Registration</th>
+                                    <th>Status</th>
                                     <th>View Details</th>
                                     <th>Delete Registration</th>
 
@@ -200,16 +198,14 @@
                                     <td>
                                         <p-tableCheckbox [value]="inscription"></p-tableCheckbox>
                                     </td>
-                                    <td>{{inscription.id}}</td>
-                                    <td>{{inscription.etudiant.nom}}</td>
-                                    <td>{{inscription.etudiant.prenom}}</td>
-                                    <td>{{inscription.etudiant.addresse}}</td>
+                                    <td>{{inscription.etudiant.numero}}</td>
+                                    <td>{{inscription.etudiant.nom}} {{inscription.etudiant.prenom}}</td>
                                     <td>{{inscription.etudiant.username}}</td>
+                                    <td></td>
+                                    <td> {{inscription.dateRegistration}} </td>
                                     <td>
-                                        <button *ngIf="inscription.etatInscription.libelle !== 'Validated'"
-                                                (click)="edit(inscription)"
-                                                class=" p-button-success " label="Validate" pButton
-                                                pRipple></button>
+                                        <span *ngIf="inscription.etatInscription.libelle == 'Validated'" class="badge-v">VALIDATED</span>
+                                        <span *ngIf="inscription.etatInscription.libelle !== 'Validated'" class="badge-nv">Pending</span>
                                     </td>
                                     <td>
                                         <button (click)="view(inscription)" class="p-button-info " label="details" pButton

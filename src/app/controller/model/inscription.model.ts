@@ -28,4 +28,5 @@ export class Inscription {
     public fonction = new Fonction();
     public statutSocial =  new StatutSocial();
     public skill =  new Skill();
+    public dateRegistration: string;
 }
