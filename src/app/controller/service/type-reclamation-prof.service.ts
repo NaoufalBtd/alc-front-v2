@@ -60,6 +60,7 @@ export class TypeReclamationProfService {
                 if (data > 0) {
                     this.typeReclamationProf = null;
                     this.findAll();
+                    this.displayTypeReclamationProf = false;
                 }
             }
         );

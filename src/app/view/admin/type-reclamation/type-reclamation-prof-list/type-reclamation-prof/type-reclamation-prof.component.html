@@ -1,0 +1,18 @@
+<p-dialog [(visible)]="displayTypeReclamationProf" [modal]="true" [style]="{width: '450px'}"
+        header="Type Reclamation Prof" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <div class="p-field">
+             <label for="libelle"></label>
+            <input placeholder="Last ame" pInputText type="text" id="libelle" [(ngModel)]="typeReclamationProf.code">
+
+        </div>
+
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button  class="p-button-text" icon="pi pi-times" label="Cancel" pButton (click)="saveTypeReclamationProf()"
+                pRipple></button>
+        <button class="p-button-text" (click)="saveTypeReclamationProf()" icon="pi pi-check" label="Save" pButton pRipple></button>
+    </ng-template>
+</p-dialog>
+

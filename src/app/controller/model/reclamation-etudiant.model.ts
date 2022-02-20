@@ -6,6 +6,7 @@ export class ReclamationEtudiant {
     reference: string;
     dateReclamation: Date;
     message: string;
+    objetReclamationEtudiant: string;
     traite: string;
     dateTraitement: Date;
     commentaireTraiteur: string;

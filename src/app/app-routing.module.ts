@@ -83,6 +83,9 @@ import {HomeWorkPreviewComponent} from './view/admin/home-work-preview/home-work
 import {ComplaintComponent} from './view/admin/complaint/complaint.component';
 import {ReclamationProf} from './controller/model/reclamation-prof.model';
 import {ReclamationProfComponent} from './view/prof/reclamation-prof/reclamation-prof.component';
+import {ReclamationEtudiant} from './controller/model/reclamation-etudiant.model';
+import {ReclamationEtudiantComponent} from './view/etudiant/reclamation-etudiant/reclamation-etudiant.component';
+import {TypeReclamationComponent} from './view/admin/type-reclamation/type-reclamation.component';
 
 
 @NgModule({
@@ -120,7 +123,8 @@ import {ReclamationProfComponent} from './view/prof/reclamation-prof/reclamation
                     {path: 'salarylist', component: SalarylistComponent},
                     {path: 'manage-section', component: ManageSectionComponent},
                     {path: 'home-work-review', component: HomeWorkPreviewComponent},
-                    {path: 'complaint', component: ComplaintComponent}
+                    {path: 'complaint', component: ComplaintComponent},
+                    {path: 'typeofcomplaint', component: TypeReclamationComponent}
                 ]
             },
             {
@@ -164,7 +168,9 @@ import {ReclamationProfComponent} from './view/prof/reclamation-prof/reclamation
                     {path: 'etudiant-simulate-sections/homeWork', component: HomeWorkEtudiantComponent},
                     {path: 'homeWorkEtudiant', component: HomeWorkEtudiantComponent},
                     {path: 'homeWorkEtudiantResult', component: HomeWorkResultComponent},
-                    {path: 'profile', component: EtudiantProfileComponent}
+                    {path: 'profile', component: EtudiantProfileComponent},
+                    {path: 'reclamation-etudiant', component: ReclamationEtudiantComponent}
+
 
                 ]
             },

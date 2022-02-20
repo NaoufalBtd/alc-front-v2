@@ -12,14 +12,16 @@ import {Parcours} from '../model/parcours.model';
 import {LoginService} from './login.service';
 import {GroupeEtude} from '../model/groupe-etude.model';
 import {User} from '../model/user.model';
-import {MessageService} from "primeng/api";
-import {error} from "protractor";
+import {MessageService} from 'primeng/api';
+import {error} from 'protractor';
+
 @Injectable({
     providedIn: 'root'
 })
 export class EtudiantService {
     constructor(private http: HttpClient, public serviceUser: LoginService, private messageService: MessageService) {
     }
+
     private adminUrl = environment.adminUrl;
 
     private etudiantUrl = environment.etudiantUrl;
@@ -44,10 +46,21 @@ export class EtudiantService {
     public packCode: string;
     private _groupeEtude: GroupeEtude;
     private etudiant: Etudiant;
+    private _studentList: Array<Etudiant>;
 
+    get studentList(): Array<Etudiant> {
+        if (this._studentList == null) {
+            this._studentList = new Array<Etudiant>();
+        }
+        return this._studentList;
+    }
+
+    set studentList(value: Array<Etudiant>) {
+        this._studentList = value;
+    }
 
     get groupeEtude(): GroupeEtude {
-        if (this._groupeEtude == null){
+        if (this._groupeEtude == null) {
             this._groupeEtude = new GroupeEtude();
         }
         return this._groupeEtude;
@@ -77,12 +90,15 @@ export class EtudiantService {
         return this.http.get<Array<Prof>>(this.adminUrl + 'prof/');
 
     }
+
     public findAllParcoursList(): Observable<Array<Parcours>> {
         return this.http.get<Array<Parcours>>(this.urlBase + this.urlParcours);
     }
+
     public findAllGroupeEtude(): Observable<Array<GroupeEtude>> {
         return this.http.get<Array<GroupeEtude>>(this.urlBase + this.urlGroupeEtude);
     }
+
     public findetudiantProf(): Observable<Array<Etudiant>> {
         return this.http.get<Array<Etudiant>>(this.adminUrl + 'etudiant/prof/id/' + this.selectedProf.id);
     }
@@ -100,7 +116,7 @@ export class EtudiantService {
         return this.http.get<Array<Etudiant>>(this.adminUrl + 'etudiant/');
     }
 
-    public updateInscriptionByStudent(code: string): Observable<number>{
+    public updateInscriptionByStudent(code: string): Observable<number> {
         this.selected.id = this.serviceUser.getConnectedStudent().id;
         console.log(this.selected.id);
         return this.http.post<number>(this.etudiantUrl + 'inscription/update/pack/' + code, this.selected);
@@ -155,6 +171,7 @@ export class EtudiantService {
     set selected(value: Etudiant) {
         this._selected = value;
     }
+
     get selectedProf(): Prof {
         if (this._selectedProf == null) {
             this._selectedProf = new Prof();
@@ -230,12 +247,15 @@ export class EtudiantService {
     set selectes(value: Array<Etudiant>) {
         this._selectes = value;
     }
+
     get editDialog(): boolean {
         return this._editDialog;
     }
+
     set editDialog(value: boolean) {
         this._editDialog = value;
     }
+
     get viewDialog(): boolean {
         return this._viewDialog;
     }
@@ -269,7 +289,6 @@ export class EtudiantService {
     }
 
 
-
     get selecteetudiant(): Array<Etudiant> {
         if (this._selecteetudiant == null) {
             this._selecteetudiant = new Array<Etudiant>();
@@ -288,6 +307,7 @@ export class EtudiantService {
     set submittedetudiant(value: Etudiant) {
         this._submittedetudiant = value;
     }
+
     get centreList(): Array<Centre> {
         if (this._centreList == null) {
             this._centreList = new Array<Centre>();
@@ -315,8 +335,7 @@ export class EtudiantService {
     }
 
     get groupeEtudeList(): Array<GroupeEtude> {
-        if (this._groupeEtudeList == null)
-        {
+        if (this._groupeEtudeList == null) {
             this._groupeEtudeList = new Array<GroupeEtude>();
         }
         return this._groupeEtudeList;
@@ -336,9 +355,9 @@ export class EtudiantService {
     }
 
     findGroupeById(id: number) {
-        this.http.get<GroupeEtude>(this.adminUrl + 'groupeEtude/id/' + id ).subscribe(
+        this.http.get<GroupeEtude>(this.adminUrl + 'groupeEtude/id/' + id).subscribe(
             data => {
-                this.groupeEtude = data ;
+                this.groupeEtude = data;
             }
         );
     }

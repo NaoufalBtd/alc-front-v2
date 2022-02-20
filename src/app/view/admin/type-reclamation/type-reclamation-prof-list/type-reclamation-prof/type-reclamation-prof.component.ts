@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {TypeReclamationProf} from '../../../../controller/model/type-reclamation-prof.model';
-import {TypeReclamationProfService} from '../../../../controller/service/type-reclamation-prof.service';
+import {TypeReclamationProf} from '../../../../../controller/model/type-reclamation-prof.model';
+import {TypeReclamationProfService} from '../../../../../controller/service/type-reclamation-prof.service';
 
 @Component({
     selector: 'app-type-reclamation-prof',

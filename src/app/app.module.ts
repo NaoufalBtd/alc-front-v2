@@ -159,8 +159,12 @@ import {RecommendListComponent} from './view/prof/recommend/recommend-list/recom
 import {RecommendViewComponent} from './view/prof/recommend/recommend-view/recommend-view.component';
 import {QuizCreateComponent} from './view/admin/quiz/quiz-create/quiz-create.component';
 import {QuizEtudiantViewComponent} from './view/etudiant/Quiz/quiz-etudiant-view/quiz-etudiant-view.component';
-import {SyntheseSessionCoursListComponent} from './view/prof/synthese-session/synthese-session-cours-list/synthese-session-cours-list.component';
-import {SyntheseSessionCoursEditComponent} from './view/prof/synthese-session/synthese-session-cours-edit/synthese-session-cours-edit.component';
+import {
+    SyntheseSessionCoursListComponent
+} from './view/prof/synthese-session/synthese-session-cours-list/synthese-session-cours-list.component';
+import {
+    SyntheseSessionCoursEditComponent
+} from './view/prof/synthese-session/synthese-session-cours-edit/synthese-session-cours-edit.component';
 import {ProfesseurListComponent} from './view/admin/professeur/professeur-list/professeur-list.component';
 import {ProfesseurCreateComponent} from './view/admin/professeur/professeur-create/professeur-create.component';
 import {ProfesseurEditComponent} from './view/admin/professeur/professeur-edit/professeur-edit.component';
@@ -183,7 +187,7 @@ import {NewsEtudiantListComponent} from './view/etudiant/news-etudiant/news-etud
 import {NewsEtudiantViewComponent} from './view/etudiant/news-etudiant/news-etudiant-view/news-etudiant-view.component';
 import {NewsAdminEditComponent} from './view/admin/news-admin/news-admin-edit/news-admin-edit.component';
 import {NewsAdminDeleteComponent} from './view/admin/news-admin/news-admin-delete/news-admin-delete.component';
- // import {PaiementListComponent} from './view/admin/allSalary/allSalary-list/allSalary-list.component';
+// import {PaiementListComponent} from './view/admin/allSalary/allSalary-list/allSalary-list.component';
 import {ScheduleAdminComponent} from './view/admin/schedule-admin/schedule-admin.component';
 import {ScheduleStudentComponent} from './view/etudiant/schedule-student/schedule-student.component';
 import {QuizUpdateComponent} from './view/admin/quiz/quiz-update/quiz-update.component';
@@ -201,7 +205,9 @@ import {EtudiantReviewViewComponent} from './view/etudiant/learn-etudiant/etudia
 import {SyntheseSessionHistoryComponent} from './view/prof/synthese-session/synthese-session-history/synthese-session-history.component';
 import {RecommendationTeacherComponent} from './view/prof/recommendation-teacher/recommendation-teacher.component';
 import {VocabularySectionComponent} from './view/etudiant/learn-etudiant/vocabulary-section/vocabulary-section.component';
-import {VocabularySectionItemComponent} from './view/etudiant/learn-etudiant/vocabulary-section/vocabulary-section-item/vocabulary-section-item.component';
+import {
+    VocabularySectionItemComponent
+} from './view/etudiant/learn-etudiant/vocabulary-section/vocabulary-section-item/vocabulary-section-item.component';
 import {ScrollingModule} from '@angular/cdk/scrolling';
 import {DashboardDemoComponent} from './view/public/landing/dashboarddemo.component';
 import {AdminComponent} from './view/admin/admin.component';
@@ -209,9 +215,13 @@ import {EtudiantComponent} from './view/etudiant/etudiant.component';
 import {ProfComponent} from './view/prof/prof.component';
 import {PublicComponent} from './view/public/public.component';
 import {VocabularySectionProfComponent} from './view/prof/learn-teacher/vocabulary-section-prof/vocabulary-section-prof.component';
-import {VocabularySectionItemProfComponent} from './view/prof/learn-teacher/vocabulary-section-prof/vocabulary-section-item-prof/vocabulary-section-item-prof.component';
+import {
+    VocabularySectionItemProfComponent
+} from './view/prof/learn-teacher/vocabulary-section-prof/vocabulary-section-item-prof/vocabulary-section-item-prof.component';
 import {SyntheseSessionComponent} from './view/prof/synthese-session/synthese-session.component';
-import {SyntheseSessionCoursCreateComponent} from './view/prof/synthese-session/synthese-session-cours-create/synthese-session-cours-create.component';
+import {
+    SyntheseSessionCoursCreateComponent
+} from './view/prof/synthese-session/synthese-session-cours-create/synthese-session-cours-create.component';
 import {ProfReviewViewComponent} from './view/prof/learn-teacher/prof-review-view/prof-review-view.component';
 import {QuizPreviewProfComponent} from './view/prof/quiz-preview-prof/quiz-preview.component';
 import {
@@ -238,7 +248,9 @@ import {GroupeEtudiantComponent} from './view/admin/groupe-etudiant/groupe-etudi
 import {GroupeEtudiantListComponent} from './view/admin/groupe-etudiant/groupe-etudiant-list/groupe-etudiant-list.component';
 import {GroupeEtudiantCreateComponent} from './view/admin/groupe-etudiant/groupe-etudiant-create/groupe-etudiant-create.component';
 
-import {GroupeEtudiantDetailListComponent} from './view/admin/groupe-etudiant/groupe-etudiant-detail-list/groupe-etudiant-detail-list.component';
+import {
+    GroupeEtudiantDetailListComponent
+} from './view/admin/groupe-etudiant/groupe-etudiant-detail-list/groupe-etudiant-detail-list.component';
 
 
 import {HomeWorkComponentComponent} from './view/admin/home-work-component/home-work-component.component';
@@ -258,30 +270,47 @@ import {LoginComponent} from './view/public/login/login.component';
 import {GroupeEtudiantEditComponent} from './view/admin/groupe-etudiant/groupe-etudiant-edit/groupe-etudiant-edit.component';
 import {ConnectedStudentComponent} from './view/prof/connected-student/connected-student.component';
 import {SyntheseSessionCours} from './controller/model/synthese-session-cours.model';
-import { ProfinscriptionComponent } from './view/public/profinscription/profinscription.component';
-import { EtudiantinscriptionComponent } from './view/public/etudiantinscription/etudiantinscription.component';
-import { PackStudentComponent } from './view/admin/pack-student/pack-student.component';
-import { BonusProfComponent } from './view/admin/bonus-prof/bonus-prof.component';
+import {ProfinscriptionComponent} from './view/public/profinscription/profinscription.component';
+import {EtudiantinscriptionComponent} from './view/public/etudiantinscription/etudiantinscription.component';
+import {PackStudentComponent} from './view/admin/pack-student/pack-student.component';
+import {BonusProfComponent} from './view/admin/bonus-prof/bonus-prof.component';
 import {ViewProfilEtudiantComponent} from './view/prof/synthese-session/view-profil-etudiant/view-profil-etudiant.component';
 import {SalarylistComponent} from './view/admin/salarylist/salarylist.component';
 import {ScheduleProfComponent} from './view/admin/professeur/schedule-prof/schedule-prof.component';
 import {RouterModule} from '@angular/router';
-import {AppRoutingModule} from "./app-routing.module";
-import { DriveApiComponent } from './view/admin/drive-api/drive-api.component';
-import { ManageSectionComponent } from './view/admin/manage-section/manage-section.component';
-import { HomeWorkPreviewComponent } from './view/admin/home-work-preview/home-work-preview.component';
-import { ComplaintComponent } from './view/admin/complaint/complaint.component';
-import { ComplaintListComponent } from './view/admin/complaint/complaint-list/complaint-list.component';
-import {TypeReclamationEtudiantComponent} from './view/admin/typeReclamation/type-reclamation-etudiant/type-reclamation-etudiant.component';
-import {TypeReclamationProfComponent} from './view/admin/typeReclamation/type-reclamation-prof/type-reclamation-prof.component';
-import { ReclamationProfComponent } from './view/prof/reclamation-prof/reclamation-prof.component';
-import { ReclamationEtudiantComponent } from './view/etudiant/reclamation-etudiant/reclamation-etudiant.component';
-import { ReclamationEtudiantCreateComponent } from './view/etudiant/reclamationEtudiant/reclamation-etudiant-create/reclamation-etudiant-create.component';
-import { ReclamationProfCreateComponent } from './view/prof/reclamation-prof/reclamation-prof-create/reclamation-prof-create.component';
+import {AppRoutingModule} from './app-routing.module';
+import {DriveApiComponent} from './view/admin/drive-api/drive-api.component';
+import {ManageSectionComponent} from './view/admin/manage-section/manage-section.component';
+import {HomeWorkPreviewComponent} from './view/admin/home-work-preview/home-work-preview.component';
+import {ComplaintComponent} from './view/admin/complaint/complaint.component';
+import {ComplaintListComponent} from './view/admin/complaint/complaint-list/complaint-list.component';
+import {TypeReclamationEtudiantComponent} from './view/admin/type-reclamation/type-reclamation-etudiant-list/type-reclamation-etudiant/type-reclamation-etudiant.component';
+import {TypeReclamationProfComponent} from './view/admin/type-reclamation/type-reclamation-prof-list/type-reclamation-prof/type-reclamation-prof.component';
+import {ReclamationProfComponent} from './view/prof/reclamation-prof/reclamation-prof.component';
+
+import {ReclamationProfCreateComponent} from './view/prof/reclamation-prof/reclamation-prof-create/reclamation-prof-create.component';
 import {
     ComplaintViewEtudiantComponent
 } from './view/admin/complaint/complaint-view/complaint-view-etudiant/complaint-view-etudiant.component';
 import {ComplaintViewProfComponent} from './view/admin/complaint/complaint-view/complaint-view-prof/complaint-view-prof.component';
+import {
+    ComplaintEditEtudiantComponent
+} from './view/admin/complaint/complaintEdit/complaint-edit-etudiant/complaint-edit-etudiant.component';
+import {ComplaintEditProfComponent} from './view/admin/complaint/complaintEdit/complaint-edit-prof/complaint-edit-prof.component';
+import {ReclamationEtudiantComponent} from './view/etudiant/reclamation-etudiant/reclamation-etudiant.component';
+import {
+    TypeReclamationEtudiantListComponent
+} from './view/admin/type-reclamation/type-reclamation-etudiant-list/type-reclamation-etudiant-list.component';
+import {
+    TypeReclamationProfListComponent
+} from './view/admin/type-reclamation/type-reclamation-prof-list/type-reclamation-prof-list.component';
+import {TypeReclamationComponent} from './view/admin/type-reclamation/type-reclamation.component';
+import {
+    ReclamationEtudiantListComponent
+} from './view/etudiant/reclamation-etudiant/reclamation-etudiant-list/reclamation-etudiant-list.component';
+import {
+    ReclamationEtudiantCreateComponent
+} from './view/etudiant/reclamation-etudiant/reclamation-etudiant-create/reclamation-etudiant-create.component';
 
 @NgModule({
     imports: [
@@ -557,11 +586,18 @@ import {ComplaintViewProfComponent} from './view/admin/complaint/complaint-view/
         TypeReclamationEtudiantComponent,
         TypeReclamationProfComponent,
         ReclamationProfComponent,
-        ReclamationEtudiantComponent,
-        ReclamationEtudiantCreateComponent,
+
         ReclamationProfCreateComponent,
         ComplaintViewEtudiantComponent,
-        ComplaintViewProfComponent
+        ComplaintViewProfComponent,
+        ComplaintEditEtudiantComponent,
+        ComplaintEditProfComponent,
+        ReclamationEtudiantComponent,
+        ReclamationEtudiantCreateComponent,
+        ReclamationEtudiantListComponent,
+        TypeReclamationComponent,
+        TypeReclamationProfListComponent,
+        TypeReclamationEtudiantListComponent
 
     ],
     providers: [

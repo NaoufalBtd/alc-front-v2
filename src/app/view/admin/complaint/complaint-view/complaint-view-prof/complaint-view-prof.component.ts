@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ReclamationProfService} from '../../../../../controller/service/reclamation-prof.service';
+import {ReclamationProf} from '../../../../../controller/model/reclamation-prof.model';
 
 @Component({
     selector: 'app-complaint-view-prof',
@@ -23,6 +24,24 @@ export class ComplaintViewProfComponent implements OnInit {
     }
 
     hideCreateDialog() {
-        this.displayReclamationViewProf=false;
+        this.displayReclamationViewProf = false;
     }
+
+    get idReclamationProf(): number {
+        return this.reclamationProfService.idReclamationProf;
+    }
+
+    set idReclamationProf(value: number) {
+        this.reclamationProfService.idReclamationProf = value;
+    }
+
+    get reclamationProfView(): ReclamationProf {
+
+        return this.reclamationProfService.reclamationProfView;
+    }
+
+    set reclamationProfView(value: ReclamationProf) {
+        this.reclamationProfService.reclamationProfView = value;
+    }
+
 }

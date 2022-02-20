@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {TypeReclamationEtudiant} from '../../../../controller/model/type-reclamation-etudiant.model';
-import {TypeReclamationEtudiantService} from '../../../../controller/service/type-reclamation-etudiant.service';
+import {TypeReclamationEtudiant} from '../../../../../controller/model/type-reclamation-etudiant.model';
+import {TypeReclamationEtudiantService} from '../../../../../controller/service/type-reclamation-etudiant.service';
 
 @Component({
     selector: 'app-type-reclamation-etudiant',
@@ -23,8 +23,9 @@ export class TypeReclamationEtudiantComponent implements OnInit {
     set displayTypeReclamationEtudiant(value: boolean) {
         this.typeReclamationEtudiantService.displayTypeReclamationEtudiant = value;
     }
+
     get typeReclamationEtudiant(): TypeReclamationEtudiant {
-     return this.typeReclamationEtudiantService.typeReclamationEtudiant;
+        return this.typeReclamationEtudiantService.typeReclamationEtudiant;
     }
 
     set typeReclamationEtudiant(value: TypeReclamationEtudiant) {
@@ -39,7 +40,12 @@ export class TypeReclamationEtudiantComponent implements OnInit {
     set typeReclamationEtudiantList(value: Array<TypeReclamationEtudiant>) {
         this.typeReclamationEtudiantService.typeReclamationEtudiantList = value;
     }
+
     public saveTypeReclamationEtudiant() {
         this.typeReclamationEtudiantService.saveTypeReclamationEtudiant();
+    }
+
+    close() {
+        this.typeReclamationEtudiantService.displayTypeReclamationEtudiant = false;
     }
 }

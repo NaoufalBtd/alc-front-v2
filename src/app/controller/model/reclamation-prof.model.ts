@@ -8,6 +8,7 @@ export class ReclamationProf {
     reference: string;
     dateReclamation: Date;
     message: string;
+    objetReclamationProf: string;
     traite: string;
     dateTraitement: Date;
     commentaireTraiteur: string;

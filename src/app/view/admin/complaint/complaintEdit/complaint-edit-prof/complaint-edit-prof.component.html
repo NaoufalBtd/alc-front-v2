@@ -1,0 +1,43 @@
+<p-dialog [(visible)]="displayReclamationEditProf" [modal]="true" [style]="{width: '450px'}"
+          header="Reclamation Prof View" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <div class="p-field">
+            <div class="p-grid p-fluid">
+
+                <div class="p-field p-md-3">
+                    <img class="img"   [src]="reclamationProfEdit.prof?.image">
+                </div>
+                <div class="p-field  p-md-9">
+
+                    <p><strong><i class="pi pi-user" style="color: #0c799f"></i><strong style="color: #0c799f"> Full Name:</strong> {{reclamationProfEdit.prof.nom}} {{reclamationProfEdit.prof.prenom}}</strong></p>
+                    <p><strong><i class="pi pi-envelope" style="color: #0c799f"></i><strong style="color: #0c799f"> E-mail: </strong>{{reclamationProfEdit.prof.username}}</strong></p>
+
+
+                </div>
+            </div>
+        </div>
+        <div class="p-field">
+            <label for="reference">Reference</label>
+            <input autofocus id="reference" pInputText required type="text" [(ngModel)]="reclamationProfEdit.reference"  disabled>
+        </div>
+        <div class="p-field">
+            <label for="dateReclamation">Date Reclamation</label>
+            <input autofocus id="dateReclamation" pInputText required type="text" [(ngModel)]="reclamationProfEdit.dateReclamation"  disabled>
+        </div>
+        <div class="p-field">
+            <label for="message">Message</label>
+            <textarea pInputTextarea id="message" disabled [(ngModel)]="reclamationProfEdit.message"></textarea>
+        </div>
+        <div class="p-field">
+            <label for="commentaireTraiteur">Commentaire</label>
+            <textarea pInputTextarea id="commentaireTraiteur" [(ngModel)]="reclamationProfEdit.commentaireTraiteur"></textarea>
+        </div>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button  class="p-button-text" icon="pi pi-times" label="Cancel" pButton (click)="hide()"
+                pRipple></button>
+        <button class="p-button-text" icon="pi pi-times" label="Save" pButton (click)="reponseReclamationProf(this.idreclamationprofedite,reclamationProfEdit.commentaireTraiteur)"
+                pRipple></button>
+    </ng-template>
+</p-dialog>
