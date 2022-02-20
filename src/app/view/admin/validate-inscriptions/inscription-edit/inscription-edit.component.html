@@ -8,7 +8,6 @@
             <div class="p-col-12 p-md-6 p-lg-4"><label class="label">Teacher locality:</label>  {{ selected?.etudiant?.teacherLocality}}</div>
             <div class="p-col-12 p-md-6 p-lg-4"><label  class="label">Group option:</label>  {{ selected?.etudiant?.groupOption}}</div>
             <div *ngIf="selected.packStudent!= null" class="p-col-12 p-md-6 p-lg-4"><label  class="label">Pack choosen:</label>  {{ selected.packStudent.libelle}} : {{selected.packStudent.nombreCours}}h | {{selected.packStudent.prix}}$</div>
-            <div class="p-col-12 p-md-6 p-lg-4"><label  class="label">Pack choosen:</label>  {{ selected?.packStudent?.libelle}} : {{selected?.packStudent?.nombreCours}}h | {{selected?.packStudent?.prix}}$</div>
         </div>
 
 
@@ -73,6 +72,12 @@
             <div class="p-col-12 p-md-6 p-lg-4">
                 <label for="dateformat1">Interest</label>
                 <p-dropdown [options]="interetEtudiants" editable="true" [(ngModel)]="selected.interetEtudiant"
+                            optionLabel="libelle" [itemSize]="3"></p-dropdown>
+            </div>
+
+            <div class="p-col-12 p-md-6 p-lg-4">
+                <label for="dateformat1">Skill</label>
+                <p-dropdown [options]="skills" editable="true" [(ngModel)]="selected.skill"
                             optionLabel="libelle" [itemSize]="3"></p-dropdown>
             </div>
 

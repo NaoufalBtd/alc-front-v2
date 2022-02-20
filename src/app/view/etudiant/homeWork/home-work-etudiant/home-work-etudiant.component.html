@@ -17,7 +17,7 @@
                         </div>
                     </div>
 
-                    <div *ngIf="showTypeOfQstBar" style="background-color: #dee2e6" class="p-grid">
+                    <div *ngIf="showTypeOfQstBar && homeWorkQuestion?.typeDeQuestion?.ref !== 't8'" style="background-color: #dee2e6" class="p-grid">
                         <div style="  background-color: transparent!important;" class="p-col-12">
                             <p-progressBar [style]="{'height': '6px'}" [showValue]="false"
                                            [value]="progressBarValue"></p-progressBar>
@@ -277,6 +277,33 @@
                                           pInputTextarea></textarea>
                                 <label for="float-input">Your answer</label>
                             </span>
+                        </div>
+
+                    </div>
+
+
+                    <!--------------------------------- Reading -------------------------------------------------------->
+
+
+                    <div style="background-color: white;" *ngIf="homeWorkQuestion.typeDeQuestion.ref === 't8'" class="p-grid">
+
+                        <div class="p-col-12 ">
+                            <img [src]="selectedHomeWork.urlImage" alt="Image Not Found !" width="100%">
+
+                        </div>
+
+                        <div class="p-col-12 bookHeader ">
+                            <strong style="float: left">{{homeWorkQuestion?.ref}}</strong>
+                            <strong style="float: right">{{partOfStory}}</strong>
+
+                        </div>
+
+
+                        <div (dblclick)="dict()" class="p-col-12 readingContainer">
+                            <p class="reading-text">{{homeWorkQuestion?.libelle}}</p>
+                        </div>
+
+                        <div class="p-col-12">
                         </div>
 
                     </div>

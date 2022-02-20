@@ -86,6 +86,7 @@ import {ReclamationProfComponent} from './view/prof/reclamation-prof/reclamation
 import {ReclamationEtudiant} from './controller/model/reclamation-etudiant.model';
 import {ReclamationEtudiantComponent} from './view/etudiant/reclamation-etudiant/reclamation-etudiant.component';
 import {TypeReclamationComponent} from './view/admin/type-reclamation/type-reclamation.component';
+import {ProfileComponent} from './view/etudiant/profile/profile.component';
 
 
 @NgModule({
@@ -171,6 +172,8 @@ import {TypeReclamationComponent} from './view/admin/type-reclamation/type-recla
                     {path: 'profile', component: EtudiantProfileComponent},
                     {path: 'reclamation-etudiant', component: ReclamationEtudiantComponent}
 
+                    {path: 'profile', component: EtudiantProfileComponent},
+                    {path: 'profileEdit', component: ProfileComponent}
 
                 ]
             },

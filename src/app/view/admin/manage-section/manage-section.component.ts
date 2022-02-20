@@ -108,12 +108,11 @@ export class ManageSectionComponent implements OnInit {
     save() {
         this.showEditDialog = false;
         this.parcoursService.updateSection(this.sectionSelected).subscribe(data => {
-            console.log(data);
             this.messageService.add({
-                severity: 'success',
+                severity: 'info',
                 summary: 'Successful',
                 detail: 'Section Updated',
-                life: 7000
+                life: 3000
             });
         }, error => {
             console.log(error);
@@ -121,7 +120,7 @@ export class ManageSectionComponent implements OnInit {
                 severity: 'error',
                 summary: 'Error!',
                 detail: 'Error to update section please try again !',
-                life: 7000
+                life: 3000
             });
 
         });

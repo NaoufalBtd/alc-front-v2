@@ -32,6 +32,7 @@ import {QuizReponse} from '../../../../controller/model/quiz-reponse';
 import {Prof} from '../../../../controller/model/prof.model';
 import {GroupeEtudiant} from '../../../../controller/model/groupe-etudiant.model';
 import {GroupeEtudiantService} from '../../../../controller/service/groupe-etudiant-service';
+import {AppComponent} from '../../../../app.component';
 
 @Pipe({name: 'safe'})
 export class SafePipe implements PipeTransform {
@@ -51,21 +52,6 @@ export class SafePipe implements PipeTransform {
 })
 export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
 
-    showLesson = true;
-    showTakeQuiz = false;
-    showViewQuiz = false;
-    nodes: TreeNode[];
-    menu: MenuItem[];
-    srcImg: string;
-    translate: any;
-    textSeleted: string;
-    filteredDict: any[];
-    synonym: any[];
-    value = 0;
-    word: string;
-    wordDict: any;
-    j: number;
-
     // tslint:disable-next-line:max-line-lengthg max-line-length
     constructor(private messageService: MessageService,
                 private router: Router,
@@ -84,6 +70,7 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
                 private homeWorkService: HomeworkService,
                 private homeWorkEtudiantService: HomeWorkEtudiantServiceService,
                 private learnService: LearnService,
+                private app: AppComponent,
                 private grpEtudiantService: GroupeEtudiantService,
     ) {
     }
@@ -113,10 +100,6 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
         this.review.viewDialog = value;
     }
 
-    public finish() {
-        this.viewDialog = true;
-    }
-
     get showAppMenu(): boolean {
         return this.learnService.showAppMenu;
     }
@@ -132,11 +115,6 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
 
     set showVocabulary(value: boolean) {
         this.sectionItemService.showVocabulary = value;
-    }
-
-    public view(EtudiantReview: EtudiantReview) {
-        this.review.selected = {...EtudiantReview};
-        this.viewDialog = true;
     }
 
     get contenuSection(): Array<string> {
@@ -240,8 +218,6 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
         return this.service.selectedsection;
     }
 
-    // tslint:disable-next-line:adjacent-overload-signatures
-
     set selectedsection(value: Section) {
         this.service.selectedsection = value;
     }
@@ -337,6 +313,90 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
 
     set homeWorkList(homeWorklist: Array<HomeWork>) {
         this.homeWorkService.homeWorkList = homeWorklist;
+    }
+
+    get selectedReview(): EtudiantReview {
+        return this.review.selected;
+    }
+
+    set selectedReview(value: EtudiantReview) {
+        this.review.selected = value;
+    }
+
+    get listSynonymes(): Array<any> {
+        return this.dictionnaryService.listSynonymes;
+    }
+
+    set listSynonymes(value: Array<any>) {
+        this.dictionnaryService.listSynonymes = value;
+    }
+
+    get Synonymes(): Array<any> {
+        return this.dictionnaryService.Synonymes;
+    }
+
+    set Synonymes(value: Array<any>) {
+        this.dictionnaryService.Synonymes = value;
+    }
+
+    get TranslateSynonymeDialog(): boolean {
+        return this.dictionnaryService.TranslateSynonymeDialog;
+    }
+
+    set TranslateSynonymeDialog(value: boolean) {
+        this.dictionnaryService.TranslateSynonymeDialog = value;
+    }
+
+    get connectedUsers(): any[] {
+        return this.webSocketService.connectedUsers;
+    }
+
+    set connectedUsers(value: any[]) {
+        this.webSocketService.connectedUsers = value;
+    }
+
+    get prof(): Prof {
+        return this.webSocketService.prof;
+    }
+
+    set prof(value: Prof) {
+        this.webSocketService.prof = value;
+    }
+
+
+    get studentsEnLigne(): Map<number, Etudiant> {
+        return this.webSocketService.studentsEnLigne;
+    }
+
+    showLesson = true;
+    showTakeQuiz = false;
+    showViewQuiz = false;
+    nodes: TreeNode[];
+    menu: MenuItem[];
+    srcImg: string;
+    translate: any;
+    textSeleted: string;
+    filteredDict: any[];
+    synonym: any[];
+    value = 0;
+    word: string;
+    wordDict: any;
+    j: number;
+
+    get selectedLanguage(): any {
+        return this.learnService.selectedLanguage;
+    }
+
+    set selectedLanguage(value: any) {
+        this.learnService.selectedLanguage = value;
+    }
+    public finish() {
+        this.viewDialog = true;
+    }
+
+    public view(EtudiantReview: EtudiantReview) {
+        this.review.selected = {...EtudiantReview};
+        this.viewDialog = true;
     }
 
     navigate() {
@@ -438,15 +498,10 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
         this.filteredDict = filtered;
     }
 
-    get selectedReview(): EtudiantReview {
-        return this.review.selected;
-    }
-
-    set selectedReview(value: EtudiantReview) {
-        this.review.selected = value;
-    }
-
     ngOnInit(): void {
+        if (this.loginService.getConnectedStudent().langue === 'fr'){
+            this.selectedLanguage = {code: 'fr', name: 'French', nativeName: 'français'};
+        }
         this.showAppMenu = false;
         this.review.findReview(this.selectedcours.id).subscribe(
             data => {
@@ -575,22 +630,6 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
         }
     }
 
-    get listSynonymes(): Array<any> {
-        return this.dictionnaryService.listSynonymes;
-    }
-
-    set listSynonymes(value: Array<any>) {
-        this.dictionnaryService.listSynonymes = value;
-    }
-
-    get Synonymes(): Array<any> {
-        return this.dictionnaryService.Synonymes;
-    }
-
-    set Synonymes(value: Array<any>) {
-        this.dictionnaryService.Synonymes = value;
-    }
-
     public dict() {
         const selection = window.getSelection();
         this.textSeleted = selection.toString();
@@ -644,14 +683,6 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
                     // console.log(this.selected.word);
                 }
             });
-    }
-
-    get TranslateSynonymeDialog(): boolean {
-        return this.dictionnaryService.TranslateSynonymeDialog;
-    }
-
-    set TranslateSynonymeDialog(value: boolean) {
-        this.dictionnaryService.TranslateSynonymeDialog = value;
     }
 
 
@@ -841,7 +872,6 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
     }
 
 
-
     ngOnDestroy(): void {
         this.showAppMenu = true;
     }
@@ -853,30 +883,18 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
         console.log(this.participants);
     }
 
-    get connectedUsers(): any[] {
-        return this.webSocketService.connectedUsers;
-    }
-
-    set connectedUsers(value: any[]) {
-        this.webSocketService.connectedUsers = value;
-    }
-
     getData() {
         const grp = this.participants.get(this.prof.id);
         console.log(grp);
         console.log(this.participants);
     }
 
-    get prof(): Prof {
-        return this.webSocketService.prof;
+    getLanguages(): Array<any> {
+        return this.app.languages;
     }
 
-    set prof(value: Prof) {
-        this.webSocketService.prof = value;
-    }
-
-
-    get studentsEnLigne(): Map<number, Etudiant> {
-        return this.webSocketService.studentsEnLigne;
+    getSelectedLanguage() {
+        console.log(this.selectedLanguage);
+        
     }
 }

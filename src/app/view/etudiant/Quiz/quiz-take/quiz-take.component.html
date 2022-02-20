@@ -130,8 +130,9 @@
                    *ngFor="let ans of correctAnswersList?.get(question.id)">{{ ans.lib}}
             </label>
         </span>
-        </div>
+            <h4 *ngIf="translateWord !== undefined">{{translateWord}}</h4>
 
+        </div>
         <div class="p-col-12 answers">
             <button *ngIf="showCheckButton && !saveDone" pButton pRipple type="button"
                     icon="pi pi-check" iconPos="right"
@@ -276,8 +277,11 @@
                     </p-toggleButton>
                 </div>
             </div>
-        </div>
 
+        </div>
+        <div style="text-align: center!important;" class="p-col-12">
+            <h4 *ngIf="translateWord !== undefined">{{translateWord}}</h4>
+        </div>
         <div class="p-col-12 answers">
 
             <button *ngIf="showCheckButton && !saveDone" pButton pRipple type="button"

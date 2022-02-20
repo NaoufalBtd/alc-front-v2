@@ -1,38 +1,35 @@
 import { Component, OnInit } from '@angular/core';
 import {User} from '../../../controller/model/user.model';
+import {Etudiant} from '../../../controller/model/etudiant.model';
 import {FileUploadStatus} from '../../../controller/model/FileUploadStatus';
-import {Observable, Subscription} from 'rxjs';
+import {Subscription} from 'rxjs';
+import {PackStudent} from '../../../controller/model/pack-student.model';
+import {Inscription} from '../../../controller/model/inscription.model';
 import {MenuService} from '../../shared/slide-bar/app.menu.service';
 import {AuthenticationService} from '../../../controller/service/authentication.service';
 import {UserService} from '../../../controller/service/user.service';
+import {LoginService} from '../../../controller/service/login.service';
+import {EtudiantService} from '../../../controller/service/etudiant.service';
+import {InscriptionService} from '../../../controller/service/inscription.service';
+import {PackStudentService} from '../../../controller/service/pack-student.service';
+import {MessageService} from 'primeng/api';
+import {GroupeEtudeService} from '../../../controller/service/groupe-etude.service';
+import {GroupeEtude} from '../../../controller/model/groupe-etude.model';
+import {Parcours} from '../../../controller/model/parcours.model';
 import {HttpErrorResponse, HttpEvent, HttpEventType} from '@angular/common/http';
-import {GroupeEtude} from "../../../controller/model/groupe-etude.model";
-import {EtudiantService} from "../../../controller/service/etudiant.service";
-import {Parcours} from "../../../controller/model/parcours.model";
-import {ParcoursService} from "../../../controller/service/parcours.service";
-import {InscriptionService} from "../../../controller/service/inscription.service";
-import {Etudiant} from "../../../controller/model/etudiant.model";
-import {PackStudent} from "../../../controller/model/pack-student.model";
-import {PackStudentService} from "../../../controller/service/pack-student.service";
-import {MessageService} from "primeng/api";
-import {Inscription} from "../../../controller/model/inscription.model";
-import {GroupeEtudeService} from "../../../controller/service/groupe-etude.service";
 import {InteretEtudiant} from '../../../controller/model/interet-etudiant.model';
 import {Fonction} from '../../../controller/model/fonction.model';
 import {StatutSocial} from '../../../controller/model/statut-social.model';
 import {NiveauEtude} from '../../../controller/model/niveau-etude.model';
-import {LoginComponent} from '../../public/login/login.component';
-import {LoginService} from '../../../controller/service/login.service';
 import {Router} from '@angular/router';
-import {Skill} from '../../../controller/model/skill.model';
-
 
 @Component({
-  selector: 'app-etudiant-profile',
-  templateUrl: './etudiant-profile.component.html',
-  styleUrls: ['./etudiant-profile.component.scss']
+  selector: 'app-profile',
+  templateUrl: './profile.component.html',
+  styleUrls: ['./profile.component.scss']
 })
-export class EtudiantProfileComponent implements OnInit {
+export class ProfileComponent implements OnInit {
+
 
   user: User = new User();
   public users: User[];
@@ -45,24 +42,18 @@ export class EtudiantProfileComponent implements OnInit {
   showdialog = false;
   packChossen: PackStudent = new PackStudent();
   inscription: Inscription = new Inscription();
-    updated = false;
-    showpackInput = false;
+  updated = false;
 
- Student =false;
-  Employed = false;
 
-    private submitted: boolean;
-    changePass = false;
-    newPassword = '';
-    newPasswordRepated = '';
 
-  constructor(private menuService: MenuService,
+
+  constructor(private menuService: MenuService, public router: Router,
               private authenticationService: AuthenticationService,
               public userService: UserService,
               public loginService: LoginService, private etudiantService: EtudiantService,
               private service: InscriptionService,
               public packStudentService: PackStudentService, private messageService: MessageService,
-              public groupeEtudeService: GroupeEtudeService,public router: Router) {
+              public groupeEtudeService: GroupeEtudeService) {
   }
   get selected(): Etudiant {
     return this.userService.selected;
@@ -75,34 +66,33 @@ export class EtudiantProfileComponent implements OnInit {
 
   public edit(){
     console.log(this.etudiant);
+    this.router.navigate(['etudiant/profile']);
     this.userService.edit(this.etudiant).subscribe(data => {
       this.etudiant  = data;
     });
   }
   ngOnInit(): void {
-
-  this.etudiantService.findAllEtudiant().subscribe(data =>{
-  this.etudiant = data ;
-  this.getValue();});
-  this.user = this.authenticationService.getUserFromLocalCache();
-  this.etudiantService.findAllParcours().subscribe(
+    this.etudiantService.findAllEtudiant().subscribe(data =>
+        this.etudiant = data );
+    this.user = this.authenticationService.getUserFromLocalCache();
+    this.etudiantService.findAllParcours().subscribe(
         data => {
           this.parcoursList = data ;
         }
     );
-  this.service.findByEtudiantId(this.user.id).subscribe(
+    this.service.findByEtudiantId(this.user.id).subscribe(
         data => {
           this.inscription = data;
           this.packChossen = this.inscription.packStudent;
         }
     );
-  this.groupeEtudeService.findAll().subscribe(
+    this.groupeEtudeService.findAll().subscribe(
         data => {
           this.groupeEtudeList = data ;
         }
     );
-  this.packStudentService.findPackIndividualOrgroupe(true);
-  this.packStudentService.findPackIndividualOrgroupe(false);
+    this.packStudentService.findPackIndividualOrgroupe(true);
+    this.packStudentService.findPackIndividualOrgroupe(false);
     this.userService.findAllStatutSocial().subscribe(
         data => {
           this.statutSocials = data;
@@ -111,14 +101,6 @@ export class EtudiantProfileComponent implements OnInit {
           console.log(error);
         }
     );
-      this.service.findAllSkill().subscribe(
-          data => {
-              this.skills = data;
-              console.log(data);
-          }, error => {
-              console.log(error);
-          }
-      );
     this.userService.findAllFonction().subscribe(
         data => {
           this.fonctions = data;
@@ -173,21 +155,12 @@ export class EtudiantProfileComponent implements OnInit {
 
 
   public updateUser(user: User) {
-      this.submitted = true;
     this.subscriptions.push(
         this.userService.updateUser(user).subscribe(
             data => {
               this.user = data;
               this.authenticationService.addUserToLocalCache(this.user);
               console.log(data);
-                this.messageService.add({
-                    severity: 'success',
-                    summary: 'Successful',
-                    detail: 'profile updated',
-                    life: 3000,
-
-                });
-                console.log('salut');
             }, err => {
               console.log(err);
             }
@@ -322,7 +295,6 @@ export class EtudiantProfileComponent implements OnInit {
   }
   getgroupechosen(id: number) {
     this.etudiantService.findGroupeById(id);
-    this.showpackInput = true;
   }
   selectedPack(pack: PackStudent) {
     this.etudiantService.packCode = pack.code ;
@@ -337,11 +309,11 @@ export class EtudiantProfileComponent implements OnInit {
             this.updated = true;
           }
           this.messageService.add({
-              severity: 'success',
-              summary: 'Successful',
-              detail: 'Registration updated Successfully',
-              life: 3000}
-            );
+            severity: 'success',
+            summary: 'Successful',
+            detail: 'Registration updated Successfully',
+            life: 3000}
+          );
         }, error => {
           this.messageService.add({
             severity: 'error',
@@ -350,65 +322,8 @@ export class EtudiantProfileComponent implements OnInit {
             life: 3000}
           );
         }
-        );
+    );
 
   }
 
-  navigateToProfilEdit() {
-    this.router.navigate(['etudiant/profileEdit']);
-
-  }
-
-  getValue() {
-    if(this.etudiant.statutSocial.libelle == 'Student'){
-      this.Student = true;
-      this.Employed= false;
-    }
-    else if (this.etudiant.statutSocial.libelle == 'Employed')
-    {
-      this.Student = false;
-      this.Employed= true;
-    }
-    else {
-      this.Student = false;
-      this.Employed= false;
-    }
-
-  }
-    get skills(): Array<Skill> {
-
-        return this.service.skills;
-    }
-    set skill(value: Skill) {
-        this.service.skill = value;
-    }
-
-    set skills(value: Array<Skill>) {
-        this.service.skills = value;
-    }
-    get skill(): Skill {
-        return this.service.skill;
-    }
-
-    changePassword() {
-        this.etudiantService.updatePassword(this.newPassword).subscribe(
-            data => {
-                if (data > 0){
-                    this.messageService.add({
-                        severity: 'success',
-                        summary: 'Successful',
-                        detail: 'Password updated Successfully',
-                        life: 3000}
-                    );
-                }
-            }, error => {
-                this.messageService.add({
-                    severity: 'Error',
-                    summary: 'error',
-                    detail: 'error while updating your password',
-                    life: 3000}
-                );
-            }
-        );
-    }
 }

@@ -9,6 +9,12 @@ export class AppComponent implements OnInit {
 
     layoutMode = 'slim';
 
+    languages = [
+        {code: 'ar', name: 'Arabic', nativeName: 'العربية'},
+        {code: 'fr', name: 'French', nativeName: 'français'},
+    ];
+
+
     lightMenu = true;
 
     topbarColor = 'layout-topbar-dark';

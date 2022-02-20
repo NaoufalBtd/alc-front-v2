@@ -9,6 +9,7 @@ import {InteretEtudiant} from './interet-etudiant.model';
 import {NiveauEtude} from './niveau-etude.model';
 import {Fonction} from './fonction.model';
 import {StatutSocial} from './statut-social.model';
+import {Skill} from './skill.model';
 
 export class Inscription {
     public id: number;
@@ -26,4 +27,6 @@ export class Inscription {
     public niveauEtude = new NiveauEtude();
     public fonction = new Fonction();
     public statutSocial =  new StatutSocial();
+    public skill =  new Skill();
+    public dateRegistration: string;
 }

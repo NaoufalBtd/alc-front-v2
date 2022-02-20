@@ -24,6 +24,7 @@ import {LearnService} from '../../../../controller/service/learn.service';
 import {Role} from '../../../../enum/role.enum';
 import {ChatMessageDto} from '../../../../controller/model/chatMessageDto';
 import {Prof} from '../../../../controller/model/prof.model';
+import {AppComponent} from '../../../../app.component';
 
 @Component({
     selector: 'app-quiz-take',
@@ -43,9 +44,9 @@ export class QuizTakeComponent implements OnInit, OnDestroy {
                 private dictionnaryService: DictionaryService,
                 private sanitizer: DomSanitizer,
                 private confirmationService: ConfirmationService,
-                private webSocketService: WebSocketService,
-                private parcoursservice: ParcoursService) {
+                private webSocketService: WebSocketService) {
     }
+
 
     get showTakeQuiz(): boolean {
         return this.learnService.showTakeQuiz;
@@ -63,13 +64,6 @@ export class QuizTakeComponent implements OnInit, OnDestroy {
         this.learnService.showQuizReview = value;
     }
 
-    get myAnswer(): Reponse {
-        return this.learnService.myAnswer;
-    }
-
-    set myAnswer(value: Reponse) {
-        this.learnService.myAnswer = value;
-    }
 
     get answerSelected(): Reponse {
         return this.learnService.answerSelected;
@@ -301,8 +295,8 @@ export class QuizTakeComponent implements OnInit, OnDestroy {
     }
 
     nextQuestionFct() {
-        const  question = this.learnService.nextQuestionFct();
-        if (this.participants.get(this.prof.id).length === 1){
+        const question = this.learnService.nextQuestionFct();
+        if (this.participants.get(this.prof.id).length === 1) {
             this.followMeFct(question);
         }
     }

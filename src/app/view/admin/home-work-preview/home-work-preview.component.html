@@ -13,11 +13,14 @@
     <div class="p-col-3 ">
         <h5>Courses</h5>
         <p-dropdown [options]="cours" [(ngModel)]="selectedcours"
-                    (ngModelChange)="getHomeWorks()"
                     [style]="{'width': '100%'}"
                     optionLabel="libelle" [filter]="true" filterBy="libelle" [showClear]="true"
                     placeholder="Select a Course">
         </p-dropdown>
+    </div>
+    <div style="padding-top: 43px;" class="p-col-1">
+        <button pButton pRipple type="button" (click)="getHomeWorks()"
+                icon="pi pi-search" class="p-button-rounded p-button-outlined p-button-info searchHomeWork "></button>
     </div>
 </div>
 
@@ -192,7 +195,7 @@
 
 <!-----------------------------------------------------Edit write It Up  Dialog ------------------------------------>
 
-<p-dialog header="Questions" [(visible)]="showEditWriteItUpDialog" [style]="{width: '50vw'}">
+<p-dialog header="Questions" [(visible)]="showEditWriteItUpDialog" [style]="{width: '60vw'}">
     <div class="p-grid">
 
         <div class="p-col-4 ">
@@ -202,38 +205,45 @@
 
         <div class="p-col-4 ">
             <h6>Url Image</h6>
-            <input  type="text" pInputText [(ngModel)]="selectedHomeWork.urlImage">
+            <input type="text" pInputText [(ngModel)]="selectedHomeWork.urlImage">
         </div>
 
         <div class="p-col-4 ">
             <h6>Url Video</h6>
-            <input  type="text" pInputText [(ngModel)]="selectedHomeWork.urlVideo">
+            <input type="text" pInputText [(ngModel)]="selectedHomeWork.urlVideo">
         </div>
 
 
         <div class="p-col-4 ">
             <h6>Number of question</h6>
-            <input  type="text" pInputText [(ngModel)]="qstWriteItUp.numero">
+            <input type="text" pInputText [(ngModel)]="qstWriteItUp.numero">
         </div>
 
 
         <div class="p-col-4 ">
             <h6>Correct answer</h6>
-            <input  type="number" pInputText [(ngModel)]="qstWriteItUp.pointReponseJuste">
+            <input type="number" pInputText [(ngModel)]="qstWriteItUp.pointReponseJuste">
         </div>
 
 
         <div class="p-col-4 ">
             <h6>Incorrect answer</h6>
-            <input  type="number" pInputText [(ngModel)]="qstWriteItUp.pointReponsefausse">
+            <input type="number" pInputText [(ngModel)]="qstWriteItUp.pointReponsefausse">
         </div>
 
-        <div class="p-col-8">
-            <h6>Question</h6>
-            <textarea rows="5" cols="90%" [(ngModel)]="qstWriteItUp.libelle" pInputTextarea
+
+        <div *ngIf="selectedHomeWork.libelle === 'READING'" class="p-col-4 ">
+            <h6>Title</h6>
+            <input type="text" pInputText [(ngModel)]="qstWriteItUp.ref">
+        </div>
+
+        <div class="p-col-12">
+            <h6 *ngIf="selectedHomeWork.libelle !== 'READING'">Question</h6>
+            <h6 *ngIf="selectedHomeWork.libelle === 'READING'">Content</h6>
+            <textarea [style]="{'width':'100%', 'padding': '10px'}" rows="5" [(ngModel)]="qstWriteItUp.libelle"
+                      pInputTextarea
                       autoResize="autoResize"></textarea>
         </div>
-
 
 
     </div>

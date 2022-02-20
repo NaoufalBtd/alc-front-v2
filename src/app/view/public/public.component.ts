@@ -150,12 +150,9 @@ user: User = new User();
     this.userMenuClick = true;
     this.topbarUserMenuActive = !this.topbarUserMenuActive;
     this.topbarUserMenuActive2 = !this.topbarUserMenuActive2;
-
     this.hideOverlayMenu();
-
     event.preventDefault();
   }
-
   onTopbarNotificationMenuButtonClick2(event) {
     this.notificationMenuClick2 = true;
     this.topbarNotificationMenuActive2 = !this.topbarNotificationMenuActive2;

@@ -13,6 +13,7 @@ import {GroupeEtudeService} from '../../../../controller/service/groupe-etude.se
 import {PackStudentService} from '../../../../controller/service/pack-student.service';
 import {PackStudent} from '../../../../controller/model/pack-student.model';
 import {GroupeEtude} from '../../../../controller/model/groupe-etude.model';
+import {Skill} from '../../../../controller/model/skill.model';
 
 @Component({
     selector: 'app-inscription-edit',
@@ -109,6 +110,14 @@ export class InscriptionEditComponent implements OnInit {
         this.service.findAllProf().subscribe(
             data => {
                 this.profList = data;
+                console.log(data);
+            }, error => {
+                console.log(error);
+            }
+        );
+        this.service.findAllSkill().subscribe(
+            data => {
+                this.skills = data;
                 console.log(data);
             }, error => {
                 console.log(error);
@@ -294,6 +303,19 @@ export class InscriptionEditComponent implements OnInit {
     set niveauEtude(value: NiveauEtude) {
         this.service.niveauEtude = value;
     }
+    get skills(): Array<Skill> {
 
+        return this.service.skills;
+    }
+    set skill(value: Skill) {
+        this.service.skill = value;
+    }
+
+    set skills(value: Array<Skill>) {
+        this.service.skills = value;
+    }
+    get skill(): Skill {
+        return this.service.skill;
+    }
 
 }

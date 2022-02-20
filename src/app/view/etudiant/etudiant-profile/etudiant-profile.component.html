@@ -1,95 +1,267 @@
-<div class="container p-grid p-shadow-5">
-    <h2>Your Profil</h2>
-    <div class="p-col-2 yourprofil" style="text-align: center;">
-        <img [src]="user?.image" alt="Image" width="250">
-    </div>
-    <div class="p-col-6 yourprofil">
-        <h3>{{ user?.nom}} {{ user?.prenom}}</h3>
+<!--<div class="card">
+    <div  class="p-col-6 ">
+        <div class="p-grid p-fluid">
 
-        <button pButton pRipple type="button" icon="pi pi-image " class="p-button-rounded p-button-secondary"
-                (click)="updateProfileImage()"
-        ></button>
-        <form enctype="multipart/form-data" style="display:none;">
-            <input type="file"
-                   (change)="onProfileImageChange($event); onUpdateProfileImage()"
-                   name="profile-image-input" id="profile-image-input" placeholder="file" accept="image/*"/>
-        </form>
-    </div>
+            <div class="p-field p-md-2  ">
+                <img [src]="user?.image" alt="Image" width="250">
+            </div>
+            <div class="p-field p-md-2 usernom ">
+            <p style="font-size: 3Opx; font-weight: bold">{{ user?.nom}}</p>
+                <p> <i class="pi pi-user">  </i> {{user.age}}</p>
+                <div> Email {{user.username}}</div>
 
-    <div class="p-col-12">
-        <div class="p-grid">
-            <div class="p-col-4">
-                <label for="float-input">First name</label>
-                 <input id="float-input" type="text" pInputText [(ngModel)]="user.prenom">
+
             </div>
-            <div class="p-col-4">
-                <label for="float-input">Last name</label>
-                 <input id="float-input" type="text" pInputText [(ngModel)]="user.nom">
+                <div class="p-field p-md-2  class1 ">
+
+                    <button class="p-button-rounded p-button-success p-mr-2" icon="pi pi-user-edit" pButton
+                            pRipple (click)="navigateToProfilEdit()"></button>
+        </div>
             </div>
-            <div class="p-col-4">
-                <label for="float-input">Username</label>
-                 <input id="float-input" disabled type="text" pInputText [(ngModel)]="user.username">
-            </div>
-            <div class="p-col-4">
-                <label for="float-input">Age</label>
-                 <input id="float-input" type="number" pInputText [(ngModel)]="user.age">
-            </div>
-            <div class="p-col-4 ">
-                <label for="float-input">Address</label>
-                 <input id="float-input" type="text" pInputText [(ngModel)]="user.addresse">
-            </div>
-            <div class="p-col-4">
-                <label for="float-input">Phone</label>
-                 <input id="float-input" type="text" pInputText [(ngModel)]="user.numero">
-            </div>
-            <div class=" p-col-4">
-                <label for="float-input">City</label>
-                 <input id="float-input" type="text" pInputText [(ngModel)]="user.ville">
-            </div>
+
+<div class="p-grid p-fluid">
+
+        <div class="p-field p-md-4  class1 ">
+
+            <input placeholder="Last ame" pInputText type="text">
+        </div>
+        <div class="p-field  p-md-4">
+            <input placeholder="First ame" pInputText type="text">
         </div>
     </div>
-    <h2> Further information </h2>
-    <div class="p-col-12">
-        <div class="p-grid">
-            <div class=" p-col-4">
-            <label for="float-input"  class="status">Social statuts</label>
-                <p-dropdown  id="float-input" [options]="statutSocials"  [(ngModel)]="etudiant.statutSocial" optionLabel="libelle" ></p-dropdown>
-            </div>
-            <div  class=" p-col-4">
-                <div *ngIf="etudiant.statutSocial.libelle == 'Employed'" >
-                <label for="float-input" class="status">Area of work</label>
-                <p-dropdown    [options]="fonctions" placeholder="List of areas of work" [(ngModel)]="etudiant.fonction"
-                            optionLabel="libelle" ></p-dropdown>
+
+
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+      crossorigin="anonymous">
+
+<div class="page-content page-container" id="page-content">
+    <div class="padding">
+        <div class="row container d-flex justify-content-center">
+            <div class="col-xl-6 col-md-12">
+                <div class="card user-card-full">
+                    <div class="row m-l-0 m-r-0">
+                        <div class="col-sm-4 bg-c-lite-green user-profile">
+                            <div class="card-block text-center text-white">
+                                <div class="m-b-90"> <img [src]="user?.image"  class="img-radius" alt="User-Profile-Image"> </div>
+                                <h6 class="f-w-600" style="font-weight: bold">{{user.prenom}} {{user.nom}}</h6>
+                                <p style="font-weight: bold">Student</p> <i class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
+                                <button class="p-button-rounded p-button-warning p-mr-2" icon="pi pi-user-edit" pButton
+                                        pRipple (click)="navigateToProfilEdit()"></button>
+                            </div>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="card-block">
+                                <h6 class="m-b-20 p-b-5 b-b-default f-w-600">Information</h6>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <p class="m-b-10 f-w-600">Email</p>
+                                        <h6 class="text-muted f-w-400">{{user.username}}</h6>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <p class="m-b-10 f-w-600">Age</p>
+                                        <h6 class="text-muted f-w-400">{{user.age}}</h6>
+                                    </div>
+                                </div>
+                                <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Further information</h6>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <p class="m-b-10 f-w-600">Status Social</p>
+                                        <h6 class="text-muted f-w-400">{{etudiant.statutSocial.libelle}}</h6>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <p class="m-b-10 f-w-600"> Main goal with learning english</p>
+                                        <h6 class="text-muted f-w-400">{{etudiant.interetEtudiant.libelle}}</h6>
+                                    </div>
+
+
+                                </div>
+                                <ul class="social-link list-unstyled m-t-40 m-b-10">
+                                    <li><a href="#!" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="facebook" data-abc="true"><i class="mdi mdi-facebook feather icon-facebook facebook" aria-hidden="true"></i></a></li>
+                                    <li><a href="#!" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="twitter" data-abc="true"><i class="mdi mdi-twitter feather icon-twitter twitter" aria-hidden="true"></i></a></li>
+                                    <li><a href="#!" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="instagram" data-abc="true"><i class="mdi mdi-instagram feather icon-instagram instagram" aria-hidden="true"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div *ngIf="etudiant.statutSocial.libelle == 'Student'" >
-                    <label  class="status" for="float-input">Study Level</label>
-                <p-dropdown  [options]="niveauEtudes"  [(ngModel)]="etudiant.niveauEtude"
-                            optionLabel="libelle" ></p-dropdown>
             </div>
         </div>
-
-        </div>
     </div>
-                 <div class="class4">
-                <label   class="status2" for="float-input"> Your main goal with learning English</label>
-                <p-dropdown [options]="interetEtudiants"  [(ngModel)]="etudiant.interetEtudiant"
+</div>
+-->
+
+<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+      crossorigin="anonymous">
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <div class="container bootstrap snippets bootdey">
+        <div class="row">
+            <div class="profile-nav col-md-3">
+                <div class="panel">
+                    <div class="user-heading round">
+                        <a>
+                            <img [src]="user?.image" alt="Image" width="250">
+                        </a>
+                        <div style="margin-top: 5px;">
+                            <button pButton pRipple type="button" icon="pi pi-image " class="p-button-rounded p-button-secondary"
+                                    (click)="updateProfileImage()"
+                            ></button>
+                            <form enctype="multipart/form-data" style="display:none;">
+                                <input type="file"
+                                       (change)="onProfileImageChange($event); onUpdateProfileImage()"
+                                       name="profile-image-input" id="profile-image-input" placeholder="file" accept="image/*"/>
+                            </form>
+                        </div>
+                        <h1>{{user.prenom}} {{user.nom}}</h1>
+                        <p style="font-weight: bold">{{user.username}}</p><br>
+                        <p-button (click)="this.changePass = true" style="font-weight: bold">Change Password</p-button><br>
+                    </div>
+                </div>
+            </div>
+            <div class="profile-info col-md-9">
+                <div class="panel">
+<!--                    <div class="bio-graph-heading "  style="font-weight: bold">
+                        In this page you can find all your informations you can update them.Your coordinates need to be correct
+                    </div>-->
+                    <div class="panel-body bio-graph-info " style="margin: 10px;">
+                        <h1 style="  color: #f29263; font-weight: bold">Bio Graph</h1>
+
+                        <div class="row">
+                            <div class="bio-row">
+                                <label for="float-input">First name</label>
+                                <input id="float-input" type="text" style="margin-left: 5px;" pInputText [(ngModel)]="user.nom">
+                            </div>
+                            <div class="bio-row">
+                                <label for="float-input">Last name</label>
+                                <input id="float-input" type="text" style="margin-left: 5px;" pInputText [(ngModel)]="user.nom">
+                            </div>
+
+                            <div class="bio-row">
+                                <label for="float-input">Age</label>
+                                <input id="float-input" type="number" style="margin-left: 40px;" pInputText [(ngModel)]="user.age">
+                            </div>
+                            <div class="bio-row">
+                                <label for="float-input">City</label>
+                                <input id="float-input"  style="margin-left: 38px;" type="text" pInputText [(ngModel)]="user.ville">
+                            </div>
+                            <div class="bio-row">
+                                <label for="float-input">Address</label>
+                                <input id="float-input" style="margin-left: 17px; "type="text" pInputText [(ngModel)]="user.addresse">
+                            </div>
+                            <div class="bio-row">
+                                <label for="float-input">Phone</label>
+                                <input id="float-input" style="margin-left: 24px;" type="text" pInputText [(ngModel)]="user.numero">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body bio-graph-info margin" style="margin-left: 10px;">
+                        <h1  style="  color: #f29263; font-weight: bold">Further information</h1>
+                        <div class="row">
+                            <div class="bio-row">
+                                <label for="float-input">Status Social</label>
+                                <p-dropdown (click)="getValue()" id="float-input" style="margin-left: 5px;"[options]="statutSocials"  [(ngModel)]="etudiant.statutSocial" optionLabel="libelle" ></p-dropdown>
+                            </div>
+                            <div class="bio-row">
+                                <div *ngIf="Employed">
+                                    <label for="float-input" class="status"  >Area of work</label>
+                                    <p-dropdown  style="margin-left: 5px;"  [options]="fonctions" placeholder="List of areas of work" [(ngModel)]="etudiant.fonction"
+                                                 optionLabel="libelle" ></p-dropdown>
+                                </div>
+                                <div *ngIf="Student">
+                                    <label  class="status"  >Study Level</label>
+                                    <p-dropdown  [options]="niveauEtudes" style="margin-left:15px;" [(ngModel)]="etudiant.niveauEtude"
+                                                 optionLabel="libelle" ></p-dropdown>
+                                </div>
+                            </div>
+
+                            <div class="bio-row">
+                                <label> Main goal with learning English</label>
+                                <p-dropdown  style="margin-left:10px;"[options]="interetEtudiants"  [(ngModel)]="etudiant.interetEtudiant"
+                                             optionLabel="libelle" ></p-dropdown>
+                            </div>
+                            <div class="bio-row">
+                                <label> Skill</label>
+                                <p-dropdown  style="margin-left:10px;"[options]="skills"  [(ngModel)]="etudiant.skill" optionLabel="libelle" ></p-dropdown>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div>
+            <button  pButton pRipple type="button " icon="pi pi-save " label="Save changes" style="margin-left: 1000px; margin-top: 30px;"
+                     (click)="updateUser(user) ; edit()" class="p-button-warning"></button>
+        </div>
+
+        <div class="row">
+        <div class="col-md-3"></div>
+     <div class="profile-info col-md-9">
+     <div class="panel-body bio-graph-info margin" style="margin-left: 10px;">
+        <div >
+            <h3 style="  color: #f29263; font-weight: bold" *ngIf="this.inscription.packStudent != null">Registration Details</h3>
+            <h3 style="  color: #f29263; font-weight: bold" *ngIf="this.inscription.packStudent == null">Complete my registration!</h3>
+        </div>
+            <div class="bio-row">
+            <span>
+                <label> Group Option </label>
+                <p-dropdown (onClick)="getgroupechosen(inscription.groupeEtude.id)" [disabled]="this.inscription.packStudent != null" (click)="findAllGroupeEtude() ; " [options]="groupeEtudeList" placeholder="Select group"
+                            [(ngModel)]="etudiant.groupeEtude"
                             optionLabel="libelle" ></p-dropdown>
-                 </div>
+            </span>
+            </div>
+
+            <div class="bio-row">
+            <span>
+                <label> English Level </label>
+                <p-dropdown [disabled]="this.inscription.packStudent != null" (click)="findAllParcoursList() ; " [options]="parcoursList" placeholder="Select Level"
+                            [(ngModel)]="etudiant.parcours"
+                            optionLabel="libelle" ></p-dropdown>
+            </span>
+            </div>
+
+            <div class="bio-row">
+            <span>
+                <label> Teacher </label>
+                <select [disabled]="this.inscription.packStudent != null" required name="role" id="" [(ngModel)]="etudiant.teacherLocality" >
+                    <option selected value=" ">Teacher</option>
+                    <option value="native">Native</option>
+                    <option value="non-native">Non-native</option>
+                </select>
+            </span>
+            </div>
 
 
 
+            <div class="bio-row" >
+                <p-button  (click)="showdialogPacks()" type="button" >Select your Pack : </p-button>
+                <p-button *ngIf="packChossen!=null"  style="margin-left: 40px" class="p-button-danger" > {{packChossen.nombreCours}}h : {{packChossen.prix}}$</p-button>
 
+            </div>
+            <div class="bio-row">
+                <button *ngIf="this.inscription.packStudent == null" pButton pRipple type="button" icon="pi pi-save" label="save changes"
+                        (click)="updateInscriptionByStudent()"
+                        class="p-button-raised-primary"></button>
+                <h5 *ngIf="this.inscription.packStudent != null"> you can Add new Registration once this one is Completed </h5>
+            </div>
+    </div>
+    </div>
+    </div>
+
+    </div>
+    <!--
     <DIV class="class3  p-col-4" >
-        <button  pButton pRipple type="button" icon="pi pi-save" label="save changes"
-                (click)="updateUser(user) ; edit()"
-                class="p-button-raised-primary"></button>
+        <button  pButton pRipple type="button " icon="pi pi-save " label="Save" style="margin-left: 1315px; margin-top: 30px;"
+                 (click)="updateUser(user) ; edit()" class="p-button-warning"></button>
 
     </DIV>
-</div>
-
-<div class="p-grid p-shadow-5">
-
-
+    -->
+<!--
     <div class="p-col-6">
         <h3 *ngIf="this.inscription.packStudent != null">Registration Details</h3>
         <h3 *ngIf="this.inscription.packStudent == null">Complete my registration!</h3>
@@ -100,8 +272,8 @@
             <div class="p-col-4">
             <span>
                 <p-dropdown (onClick)="getgroupechosen(inscription.groupeEtude.id)" [disabled]="this.inscription.packStudent != null" (click)="findAllGroupeEtude() ; " [options]="groupeEtudeList" placeholder="Select Option"
-                                            [(ngModel)]="etudiant.groupeEtude"
-                                            optionLabel="libelle" ></p-dropdown>
+                            [(ngModel)]="etudiant.groupeEtude"
+                            optionLabel="libelle" ></p-dropdown>
             </span>
             </div>
 
@@ -144,8 +316,11 @@
     </div>
 
 </div>
+-->
 
+<!---
 
+-->
 <p-dialog header="packs and prices" [(visible)]="this.showdialog">
     <div class="row" *ngIf="this.etudiantService.groupeEtude.nombreEtudiant == 1">
         <div class="card-1" *ngFor="let p of this.packStudentService.packstudentIndividialList">
@@ -177,8 +352,19 @@
     </div>
 
 </p-dialog>
-<p-dialog header="info" [(visible)]="this.updated">
 
-    <h1 style="color: #0c6439; font-size: 20px;  text-align: center">Registration Updated Successfully</h1>
+<p-dialog header="Password Settings" [(visible)]="this.changePass">
+    <h1 style="color: #0c6439; font-size: 20px;  text-align: center">Change Password</h1><br>
+    <h6 style="color: darkred; font-size: 20px;  text-align: center">Password must have at least 8 caracters</h6><br>
+    <div class="bio-row">
+        <label for="float-input">New Password</label>
+        <input id="float-input" type="password" style="margin-left: 5px;" pInputText [(ngModel)]="newPassword">
+    </div>
+    <div class="bio-row">
+        <label for="float-input">Repeat Password</label>
+        <input id="float-input" type="password" style="margin-left: 5px;" pInputText [(ngModel)]="newPasswordRepated">
+    </div>
+        <button style="float: right" [disabled]="this.newPassword.length<8 || this.newPassword !== this.newPasswordRepated"  pButton pRipple type="button " icon="pi pi-save " label="Save changes"
+                 (click)="changePassword()" class="p-button-danger"></button>
 
 </p-dialog>
