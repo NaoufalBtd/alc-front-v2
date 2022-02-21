@@ -23,4 +23,17 @@ export class ComplaintViewEtudiantComponent implements OnInit {
     set displayReclamationViewEtudiant(value: boolean) {
         this.reclamationEtudiantService.displayReclamationViewEtudiant = value;
     }
+
+    get reclamationEtudiantView(): ReclamationEtudiant {
+        return this.reclamationEtudiantService.reclamationEtudiantView;
+    }
+
+    set reclamationEtudiantView(value: ReclamationEtudiant) {
+        this.reclamationEtudiantService.reclamationEtudiantView = value;
+    }
+
+    hideCreateDialog() {
+        this.displayReclamationViewEtudiant = false;
+    }
+
 }

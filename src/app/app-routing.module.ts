@@ -170,7 +170,7 @@ import {ProfileComponent} from './view/etudiant/profile/profile.component';
                     {path: 'homeWorkEtudiant', component: HomeWorkEtudiantComponent},
                     {path: 'homeWorkEtudiantResult', component: HomeWorkResultComponent},
                     {path: 'profile', component: EtudiantProfileComponent},
-                    {path: 'reclamation-etudiant', component: ReclamationEtudiantComponent}
+                    {path: 'reclamation-etudiant', component: ReclamationEtudiantComponent},
 
                     {path: 'profile', component: EtudiantProfileComponent},
                     {path: 'profileEdit', component: ProfileComponent}

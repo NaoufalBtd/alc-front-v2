@@ -9,6 +9,7 @@ import {ProfService} from '../../../../controller/service/prof.service';
 import {Prof} from '../../../../controller/model/prof.model';
 import {Etudiant} from '../../../../controller/model/etudiant.model';
 import {EtudiantService} from '../../../../controller/service/etudiant.service';
+import {MenuItem} from 'primeng/api';
 
 @Component({
     selector: 'app-complaint-list',
@@ -16,8 +17,14 @@ import {EtudiantService} from '../../../../controller/service/etudiant.service';
     styleUrls: ['./complaint-list.component.scss']
 })
 export class ComplaintListComponent implements OnInit {
+    processingStatus: MenuItem[];
 
     constructor(private typeReclamationEtudiantService: TypeReclamationEtudiantService, private typeReclamationProfService: TypeReclamationProfService, private reclamationProfService: ReclamationProfService, private reclamationEtudiantService: ReclamationEtudiantService, private profService: ProfService, private studentService: EtudiantService) {
+        this.processingStatus = [];
+        // @ts-ignore
+        this.processingStatus.push({label: 'Processed', value: 1});
+        // @ts-ignore
+        this.processingStatus.push({label: 'Being Processed', value: 0});
     }
 
 
@@ -61,8 +68,9 @@ export class ComplaintListComponent implements OnInit {
         this.reclamationEtudiantService.displayReclamationViewEtudiant = value;
     }
 
-    showReclamationViewEtudiant() {
+    showReclamationViewEtudiant(id: number, idStudent: number) {
         this.displayReclamationViewEtudiant = true;
+        this.findReclamationEtudiantByIdAndStudentId(id, idStudent);
     }
 
     showReclamationViewProf(idReclamation: number) {
@@ -74,6 +82,7 @@ export class ComplaintListComponent implements OnInit {
 
     ngOnInit(): void {
         this.reclamationProfService.findAll();
+        this.reclamationEtudiantService.findAll();
         this.profService.findAll().subscribe(
             data => {
                 if (data != null) {
@@ -93,6 +102,7 @@ export class ComplaintListComponent implements OnInit {
     get studentList(): Array<Etudiant> {
         return this.studentService.studentList;
     }
+
     set studentList(value: Array<Etudiant>) {
         this.studentService.studentList = value;
     }
@@ -122,10 +132,9 @@ export class ComplaintListComponent implements OnInit {
         this.reclamationProfService.displayReclamationEditProf = value;
     }
 
-    showReclamationEditProf(idReclamation: number) {
+    showReclamationEditProf(reclamationProf: ReclamationProf) {
         this.displayReclamationEditProf = true;
-        this.reclamationProfService.findReclamationEtudiantByIdEdit(idReclamation);
-        this.idreclamationprofedite = idReclamation;
+        this.reclamationProfService.findReclamationEtudiantByIdEdit(reclamationProf.id);
     }
 
     public findReclamationEtudiantByIdEdit(idreclamationProf: number) {
@@ -154,5 +163,52 @@ export class ComplaintListComponent implements OnInit {
 
     set reclamationEtudiantList(value: Array<ReclamationEtudiant>) {
         this.reclamationEtudiantService.reclamationEtudiantList = value;
+    }
+    get displayReclamationEditEtudiant(): boolean {
+        return this.reclamationEtudiantService.displayReclamationEditEtudiant;
+    }
+
+    set displayReclamationEditEtudiant(value: boolean) {
+        this.reclamationEtudiantService.displayReclamationEditEtudiant = value;
+    }
+
+    showEtudiantEdit(id: number, idStudent: number) {
+        this.displayReclamationEditEtudiant = true;
+        this.findReclamationEtudiantByIdAndStudentId(id, idStudent);
+    }
+
+    public findReclamationEtudiantByIdAndStudentId(id: number, idStudent: number) {
+        this.reclamationEtudiantService.findReclamationEtudiantByIdAndStudentId(id, idStudent);
+    }
+
+    get reclamationEtudiantSerch(): ReclamationEtudiant {
+        return this.reclamationEtudiantService.reclamationEtudiantSerch;
+    }
+
+    set reclamationEtudiantSerch(value: ReclamationEtudiant) {
+        this.reclamationEtudiantService.reclamationEtudiantSerch = value;
+    }
+
+    public findAllByCriteria() {
+        this.reclamationEtudiantService.findAllByCriteria();
+    }
+
+    public findAllByCriteriaProf() {
+        this.reclamationProfService.findAllByCriteria();
+    }
+
+    get reclamationProfSearch(): ReclamationProf {
+        return this.reclamationProfService.reclamationProfSearch;
+    }
+
+    set reclamationProfSearch(value: ReclamationProf) {
+        this.reclamationProfService.reclamationProfSearch = value;
+    }
+    get reclamationEtudiantEdit(): ReclamationEtudiant {
+        return this.reclamationEtudiantService.reclamationEtudiantEdit;
+    }
+
+    set reclamationEtudiantEdit(value: ReclamationEtudiant) {
+        this.reclamationEtudiantService.reclamationEtudiantEdit = value;
     }
 }

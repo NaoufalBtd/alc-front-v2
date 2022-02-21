@@ -3,6 +3,7 @@ import {ReclamationEtudiantService} from '../../../../controller/service/reclama
 import {ReclamationEtudiant} from '../../../../controller/model/reclamation-etudiant.model';
 import {TypeReclamationEtudiant} from '../../../../controller/model/type-reclamation-etudiant.model';
 import {TypeReclamationEtudiantService} from '../../../../controller/service/type-reclamation-etudiant.service';
+import {LoginService} from '../../../../controller/service/login.service';
 
 @Component({
     selector: 'app-reclamation-etudiant-create',
@@ -11,13 +12,14 @@ import {TypeReclamationEtudiantService} from '../../../../controller/service/typ
 })
 export class ReclamationEtudiantCreateComponent implements OnInit {
 
-    constructor(private typeReclamationEtudiantService: TypeReclamationEtudiantService, private reclamationEtudiantService: ReclamationEtudiantService) {
+    constructor(private typeReclamationEtudiantService: TypeReclamationEtudiantService, private reclamationEtudiantService: ReclamationEtudiantService, private serviceLogin: LoginService) {
     }
 
     ngOnInit(): void {
         this.typeReclamationEtudiantService.findAll();
 
     }
+
     get typeReclamationEtudiantList(): Array<TypeReclamationEtudiant> {
         return this.typeReclamationEtudiantService.typeReclamationEtudiantList;
     }
@@ -25,6 +27,7 @@ export class ReclamationEtudiantCreateComponent implements OnInit {
     set typeReclamationEtudiantList(value: Array<TypeReclamationEtudiant>) {
         this.typeReclamationEtudiantService.typeReclamationEtudiantList = value;
     }
+
     get reclamationEtudiant(): ReclamationEtudiant {
         return this.reclamationEtudiantService.reclamationEtudiant;
     }
@@ -39,5 +42,14 @@ export class ReclamationEtudiantCreateComponent implements OnInit {
 
     set displayReclamationEtudiant(value: boolean) {
         this.reclamationEtudiantService.displayReclamationEtudiant = value;
+    }
+
+    public saveReclamationEtudiant() {
+        this.reclamationEtudiant.etudiant = this.serviceLogin.getConnectedStudent();
+        this.reclamationEtudiantService.saveReclamationEtudiant();
+    }
+
+    hide() {
+        this.reclamationEtudiantService.displayReclamationEtudiant = false;
     }
 }

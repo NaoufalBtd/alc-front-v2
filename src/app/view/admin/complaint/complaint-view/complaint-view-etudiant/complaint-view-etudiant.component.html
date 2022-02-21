@@ -1,4 +1,43 @@
-<p-dialog header="Type Reclamation Student" [style]="{width: '50vw'}" [(visible)]="displayReclamationViewEtudiant">
-    <p>complaint-view-etudiant works!</p>
+    <p-dialog [(visible)]="displayReclamationViewEtudiant" [modal]="true" [style]="{width: '450px'}"
+              header="Reclamation Student View" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <div class="p-field">
+            <div class="p-grid p-fluid">
 
+                <div class="p-field p-md-3">
+                    <img class="img" [src]="reclamationEtudiantView.etudiant?.image" >
+                </div>
+                <div class="p-field  p-md-9">
+
+                    <p><strong><i class="pi pi-user" style="color: #0c799f"></i><strong style="color: #0c799f"> Full Name:</strong> {{reclamationEtudiantView.etudiant.nom}} {{reclamationEtudiantView.etudiant.prenom}}</strong></p>
+                    <p><strong><i class="pi pi-envelope" style="color: #0c799f"></i><strong style="color: #0c799f"> E-mail: </strong>{{reclamationEtudiantView.etudiant.username}}</strong></p>
+
+
+                </div>
+            </div>
+        </div>
+        <div class="p-field">
+            <label for="reference">Reference</label>
+            <input autofocus id="reference" pInputText required type="text" [(ngModel)]="reclamationEtudiantView.reference" disabled>
+        </div>
+        <div class="p-field">
+            <label for="dateReclamation">Date Reclamation</label>
+            <input autofocus id="dateReclamation" pInputText required type="text" [(ngModel)]="reclamationEtudiantView.dateReclamation" disabled>
+        </div>
+        <div class="p-field">
+            <label for="objetmessage">Objet Message</label>
+            <input type="text" pInputText id="objetmessage" [(ngModel)]="reclamationEtudiantView.objetReclamationEtudiant" disabled />
+
+        </div>
+        <div class="p-field">
+            <label for="message">Message</label>
+            <textarea pInputTextarea id="message" [(ngModel)]="reclamationEtudiantView.message" disabled></textarea>
+
+        </div>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button (click)="hideCreateDialog()" class="p-button-text" icon="pi pi-times" label="Cancel" pButton
+                pRipple></button>
+    </ng-template>
 </p-dialog>

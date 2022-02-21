@@ -3,7 +3,7 @@
     <ng-template pTemplate="content">
         <div class="p-field">
             <label for="objetmessage">Objet Message</label>
-            <input type="text" [(ngModel)]="reclamationEtudiant.objetReclamationProf" id="objetmessage" pInputText/>
+            <input type="text" [(ngModel)]="reclamationEtudiant.objetReclamationEtudiant" id="objetmessage" pInputText/>
         </div>
         <div class="p-field">
             <label for="message" >Message</label>
@@ -18,8 +18,8 @@
     </ng-template>
 
     <ng-template pTemplate="footer">
-        <button  class="p-button-text" icon="pi pi-times" label="Cancel" pButton
+        <button  class="p-button-text" icon="pi pi-times" label="Cancel" pButton (click)="hide()"
                 pRipple></button>
-        <button class="p-button-text"  icon="pi pi-check" label="Save" pButton pRipple></button>
+        <button class="p-button-text"  icon="pi pi-check" label="Save"  (click)="saveReclamationEtudiant()" pButton pRipple></button>
     </ng-template>
 </p-dialog>

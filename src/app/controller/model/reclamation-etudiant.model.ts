@@ -1,5 +1,6 @@
 import {Etudiant} from './etudiant.model';
 import {TypeReclamationEtudiant} from './type-reclamation-etudiant.model';
+import {Admin} from './admin.model';
 
 export class ReclamationEtudiant {
     id: number;
@@ -7,7 +8,8 @@ export class ReclamationEtudiant {
     dateReclamation: Date;
     message: string;
     objetReclamationEtudiant: string;
-    traite: string;
+    admin = new Admin();
+    traite: boolean;
     dateTraitement: Date;
     commentaireTraiteur: string;
     etudiant = new Etudiant();

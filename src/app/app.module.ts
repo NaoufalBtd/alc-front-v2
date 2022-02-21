@@ -305,12 +305,12 @@ import {
     TypeReclamationProfListComponent
 } from './view/admin/type-reclamation/type-reclamation-prof-list/type-reclamation-prof-list.component';
 import {TypeReclamationComponent} from './view/admin/type-reclamation/type-reclamation.component';
-import {
-    ReclamationEtudiantListComponent
-} from './view/etudiant/reclamation-etudiant/reclamation-etudiant-list/reclamation-etudiant-list.component';
+
 import {
     ReclamationEtudiantCreateComponent
 } from './view/etudiant/reclamation-etudiant/reclamation-etudiant-create/reclamation-etudiant-create.component';
+import { ReclamationEtudiantViewComponent } from './view/etudiant/reclamation-etudiant/reclamation-etudiant-view/reclamation-etudiant-view.component';
+import { ReclamationProfViewComponent } from './view/prof/reclamation-prof/reclamation-prof-view/reclamation-prof-view.component';
 
 @NgModule({
     imports: [
@@ -594,10 +594,11 @@ import {
         ComplaintEditProfComponent,
         ReclamationEtudiantComponent,
         ReclamationEtudiantCreateComponent,
-        ReclamationEtudiantListComponent,
         TypeReclamationComponent,
         TypeReclamationProfListComponent,
-        TypeReclamationEtudiantListComponent
+        TypeReclamationEtudiantListComponent,
+        ReclamationEtudiantViewComponent,
+        ReclamationProfViewComponent
 
     ],
     providers: [

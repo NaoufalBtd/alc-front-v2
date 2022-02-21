@@ -25,6 +25,11 @@
             <input autofocus id="dateReclamation" pInputText required type="text" [(ngModel)]="reclamationProfView.dateReclamation" disabled>
         </div>
         <div class="p-field">
+            <label for="objetmessage">Objet Message</label>
+             <input type="text" pInputText id="objetmessage" [(ngModel)]="reclamationProfView.objetReclamationProf" disabled />
+
+        </div>
+        <div class="p-field">
             <label for="message">Message</label>
             <textarea pInputTextarea id="message" [(ngModel)]="reclamationProfView.message" disabled></textarea>
 

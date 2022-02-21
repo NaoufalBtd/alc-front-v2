@@ -1,6 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {ReclamationProfService} from '../../../../../controller/service/reclamation-prof.service';
 import {ReclamationProf} from '../../../../../controller/model/reclamation-prof.model';
+import {LoginService} from '../../../../../controller/service/login.service';
+import {MenuItem} from 'primeng/api';
+import {Admin} from '../../../../../controller/model/admin.model';
 
 @Component({
     selector: 'app-complaint-edit-prof',
@@ -8,8 +11,14 @@ import {ReclamationProf} from '../../../../../controller/model/reclamation-prof.
     styleUrls: ['./complaint-edit-prof.component.scss']
 })
 export class ComplaintEditProfComponent implements OnInit {
+    processingStatus: MenuItem[];
 
-    constructor(private reclamationProfService: ReclamationProfService) {
+    constructor(private reclamationProfService: ReclamationProfService, private serviceLogin: LoginService) {
+        this.processingStatus = [];
+        // @ts-ignore
+        this.processingStatus.push({label: 'Processed', value: 1});
+        // @ts-ignore
+        this.processingStatus.push({label: 'Being Processed', value: 0});
     }
 
     ngOnInit(): void {
@@ -35,8 +44,9 @@ export class ComplaintEditProfComponent implements OnInit {
         this.reclamationProfService.findReclamationEtudiantByIdEdit(idreclamationProf);
     }
 
-    public reponseReclamationProf(idreclamationProf: number, commentaireTraiteur: string) {
-        this.reclamationProfService.reponseReclamationProf(idreclamationProf, commentaireTraiteur);
+    public reponseReclamationProf(admin: Admin, dateTraitement: Date) {
+        // this.reclamationProfEdit.admin.id = this.serviceLogin.getConnectedAdmin().id;
+        this.reclamationProfService.reponseReclamationProf(admin, dateTraitement);
     }
 
     get idreclamationprofedite(): number {
@@ -58,4 +68,13 @@ export class ComplaintEditProfComponent implements OnInit {
     hide() {
         this.displayReclamationEditProf = false;
     }
+
+    get dateTraitement(): Date {
+        return this.reclamationProfService.dateTraitement;
+    }
+
+    set dateTraitement(value: Date) {
+        this.reclamationProfService.dateTraitement = value;
+    }
+
 }
