@@ -274,27 +274,27 @@ tr.timeline > li:before {
   z-index: 200;
 }
 
-div.p-col-2{
+div.p-col-2 {
   background-color: white;
   border: solid 2px #dee2e6;
 }
 
-div.p-col-9.rightBar{
+div.p-col-9.rightBar {
   border: solid 3px #dee2e6;
   margin-right: 3%;
 }
 
-.HomeWorkcontainer{
-  margin: 0!important;
+.HomeWorkcontainer {
+  margin: 0 !important;
 }
 
-.reading-text::first-letter{
+.reading-text::first-letter {
   color: #000000;
   font-weight: bold;
   font-size: large;
 }
 
-.reading-text{
+.reading-text {
   font-size: medium;
   line-height: 40px;
   line-break: auto;
@@ -302,15 +302,17 @@ div.p-col-9.rightBar{
   font-family: cursive;
 }
 
-.readingContainer{
+.readingContainer {
   border-radius: 3px;
   background-color: hsl(49deg 45% 50%);
   color: black;
 }
 
-.bookHeader{
+.bookHeader {
   background-color: #b9a446;
   color: black;
   border-bottom: 2px solid white;
   border-radius: 3px;
 }
+
+

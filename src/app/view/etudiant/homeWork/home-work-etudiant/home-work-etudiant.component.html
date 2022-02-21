@@ -12,12 +12,14 @@
                                 {{homeWorkQuestion?.typeDeQuestion?.lib}}
                             </div>
 
-                            <div style="float:right;display: inline-block;text-align: center">{{homeWorkQuestion.numero}}
+                            <div *ngIf="showTypeOfQstBar && homeWorkQuestion?.typeDeQuestion?.ref !==( 't8' && 't9')"
+                                 style="float:right;display: inline-block;text-align: center">{{homeWorkQuestion.numero}}
                                 /{{numberOfQuestion}}</div>
                         </div>
                     </div>
 
-                    <div *ngIf="showTypeOfQstBar && homeWorkQuestion?.typeDeQuestion?.ref !== 't8'" style="background-color: #dee2e6" class="p-grid">
+                    <div *ngIf="showTypeOfQstBar && homeWorkQuestion?.typeDeQuestion?.ref !==( 't8' && 't9')"
+                         style="background-color: #dee2e6" class="p-grid">
                         <div style="  background-color: transparent!important;" class="p-col-12">
                             <p-progressBar [style]="{'height': '6px'}" [showValue]="false"
                                            [value]="progressBarValue"></p-progressBar>
@@ -260,7 +262,8 @@
                     <!--------------------------------- Write It Up -------------------------------------------------------->
 
 
-                    <div style="background-color: white;" *ngIf="homeWorkQuestion.typeDeQuestion.ref === 't2'" class="p-grid">
+                    <div style="background-color: white;" *ngIf="homeWorkQuestion.typeDeQuestion.ref === 't2'"
+                         class="p-grid">
 
                         <div class="p-col-12">
                             <img [src]="selectedHomeWork.urlImage" alt="Image Not Found !" width="100%">
@@ -282,10 +285,16 @@
                     </div>
 
 
+                    <!--------------------------------- Watch it -------------------------------------------------------->
+                    <div style="background-color: white;" *ngIf="showWatchItHomeWork" class="p-grid">
+                        <app-watch-it></app-watch-it>
+                    </div>
+
                     <!--------------------------------- Reading -------------------------------------------------------->
 
 
-                    <div style="background-color: white;" *ngIf="homeWorkQuestion.typeDeQuestion.ref === 't8'" class="p-grid">
+                    <div style="background-color: white;" *ngIf="homeWorkQuestion.typeDeQuestion.ref === 't8'"
+                         class="p-grid">
 
                         <div class="p-col-12 ">
                             <img [src]="selectedHomeWork.urlImage" alt="Image Not Found !" width="100%">
@@ -299,7 +308,7 @@
                         </div>
 
 
-                        <div (dblclick)="dict()" class="p-col-12 readingContainer">
+                        <div (mouseup)="dict()" class="p-col-12 readingContainer">
                             <p class="reading-text">{{homeWorkQuestion?.libelle}}</p>
                         </div>
 
@@ -454,6 +463,69 @@
             </ng-template>
         </p-table>
     </div>
+
+    <!--    <p-dialog header="Dictionary" position="top" [(visible)]="displayDictionaryDialog" [style]="{width: '20vw'}">-->
+
+
+    <!--    </p-dialog>-->
+
+    <p-dialog styleClass="dialogDict" [(visible)]="displayDictionaryDialog" position="right" [style]="{width: '27vw'}">
+        <ng-template pTemplate="header">
+            <h4 style="text-align: center">Dictionary</h4>
+        </ng-template>
+
+        <ng-template pTemplate="content">
+            <p-tabView>
+                <p-tabPanel header="Add new words">
+                    <h6>Text</h6>
+                    <textarea
+                            [style]="{'width': '100%',  'font-size': 'medium', 'border': '1px solid rgb(156, 39, 176)'}"
+                            rows="2" [(ngModel)]="textSeleted"
+                            pInputTextarea
+                            autoResize="autoResize"></textarea>
+                    <h6>Translation</h6>
+                    <textarea
+                            [style]="{'width': '100%',  'font-size': 'medium', 'border': '1px solid rgb(156, 39, 176)'}"
+                            rows="2" [(ngModel)]="synonymes"
+                            pInputTextarea
+                            autoResize="autoResize"></textarea>
+
+                    <button [style]="{'width': '100%','margin-top': '35px'}" pButton pRipple type="button"
+                            label="Add to my dictionary" (click)="addToDictionary()"
+                            class="p-button-raised p-button-help"></button>
+                </p-tabPanel>
+                <p-tabPanel header="My Dictionary">
+
+                    <p-table [value]="dictionaryList" responsiveLayout="scroll" [paginator]="true" [rows]="rows"
+                             [showCurrentPageReport]="true"
+                             [(first)]="first"
+                             [rowsPerPageOptions]="[10,25,50]">
+
+
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th>Word</th>
+                                <th>Translation</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-dict>
+                            <tr>
+                                <td>{{dict?.word}}</td>
+                                <td>{{dict?.definition}}</td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="summary">
+                            <div class="flex align-items-center justify-content-between">
+                                In total there are {{ dictionaryList?.length }} words.
+                            </div>
+                        </ng-template>
+                    </p-table>
+                </p-tabPanel>
+            </p-tabView>
+        </ng-template>
+
+
+    </p-dialog>
 
 
 </div>

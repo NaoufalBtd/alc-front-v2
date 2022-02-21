@@ -61,7 +61,16 @@ export class LearnService {
     private _showAppMenu = true;
     private _homeWorkList: Array<HomeWork> = new Array<HomeWork>();
     private _selectedLanguage: any = {code: 'ar', name: 'Arabic', nativeName: 'العربية'};
+    private _selectedHomeWork: HomeWork = new HomeWork();
 
+
+    get selectedHomeWork(): HomeWork {
+        return this._selectedHomeWork;
+    }
+
+    set selectedHomeWork(value: HomeWork) {
+        this._selectedHomeWork = value;
+    }
 
     wordDictionnary: string;
     son = '';

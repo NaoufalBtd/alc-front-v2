@@ -210,6 +210,11 @@ export class DictionaryService {
         return this.http.post<Dictionary>(this.adminUrl + 'dictionary/', this.selected);
     }
 
+    public addToDictionary(dict: Dictionary): Observable<Dictionary> {
+        console.log(dict);
+        return this.http.post<Dictionary>(this.adminUrl + 'dictionary/', dict);
+    }
+
     public editDict(): Observable<number> {
         return this.http.put<number>(this.adminUrl + 'dictionary/', this.selected);
     }

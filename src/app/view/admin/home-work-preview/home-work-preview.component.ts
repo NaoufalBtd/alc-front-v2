@@ -32,12 +32,13 @@ export class HomeWorkPreviewComponent implements OnInit {
     first = 0;
     public answersList: Map<HomeWorkQST, Array<HomeWorkReponse>> = new Map<HomeWorkQST, Array<HomeWorkReponse>>();
 
-    imgUrl: string;
+    urlMedia: string;
     showEditDialog: boolean;
     showAnswersDialog: boolean;
     categorieSections: Array<CategorieSection> = new Array<CategorieSection>();
     answers: Array<HomeWorkReponse> = new Array<HomeWorkReponse>();
     showEditWriteItUpDialog: boolean;
+    showSrcImg: boolean;
 
     constructor(private parcoursService: ParcoursService,
                 private homeWorkService: HomeworkService,
@@ -89,6 +90,7 @@ export class HomeWorkPreviewComponent implements OnInit {
             if (this.selectedparcours.id !== undefined) {
                 this.homeWorkService.findhomeworkbyCoursId(this.selectedcours).subscribe(data => {
                     this.homeWorks = data;
+                    console.log(this.homeWorks);
                 }, error => {
                     console.log(error);
                 });
@@ -143,8 +145,16 @@ export class HomeWorkPreviewComponent implements OnInit {
 
     }
 
-    showImage(imgUrl: string) {
-        this.imgUrl = imgUrl;
+    showImage(imgUrl: string, code: string) {
+        console.log('-----------------------------------------');
+        console.log(imgUrl);
+        if (code === 'img') {
+            this.showSrcImg = true;
+        } else {
+            this.showSrcImg = false;
+
+        }
+        this.urlMedia = imgUrl;
         this.visibleSidebar = true;
     }
 
@@ -196,4 +206,20 @@ export class HomeWorkPreviewComponent implements OnInit {
         });
         this.showEditWriteItUpDialog = false;
     }
+
+    getUrlVideo(urlVideo: string): string {
+        console.log(urlVideo);
+        let video = urlVideo.replace('watch?v=', 'embed/');
+        const index = video.indexOf('&t=');
+        const startTime: number = Number(video.substring(index + '&t='.length, (video.length - 1)));
+        if (index !== -1) {
+            video = video.substring(0, index) + '?start=' + startTime;
+        }
+        console.log(video);
+        console.log(startTime);
+        return video;
+    }
 }
+
+// https://www.youtube.com/watch?v=tpN9CPwZ-oE&t=43s
+
