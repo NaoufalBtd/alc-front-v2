@@ -490,7 +490,8 @@
                             pInputTextarea
                             autoResize="autoResize"></textarea>
 
-                    <button [style]="{'width': '100%','margin-top': '35px'}" pButton pRipple type="button"
+                    <button [disabled]="textSeleted.length < 3" [style]="{'width': '100%','margin-top': '35px'}" pButton
+                            pRipple type="button"
                             label="Add to my dictionary" (click)="addToDictionary()"
                             class="p-button-raised p-button-help"></button>
                 </p-tabPanel>

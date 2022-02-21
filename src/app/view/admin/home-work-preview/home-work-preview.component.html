@@ -73,7 +73,9 @@
                     </td>
 
 
-                    <td><span class="badge">VALIDATED</span></td>
+                    <td *ngIf="isValidated(homework)"><span class="badge">VALIDATED</span></td>
+                    <td *ngIf="!isValidated(homework)"><span class="badge-pending">PENDING</span></td>
+
                     <td>
                         <button (click)="view(homework)"
                                 class="p-button-rounded p-button-info p-mr-2" icon="pi pi-list" pButton
