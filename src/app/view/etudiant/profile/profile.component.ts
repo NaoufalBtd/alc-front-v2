@@ -303,7 +303,7 @@ export class ProfileComponent implements OnInit {
     console.log(this.etudiantService.packCode);
   }
   updateInscriptionByStudent(){
-    this.etudiantService.updateInscriptionByStudent(this.packChossen.code, this.loginService.getConnectedStudent()).subscribe(
+    this.etudiantService.updateInscriptionByStudent(this.packChossen.code, this.etudiant).subscribe(
         data => {
           if (data > 0){
             this.updated = true;

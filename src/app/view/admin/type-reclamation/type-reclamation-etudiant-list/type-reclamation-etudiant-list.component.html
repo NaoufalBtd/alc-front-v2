@@ -1,0 +1,46 @@
+<div class="p-grid">
+    <h5>A list of complaint type to the student</h5>
+    <div class="p-col-12">
+        <p-toast></p-toast>
+        <div class="card">
+            <p-toolbar styleClass="p-mb-4">
+                <ng-template pTemplate="left">
+                    <button pButton pRipple type="button" icon="pi pi-plus" label="Add Type Complaint" class="p-mr-2" (click)="showReclamation()"
+                    ></button>
+
+                </ng-template>
+                <ng-template pTemplate="right">
+
+                </ng-template>
+            </p-toolbar>
+
+
+            <p-table #dt [rows]="10" [paginator]="true" [value]="typeReclamationEtudiantList"
+                     [globalFilterFields]="['reference','total','totalPaye']"
+                     [rowHover]="true" dataKey="id" styleClass="p-datatable-customers"
+                     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                     [showCurrentPageReport]="true">
+
+                <ng-template pTemplate="header">
+                    <tr>
+
+                        <th pSortableColumn="Code">Name</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-typeReclamationStudent>
+                    <tr>
+                        <td>{{typeReclamationStudent.code}}</td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="summary">
+
+                </ng-template>
+            </p-table>
+
+
+        </div>
+        <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+    </div>
+    <app-type-reclamation-etudiant></app-type-reclamation-etudiant>
+</div>
+

@@ -98,24 +98,25 @@ export class EtudiantEditComponent implements OnInit {
     public edit() {
         this.submitted = true;
 
-                this.items[this.service.findIndexById(this.selected.id)] = this.selected;
-                this.service.edit().subscribe(data => {
-                    this.selected = data;
-                    this.service.findAll();
-                    this.messageService.add({
-                        severity: 'success',
-                        summary: 'Successful',
-                        detail: 'Etudiant Updated',
-                        life: 3000
-                    });
-                });
-            this.editDialog = false;
-            this.selected = new Etudiant();
+        this.items[this.service.findIndexById(this.selected.id)] = this.selected;
+        this.service.edit().subscribe(data => {
+            this.selected = data;
+            this.service.findAll();
+            this.messageService.add({
+                severity: 'success',
+                summary: 'Successful',
+                detail: 'Etudiant Updated',
+                life: 3000
+            });
+        });
+        this.editDialog = false;
+        this.selected = new Etudiant();
     }
 
     public hideEditDialog() {
         this.editDialog = false;
     }
+
     get interetEtudiant(): InteretEtudiant {
         return this.service.interetEtudiant;
     }
@@ -131,36 +132,47 @@ export class EtudiantEditComponent implements OnInit {
     set interetEtudiants(value: Array<InteretEtudiant>) {
         this.service.interetEtudiants = value;
     }
+
     get fonctions(): Array<Fonction> {
         return this.service.fonctions;
     }
+
     set fonctions(value: Array<Fonction>) {
         this.service.fonctions = value;
     }
+
     get fonction(): Fonction {
         return this.service.fonction;
     }
+
     set fonction(value: Fonction) {
         this.service.fonction = value;
     }
+
     get statutSocial(): StatutSocial {
         return this.service.statutSocial;
     }
+
     set statutSocial(value: StatutSocial) {
         this.service.statutSocial = value;
     }
+
     get statutSocials(): Array<StatutSocial> {
         return this.service.statutSocials;
     }
+
     set statutSocials(value: Array<StatutSocial>) {
         this.service.statutSocials = value;
     }
+
     get niveauEtudes(): Array<NiveauEtude> {
         return this.service.niveauEtudes;
     }
+
     set niveauEtudes(value: Array<NiveauEtude>) {
         this.service.niveauEtudes = value;
     }
+
     get niveauEtude(): NiveauEtude {
         return this.service.niveauEtude;
     }
@@ -168,19 +180,15 @@ export class EtudiantEditComponent implements OnInit {
     set niveauEtude(value: NiveauEtude) {
         this.service.niveauEtude = value;
     }
+
     get skills(): Array<Skill> {
 
         return this.service.skills;
     }
+
     set skill(value: Skill) {
         this.service.skill = value;
     }
 
-    set skills(value: Array<Skill>) {
-        this.service.skills = value;
-    }
-    get skill(): Skill {
-        return this.service.skill;
-    }
 
 }

@@ -1,0 +1,25 @@
+<p-dialog [(visible)]="displayReclamationEtudiant" [modal]="true" [style]="{width: '450px'}"
+          header="Reclamation" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <div class="p-field">
+            <label for="objetmessage">Objet Message</label>
+            <input type="text" [(ngModel)]="reclamationEtudiant.objetReclamationEtudiant" id="objetmessage" pInputText/>
+        </div>
+        <div class="p-field">
+            <label for="message" >Message</label>
+            <textarea id="message" pInputTextarea [(ngModel)]="reclamationEtudiant.message"></textarea>
+        </div>
+        <div class="p-field">
+            <label for="type">Type Reclamation</label>
+            <p-dropdown   placeholder="Select a Type" id="type" [options]="typeReclamationEtudiantList" optionLabel="code" [(ngModel)]="reclamationEtudiant.typeReclamationEtudiant"
+                        [showClear]="true"></p-dropdown>
+
+        </div>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button  class="p-button-text" icon="pi pi-times" label="Cancel" pButton (click)="hide()"
+                pRipple></button>
+        <button class="p-button-text"  icon="pi pi-check" label="Save"  (click)="saveReclamationEtudiant()" pButton pRipple></button>
+    </ng-template>
+</p-dialog>

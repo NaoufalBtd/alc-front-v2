@@ -21,12 +21,8 @@ export class ProfService {
     private profUrl = environment.profUrl;
     private urlBase = environment.baseApi;
     private urlParcours = '/admin/parcours/';
+    private _profListReclamation: Array<Prof>;
     prof: Prof = this.loginService.getConnectedProf();
-
-    constructor(private http: HttpClient,
-                private loginService: LoginService) {
-    }
-
     private _itemsCategorieProf: Array<CategorieProf>;
     private _listStudent: Array<Etudiant> = new Array<Etudiant>();
 
@@ -35,7 +31,21 @@ export class ProfService {
     private _listprof: Array<Prof>;
 
 
+    constructor(private http: HttpClient,
+                private loginService: LoginService) {
+    }
 
+
+    get profListReclamation(): Array<Prof> {
+        if (this._profListReclamation == null) {
+            this.profListReclamation = new Array<Prof>();
+        }
+        return this._profListReclamation;
+    }
+
+    set profListReclamation(value: Array<Prof>) {
+        this._profListReclamation = value;
+    }
 
     get listprof(): Array<Prof> {
         if (this._listprof == null) {
@@ -51,6 +61,7 @@ export class ProfService {
     public findAllParcours(): Observable<Array<Parcours>> {
         return this.http.get<Array<Parcours>>(this.urlBase + this.urlParcours);
     }
+
     public save(): Observable<number> {
         return this.http.post<number>(this.adminUrl + 'prof/', this.selectedProf);
     }

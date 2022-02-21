@@ -5,6 +5,7 @@ import {TypeReclamationProf} from '../../../../controller/model/type-reclamation
 import {TypeReclamationProfService} from '../../../../controller/service/type-reclamation-prof.service';
 import {ReclamationProf} from '../../../../controller/model/reclamation-prof.model';
 import {LoginService} from '../../../../controller/service/login.service';
+import {TypeReclamationEtudiant} from '../../../../controller/model/type-reclamation-etudiant.model';
 
 @Component({
     selector: 'app-reclamation-prof-create',

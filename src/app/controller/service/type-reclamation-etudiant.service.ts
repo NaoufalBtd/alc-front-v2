@@ -59,6 +59,7 @@ export class TypeReclamationEtudiantService {
                 if (data > 0) {
                     this.typeReclamationEtudiant = null;
                     this.findAll();
+                    this.displayTypeReclamationEtudiant=false;
                 }
             }
         );

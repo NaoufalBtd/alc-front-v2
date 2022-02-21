@@ -1,0 +1,56 @@
+<p-dialog [(visible)]="displayReclamationViewProf" [modal]="true" [style]="{width: '450px'}"
+          header="Prof Complaint Details" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+
+        <div class="p-field">
+            <label for="reference">Code</label>
+            <input autofocus id="reference" pInputText required type="text" [(ngModel)]="reclamationProfView.reference"
+                   disabled>
+        </div>
+        <div class="p-field">
+            <label for="dateReclamation">Date Reclamation</label>
+            <input autofocus id="dateReclamation" pInputText required type="text"
+                   [(ngModel)]="reclamationProfView.dateReclamation" disabled>
+        </div>
+        <div class="p-field">
+            <label for="type of complaint">Type of Complaint</label>
+            <input autofocus id="type of complaint" pInputText required type="text"
+                   [(ngModel)]="reclamationProfView.typeReclamationProf.code" disabled>
+        </div>
+        <div class="p-field">
+            <label for="objetmessage">Objet Message</label>
+            <input type="text" pInputText id="objetmessage" disabled
+                   [(ngModel)]="reclamationProfView.objetReclamationProf"/>
+
+        </div>
+        <div class="p-field">
+            <label for="message">Message</label>
+            <textarea pInputTextarea id="message" disabled [(ngModel)]="reclamationProfView.message"></textarea>
+        </div>
+        <div class="p-field">
+            <label for="adminName">Admin Name</label>
+            <input type="text" pInputText id="adminName" disabled
+                   [(ngModel)]="reclamationProfView.admin.nom+' '+ reclamationProfView.admin.prenom"/>
+
+        </div>
+        <div class="p-field">
+            <label for="commentaireTraiteur">Comment Admin</label>
+            <textarea pInputTextarea id="commentaireTraiteur" disabled
+                      [(ngModel)]="reclamationProfView.commentaireTraiteur"></textarea>
+        </div>
+
+        <div class="p-field">
+            <label for="etat">Processing Status</label>
+            <p-message *ngIf="!reclamationProfView.traite" severity="warn" text="Being Processed" id="etat"
+                       styleClass="p-mr-2"></p-message>
+            <p-message *ngIf="reclamationProfView.traite" severity="success" text="Processed" id="etat"
+                       styleClass="p-mr-2"></p-message>
+        </div>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button class="p-button-text" icon="pi pi-times" label="Cancel" pButton (click)="hide()"
+                pRipple></button>
+
+    </ng-template>
+</p-dialog>

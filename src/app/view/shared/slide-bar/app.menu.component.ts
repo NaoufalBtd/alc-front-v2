@@ -95,7 +95,8 @@ export class AppMenuComponent implements OnInit {
                     {label: 'Bonus', icon: 'pi pi-fw pi-wallet', routerLink: ['/admin/bonus']},
                     {label: 'Packs', icon: 'pi pi-briefcase', routerLink: ['/admin/PackStudent']},
                     {label: 'Cloud', icon: 'pi pi-cloud', routerLink: ['/admin/driveApi']},
-                    {label: 'Complaint', icon: 'pi pi-bell', routerLink: ['/admin/complaint']}
+                    {label: 'Complaint', icon: 'pi pi-bell', routerLink: ['/admin/complaint']},
+                    {label: 'Type of Complaint', icon: 'pi pi-bell', routerLink: ['/admin/typeofcomplaint']}
                 ];
             } else if (this.user.role === 'TEACHER') {
                 this.model = [
@@ -118,7 +119,7 @@ export class AppMenuComponent implements OnInit {
                     {label: 'FAQ ', icon: 'pi pi-fw pi-question-circle', routerLink: ['/etudiant/faq-student']},
                     {label: 'News ', icon: 'pi pi-fw pi-clock', routerLink: ['/etudiant/news-student']},
                     {label: 'Schedule', icon: 'pi pi-fw pi-calendar-times', routerLink: ['/etudiant/schedule-student']},
-                    {label: 'Reclamation', icon: 'pi pi-fw pi-exclamation-triangle', routerLink: ['/etudiant/reclamation-prof']},
+                    {label: 'Reclamation', icon: 'pi pi-fw pi-exclamation-triangle', routerLink: ['/etudiant/reclamation-etudiant']},
 
 
                 ];

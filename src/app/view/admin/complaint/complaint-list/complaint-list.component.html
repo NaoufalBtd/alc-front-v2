@@ -1,21 +1,33 @@
 <div class="p-grid">
+
     <div class="p-col-12">
         <p-toast></p-toast>
         <div class="card">
-            <p-toolbar styleClass="p-mb-4">
-                <ng-template pTemplate="left">
-                    <button pButton pRipple type="button" icon="pi pi-plus" label="Type Reclamation Prof" class="p-mr-2"
-                            (click)="showTypeReclamationProf()"></button>
-                    <button pButton pRipple type="button" icon="pi pi-plus" label="Type Reclamation Etudiant"
-                            class="p-button-warning" (click)="showTypeReclamationEtudiant()"></button>
-                </ng-template>
-                <ng-template pTemplate="right">
 
-                </ng-template>
-            </p-toolbar>
             <p-tabView>
                 <p-tabPanel header="Complaint Prof">
+                    <p-toolbar styleClass="p-mb-4">
+                        <ng-template pTemplate="left">
 
+                        </ng-template>
+                        <ng-template pTemplate="right">
+                            <input type="text" pInputText style="margin-right: 5px" placeholder="Code"
+                                   [(ngModel)]="reclamationProfSearch.reference"/>
+                            <p-dropdown placeholder="Prof Name" [itemSize]="2"
+                                        [options]="profListReclamation" [(ngModel)]="reclamationProfSearch.prof.nom"
+                                        optionValue="nom"
+                                        optionLabel="nom"
+                                        [showClear]="true"
+                                        [filter]="false" style="margin-right: 5px"></p-dropdown>
+                            <p-dropdown placeholder="Etat" [itemSize]="2"
+                                        [options]="processingStatus" [(ngModel)]="reclamationProfSearch.traite"
+                                        [showClear]="true"
+                                        [filter]="false" style="margin-right: 5px"></p-dropdown>
+                            <p-button label="Search" style="margin-right: 5px"
+                                      (click)="findAllByCriteriaProf()"></p-button>
+
+                        </ng-template>
+                    </p-toolbar>
                     <p-table #dt [rows]="10" [paginator]="true"
                              [value]="reclamationProfList"
                              [globalFilterFields]="['reference','total','totalPaye']"
@@ -35,19 +47,36 @@
                         </ng-template>
                         <ng-template pTemplate="body" let-reclamationProf>
                             <tr>
-                                <td>{{reclamationProf.reference}}</td>
-                                <td>{{reclamationProf.prof.nom}} {{reclamationProf.prof.prenom}}</td>
-                                <td>{{reclamationProf.dateReclamation}}</td>
-                                <td *ngIf="!reclamationProf.traite">
-                                    <strong style="background-color: red">    <i class="pi pi-times" style="font-size: 1rem;color: white"></i> <span style="color: white">  Non Traiter</span></strong>
+                                <td><strong>{{reclamationProf.reference}}</strong>
+
                                 </td>
-                                <td *ngIf="reclamationProf.traite">
-                                    <strong style="background-color: green">    <i class="pi pi-check" style="color: white"></i> <span style="color: white"> Traiter</span></strong>
+                                <td>{{reclamationProf.prof.nom}} {{reclamationProf.prof.prenom}}</td>
+                                <td>
+                                    <strong>
+                                        <i class="pi pi-calendar"></i>   {{ reclamationProf.dateReclamation | date : "yyyy-MM-dd"}}
+                                    </strong>
+                                    <br>
+                                    <strong>
+                                        <i class="pi pi-clock"></i> {{ reclamationProf.dateReclamation | date : "HH:mm"}}
+                                    </strong>
+
                                 </td>
                                 <td>
+                                    <p-message *ngIf="!reclamationProf.traite" severity="warn" text="Being Processed"
+                                               styleClass="p-mr-2"></p-message>
+                                    <p-message *ngIf="reclamationProf.traite" severity="success" text="Processed"
+                                               styleClass="p-mr-2"></p-message>
+                                </td>
 
-                                    <button pButton type="button" class="p-button-info p-mr-2" (click)="showReclamationViewProf()"
+
+                                <td>
+
+                                    <button pButton type="button" class="p-button-info p-mr-2"
+                                            (click)="showReclamationViewProf(reclamationProf.id)"
                                             icon="pi pi-align-justify"></button>
+                                    <button pButton type="button" class="p-button-success p-mr-2"
+                                            (click)="showReclamationEditProf(reclamationProf)"
+                                            icon="pi pi-pencil"></button>
                                 </td>
                             </tr>
                         </ng-template>
@@ -58,9 +87,30 @@
                 </p-tabPanel>
 
                 <p-tabPanel header="Complaint Student">
+                    <p-toolbar styleClass="p-mb-4">
+                        <ng-template pTemplate="left">
 
-                    <p-table #dt [rows]="10" [paginator]="true"
+                        </ng-template>
+                        <ng-template pTemplate="right">
+                            <input type="text" pInputText style="margin-right: 5px" placeholder="Code"
+                                   [(ngModel)]="reclamationEtudiantSerch.reference"/>
+                            <p-dropdown placeholder="Student Name" [itemSize]="2"
+                                        [(ngModel)]="reclamationEtudiantSerch.etudiant.nom"
+                                        [options]="studentList"
+                                        optionLabel="nom"
+                                        optionValue="nom"
+                                        [showClear]="true"
+                                        [filter]="false" style="margin-right: 5px"></p-dropdown>
+                            <p-dropdown placeholder="Etat" [itemSize]="2"
+                                        [options]="processingStatus"
+                                        [showClear]="true"
+                                        [(ngModel)]="reclamationEtudiantSerch.traite"
+                                        [filter]="false" style="margin-right: 5px"></p-dropdown>
+                            <p-button label="Search" style="margin-right: 5px" (click)="findAllByCriteria()"></p-button>
 
+                        </ng-template>
+                    </p-toolbar>
+                    <p-table #dt [rows]="10" [paginator]="true" [value]="reclamationEtudiantList"
                              [globalFilterFields]="['reference','total','totalPaye']"
                              [rowHover]="true" dataKey="id" styleClass="p-datatable-customers"
                              currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
@@ -71,24 +121,41 @@
 
                                 <th pSortableColumn="Code">Code</th>
                                 <th pSortableColumn="prof">Student</th>
-                                <th pSortableColumn="prof">Message</th>
                                 <th pSortableColumn="Date">Date Reclamation</th>
                                 <th pSortableColumn="Number Of Sessions">Etat</th>
                                 <th>Action</th>
                             </tr>
                         </ng-template>
-                        <ng-template pTemplate="body" let-reclamationProf>
+                        <ng-template pTemplate="body" let-reclamationEtudiant>
                             <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td><strong> {{reclamationEtudiant.reference}}</strong>
+                                </td>
+                                <td>{{reclamationEtudiant.etudiant.nom}} {{reclamationEtudiant.etudiant.prenom}}</td>
+                                <td>
+                                    <strong>
+                                        <i class="pi pi-calendar"></i>   {{ reclamationEtudiant.dateReclamation | date : "yyyy-MM-dd"}}
+                                    </strong>
+                                    <br>
+                                    <strong>
+                                        <i class="pi pi-clock"></i> {{ reclamationEtudiant.dateReclamation | date : "HH:mm"}}
+                                    </strong>
 
+                                </td>
+                                <td>
+                                    <p-message *ngIf="!reclamationEtudiant.traite" severity="warn"
+                                               text="Being Processed"
+                                               styleClass="p-mr-2"></p-message>
+                                    <p-message *ngIf="reclamationEtudiant.traite" severity="success" text="Processed"
+                                               styleClass="p-mr-2"></p-message>
+                                </td>
                                 <td>
 
                                     <button pButton type="button" class="p-button-info p-mr-2"
+                                            (click)="showReclamationViewEtudiant(reclamationEtudiant.id,reclamationEtudiant.etudiant.id)"
                                             icon="pi pi-align-justify"></button>
+                                    <button pButton type="button" class="p-button-success p-mr-2"
+                                            (click)="showEtudiantEdit(reclamationEtudiant.id,reclamationEtudiant.etudiant.id)"
+                                            icon="pi pi-pencil"></button>
                                 </td>
                             </tr>
                         </ng-template>
@@ -103,9 +170,10 @@
         </div>
         <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
     </div>
-    <app-type-reclamation-etudiant></app-type-reclamation-etudiant>
-    <app-type-reclamation-prof></app-type-reclamation-prof>
+
+    <app-complaint-edit-prof></app-complaint-edit-prof>
     <app-complaint-view-prof></app-complaint-view-prof>
+    <app-complaint-edit-etudiant></app-complaint-edit-etudiant>
     <app-complaint-view-etudiant></app-complaint-view-etudiant>
 </div>
 

@@ -5,29 +5,33 @@
             <div class="p-grid p-fluid">
 
                 <div class="p-field p-md-3">
-
-                    <input placeholder="Last ame" pInputText type="text">
+                    <img class="img" [src]="reclamationProfView.prof?.image" >
                 </div>
                 <div class="p-field  p-md-9">
 
-                    <p><strong><i class="pi pi-user" style="color: #0c799f"></i>  Full Name: </strong></p>
-                    <p><strong><i class="pi pi-envelope" style="color: #0c799f"></i>  E-mail: </strong></p>
-                    <p><strong><i class="pi pi-phone" style="color: #0c799f"></i>  Phone: </strong></p>
+                    <p><strong><i class="pi pi-user" style="color: #0c799f"></i><strong style="color: #0c799f"> Full Name:</strong> {{reclamationProfView.prof.nom}} {{reclamationProfView.prof.prenom}}</strong></p>
+                    <p><strong><i class="pi pi-envelope" style="color: #0c799f"></i><strong style="color: #0c799f"> E-mail: </strong>{{reclamationProfView.prof.username}}</strong></p>
+
 
                 </div>
             </div>
         </div>
         <div class="p-field">
             <label for="reference">Reference</label>
-            <input autofocus id="reference" pInputText required type="text"/>
+            <input autofocus id="reference" pInputText required type="text" [(ngModel)]="reclamationProfView.reference" disabled>
         </div>
         <div class="p-field">
             <label for="dateReclamation">Date Reclamation</label>
-            <input autofocus id="dateReclamation" pInputText required type="text"/>
+            <input autofocus id="dateReclamation" pInputText required type="text" [(ngModel)]="reclamationProfView.dateReclamation" disabled>
+        </div>
+        <div class="p-field">
+            <label for="objetmessage">Objet Message</label>
+             <input type="text" pInputText id="objetmessage" [(ngModel)]="reclamationProfView.objetReclamationProf" disabled />
+
         </div>
         <div class="p-field">
             <label for="message">Message</label>
-            <textarea pInputTextarea id="message"></textarea>
+            <textarea pInputTextarea id="message" [(ngModel)]="reclamationProfView.message" disabled></textarea>
 
         </div>
     </ng-template>

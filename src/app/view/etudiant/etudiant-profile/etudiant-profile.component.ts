@@ -52,6 +52,9 @@ export class EtudiantProfileComponent implements OnInit {
   Employed = false;
 
     private submitted: boolean;
+    changePass = false;
+    newPassword = '';
+    newPasswordRepated = '';
 
   constructor(private menuService: MenuService,
               private authenticationService: AuthenticationService,
@@ -385,5 +388,27 @@ export class EtudiantProfileComponent implements OnInit {
     }
     get skill(): Skill {
         return this.service.skill;
+    }
+
+    changePassword() {
+        this.etudiantService.updatePassword(this.newPassword).subscribe(
+            data => {
+                if (data > 0){
+                    this.messageService.add({
+                        severity: 'success',
+                        summary: 'Successful',
+                        detail: 'Password updated Successfully',
+                        life: 3000}
+                    );
+                }
+            }, error => {
+                this.messageService.add({
+                    severity: 'Error',
+                    summary: 'error',
+                    detail: 'error while updating your password',
+                    life: 3000}
+                );
+            }
+        );
     }
 }

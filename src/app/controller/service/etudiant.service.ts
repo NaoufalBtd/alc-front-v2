@@ -12,20 +12,22 @@ import {Parcours} from '../model/parcours.model';
 import {LoginService} from './login.service';
 import {GroupeEtude} from '../model/groupe-etude.model';
 import {User} from '../model/user.model';
-import {MessageService} from "primeng/api";
-import {error} from "protractor";
+import {MessageService} from 'primeng/api';
+import {error} from 'protractor';
 import {InteretEtudiant} from '../model/interet-etudiant.model';
 import {Fonction} from '../model/fonction.model';
 import {StatutSocial} from '../model/statut-social.model';
 import {NiveauEtude} from '../model/niveau-etude.model';
 import {Inscription} from '../model/inscription.model';
 import {Skill} from '../model/skill.model';
+
 @Injectable({
     providedIn: 'root'
 })
 export class EtudiantService {
     constructor(private http: HttpClient, public serviceUser: LoginService, private messageService: MessageService) {
     }
+
     private adminUrl = environment.adminUrl;
 
     private etudiantUrl = environment.etudiantUrl;
@@ -60,15 +62,31 @@ export class EtudiantService {
     private _interetEtudiants: Array<InteretEtudiant>;
     private _skill: Skill;
     private _skills: Array<Skill>;
+    private _studentList: Array<Etudiant>;
+
+    get studentList(): Array<Etudiant> {
+        if (this._studentList == null) {
+            this._studentList = new Array<Etudiant>();
+        }
+        return this._studentList;
+    }
+
+    set studentList(value: Array<Etudiant>) {
+        this._studentList = value;
+    }
+
     public findAllNiveauEtude(): Observable<Array<NiveauEtude>> {
         return this.http.get<Array<NiveauEtude>>(this.etudiantUrl + 'niveauEtude/');
     }
+
     public findAllFonction(): Observable<Array<Fonction>> {
         return this.http.get<Array<Fonction>>(this.etudiantUrl + 'fonction/');
     }
+
     public findAllInteretEtudiant(): Observable<Array<StatutSocial>> {
         return this.http.get<Array<StatutSocial>>(this.etudiantUrl + 'interetEtudiant/');
     }
+
     public findAllStatutSocial(): Observable<Array<Parcours>> {
         return this.http.get<Array<Parcours>>(this.etudiantUrl + 'statutSocial/');
 
@@ -99,12 +117,15 @@ export class EtudiantService {
         return this.http.get<Array<Prof>>(this.adminUrl + 'prof/');
 
     }
+
     public findAllParcoursList(): Observable<Array<Parcours>> {
         return this.http.get<Array<Parcours>>(this.urlBase + this.urlParcours);
     }
+
     public findAllGroupeEtude(): Observable<Array<GroupeEtude>> {
         return this.http.get<Array<GroupeEtude>>(this.urlBase + this.urlGroupeEtude);
     }
+
     public findetudiantProf(): Observable<Array<Etudiant>> {
         return this.http.get<Array<Etudiant>>(this.adminUrl + 'etudiant/prof/id/' + this.selectedProf.id);
     }
@@ -122,10 +143,14 @@ export class EtudiantService {
         return this.http.get<Array<Etudiant>>(this.adminUrl + 'etudiant/');
     }
 
-    public updateInscriptionByStudent(code: string, etudiant: Etudiant): Observable<number>{
+    public updateInscriptionByStudent(code: string, etudiant: Etudiant): Observable<number> {
         etudiant.id = this.serviceUser.getConnectedStudent().id;
         console.log(this.selected.id);
         return this.http.post<number>(this.etudiantUrl + 'inscription/update/pack/' + code, etudiant);
+    }
+
+    public updatePassword(newPassword: string): Observable<number> {
+        return this.http.get<number>(this.etudiantUrl + 'etudiant/username/' + this.serviceUser.getConnectedStudent().username + '/newpass/' + newPassword);
     }
 
     public deleteMultipleByNom(): Observable<number> {
@@ -166,8 +191,9 @@ export class EtudiantService {
         }
         return index;
     }
+
     get groupeEtude(): GroupeEtude {
-        if (this._groupeEtude == null){
+        if (this._groupeEtude == null) {
             this._groupeEtude = new GroupeEtude();
         }
         return this._groupeEtude;
@@ -176,6 +202,7 @@ export class EtudiantService {
     set groupeEtude(value: GroupeEtude) {
         this._groupeEtude = value;
     }
+
     get selected(): Etudiant {
         if (this._selected == null) {
             this._selected = new Etudiant();
@@ -186,6 +213,7 @@ export class EtudiantService {
     set selected(value: Etudiant) {
         this._selected = value;
     }
+
     get selectedProf(): Prof {
         if (this._selectedProf == null) {
             this._selectedProf = new Prof();
@@ -261,12 +289,15 @@ export class EtudiantService {
     set selectes(value: Array<Etudiant>) {
         this._selectes = value;
     }
+
     get editDialog(): boolean {
         return this._editDialog;
     }
+
     set editDialog(value: boolean) {
         this._editDialog = value;
     }
+
     get viewDialog(): boolean {
         return this._viewDialog;
     }
@@ -300,7 +331,6 @@ export class EtudiantService {
     }
 
 
-
     get selecteetudiant(): Array<Etudiant> {
         if (this._selecteetudiant == null) {
             this._selecteetudiant = new Array<Etudiant>();
@@ -319,6 +349,7 @@ export class EtudiantService {
     set submittedetudiant(value: Etudiant) {
         this._submittedetudiant = value;
     }
+
     get centreList(): Array<Centre> {
         if (this._centreList == null) {
             this._centreList = new Array<Centre>();
@@ -346,8 +377,7 @@ export class EtudiantService {
     }
 
     get groupeEtudeList(): Array<GroupeEtude> {
-        if (this._groupeEtudeList == null)
-        {
+        if (this._groupeEtudeList == null) {
             this._groupeEtudeList = new Array<GroupeEtude>();
         }
         return this._groupeEtudeList;
@@ -367,14 +397,15 @@ export class EtudiantService {
     }
 
     findGroupeById(id: number) {
-        this.http.get<GroupeEtude>(this.adminUrl + 'groupeEtude/id/' + id ).subscribe(
+        this.http.get<GroupeEtude>(this.adminUrl + 'groupeEtude/id/' + id).subscribe(
             data => {
-                this.groupeEtude = data ;
+                this.groupeEtude = data;
             }
         );
     }
+
     get interetEtudiant(): InteretEtudiant {
-        if (this._interetEtudiant == null ){
+        if (this._interetEtudiant == null) {
             this._interetEtudiant = new InteretEtudiant();
         }
         return this._interetEtudiant;
@@ -385,7 +416,7 @@ export class EtudiantService {
     }
 
     get interetEtudiants(): Array<InteretEtudiant> {
-        if (this._interetEtudiants == null ){
+        if (this._interetEtudiants == null) {
             this._interetEtudiants = new Array<InteretEtudiant>();
         }
         return this._interetEtudiants;
@@ -396,7 +427,7 @@ export class EtudiantService {
     }
 
     get fonctions(): Array<Fonction> {
-        if (this._fonctions == null){
+        if (this._fonctions == null) {
             this._fonctions = new Array<Fonction>();
         }
         return this._fonctions;
@@ -407,7 +438,7 @@ export class EtudiantService {
     }
 
     get fonction(): Fonction {
-        if (this._fonction == null){
+        if (this._fonction == null) {
             this._fonction = new Fonction();
         }
         return this._fonction;
@@ -418,7 +449,7 @@ export class EtudiantService {
     }
 
     get statutSocial(): StatutSocial {
-        if (this._statutSocial == null ){
+        if (this._statutSocial == null) {
             this._statutSocial = new StatutSocial();
         }
         return this._statutSocial;
@@ -429,7 +460,7 @@ export class EtudiantService {
     }
 
     get statutSocials(): Array<StatutSocial> {
-        if (this._statutSocials == null ){
+        if (this._statutSocials == null) {
             this._statutSocials = new Array<StatutSocial>();
         }
         return this._statutSocials;
@@ -440,8 +471,7 @@ export class EtudiantService {
     }
 
     get niveauEtudes(): Array<NiveauEtude> {
-        if (this._niveauEtudes == null)
-        {
+        if (this._niveauEtudes == null) {
             this._niveauEtudes = new Array<NiveauEtude>();
         }
         return this._niveauEtudes;
@@ -452,8 +482,7 @@ export class EtudiantService {
     }
 
     get niveauEtude(): NiveauEtude {
-        if (this._niveauEtude == null)
-        {
+        if (this._niveauEtude == null) {
             this._niveauEtude = new NiveauEtude();
         }
         return this._niveauEtude;
@@ -462,17 +491,18 @@ export class EtudiantService {
     set niveauEtude(value: NiveauEtude) {
         this._niveauEtude = value;
     }
-    public findByEtudiantId(id: number): Observable<Inscription>{
-        return this.http.get<Inscription>(this.etudiantUrl + 'inscription/id/' + id );
+
+    public findByEtudiantId(id: number): Observable<Inscription> {
+        return this.http.get<Inscription>(this.etudiantUrl + 'inscription/id/' + id);
     }
 
     get skills(): Array<Skill> {
-        if (this._skills == null)
-        {
+        if (this._skills == null) {
             this._skills = new Array<Skill>();
         }
         return this._skills;
     }
+
     set skill(value: Skill) {
         this._skill = value;
     }
@@ -482,8 +512,7 @@ export class EtudiantService {
     }
 
     get skill(): Skill {
-        if (this._skills == null)
-        {
+        if (this._skills == null) {
             this._skill = new Skill();
         }
         return this._skill;
