@@ -283,6 +283,7 @@ import {
 } from './view/admin/complaint/complaint-view/complaint-view-etudiant/complaint-view-etudiant.component';
 import {ComplaintViewProfComponent} from './view/admin/complaint/complaint-view/complaint-view-prof/complaint-view-prof.component';
 import {ProfileComponent} from './view/etudiant/profile/profile.component';
+import { WatchItComponent } from './view/etudiant/homeWork/watch-it/watch-it.component';
 
 
 
@@ -566,7 +567,8 @@ import {ProfileComponent} from './view/etudiant/profile/profile.component';
         ReclamationEtudiantCreateComponent,
         ReclamationProfCreateComponent,
         ComplaintViewEtudiantComponent,
-        ComplaintViewProfComponent
+        ComplaintViewProfComponent,
+        WatchItComponent
 
     ],
     providers: [
