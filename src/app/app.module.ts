@@ -592,7 +592,7 @@ import { ReclamationProfViewComponent } from './view/prof/reclamation-prof/recla
         ReclamationProfCreateComponent,
         ComplaintViewEtudiantComponent,
         ComplaintViewProfComponent,
-        WatchItComponent
+        WatchItComponent,
         ComplaintViewProfComponent,
         ComplaintEditEtudiantComponent,
         ComplaintEditProfComponent,
