@@ -126,4 +126,12 @@ export class ManageSectionComponent implements OnInit {
         });
 
     }
+
+    isValidated(section: Section): boolean {
+        if (section.urlImage.length < 5 && section.urlVideo.length < 5) {
+            return false;
+        } else {
+            return section.contenu.length >= 5;
+        }
+    }
 }

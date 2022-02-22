@@ -66,7 +66,8 @@
                     <td>{{section?.categorieSection?.libelle}}</td>
                     <td><img [src]="section?.urlImage" width="90%" (click)="showImage(section.urlImage)"
                              class="shadow-4"/></td>
-                    <td><span class="badge">VALIDATED</span></td>
+                    <td *ngIf="isValidated(section)"><span  class="badge">VALIDATED</span></td>
+                    <td *ngIf="!isValidated(section)"><span class="badge-pending">PENDING</span></td>
                     <td>
                         <button pButton pRipple type="button" icon="pi pi-pencil" (click)="showEditDialogFct(section)"
                                 class="p-button-rounded "></button>

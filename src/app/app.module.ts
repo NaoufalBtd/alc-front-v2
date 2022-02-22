@@ -293,6 +293,8 @@ import {
     ComplaintViewEtudiantComponent
 } from './view/admin/complaint/complaint-view/complaint-view-etudiant/complaint-view-etudiant.component';
 import {ComplaintViewProfComponent} from './view/admin/complaint/complaint-view/complaint-view-prof/complaint-view-prof.component';
+import {ProfileComponent} from './view/etudiant/profile/profile.component';
+import { WatchItComponent } from './view/etudiant/homeWork/watch-it/watch-it.component';
 import {
     ComplaintEditEtudiantComponent
 } from './view/admin/complaint/complaintEdit/complaint-edit-etudiant/complaint-edit-etudiant.component';
@@ -603,6 +605,8 @@ export function createTranslateLoader(http: HttpClient) {
 
         ReclamationProfCreateComponent,
         ComplaintViewEtudiantComponent,
+        ComplaintViewProfComponent,
+        WatchItComponent,
         ComplaintViewProfComponent,
         ComplaintEditEtudiantComponent,
         ComplaintEditProfComponent,
