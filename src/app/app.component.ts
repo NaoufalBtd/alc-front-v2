@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {PrimeNGConfig} from 'primeng/api';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
     selector: 'app-root',
@@ -29,7 +30,11 @@ export class AppComponent implements OnInit {
 
     ripple = true;
 
-    constructor(private primengConfig: PrimeNGConfig) {
+    constructor(private primengConfig: PrimeNGConfig, translate: TranslateService) {
+        translate.setDefaultLang('en');
+
+        // the lang to use, if the lang isn't available, it will use the current loader to get them
+        translate.use('en');
     }
 
     ngOnInit() {

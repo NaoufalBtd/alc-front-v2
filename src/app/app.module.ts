@@ -1,7 +1,7 @@
 /* tslint:disable:quotemark */
 import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
-import {HttpClientModule} from '@angular/common/http';
+import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {CommonModule, HashLocationStrategy, LocationStrategy} from '@angular/common';
@@ -311,6 +311,12 @@ import {
 } from './view/etudiant/reclamation-etudiant/reclamation-etudiant-create/reclamation-etudiant-create.component';
 import { ReclamationEtudiantViewComponent } from './view/etudiant/reclamation-etudiant/reclamation-etudiant-view/reclamation-etudiant-view.component';
 import { ReclamationProfViewComponent } from './view/prof/reclamation-prof/reclamation-prof-view/reclamation-prof-view.component';
+import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+
+export function createTranslateLoader(http: HttpClient) {
+    return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
 
 @NgModule({
     imports: [
@@ -407,7 +413,15 @@ import { ReclamationProfViewComponent } from './view/prof/reclamation-prof/recla
         DropdownModule,
         DateTimePickerModule,
         FocusTrapModule,
-        AppRoutingModule
+        AppRoutingModule,
+        TranslateModule.forRoot({
+            defaultLanguage: 'en',
+            loader: {
+                provide: TranslateLoader,
+                useFactory: (createTranslateLoader),
+                deps: [HttpClient]
+            }
+        })
     ],
     declarations: [
         AppComponent,
