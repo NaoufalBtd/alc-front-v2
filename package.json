@@ -27,6 +27,8 @@
     "@fullcalendar/daygrid": "^4.1.0",
     "@fullcalendar/interaction": "4.1.0",
     "@fullcalendar/timegrid": "4.1.0",
+    "@ngx-translate/core": "^13.0.0",
+    "@ngx-translate/http-loader": "^6.0.0",
     "@syncfusion/ej2-angular-calendars": "^19.3.44",
     "@syncfusion/ej2-angular-dropdowns": "^19.3.44",
     "@syncfusion/ej2-angular-grids": "^19.3.44",

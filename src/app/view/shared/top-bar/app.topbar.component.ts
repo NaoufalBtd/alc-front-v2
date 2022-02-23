@@ -13,6 +13,7 @@ import {ProfService} from '../../../controller/service/prof.service';
 import {EtudiantService} from '../../../controller/service/etudiant.service';
 import {Menu} from "primeng/menu";
 import {backgroundColor} from "html2canvas/dist/types/css/property-descriptors/background-color";
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
     selector: 'app-topbar',
@@ -31,7 +32,11 @@ export class AppTopBarComponent implements OnInit, OnDestroy {
     constructor(public app: AppComponent, public appMain: PublicComponent,
                 private router: Router,
                 private authenticationService: AuthenticationService, public loginservice: LoginService,
-                private profService: ProfService, private studentservice: EtudiantService) {
+                private profService: ProfService, private studentservice: EtudiantService, public translate: TranslateService) {
+        translate.setDefaultLang('en');
+
+        // the lang to use, if the lang isn't available, it will use the current loader to get them
+        translate.use('en');
     }
 
 
@@ -79,5 +84,11 @@ export class AppTopBarComponent implements OnInit, OnDestroy {
 
     ngOnDestroy(): void {
         this.subscriptions.forEach(sub => sub.unsubscribe());
+    }
+
+    selectedLangage(event: any) {
+        console.log(event.target.value);
+        this.translate.use(event.target.value);
+
     }
 }
