@@ -9,6 +9,8 @@ import {LearnService} from '../../../controller/service/learn.service';
 import {Cours} from '../../../controller/model/cours.model';
 import {Parcours} from '../../../controller/model/parcours.model';
 import {HomeWorkEtudiantServiceService} from '../../../controller/service/home-work-etudiant-service.service';
+import {TypeHomeWorkService} from '../../../controller/service/type-home-work.service';
+import {TypeHomeWork} from '../../../controller/model/type-home-work.model';
 
 
 @Component({
@@ -27,11 +29,27 @@ export class HomeWorkComponentComponent implements OnInit {
         {label: this.parcourCurrent.libelle, routerLink: '/admin/parcours'},
         {label: this.courseSelected.libelle, routerLink: '/admin/parcours'},
     ];
+    part: number;
+    numero = 1;
 
     constructor(private service: HomeworkService,
                 private homeWorkEtudiantService: HomeWorkEtudiantServiceService,
                 private learnService: LearnService,
+                private typeHomeWorkService: TypeHomeWorkService,
                 private messageService: MessageService) {
+    }
+
+    get typeHomeWorkList(): Array<TypeHomeWork> {
+        return this.typeHomeWorkService.typeHomeWorkList;
+    }
+
+
+    get typeHomeWork(): TypeHomeWork {
+        return this.typeHomeWorkService.typeHomeWork;
+    }
+
+    set typeHomeWork(value: TypeHomeWork) {
+        this.typeHomeWorkService.typeHomeWork = value;
     }
 
     get courseSelected(): Cours {
@@ -43,6 +61,7 @@ export class HomeWorkComponentComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.typeHomeWorkService.findAll();
         this.homeWork.cours = this.courseSelected;
         this.questionTypes();
         if (this.homeWork.id !== undefined) {
@@ -96,11 +115,11 @@ export class HomeWorkComponentComponent implements OnInit {
         this.service.reponses = homeWorkReponses;
     }
 
-    get types(): Array<TypeDeQuestion> {
+    get typeOfQuestions(): Array<TypeDeQuestion> {
         return this.service.types;
     }
 
-    set types(typeDeQuestions) {
+    set typeOfQuestions(typeDeQuestions) {
         this.service.types = typeDeQuestions;
     }
 
@@ -195,7 +214,27 @@ export class HomeWorkComponentComponent implements OnInit {
     }
 
     public save() {
+        let typeqst: TypeDeQuestion = new TypeDeQuestion();
         console.log(this.homeWork);
+        this.homeWork.cours = this.courseSelected;
+        this.homeWork.typeHomeWork = this.typeHomeWork;
+        this.homeWork.libelle = this.typeHomeWork.lib;
+        if (this.homeWork.typeHomeWork.lib === 'READING' || this.homeWork.typeHomeWork.lib === 'WRITE IT UP') {
+            if (this.homeWork.typeHomeWork.lib === 'READING') {
+                typeqst = this.typeOfQuestions.filter(t => t.lib === 'Read and add new words')[0];
+
+            } else {
+                typeqst = this.typeOfQuestions.filter(t => t.lib === 'Write it up')[0];
+            }
+            console.log(typeqst);
+            this.homeworkQST.typeDeQuestion = typeqst;
+            this.homeWork.questions.push({...this.homeworkQST});
+            console.log(this.homeWork);
+        }
+        this.saveHomeWork();
+    }
+
+    saveHomeWork() {
         this.homeWork.cours = this.courseSelected;
         this.service.saveHomeWork().subscribe(
             data => {
@@ -205,6 +244,17 @@ export class HomeWorkComponentComponent implements OnInit {
                     detail: 'HomeWork Created',
                     life: 3000
                 });
+                this.homeWork = new HomeWork();
+                this.homeworkQST = new HomeWorkQST();
+                this.homeworkReponse = new HomeWorkReponse();
+            }, error => {
+                console.log(error);
+                this.messageService.add({
+                    severity: 'error',
+                    summary: 'Error!',
+                    detail: 'Error to create Home Work please try again !',
+                    life: 3000
+                });
             }
         );
     }
@@ -212,7 +262,7 @@ export class HomeWorkComponentComponent implements OnInit {
     questionTypes() {
         this.service.findType().subscribe(
             data => {
-                this.types = data;
+                this.typeOfQuestions = data;
             }
         );
     }
@@ -302,6 +352,45 @@ export class HomeWorkComponentComponent implements OnInit {
             this.onOff_true = false;
         } else {
             this.onOff_true = true;
+        }
+    }
+
+    filterTypeOfQsts() {
+        this.homeWork = new HomeWork();
+        this.homeworkQST = new HomeWorkQST();
+        this.homeworkReponse = new HomeWorkReponse();
+    }
+
+    isButtonDisabled(): boolean {
+        if (this.homeworkQST.libelle === undefined || this.homeworkQST.libelle?.length < 4) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    savePhraseBook() {
+        console.log(this.homeworkReponse);
+        console.log(this.homeworkQST);
+        this.homeworkReponse.etatReponse = 'true';
+        this.homeworkQST.reponses.push({...this.homeworkReponse});
+        this.homeworkQST.numero = this.numero;
+        this.homeworkQST.typeDeQuestion = this.typeOfQuestions.filter(t => t.lib === 'Translate the phrase')[0];
+        this.homeWork.questions.push({...this.homeworkQST});
+        this.homeWork.libelle = this.typeHomeWork.lib;
+        this.homeWork.typeHomeWork = this.typeHomeWork;
+
+        console.log(this.homeWork);
+        this.numero += 1;
+        this.homeworkQST.libelle = String();
+        this.homeworkReponse.lib = String();
+    }
+
+    removeAnswer(rps: HomeWorkQST) {
+        for (let i = 0; i < this.homeWork.questions.length; i++) {
+            if (this.homeWork.questions[i].numero === rps.numero) {
+                this.homeWork.questions.splice(i, 1);
+            }
         }
     }
 }
