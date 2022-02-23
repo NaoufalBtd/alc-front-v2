@@ -60,9 +60,22 @@
                 <tr>
                     <td>{{homework?.id}}</td>
                     <td>{{homework?.libelle}}</td>
-                    <td><img [src]="homework?.urlImage" width="75%" (click)="showImage(homework.urlImage)"
-                             class="shadow-4"/></td>
-                    <td><span class="badge">VALIDATED</span></td>
+
+                    <td (click)="showImage(getUrlVideo(homework?.urlVideo), 'video')">
+                        <img *ngIf="homework?.urlVideo === null" [src]="homework?.urlImage" width="75%"
+                              class="shadow-4" alt="Image not found !"/>
+
+
+                        <iframe *ngIf="homework?.urlVideo !== null" [src]='getUrlVideo(homework?.urlVideo) | safe'
+                                allow="fullscreen"
+                                loading="lazy"
+                                style="width: 75%; height: 70px;border: none;border-radius: 5px;"></iframe>
+                    </td>
+
+
+                    <td *ngIf="isValidated(homework)"><span class="badge">VALIDATED</span></td>
+                    <td *ngIf="!isValidated(homework)"><span class="badge-pending">PENDING</span></td>
+
                     <td>
                         <button (click)="view(homework)"
                                 class="p-button-rounded p-button-info p-mr-2" icon="pi pi-list" pButton
@@ -91,7 +104,10 @@
 </div>
 
 <p-sidebar [(visible)]="visibleSidebar" [fullScreen]="true" [baseZIndex]="10000">
-    <img [src]="imgUrl" width="100%" height="100%" class="shadow-5"/>
+    <img *ngIf="showSrcImg" [src]="urlMedia" width="100%" height="100%" class="shadow-5"/>
+    <iframe *ngIf="!showSrcImg" [src]='urlMedia | safe'
+            allow="fullscreen"
+            loading="lazy" style="width: 75%; height: 100%;border: none;border-radius: 5px;"></iframe>
 </p-sidebar>
 
 

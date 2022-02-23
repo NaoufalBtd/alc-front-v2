@@ -32,12 +32,13 @@ export class HomeWorkPreviewComponent implements OnInit {
     first = 0;
     public answersList: Map<HomeWorkQST, Array<HomeWorkReponse>> = new Map<HomeWorkQST, Array<HomeWorkReponse>>();
 
-    imgUrl: string;
+    urlMedia: string;
     showEditDialog: boolean;
     showAnswersDialog: boolean;
     categorieSections: Array<CategorieSection> = new Array<CategorieSection>();
     answers: Array<HomeWorkReponse> = new Array<HomeWorkReponse>();
     showEditWriteItUpDialog: boolean;
+    showSrcImg: boolean;
 
     constructor(private parcoursService: ParcoursService,
                 private homeWorkService: HomeworkService,
@@ -89,6 +90,15 @@ export class HomeWorkPreviewComponent implements OnInit {
             if (this.selectedparcours.id !== undefined) {
                 this.homeWorkService.findhomeworkbyCoursId(this.selectedcours).subscribe(data => {
                     this.homeWorks = data;
+                    if (this.homeWorks.length === 0) {
+                        this.messageService.add({
+                            severity: 'info',
+                            summary: 'Info',
+                            detail: 'No home work found in  this section !',
+                            life: 4000
+                        });
+                    }
+                    console.log(this.homeWorks);
                 }, error => {
                     console.log(error);
                 });
@@ -102,6 +112,7 @@ export class HomeWorkPreviewComponent implements OnInit {
 
 
     view(homework: HomeWork) {
+
         this.homeWorkEtudiantService.findQuestions(homework).subscribe(data => {
             this.qstList = data;
             for (let i = 0; i < this.qstList.length; i++) {
@@ -123,7 +134,7 @@ export class HomeWorkPreviewComponent implements OnInit {
         this.courseSelected = this.selectedcours;
         this.parcourCurrent = this.selectedparcours;
         this.homeWorkSelected = homework;
-        if (homework.libelle === 'WRITE IT UP' || homework.libelle === 'READING') {
+        if (homework.libelle === 'WRITE IT UP' || homework.libelle === 'READING' || homework.libelle === 'Watch it') {
             this.editWriteItUp(homework);
         } else {
             this.router.navigate(['/admin/homeWork']);
@@ -143,8 +154,16 @@ export class HomeWorkPreviewComponent implements OnInit {
 
     }
 
-    showImage(imgUrl: string) {
-        this.imgUrl = imgUrl;
+    showImage(imgUrl: string, code: string) {
+        console.log('-----------------------------------------');
+        console.log(imgUrl);
+        if (code === 'img') {
+            this.showSrcImg = true;
+        } else {
+            this.showSrcImg = false;
+
+        }
+        this.urlMedia = imgUrl;
         this.visibleSidebar = true;
     }
 
@@ -196,4 +215,29 @@ export class HomeWorkPreviewComponent implements OnInit {
         });
         this.showEditWriteItUpDialog = false;
     }
+
+    getUrlVideo(urlVideo: string): string {
+        let video = urlVideo.replace('watch?v=', 'embed/');
+        const index = video.indexOf('&t=');
+        const startTime: number = Number(video.substring(index + '&t='.length, (video.length - 1)));
+        if (index !== -1) {
+            video = video.substring(0, index) + '?start=' + startTime;
+        }
+        return video;
+    }
+
+    isValidated(homework: HomeWork): boolean {
+        if (homework.libelle === 'Watch it') {
+            return (homework.urlVideo?.length >= 5 || homework.urlImage == null || undefined);
+        } else if (homework.libelle === 'READING') {
+            return !(homework.urlImage?.length < 5);
+        } else if (homework.libelle === 'WRITE IT UP') {
+            return !(homework.urlImage === null || homework.urlImage?.length < 5);
+        } else {
+            return true;
+        }
+    }
 }
+
+// https://www.youtube.com/watch?v=tpN9CPwZ-oE&t=43s
+

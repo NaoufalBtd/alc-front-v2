@@ -1,0 +1,13 @@
+
+<div class="p-col-12">
+    <iframe [src]='getUrlVideo(selectedHomeWork?.urlVideo) | safe'
+            allow="fullscreen"
+
+            (click)="onPlayerReady($event)"
+            loading="lazy"
+            style="width: 1000px; height: 600px;border: none;border-radius: 5px;"></iframe>
+</div>
+
+
+<!-- https://www.youtube.com/embed/_53mo10_Mbk?color=white&controls=0&rel=0&autoplay=1&iv_load_policy=3
+-->

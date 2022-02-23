@@ -25,6 +25,17 @@ img.shadow-4 {
   letter-spacing: .3px;
 }
 
+.badge-pending {
+  background: #FEEDAF;
+  color: #8a5340;
+  border-radius: 2px;
+  padding: 0.25em 0.5rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: .3px;
+}
+
 .contentBar {
   //border: 3px solid #ff8800;
   border-radius: 5px;
@@ -34,11 +45,12 @@ th {
   color: #ff792e !important;
 }
 
-.p-button-rounded{
+.p-button-rounded {
   background-color: #ff792e !important;
-  border: none!important;
+  border: none !important;
   color: white;
 }
-input{
+
+input {
   width: 100% !important;
 }
