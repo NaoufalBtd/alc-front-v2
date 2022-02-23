@@ -1,3 +1,11 @@
+.form-control.ng-touched.ng-invalid{
+  border-bottom: 1px solid red;
+}
+.form-control.ng-touched.ng-valid{
+  border-bottom: 1px solid green;
+}
+
+
 .homepage {
   width: 100%;
   position: absolute;

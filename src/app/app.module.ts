@@ -1,6 +1,6 @@
 /* tslint:disable:quotemark */
 import {NgModule} from '@angular/core';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -314,6 +314,7 @@ import { ReclamationProfViewComponent } from './view/prof/reclamation-prof/recla
 
 @NgModule({
     imports: [
+        ReactiveFormsModule,
         BrowserModule,
         CommonModule,
         ScheduleAllModule,

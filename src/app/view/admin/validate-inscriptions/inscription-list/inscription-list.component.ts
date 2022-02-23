@@ -13,13 +13,14 @@ import {Prof} from '../../../../controller/model/prof.model';
 import {ProfService} from '../../../../controller/service/prof.service';
 import {GroupeEtude} from '../../../../controller/model/groupe-etude.model';
 import {GroupeEtudeService} from '../../../../controller/service/groupe-etude.service';
-import {PackStudent} from "../../../../controller/model/pack-student.model";
-import {PackStudentService} from "../../../../controller/service/pack-student.service";
+import {PackStudent} from '../../../../controller/model/pack-student.model';
+import {PackStudentService} from '../../../../controller/service/pack-student.service';
 import {NiveauEtude} from '../../../../controller/model/niveau-etude.model';
 import {InteretEtudiant} from '../../../../controller/model/interet-etudiant.model';
 import {Fonction} from '../../../../controller/model/fonction.model';
 import {StatutSocial} from '../../../../controller/model/statut-social.model';
 import {Skill} from '../../../../controller/model/skill.model';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
     selector: 'app-inscription-list',
@@ -29,6 +30,10 @@ import {Skill} from '../../../../controller/model/skill.model';
 })
 export class InscriptionListComponent implements OnInit {
     cols: any[];
+
+    isRequired = false;
+
+
     index: number;
     student: Etudiant = new Etudiant();
     editInscDialog: boolean;
@@ -38,7 +43,10 @@ export class InscriptionListComponent implements OnInit {
     teachers: Array<Prof> = new Array<Prof>();
     groupEtudes: Array<GroupeEtude> = new Array<GroupeEtude>();
     packStudents = new Array<PackStudent>();
-
+     isRequired22= false;
+    errorMessage = '';
+    isSuccessful = false;
+    isSignUpFailed = false;
     constructor(private messageService: MessageService,
                 private profService: ProfService,
                 private parcourService: ParcoursService,
@@ -183,8 +191,21 @@ export class InscriptionListComponent implements OnInit {
     set statutSocials(value: Array<StatutSocial>) {
         this.service.statutSocials = value;
     }
-
+    exform: FormGroup;
     ngOnInit(): void {
+
+        this.isRequired = false;
+
+        this.exform = new FormGroup({
+           fullName: new FormControl(null, Validators.required),
+            level: new FormControl(null, Validators.required),
+            nom: new FormControl(null, Validators.required),
+            state: new FormControl(null, Validators.required),
+            groupeEtude: new FormControl(null, Validators.required),
+            packOption: new FormControl(null, Validators.required)
+             });
+
+
         this.packStudentService.findPackIndividualOrgroupe(true);
         this.packStudentService.findPackIndividualOrgroupe(false);
         console.log(this.packStudentService.packstudentIndividialList);
@@ -329,8 +350,10 @@ export class InscriptionListComponent implements OnInit {
     }
 
     public view(inscription: Inscription) {
+
         this.selected = {...inscription};
         this.viewDialog = true;
+
     }
 
     public update(index: number, inscription: Inscription) {
@@ -366,17 +389,25 @@ export class InscriptionListComponent implements OnInit {
     }
 
     updateInsc(inscription: Inscription) {
-        // this.selected = inscription;
+
+        this.isRequired = false;
+            this.service.edit(inscription).subscribe(data => console.log(data));
+
+            this.editInscDialog = false;
+
         console.log(inscription);
-        this.service.edit(inscription).subscribe(data => console.log(data));
+       // this.service.edit(inscription).subscribe(data => console.log(data));
     }
 
     showEditDialog(inscription: Inscription) {
+        this.inscription = new Inscription();
         this.editInscDialog = true;
         this.inscription = inscription;
         this.findTypeOfPack(this.inscription);
         console.log(inscription);
+
     }
+
     public findTypeOfPack(inscription: Inscription){
         if (inscription.groupeEtude.nombreEtudiant > 1){
             this.packStudents = this.packStudentService.packstudentgroupeList;
@@ -384,6 +415,7 @@ export class InscriptionListComponent implements OnInit {
             this.packStudents = this.packStudentService.packstudentIndividialList;
         }
         console.log(this.packStudents);
+
     }
     get skills(): Array<Skill> {
 

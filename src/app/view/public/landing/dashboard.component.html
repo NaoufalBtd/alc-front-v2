@@ -14,9 +14,12 @@
 </style>
 <div class="boxes">
     <div class="container  items-center homepage">
+
         <div class="row">
             <div class="col-4">
+                <form [formGroup]="exform" name="exform" (ngSubmit)="createEtudiant()">
                 <div class="bg-white" style="margin-top: 60px; margin-left: 60px;  z-index: -10;opacity: 0.8">
+
                     <div class="flex-1 bg-white rounded-t rounded-b-none shadow" style="color: rgba(0,0,0,1)" >
                         <div class="w-full p-8 text-3xl font-bold text-center" >
                             Free Trial Lesson<br>
@@ -26,32 +29,42 @@
                         <div class="h-1 w-full gradient my-0 py-0 rounded-t"></div>
                     </div>
                     <div class="form-group-2" style="color: rgba(0,0,0,1)">
+
                         <ul class="w-full text-center text-sm" >
                             <li class="border-b py-4">
-                                <input type="text" name="phone_number" id="name" placeholder="full name" required
-                                       [(ngModel)]="etudiantService.selected.prenom"
-                                />
+                                <input  formControlName="fullName" type="text" name="phone_number" id="name" placeholder="full name" required class="form-control"
+                                       [(ngModel)]="etudiantService.selected.prenom"/>
+                                <small  style="font-weight: bold"  *ngIf="exform.get('fullName').invalid && exform.get('fullName').touched" class="text-danger">Full name is Required</small>
+
                             </li>
                             <li class="border-b py-4">
-                                <input type="text" name="phone_number" id="Mail" placeholder="Example@gmail.com" required
+                                <input type="text" class="form-control" formControlName="email" name="phone_number" id="Mail" placeholder="Example@gmail.com" required
                                        [(ngModel)]="etudiantService.selected.username"
                                 />
+                                <small   style="font-weight: bold"  *ngIf="exform.get('email').invalid && exform.get('email').touched" class="text-danger">Email is Required</small>
+
                             </li>
                             <li class="border-b py-4">
-                                <input type="text" name="phone_number" id="phone" placeholder="+212" required
+                                <input type="text" class="form-control"formControlName="phone"  name="phone_number" id="phone" placeholder="+212" required
                                        [(ngModel)]="etudiantService.selected.numero"
                                 />
+                                <small style="font-weight: bold" *ngIf="exform.get('phone').invalid && exform.get('phone').touched"
+                                       class="text-danger">Phone number is Required</small>
+
                             </li>
                         </ul>
+
                     </div>
                     <div class="flex-none mt-auto  rounded-b rounded-t-none overflow-hidden shadow p-6" style="color: rgba(250,250,250,1)" >
-                        <div class="flex items-center  justify-center" >
-                            <button style="background-color: rgba(255,87,51,1)" (click)="createEtudiant()" class=" mx-auto lg:mx-0 hover:underline font-bold rounded-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out">
+                        <div  class="flex items-center  justify-center" >
+                            <button style="background-color: rgba(255,87,51,1)" [disabled]="exform.invalid" (click)="createEtudiant()" class=" mx-auto lg:mx-0 hover:underline font-bold rounded-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out">
                                 <a  >Submit</a>
                             </button>
                         </div>
                     </div>
+
                 </div>
+                </form>
             </div>
             <div class="col-8">
                 <div style="margin-top: 80px;margin-left: 380px ">
@@ -603,23 +616,26 @@
             <div class="h-1 w-full gradient my-0 py-0 rounded-t"></div>
         </div>
         <div class="form-group-2">
+           <fomr >
             <ul class="w-full text-center text-sm" >
                 <li class="border-b py-4">
-                    <input type="text" name="phone_number" id="name" placeholder="full name" required
+                    <input  formControlName="fullName" type="text" name="phone_number" id="name"  placeholder="full name"
                            [(ngModel)]="etudiantService.selected.prenom"
                     />
+
                 </li>
                 <li class="border-b py-4">
-                    <input type="text" name="phone_number" id="Mail" placeholder="Example@gmail.com" required
+                    <input type="text" name="phone_number" id="Mail" validation placeholder="Example@gmail.com" [required]="true"
                            [(ngModel)]="etudiantService.selected.username"
                     />
                 </li>
                 <li class="border-b py-4">
-                    <input type="text" name="phone_number" id="phone" placeholder="+212" required
+                    <input type="text" name="phone_number" id="phone" placeholder="+212" required validation [required]="true"
                            [(ngModel)]="etudiantService.selected.numero"
                     />
                 </li>
             </ul>
+           </fomr>
         </div>
         <div class="flex-none mt-auto bg-white rounded-b rounded-t-none overflow-hidden shadow p-6">
             <div class="flex items-center justify-center">
