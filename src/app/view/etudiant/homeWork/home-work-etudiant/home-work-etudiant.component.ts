@@ -41,7 +41,7 @@ export class HomeWorkEtudiantComponent implements OnInit {
     synonymes: string = String();
     textSeleted: string;
     dictionaryList: Array<Dictionary> = new Array<Dictionary>();
-    rows = 10;
+    rows = 5;
     first = 0;
 
     constructor(
@@ -242,7 +242,7 @@ export class HomeWorkEtudiantComponent implements OnInit {
     public answersPointStudent: Map<HomeWorkQST, string> = new Map<HomeWorkQST, string>();
     public myAnswer: HomeWorkReponse = new HomeWorkReponse();
     public homeWorkReponse: HomeWorkReponse = new HomeWorkReponse();
-    public progressBarValue: number;
+    public progressBarValue = 0;
     showTypeOfQstBar = false;
     showHomeWorkEtudiantResult = false;
 

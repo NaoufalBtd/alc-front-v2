@@ -8,10 +8,10 @@ export class HomeWorkQST {
     public id: number;
     public ref: string;
     public libelle: string;
-    public numero = Number(0);
-    public pointReponseJuste: number;
-    public pointReponsefausse: number;
+    public numero = Number(1);
+    public pointReponseJuste = Number(1);
+    public pointReponsefausse = Number(0);
     public typeDeQuestion = new TypeDeQuestion();
-    public reponses: Array<HomeWorkReponse>;
+    public reponses: Array<HomeWorkReponse> = new Array<HomeWorkReponse>();
     public homeWork: HomeWork;
 }
