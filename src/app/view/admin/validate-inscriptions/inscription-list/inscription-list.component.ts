@@ -194,7 +194,6 @@ export class InscriptionListComponent implements OnInit {
     exform: FormGroup;
     ngOnInit(): void {
 
-        this.isRequired = false;
 
         this.exform = new FormGroup({
            fullName: new FormControl(null, Validators.required),
@@ -274,6 +273,7 @@ export class InscriptionListComponent implements OnInit {
                 this.groupEtudes = data;
             }
         );
+
     }
 
     findAll() {
@@ -351,8 +351,18 @@ export class InscriptionListComponent implements OnInit {
 
     public view(inscription: Inscription) {
 
+        this.exform = new FormGroup({
+            fullName: new FormControl(),
+            level: new FormControl(),
+            nom: new FormControl(),
+            state: new FormControl(),
+            groupeEtude: new FormControl(),
+            packOption: new FormControl()
+        });
+
         this.selected = {...inscription};
         this.viewDialog = true;
+
 
     }
 
@@ -389,8 +399,6 @@ export class InscriptionListComponent implements OnInit {
     }
 
     updateInsc(inscription: Inscription) {
-
-        this.isRequired = false;
             this.service.edit(inscription).subscribe(data => console.log(data));
 
             this.editInscDialog = false;
@@ -405,6 +413,15 @@ export class InscriptionListComponent implements OnInit {
         this.inscription = inscription;
         this.findTypeOfPack(this.inscription);
         console.log(inscription);
+
+        this.exform = new FormGroup({
+            fullName: new FormControl(),
+            level: new FormControl(),
+            nom: new FormControl(),
+            state: new FormControl(),
+            groupeEtude: new FormControl(),
+            packOption: new FormControl()
+        });
 
     }
 

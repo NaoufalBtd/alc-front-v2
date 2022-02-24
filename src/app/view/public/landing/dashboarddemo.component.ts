@@ -154,7 +154,7 @@ export class DashboardDemoComponent implements OnInit {
 
     ngOnInit() {
         this.exform = new FormGroup({'fullName': new FormControl(null, Validators.required),
-            'phone': new FormControl(null, Validators.required),
+
             'email': new FormControl(null, Validators.required) });
 
 
