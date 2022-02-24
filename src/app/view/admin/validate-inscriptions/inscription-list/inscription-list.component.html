@@ -247,139 +247,155 @@
 <!------------------------ edit inscription Dialog -------------------------------------------------->
 
 
+
 <p-dialog header="Registration Details" [(visible)]="editInscDialog" [style]="{width: '70vw'}">
-
-
+    <div style="margin-bottom: 10px;">
+        <i style="color: red ; font-weight: bold">*</i> Required fields
+    </div>
+<form  [formGroup]="exform" >
     <div class="p-grid">
 
+
         <div class="p-col-4">
-            <span class="p-float-label">
-                 <input  type="text" pInputText [(ngModel)]="inscription.etudiant.nom"><label >First name</label>
+            <span class="p-float-label" style="margin-top: 10px;">
+                 <input  formControlName="fullName" type="text" pInputText [(ngModel)]="inscription.etudiant.prenom" ><i style="color: red">*</i>
+                <label >Full name</label>
             </span>
+            <small style="font-weight: bold" *ngIf="exform.get('fullName').invalid && exform.get('fullName').touched"
+                   class="text-danger">Full name is Required</small>
         </div>
 
+
         <div class="p-col-4">
-            <span class="p-float-label">
-                 <input  type="text" pInputText [(ngModel)]="inscription.etudiant.prenom"><label >Last name</label>
+            <span class="p-float-label "  style="margin-top: 10px;">
+                 <p-dropdown   class="form-control"  [options]="teachers" [(ngModel)]="inscription.prof" editable="true" formControlName="nom" optionLabel="nom"></p-dropdown><i style="color: red">*</i>
+                 <label>Teacher</label>
             </span>
+            <small style="font-weight: bold" *ngIf="exform.get('nom').invalid && exform.get('nom').touched"
+                   class="text-danger">Teacher  is Required</small>
         </div>
 
+        <!--        <div class="p-col-4">-->
+        <!--            <span class="p-float-label">-->
+        <!--                 <input  disabled type="text" pInputText [(ngModel)]="inscription.prof"><label-->
+        <!--            >Teacher</label>-->
+        <!--            </span>-->
+        <!--        </div>-->
+
 
         <div class="p-col-4">
-            <span class="p-float-label">
-                 <p-dropdown [options]="teachers" [(ngModel)]="inscription.prof" optionLabel="nom"></p-dropdown>
+            <span class="p-float-label" style="margin-top: 10px;">
+                 <p-dropdown editable="true"   class="form-control"  [options]="parcours" [(ngModel)]="inscription.parcours"   formControlName="level" optionLabel="libelle"></p-dropdown>
+                <i style="color: red">*</i>
                  <label>Level</label>
             </span>
-        </div>
-
-<!--        <div class="p-col-4">-->
-<!--            <span class="p-float-label">-->
-<!--                 <input  disabled type="text" pInputText [(ngModel)]="inscription.prof"><label-->
-<!--            >Teacher</label>-->
-<!--            </span>-->
-<!--        </div>-->
-
-
-        <div class="p-col-4">
-            <span class="p-float-label">
-                 <p-dropdown [options]="parcours" [(ngModel)]="inscription.parcours" optionLabel="libelle"></p-dropdown>
-                 <label>Level</label>
-            </span>
+            <small style="font-weight: bold" *ngIf="exform.get('level').invalid && exform.get('level').touched"
+                   class="text-danger">Level is Required</small>
         </div>
 
 
         <div class="p-col-4">
-            <span class="p-float-label">
-                 <p-dropdown [options]="etatInsc" [(ngModel)]="inscription.etatInscription" optionLabel="libelle"></p-dropdown>
+            <span class="p-float-label" style="margin-top: 15px;">
+                 <p-dropdown  editable="true"  class="form-control" formControlName="state" [options]="etatInsc" [(ngModel)]="inscription.etatInscription"  optionLabel="libelle"></p-dropdown>
+                <i style="color: red">*</i>
                  <label>State</label>
             </span>
+            <small style="font-weight: bold" *ngIf="exform.get('state').invalid && exform.get('state').touched"
+                   class="text-danger">State is required</small>
         </div>
 
-
         <div class="p-col-4">
-            <span class="p-float-label">
-                 <p-dropdown [options]="groupEtudes" [(ngModel)]="inscription.groupeEtude" optionLabel="libelle"></p-dropdown>
+            <span class="p-float-label" style="margin-top: 15px;">
+                 <p-dropdown editable="true" formControlName="groupeEtude" [options]="groupEtudes"
+                             [(ngModel)]="inscription.groupeEtude"  class="form-control" optionLabel="libelle"></p-dropdown><i style="color: red">*</i>
                  <label>Group option</label>
             </span>
+            <small style="font-weight: bold" *ngIf="exform.get('groupeEtude').invalid && exform.get('groupeEtude').touched"
+                   class="text-danger">Group option is Required</small>
         </div>
         <div class="p-col-4">
-            <span class="p-float-label">
-                 <p-dropdown (click)="findTypeOfPack(inscription)" [options]="packStudents" [(ngModel)]="inscription.packStudent" optionLabel="libelle"></p-dropdown>
+            <span class="p-float-label" style="margin-top: 15px;">
+                 <p-dropdown editable="true" class="form-control" formControlName="packOption" (click)="findTypeOfPack(inscription)" [options]="packStudents" [(ngModel)]="inscription.packStudent" optionLabel="libelle"></p-dropdown><i style="color: red">*</i>
                 <label>Pack option</label>
             </span>
-
+            <small style="font-weight: bold" *ngIf="exform.get('packOption').invalid && exform.get('packOption').touched"
+                   class="text-danger">Pack is Required</small>
         </div>
 
 
 
 
         <div class="p-col-4">
-            <span class="p-float-label">
-          <p-calendar id="start" [(ngModel)]="inscription.datedebutinscription" [showTime]="true" name="StartTime"
-                      class="e-field"
-                      data-name="startTime"
-                      [showIcon]="true"
-                      inputId="start"></p-calendar> <label> Start date</label>
+            <span class="p-float-label" style="margin-top: 15px;">
+          <p-calendar [ngModelOptions]="{standalone: true}" id="start" [(ngModel)]="inscription.datedebutinscription"
+                      [showTime]="true" name="StartTime"
+                       class="e-field"
+                       data-name="startTime"
+                       [showIcon]="true"
+                       inputId="start"></p-calendar> <label> Start date</label>
             </span>
         </div>
 
         <div class="p-col-4">
-            <span class="p-float-label">
-          <p-calendar id="finish" [(ngModel)]="inscription.datefininscription" [showTime]="true" name="finishDate"
+            <span class="p-float-label"style="margin-top: 15px;">
+          <p-calendar id="finish" [ngModelOptions]="{standalone: true}" [(ngModel)]="inscription.datefininscription" [showTime]="true" name="finishDate"
                       class="e-field"
                       data-name="startTime"
                       [showIcon]="true"
                       inputId="start"></p-calendar> <label> Finish date</label>
             </span>
+
         </div>
 
 
         <div class="p-col-12 p-md-6 p-lg-4">
-            <p-dropdown [options]="statutSocials" placeholder="social status" [(ngModel)]="inscription.statutSocial"
-                        optionLabel="libelle" [itemSize]="3"></p-dropdown>
+             <span class="p-float-label" style="margin-top: 15px;">
+            <p-dropdown editable="true"  [ngModelOptions]="{standalone: true}" [options]="statutSocials" [(ngModel)]="inscription.statutSocial"
+                        optionLabel="libelle" [itemSize]="3"></p-dropdown><label>  Status Social</label>
+             </span>
+
+        </div>
+
+        <div class="p-col-12 p-md-6 p-lg-4">
+                         <span class="p-float-label" style="margin-top: 15px;">
+
+            <p-dropdown [options]="fonctions"  [(ngModel)]="inscription.fonction"
+                        editable="true"   [ngModelOptions]="{standalone: true}"  optionLabel="libelle" [itemSize]="3"></p-dropdown>
+                             <label> Area of work</label>
+                         </span>
+
+        </div>
+
+        <div class="p-col-12 p-md-6 p-lg-4">
+                        <span class="p-float-label" style="margin-top: 15px;">
+
+            <p-dropdown editable="true"  [options]="niveauEtudes" [(ngModel)]="inscription.niveauEtude"
+                        [ngModelOptions]="{standalone: true}"  optionLabel="libelle" [itemSize]="3"></p-dropdown>
+                            <label >Study Level</label>
+                        </span>
+
         </div>
         <div class="p-col-12 p-md-6 p-lg-4">
-            <p-dropdown [options]="fonctions" placeholder="List of areas of work" [(ngModel)]="inscription.fonction"
+                        <span class="p-float-label" style="margin-top: 15px;">
+            <p-dropdown editable="true"  formControlName="interet"  [options]="interetEtudiants" [(ngModel)]="inscription.interetEtudiant"
                         optionLabel="libelle" [itemSize]="3"></p-dropdown>
-        </div>
+                            <label>Main goal with learning english</label>
+                        </span>
 
-        <div class="p-col-12 p-md-6 p-lg-4">
-            <p-dropdown [options]="niveauEtudes" placeholder="Study Level" [(ngModel)]="inscription.niveauEtude"
-                        optionLabel="libelle" [itemSize]="3"></p-dropdown>
-        </div>
-        <div class="p-col-12 p-md-6 p-lg-4">
-            <p-dropdown [options]="interetEtudiants" placeholder="Interest" [(ngModel)]="inscription.interetEtudiant"
-                        optionLabel="libelle" [itemSize]="3"></p-dropdown>
         </div>
         <div class="p-col-12 p-md-6 p-lg-4">
-            <p-dropdown [options]="skills" placeholder="Interest" [(ngModel)]="inscription.skill"
-                        optionLabel="libelle" [itemSize]="3"></p-dropdown>
+   <span class="p-float-label"  style="margin-top: 15px;">
+            <p-dropdown   [ngModelOptions]="{standalone: true}"editable="true" [options]="skills" [(ngModel)]="inscription.skill"
+                        optionLabel="libelle" [itemSize]="3" ></p-dropdown>
+   <label>Skill</label>
+
+   </span>
         </div>
-
-
-
-<!--        <div class="p-col-4">-->
-<!--            <span class="p-float-label">-->
-<!--                 <input  type="text" pInputText [(ngModel)]="inscription.ville"><label-->
-<!--            >City</label>-->
-<!--            </span>-->
-<!--        </div>-->
-
-        <div class="p-col-4">
-        </div>
-
-        <div class="p-col-4">
-
-
-        </div>
-
-
     </div>
-
-
+</form>
     <ng-template pTemplate="footer">
         <button pButton pRipple type="button" icon="pi pi-save" label="save changes"
-                (click)="updateInsc(inscription) ; editInscDialog=false"
+                (click)="updateInsc(inscription) "[disabled]="exform.invalid"
                 class="p-button-raised-primary"></button>
     </ng-template>
 </p-dialog>
