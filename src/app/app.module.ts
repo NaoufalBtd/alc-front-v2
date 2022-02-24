@@ -294,7 +294,7 @@ import {
 } from './view/admin/complaint/complaint-view/complaint-view-etudiant/complaint-view-etudiant.component';
 import {ComplaintViewProfComponent} from './view/admin/complaint/complaint-view/complaint-view-prof/complaint-view-prof.component';
 import {ProfileComponent} from './view/etudiant/profile/profile.component';
-import { WatchItComponent } from './view/etudiant/homeWork/watch-it/watch-it.component';
+import {WatchItComponent} from './view/etudiant/homeWork/watch-it/watch-it.component';
 import {
     ComplaintEditEtudiantComponent
 } from './view/admin/complaint/complaintEdit/complaint-edit-etudiant/complaint-edit-etudiant.component';
@@ -311,10 +311,12 @@ import {TypeReclamationComponent} from './view/admin/type-reclamation/type-recla
 import {
     ReclamationEtudiantCreateComponent
 } from './view/etudiant/reclamation-etudiant/reclamation-etudiant-create/reclamation-etudiant-create.component';
-import { ReclamationEtudiantViewComponent } from './view/etudiant/reclamation-etudiant/reclamation-etudiant-view/reclamation-etudiant-view.component';
-import { ReclamationProfViewComponent } from './view/prof/reclamation-prof/reclamation-prof-view/reclamation-prof-view.component';
+import {ReclamationEtudiantViewComponent} from './view/etudiant/reclamation-etudiant/reclamation-etudiant-view/reclamation-etudiant-view.component';
+import {ReclamationProfViewComponent} from './view/prof/reclamation-prof/reclamation-prof-view/reclamation-prof-view.component';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import {DragHomeWorkComponent} from './view/etudiant/homeWork/drag-home-work/drag-home-work.component';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -423,7 +425,8 @@ export function createTranslateLoader(http: HttpClient) {
                 useFactory: (createTranslateLoader),
                 deps: [HttpClient]
             }
-        })
+        }),
+        DragDropModule
     ],
     declarations: [
         AppComponent,
@@ -616,7 +619,8 @@ export function createTranslateLoader(http: HttpClient) {
         TypeReclamationProfListComponent,
         TypeReclamationEtudiantListComponent,
         ReclamationEtudiantViewComponent,
-        ReclamationProfViewComponent
+        ReclamationProfViewComponent,
+        DragHomeWorkComponent
 
     ],
     providers: [
