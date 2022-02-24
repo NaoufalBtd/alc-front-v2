@@ -31,6 +31,8 @@ export class HomeWorkComponentComponent implements OnInit {
     ];
     part: number;
     numero = 1;
+    input = '<input type="text" pInputText placeholder="Username">';
+    showPutInOrder: boolean;
 
     constructor(private service: HomeworkService,
                 private homeWorkEtudiantService: HomeWorkEtudiantServiceService,
@@ -214,49 +216,75 @@ export class HomeWorkComponentComponent implements OnInit {
     }
 
     public save() {
-        let typeqst: TypeDeQuestion = new TypeDeQuestion();
-        console.log(this.homeWork);
         this.homeWork.cours = this.courseSelected;
         this.homeWork.typeHomeWork = this.typeHomeWork;
         this.homeWork.libelle = this.typeHomeWork.lib;
-        if (this.homeWork.typeHomeWork.lib === 'READING' || this.homeWork.typeHomeWork.lib === 'WRITE IT UP') {
-            if (this.homeWork.typeHomeWork.lib === 'READING') {
-                typeqst = this.typeOfQuestions.filter(t => t.lib === 'Read and add new words')[0];
+        this.homeWork.cours = this.courseSelected;
+        if (this.homeworkQST?.libelle === undefined || this.homeworkQST?.libelle === null || this.homeworkQST?.libelle.length < 5 ||
+            this.courseSelected.id === null || this.courseSelected.id === undefined) {
+            this.messageService.add({
+                severity: 'warn',
+                summary: 'Warning!',
+                detail: 'Please complete the required object !',
+                life: 6000
+            });
+            return;
+        } else {
+            let typeqst: TypeDeQuestion = new TypeDeQuestion();
+            console.log(this.homeWork);
+            if (this.homeWork.typeHomeWork.lib === 'READING' || this.homeWork.typeHomeWork.lib === 'WRITE IT UP') {
+                if (this.homeWork.typeHomeWork.lib === 'READING') {
+                    typeqst = this.typeOfQuestions.filter(t => t.lib === 'Read and add new words')[0];
 
-            } else {
-                typeqst = this.typeOfQuestions.filter(t => t.lib === 'Write it up')[0];
+                } else {
+                    typeqst = this.typeOfQuestions.filter(t => t.lib === 'Write it up')[0];
+                }
+            } else if (this.homeWork.typeHomeWork.lib === 'Drag and Drop') {
+                typeqst = this.typeOfQuestions.filter(t => t.lib === 'Put words to gap')[0];
             }
             console.log(typeqst);
             this.homeworkQST.typeDeQuestion = typeqst;
             this.homeWork.questions.push({...this.homeworkQST});
             console.log(this.homeWork);
+            this.saveHomeWork();
         }
-        this.saveHomeWork();
     }
 
     saveHomeWork() {
-        this.homeWork.cours = this.courseSelected;
-        this.service.saveHomeWork().subscribe(
-            data => {
-                this.messageService.add({
-                    severity: 'success',
-                    summary: 'Successful',
-                    detail: 'HomeWork Created',
-                    life: 3000
-                });
-                this.homeWork = new HomeWork();
-                this.homeworkQST = new HomeWorkQST();
-                this.homeworkReponse = new HomeWorkReponse();
-            }, error => {
-                console.log(error);
-                this.messageService.add({
-                    severity: 'error',
-                    summary: 'Error!',
-                    detail: 'Error to create Home Work please try again !',
-                    life: 3000
-                });
-            }
-        );
+        if (this.courseSelected.id !== null && this.courseSelected.id !== undefined) {
+            this.homeWork.cours = this.courseSelected;
+            this.homeWork.typeHomeWork = this.typeHomeWork;
+            this.homeWork.libelle = this.typeHomeWork.lib;
+            this.homeWork.cours = this.courseSelected;
+            this.service.saveHomeWork().subscribe(
+                data => {
+                    this.messageService.add({
+                        severity: 'success',
+                        summary: 'Successful',
+                        detail: 'HomeWork Created',
+                        life: 3000
+                    });
+                    this.homeWork = new HomeWork();
+                    this.homeworkQST = new HomeWorkQST();
+                    this.homeworkReponse = new HomeWorkReponse();
+                }, error => {
+                    console.log(error);
+                    this.messageService.add({
+                        severity: 'error',
+                        summary: 'Error!',
+                        detail: 'Error to create Home Work please try again !',
+                        life: 3000
+                    });
+                }
+            );
+        } else {
+            this.messageService.add({
+                severity: 'warn',
+                summary: 'Warning',
+                detail: 'Course should not be null !',
+                life: 3000
+            });
+        }
     }
 
     questionTypes() {
@@ -306,8 +334,11 @@ export class HomeWorkComponentComponent implements OnInit {
     }
 
     chooseType() {
+        this.showPutInOrder = false;
         if (this.homeworkQST.typeDeQuestion.ref === 't5') {
             this.viewOnOffDialog = true;
+        } else if (this.homeworkQST.typeDeQuestion.ref === 't11') {
+            this.showPutInOrder = true;
         }
     }
 
@@ -356,6 +387,10 @@ export class HomeWorkComponentComponent implements OnInit {
     }
 
     filterTypeOfQsts() {
+        if (this.typeHomeWork.lib === 'Let\'s Practice') {
+            this.typeOfQuestions = this.typeOfQuestions.filter(t => (t.ref !== 't10' &&
+                t.ref !== 't8' && t.ref !== 't9' && t.ref !== 't7' && t.ref !== 't2'));
+        }
         this.homeWork = new HomeWork();
         this.homeworkQST = new HomeWorkQST();
         this.homeworkReponse = new HomeWorkReponse();
@@ -384,6 +419,18 @@ export class HomeWorkComponentComponent implements OnInit {
         this.numero += 1;
         this.homeworkQST.libelle = String();
         this.homeworkReponse.lib = String();
+    }
+
+    saveDrapAndDropHomeWork() {
+        this.homeworkQST.numero = this.numero;
+        this.homeWork.questions.push({...this.homeworkQST});
+        this.homeWork.libelle = this.typeHomeWork.lib;
+        this.homeWork.typeHomeWork = this.typeHomeWork;
+
+        console.log(this.homeWork);
+        this.numero += 1;
+        this.homeworkQST = new HomeWorkQST();
+        console.log(this.homeWork);
     }
 
     removeAnswer(rps: HomeWorkQST) {

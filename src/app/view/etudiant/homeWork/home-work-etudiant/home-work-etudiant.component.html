@@ -281,6 +281,32 @@
                     </div>
 
 
+                    <!--------------------------------- Drag and Drop -------------------------------------------------------->
+                    <div style="background-color: white;" *ngIf="showDragHomeWork" class="p-grid">
+                        <app-drag-home-work></app-drag-home-work>
+                    </div>
+
+
+                    <!--------------------------------- Put in Order -------------------------------------------------------->
+                    <div style="background-color: white;" *ngIf="homeWorkQuestion.typeDeQuestion.ref=== 't11'"
+                         class="p-grid dragContainer">
+                        <!--                        <div [id]="i+1" *ngFor="let item of dragList; index as i" draggable="true"-->
+                        <!--                             (drag)="drag(item, i)"-->
+                        <!--                             (drop)="drop($event)" (dragover)="allowDrop($event)"-->
+                        <!--                             class="p-col-10 dragText">-->
+                        <!--                            {{i + 1}} {{item}}-->
+                        <!--                        </div>-->
+                        <div class="p-col-12">
+                            <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+                                <div [id]="item" class="example-box" (cdkDragStarted)="drag(item, i+1)"
+                                     *ngFor="let item of dragList; index as i"
+                                     cdkDrag>
+                                    {{item}}</div>
+                            </div>
+                        </div>
+                    </div>
+
+
                     <!--------------------------------- Watch it -------------------------------------------------------->
                     <div style="background-color: white;" *ngIf="showWatchItHomeWork" class="p-grid">
                         <app-watch-it></app-watch-it>
