@@ -39,9 +39,7 @@ export class HomeWorkEtudiantComponent implements OnInit {
     partOfStory: string = String('Part 0');
     showWatchItHomeWork: boolean;
     listOftypeQuestions: Array<TypeDeQuestion> = new Array<TypeDeQuestion>();
-    synonymes: string = String();
-    textSeleted: string;
-    dictionaryList: Array<Dictionary> = new Array<Dictionary>();
+
     rows = 5;
     first = 0;
     dragAnswersList: Map<string, number> = new Map<string, number>();
@@ -89,6 +87,30 @@ export class HomeWorkEtudiantComponent implements OnInit {
 
     get showQuizReview(): boolean {
         return this.learnService.showQuizReview;
+    }
+
+    get synonymes(): string {
+        return this.learnService.synonymes;
+    }
+
+    set synonymes(value: string) {
+        this.learnService.synonymes = value;
+    }
+
+    get textSeleted(): string {
+        return this.learnService.textSeleted;
+    }
+
+    set textSeleted(value: string) {
+        this.learnService.textSeleted = value;
+    }
+
+    get dictionaryList(): Array<Dictionary> {
+        return this.learnService.dictionaryList;
+    }
+
+    set dictionaryList(value: Array<Dictionary>) {
+        this.learnService.dictionaryList = value;
     }
 
     set showQuizReview(value: boolean) {
@@ -257,8 +279,16 @@ export class HomeWorkEtudiantComponent implements OnInit {
     wordDictionnary: string;
 
     son = '';
-    displayDictionaryDialog: boolean;
     showDragHomeWork: boolean;
+
+
+    set displayDictionaryDialog(value: boolean) {
+        this.learnService.displayDictionaryDialog = value;
+    }
+
+    get displayDictionaryDialog(): boolean {
+        return this.learnService.displayDictionaryDialog;
+    }
 
     ngOnInit(): void {
         console.log(this.selectedcours);

@@ -3,6 +3,9 @@ import {LearnService} from '../../../../controller/service/learn.service';
 import {HomeWork} from '../../../../controller/model/home-work.model';
 import {HomeWorkEtudiantServiceService} from '../../../../controller/service/home-work-etudiant-service.service';
 import {HomeWorkQST} from '../../../../controller/model/home-work-qst.model';
+import {Dictionary} from '../../../../controller/model/dictionary.model';
+import {QuizEtudiantService} from '../../../../controller/service/quiz-etudiant.service';
+import {DictionaryService} from '../../../../controller/service/dictionary.service';
 
 @Component({
     selector: 'app-drag-home-work',
@@ -12,6 +15,7 @@ import {HomeWorkQST} from '../../../../controller/model/home-work-qst.model';
 export class DragHomeWorkComponent implements OnInit {
     public homeWorkQuestion: HomeWorkQST = new HomeWorkQST();
     correctAnswersList: Map<number, string> = new Map<number, string>();
+
 
     sourceProducts = [
         {name: '1', text: 'I am fine'},
@@ -25,6 +29,8 @@ export class DragHomeWorkComponent implements OnInit {
     listOfText: Map<number, string> = new Map<number, string>();
 
     constructor(private learnService: LearnService,
+                private quizEtudiantService: QuizEtudiantService,
+                private dictionnaryService: DictionaryService,
                 private homeWorkEtudiantService: HomeWorkEtudiantServiceService,
     ) {
         console.log('=================================================');
@@ -32,6 +38,9 @@ export class DragHomeWorkComponent implements OnInit {
         console.log('=================================================');
     }
 
+    get selectedLanguage(): any {
+        return this.learnService.selectedLanguage;
+    }
 
     get selectedHomeWork(): HomeWork {
         return this.learnService.selectedHomeWork;
@@ -39,6 +48,36 @@ export class DragHomeWorkComponent implements OnInit {
 
     set selectedHomeWork(value: HomeWork) {
         this.learnService.selectedHomeWork = value;
+    }
+    set displayDictionaryDialog(value: boolean) {
+        this.learnService.displayDictionaryDialog = value;
+    }
+
+    get displayDictionaryDialog(): boolean {
+        return this.learnService.displayDictionaryDialog;
+    }
+    get synonymes(): string {
+        return this.learnService.synonymes;
+    }
+
+    set synonymes(value: string) {
+        this.learnService.synonymes = value;
+    }
+
+    get textSeleted(): string {
+        return this.learnService.textSeleted;
+    }
+
+    set textSeleted(value: string) {
+        this.learnService.textSeleted = value;
+    }
+
+    get dictionaryList(): Array<Dictionary> {
+        return this.learnService.dictionaryList;
+    }
+
+    set dictionaryList(value: Array<Dictionary>) {
+        this.learnService.dictionaryList = value;
     }
 
     ngOnInit(): void {
@@ -112,5 +151,36 @@ export class DragHomeWorkComponent implements OnInit {
             this.listOfWords.push(value);
         }
         this.listOfWords = this.listOfWords.sort((a, b) => b.localeCompare(a));
+    }
+
+    dict() {
+        this.synonymes = String();
+        const selection = window.getSelection();
+        this.textSeleted = selection.toString();
+        console.log(this.textSeleted.length);
+        if (this.textSeleted.length > 3) {
+            console.log(this.selectedLanguage.code);
+            if (this.selectedLanguage.code === 'ar') {
+                this.quizEtudiantService.translate(this.textSeleted).subscribe(data => {
+                    console.log(data);
+                    this.synonymes = data;
+                });
+            } else if (this.selectedLanguage.code === 'fr') {
+                this.quizEtudiantService.translateEnFr(this.textSeleted).subscribe(data => {
+                    this.synonymes = data;
+                    console.log(data);
+                });
+            }
+            this.displayDictionaryDialog = true;
+            this.getDictionaryList();
+        }
+    }
+    getDictionaryList() {
+        this.dictionnaryService.FindAllWord().subscribe(data => {
+            this.dictionaryList = data;
+            console.log(this.dictionaryList);
+        }, error => {
+            console.log(error);
+        });
     }
 }
