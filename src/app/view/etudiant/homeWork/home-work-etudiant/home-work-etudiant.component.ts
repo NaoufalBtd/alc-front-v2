@@ -28,6 +28,7 @@ import {ReponseEtudiantHomeWork} from '../../../../controller/model/reponse-etud
 import {QuizService} from '../../../../controller/service/quiz.service';
 import {TypeDeQuestion} from '../../../../controller/model/type-de-question.model';
 import {Dictionary} from '../../../../controller/model/dictionary.model';
+import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 
 @Component({
     selector: 'app-home-work-etudiant',
@@ -38,11 +39,13 @@ export class HomeWorkEtudiantComponent implements OnInit {
     partOfStory: string = String('Part 0');
     showWatchItHomeWork: boolean;
     listOftypeQuestions: Array<TypeDeQuestion> = new Array<TypeDeQuestion>();
-    synonymes: string = String();
-    textSeleted: string;
-    dictionaryList: Array<Dictionary> = new Array<Dictionary>();
+
     rows = 5;
     first = 0;
+    dragAnswersList: Map<string, number> = new Map<string, number>();
+    dragList: Array<string> = new Array<string>();
+    private dragIndex: number;
+    private dragData: string;
 
     constructor(
         private learnService: LearnService,
@@ -84,6 +87,30 @@ export class HomeWorkEtudiantComponent implements OnInit {
 
     get showQuizReview(): boolean {
         return this.learnService.showQuizReview;
+    }
+
+    get synonymes(): string {
+        return this.learnService.synonymes;
+    }
+
+    set synonymes(value: string) {
+        this.learnService.synonymes = value;
+    }
+
+    get textSeleted(): string {
+        return this.learnService.textSeleted;
+    }
+
+    set textSeleted(value: string) {
+        this.learnService.textSeleted = value;
+    }
+
+    get dictionaryList(): Array<Dictionary> {
+        return this.learnService.dictionaryList;
+    }
+
+    set dictionaryList(value: Array<Dictionary>) {
+        this.learnService.dictionaryList = value;
     }
 
     set showQuizReview(value: boolean) {
@@ -252,7 +279,16 @@ export class HomeWorkEtudiantComponent implements OnInit {
     wordDictionnary: string;
 
     son = '';
-    displayDictionaryDialog: boolean;
+    showDragHomeWork: boolean;
+
+
+    set displayDictionaryDialog(value: boolean) {
+        this.learnService.displayDictionaryDialog = value;
+    }
+
+    get displayDictionaryDialog(): boolean {
+        return this.learnService.displayDictionaryDialog;
+    }
 
     ngOnInit(): void {
         console.log(this.selectedcours);
@@ -431,6 +467,8 @@ export class HomeWorkEtudiantComponent implements OnInit {
                     console.log('====================== T3 =======================================');
                     console.log(this.correctAnswersList.get(this.homeWorkQuestion.id)[0]);
                     console.log('====================== T3 =======================================');
+                } else if (this.homeWorkQuestion.typeDeQuestion.ref === 't11') {
+                    this.extractedData(this.homeWorkQuestion.libelle);
                 }
                 break;
             }
@@ -538,13 +576,23 @@ export class HomeWorkEtudiantComponent implements OnInit {
 
     homeWorkSelectedFct(homeWork: HomeWork) {
         this.showTypeOfQstBar = true;
-        if (homeWork.libelle === 'Watch it') {
+        this.showWatchItHomeWork = false;
+        this.showDragHomeWork = false;
+        if (homeWork.libelle === 'Watch it' || homeWork.libelle === 'Drag and Drop') {
             this.selectedHomeWork = homeWork;
-            this.showWatchItHomeWork = true;
             this.homeWorkQuestion = new HomeWorkQST();
-            this.homeWorkQuestion.typeDeQuestion = this.listOftypeQuestions.filter(t => t.ref === 't9')[0];
+            if (homeWork.libelle === 'Watch it') {
+                this.homeWorkQuestion.typeDeQuestion = this.listOftypeQuestions.filter(t => t.ref === 't9')[0];
+                this.showDragHomeWork = false;
+                this.showWatchItHomeWork = true;
+            } else {
+                this.homeWorkQuestion.typeDeQuestion = this.listOftypeQuestions.filter(t => t.ref === 't10')[0];
+                this.showWatchItHomeWork = false;
+                this.showDragHomeWork = true;
+            }
         } else {
             this.showWatchItHomeWork = false;
+            this.showDragHomeWork = false;
             this.homeWorkReponse = new HomeWorkReponse();
             this.answersList = new Map<HomeWorkQST, HomeWorkReponse>();
             this.answersPointStudent = new Map<HomeWorkQST, string>();
@@ -672,5 +720,57 @@ export class HomeWorkEtudiantComponent implements OnInit {
 
         });
     }
+
+    private extractedData(libelle: string) {
+        this.dragAnswersList = new Map<string, number>();
+        this.dragList = new Array<string>();
+        const text = libelle;
+        let counter = 2;
+        while (counter !== -1) {
+            const myNumber = libelle[0];
+            let sentence: string;
+            const index = libelle.indexOf(String(counter));
+            if (index !== -1) {
+                sentence = libelle.substring(1, index);
+                counter++;
+            } else {
+                sentence = libelle.substring(1, libelle.length);
+                counter = -1;
+            }
+            libelle = libelle.substring(sentence.length + 1, libelle.length);
+            this.dragAnswersList.set(sentence, Number(myNumber));
+            this.dragList.push(sentence);
+        }
+        console.log(this.dragAnswersList);
+        console.log(this.dragList);
+        this.dragList = this.dragList.sort((a, b) => b.localeCompare(a));
+        console.log(text);
+    }
+
+
+    allowDrop(ev) {
+        ev.preventDefault();
+    }
+
+    drag(data: string, index: number) {
+        this.dragData = data;
+        this.dragIndex = index;
+    }
+
+
+    drop(event: CdkDragDrop<string[]>) {
+        console.log(event.currentIndex + 1);
+        const key = this.dragAnswersList.get(this.dragData);
+        console.log(key);
+        if (key === Number(event.currentIndex + 1)) {
+            document.getElementById(this.dragData).style.border = '1px solid green';
+            document.getElementById(this.dragData).style.backgroundColor = '#bcf0da';
+        } else {
+            document.getElementById(this.dragData).style.border = '1px solid red';
+            document.getElementById(this.dragData).style.backgroundColor = '#f0bcbc';
+        }
+        moveItemInArray(this.dragList, event.previousIndex, event.currentIndex);
+    }
+
 }
 

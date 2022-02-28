@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, NgModule, OnInit} from '@angular/core';
 import {MenuItem, MessageService} from 'primeng/api';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
@@ -12,10 +12,17 @@ import {ParcoursService} from '../../../controller/service/parcours.service';
 import {Cours} from '../../../controller/model/cours.model';
 import {PackStudentService} from '../../../controller/service/pack-student.service';
 
-
+import { VonPrimengFormModule } from '@von-development-studio/primeng-form-validation';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 @Component({
     templateUrl: './dashboard.component.html',
     styleUrls: ['./tabledemo.scss']
+})
+@NgModule({
+    imports: [
+
+            VonPrimengFormModule,
+    ]
 })
 export class DashboardDemoComponent implements OnInit {
 
@@ -47,6 +54,9 @@ export class DashboardDemoComponent implements OnInit {
     showdialoggroupe = false;
     showdialog = false;
     message = '';
+    exform: FormGroup;
+    isSuccessful = false;
+    form2: any = {};
     constructor(private login: LoginService, public profservice: ProfService, public studentservice: EtudiantService, public parcoursService: ParcoursService,
                 public packStudentService: PackStudentService,
                 public etudiantService: EtudiantService,
@@ -60,6 +70,7 @@ export class DashboardDemoComponent implements OnInit {
     public previousgroup = false;
     title = 'landingDemo';
     value = 10;
+
 
     public showNext(){
         if (this.progress >= 0 && this.progress < 3){
@@ -142,6 +153,11 @@ export class DashboardDemoComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.exform = new FormGroup({'fullName': new FormControl(null, Validators.required),
+
+            'email': new FormControl(null, Validators.required) });
+
+
         console.log('nbr of student');
         console.log(this.studentservice.items);
         this.studentservice.findAll().subscribe(data => this.items = data);
@@ -205,7 +221,7 @@ export class DashboardDemoComponent implements OnInit {
         this.etudiantService.create().subscribe(
             data => {
                 if (data != null){
-                    console.log("waqila dazt");
+                    console.log('waqila dazt');
                     this.showdialog = true;
                     this.message = 'Registration added, please check your email to get your password.';
                     this.messageService.add({
@@ -216,7 +232,7 @@ export class DashboardDemoComponent implements OnInit {
                     });
                 }
             }, error => {
-                console.log("error a m3lm");
+                console.log('error a m3lm');
                 this.showdialog = true;
                 this.message = 'Registration Canceled, there was an error during saving your registration!!.';
                 this.messageService.add({
@@ -249,4 +265,5 @@ export class DashboardDemoComponent implements OnInit {
             }
         );
     }
+
 }

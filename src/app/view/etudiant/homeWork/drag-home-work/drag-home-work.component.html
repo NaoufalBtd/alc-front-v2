@@ -1,0 +1,38 @@
+<div class="p-col-12">
+    <img [src]="selectedHomeWork?.urlImage" width="100%">
+    <div class="p-grid">
+
+        <div class="p-col-12 topDiv">
+            <div class="p-grid">
+                <input disabled *ngFor="let item of listOfWords" class="answers p-col-2" draggable="true"
+                       (drag)="drag($event)" type="text"
+                       pInputText [value]="item"/>
+            </div>
+
+        </div>
+        <div (mouseup)="dict()" id="answers" class="p-col-12 ">
+            <h4 *ngIf="homeWorkQuestion.ref !== null ||homeWorkQuestion.ref !== undefined ">{{homeWorkQuestion?.ref}}</h4>
+            <span *ngFor="let item of listOfText| keyvalue">
+                <span>{{item.value}}</span>
+                <input *ngIf="listOfText.has(item.key+ 1)" disabled [id]="item.key" class="text"
+                       (drop)="drop($event)" (dragover)="allowDrop($event)" type="text"
+                       pInputText/>
+            </span>
+        </div>
+    </div>
+</div>
+
+
+<div style="margin: 10%!important;" class="p-grid">
+
+    <div></div>
+
+
+    <br>
+    <!--    <img id="drag1" src="https://drive.google.com/uc?id=1i3aX5bGf4U97TAS945ryZ8NGKvAG3lTF&export=download"-->
+    <!--         draggable="true" width="336" height="69">-->
+
+
+</div>
+
+
