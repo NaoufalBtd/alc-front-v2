@@ -281,6 +281,32 @@
                     </div>
 
 
+                    <!--------------------------------- Drag and Drop -------------------------------------------------------->
+                    <div style="background-color: white;" *ngIf="showDragHomeWork" class="p-grid">
+                        <app-drag-home-work></app-drag-home-work>
+                    </div>
+
+
+                    <!--------------------------------- Put in Order -------------------------------------------------------->
+                    <div style="background-color: white;" *ngIf="homeWorkQuestion.typeDeQuestion.ref=== 't11'"
+                         class="p-grid dragContainer">
+                        <!--                        <div [id]="i+1" *ngFor="let item of dragList; index as i" draggable="true"-->
+                        <!--                             (drag)="drag(item, i)"-->
+                        <!--                             (drop)="drop($event)" (dragover)="allowDrop($event)"-->
+                        <!--                             class="p-col-10 dragText">-->
+                        <!--                            {{i + 1}} {{item}}-->
+                        <!--                        </div>-->
+                        <div class="p-col-12">
+                            <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+                                <div [id]="item" class="example-box" (cdkDragStarted)="drag(item, i+1)"
+                                     *ngFor="let item of dragList; index as i"
+                                     cdkDrag>
+                                    {{item}}</div>
+                            </div>
+                        </div>
+                    </div>
+
+
                     <!--------------------------------- Watch it -------------------------------------------------------->
                     <div style="background-color: white;" *ngIf="showWatchItHomeWork" class="p-grid">
                         <app-watch-it></app-watch-it>
@@ -437,23 +463,67 @@
     </div>
 
 
-    <div class="p-col-2">
-        <p-table [value]="homeWorkList" id="categ">
+    <div class="p-col-3">
+        <p-tabView>
+            <p-tabPanel header="Home Work">
+                <p-table [value]="homeWorkList" id="categ">
 
-            <ng-template let-homeWork pTemplate="body">
+                    <ng-template let-homeWork pTemplate="body">
 
-                <tr class="timeline">
+                        <tr class="timeline">
 
-                    <li style="margin-top: 20px">
-                        <td (click)="homeWorkSelectedFct(homeWork)"
-                            [style.color]="(homeWork.id) == (this.selectedHomeWork?.id)? 'orange' :'black' "
-                            style="cursor: pointer; font-weight: 600;margin-left: 5px; font-size: 15px">
-                            <u style="margin-left: 33px">{{homeWork?.libelle}}</u>
-                        </td>
-                    </li>
-                </tr>
-            </ng-template>
-        </p-table>
+                            <li style="margin-top: 20px">
+                                <td (click)="homeWorkSelectedFct(homeWork)"
+                                    [style.color]="(homeWork.id) == (this.selectedHomeWork?.id)? 'orange' :'black' "
+                                    style="cursor: pointer; font-weight: 600;margin-left: 5px; font-size: 15px">
+                                    <u style="margin-left: 33px">{{homeWork?.libelle}}</u>
+                                </td>
+                            </li>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </p-tabPanel>
+            <p-tabPanel header="Dictionary">
+                <p-table #dt [value]="dictionaryList" responsiveLayout="scroll" [paginator]="true" [rows]="rows"
+                         [showCurrentPageReport]="true"
+                         [(first)]="first"
+                         [globalFilterFields]="['word','definition']"
+                         [rowsPerPageOptions]="[5,10,25,50]">
+                    <ng-template pTemplate="caption">
+                        <input class="searchValue" type="text" pInputText
+                               (input)="dt.filterGlobal($event.target.value, 'contains')"
+                               placeholder="Search..."/>
+
+
+                        <button style="float: right;" pButton pRipple type="button"
+                                (click)="displayDictionaryDialog = true"
+                                icon="pi pi-plus" class=" p-button-rounded p-button-success"></button>
+
+                    </ng-template>
+
+
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th>Word</th>
+                            <th>Translation</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-dict>
+                        <tr>
+                            <td>{{dict?.word}}</td>
+                            <td>{{dict?.definition}}</td>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="summary">
+                        <div class="flex align-items-center justify-content-between">
+                            In total there are {{ dictionaryList?.length }} words.
+                        </div>
+                    </ng-template>
+                </p-table>
+            </p-tabPanel>
+        </p-tabView>
+
+
     </div>
 
     <!--    <p-dialog header="Dictionary" position="top" [(visible)]="displayDictionaryDialog" [style]="{width: '20vw'}">-->
@@ -482,7 +552,8 @@
                             pInputTextarea
                             autoResize="autoResize"></textarea>
 
-                    <button [disabled]="textSeleted.length < 3" [style]="{'width': '100%','margin-top': '35px'}" pButton
+                    <button [disabled]="textSeleted?.length < 3" [style]="{'width': '100%','margin-top': '35px'}"
+                            pButton
                             pRipple type="button"
                             label="Add to my dictionary" (click)="addToDictionary()"
                             class="p-button-raised p-button-help"></button>
