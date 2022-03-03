@@ -312,6 +312,30 @@
                         <app-watch-it></app-watch-it>
                     </div>
 
+
+                    <!---------------------------------  Translate -------------------------------------------------------->
+                    <div style="background-color: white;" *ngIf="homeWorkQuestion.typeDeQuestion.ref === 't12'"
+                         class="p-grid">
+                        <div class="p-col-12 question">
+                            <button [disabled]="disableButtonSon" pButton pRipple type="button"
+                                    (click)="sound(homeWorkQuestion)"
+                                    icon="pi pi-volume-up" class="p-button-rounded sonButton "></button>
+
+                            <h5 class="h5 libelleT12" [id]="item.key"
+                                *ngFor="let item of answersT12List| keyvalue">{{item.value}} </h5>
+                        </div>
+                        <div *ngIf="showT12AnswerDiv" class="p-col-12 correctAnswerT12">
+                            {{correctAnswerT12}}
+                        </div>
+
+                        <div [id]="value.lib" *ngFor="let value of t12AnswersList"
+                             (click)="checkAnswers(value)"
+                             class="p-col-3 answert12">
+                            {{value.lib}}
+
+                        </div>
+
+                    </div>
                     <!--------------------------------- Reading -------------------------------------------------------->
 
 
@@ -416,10 +440,12 @@
                         <ng-template pTemplate="body" let-value>
                             <tr>
                                 <td *ngIf="value.value.etatReponse === 'true' && (answersPointStudent.get(value.key))?.toString() === 'STUDENT_ANSWER'">
-                                    <i class="pi pi-check-circle" pTooltip="Correct answer" tooltipPosition="top"></i>
+                                    <i class="pi pi-check-circle" pTooltip="Correct answer"
+                                       tooltipPosition="top"></i>
                                 </td>
                                 <td *ngIf="value.value.etatReponse === 'false'">
-                                    <i pTooltip="Incorrect answer" tooltipPosition="top" class="pi pi-times-circle"></i>
+                                    <i pTooltip="Incorrect answer" tooltipPosition="top"
+                                       class="pi pi-times-circle"></i>
                                 </td>
 
                                 <td *ngIf="value.value.etatReponse === 'true' && answersPointStudent.get(value.key)?.toString() === 'STUDENT_DONT_KNOW'">
@@ -445,7 +471,8 @@
                             </tr>
                         </ng-template>
                         <ng-template pTemplate="footer">
-                            <th colspan="5" style="padding: 3% 0 10px 9%;text-align: center;"><h4 class="noteFinal">Note
+                            <th colspan="5" style="padding: 3% 0 10px 9%;text-align: center;"><h4 class="noteFinal">
+                                Note
                                 final: </h4>  {{  noteQuiz}} / {{answersList.size}}</th>
                         </ng-template>
                     </p-table>

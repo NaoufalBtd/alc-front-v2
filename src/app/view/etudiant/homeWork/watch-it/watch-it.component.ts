@@ -32,9 +32,9 @@ export class WatchItComponent implements OnInit {
         const index = video.indexOf('&t=');
         const startTime: number = Number(video.substring(index + '&t='.length, (video.length - 1)));
         if (index !== -1) {
-            video = video.substring(0, index) + '?start=' + startTime + '&color=white&controls=0&rel=0&autoplay=1&iv_load_policy=3';
+            video = video.substring(0, index) + '?start=' + startTime + '&color=red&controls=1&rel=0&autoplay=1&iv_load_policy=3';
         } else {
-            video = video + '?color=white&controls=0&rel=0&autoplay=1&iv_load_policy=3';
+            video = video + '?color=red&controls=1&rel=0&autoplay=1&iv_load_policy=3';
         }
         console.log(video);
         console.log(startTime);
@@ -51,5 +51,4 @@ export class WatchItComponent implements OnInit {
         }
         console.log(embedCode);
     }
-
 }
