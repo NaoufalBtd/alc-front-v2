@@ -67,6 +67,9 @@
                         <th pSortableColumn="email">Email
                             <p-sortIcon field="email"></p-sortIcon>
                         </th>
+                        <th pSortableColumn="email">TypeTeacher
+                            <p-sortIcon field="email"></p-sortIcon>
+                        </th>
                         <th pSortableColumn="City">Action
                         </th>
 
@@ -80,6 +83,7 @@
                         <td>{{professor?.prenom}} {{ professor?.nom}}</td>
                         <td>{{professor?.numero}}</td>
                         <td>{{professor?.username}}</td>
+                        <td>{{professor.typeTeacher.libelle}}</td>
                         <td>
                             <button (click)="edit(professor); findByProfId(professor)"
                                     class="p-button-rounded p-button-success p-mr-2" icon="pi pi-pencil" pButton

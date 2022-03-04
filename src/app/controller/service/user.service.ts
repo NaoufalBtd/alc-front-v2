@@ -9,9 +9,13 @@ import {Fonction} from '../model/fonction.model';
 import {InteretEtudiant} from '../model/interet-etudiant.model';
 import {Parcours} from '../model/parcours.model';
 import {Etudiant} from '../model/etudiant.model';
+import {Skill} from '../model/skill.model';
 
 @Injectable({providedIn: 'root'})
 export class UserService {
+    private _skill: Skill;
+    private _skills: Array<Skill>;
+
     private _niveauEtudes: Array<NiveauEtude>;
     private _niveauEtude: NiveauEtude;
     private _statutSocial: StatutSocial;
@@ -30,6 +34,34 @@ export class UserService {
         }
         return this._selected;
     }
+
+    public findAllSkill(): Observable<Array<Parcours>> {
+        return this.http.get<Array<Parcours>>(this.etudiantUrl + 'skill/');
+
+    }
+    get skills(): Array<Skill> {
+        if (this._skills == null)
+        {
+            this._skills = new Array<Skill>();
+        }
+        return this._skills;
+    }
+    set skill(value: Skill) {
+        this._skill = value;
+    }
+
+    set skills(value: Array<Skill>) {
+        this._skills = value;
+    }
+
+    get skill(): Skill {
+        if (this._skills == null)
+        {
+            this._skill = new Skill();
+        }
+        return this._skill;
+    }
+
 
     set selected(value: Etudiant) {
         this._selected = value;

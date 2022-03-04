@@ -6,6 +6,7 @@ import {ChatMessageDto} from './chatMessageDto';
 import {User} from './user.model';
 import {Parcours} from './parcours.model';
 import {TrancheHoraireProf} from './tranche-horaire-prof.model';
+import {TypeTeacher} from './type-teacher.model';
 
 export class Prof extends User {
     public ref: string;
@@ -17,4 +18,5 @@ export class Prof extends User {
     public levelMax = new Parcours();
     public trancheHoraireProfList = new Array<TrancheHoraireProf>();
     public students = new Array<Etudiant>();
+public typeTeacher = new TypeTeacher();
 }

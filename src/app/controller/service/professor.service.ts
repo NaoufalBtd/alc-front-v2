@@ -12,6 +12,7 @@ import {Parcours} from '../model/parcours.model';
 import {TrancheHoraireProf} from '../model/tranche-horaire-prof.model';
 
 import {Etudiant} from '../model/etudiant.model';
+import {TypeTeacher} from '../model/type-teacher.model';
 
 
 
@@ -19,6 +20,7 @@ import {Etudiant} from '../model/etudiant.model';
     providedIn: 'root'
 })
 export class ProfessorService {
+    private  urlProf = environment.profUrl;
     private _submitted: boolean;
     private _editDialog: boolean;
     private _createDialog: boolean;
@@ -40,7 +42,9 @@ export class ProfessorService {
     private _trancheHoraireProf: TrancheHoraireProf;
     private _etudiant: Etudiant;
     private etudiantUrl = environment.etudiantUrl;
-    private _sessionCours : Array<SessionCours>;
+    private _sessionCours: Array<SessionCours>;
+    private _typeTeacher: TypeTeacher;
+    private _typeTeachers: Array <TypeTeacher>;
 
     public  findCoursByEtudiantId(id: number): Observable<Array<SessionCours>> {
         return this.http.get<Array<SessionCours>>(this.profUrl  + 'etudiant/sessionCours/id/' + id);
@@ -83,6 +87,9 @@ export class ProfessorService {
     }
     public findAllParcours(): Observable<Array<Parcours>> {
         return this.http.get<Array<Parcours>>(this.urlBase + this.urlParcours);
+    }
+    public findAllType(): Observable<Array<TypeTeacher>>{
+        return this.http.get<Array<TypeTeacher>>(this.urlProf + 'typeTeacher/');
     }
 
     public deleteByReference(): Observable<number> {
@@ -139,7 +146,7 @@ export class ProfessorService {
         this._sessionCours = value;
     }
     get trancheHoraireProfList(): Array<TrancheHoraireProf> {
-        if( this._trancheHoraireProfList == null){
+        if ( this._trancheHoraireProfList == null){
             this._trancheHoraireProfList = new Array<TrancheHoraireProf>();
         }
         return this._trancheHoraireProfList;
@@ -150,7 +157,7 @@ export class ProfessorService {
     }
 
     get trancheHoraireProf(): TrancheHoraireProf {
-        if( this._trancheHoraireProf == null){
+        if ( this._trancheHoraireProf == null){
             this._trancheHoraireProf = new TrancheHoraireProf();
         }
         return this._trancheHoraireProf;
@@ -263,6 +270,27 @@ export class ProfessorService {
     }
 
 
+    get typeTeacher(): TypeTeacher {
+        if (this._typeTeacher == null){
+            this._typeTeacher =  new TypeTeacher();
+        }
+        return this._typeTeacher;
+    }
+
+    set typeTeacher(value: TypeTeacher) {
+        this._typeTeacher = value;
+    }
+
+    get typeTeachers(): Array<TypeTeacher> {
+        if (this._typeTeachers == null){
+            this._typeTeachers = new Array<TypeTeacher>();
+        }
+        return this._typeTeachers;
+    }
+
+    set typeTeachers(value: Array<TypeTeacher>) {
+        this._typeTeachers = value;
+    }
 
     get itemsPaiement(): Array<Paiement> {
         if (this._itemsPaiement == null) {
