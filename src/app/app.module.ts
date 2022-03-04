@@ -317,6 +317,12 @@ import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {DragHomeWorkComponent} from './view/etudiant/homeWork/drag-home-work/drag-home-work.component';
 import {DragDropModule} from '@angular/cdk/drag-drop';
+import {InvitedStudentComponent} from './view/etudiant/invited-student/invited-student.component';
+import {InvitedStudentCreateComponent} from './view/etudiant/invited-student/invited-student-create/invited-student-create.component';
+import {InvitedStudentListComponent} from './view/admin/invited-student-list/invited-student-list.component';
+import {
+    InvitedStudentListStudentComponent
+} from './view/etudiant/invited-student/invited-student-list-student/invited-student-list-student.component';
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -606,7 +612,6 @@ export function createTranslateLoader(http: HttpClient) {
         TypeReclamationEtudiantComponent,
         TypeReclamationProfComponent,
         ReclamationProfComponent,
-
         ReclamationProfCreateComponent,
         ComplaintViewEtudiantComponent,
         ComplaintViewProfComponent,
@@ -621,8 +626,11 @@ export function createTranslateLoader(http: HttpClient) {
         TypeReclamationEtudiantListComponent,
         ReclamationEtudiantViewComponent,
         ReclamationProfViewComponent,
-        DragHomeWorkComponent
-
+        DragHomeWorkComponent,
+        InvitedStudentListComponent,
+        InvitedStudentComponent,
+        InvitedStudentCreateComponent,
+        InvitedStudentListStudentComponent
     ],
     providers: [
         {provide: LocationStrategy, useClass: HashLocationStrategy},

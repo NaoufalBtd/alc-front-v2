@@ -5,12 +5,15 @@ import {Admin} from './admin.model';
 export class ReclamationEtudiant {
     id: number;
     reference: string;
-    dateReclamation: Date;
+    dateReclamation: string;
     message: string;
     objetReclamationEtudiant: string;
     admin = new Admin();
     traite: boolean;
-    dateTraitement: Date;
+    postView: string;
+
+    dateTraitement: string;
+    dateReponse: string;
     commentaireTraiteur: string;
     etudiant = new Etudiant();
     typeReclamationEtudiant = new TypeReclamationEtudiant();

@@ -3,8 +3,14 @@
     <ng-template pTemplate="content">
 
         <div class="p-field">
+            <p-message *ngIf="reclamationEtudiantView.postView" severity="info" text="Message has been seen" ></p-message>
+
+            <p-message *ngIf="!reclamationEtudiantView.postView" severity="error" text="The message has not been seen"></p-message>
+        </div>
+        <div class="p-field">
             <label for="reference">Code</label>
-            <input autofocus id="reference" pInputText required type="text" [(ngModel)]="reclamationEtudiantView.reference"   disabled>
+            <input autofocus id="reference" pInputText required type="text"
+                   [(ngModel)]="reclamationEtudiantView.reference" disabled>
         </div>
         <div class="p-field">
             <label for="dateReclamation">Date Reclamation</label>
@@ -19,6 +25,8 @@
             <label for="message">Message</label>
             <textarea pInputTextarea id="message" disabled  [(ngModel)]="reclamationEtudiantView.message" ></textarea>
         </div>
+        <div *ngIf="reclamationEtudiantView.postView">
+
         <div class="p-field">
             <label for="adminName">Admin Name</label>
             <input type="text" pInputText id="adminName"  disabled [(ngModel)]="reclamationEtudiantView.admin.nom+' '+reclamationEtudiantView.admin.prenom"   />
@@ -28,7 +36,19 @@
             <label for="commentaireTraiteur">Comment Admin</label>
             <textarea pInputTextarea id="commentaireTraiteur" disabled  [(ngModel)]="reclamationEtudiantView.commentaireTraiteur" ></textarea>
         </div>
+        <div class="p-field">
+            <label for="adminName">Reply Date</label>
+            <input type="text" pInputText id="replydate" disabled
+                   [(ngModel)]="reclamationEtudiantView.dateReponse"/>
 
+        </div>
+        <div class="p-field">
+            <label for="adminName">Processing Date</label>
+            <input type="text" pInputText id="processingdate" disabled
+                   [(ngModel)]="reclamationEtudiantView.dateTraitement"/>
+
+        </div>
+        </div>
         <div class="p-field">
             <label for="etat">Processing Status</label>
             <p-message *ngIf="!reclamationEtudiantView.traite" severity="warn" text="Being Processed" id="etat"
@@ -39,8 +59,8 @@
     </ng-template>
 
     <ng-template pTemplate="footer">
-        <button  class="p-button-text" icon="pi pi-times" label="Cancel" pButton (click)="hide()"
-                 pRipple></button>
+
+        <p-button label="Close" (click)="hide()"></p-button>
 
     </ng-template>
 </p-dialog>

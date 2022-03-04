@@ -88,6 +88,7 @@ import {ReclamationEtudiantComponent} from './view/etudiant/reclamation-etudiant
 import {TypeReclamationComponent} from './view/admin/type-reclamation/type-reclamation.component';
 import {ProfileComponent} from './view/etudiant/profile/profile.component';
 import {DragHomeWorkComponent} from './view/etudiant/homeWork/drag-home-work/drag-home-work.component';
+import {InvitedStudentComponent} from './view/etudiant/invited-student/invited-student.component';
 
 
 @NgModule({
@@ -173,9 +174,9 @@ import {DragHomeWorkComponent} from './view/etudiant/homeWork/drag-home-work/dra
                     {path: 'homeWorkEtudiantResult', component: HomeWorkResultComponent},
                     {path: 'profile', component: EtudiantProfileComponent},
                     {path: 'reclamation-etudiant', component: ReclamationEtudiantComponent},
-
                     {path: 'profile', component: EtudiantProfileComponent},
-                    {path: 'profileEdit', component: ProfileComponent}
+                    {path: 'profileEdit', component: ProfileComponent},
+                    {path: 'inviteStudent', component: InvitedStudentComponent}
 
                 ]
             },

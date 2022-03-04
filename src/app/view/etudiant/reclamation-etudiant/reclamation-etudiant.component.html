@@ -4,7 +4,7 @@
         <div class="card">
             <p-toolbar styleClass="p-mb-4">
                 <ng-template pTemplate="left">
-                    <button pButton pRipple type="button" icon="pi pi-plus" label="Reclamation" class="p-mr-2"
+                    <button pButton pRipple type="button" icon="pi pi-plus" label="Complaint" class="p-mr-2"
                             (click)="showReclamationEtudiant()"
                     ></button>
 
@@ -24,7 +24,8 @@
                         <th pSortableColumn="prof">Code</th>
                         <th pSortableColumn="prof">Objet Message</th>
                         <th pSortableColumn="Date">Date Reclamation</th>
-                        <th pSortableColumn="Number Of Sessions">Etat</th>
+                        <th pSortableColumn="Number Of Sessions">Processing Status</th>
+                        <th pSortableColumn="Number Of Sessions">View Status</th>
                         <th>Action</th>
                     </tr>
                 </ng-template>
@@ -53,7 +54,14 @@
                                        styleClass="p-mr-2"></p-message>
                         </td>
                         <td>
-                            <button pButton type="button" class="p-button-info p-mr-2"
+                            <p-message *ngIf="!reclamationEtudiant.postView" severity="error" text="Not seen yet"
+                                       styleClass="p-mr-2"></p-message>
+                            <p-message *ngIf="reclamationEtudiant.postView" severity="info" text="Message has been seen"
+                                       styleClass="p-mr-2"></p-message>
+                        </td>
+
+                        <td>
+                            <button pButton type="button" class="p-button-info p-mr-2" label="Details"
                                     (click)="showView(reclamationEtudiant.id,reclamationEtudiant.etudiant.id)"
                                     icon="pi pi-align-justify"></button>
                         </td>
