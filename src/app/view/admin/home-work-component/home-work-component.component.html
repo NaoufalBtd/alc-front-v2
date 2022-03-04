@@ -8,12 +8,19 @@
         <div class="card toolbar-demo">
             <p-toolbar>
                 <div class="p-toolbar-group-left">
-                    <button  class="p-button-secondary p-button-rounded p-mr-2 p-mb-2" icon="pi pi-eye" pButton
+                    <button class="p-button-secondary p-button-rounded p-mr-2 p-mb-2" icon="pi pi-eye" pButton
                             pRipple></button>
                 </div>
 
-                <div class="p-toolbar-group-right">
-                    <button (click)="save()"  icon="pi pi-check" label="Save" pButton pRipple type="button"></button>
+                <div *ngIf="typeHomeWork.lib === 'Let\'s Practice'" class="p-toolbar-group-right">
+                    <button (click)="saveHomeWork()" icon="pi pi-check" label="Save" pButton pRipple
+                            type="button"></button>
+                </div>
+
+
+                <div *ngIf="typeHomeWork.lib === 'PHRASEBOOK'" class="p-toolbar-group-right">
+                    <button (click)="saveHomeWork()" icon="pi pi-check" label="Save" pButton pRipple
+                            type="button"></button>
                 </div>
             </p-toolbar>
         </div>
@@ -25,110 +32,465 @@
                     </div>
                 </p-card>
             </ng-template>
-            <div class="p-grid">
-                <div class="p-col-fixed" id="formCard" style="width: 60%">
-                    <div class="card" styleClass="p-card-shadow">
-                        <div class="p-fluid p-formgrid p-grid">
-                            <div class="p-field p-col-12 p-md-6">
-                                <p-inputNumber [(ngModel)]="homeworkQST.numero" id="firstname6"
-                                               placeholder="Question number"></p-inputNumber>
-                            </div>
-                            <div class="p-field p-col-12 p-md-6">
-                                <p-dropdown [(ngModel)]="homeworkQST.typeDeQuestion" [options]="types" inputId="type"
-                                            optionLabel="lib" placeholder="Type of Question" (click)="chooseType()" ></p-dropdown>
-                            </div>
-                            <div class="p-field p-col-12 ">
-                                <label>Question</label>
-                                <textarea [(ngModel)]="homeworkQST.libelle" pInputTextarea rows="4" type="text"></textarea>
 
-                            </div>
-                            <div class="p-col-12 " style="text-align: center; margin: 5px; ">
-                                <h1 class="reponseLib" style="width: 100px"><b>Answers</b></h1>
-                            </div>
-                            <div class="p-formgroup-inline">
-                                <div class="p-field p-col-12 p-md-3">
-                                    <p-inputNumber [(ngModel)]="homeworkReponse.numero" placeholder="Number"></p-inputNumber>
+            <div class="p-grid">
+                <div class="p-col-4">
+                    <h5>Type Of Home Work</h5>
+
+                    <p-dropdown [options]="typeHomeWorkList" [(ngModel)]="typeHomeWork"
+                                [style]="{'width': '100%'}"
+                                (ngModelChange)="filterTypeOfQsts()"
+                                optionLabel="lib" [filter]="true" filterBy="lib" [showClear]="true"
+                                placeholder="Select a type of Home Work">
+                    </p-dropdown>
+                </div>
+
+                <div class="p-col-8">
+                </div>
+            </div>
+
+            <div *ngIf="typeHomeWork?.lib === 'READING' || typeHomeWork?.lib === 'WRITE IT UP'" class="p-grid">
+                <div class="p-col-4">
+                    <h6>Image Url</h6>
+                    <input required [style]="{'width': '100%'}" type="text" pInputText [(ngModel)]="homeWork.urlImage">
+                </div>
+
+
+                <div class="p-col-4">
+                    <h6>Title</h6>
+                    <input [style]="{'width': '100%'}" type="text" pInputText [(ngModel)]="homeworkQST.ref">
+                </div>
+
+
+                <div class="p-col-4">
+                    <h6>Part</h6>
+                    <input [style]="{'width': '100%'}" type="number" pInputText [(ngModel)]="part">
+                </div>
+
+
+                <div class="p-col-12 ">
+                    <h6>Content</h6>
+                    <textarea required [style]="{'width':'100%', 'padding': '10px'}" rows="5"
+                              [(ngModel)]="homeworkQST.libelle"
+                              pInputTextarea
+                              autoResize="autoResize"></textarea>
+                </div>
+
+                <div class="p-col-4"></div>
+                <div class="p-col-4">
+                    <p-button *ngIf="!isButtonDisabled()" [style]="{'width': '100%'}" icon="pi pi-check"
+                              (click)="save()" label="save Homework"
+                              styleClass="p-button-success"></p-button>
+                </div>
+                <div class="p-col-4"></div>
+            </div>
+
+
+            <div *ngIf="typeHomeWork?.lib === 'PHRASEBOOK'" class="p-grid">
+
+                <div class="p-col-3">
+                    <h6>Number</h6>
+                    <input [style]="{'width': '100%'}" type="number" pInputText [(ngModel)]="numero">
+                </div>
+
+                <div class="p-col-4">
+                    <h6>true</h6>
+                    <input [style]="{'width': '100%'}" type="number" pInputText
+                           [(ngModel)]="homeworkQST.pointReponseJuste">
+                </div>
+
+
+                <div class="p-col-4">
+                    <h6>false</h6>
+                    <input [style]="{'width': '100%'}" type="number" pInputText
+                           [(ngModel)]="homeworkQST.pointReponsefausse">
+                </div>
+
+
+                <div class="p-col-5 ">
+                    <h6>Questions</h6>
+                    <textarea required [style]="{'width':'100%', 'padding': '10px'}" rows="1"
+                              [(ngModel)]="homeworkQST.libelle"
+                              pInputTextarea
+                              autoResize="autoResize"></textarea>
+                </div>
+
+
+                <div class="p-col-5 ">
+                    <h6>Answers</h6>
+                    <textarea required [style]="{'width':'100%', 'padding': '10px'}" rows="1"
+                              [(ngModel)]="homeworkReponse.lib"
+                              pInputTextarea
+                              autoResize="autoResize"></textarea>
+                </div>
+
+                <div style="padding-top: 45px;" class="p-col-2">
+                    <p-button *ngIf="!isButtonDisabled()" [style]="{'width': '100%'}" icon="pi pi-check"
+                              (click)="savePhraseBook()" label="Add"
+                              styleClass="p-button-success"></p-button>
+                </div>
+
+                <div class="p-col-12">
+                    <p-table [value]="homeWork.questions">
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th>Number</th>
+                                <th>Question</th>
+                                <th>Answer</th>
+                                <th>Correct answer</th>
+                                <th>Wrong answer</th>
+                                <th>Action</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template let-rps pTemplate="body">
+                            <tr>
+                                <td>{{rps?.numero}}</td>
+                                <td>{{rps?.libelle}}</td>
+                                <td>{{rps?.reponses[0]?.lib}}</td>
+                                <td>{{rps?.pointReponseJuste}}</td>
+                                <td>{{rps?.pointReponsefausse}}</td>
+                                <td>
+                                    <button pButton pRipple type="button" icon="pi pi-times"
+                                            (click)="removeAnswer(rps)"
+                                            class="p-button-rounded p-button-danger"></button>
+
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+
+            </div>
+
+
+            <div *ngIf="typeHomeWork?.lib === 'Watch it'" class="p-grid">
+                <div class="p-col-8 ">
+                    <h6>Url video</h6>
+                    <textarea required [style]="{'width':'100%', 'padding': '10px'}" rows="1"
+                              [(ngModel)]="homeWork.urlVideo"
+                              pInputTextarea
+                              autoResize="autoResize"></textarea>
+                </div>
+
+                <div style="margin-top: 30px;" class="p-col-2">
+                    <p-button *ngIf="homeWork.urlVideo !== undefined && homeWork?.urlVideo.length > 5 "
+                              [style]="{'width': '100%'}"
+                              icon="pi pi-check"
+                              (click)="saveHomeWork()" label="save Home Work"
+                              styleClass="p-button-success"></p-button>
+                </div>
+            </div>
+
+
+            <div *ngIf="typeHomeWork.lib === 'Let\'s Practice'" class="p-grid">
+
+
+                <div class="p-col-2">
+                    <h6>Number of question</h6>
+                    <p-inputNumber [(ngModel)]="homeworkQST.numero" id="firstname6"
+                                   placeholder="Question number"></p-inputNumber>
+
+                </div>
+                <div class="p-col-4">
+                    <h6>Type of question</h6>
+                    <p-dropdown [style]="{'width':'100%'}" [(ngModel)]="homeworkQST.typeDeQuestion"
+                                [options]="typeOfQuestions"
+                                inputId="type"
+                                optionLabel="lib" placeholder="Type of Question"
+                                (click)="chooseType()"></p-dropdown>
+                </div>
+
+
+                <div class="p-grid">
+                    <div *ngIf="!showPutInOrder && !showTranslate " class="p-col-8 leftCard" id="formCard">
+                        <div class="card">
+                            <div class="p-fluid p-formgrid p-grid">
+
+
+                                <div class="p-field p-col-12 ">
+                                    <label>Question</label>
+                                    <textarea [(ngModel)]="homeworkQST.libelle" pInputTextarea rows="4"
+
+                                              type="text"></textarea>
+
                                 </div>
-                                <div class="p-field p-col-12 p-md-4">
-                                    <p-inputNumber [(ngModel)]="homeworkQST.pointReponseJuste" [maxFractionDigits]="2"
-                                                   [minFractionDigits]="2" placeholder="True point"></p-inputNumber>
+                                <div class="p-col-12 " style="text-align: center; margin: 5px; ">
+                                    <h1 class="reponseLib" style="width: 100px"><b>Answers</b></h1>
                                 </div>
-                                <div class="p-field p-col-12 p-md-4">
-                                    <p-inputNumber [(ngModel)]="homeworkQST.pointReponsefausse" [maxFractionDigits]="2"
-                                                   [minFractionDigits]="2" placeholder="false point"></p-inputNumber>
+                                <div class="p-formgroup-inline">
+                                    <div class="p-field p-col-12 p-md-3">
+                                        <p-inputNumber [(ngModel)]="homeworkReponse.numero"
+                                                       placeholder="Number"></p-inputNumber>
+                                    </div>
+                                    <div class="p-field p-col-12 p-md-4">
+                                        <p-inputNumber [(ngModel)]="homeworkQST.pointReponseJuste"
+                                                       [maxFractionDigits]="2"
+                                                       [minFractionDigits]="2" placeholder="True point"></p-inputNumber>
+                                    </div>
+                                    <div class="p-field p-col-12 p-md-4">
+                                        <p-inputNumber [(ngModel)]="homeworkQST.pointReponsefausse"
+                                                       [maxFractionDigits]="2"
+                                                       [minFractionDigits]="2"
+                                                       placeholder="false point"></p-inputNumber>
+                                    </div>
+                                </div>
+                                <div class="p-field  p-col-10 ">
+                                    <label>Answer</label>
+                                    <input [(ngModel)]="homeworkReponse.lib" pInputText type="text"/>
+                                </div>
+                                <div class="p-field  p-col-2">
+                                    <p-button (click)="addAnswer()" icon="pi pi-plus" iconPos="right" label="Add Answer"
+                                              styleClass="p-button-sm"></p-button>
+                                </div>
+                                <div class="p-formgroup-inline p-col-12">
+                                    <h6>Correct : </h6>
+                                    <div class="p-field-radiobutton p-md-1">
+                                        <p-radioButton [(ngModel)]="homeworkReponse.etatReponse" inputId="city1"
+                                                       name="state"
+                                                       value="true"></p-radioButton>
+                                        <label>true</label>
+                                    </div>
+                                    <div class="p-field-radiobutton p-md-1">
+                                        <p-radioButton [(ngModel)]="homeworkReponse.etatReponse" inputId="city2"
+                                                       name="state"
+                                                       value="false"></p-radioButton>
+                                        <label>False</label>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="p-field  p-col-10 ">
-                                <label>Answer</label>
-                                <input [(ngModel)]="homeworkReponse.lib" pInputText type="text"/>
-                            </div>
-                            <div class="p-field  p-col-2">
-                                <p-button (click)="addAnswer()" icon="pi pi-plus" iconPos="right" label="Add Answer"
-                                          styleClass="p-button-sm"></p-button>
-                            </div>
-                            <div class="p-formgroup-inline p-col-12">
-                                <h6>Correct : </h6>
-                                <div class="p-field-radiobutton p-md-1">
-                                    <p-radioButton [(ngModel)]="homeworkReponse.etatReponse" inputId="city1" name="state"
-                                                   value="true"></p-radioButton>
-                                    <label>true</label>
-                                </div>
-                                <div class="p-field-radiobutton p-md-1">
-                                    <p-radioButton [(ngModel)]="homeworkReponse.etatReponse" inputId="city2" name="state"
-                                                   value="false"></p-radioButton>
-                                    <label>False</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="p-md-12" style="margin: auto">
-                            <p-table [value]="reponses" >
-                                <ng-template pTemplate="header">
-                                    <tr>
-                                        <th>Libelle Answer</th>
-                                        <th>State of Answer</th>
-                                        <th>Correct answer</th>
-                                        <th>Wrong answer</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </ng-template>
-                                <ng-template let-reponse pTemplate="body">
-                                    <tr>
-                                        <td>{{reponse.lib}}</td>
-                                        <td>{{reponse.etatReponse}}</td>
-                                        <td>{{reponse.pointReponseJuste}} pt</td>
-                                        <td>{{reponse.pointReponsefausse}} pt</td>
-                                        <td>
-                                            <span (click)="deleteReponse(reponse)" class="pi pi-trash p-button-rounded p-button-danger"
+                            <div class="p-md-12" style="margin: auto">
+                                <p-table [value]="reponses">
+                                    <ng-template pTemplate="header">
+                                        <tr>
+                                            <th>Libelle Answer</th>
+                                            <th>State of Answer</th>
+                                            <th>Correct answer</th>
+                                            <th>Wrong answer</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template let-reponse pTemplate="body">
+                                        <tr>
+                                            <td>{{reponse.lib}}</td>
+                                            <td>{{reponse.etatReponse}}</td>
+                                            <td>{{reponse.pointReponseJuste}} pt</td>
+                                            <td>{{reponse.pointReponsefausse}} pt</td>
+                                            <td>
+                                            <span (click)="deleteReponse(reponse)"
+                                                  class="pi pi-trash p-button-rounded p-button-danger"
                                                   style="cursor: pointer"></span>
 
 
-                                        </td>
-                                    </tr>
-                                </ng-template>
-                            </p-table>
+                                            </td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="p-col ">
-                    <p-tree [value]="nodes" >
-                        <ng-template let-node pTemplate="default">
-                            <output>{{node.label}}</output>
-                        </ng-template>
-                        <ng-template let-node pTemplate="default">
-                            <b>{{node.label}}</b>
-                            <button  class="p-button-rounded p-button-success" icon="pi pi-undo" pButton (click)="updateQuestion(node.key)"
-                                    pRipple type="button"></button>
-                            <button  class="p-button-rounded p-button-danger" icon="pi pi-times" pButton
-                                    pRipple
-                                     (click)="deleteQuestion(node.key)"
-                                    type="button"></button>
+                    <div *ngIf="showPutInOrder" class="p-col-8 leftCard">
+                        <div class="p-grid">
+                            <div class="p-col-6">
+                                <h6>Title</h6>
+                                <input [style]="{'width': '100%'}" type="text" pInputText [(ngModel)]="homeworkQST.ref">
+                            </div>
 
-                        </ng-template>
-                    </p-tree>
+                            <div class="p-col-6">
+                                <h6>Part</h6>
+                                <input [style]="{'width': '100%'}" type="text" pInputText [(ngModel)]="part">
+                            </div>
+
+                            <div class="p-col-6">
+                                <h6>Image Url</h6>
+                                <input [style]="{'width': '100%'}" type="text" pInputText
+                                       [(ngModel)]="homeWork.urlImage">
+                            </div>
+
+                            <div class="p-col-6">
+                                <h6>Video Url</h6>
+                                <input [style]="{'width': '100%'}" type="text" pInputText
+                                       [(ngModel)]="homeWork.urlVideo">
+                            </div>
+
+
+                            <div class="p-col-12 ">
+                                <h6>Content</h6>
+                                <textarea required="required" [style]="{'width':'100%', 'padding': '10px'}" rows="2"
+                                          [(ngModel)]="homeworkQST.libelle"
+                                          pInputTextarea
+                                          placeholder="Example:
+1 Why the Myers-Briggs test is totally meaningless
+2 Test tells you you're one of these 16 personality types.
+3 There are perceivers and judgers.
+4 People who prefer sensing over intuition.
+5 Every individual is an exception to the rule."
+                                          autoResize="autoResize"></textarea>
+                            </div>
+                            <!--                            <div style="padding-top: 45px;" class="p-col-2">-->
+                            <!--                                <p-button [style]="{'width': '100%'}" icon="pi pi-check"-->
+                            <!--                                          (click)="saveDrapAndDropHomeWork()" label="Add"-->
+                            <!--                                          styleClass="p-button-success"></p-button>-->
+                            <!--                            </div>-->
+                        </div>
+                    </div>
+                    <div *ngIf="showTranslate" class="leftCard p-col-8">
+                        <div class="p-grid">
+
+                            <div class="p-col-2">
+                                <h6>Number</h6>
+                                <input [style]="{'width': '100%'}" [(ngModel)]="homeworkReponse.numero"
+                                       pInputText
+                                       type="number"
+                                       placeholder="Answer number">
+                            </div>
+
+                            <div class="p-col-4">
+                                <h6>Word</h6>
+                                <input [style]="{'width': '100%'}" type="text" pInputText
+
+                                       [(ngModel)]="libelle">
+                            </div>
+                            <div class="p-col-6">
+                                <h6>Answers</h6>
+                                <input [style]="{'width': '100%'}" type="text" pInputText
+                                       [(ngModel)]="homeworkReponse.lib">
+                            </div>
+
+
+                            <div class="p-col-3">
+                                <h6>Correct answer</h6>
+                                <input [style]="{'width': '100%'}" [(ngModel)]="homeworkQST.pointReponseJuste"
+                                       pInputText
+                                       type="number"
+                                       placeholder="True point">
+                            </div>
+                            <div class="p-col-3">
+                                <h6>Incorrect answer</h6>
+                                <input [style]="{'width': '100%'}" [(ngModel)]="homeworkQST.pointReponsefausse"
+                                       type="number"
+                                       pInputText
+                                       placeholder="false point">
+                            </div>
+
+                            <div class="p-col-4">
+                                <div style="display: inline-block; margin-left: 20px" *ngFor="let bool of booleanTypes"
+                                     class="field-checkbox">
+                                    <p-radioButton name="category" [value]="bool"
+                                                   [(ngModel)]="homeworkReponse.etatReponse"></p-radioButton>
+                                    <label>{{bool}}</label>
+                                </div>
+                            </div>
+                            <div class="p-col-2" style=" margin-top: 28px;">
+                                <button (click)="addAnswers()" class="p-button-raised p-button-info"
+                                        icon="pi pi-plus"
+                                        iconPos="right"
+                                        label="Add"
+                                        pButton pRipple type="button"></button>
+                            </div>
+                            <div class="p-col-12 fullText">{{fullText}}</div>
+                            <div class="p-col-12 fullText">
+                                <p-accordion>
+                                    <p-accordionTab *ngFor="let item of mapTranslate | keyvalue" [header]="item.key">
+                                        <div style="height: 50px" *ngFor="let value of item.value">
+                                            <h6 class="answers">
+                                                {{value.lib}} ({{ value.etatReponse}})</h6>
+                                            <button style="margin: 6px" pButton pRipple type="button"
+                                                    icon="pi pi-pencil"
+                                                    pTooltip="click to edit answer" tooltipPosition="top"
+                                                    (click)="editT12(item, value)"
+                                                    class="p-button-rounded p-button-warning p-button-outlined"></button>
+
+                                        </div>
+
+                                    </p-accordionTab>
+                                </p-accordion>
+                            </div>
+                            <div style="text-align: center!important;" class="p-col-12">
+                                <button id="saveWord" (click)="nextWord()" class="p-button-raised p-button-success"
+                                        icon="pi pi-arrow-right"
+                                        iconPos="right"
+                                        label="save word"
+                                        pButton pRipple type="button"></button>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="p-col-4 rightCard ">
+                        <p-tree [value]="nodes">
+                            <ng-template let-node pTemplate="default">
+                                <output>{{node.label}}</output>
+                            </ng-template>
+                            <ng-template let-node pTemplate="default">
+                                <b>{{node.label}}</b>
+                                <button class="p-button-rounded p-button-success" icon="pi pi-undo" pButton
+                                        (click)="updateQuestion(node.key)"
+                                        pRipple type="button"></button>
+                                <button class="p-button-rounded p-button-danger" icon="pi pi-times" pButton
+                                        pRipple
+                                        (click)="deleteQuestion(node.key)"
+                                        type="button"></button>
+
+                            </ng-template>
+                        </p-tree>
+                    </div>
+
+                    <div style="text-align: center!important;" class="p-col-8">
+                        <button (click)="addQuestion()" class="p-button-raised p-button-success" icon="pi pi-plus"
+                                iconPos="right"
+                                label="Add question"
+                                pButton pRipple type="button"></button>
+                    </div>
                 </div>
+
+
             </div>
-            <button (click)="addQuestion()" class="p-button-raised p-button-success" icon="pi pi-plus" iconPos="right" label="Add question"
-                    pButton pRipple style="margin-left: 20%" type="button"></button>
+
+            <div *ngIf="typeHomeWork.lib === 'Drag and Drop'" class="p-grid">
+                <div class="p-col-4">
+                    <h6>Image Url</h6>
+                    <input [style]="{'width': '100%'}" type="text" pInputText [(ngModel)]="homeWork.urlImage">
+                </div>
+
+                <div class="p-col-4">
+                    <h6>Video Url</h6>
+                    <input [style]="{'width': '100%'}" type="text" pInputText [(ngModel)]="homeWork.urlVideo">
+                </div>
+
+                <div class="p-col-4">
+                    <h6>Title</h6>
+                    <input [style]="{'width': '100%'}" type="text" pInputText [(ngModel)]="homeworkQST.ref">
+                </div>
+
+
+                <div class="p-col-12 ">
+                    <h6>Content</h6>
+                    <textarea required="required" [style]="{'width':'100%', 'padding': '10px'}" rows="2"
+                              [(ngModel)]="homeworkQST.libelle"
+                              pInputTextarea
+                              placeholder=" Example:Lucas goes to @school@ every day of the week. He has many subjects to @go@ to each school day: English, art, science, mathematics, gym, and history.
+His @mother@ packs a big backpack full of @books@ and lunch for Lucas."
+                              autoResize="autoResize"></textarea>
+                </div>
+
+
+                <div class="p-col-4">
+                </div>
+
+                <div class="p-col-4">
+                    <p-button [disabled]="homeworkQST.libelle === undefined || homeworkQST.libelle.length < 5 "
+                              [style]="{'width': '100%'}"
+                              icon="pi pi-check"
+                              (click)="save()" label="save Home Work"
+                              styleClass="p-button-success"></p-button>
+                </div>
+
+                <div class="p-col-4">
+                </div>
+
+            </div>
+
+
             <ng-template pTemplate="footer">
             </ng-template>
         </p-card>
@@ -137,7 +499,7 @@
     </div>
 </div>
 
-<p-dialog  [modal]="true" [style]="{width: '800px'}" styleClass="p-fluid">
+<p-dialog [modal]="true" [style]="{width: '800px'}" styleClass="p-fluid">
     <ng-template pTemplate="content">
         <div class="box">
             <h3>Types "Correct the mistakes" and "Input" can only have one answer, it must be correct</h3>
@@ -145,7 +507,7 @@
     </ng-template>
 
     <ng-template pTemplate="footer">
-        <button  class="p-button-text" icon="pi pi-times" label="Fermer" pButton
+        <button class="p-button-text" icon="pi pi-times" label="Fermer" pButton
                 pRipple></button>
     </ng-template>
 </p-dialog>
@@ -158,15 +520,50 @@
                 <textarea [(ngModel)]="homeworkQST.libelle" pInputTextarea rows="4" type="text"></textarea>
 
             </div>
-            <output style="margin-left: 20px; margin-right: 30px; font-size: 30px; font-family: 'Goudy Old Style'">True  : </output> <p-inputSwitch [(ngModel)]="onOff_true" (click)="onOffTrue()"></p-inputSwitch>
+            <output style="margin-left: 20px; margin-right: 30px; font-size: 30px; font-family: 'Goudy Old Style'">True
+                :
+            </output>
+            <p-inputSwitch [(ngModel)]="onOff_true" (click)="onOffTrue()"></p-inputSwitch>
             <br>
-            <output style="margin-left: 20px; margin-right: 30px; font-size: 30px; font-family: 'Goudy Old Style'">False : </output> <p-inputSwitch [(ngModel)]="onOff_false" (click)="onOffFalse()"></p-inputSwitch>
+            <output style="margin-left: 20px; margin-right: 30px; font-size: 30px; font-family: 'Goudy Old Style'">False
+                :
+            </output>
+            <p-inputSwitch [(ngModel)]="onOff_false" (click)="onOffFalse()"></p-inputSwitch>
         </div>
     </ng-template>
 
     <ng-template pTemplate="footer">
-        <button (click)="submitOnOff()" class="p-button-text" icon="pi pi-check" label="Submit" pButton pRipple></button>
-        <button (click)="hideOnOffDialog()" class="p-button-text" icon="pi pi-times" label="Fermer" pButton pRipple></button>
+        <button (click)="submitOnOff()" class="p-button-text" icon="pi pi-check" label="Submit" pButton
+                pRipple></button>
+        <button (click)="hideOnOffDialog()" class="p-button-text" icon="pi pi-times" label="Fermer" pButton
+                pRipple></button>
     </ng-template>
 </p-dialog>
 
+<p-dialog header="Title" [(visible)]="displayDialogT12">
+    <div class="p-grid">
+        <div class="p-col-6">
+            <h6>Answers</h6>
+            <input [style]="{'width': '100%'}" type="text" pInputText
+                   [(ngModel)]="selectedRps.lib">
+        </div>
+
+
+        <div class="p-col-4">
+            <div style="display: inline-block; margin-left: 20px" *ngFor="let bool of booleanTypes"
+                 class="field-checkbox">
+                <p-radioButton name="category" [value]="bool"
+                               [(ngModel)]="selectedRps.etatReponse"></p-radioButton>
+                <label>{{bool}}</label>
+            </div>
+        </div>
+        <div class="p-col-2" style=" margin-top: 28px;">
+            <button (click)="edit()" class="p-button-raised p-button-info"
+                    icon="pi pi-pencil"
+                    iconPos="right"
+                    label="Edit"
+                    pButton pRipple type="button"></button>
+        </div>
+    </div>
+
+</p-dialog>

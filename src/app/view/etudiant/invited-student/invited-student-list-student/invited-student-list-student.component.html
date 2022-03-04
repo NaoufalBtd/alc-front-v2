@@ -1,0 +1,72 @@
+
+<div class="p-grid">
+    <div class="p-col-12">
+        <p-toast></p-toast>
+        <div class="card">
+            <p-toolbar styleClass="p-mb-4">
+                <ng-template pTemplate="left">
+                    <input type="email" pInputText style="margin-right: 5px" placeholder="E-mail Student" [(ngModel)]="inviteStudentEtudiant.emailInvited">
+
+                    <button pButton pRipple type="button" label="Invite" class="p-button-raised p-button-info"
+                            style="margin-right: 5px"
+                            (click)="sendInvitation(this.loginService.getConnectedStudent().id,inviteStudentEtudiant.emailInvited)"></button>
+
+                </ng-template>
+                <ng-template pTemplate="right">
+
+                </ng-template>
+            </p-toolbar>
+            <p-table #dt [rows]="10" [paginator]="true" [value]="inviteStudentEtudiantList"
+                     [globalFilterFields]="['reference','total','totalPaye']"
+                     [rowHover]="true" dataKey="id" styleClass="p-datatable-customers"
+                     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                     [showCurrentPageReport]="true">
+
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pSortableColumn="prof">Code</th>
+                        <th pSortableColumn="prof">E-mail Invited</th>
+                        <th pSortableColumn="Date">Date Sent Invitation</th>
+                        <th pSortableColumn="Number Of Sessions">Invitation Status</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-inviteStudentEtudiant>
+                    <tr>
+                        <td>
+                            <strong>{{inviteStudentEtudiant.code}}</strong>
+
+                        </td>
+                        <td>
+                            <strong style="color: #0c799f">{{inviteStudentEtudiant.emailInvited}}</strong>
+
+                        </td>
+                        <td>
+                            <strong>
+                                <i class="pi pi-calendar"></i>   {{ inviteStudentEtudiant.dateSentInvitation | date : "yyyy-MM-dd"}}
+                            </strong>
+                            <br>
+                            <strong>
+                                <i class="pi pi-clock"></i> {{ inviteStudentEtudiant.dateSentInvitation | date : "HH:mm"}}
+                            </strong>
+
+                        </td>
+                        <td>
+                            <p-message *ngIf="!inviteStudentEtudiant.isAccepted" severity="error" text="Invitation Not Accepted"
+                                       styleClass="p-mr-2"></p-message>
+                            <p-message *ngIf="inviteStudentEtudiant.isAccepted" severity="success" text="Invite Accepted"
+                                       styleClass="p-mr-2"></p-message>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="summary">
+
+                </ng-template>
+            </p-table>
+        </div>
+        <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+    </div>
+    <app-reclamation-etudiant-create></app-reclamation-etudiant-create>
+    <app-reclamation-etudiant-view></app-reclamation-etudiant-view>
+</div>
+
+

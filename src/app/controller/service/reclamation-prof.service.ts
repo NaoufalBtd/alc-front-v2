@@ -160,6 +160,7 @@ export class ReclamationProfService {
             }
         );
     }
+
     public findAllByCriteria() {
         this.http.post<Array<ReclamationProf>>(this.adminReclamationProf + '/byCriteria', this.reclamationProfSearch).subscribe(
             data => {
@@ -170,6 +171,7 @@ export class ReclamationProfService {
             }
         );
     }
+
     public findReclamationProfByProfId(idProf: number) {
         this.http.get<Array<ReclamationProf>>(this.adminReclamationProf + '/prof/' + idProf).subscribe(
             data => {
@@ -239,6 +241,16 @@ export class ReclamationProfService {
                         summary: 'Teacher Complaint',
                         detail: 'Complaint sent with successfully'
                     });
+                }
+            }
+        );
+    }
+
+    public viewReclamationProf(idReclamationProf1: number) {
+        this.http.get(this.adminReclamationProf + '/idReclamationProf1/' + idReclamationProf1).subscribe(
+            data => {
+                if (data > 0) {
+                    this.findAll();
                 }
             }
         );

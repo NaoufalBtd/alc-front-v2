@@ -1,6 +1,6 @@
 /* tslint:disable:quotemark */
 import {NgModule} from '@angular/core';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -294,7 +294,7 @@ import {
 } from './view/admin/complaint/complaint-view/complaint-view-etudiant/complaint-view-etudiant.component';
 import {ComplaintViewProfComponent} from './view/admin/complaint/complaint-view/complaint-view-prof/complaint-view-prof.component';
 import {ProfileComponent} from './view/etudiant/profile/profile.component';
-import { WatchItComponent } from './view/etudiant/homeWork/watch-it/watch-it.component';
+import {WatchItComponent} from './view/etudiant/homeWork/watch-it/watch-it.component';
 import {
     ComplaintEditEtudiantComponent
 } from './view/admin/complaint/complaintEdit/complaint-edit-etudiant/complaint-edit-etudiant.component';
@@ -311,12 +311,21 @@ import {TypeReclamationComponent} from './view/admin/type-reclamation/type-recla
 import {
     ReclamationEtudiantCreateComponent
 } from './view/etudiant/reclamation-etudiant/reclamation-etudiant-create/reclamation-etudiant-create.component';
-import { ReclamationEtudiantViewComponent } from './view/etudiant/reclamation-etudiant/reclamation-etudiant-view/reclamation-etudiant-view.component';
-import { ReclamationProfViewComponent } from './view/prof/reclamation-prof/reclamation-prof-view/reclamation-prof-view.component';
+import {ReclamationEtudiantViewComponent} from './view/etudiant/reclamation-etudiant/reclamation-etudiant-view/reclamation-etudiant-view.component';
+import {ReclamationProfViewComponent} from './view/prof/reclamation-prof/reclamation-prof-view/reclamation-prof-view.component';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import { HomePageEtudiantComponent } from './view/etudiant/home-page-etudiant/home-page-etudiant.component';
 import { EtudiantpurchasepackComponent } from './view/etudiant/etudiantpurchasepack/etudiantpurchasepack.component';
+import {DragHomeWorkComponent} from './view/etudiant/homeWork/drag-home-work/drag-home-work.component';
+import {DragDropModule} from '@angular/cdk/drag-drop';
+import {InvitedStudentComponent} from './view/etudiant/invited-student/invited-student.component';
+import {InvitedStudentCreateComponent} from './view/etudiant/invited-student/invited-student-create/invited-student-create.component';
+import {InvitedStudentListComponent} from './view/admin/invited-student-list/invited-student-list.component';
+import {
+    InvitedStudentListStudentComponent
+} from './view/etudiant/invited-student/invited-student-list-student/invited-student-list-student.component';
+import { HomeWorkReviewComponent } from './view/prof/home-work/home-work-review/home-work-review.component';
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -324,6 +333,7 @@ export function createTranslateLoader(http: HttpClient) {
 
 @NgModule({
     imports: [
+        ReactiveFormsModule,
         BrowserModule,
         CommonModule,
         ScheduleAllModule,
@@ -425,7 +435,8 @@ export function createTranslateLoader(http: HttpClient) {
                 useFactory: (createTranslateLoader),
                 deps: [HttpClient]
             }
-        })
+        }),
+        DragDropModule
     ],
     declarations: [
         AppComponent,
@@ -618,6 +629,14 @@ export function createTranslateLoader(http: HttpClient) {
         TypeReclamationProfListComponent,
         TypeReclamationEtudiantListComponent,
         ReclamationEtudiantViewComponent,
+        ReclamationProfViewComponent,
+        DragHomeWorkComponent,
+        InvitedStudentListComponent,
+        InvitedStudentComponent,
+        InvitedStudentCreateComponent,
+        InvitedStudentListStudentComponent,
+        DragHomeWorkComponent,
+        HomeWorkReviewComponent,
         ReclamationProfViewComponent,
         HomePageEtudiantComponent,
         EtudiantpurchasepackComponent

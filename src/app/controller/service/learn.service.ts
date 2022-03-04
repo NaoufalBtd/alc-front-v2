@@ -16,6 +16,7 @@ import {HomeworkService} from './homework.service';
 import {HomeWorkEtudiantServiceService} from './home-work-etudiant-service.service';
 import {HomeWork} from '../model/home-work.model';
 import {AppComponent} from '../../app.component';
+import {Dictionary} from '../model/dictionary.model';
 
 @Injectable({
     providedIn: 'root'
@@ -62,7 +63,43 @@ export class LearnService {
     private _homeWorkList: Array<HomeWork> = new Array<HomeWork>();
     private _selectedLanguage: any = {code: 'ar', name: 'Arabic', nativeName: 'العربية'};
     private _selectedHomeWork: HomeWork = new HomeWork();
+    private _displayDictionaryDialog: boolean;
+    private _synonymes: string = String();
+    private _textSeleted: string;
+    private _dictionaryList: Array<Dictionary> = new Array<Dictionary>();
 
+
+    get synonymes(): string {
+        return this._synonymes;
+    }
+
+    set synonymes(value: string) {
+        this._synonymes = value;
+    }
+
+    get textSeleted(): string {
+        return this._textSeleted;
+    }
+
+    set textSeleted(value: string) {
+        this._textSeleted = value;
+    }
+
+    get dictionaryList(): Array<Dictionary> {
+        return this._dictionaryList;
+    }
+
+    set dictionaryList(value: Array<Dictionary>) {
+        this._dictionaryList = value;
+    }
+
+    get displayDictionaryDialog(): boolean {
+        return this._displayDictionaryDialog;
+    }
+
+    set displayDictionaryDialog(value: boolean) {
+        this._displayDictionaryDialog = value;
+    }
 
     get selectedHomeWork(): HomeWork {
         return this._selectedHomeWork;

@@ -6,7 +6,7 @@ export class HomeWorkReponse {
     public ref: string;
     public lib: string;
     public etatReponse: string;
-    public numero: number;
+    public numero = Number(1);
     public homeWorkQuestion: HomeWorkQST;
 
 }

@@ -87,6 +87,8 @@ import {ReclamationEtudiant} from './controller/model/reclamation-etudiant.model
 import {ReclamationEtudiantComponent} from './view/etudiant/reclamation-etudiant/reclamation-etudiant.component';
 import {TypeReclamationComponent} from './view/admin/type-reclamation/type-reclamation.component';
 import {ProfileComponent} from './view/etudiant/profile/profile.component';
+import {DragHomeWorkComponent} from './view/etudiant/homeWork/drag-home-work/drag-home-work.component';
+import {InvitedStudentComponent} from './view/etudiant/invited-student/invited-student.component';
 import {HomePageEtudiantComponent} from './view/etudiant/home-page-etudiant/home-page-etudiant.component';
 import {EtudiantpurchasepackComponent} from './view/etudiant/etudiantpurchasepack/etudiantpurchasepack.component';
 
@@ -98,6 +100,7 @@ import {EtudiantpurchasepackComponent} from './view/etudiant/etudiantpurchasepac
                 path: 'admin', component: AdminComponent,
                 children: [
                     {path: 'parcours', component: LearnComponent},
+                    {path: 'drag', component: DragHomeWorkComponent},
                     {path: 'create-section-items', component: SectionItemComponent},
                     {path: 'preview-section-items', component: SectionItemPreviewComponent},
                     {path: 'quiz-preview-prof', component: QuizPreviewComponent},
@@ -173,9 +176,9 @@ import {EtudiantpurchasepackComponent} from './view/etudiant/etudiantpurchasepac
                     {path: 'homeWorkEtudiantResult', component: HomeWorkResultComponent},
                     {path: 'profile', component: EtudiantProfileComponent},
                     {path: 'reclamation-etudiant', component: ReclamationEtudiantComponent},
-
                     {path: 'profile', component: EtudiantProfileComponent},
-                    {path: 'profileEdit', component: ProfileComponent}
+                    {path: 'profileEdit', component: ProfileComponent},
+                    {path: 'inviteStudent', component: InvitedStudentComponent}
 
                 ]
             },

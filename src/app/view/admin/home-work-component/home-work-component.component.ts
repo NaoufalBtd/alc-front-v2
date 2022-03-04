@@ -9,6 +9,9 @@ import {LearnService} from '../../../controller/service/learn.service';
 import {Cours} from '../../../controller/model/cours.model';
 import {Parcours} from '../../../controller/model/parcours.model';
 import {HomeWorkEtudiantServiceService} from '../../../controller/service/home-work-etudiant-service.service';
+import {TypeHomeWorkService} from '../../../controller/service/type-home-work.service';
+import {TypeHomeWork} from '../../../controller/model/type-home-work.model';
+import {KeyValue} from '@angular/common';
 
 
 @Component({
@@ -18,20 +21,24 @@ import {HomeWorkEtudiantServiceService} from '../../../controller/service/home-w
 })
 export class HomeWorkComponentComponent implements OnInit {
 
-    nodes: TreeNode[];
-    viewOnOffDialog = false;
-    onOff_true = true;
-    onOff_false = false;
-    home = {icon: 'pi pi-home', routerLink: '/admin/parcours'};
-    navigateItems = [
-        {label: this.parcourCurrent.libelle, routerLink: '/admin/parcours'},
-        {label: this.courseSelected.libelle, routerLink: '/admin/parcours'},
-    ];
-
     constructor(private service: HomeworkService,
                 private homeWorkEtudiantService: HomeWorkEtudiantServiceService,
                 private learnService: LearnService,
+                private typeHomeWorkService: TypeHomeWorkService,
                 private messageService: MessageService) {
+    }
+
+    get typeHomeWorkList(): Array<TypeHomeWork> {
+        return this.typeHomeWorkService.typeHomeWorkList;
+    }
+
+
+    get typeHomeWork(): TypeHomeWork {
+        return this.typeHomeWorkService.typeHomeWork;
+    }
+
+    set typeHomeWork(value: TypeHomeWork) {
+        this.typeHomeWorkService.typeHomeWork = value;
     }
 
     get courseSelected(): Cours {
@@ -42,7 +49,75 @@ export class HomeWorkComponentComponent implements OnInit {
         return this.learnService.parcourCurrent;
     }
 
+    get reponses(): Array<HomeWorkReponse> {
+        return this.service.reponses;
+    }
+
+    set reponses(homeWorkReponses) {
+        this.service.reponses = homeWorkReponses;
+    }
+
+    get typeOfQuestions(): Array<TypeDeQuestion> {
+        return this.service.types;
+    }
+
+    set typeOfQuestions(typeDeQuestions) {
+        this.service.types = typeDeQuestions;
+    }
+
+    get homeworkReponse(): HomeWorkReponse {
+        return this.service.homeworkReponse;
+    }
+
+    set homeworkReponse(homeWorkReponse) {
+        this.service.homeworkReponse = homeWorkReponse;
+    }
+
+    get homeworkQST(): HomeWorkQST {
+        return this.service.HomeWorkQST;
+    }
+
+    set homeworkQST(homeWorkQST) {
+        this.service.HomeWorkQST = homeWorkQST;
+    }
+
+    get homeWork(): HomeWork {
+        return this.service.HomeWork;
+    }
+
+    set homeWork(homeWork1) {
+        this.service.HomeWork = homeWork1;
+    }
+
+    nodes: TreeNode[];
+    viewOnOffDialog = false;
+    onOff_true = true;
+    onOff_false = false;
+    home = {icon: 'pi pi-home', routerLink: '/admin/parcours'};
+    navigateItems = [
+        {label: this.parcourCurrent.libelle, routerLink: '/admin/parcours'},
+        {label: this.courseSelected.libelle, routerLink: '/admin/parcours'},
+    ];
+    part: number;
+    numero = 1;
+    input = '<input type="text" pInputText placeholder="Username">';
+    showPutInOrder: boolean;
+    showTranslate: boolean;
+    booleanTypes: Array<boolean> = [true, false];
+    selectedBoolean = false;
+    fullText = ' ';
+    libelle = String(' ');
+    private index = 1;
+    private indexForEdit = 0;
+    disableAddQuestion = true;
+    selectedRps: HomeWorkReponse = new HomeWorkReponse();
+
+    mapTranslate: Map<string, Array<HomeWorkReponse>> = new Map<string, Array<HomeWorkReponse>>();
+    displayDialogT12: boolean;
+    keyForEdit: string;
+
     ngOnInit(): void {
+        this.typeHomeWorkService.findAll();
         this.homeWork.cours = this.courseSelected;
         this.questionTypes();
         if (this.homeWork.id !== undefined) {
@@ -88,46 +163,6 @@ export class HomeWorkComponentComponent implements OnInit {
         console.log(this.homeWork);
     }
 
-    get reponses(): Array<HomeWorkReponse> {
-        return this.service.reponses;
-    }
-
-    set reponses(homeWorkReponses) {
-        this.service.reponses = homeWorkReponses;
-    }
-
-    get types(): Array<TypeDeQuestion> {
-        return this.service.types;
-    }
-
-    set types(typeDeQuestions) {
-        this.service.types = typeDeQuestions;
-    }
-
-    get homeworkReponse(): HomeWorkReponse {
-        return this.service.homeworkReponse;
-    }
-
-    set homeworkReponse(homeWorkReponse) {
-        this.service.homeworkReponse = homeWorkReponse;
-    }
-
-    get homeworkQST(): HomeWorkQST {
-        return this.service.HomeWorkQST;
-    }
-
-    set homeworkQST(homeWorkQST) {
-        this.service.HomeWorkQST = homeWorkQST;
-    }
-
-    get homeWork(): HomeWork {
-        return this.service.HomeWork;
-    }
-
-    set homeWork(homeWork1) {
-        this.service.HomeWork = homeWork1;
-    }
-
     public clonequestion(question: HomeWorkQST): HomeWorkQST {
         const myclone = new HomeWorkQST();
         myclone.id = question.id;
@@ -154,6 +189,22 @@ export class HomeWorkComponentComponent implements OnInit {
     }
 
     public addQuestion() {
+        console.log(this.libelle);
+        console.log(this.libelle.length);
+        if (this.homeworkQST.typeDeQuestion.ref === 't12') {
+            if (this.libelle?.length > 2) {
+                this.messageService.add({
+                    severity: 'info',
+                    summary: 'Info',
+                    detail: 'Please save the word  before add the question !',
+                    life: 6000
+                });
+                document.getElementById('saveWord').style.animationName = 'inCorrect';
+                document.getElementById('saveWord').style.animationDuration = '4s';
+                document.getElementById('saveWord').style.animationIterationCount = '1';
+                return;
+            }
+        }
         this.homeworkQST.reponses = this.reponses;
         this.homeWork.questions.push({...this.homeworkQST});
         this.addToNode();
@@ -195,24 +246,81 @@ export class HomeWorkComponentComponent implements OnInit {
     }
 
     public save() {
-        console.log(this.homeWork);
         this.homeWork.cours = this.courseSelected;
-        this.service.saveHomeWork().subscribe(
-            data => {
-                this.messageService.add({
-                    severity: 'success',
-                    summary: 'Successful',
-                    detail: 'HomeWork Created',
-                    life: 3000
-                });
+        this.homeWork.typeHomeWork = this.typeHomeWork;
+        this.homeWork.libelle = this.typeHomeWork.lib;
+        this.homeWork.cours = this.courseSelected;
+        if (this.homeworkQST?.libelle === undefined || this.homeworkQST?.libelle === null || this.homeworkQST?.libelle.length < 5 ||
+            this.courseSelected.id === null || this.courseSelected.id === undefined) {
+            this.messageService.add({
+                severity: 'warn',
+                summary: 'Warning!',
+                detail: 'Please complete the required object !',
+                life: 6000
+            });
+            return;
+        } else {
+            let typeqst: TypeDeQuestion = new TypeDeQuestion();
+            console.log(this.homeWork);
+            if (this.homeWork.typeHomeWork.lib === 'READING' || this.homeWork.typeHomeWork.lib === 'WRITE IT UP') {
+                if (this.homeWork.typeHomeWork.lib === 'READING') {
+                    typeqst = this.typeOfQuestions.filter(t => t.lib === 'Read and add new words')[0];
+
+                } else {
+                    typeqst = this.typeOfQuestions.filter(t => t.lib === 'Write it up')[0];
+                }
+            } else if (this.homeWork.typeHomeWork.lib === 'Drag and Drop') {
+                typeqst = this.typeOfQuestions.filter(t => t.lib === 'Put words to gap')[0];
             }
-        );
+            console.log(typeqst);
+            this.homeworkQST.typeDeQuestion = typeqst;
+            this.homeWork.questions.push({...this.homeworkQST});
+            console.log(this.homeWork);
+            this.saveHomeWork();
+        }
+    }
+
+    saveHomeWork() {
+        if (this.courseSelected.id !== null && this.courseSelected.id !== undefined) {
+            this.homeWork.cours = this.courseSelected;
+            this.homeWork.typeHomeWork = this.typeHomeWork;
+            this.homeWork.libelle = this.typeHomeWork.lib;
+            this.homeWork.cours = this.courseSelected;
+            this.service.saveHomeWork().subscribe(
+                data => {
+                    this.messageService.add({
+                        severity: 'success',
+                        summary: 'Successful',
+                        detail: 'HomeWork Created',
+                        life: 3000
+                    });
+                    this.homeWork = new HomeWork();
+                    this.homeworkQST = new HomeWorkQST();
+                    this.homeworkReponse = new HomeWorkReponse();
+                }, error => {
+                    console.log(error);
+                    this.messageService.add({
+                        severity: 'error',
+                        summary: 'Error!',
+                        detail: 'Error to create Home Work please try again !',
+                        life: 3000
+                    });
+                }
+            );
+        } else {
+            this.messageService.add({
+                severity: 'warn',
+                summary: 'Warning',
+                detail: 'Course should not be null !',
+                life: 3000
+            });
+        }
     }
 
     questionTypes() {
         this.service.findType().subscribe(
             data => {
-                this.types = data;
+                this.typeOfQuestions = data;
             }
         );
     }
@@ -256,8 +364,17 @@ export class HomeWorkComponentComponent implements OnInit {
     }
 
     chooseType() {
+        this.showPutInOrder = false;
         if (this.homeworkQST.typeDeQuestion.ref === 't5') {
             this.viewOnOffDialog = true;
+        } else if (this.homeworkQST.typeDeQuestion.ref === 't11') {
+            this.showPutInOrder = true;
+        } else if (this.homeworkQST.typeDeQuestion.ref === 't12') {
+            this.showTranslate = true;
+            this.showPutInOrder = false;
+        } else {
+            this.showTranslate = false;
+            this.showPutInOrder = false;
         }
     }
 
@@ -303,5 +420,101 @@ export class HomeWorkComponentComponent implements OnInit {
         } else {
             this.onOff_true = true;
         }
+    }
+
+    filterTypeOfQsts() {
+        if (this.typeHomeWork.lib === 'Let\'s Practice') {
+            this.typeOfQuestions = this.typeOfQuestions.filter(t => (t.ref !== 't10' &&
+                t.ref !== 't8' && t.ref !== 't9' && t.ref !== 't7' && t.ref !== 't2'));
+        }
+        this.homeWork = new HomeWork();
+        this.homeworkQST = new HomeWorkQST();
+        this.homeworkReponse = new HomeWorkReponse();
+    }
+
+    isButtonDisabled(): boolean {
+        if (this.homeworkQST.libelle === undefined || this.homeworkQST.libelle?.length < 4) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    savePhraseBook() {
+        console.log(this.homeworkReponse);
+        console.log(this.homeworkQST);
+        this.homeworkReponse.etatReponse = 'true';
+        this.homeworkQST.reponses.push({...this.homeworkReponse});
+        this.homeworkQST.numero = this.numero;
+        this.homeworkQST.typeDeQuestion = this.typeOfQuestions.filter(t => t.lib === 'Translate the phrase')[0];
+        this.homeWork.questions.push({...this.homeworkQST});
+        this.homeWork.libelle = this.typeHomeWork.lib;
+        this.homeWork.typeHomeWork = this.typeHomeWork;
+
+        console.log(this.homeWork);
+        this.numero += 1;
+        this.homeworkQST.libelle = String();
+        this.homeworkReponse.lib = String();
+    }
+
+    saveDrapAndDropHomeWork() {
+        this.homeworkQST.numero = this.numero;
+        this.homeWork.questions.push({...this.homeworkQST});
+        this.homeWork.libelle = this.typeHomeWork.lib;
+        this.homeWork.typeHomeWork = this.typeHomeWork;
+
+        console.log(this.homeWork);
+        this.numero += 1;
+        this.homeworkQST = new HomeWorkQST();
+        console.log(this.homeWork);
+    }
+
+    removeAnswer(rps: HomeWorkQST) {
+        for (let i = 0; i < this.homeWork.questions.length; i++) {
+            if (this.homeWork.questions[i].numero === rps.numero) {
+                this.homeWork.questions.splice(i, 1);
+            }
+        }
+    }
+
+    getPlaceHolder() {
+
+    }
+
+    addAnswers() {
+        const num = this.homeworkReponse.numero;
+        this.reponses.push({...this.homeworkReponse});
+        console.log(this.homeworkQST);
+        this.homeworkReponse = new HomeWorkReponse();
+        this.homeworkReponse.numero = num;
+    }
+
+    nextWord() {
+        this.mapTranslate.set(this.libelle, this.reponses.filter(t => t.numero === this.index));
+        this.fullText = this.fullText + ' ' + this.libelle + ' ';
+        this.libelle = String(this.index) + this.libelle;
+        if (this.homeworkQST.libelle !== undefined) {
+            this.homeworkQST.libelle += this.libelle;
+        } else {
+            this.homeworkQST.libelle = this.libelle;
+        }
+        this.index += 1;
+        this.homeworkReponse.numero = this.index;
+        console.log(this.homeworkQST.libelle);
+        this.libelle = String(' ');
+        this.disableAddQuestion = false;
+    }
+
+    editT12(item: KeyValue<string, Array<HomeWorkReponse>>, rps: HomeWorkReponse) {
+        this.keyForEdit = item.key;
+        console.log(item);
+        this.selectedRps = rps;
+        this.indexForEdit = this.reponses.indexOf(rps);
+        console.log(this.indexForEdit);
+        this.displayDialogT12 = true;
+    }
+
+    edit() {
+        this.reponses[this.indexForEdit] = this.selectedRps;
     }
 }

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, NgModule, OnInit} from '@angular/core';
 import {ConfirmationService, MessageService} from 'primeng/api';
 import {InscriptionService} from '../../../controller/service/inscription.service';
 import {Inscription} from '../../../controller/model/inscription.model';
@@ -10,6 +10,7 @@ import {EtudiantService} from '../../../controller/service/etudiant.service';
 import {GroupeEtude} from '../../../controller/model/groupe-etude.model';
 import {PackStudentService} from "../../../controller/service/pack-student.service";
 import {PackStudent} from "../../../controller/model/pack-student.model";
+import { VonPrimengFormModule } from '@von-development-studio/primeng-form-validation';
 
 @Component({
     selector: 'app-formlayoutdemo',
@@ -17,6 +18,12 @@ import {PackStudent} from "../../../controller/model/pack-student.model";
     styleUrls: ['./formlayoutdemo.component.css']
 })
 export class FormLayoutDemoComponent implements OnInit {
+    @NgModule({
+        imports: [
+                VonPrimengFormModule,
+
+        ]
+    })
     locality = [
         {name: 'native'},
         {name: 'non-native'},

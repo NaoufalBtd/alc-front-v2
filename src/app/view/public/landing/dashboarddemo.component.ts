@@ -18,10 +18,17 @@ import {HeaderType} from '../../../enum/header-type.enum';
 import {AuthenticationService} from '../../../controller/service/authentication.service';
 import {Subscription} from 'rxjs';
 
-
+import { VonPrimengFormModule } from '@von-development-studio/primeng-form-validation';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 @Component({
     templateUrl: './dashboard.component.html',
     styleUrls: ['./tabledemo.scss']
+})
+@NgModule({
+    imports: [
+
+            VonPrimengFormModule,
+    ]
 })
 export class DashboardDemoComponent implements OnInit {
 
@@ -53,6 +60,9 @@ export class DashboardDemoComponent implements OnInit {
     showdialoggroupe = false;
     showdialog = false;
     message = '';
+    exform: FormGroup;
+    isSuccessful = false;
+    form2: any = {};
     constructor(private login: LoginService, public profservice: ProfService, public studentservice: EtudiantService, public parcoursService: ParcoursService,
                 public packStudentService: PackStudentService,
                 public etudiantService: EtudiantService,
@@ -66,8 +76,6 @@ export class DashboardDemoComponent implements OnInit {
     public previousgroup = false;
     title = 'landingDemo';
     value = 10;
-
-
 
     public showNext(){
         if (this.progress >= 0 && this.progress < 3){
@@ -150,6 +158,11 @@ export class DashboardDemoComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.exform = new FormGroup({'fullName': new FormControl(null, Validators.required),
+
+            'email': new FormControl(null, Validators.required) });
+
+
         console.log('nbr of student');
         console.log(this.studentservice.items);
         if (this.login.getConnecteUser() != null) {

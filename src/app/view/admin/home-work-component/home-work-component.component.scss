@@ -1,0 +1,35 @@
+.leftCard {
+  border: 1px solid #c1c1c1;
+  border-radius: 5px;
+  background-color: #eeeeee;
+}
+
+.rightCard {
+  border-radius: 5px;
+  background-color: #ffffff;
+}
+
+div.fullText {
+  text-align: center;
+  background-color: white;
+  border-radius: 10px;
+  margin: 20px 0;
+  letter-spacing: 1px;
+  font-size: medium;
+  color: black;
+}
+
+@keyframes inCorrect {
+  from {
+    background-color: #f08080;
+  }
+  to {
+    background-color: #689F38;
+    height: auto;
+  }
+}
+
+.answers {
+  display: inline-block !important;
+  margin-right: 25px;
+}

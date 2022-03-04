@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Prof} from '../../../../controller/model/prof.model';
 import {MessageService} from 'primeng/api';
 import {ProfessorService} from '../../../../controller/service/professor.service';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
     selector: 'app-professeur-create',
@@ -44,8 +45,13 @@ export class ProfesseurCreateComponent implements OnInit {
     set items(value: Array<Prof>) {
         this.service.items = value;
     }
-
+    exform: FormGroup;
     ngOnInit(): void {
+        this.exform = new FormGroup({'fullName': new FormControl(null, Validators.required),
+            'password': new FormControl(null, Validators.required),
+
+            'email': new FormControl(null, Validators.required) });
+
     }
 
     public hideCreateDialog() {

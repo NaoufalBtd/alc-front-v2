@@ -229,6 +229,16 @@ export class ReclamationEtudiantService {
         );
     }
 
+    public viewReclamationEtudiant(idReclamationEtudiant1: number) {
+        this.http.get(this.adminReclamationEtudiant + '/idReclamationEtudiant1/' + idReclamationEtudiant1).subscribe(
+            data => {
+                if (data > 0) {
+                    this.findAll();
+                }
+            }
+        );
+    }
+
 // constructor
     constructor(private http: HttpClient, private messageService: MessageService) {
     }
