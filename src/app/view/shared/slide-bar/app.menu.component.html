@@ -1,4 +1,4 @@
-<div (click)="onMenuClick($event)" class="layout-menu-container">
+<div (click)="onMenuClick($event)"  class="layout-menu-container" *ngIf="this.authenticationService.getUserFromLocalCache() != null">
     <div class="menu-scroll-content">
 
         <ul class="layout-menu" *ngFor="let item of model; let i = index;">

@@ -10,4 +10,5 @@ export class ReponseEtudiantHomeWork {
     public question = new HomeWorkQST();
     public reponse: HomeWorkReponse = new HomeWorkReponse();
     public note: number;
+    public profNote: string;
 }

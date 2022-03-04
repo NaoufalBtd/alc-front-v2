@@ -23,7 +23,7 @@
                     <tr>
                         <th pSortableColumn="prof">Message</th>
                         <th pSortableColumn="Date">Date Reclamation</th>
-                        <th pSortableColumn="Number Of Sessions">Etat</th>
+                        <th pSortableColumn="Number Of Sessions">Processing Status</th>
                         <th>Action</th>
                     </tr>
                 </ng-template>
@@ -51,9 +51,16 @@
                                        styleClass="p-mr-2"></p-message>
                             <p-message *ngIf="reclamationProf.traite" severity="success" text="Processed"
                                        styleClass="p-mr-2"></p-message>
+
                         </td>
 
+                    <!--    <td>
+                            <p-message *ngIf="reclamationProf.postView" severity="info"
+                                       text="Message has been seen"></p-message>
 
+                            <p-message *ngIf="!reclamationProf.postView" severity="error"
+                                       text="The message has not been seen"></p-message>
+                        </td>-->
                         <td>
                             <button pButton type="button" class="p-button-info p-mr-2"
                                     (click)="showReclamationProfView(reclamationProf.id,this.serviceLogin.getConnectedProf().id)"

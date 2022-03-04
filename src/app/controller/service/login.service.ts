@@ -27,6 +27,9 @@ export class LoginService {
         return JSON.parse(localStorage.getItem('user'));
     }
 
+    public setonnectedStudent(student: Etudiant) {
+    }
+
     public getConnectedProf(): Prof {
         return JSON.parse(localStorage.getItem('user'));
     }

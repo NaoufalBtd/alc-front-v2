@@ -71,12 +71,14 @@ export class ComplaintListComponent implements OnInit {
     showReclamationViewEtudiant(id: number, idStudent: number) {
         this.displayReclamationViewEtudiant = true;
         this.findReclamationEtudiantByIdAndStudentId(id, idStudent);
+        this.viewReclamationEtudiant(id);
     }
 
     showReclamationViewProf(idReclamation: number) {
         this.displayReclamationViewProf = true;
         // this.reclamationProfService.idReclamationProf = idReclamation;
         this.reclamationProfService.findReclamationEtudiantById(idReclamation);
+        this.viewReclamationProf(idReclamation);
 
     }
 
@@ -164,6 +166,7 @@ export class ComplaintListComponent implements OnInit {
     set reclamationEtudiantList(value: Array<ReclamationEtudiant>) {
         this.reclamationEtudiantService.reclamationEtudiantList = value;
     }
+
     get displayReclamationEditEtudiant(): boolean {
         return this.reclamationEtudiantService.displayReclamationEditEtudiant;
     }
@@ -204,6 +207,7 @@ export class ComplaintListComponent implements OnInit {
     set reclamationProfSearch(value: ReclamationProf) {
         this.reclamationProfService.reclamationProfSearch = value;
     }
+
     get reclamationEtudiantEdit(): ReclamationEtudiant {
         return this.reclamationEtudiantService.reclamationEtudiantEdit;
     }
@@ -211,4 +215,13 @@ export class ComplaintListComponent implements OnInit {
     set reclamationEtudiantEdit(value: ReclamationEtudiant) {
         this.reclamationEtudiantService.reclamationEtudiantEdit = value;
     }
+
+    viewReclamationProf(idReclamationProf1: number) {
+        this.reclamationProfService.viewReclamationProf(idReclamationProf1);
+    }
+
+    viewReclamationEtudiant(idReclamationEtudiant1: number) {
+        this.reclamationEtudiantService.viewReclamationEtudiant(idReclamationEtudiant1);
+    }
+
 }

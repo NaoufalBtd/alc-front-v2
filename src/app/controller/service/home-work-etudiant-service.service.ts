@@ -158,8 +158,8 @@ export class HomeWorkEtudiantServiceService {
         return this.http.post<ReponseEtudiantHomeWork>(this.etudianturl + 'reponseEtudiantHomeWork/', reponseEtudiantHomeWork);
     }
 
-    public update(): Observable<number> {
-        return this.http.post<number>(this.etudianturl + 'homeWorkEtudiant/update', this.homeWorkEtudiant);
+    public update(homeWorkEtudiant: HomeWOrkEtudiant): Observable<number> {
+        return this.http.post<number>(this.etudianturl + 'homeWorkEtudiant/update', homeWorkEtudiant);
     }
 
     public findbyetudiantIdAndHomeWorkID(homeWork: HomeWork): Observable<Array<HomeWOrkEtudiant>> {

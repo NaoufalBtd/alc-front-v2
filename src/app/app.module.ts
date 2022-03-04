@@ -315,8 +315,17 @@ import {ReclamationEtudiantViewComponent} from './view/etudiant/reclamation-etud
 import {ReclamationProfViewComponent} from './view/prof/reclamation-prof/reclamation-prof-view/reclamation-prof-view.component';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import { HomePageEtudiantComponent } from './view/etudiant/home-page-etudiant/home-page-etudiant.component';
+import { EtudiantpurchasepackComponent } from './view/etudiant/etudiantpurchasepack/etudiantpurchasepack.component';
 import {DragHomeWorkComponent} from './view/etudiant/homeWork/drag-home-work/drag-home-work.component';
 import {DragDropModule} from '@angular/cdk/drag-drop';
+import {InvitedStudentComponent} from './view/etudiant/invited-student/invited-student.component';
+import {InvitedStudentCreateComponent} from './view/etudiant/invited-student/invited-student-create/invited-student-create.component';
+import {InvitedStudentListComponent} from './view/admin/invited-student-list/invited-student-list.component';
+import {
+    InvitedStudentListStudentComponent
+} from './view/etudiant/invited-student/invited-student-list-student/invited-student-list-student.component';
+import { HomeWorkReviewComponent } from './view/prof/home-work/home-work-review/home-work-review.component';
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -621,7 +630,16 @@ export function createTranslateLoader(http: HttpClient) {
         TypeReclamationEtudiantListComponent,
         ReclamationEtudiantViewComponent,
         ReclamationProfViewComponent,
-        DragHomeWorkComponent
+        DragHomeWorkComponent,
+        InvitedStudentListComponent,
+        InvitedStudentComponent,
+        InvitedStudentCreateComponent,
+        InvitedStudentListStudentComponent,
+        DragHomeWorkComponent,
+        HomeWorkReviewComponent,
+        ReclamationProfViewComponent,
+        HomePageEtudiantComponent,
+        EtudiantpurchasepackComponent
 
     ],
     providers: [

@@ -1,0 +1,136 @@
+<!-- CSS only -->
+
+<div class="p-grid" >
+    <div class="p-col-3"></div>
+    <div class="col-6" style="margin-top: 60px">
+        <p-messages severity="success">
+            <ng-template pTemplate >
+                <div class="ml-2" style="font-size: 20px"><h1>Your application has been successfully sent!</h1>
+                    <h6 style="justify-content: center; font-size: 15px; margin-top: 5px">Already know about our school? Don't want to waste time on a trial lesson?
+                        Then pay immediately and get bonus lessons!</h6>
+                </div>
+            </ng-template>
+        </p-messages>
+
+    </div>
+</div>
+
+<div class="p-grid justify-content-center">
+    <div class="p-col-3"></div>
+    <div class="p-col-3"  >
+        <p-card header="Continue to purchase"  [style]="{width: '100%', background:'#FF5733', color: 'white'}" styleClass="p-card-shadow">
+            <hr class="my-3 mx-0 border-top-1 border-none surface-border" />
+            <div class="p-float-label align-items-center">
+                <span style="font-size: 20px; " class="p-card-shadow">from $20</span>
+                <span style="font-size: 10px">  per month</span>
+            </div>
+            <hr class="my-3 mx-0 border-top-1 border-none surface-border" />
+            <ul class="list-none p-0 m-0 flex-grow-1" style="list-style-type: none;margin: 0;padding: 0;">
+                <li style="text-decoration: none; font-size: 15px; margin-top: 10px" >
+                    <strong>
+                        <i class="pi pi-check-circle " style="color: white"></i>
+                    </strong>
+                    <span>  Pay immediately</span>
+                </li>
+                <li style="text-decoration: none; font-size: 15px; margin-top: 10px">
+                    <strong>
+                        <i class="pi pi-check-circle " style="color: white"></i>
+                    </strong>
+                    <span>  You get a bonus up to 3 lessons when you pay now</span>
+                </li>
+                <li style="text-decoration: none; font-size: 15px; margin-top: 10px">
+                    <strong>
+                        <i class="pi pi-check-circle " style="color: white"></i>
+                    </strong>
+                    <span>  We will immediately coordinate the schedule of classes with the teacher</span>
+                </li>
+                <li style="text-decoration: none; font-size: 15px;margin-top: 10px">
+                    <strong>
+                        <i class="pi pi-check-circle " style="color: white"></i>
+                    </strong>
+                    <span>  Save time and money</span>
+                </li>
+            </ul>
+            <hr class="mb-3 mx-0 border-top-1 border-none surface-border mt-auto" />
+            <ng-template pTemplate="footer">
+                <p-button (click)="navigatetopurchase()" label="Pay now" icon="pi pi-check" styleClass="p-button-info" [style]="{'margin-left': '.5em'}"></p-button>
+            </ng-template>
+        </p-card>
+    </div>
+    <div class="p-col-3"  >
+        <p-card header="Free trial lesson"  [style]="{width: '100%', margin:'30px 0px 0px 0px', color:'#2e2e2e'}" styleClass="p-card-shadow">
+            <hr class="my-3 mx-0 border-top-1 border-none surface-border" />
+            <ul class="list-none p-0 m-0 flex-grow-1" style="list-style-type: none;margin: 0;padding: 0;">
+                <li style="text-decoration: none; font-size: 15px; margin-top: 10px" >
+                    <strong>
+                        <i class="pi pi-check-circle " style="color: #2e2e2e"></i>
+                    </strong>
+                    <span>  Take a trial lesson</span>
+                </li>
+                <li style="text-decoration: none; font-size: 15px; margin-top: 10px">
+                    <strong>
+                        <i class="pi pi-check-circle " style="color: #2e2e2e"></i>
+                    </strong>
+                    <span>  We'll pick you up in 15 minutes</span>
+                </li>
+                <li style="text-decoration: none; font-size: 15px; margin-top: 10px">
+                    <strong>
+                        <i class="pi pi-check-circle " style="color: #2e2e2e"></i>
+                    </strong>
+                    <span>  Appoint a trial lesson with a methodologist</span>
+                </li>
+                <li style="text-decoration: none; font-size: 15px;margin-top: 10px">
+                    <strong>
+                        <i class="pi pi-check-circle " style="color: #2e2e2e"></i>
+                    </strong>
+                    <span>  Show the platform and determine your level</span>
+                </li>
+            </ul>
+            <hr class="mb-3 mx-0 border-top-1 border-none surface-border mt-auto" />
+            <ng-template pTemplate="footer">
+                <p-button label="Start now" icon="pi pi-check" styleClass="p-button-warning" [style]="{'margin-left': '.5em'}"></p-button>
+            </ng-template>
+        </p-card>
+    </div>
+</div>
+
+
+
+
+
+
+<!--
+<div class="surface-ground px-4 py-8 md:px-6 lg:px-8">
+        <div class="col-12 lg:col-4">
+            <div class="p-3 h-full">
+                <div class="shadow-2 p-3 h-full flex flex-column surface-card" style="border-radius: 6px">
+                    <div class="text-900 font-medium text-xl mb-2">Free trial lesson</div>
+                    <div class="text-600">Plan description</div>
+                    <hr class="my-3 mx-0 border-top-1 border-none surface-border" />
+                    <ul class="list-none p-0 m-0 flex-grow-1">
+                        <li class="flex align-items-center mb-3">
+                            <i class="pi pi-check-circle text-green-500 mr-2"></i>
+                            <span>Take a trial lesson</span>
+                        </li>
+                        <li class="flex align-items-center mb-3">
+                            <i class="pi pi-check-circle text-green-500 mr-2"></i>
+                            <span>We'll pick you up in 15 minutes</span>
+                        </li>
+                        <li class="flex align-items-center mb-3">
+                            <i class="pi pi-check-circle text-green-500 mr-2"></i>
+                            <span>Appoint a trial lesson with a methodologist</span>
+                        </li>
+                        <li class="flex align-items-center mb-3">
+                            <i class="pi pi-check-circle text-green-500 mr-2"></i>
+                            <span>Show the platform and determine your level</span>
+                        </li>
+                    </ul>
+                    <hr class="mb-3 mx-0 border-top-1 border-none surface-border" />
+                    <button pButton pRipple label="Start Now" class="p-3 w-full"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+-->
+
