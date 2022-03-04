@@ -632,7 +632,7 @@ export function createTranslateLoader(http: HttpClient) {
         InvitedStudentListComponent,
         InvitedStudentComponent,
         InvitedStudentCreateComponent,
-        InvitedStudentListStudentComponent
+        InvitedStudentListStudentComponent,
         DragHomeWorkComponent,
         HomeWorkReviewComponent
 
