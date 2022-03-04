@@ -43,7 +43,7 @@ export class AppMenuComponent implements OnInit {
 
     constructor(public app: AppComponent,
                 private authService: AuthenticationService,
-                public appMain: PublicComponent, private service: LoginService) {
+                public appMain: PublicComponent, private service: LoginService, public authenticationService: AuthenticationService) {
     }
 
     get model(): any[] {

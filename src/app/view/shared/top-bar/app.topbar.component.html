@@ -1,17 +1,17 @@
 
-<div class="layout-topbar" *ngIf="user!=null"  >
+<div class="layout-topbar" *ngIf="this.authenticationService.getUserFromLocalCache() != null"  >
 
-    <a [hidden]="user == null" class="layout-topbar-logo" href="#">
+    <a [hidden]="this.authenticationService.getUserFromLocalCache() == null" class="layout-topbar-logo" href="#">
         <span id="topbar-logo" style="color: white; font-family: 'Lucida Bright'"><h1>American Center</h1></span>
     </a>
 
 
-    <ul [hidden]="user == null" class="topbar-menu">
+    <ul [hidden]="this.authenticationService.getUserFromLocalCache() == null" class="topbar-menu">
         <li [ngClass]="{'active-topmenuitem fadeInDown': appMain.topbarUserMenuActive}"  class="user-profile">
             <a class="ng-star-inserted" (click)="appMain.onTopbarUserMenuButtonClick($event); hidePopUp=false" *ngIf="!app.inlineUser">
-                <img class="img" [src]="user?.image">
+                <img class="img" [src]="this.authenticationService.getUserFromLocalCache().image">
                 <div class="layout-profile-userinfo">
-                    <span class="layout-profile-name profile-label">{{user?.nom}} {{ user?.prenom}}</span>
+                    <span class="layout-profile-name profile-label">{{this.authenticationService.getUserFromLocalCache().nom}} {{ this.authenticationService.getUserFromLocalCache().prenom}}</span>
                     <span *ngIf="isAdmin() == true" class="layout-profile-role">Admin</span>
                     <span *ngIf="isProf() == true" class="layout-profile-role">Teacher</span>
                     <span *ngIf="isStudent() == true" class="layout-profile-role">Student</span>
@@ -120,7 +120,7 @@
 
 
 </div>
-<div class="layout-topbar" style="background-color: #ffffff" *ngIf="user==null">
+<div class="layout-topbar" style="background-color: #ffffff" *ngIf="this.authenticationService.getUserFromLocalCache() == null">
     <div class="mainnav">
     <img [routerLink]="['']" style="width: 120px; height: auto"  src="assets/picture/icon/logo.png" alt="logo">
     <a style="margin-left: 35px; padding: 10px"  class="get-started">{{'courses' | translate}}</a>
@@ -132,7 +132,7 @@
         </select>
     </div>
 
-    <ul *ngIf="user == null" class="topbar-menu" >
+    <ul *ngIf="this.authenticationService.getUserFromLocalCache() == null" class="topbar-menu" >
 
         <li  [ngClass]="{'active-topmenuitem fadeInDown': appMain.topbarUserMenuActive}"  class="user-profile">
 

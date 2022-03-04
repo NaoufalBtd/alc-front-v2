@@ -372,8 +372,8 @@ export class EtudiantService {
         this._parcoursList = value;
     }
 
-    public create(): Observable<number> {
-        return this.http.post<number>(this.etudiantUrl + 'etudiant/save/pack/' + this.packCode, this.selected);
+    public create(): Observable<User> {
+        return this.http.post<User>(this.etudiantUrl + 'etudiant/save/pack/' + this.packCode, this.selected);
     }
 
     get groupeEtudeList(): Array<GroupeEtude> {

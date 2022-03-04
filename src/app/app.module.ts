@@ -315,6 +315,8 @@ import { ReclamationEtudiantViewComponent } from './view/etudiant/reclamation-et
 import { ReclamationProfViewComponent } from './view/prof/reclamation-prof/reclamation-prof-view/reclamation-prof-view.component';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import { HomePageEtudiantComponent } from './view/etudiant/home-page-etudiant/home-page-etudiant.component';
+import { EtudiantpurchasepackComponent } from './view/etudiant/etudiantpurchasepack/etudiantpurchasepack.component';
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -616,7 +618,9 @@ export function createTranslateLoader(http: HttpClient) {
         TypeReclamationProfListComponent,
         TypeReclamationEtudiantListComponent,
         ReclamationEtudiantViewComponent,
-        ReclamationProfViewComponent
+        ReclamationProfViewComponent,
+        HomePageEtudiantComponent,
+        EtudiantpurchasepackComponent
 
     ],
     providers: [

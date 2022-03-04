@@ -87,6 +87,8 @@ import {ReclamationEtudiant} from './controller/model/reclamation-etudiant.model
 import {ReclamationEtudiantComponent} from './view/etudiant/reclamation-etudiant/reclamation-etudiant.component';
 import {TypeReclamationComponent} from './view/admin/type-reclamation/type-reclamation.component';
 import {ProfileComponent} from './view/etudiant/profile/profile.component';
+import {HomePageEtudiantComponent} from './view/etudiant/home-page-etudiant/home-page-etudiant.component';
+import {EtudiantpurchasepackComponent} from './view/etudiant/etudiantpurchasepack/etudiantpurchasepack.component';
 
 
 @NgModule({
@@ -181,6 +183,8 @@ import {ProfileComponent} from './view/etudiant/profile/profile.component';
                 path: '', component: PublicComponent,
                 children: [
                     {path: '', component: DashboardDemoComponent},
+                    {path: 'public/etudianthomepage', component: HomePageEtudiantComponent},
+                    {path: 'public/etudiantchoosepack', component: EtudiantpurchasepackComponent},
                     {path: 'public/login-admin', component: LoginAdminComponent},
                     {path: 'public/login-prof', component: LoginProfComponent},
                     {path: 'public/login-etudiant', component: LoginEtudiantComponent},

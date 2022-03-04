@@ -11,6 +11,12 @@ import {Prof} from '../../../controller/model/prof.model';
 import {ParcoursService} from '../../../controller/service/parcours.service';
 import {Cours} from '../../../controller/model/cours.model';
 import {PackStudentService} from '../../../controller/service/pack-student.service';
+import {Router, RouterModule} from '@angular/router';
+import {User} from '../../../controller/model/user.model';
+import {HttpErrorResponse, HttpResponse} from '@angular/common/http';
+import {HeaderType} from '../../../enum/header-type.enum';
+import {AuthenticationService} from '../../../controller/service/authentication.service';
+import {Subscription} from 'rxjs';
 
 
 @Component({
@@ -20,7 +26,7 @@ import {PackStudentService} from '../../../controller/service/pack-student.servi
 export class DashboardDemoComponent implements OnInit {
 
     products: any[];
-
+    private subscriptions: Subscription[] = [];
 
     events: any[];
 
@@ -51,7 +57,7 @@ export class DashboardDemoComponent implements OnInit {
                 public packStudentService: PackStudentService,
                 public etudiantService: EtudiantService,
                 public messageService: MessageService,
-                public profService: ProfService) {}
+                public profService: ProfService, public router: Router, public authenticationService: AuthenticationService) {}
     public progress = 0;
     public next = false;
     public previous = false;
@@ -60,6 +66,8 @@ export class DashboardDemoComponent implements OnInit {
     public previousgroup = false;
     title = 'landingDemo';
     value = 10;
+
+
 
     public showNext(){
         if (this.progress >= 0 && this.progress < 3){
@@ -144,6 +152,15 @@ export class DashboardDemoComponent implements OnInit {
     ngOnInit() {
         console.log('nbr of student');
         console.log(this.studentservice.items);
+        if (this.login.getConnecteUser() != null) {
+            if (this.login.getConnecteUser().role === 'STUDENT') {
+                this.router.navigate(['etudiant/etudiant-cours']);
+            } else if (this.login.getConnecteUser().role === 'PROF') {
+                this.router.navigate(['prof/cours']);
+            } else if (this.login.getConnecteUser().role === 'ADMIN' || this.login.getConnecteUser().role === 'SUPER_ADMIN') {
+                this.router.navigate(['admin/parcours']);
+            }
+        }
         this.studentservice.findAll().subscribe(data => this.items = data);
         this.profservice.findAll().subscribe(data => this.listprof = data);
         this.parcoursService.findAll().subscribe(data => this.listcours = data);
@@ -201,11 +218,38 @@ export class DashboardDemoComponent implements OnInit {
           this.packStudentService.findPackIndividualOrgroupe(b);
     }
 
+    public onLogin(user: User): void {
+        // this.showLoading = true;
+        this.subscriptions.push(
+            this.authenticationService.login(user).subscribe(
+                response => {
+                    this.etudiantService.connectedStudent.set(response.body.id, response.body);
+                    this.model = [
+                        {label: 'Courses ', icon: 'pi pi-fw pi-briefcase', routerLink: ['/etudiant/etudiant-cours']},
+                        {label: 'FAQ ', icon: 'pi pi-fw pi-question-circle', routerLink: ['/etudiant/faq-student']},
+                        {label: 'News ', icon: 'pi pi-fw pi-clock', routerLink: ['/etudiant/news-student']},
+                        {label: 'Schedule', icon: 'pi pi-fw pi-calendar-times', routerLink: ['/etudiant/schedule-student']},
+                        {label: 'LogOut ', icon: 'pi pi-fw pi-sign-out', routerLink: ['']},
+                    ];
+                    this.login.hasloged = true;
+
+                    this.router.navigate(['/etudiant/etudiant-cours']);
+                },
+                (errorResponse: HttpErrorResponse) => {
+                    console.log(errorResponse.message);
+                }
+            )
+        );
+    }
+
     createEtudiant(){
         this.etudiantService.create().subscribe(
             data => {
                 if (data != null){
-                    console.log("waqila dazt");
+                    console.log(data);
+                    // this.onLogin(data);
+                    this.authenticationService.addUserToLocalCache(data);
+                    console.log('waqila dazt');
                     this.showdialog = true;
                     this.message = 'Registration added, please check your email to get your password.';
                     this.messageService.add({
@@ -214,9 +258,10 @@ export class DashboardDemoComponent implements OnInit {
                         detail: 'Registration added, please check your email to get your password.',
                         life: 4000
                     });
+                    this.router.navigate(['public/etudianthomepage']);
                 }
             }, error => {
-                console.log("error a m3lm");
+                console.log('error a m3lm');
                 this.showdialog = true;
                 this.message = 'Registration Canceled, there was an error during saving your registration!!.';
                 this.messageService.add({
