@@ -317,6 +317,7 @@ import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {DragHomeWorkComponent} from './view/etudiant/homeWork/drag-home-work/drag-home-work.component';
 import {DragDropModule} from '@angular/cdk/drag-drop';
+import { HomeWorkReviewComponent } from './view/prof/home-work/home-work-review/home-work-review.component';
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -621,7 +622,8 @@ export function createTranslateLoader(http: HttpClient) {
         TypeReclamationEtudiantListComponent,
         ReclamationEtudiantViewComponent,
         ReclamationProfViewComponent,
-        DragHomeWorkComponent
+        DragHomeWorkComponent,
+        HomeWorkReviewComponent
 
     ],
     providers: [

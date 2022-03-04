@@ -493,12 +493,12 @@ export class HomeWorkEtudiantComponent implements OnInit {
 
 
     finishHomeWork() {
+        const text = this.homeWorkReponse.lib;
 
         if (this.homeWorkQuestion.typeDeQuestion.ref === 't2') {
             const homeWorkEtudiant: HomeWOrkEtudiant = new HomeWOrkEtudiant();
             homeWorkEtudiant.etudiant = this.login.getConnectedStudent();
             homeWorkEtudiant.homeWork = this.selectedHomeWork;
-            homeWorkEtudiant.note = 0;
             homeWorkEtudiant.resultat = '-';
             homeWorkEtudiant.date = new Date();
             this.homeWorkEtudiantService.save(homeWorkEtudiant).subscribe(
@@ -506,14 +506,21 @@ export class HomeWorkEtudiantComponent implements OnInit {
                     console.log(homeWorkEtudiantData);
                     const answer: ReponseEtudiantHomeWork = new ReponseEtudiantHomeWork();
                     answer.homeWorkEtudiant = homeWorkEtudiantData;
-                    answer.answer = this.homeWorkReponse.lib;
-                    answer.note = 0;
+                    console.log('=======================================================');
+                    console.log(text);
+                    answer.answer = text;
                     answer.question = this.homeWorkQuestion;
                     answer.reponse = null;
                     console.log(answer);
                     this.homeWorkEtudiantService.saveHomeWorkEtudiantReponse(answer).subscribe(
                         reponse => {
                             console.log(reponse);
+                            this.messageService.add({
+                                severity: 'success',
+                                summary: 'Successful',
+                                detail: 'HomeWork saved successfully.',
+                                life: 3000
+                            });
                         }, error => {
                             console.log(error);
                         }
@@ -584,6 +591,7 @@ export class HomeWorkEtudiantComponent implements OnInit {
             this.showTakeQuiz = false;
             this.showQuizReview = true;
         }
+        this.homeWorkReponse = new HomeWorkReponse();
     }
 
     homeWorkSelectedFct(homeWork: HomeWork) {

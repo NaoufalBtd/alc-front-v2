@@ -9,6 +9,7 @@ import {environment} from '../../../environments/environment';
 import {TypeDeQuestion} from '../model/type-de-question.model';
 import {Section} from '../model/section.model';
 import {Cours} from '../model/cours.model';
+import {HomeWOrkEtudiant} from '../model/home-work-etudiant.model';
 
 @Injectable({
     providedIn: 'root'
@@ -17,6 +18,7 @@ export class HomeworkService {
 
     private adminUrl = environment.adminUrl;
     private _homeWork: HomeWork;
+    private _homeWorkSelected: HomeWork = new HomeWork();
     private _homeworkQST: HomeWorkQST;
     private _homeworkReponse: HomeWorkReponse;
     private _types: Array<TypeDeQuestion>;
@@ -28,6 +30,14 @@ export class HomeworkService {
     constructor(private http: HttpClient, private messageService: MessageService,) {
     }
 
+
+    get homeWorkSelected(): HomeWork {
+        return this._homeWorkSelected;
+    }
+
+    set homeWorkSelected(value: HomeWork) {
+        this._homeWorkSelected = value;
+    }
 
     get correctAnswers(): Array<HomeWorkReponse> {
         if (this._correctAnswers == null) {
@@ -137,4 +147,7 @@ export class HomeworkService {
         return this.http.get<Array<HomeWork>>(this.adminUrl + 'homeWork/cours/id/' + cours.id);
     }
 
+    findHomeWorkEtudiantByHomeWorkId(homeWorkSelected: HomeWork): Observable<Array<HomeWOrkEtudiant>> {
+        return this.http.get<Array<HomeWOrkEtudiant>>(this.adminUrl + 'homeWorkEtudiant/homeWork/id/' + homeWorkSelected.id);
+    }
 }
