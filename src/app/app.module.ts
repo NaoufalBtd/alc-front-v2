@@ -323,6 +323,7 @@ import {InvitedStudentListComponent} from './view/admin/invited-student-list/inv
 import {
     InvitedStudentListStudentComponent
 } from './view/etudiant/invited-student/invited-student-list-student/invited-student-list-student.component';
+import { HomeWorkReviewComponent } from './view/prof/home-work/home-work-review/home-work-review.component';
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -612,6 +613,7 @@ export function createTranslateLoader(http: HttpClient) {
         TypeReclamationEtudiantComponent,
         TypeReclamationProfComponent,
         ReclamationProfComponent,
+
         ReclamationProfCreateComponent,
         ComplaintViewEtudiantComponent,
         ComplaintViewProfComponent,
@@ -631,6 +633,9 @@ export function createTranslateLoader(http: HttpClient) {
         InvitedStudentComponent,
         InvitedStudentCreateComponent,
         InvitedStudentListStudentComponent
+        DragHomeWorkComponent,
+        HomeWorkReviewComponent
+
     ],
     providers: [
         {provide: LocationStrategy, useClass: HashLocationStrategy},

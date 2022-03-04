@@ -43,9 +43,11 @@ export class HomeWorkEtudiantComponent implements OnInit {
     rows = 5;
     first = 0;
     dragAnswersList: Map<string, number> = new Map<string, number>();
+    answersT12List: Map<number, string> = new Map<number, string>();
     dragList: Array<string> = new Array<string>();
     private dragIndex: number;
     private dragData: string;
+    private nextIndex = Number(1);
 
     constructor(
         private learnService: LearnService,
@@ -263,6 +265,7 @@ export class HomeWorkEtudiantComponent implements OnInit {
     public homeWorkQuestionList: Array<HomeWorkQST> = new Array<HomeWorkQST>();
     public homeWorkQuestion: HomeWorkQST = new HomeWorkQST();
     public homeWorkAnswersList: Array<HomeWorkReponse> = new Array<HomeWorkReponse>();
+    public t12AnswersList: Array<HomeWorkReponse> = new Array<HomeWorkReponse>();
     public correctAnswersList: Map<number, Array<HomeWorkReponse>> = new Map<number, Array<HomeWorkReponse>>();
     public answersList: Map<HomeWorkQST, HomeWorkReponse> = new Map<HomeWorkQST, HomeWorkReponse>();
     public answerSelected: HomeWorkReponse = new HomeWorkReponse();
@@ -280,6 +283,8 @@ export class HomeWorkEtudiantComponent implements OnInit {
 
     son = '';
     showDragHomeWork: boolean;
+    correctAnswerT12: string;
+    showT12AnswerDiv: boolean;
 
 
     set displayDictionaryDialog(value: boolean) {
@@ -312,6 +317,7 @@ export class HomeWorkEtudiantComponent implements OnInit {
     }
 
     sound(qst: HomeWorkQST) {
+        this.son = ' ';
         if (qst.typeDeQuestion.ref === 't1' || qst.typeDeQuestion.ref === 't6' || qst.typeDeQuestion.ref === 't4') {
             this.son = this.questionSideLeft + ' ' + this.correctAnswersList?.get(qst.id)[0].lib + ' ' + this.questionSideRight;
             console.log(this.son);
@@ -320,6 +326,10 @@ export class HomeWorkEtudiantComponent implements OnInit {
             console.log(this.son);
         } else if (qst.typeDeQuestion.ref === 't5') {
             this.son = qst.libelle;
+        } else if (qst.typeDeQuestion.ref === 't12') {
+            for (const value of this.answersT12List.values()) {
+                this.son = this.son + ' ' + value + '. ';
+            }
         }
         const text = encodeURIComponent(this.son);
         const url = 'https://www.translatedict.com/speak.php?word=' + this.son + '&lang=ar';
@@ -468,7 +478,9 @@ export class HomeWorkEtudiantComponent implements OnInit {
                     console.log(this.correctAnswersList.get(this.homeWorkQuestion.id)[0]);
                     console.log('====================== T3 =======================================');
                 } else if (this.homeWorkQuestion.typeDeQuestion.ref === 't11') {
-                    this.extractedData(this.homeWorkQuestion.libelle);
+                    this.extractedData(this.homeWorkQuestion.libelle, 't11');
+                } else if (this.homeWorkQuestion.typeDeQuestion.ref === 't12') {
+                    this.extractedData(this.homeWorkQuestion.libelle, 't12');
                 }
                 break;
             }
@@ -481,12 +493,12 @@ export class HomeWorkEtudiantComponent implements OnInit {
 
 
     finishHomeWork() {
+        const text = this.homeWorkReponse.lib;
 
         if (this.homeWorkQuestion.typeDeQuestion.ref === 't2') {
             const homeWorkEtudiant: HomeWOrkEtudiant = new HomeWOrkEtudiant();
             homeWorkEtudiant.etudiant = this.login.getConnectedStudent();
             homeWorkEtudiant.homeWork = this.selectedHomeWork;
-            homeWorkEtudiant.note = 0;
             homeWorkEtudiant.resultat = '-';
             homeWorkEtudiant.date = new Date();
             this.homeWorkEtudiantService.save(homeWorkEtudiant).subscribe(
@@ -494,14 +506,21 @@ export class HomeWorkEtudiantComponent implements OnInit {
                     console.log(homeWorkEtudiantData);
                     const answer: ReponseEtudiantHomeWork = new ReponseEtudiantHomeWork();
                     answer.homeWorkEtudiant = homeWorkEtudiantData;
-                    answer.answer = this.homeWorkReponse.lib;
-                    answer.note = 0;
+                    console.log('=======================================================');
+                    console.log(text);
+                    answer.answer = text;
                     answer.question = this.homeWorkQuestion;
                     answer.reponse = null;
                     console.log(answer);
                     this.homeWorkEtudiantService.saveHomeWorkEtudiantReponse(answer).subscribe(
                         reponse => {
                             console.log(reponse);
+                            this.messageService.add({
+                                severity: 'success',
+                                summary: 'Successful',
+                                detail: 'HomeWork saved successfully.',
+                                life: 3000
+                            });
                         }, error => {
                             console.log(error);
                         }
@@ -572,9 +591,13 @@ export class HomeWorkEtudiantComponent implements OnInit {
             this.showTakeQuiz = false;
             this.showQuizReview = true;
         }
+        this.homeWorkReponse = new HomeWorkReponse();
     }
 
     homeWorkSelectedFct(homeWork: HomeWork) {
+        this.answersT12List = new Map<number, string>();
+        this.correctAnswerT12 = String();
+        this.showT12AnswerDiv = false;
         this.showTypeOfQstBar = true;
         this.showWatchItHomeWork = false;
         this.showDragHomeWork = false;
@@ -652,10 +675,16 @@ export class HomeWorkEtudiantComponent implements OnInit {
                                     this.homeWorkQuestion.libelle.length);
                             }
                         }
+                    } else if (this.homeWorkQuestion.typeDeQuestion.ref === 't11') {
+                        this.extractedData(this.homeWorkQuestion.libelle, 't11');
+                    } else if (this.homeWorkQuestion.typeDeQuestion.ref === 't12') {
+                        this.extractedData(this.homeWorkQuestion.libelle, 't12');
+                        console.log('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
+                        console.log(this.answersT12List);
+                        this.showT12Answers();
                     }
                 }
             });
-            console.log(homeWork);
             this.homeWorkEtudiantService.findbyetudiantIdAndHomeWorkID(homeWork).subscribe(homeWorkEtudianData => {
                 if (homeWorkEtudianData.length !== 0) {
                     this.showHomeWorkEtudiantResult = true;
@@ -721,7 +750,7 @@ export class HomeWorkEtudiantComponent implements OnInit {
         });
     }
 
-    private extractedData(libelle: string) {
+    private extractedData(libelle: string, code: string) {
         this.dragAnswersList = new Map<string, number>();
         this.dragList = new Array<string>();
         const text = libelle;
@@ -738,7 +767,12 @@ export class HomeWorkEtudiantComponent implements OnInit {
                 counter = -1;
             }
             libelle = libelle.substring(sentence.length + 1, libelle.length);
-            this.dragAnswersList.set(sentence, Number(myNumber));
+            if (code === 't11') {
+                this.dragAnswersList.set(sentence, Number(myNumber));
+            } else {
+                this.answersT12List.set(Number(myNumber), sentence);
+            }
+
             this.dragList.push(sentence);
         }
         console.log(this.dragAnswersList);
@@ -772,5 +806,54 @@ export class HomeWorkEtudiantComponent implements OnInit {
         moveItemInArray(this.dragList, event.previousIndex, event.currentIndex);
     }
 
+    private extractDataForT12(libelle: string) {
+
+    }
+
+    private showT12Answers() {
+        this.homeWorkAnswersList = new Array<HomeWorkReponse>();
+        console.log(this.homeWorkAnswersList);
+        console.log(this.correctAnswersList);
+        this.homeWorkEtudiantService.findReponsesByQuestionId(this.homeWorkQuestion.id).subscribe(
+            data1 => {
+                this.homeWorkAnswersList = data1;
+                this.filterDatat12(this.homeWorkAnswersList, 1);
+            }, error => {
+                console.log(error);
+            }
+        );
+    }
+
+    private filterDatat12(homeWorkAnswersList: Array<HomeWorkReponse>, index: number) {
+        this.t12AnswersList = homeWorkAnswersList.filter(t => t.numero === index);
+        document.getElementById(String(index)).style.borderBottom = '3px dashed #2196f3';
+        document.getElementById(String(index)).style.color = '#2196f3';
+    }
+
+    checkAnswers(answer: HomeWorkReponse) {
+        if (answer.etatReponse === 'true') {
+            this.showT12AnswerDiv = true;
+            if (this.correctAnswerT12 === undefined || this.correctAnswerT12 === null) {
+                this.correctAnswerT12 = answer.lib + ' ';
+            } else {
+                this.correctAnswerT12 = this.correctAnswerT12 + answer.lib + ' ';
+            }
+            document.getElementById(answer.lib).style.backgroundColor = '#52b788';
+            document.getElementById(String(this.nextIndex)).style.borderBottom = '2px solid #52b788';
+            document.getElementById(String(this.nextIndex)).style.color = '#2d6a4f';
+            this.nextIndex += 1;
+            if (this.nextIndex <= this.answersT12List.size) {
+                this.filterDatat12(this.homeWorkAnswersList, this.nextIndex);
+            } else {
+                this.disableButtonSon = false;
+                this.t12AnswersList = new Array<HomeWorkReponse>();
+            }
+        } else {
+            document.getElementById(answer.lib).style.animationName = 'inCorrect';
+            document.getElementById(answer.lib).style.animationDuration = '2s';
+            document.getElementById(answer.lib).style.animationIterationCount = '1';
+        }
+        console.log(answer);
+    }
 }
 

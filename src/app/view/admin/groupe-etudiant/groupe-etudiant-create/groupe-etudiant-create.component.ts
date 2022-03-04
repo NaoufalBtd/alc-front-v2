@@ -7,6 +7,7 @@ import {Etudiant} from '../../../../controller/model/etudiant.model';
 import { GroupeEtudiantDetail} from '../../../../controller/model/groupe-etudiant-detail.model';
 import {Parcours} from '../../../../controller/model/parcours.model';
 import {Prof} from '../../../../controller/model/prof.model';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-groupe-etudiant-create',
@@ -16,6 +17,15 @@ import {Prof} from '../../../../controller/model/prof.model';
 export class GroupeEtudiantCreateComponent implements OnInit {
   constructor( private groupeEtudiantService: GroupeEtudiantService, private messageService: MessageService) { }
   prof2 = new Prof();
+  exform: FormGroup;
+  ngOnInit(): void {
+    this.exform = new FormGroup({
+      'groupe': new FormControl(null, Validators.required),
+      'groupLabel': new FormControl(null, Validators.required),
+      'prof': new FormControl(null, Validators.required),
+      'level': new FormControl(null, Validators.required)});
+    this.findAllProf();
+  }
   get createDialogEtud(): boolean {
     return this.groupeEtudiantService.createDialog;
   }
@@ -124,8 +134,7 @@ set profs( value: Array<Prof>){
   public id3 = Number(this.libelle2);
   cols: any[];
   public full:boolean = false;
-  ngOnInit(): void { this.findAllProf();
-  }
+
   public findAllGroupeEtude() {
     this.groupeEtudiantService.findAllGroupeEtude().subscribe(data => this.groupeEtudeList = data);
   }

@@ -11,6 +11,7 @@ import {Parcours} from '../../../controller/model/parcours.model';
 import {HomeWorkEtudiantServiceService} from '../../../controller/service/home-work-etudiant-service.service';
 import {TypeHomeWorkService} from '../../../controller/service/type-home-work.service';
 import {TypeHomeWork} from '../../../controller/model/type-home-work.model';
+import {KeyValue} from '@angular/common';
 
 
 @Component({
@@ -19,20 +20,6 @@ import {TypeHomeWork} from '../../../controller/model/type-home-work.model';
     styleUrls: ['./home-work-component.component.scss']
 })
 export class HomeWorkComponentComponent implements OnInit {
-
-    nodes: TreeNode[];
-    viewOnOffDialog = false;
-    onOff_true = true;
-    onOff_false = false;
-    home = {icon: 'pi pi-home', routerLink: '/admin/parcours'};
-    navigateItems = [
-        {label: this.parcourCurrent.libelle, routerLink: '/admin/parcours'},
-        {label: this.courseSelected.libelle, routerLink: '/admin/parcours'},
-    ];
-    part: number;
-    numero = 1;
-    input = '<input type="text" pInputText placeholder="Username">';
-    showPutInOrder: boolean;
 
     constructor(private service: HomeworkService,
                 private homeWorkEtudiantService: HomeWorkEtudiantServiceService,
@@ -61,6 +48,73 @@ export class HomeWorkComponentComponent implements OnInit {
     get parcourCurrent(): Parcours {
         return this.learnService.parcourCurrent;
     }
+
+    get reponses(): Array<HomeWorkReponse> {
+        return this.service.reponses;
+    }
+
+    set reponses(homeWorkReponses) {
+        this.service.reponses = homeWorkReponses;
+    }
+
+    get typeOfQuestions(): Array<TypeDeQuestion> {
+        return this.service.types;
+    }
+
+    set typeOfQuestions(typeDeQuestions) {
+        this.service.types = typeDeQuestions;
+    }
+
+    get homeworkReponse(): HomeWorkReponse {
+        return this.service.homeworkReponse;
+    }
+
+    set homeworkReponse(homeWorkReponse) {
+        this.service.homeworkReponse = homeWorkReponse;
+    }
+
+    get homeworkQST(): HomeWorkQST {
+        return this.service.HomeWorkQST;
+    }
+
+    set homeworkQST(homeWorkQST) {
+        this.service.HomeWorkQST = homeWorkQST;
+    }
+
+    get homeWork(): HomeWork {
+        return this.service.HomeWork;
+    }
+
+    set homeWork(homeWork1) {
+        this.service.HomeWork = homeWork1;
+    }
+
+    nodes: TreeNode[];
+    viewOnOffDialog = false;
+    onOff_true = true;
+    onOff_false = false;
+    home = {icon: 'pi pi-home', routerLink: '/admin/parcours'};
+    navigateItems = [
+        {label: this.parcourCurrent.libelle, routerLink: '/admin/parcours'},
+        {label: this.courseSelected.libelle, routerLink: '/admin/parcours'},
+    ];
+    part: number;
+    numero = 1;
+    input = '<input type="text" pInputText placeholder="Username">';
+    showPutInOrder: boolean;
+    showTranslate: boolean;
+    booleanTypes: Array<boolean> = [true, false];
+    selectedBoolean = false;
+    fullText = ' ';
+    libelle = String(' ');
+    private index = 1;
+    private indexForEdit = 0;
+    disableAddQuestion = true;
+    selectedRps: HomeWorkReponse = new HomeWorkReponse();
+
+    mapTranslate: Map<string, Array<HomeWorkReponse>> = new Map<string, Array<HomeWorkReponse>>();
+    displayDialogT12: boolean;
+    keyForEdit: string;
 
     ngOnInit(): void {
         this.typeHomeWorkService.findAll();
@@ -109,46 +163,6 @@ export class HomeWorkComponentComponent implements OnInit {
         console.log(this.homeWork);
     }
 
-    get reponses(): Array<HomeWorkReponse> {
-        return this.service.reponses;
-    }
-
-    set reponses(homeWorkReponses) {
-        this.service.reponses = homeWorkReponses;
-    }
-
-    get typeOfQuestions(): Array<TypeDeQuestion> {
-        return this.service.types;
-    }
-
-    set typeOfQuestions(typeDeQuestions) {
-        this.service.types = typeDeQuestions;
-    }
-
-    get homeworkReponse(): HomeWorkReponse {
-        return this.service.homeworkReponse;
-    }
-
-    set homeworkReponse(homeWorkReponse) {
-        this.service.homeworkReponse = homeWorkReponse;
-    }
-
-    get homeworkQST(): HomeWorkQST {
-        return this.service.HomeWorkQST;
-    }
-
-    set homeworkQST(homeWorkQST) {
-        this.service.HomeWorkQST = homeWorkQST;
-    }
-
-    get homeWork(): HomeWork {
-        return this.service.HomeWork;
-    }
-
-    set homeWork(homeWork1) {
-        this.service.HomeWork = homeWork1;
-    }
-
     public clonequestion(question: HomeWorkQST): HomeWorkQST {
         const myclone = new HomeWorkQST();
         myclone.id = question.id;
@@ -175,6 +189,22 @@ export class HomeWorkComponentComponent implements OnInit {
     }
 
     public addQuestion() {
+        console.log(this.libelle);
+        console.log(this.libelle.length);
+        if (this.homeworkQST.typeDeQuestion.ref === 't12') {
+            if (this.libelle?.length > 2) {
+                this.messageService.add({
+                    severity: 'info',
+                    summary: 'Info',
+                    detail: 'Please save the word  before add the question !',
+                    life: 6000
+                });
+                document.getElementById('saveWord').style.animationName = 'inCorrect';
+                document.getElementById('saveWord').style.animationDuration = '4s';
+                document.getElementById('saveWord').style.animationIterationCount = '1';
+                return;
+            }
+        }
         this.homeworkQST.reponses = this.reponses;
         this.homeWork.questions.push({...this.homeworkQST});
         this.addToNode();
@@ -339,6 +369,12 @@ export class HomeWorkComponentComponent implements OnInit {
             this.viewOnOffDialog = true;
         } else if (this.homeworkQST.typeDeQuestion.ref === 't11') {
             this.showPutInOrder = true;
+        } else if (this.homeworkQST.typeDeQuestion.ref === 't12') {
+            this.showTranslate = true;
+            this.showPutInOrder = false;
+        } else {
+            this.showTranslate = false;
+            this.showPutInOrder = false;
         }
     }
 
@@ -439,5 +475,46 @@ export class HomeWorkComponentComponent implements OnInit {
                 this.homeWork.questions.splice(i, 1);
             }
         }
+    }
+
+    getPlaceHolder() {
+
+    }
+
+    addAnswers() {
+        const num = this.homeworkReponse.numero;
+        this.reponses.push({...this.homeworkReponse});
+        console.log(this.homeworkQST);
+        this.homeworkReponse = new HomeWorkReponse();
+        this.homeworkReponse.numero = num;
+    }
+
+    nextWord() {
+        this.mapTranslate.set(this.libelle, this.reponses.filter(t => t.numero === this.index));
+        this.fullText = this.fullText + ' ' + this.libelle + ' ';
+        this.libelle = String(this.index) + this.libelle;
+        if (this.homeworkQST.libelle !== undefined) {
+            this.homeworkQST.libelle += this.libelle;
+        } else {
+            this.homeworkQST.libelle = this.libelle;
+        }
+        this.index += 1;
+        this.homeworkReponse.numero = this.index;
+        console.log(this.homeworkQST.libelle);
+        this.libelle = String(' ');
+        this.disableAddQuestion = false;
+    }
+
+    editT12(item: KeyValue<string, Array<HomeWorkReponse>>, rps: HomeWorkReponse) {
+        this.keyForEdit = item.key;
+        console.log(item);
+        this.selectedRps = rps;
+        this.indexForEdit = this.reponses.indexOf(rps);
+        console.log(this.indexForEdit);
+        this.displayDialogT12 = true;
+    }
+
+    edit() {
+        this.reponses[this.indexForEdit] = this.selectedRps;
     }
 }

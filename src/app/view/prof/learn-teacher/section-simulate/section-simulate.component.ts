@@ -22,6 +22,9 @@ import {GroupeEtudiant} from '../../../../controller/model/groupe-etudiant.model
 import {Etudiant} from '../../../../controller/model/etudiant.model';
 import {SessionCoursService} from '../../../../controller/service/session-cours.service';
 import {AppComponent} from '../../../../app.component';
+import {HomeworkService} from '../../../../controller/service/homework.service';
+import {HomeWorkEtudiantServiceService} from '../../../../controller/service/home-work-etudiant-service.service';
+import {HomeWork} from '../../../../controller/model/home-work.model';
 
 @Pipe({name: 'safe'})
 export class SafePipe1 implements PipeTransform {
@@ -59,9 +62,15 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
                 private dictionnaryService: DictionaryService,
                 private router: Router,
                 private app: AppComponent,
-                private serviceQuiz: QuizService, private sanitizer: DomSanitizer, private quizService: QuizEtudiantService, private confirmationService: ConfirmationService, private service: ParcoursService, private http: HttpClient, private review: EtudiantReviewService) {
+                private homeWorkService: HomeworkService,
+                private serviceQuiz: QuizService, private sanitizer: DomSanitizer, private quizService: QuizEtudiantService, private confirmationService: ConfirmationService,
+                private service: ParcoursService, private http: HttpClient, private review: EtudiantReviewService) {
     }
 
+
+    get homeWorkSelected(): HomeWork {
+        return this.homeWorkService.homeWorkSelected;
+    }
 
     get showAppMenu(): boolean {
         return this.learnService.showAppMenu;
@@ -482,8 +491,9 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
     }
 
     public saveSessionCoursForGroupEtudiant(idprof: number, idcours: number) {
-        this.sessionservice.saveSessionCoursForGroupEtudiant( idprof, idcours);
+        this.sessionservice.saveSessionCoursForGroupEtudiant(idprof, idcours);
     }
+
     getLanguages(): Array<any> {
         return this.app.languages;
     }
@@ -500,4 +510,6 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
     set selectedLanguage(value: any) {
         this.learnService.selectedLanguage = value;
     }
+
+
 }

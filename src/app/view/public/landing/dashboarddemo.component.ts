@@ -28,7 +28,8 @@ export class DashboardDemoComponent implements OnInit {
 
     products: any[];
 
-
+ itsRequired = false;
+ itRaquired2 = false ;
     events: any[];
 
     fullcalendarOptions: any;
@@ -218,6 +219,8 @@ export class DashboardDemoComponent implements OnInit {
     }
 
     createEtudiant(){
+
+
         this.etudiantService.create().subscribe(
             data => {
                 if (data != null){
