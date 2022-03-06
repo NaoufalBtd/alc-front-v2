@@ -58,7 +58,9 @@
                             </div>
                             <div class="p-field p-col-12 ">
                                 <label>Question</label>
-                                <textarea [(ngModel)]="question.libelle" pInputTextarea rows="4" type="text"></textarea>
+                                <textarea [(ngModel)]="question.libelle" pInputTextarea
+                                          [placeholder]="getPlaceHolder()"
+                                          rows="4" type="text"></textarea>
 
                             </div>
                             <div class="p-col-12 " style="text-align: center; margin: 5px; ">

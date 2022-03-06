@@ -6,5 +6,6 @@ export class Reponse {
     public lib: string;
     public numero: number;
     public question = new Question();
-    public etatReponse: string;
+    public etatReponse = String('true');
+    public state: boolean = Boolean(this.etatReponse);
 }
