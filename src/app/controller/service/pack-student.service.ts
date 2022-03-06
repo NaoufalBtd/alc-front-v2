@@ -9,6 +9,7 @@ import {environment} from "../../../environments/environment";
 export class PackStudentService {
 
   private _packstudentIndividial: PackStudent;
+  private _packstudentlist: Array<PackStudent>;
   private _packstudentVo: PackStudent;
   private _packstudentgroupe: PackStudent;
   private _packstudentIndividialList: Array<PackStudent>;
@@ -16,6 +17,17 @@ export class PackStudentService {
   private adminUrl = environment.adminUrl;
   constructor(private http: HttpClient) { }
 
+
+  get packstudentlist(): Array<PackStudent> {
+    if (this._packstudentlist == null){
+      this._packstudentlist = new Array<PackStudent>();
+    }
+    return this._packstudentlist;
+  }
+
+  set packstudentlist(value: Array<PackStudent>) {
+    this._packstudentlist = value;
+  }
 
   get packstudentVo(): PackStudent {
     if (this._packstudentVo == null){
@@ -78,8 +90,10 @@ export class PackStudentService {
           if (data !== null){
             if (isforgroupe){
                this.packstudentgroupeList = data;
+               this.packstudentlist = data;
             }else {
               this.packstudentIndividialList = data;
+              this.packstudentlist = data;
             }
           }
         }

@@ -1,0 +1,54 @@
+
+<div class="p-grid justify-content-center">
+    <div class="p-col-2"></div>
+    <div class="p-col-8">
+    <div class="card">
+        <p-toolbar styleClass="p-mb-4">
+            <ng-template pTemplate="left">
+               <strong>Select your pack</strong>
+            </ng-template>
+            <ng-template pTemplate="right">
+                <p-dropdown [options]="typePack" [(ngModel)]="valuechoosen" (click)="this.packservice.findPackIndividualOrgroupe(valuechoosen)">
+
+                </p-dropdown>
+            </ng-template>
+        </p-toolbar>
+        <div class="row">
+        <div class="card-1" *ngFor="let p of this.packservice.packstudentlist">
+            <div class="card-header-1">
+                <h1>{{p.libelle}}</h1>
+            </div>
+            <div class="card-body-1">
+                <p>
+                    <strong>{{p.totalStudents}} Students</strong><br>
+                    have bought this pack
+                </p>
+                <a (click)="packIsChossen(p)" class="btn-1">{{p.nombreCours}}h  | {{p.prix}}$</a>
+            </div>
+        </div>
+        </div>
+    </div>
+    </div>
+</div>
+
+<p-dialog [(visible)]="packIschossed" [modal]="true" [style]="{width: '450px'}"
+          header="Please confirm your choice" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <div class="card-body-1">
+            <h4>you have chose this pack</h4>
+        </div>
+        <div class="card-header-1">
+            <p style="font-size: 20px">
+                <strong>{{packshossen.libelle}}</strong><br>
+                <strong>{{packshossen.nombreCours}}h  | {{packshossen.prix}}$</strong><br>
+
+            </p>
+        </div>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button  class="p-button-text" icon="pi pi-times" label="Cancel" pButton (click)="hide()"
+                 pRipple></button>
+        <button class="p-button-text"  icon="pi pi-check" label="Purchase now"   (click)="getchoosenPack(packshossen.code)" pButton pRipple></button>
+    </ng-template>
+</p-dialog>

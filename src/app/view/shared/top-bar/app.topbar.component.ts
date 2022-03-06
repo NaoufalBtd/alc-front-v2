@@ -31,7 +31,7 @@ export class AppTopBarComponent implements OnInit, OnDestroy {
 
     constructor(public app: AppComponent, public appMain: PublicComponent,
                 private router: Router,
-                private authenticationService: AuthenticationService, public loginservice: LoginService,
+                public authenticationService: AuthenticationService, public loginservice: LoginService,
                 private profService: ProfService, private studentservice: EtudiantService, public translate: TranslateService) {
         translate.setDefaultLang('en');
 
@@ -47,6 +47,7 @@ export class AppTopBarComponent implements OnInit, OnDestroy {
     }
 
     public logOut() {
+        this.loginservice.model = [];
         this.loginservice.hasloged = false;
         if (this.isStudent()) {
             this.profService.removeConnectedStudent(this.user.id);
@@ -56,28 +57,28 @@ export class AppTopBarComponent implements OnInit, OnDestroy {
     }
 
     public isAdmin(): boolean {
-        if (this.user == null) {
+        if (this.authenticationService.getUserFromLocalCache() == null) {
             return false;
         } else {
-            return this.user.role === 'ADMIN';
+            return this.authenticationService.getUserFromLocalCache().role === 'ADMIN';
 
         }
     }
 
     public isProf(): boolean {
-        if (this.user == null) {
+        if (this.authenticationService.getUserFromLocalCache() == null) {
             return false;
         } else {
-            return this.user.role === 'TEACHER';
+            return this.authenticationService.getUserFromLocalCache().role === 'TEACHER';
 
         }
     }
 
     public isStudent(): boolean {
-        if (this.user == null) {
+        if (this.authenticationService.getUserFromLocalCache() == null) {
             return false;
         } else {
-            return this.user.role === 'STUDENT';
+            return this.authenticationService.getUserFromLocalCache().role === 'STUDENT';
 
         }
     }

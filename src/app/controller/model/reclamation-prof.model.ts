@@ -8,11 +8,13 @@ export class ReclamationProf {
     id: number;
     admin = new Admin();
     reference: string;
-    dateReclamation: Date;
+    dateReclamation: string;
     message: string;
     objetReclamationProf: string;
     traite: string;
-    dateTraitement: Date;
+    postView: string;
+    dateReponse: string;
+    dateTraitement: string;
     commentaireTraiteur: string;
     prof = new Prof();
     typeReclamationProf = new TypeReclamationProf();

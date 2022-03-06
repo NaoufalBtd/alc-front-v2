@@ -43,7 +43,7 @@ export class AppMenuComponent implements OnInit {
 
     constructor(public app: AppComponent,
                 private authService: AuthenticationService,
-                public appMain: PublicComponent, private service: LoginService) {
+                public appMain: PublicComponent, private service: LoginService, public authenticationService: AuthenticationService) {
     }
 
     get model(): any[] {
@@ -120,6 +120,7 @@ export class AppMenuComponent implements OnInit {
                     {label: 'News ', icon: 'pi pi-fw pi-clock', routerLink: ['/etudiant/news-student']},
                     {label: 'Schedule', icon: 'pi pi-fw pi-calendar-times', routerLink: ['/etudiant/schedule-student']},
                     {label: 'Reclamation', icon: 'pi pi-fw pi-exclamation-triangle', routerLink: ['/etudiant/reclamation-etudiant']},
+                    {label: 'Invited Student', icon: 'pi pi-fw pi-share-alt', routerLink: ['/etudiant/inviteStudent']},
 
 
                 ];

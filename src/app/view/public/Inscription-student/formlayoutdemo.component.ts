@@ -162,7 +162,7 @@ export class FormLayoutDemoComponent implements OnInit {
         this.submitted = true;
         console.log(this.etudiant.parcours.id);
         this.etudiantService.create().subscribe(data => {
-            if (data === -1) {
+            if (data !== null) {
                 this.messageService.add({
                     severity: 'info',
                     summary: 'Warning',

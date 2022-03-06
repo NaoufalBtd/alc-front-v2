@@ -1,7 +1,11 @@
 <p-dialog [(visible)]="displayReclamationViewProf" [modal]="true" [style]="{width: '450px'}"
           header="Prof Complaint Details" styleClass="p-fluid">
     <ng-template pTemplate="content">
+        <div class="p-field">
+            <p-message *ngIf="reclamationProfView.postView" severity="info" text="Message has been seen" ></p-message>
 
+            <p-message *ngIf="!reclamationProfView.postView" severity="error" text="The message has not been seen"></p-message>
+        </div>
         <div class="p-field">
             <label for="reference">Code</label>
             <input autofocus id="reference" pInputText required type="text" [(ngModel)]="reclamationProfView.reference"
@@ -27,6 +31,7 @@
             <label for="message">Message</label>
             <textarea pInputTextarea id="message" disabled [(ngModel)]="reclamationProfView.message"></textarea>
         </div>
+        <div *ngIf="reclamationProfView.postView">
         <div class="p-field">
             <label for="adminName">Admin Name</label>
             <input type="text" pInputText id="adminName" disabled
@@ -38,7 +43,19 @@
             <textarea pInputTextarea id="commentaireTraiteur" disabled
                       [(ngModel)]="reclamationProfView.commentaireTraiteur"></textarea>
         </div>
+        <div class="p-field">
+            <label for="adminName">Reply Date</label>
+            <input type="text" pInputText id="replydate" disabled
+                   [(ngModel)]="reclamationProfView.dateReponse"/>
 
+        </div>
+        <div class="p-field">
+            <label for="adminName">Processing Date</label>
+            <input type="text" pInputText id="processingdate" disabled
+                   [(ngModel)]="reclamationProfView.dateTraitement"/>
+
+        </div>
+        </div>
         <div class="p-field">
             <label for="etat">Processing Status</label>
             <p-message *ngIf="!reclamationProfView.traite" severity="warn" text="Being Processed" id="etat"
@@ -46,6 +63,7 @@
             <p-message *ngIf="reclamationProfView.traite" severity="success" text="Processed" id="etat"
                        styleClass="p-mr-2"></p-message>
         </div>
+
     </ng-template>
 
     <ng-template pTemplate="footer">

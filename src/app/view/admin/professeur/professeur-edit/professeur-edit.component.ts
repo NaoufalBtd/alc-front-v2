@@ -8,6 +8,7 @@ import {newArray} from '@angular/compiler/src/util';
 import {GroupeEtudiant} from '../../../../controller/model/groupe-etudiant.model';
 import {GroupeEtudiantDetail} from '../../../../controller/model/groupe-etudiant-detail.model';
 import {TrancheHoraireProfService} from '../../../../controller/service/tranche-horaire-prof.service';
+import {TypeTeacher} from '../../../../controller/model/type-teacher.model';
 
 @Component({
     selector: 'app-professeur-edit',
@@ -49,9 +50,27 @@ export class ProfesseurEditComponent implements OnInit {
 
     ngOnInit(): void {
         this.trancheHoraireProfList = new Array<TrancheHoraireProf>();
-        this.findAllParcours();
-    }
 
+        this.findAllParcours();
+        this.service.findAllType().subscribe(
+            data => {
+                this.typeTeachers = data;
+                console.log(data);
+            }, error => {
+                console.log(error);
+            }
+        );
+    }
+    public hiba(){
+    this.service.findAllType().subscribe(
+        data => {
+    this.typeTeachers = data;
+    console.log(data);
+}, error => {
+    console.log(error);
+}
+);
+    }
     get parcoursList(): Array<Parcours> {
         return this.service.parcoursList;
     }
@@ -92,7 +111,18 @@ export class ProfesseurEditComponent implements OnInit {
     set items(value: Array<Prof>) {
         this.service.items = value;
     }
-
+  get typeTeachers():Array<TypeTeacher>{
+        return  this.service.typeTeachers;
+  }
+    set typeTeachers(value: Array<TypeTeacher>) {
+        this.service.typeTeachers = value;
+    }
+    get typeTeacher(): TypeTeacher{
+        return  this.service.typeTeacher;
+    }
+    set typeTeacher(value: TypeTeacher) {
+        this.service.typeTeacher ;
+    }
 
     public trancheHoraireProfs: Array<TrancheHoraireProf> = new Array<TrancheHoraireProf>();
 
@@ -135,12 +165,18 @@ export class ProfesseurEditComponent implements OnInit {
     }
 
     public edit() {
+
         this.selected.trancheHoraireProfList = this.trancheHoraireProfList;
         console.log(this.selected.trancheHoraireProfList);
         console.log(this.selected);
         this.submitted = true;
         this.service.edit().subscribe(data => {
             this.selected = data;
+            for(let i = 0 ; i< this.items.length ; i++) {
+                if(this.items[i].id === data.id){
+                    this.items[i]= data;
+                }
+            }
             this.messageService.add({
                 severity: 'success',
                 summary: 'Successful',

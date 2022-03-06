@@ -2,6 +2,7 @@ import {InteretEtudiant} from './interet-etudiant.model';
 import {NiveauEtude} from './niveau-etude.model';
 import {Fonction} from './fonction.model';
 import {StatutSocial} from './statut-social.model';
+import {Skill} from './skill.model';
 
 export class User {
     public id: number = Number(0);
@@ -16,6 +17,7 @@ export class User {
     public  nom: string;
     public  prenom: string;
     public  numero: string;
+    public  skype: string;
     public  addresse: string;
     public  ville: string;
     public  country: string = String('Morocco');
@@ -26,4 +28,5 @@ export class User {
     public niveauEtude = new NiveauEtude();
     public fonction = new Fonction();
     public statutSocial =  new StatutSocial();
+    public skill = new Skill();
 }

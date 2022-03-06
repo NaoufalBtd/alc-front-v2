@@ -10,6 +10,7 @@ import {AppComponent} from '../../../../app.component';
 import {User} from '../../../../controller/model/user.model';
 import {FileUploadStatus} from '../../../../controller/model/FileUploadStatus';
 import {Subscription} from 'rxjs';
+import {Inscription} from '../../../../controller/model/inscription.model';
 
 
 @Component({
@@ -85,9 +86,25 @@ export class EtudiantListComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        console.log(this.userInfo);
         this.findAll();
+
+        this.studentService.findByEtudiantId(this.user.id).subscribe(
+            data => {
+                this.inscription = data;
+            console.log(this.inscription);
+            }
+        );
+    }
+private _inscription =  new Inscription();
+
+    get inscription(): Inscription {
+        return this._inscription;
     }
 
+    set inscription(value: Inscription) {
+        this._inscription = value;
+    }
 
     next() {
         this.first = this.first + this.rows;
