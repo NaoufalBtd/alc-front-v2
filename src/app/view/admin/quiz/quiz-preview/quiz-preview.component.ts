@@ -29,16 +29,16 @@ import {environment} from '../../../../../environments/environment';
     templateUrl: './quiz-preview.component.html',
     styleUrls: ['./quiz-preview.component.scss']
 })
-export class QuizPreviewComponent implements OnInit
-{
+export class QuizPreviewComponent implements OnInit {
     items = [
-        {label: this.parcourCurrent.libelle, routerLink:  '/admin/parcours'},
-        {label: this.courseCurrent.libelle, routerLink:  '/admin/parcours'},
-        {label: this.sectionCurrent.libelle, routerLink:  '/admin/parcours'},
+        {label: this.parcourCurrent.libelle, routerLink: '/admin/parcours'},
+        {label: this.courseCurrent.libelle, routerLink: '/admin/parcours'},
+        {label: this.sectionCurrent.libelle, routerLink: '/admin/parcours'},
     ];
-    home = {icon: 'pi pi-home', routerLink:  '/admin/parcours'};
-
-    reponseEtudiantList: Array<ReponseEtudiant> = new Array<ReponseEtudiant>();
+    home = {icon: 'pi pi-home', routerLink: '/admin/parcours'};
+    rows = 10;
+    first = 0;
+    reponseList: Array<Reponse> = new Array<Reponse>();
     showTakeQuiz = true;
     showQuizReview = false;
     myAnswer: Reponse = new Reponse();
@@ -51,6 +51,7 @@ export class QuizPreviewComponent implements OnInit
     answersList: Map<Question, Reponse> = new Map<Question, Reponse>();
     correctAnswersList: Map<number, Array<Reponse>> = new Map<number, Array<Reponse>>();
     question: Question = new Question();
+    selectedQuestion: Question = new Question();
     questionSideLeft: string;
     questionSideRight: string;
     numberOfQuestion = 0;
@@ -58,7 +59,7 @@ export class QuizPreviewComponent implements OnInit
     value = 10;
     nextQuestion: Question = new Question();
     index = 1;
-
+    displayReponsesDialog: boolean;
     showCheckButton = false;
     saveDone = false;
     showCorrectAnswerInput = false;
@@ -67,6 +68,7 @@ export class QuizPreviewComponent implements OnInit
     showNextButton = false;
 
     constructor(private service: QuizEtudiantService,
+                private quizService: QuizService,
                 private learnService: LearnService,
                 private reponseEtudiantService: ReponseEtudiantService,
                 private login: LoginService,
@@ -87,10 +89,10 @@ export class QuizPreviewComponent implements OnInit
     disableButtonSon = true;
 
 
-
     get courseCurrent(): Cours {
         return this.learnService.courseCurrent;
     }
+
     get sectionCurrent(): Section {
         return this.learnService.sectionCurrent;
     }
@@ -237,6 +239,11 @@ export class QuizPreviewComponent implements OnInit
         this.service.findAllQuestions(this.selectedQuiz.ref).subscribe(
             data => {
                 this.questionList = data;
+                // if (this.questionList.length > 0){
+                //     for (let i = 0; i < this.questionList.length; i++) {
+                //         this.service.find
+                //     }
+                // }
                 this.numberOfQuestion = this.questionList.length;
                 this.pourCentgage = 100 / this.numberOfQuestion;
                 this.value = this.pourCentgage;
@@ -380,13 +387,12 @@ export class QuizPreviewComponent implements OnInit
                 if (this.question.typeDeQuestion.ref === 't1') {
                     this.questionSideLeft = this.question.libelle.substring(0, this.question.libelle.indexOf('...'));
                     this.questionSideRight = this.question.libelle.substring(this.question.libelle.lastIndexOf('...') + 3);
-                }
-                else if (this.question.typeDeQuestion.ref === 't4' || this.question.typeDeQuestion.ref === 't6') {
+                } else if (this.question.typeDeQuestion.ref === 't4' || this.question.typeDeQuestion.ref === 't6') {
                     this.questionSideLeft = this.question.libelle.substring(0, this.question.libelle.indexOf('@'));
                     this.questionSideRight = this.question.libelle.substring(this.question.libelle.lastIndexOf('@') + 1);
                     this.inputAnswer = this.question.libelle.substring(this.question.libelle.indexOf('@') + 1,
                         this.question.libelle.lastIndexOf('@'));
-                } else if ( this.question.typeDeQuestion.ref === 't3'){
+                } else if (this.question.typeDeQuestion.ref === 't3') {
                     this.myAnswer.lib = this.correctAnswersList.get(this.question.id)[0].lib;
                 }
                 break;
@@ -395,6 +401,7 @@ export class QuizPreviewComponent implements OnInit
 
 
     }
+
     previousQuestionFct() {
         this.translateWord = String();
         this.wordDictionnary = String();
@@ -417,13 +424,12 @@ export class QuizPreviewComponent implements OnInit
                 if (this.question.typeDeQuestion.ref === 't1') {
                     this.questionSideLeft = this.question.libelle.substring(0, this.question.libelle.indexOf('...'));
                     this.questionSideRight = this.question.libelle.substring(this.question.libelle.lastIndexOf('...') + 3);
-                }
-                else if (this.question.typeDeQuestion.ref === 't4' || this.question.typeDeQuestion.ref === 't6') {
+                } else if (this.question.typeDeQuestion.ref === 't4' || this.question.typeDeQuestion.ref === 't6') {
                     this.questionSideLeft = this.question.libelle.substring(0, this.question.libelle.indexOf('@'));
                     this.questionSideRight = this.question.libelle.substring(this.question.libelle.lastIndexOf('@') + 1);
                     this.inputAnswer = this.question.libelle.substring(this.question.libelle.indexOf('@') + 1,
                         this.question.libelle.lastIndexOf('@'));
-                } else if ( this.question.typeDeQuestion.ref === 't3'){
+                } else if (this.question.typeDeQuestion.ref === 't3') {
                     this.myAnswer.lib = this.correctAnswersList.get(this.question.id)[0].lib;
                 }
                 break;
@@ -505,8 +511,79 @@ export class QuizPreviewComponent implements OnInit
         return this.reponseEtudiantService.answers;
     }
 
-    openUpdate() {
+
+    view(qst: Question) {
+        this.selectedQuestion = qst;
+        console.log(this.selectedQuestion);
+        this.displayReponsesDialog = true;
+    }
+
+    edit() {
+        this.selectedQuiz.questions = this.questionList;
         this.router.navigate(['/admin/quiz-update']);
     }
 
+    delete(qst: Question) {
+        this.confirmationService.confirm({
+            message: 'Are you sure you want to delete question ' + qst.numero + ' ?',
+            header: 'Confirm',
+            icon: 'pi pi-exclamation-triangle',
+            accept: () => {
+                const index = this.questionList.indexOf(qst);
+                this.questionList.splice(index, 1);
+                this.quizService.deleteQuestion(qst).subscribe(data => {
+                    this.messageService.add({
+                        severity: 'info',
+                        summary: 'Info',
+                        detail: 'Question has been deleted',
+                        life: 4000
+                    });
+                });
+            }
+        });
+        console.log(qst);
+    }
+
+    deleteQuiz() {
+        this.selectedQuiz.questions = this.questionList;
+        this.confirmationService.confirm({
+            message: 'Are you sure you want to delete quiz ' + this.selectedQuiz.lib + '?',
+            header: 'Confirm',
+            icon: 'pi pi-exclamation-triangle',
+            accept: () => {
+                this.quizService.deleteQuiz(this.selectedQuiz).subscribe(data => {
+                    this.messageService.add({
+                        severity: 'info',
+                        summary: 'Info',
+                        detail: 'Quiz has been deleted',
+                        life: 4000
+                    });
+                });
+                this.selectedQuiz = new Quiz();
+                this.questionList = new Array<Question>();
+                this.router.navigate(['/admin/quiz-create']);
+            }
+        });
+        console.log(this.selectedQuiz);
+    }
+
+    deleteAnswer(rps: Reponse) {
+        this.confirmationService.confirm({
+            message: 'Are you sure you want to delete answer ' + rps.numero + ' ?',
+            header: 'Confirm',
+            icon: 'pi pi-exclamation-triangle',
+            accept: () => {
+                const index = this.selectedQuestion.reponses.indexOf(rps);
+                this.selectedQuestion.reponses.splice(index, 1);
+                this.quizService.deleteAnswer(rps.id).subscribe(data => {
+                    this.messageService.add({
+                        severity: 'info',
+                        summary: 'Info',
+                        detail: 'Answer has been deleted',
+                        life: 4000
+                    });
+                });
+            }
+        });
+    }
 }

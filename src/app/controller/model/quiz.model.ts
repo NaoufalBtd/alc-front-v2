@@ -12,5 +12,5 @@ export class Quiz {
     public seuilReussite: number;
     public section = new Section();
     public quizEtudiant = new Array<QuizEtudiant>();
-    public questions = new Array<Question>();
+    public questions: Array<Question> = new Array<Question>();
 }
