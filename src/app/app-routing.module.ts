@@ -91,6 +91,7 @@ import {DragHomeWorkComponent} from './view/etudiant/homeWork/drag-home-work/dra
 import {InvitedStudentComponent} from './view/etudiant/invited-student/invited-student.component';
 import {HomePageEtudiantComponent} from './view/etudiant/home-page-etudiant/home-page-etudiant.component';
 import {EtudiantpurchasepackComponent} from './view/etudiant/etudiantpurchasepack/etudiantpurchasepack.component';
+import {FreetriallessonComponent} from './view/etudiant/freetriallesson/freetriallesson.component';
 
 
 @NgModule({
@@ -187,6 +188,7 @@ import {EtudiantpurchasepackComponent} from './view/etudiant/etudiantpurchasepac
                 children: [
                     {path: '', component: DashboardDemoComponent},
                     {path: 'public/etudianthomepage', component: HomePageEtudiantComponent},
+                    {path: 'public/etudiantTrialLesson', component: FreetriallessonComponent},
                     {path: 'public/etudiantchoosepack', component: EtudiantpurchasepackComponent},
                     {path: 'public/login-admin', component: LoginAdminComponent},
                     {path: 'public/login-prof', component: LoginProfComponent},

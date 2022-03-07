@@ -88,7 +88,7 @@
             </ul>
             <hr class="mb-3 mx-0 border-top-1 border-none surface-border mt-auto" />
             <ng-template pTemplate="footer">
-                <p-button label="Start now" icon="pi pi-check" styleClass="p-button-warning" [style]="{'margin-left': '.5em'}"></p-button>
+                <p-button (click)="router.navigate(['public/etudiantTrialLesson'])" label="Start now" icon="pi pi-check" styleClass="p-button-warning" [style]="{'margin-left': '.5em'}"></p-button>
             </ng-template>
         </p-card>
     </div>

@@ -204,13 +204,13 @@
      <div class="profile-info col-md-9">
      <div class="panel-body bio-graph-info margin" style="margin-left: 10px;">
         <div >
-            <h3 style="  color: #f29263; font-weight: bold" *ngIf="this.inscription.packStudent != null">Registration Details</h3>
-            <h3 style="  color: #f29263; font-weight: bold" *ngIf="this.inscription.packStudent == null">Complete my registration!</h3>
+            <h3 style="  color: #f29263; font-weight: bold" *ngIf="this.inscription.packStudent != null && this.inscription.parcours != null">Registration Details</h3>
+            <h3 style="  color: #f29263; font-weight: bold" *ngIf="this.inscription.packStudent == null && this.inscription.parcours == null">Complete my registration!</h3>
         </div>
             <div class="bio-row">
             <span>
                 <label> Group Option </label>
-                <p-dropdown (onClick)="getgroupechosen(inscription.groupeEtude.id)" [disabled]="this.inscription.packStudent != null" (click)="findAllGroupeEtude() ; " [options]="groupeEtudeList" placeholder="Select group"
+                <p-dropdown (onClick)="getgroupechosen(inscription.groupeEtude.id)" [disabled]="this.inscription.packStudent != null && this.inscription.parcours != null" (click)="findAllGroupeEtude() ; " [options]="groupeEtudeList" placeholder="Select group"
                             [(ngModel)]="etudiant.groupeEtude"
                             optionLabel="libelle" ></p-dropdown>
             </span>
@@ -219,7 +219,7 @@
             <div class="bio-row">
             <span>
                 <label> English Level </label>
-                <p-dropdown [disabled]="this.inscription.packStudent != null" (click)="findAllParcoursList() ; " [options]="parcoursList" placeholder="Select Level"
+                <p-dropdown [disabled]="this.inscription.packStudent != null && this.inscription.parcours != null" (click)="findAllParcoursList() ; " [options]="parcoursList" placeholder="Select Level"
                             [(ngModel)]="etudiant.parcours"
                             optionLabel="libelle" ></p-dropdown>
             </span>
@@ -228,7 +228,7 @@
             <div class="bio-row">
             <span>
                 <label> Teacher </label>
-                <select [disabled]="this.inscription.packStudent != null" required name="role" id="" [(ngModel)]="etudiant.teacherLocality" >
+                <select [disabled]="this.inscription.packStudent != null && this.inscription.parcours != null" required name="role" id="" [(ngModel)]="etudiant.teacherLocality" >
                     <option selected value=" ">Teacher</option>
                     <option value="native">Native</option>
                     <option value="non-native">Non-native</option>
@@ -244,10 +244,10 @@
 
             </div>
             <div class="bio-row">
-                <button *ngIf="this.inscription.packStudent == null" pButton pRipple type="button" icon="pi pi-save" label="save changes"
+                <button *ngIf="this.inscription.packStudent == null || this.inscription.parcours == null" pButton pRipple type="button" icon="pi pi-save" label="save changes"
                         (click)="updateInscriptionByStudent()"
                         class="p-button-raised-primary"></button>
-                <h5 *ngIf="this.inscription.packStudent != null"> you can Add new Registration once this one is Completed </h5>
+                <h5 *ngIf="this.inscription.packStudent != null && this.inscription.parcours != null"> you can Add new Registration once this one is Completed </h5>
             </div>
     </div>
     </div>

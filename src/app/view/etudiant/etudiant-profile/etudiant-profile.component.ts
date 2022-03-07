@@ -394,6 +394,7 @@ export class EtudiantProfileComponent implements OnInit {
         this.etudiantService.updatePassword(this.newPassword).subscribe(
             data => {
                 if (data > 0){
+                    this.changePass = false;
                     this.messageService.add({
                         severity: 'success',
                         summary: 'Successful',

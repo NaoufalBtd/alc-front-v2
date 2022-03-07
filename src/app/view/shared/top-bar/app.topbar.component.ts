@@ -30,7 +30,7 @@ export class AppTopBarComponent implements OnInit, OnDestroy {
 
 
     constructor(public app: AppComponent, public appMain: PublicComponent,
-                private router: Router,
+                public router: Router,
                 public authenticationService: AuthenticationService, public loginservice: LoginService,
                 private profService: ProfService, private studentservice: EtudiantService, public translate: TranslateService) {
         translate.setDefaultLang('en');
