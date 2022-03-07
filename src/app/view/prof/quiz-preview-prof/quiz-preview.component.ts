@@ -24,6 +24,7 @@ import {WebSocketService} from '../../../controller/service/web-socket.service';
 import {QuizReponse} from '../../../controller/model/quiz-reponse';
 import {ChatMessageDto} from '../../../controller/model/chatMessageDto';
 import {findIndexInData} from '@syncfusion/ej2-angular-schedule';
+import {HomeWorkReponse} from '../../../controller/model/home-work-reponse.model';
 
 @Component({
     selector: 'app-quiz-preview-prof',
@@ -44,6 +45,87 @@ export class QuizPreviewProfComponent implements OnInit, OnDestroy {
                 private confirmationService: ConfirmationService,
                 private webSocketService: WebSocketService,
                 private parcoursservice: ParcoursService) {
+    }
+
+
+    get t12AnswersList(): Array<Reponse> {
+        return this.learnService.t12AnswersList;
+    }
+
+    set t12AnswersList(value: Array<Reponse>) {
+        this.learnService.t12AnswersList = value;
+    }
+
+    get correctAnswerT12(): string {
+        return this.learnService.correctAnswerT12;
+    }
+
+    set correctAnswerT12(value: string) {
+        this.learnService.correctAnswerT12 = value;
+    }
+
+    get showT12AnswerDiv(): boolean {
+        return this.learnService.showT12AnswerDiv;
+    }
+
+    set showT12AnswerDiv(value: boolean) {
+        this.learnService.showT12AnswerDiv = value;
+    }
+
+    get dragAnswersList(): Map<string, number> {
+        return this.learnService.dragAnswersList;
+    }
+
+    get quizT12AnswersList(): Array<Reponse> {
+        return this.learnService.quizT12AnswersList;
+    }
+
+    set quizT12AnswersList(value: Array<Reponse>) {
+        this.learnService.quizT12AnswersList = value;
+    }
+
+    set dragAnswersList(value: Map<string, number>) {
+        this.learnService.dragAnswersList = value;
+    }
+
+    get answersT12List(): Map<number, string> {
+        return this.learnService.answersT12List;
+    }
+
+    set answersT12List(value: Map<number, string>) {
+        this.learnService.answersT12List = value;
+    }
+
+    get dragList(): Array<string> {
+        return this.learnService.dragList;
+    }
+
+    set dragList(value: Array<string>) {
+        this.learnService.dragList = value;
+    }
+
+    get dragIndex(): number {
+        return this.learnService.dragIndex;
+    }
+
+    set dragIndex(value: number) {
+        this.learnService.dragIndex = value;
+    }
+
+    get dragData(): string {
+        return this.learnService.dragData;
+    }
+
+    set dragData(value: string) {
+        this.learnService.dragData = value;
+    }
+
+    get nextIndex(): number {
+        return this.learnService.nextIndex;
+    }
+
+    set nextIndex(value: number) {
+        this.learnService.nextIndex = value;
     }
 
     get showTakeQuiz(): boolean {
@@ -226,6 +308,10 @@ export class QuizPreviewProfComponent implements OnInit, OnDestroy {
         return this.learnService.disableButtonSon;
     }
 
+    set disableButtonSon(value: boolean) {
+        this.learnService.disableButtonSon = value;
+    }
+
     get translateWord(): string {
         return this.learnService.translateWord;
     }
@@ -309,12 +395,16 @@ export class QuizPreviewProfComponent implements OnInit, OnDestroy {
     }
 
     nextQuestionFct() {
+        this.correctAnswerT12 = String(' ');
+        this.showT12AnswerDiv = false;
         this.grpStudentAnswers.clear();
         const question = this.learnService.nextQuestionFct();
         this.followMeFct(question);
     }
 
     previousQuestionFct() {
+        this.correctAnswerT12 = String(' ');
+        this.showT12AnswerDiv = false;
         this.grpStudentAnswers.clear();
         this.showFollowButton = true;
         const qst = this.learnService.previousQuestionFct();
@@ -387,5 +477,20 @@ export class QuizPreviewProfComponent implements OnInit, OnDestroy {
 
     showDialog() {
         this.display = true;
+    }
+
+
+    checkAnswers(value: Reponse) {
+        this.learnService.checkAnswers(value);
+    }
+
+    getCorrectAnswerForT12(): string {
+        for (const item of this.t12AnswersList) {
+            if (item.etatReponse === 'true') {
+                return item.lib;
+            }
+        }
+
+
     }
 }

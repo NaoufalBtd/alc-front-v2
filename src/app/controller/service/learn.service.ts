@@ -17,6 +17,7 @@ import {HomeWorkEtudiantServiceService} from './home-work-etudiant-service.servi
 import {HomeWork} from '../model/home-work.model';
 import {AppComponent} from '../../app.component';
 import {Dictionary} from '../model/dictionary.model';
+import {HomeWorkReponse} from '../model/home-work-reponse.model';
 
 @Injectable({
     providedIn: 'root'
@@ -68,6 +69,100 @@ export class LearnService {
     private _textSeleted: string;
     private _dictionaryList: Array<Dictionary> = new Array<Dictionary>();
 
+    // --------------- Next_added
+
+    private _dragAnswersList: Map<string, number> = new Map<string, number>();
+    private _answersT12List: Map<number, string> = new Map<number, string>();
+    private _dragList: Array<string> = new Array<string>();
+    private _dragIndex: number;
+    private _dragData: string;
+    private _nextIndex = Number(1);
+
+    private _correctAnswerT12: string;
+    private _showT12AnswerDiv: boolean;
+    private _t12AnswersList: Array<Reponse> = new Array<Reponse>();
+    private _quizT12AnswersList: Array<Reponse> = new Array<Reponse>();
+
+
+    get quizT12AnswersList(): Array<Reponse> {
+        return this._quizT12AnswersList;
+    }
+
+    set quizT12AnswersList(value: Array<Reponse>) {
+        this._quizT12AnswersList = value;
+    }
+
+    get t12AnswersList(): Array<Reponse> {
+        return this._t12AnswersList;
+    }
+
+    set t12AnswersList(value: Array<Reponse>) {
+        this._t12AnswersList = value;
+    }
+
+    get correctAnswerT12(): string {
+        return this._correctAnswerT12;
+    }
+
+    set correctAnswerT12(value: string) {
+        this._correctAnswerT12 = value;
+    }
+
+    get showT12AnswerDiv(): boolean {
+        return this._showT12AnswerDiv;
+    }
+
+    set showT12AnswerDiv(value: boolean) {
+        this._showT12AnswerDiv = value;
+    }
+
+    get dragAnswersList(): Map<string, number> {
+        return this._dragAnswersList;
+    }
+
+    set dragAnswersList(value: Map<string, number>) {
+        this._dragAnswersList = value;
+    }
+
+    get answersT12List(): Map<number, string> {
+        return this._answersT12List;
+    }
+
+    set answersT12List(value: Map<number, string>) {
+        this._answersT12List = value;
+    }
+
+    get dragList(): Array<string> {
+        return this._dragList;
+    }
+
+    set dragList(value: Array<string>) {
+        this._dragList = value;
+    }
+
+    get dragIndex(): number {
+        return this._dragIndex;
+    }
+
+    set dragIndex(value: number) {
+        this._dragIndex = value;
+    }
+
+    get dragData(): string {
+        return this._dragData;
+    }
+
+    set dragData(value: string) {
+        this._dragData = value;
+    }
+
+    get nextIndex(): number {
+        return this._nextIndex;
+    }
+
+    set nextIndex(value: number) {
+        this._nextIndex = value;
+    }
 
     get synonymes(): string {
         return this._synonymes;
@@ -558,6 +653,11 @@ export class LearnService {
                     console.log(this.correctAnswersList.get(this.question.id)[0]);
                     console.log('====================== T3 =======================================');
                     this.placeHolderAnswer = this.correctAnswersList.get(this.question.id)[0]?.lib;
+                } else if (this.question.typeDeQuestion.ref === 't12') {
+                    this.extractedData(this.question.libelle, 't12');
+                    console.log('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
+                    console.log(this.answersT12List);
+                    this.showT12Answers();
                 }
                 break;
             }
@@ -598,6 +698,11 @@ export class LearnService {
                         this.question.libelle.lastIndexOf('@'));
                 } else if (this.question.typeDeQuestion.ref === 't3') {
                     this.placeHolderAnswer = this.correctAnswersList.get(this.question.id)[0]?.lib;
+                } else if (this.question.typeDeQuestion.ref === 't12') {
+                    this.extractedData(this.question.libelle, 't12');
+                    console.log('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
+                    console.log(this.answersT12List);
+                    this.showT12Answers();
                 }
                 break;
             }
@@ -731,12 +836,101 @@ export class LearnService {
                         this.questionSideRight = this.question.libelle.substring(this.question.libelle.lastIndexOf('@') + 1);
                         this.inputAnswer = this.question.libelle.substring(this.question.libelle.indexOf('@') + 1,
                             this.question.libelle.lastIndexOf('@'));
+                    } else if (this.question.typeDeQuestion.ref === 't12') {
+                        this.extractedData(this.question.libelle, 't12');
+                        console.log('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
+                        console.log(this.answersT12List);
+                        this.showT12Answers();
                     }
                 }
             }
         );
     }
 
+    private showT12Answers() {
+        this.quizT12AnswersList = new Array<Reponse>();
+        console.log(this.quizT12AnswersList);
+        console.log(this.correctAnswersList);
+        this.service.findReponses(this.question.id).subscribe(
+            data1 => {
+                this.quizT12AnswersList = data1;
+                this.filterDatat12(this.quizT12AnswersList, 1);
+            }, error => {
+                console.log(error);
+            }
+        );
+    }
+
+    checkAnswers(answer: Reponse) {
+        if (answer.etatReponse === 'true') {
+            this.showT12AnswerDiv = true;
+            if (this.correctAnswerT12 === undefined || this.correctAnswerT12 === null) {
+                this.correctAnswerT12 = answer.lib + ' ';
+            } else {
+                this.correctAnswerT12 = this.correctAnswerT12 + answer.lib + ' ';
+            }
+            document.getElementById(answer.lib).style.backgroundColor = '#52b788';
+            document.getElementById(String(this.nextIndex)).style.borderBottom = '2px solid #52b788';
+            document.getElementById(String(this.nextIndex)).style.color = '#2d6a4f';
+            this.nextIndex += 1;
+            if (this.nextIndex <= this.answersT12List.size) {
+                this.filterDatat12(this.quizT12AnswersList, this.nextIndex);
+            } else {
+                this.disableButtonSon = false;
+                this.t12AnswersList = new Array<Reponse>();
+            }
+        } else {
+            document.getElementById(answer.lib).style.animationName = 'inCorrect';
+            document.getElementById(answer.lib).style.animationDuration = '2s';
+            document.getElementById(answer.lib).style.animationIterationCount = '1';
+        }
+        console.log(answer);
+    }
+
+    private filterDatat12(reponses: Array<Reponse>, index: number) {
+        this.t12AnswersList = reponses.filter(t => t.numero === index);
+        document.getElementById(String(index)).style.borderBottom = '3px dashed #2196f3';
+        document.getElementById(String(index)).style.color = '#2196f3';
+    }
+
+    private extractedData(libelle: string, code: string) {
+        this.dragAnswersList = new Map<string, number>();
+        this.dragList = new Array<string>();
+        const text = libelle;
+        let counter = 2;                  //_1 It's been a while /_2 we have been in touch.
+        while (counter !== -1) {
+            const myNumIndex = libelle.indexOf(String(counter - 1));
+            const myNumber = libelle[myNumIndex];
+            let sentence: string;
+            const index = libelle.indexOf('_' + String(counter));
+            if (index !== -1) {
+                sentence = libelle.substring(myNumIndex + 1, index);
+                counter++;
+            } else {
+                sentence = libelle.substring(myNumIndex + 1, libelle.length);
+                counter = -1;
+            }
+            console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
+            console.log(libelle);
+            console.log(sentence);
+            console.log(myNumber);
+
+            libelle = libelle.substring(sentence.length + 1, libelle.length);
+            console.log(libelle);
+            console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
+            if (code === 't11') {
+                this.dragAnswersList.set(sentence, Number(myNumber));
+            } else {
+                this.answersT12List.set(Number(myNumber), sentence);
+            }
+
+            this.dragList.push(sentence);
+        }
+        console.log(this.dragAnswersList);
+        console.log(this.dragList);
+        this.dragList = this.dragList.sort((a, b) => b.localeCompare(a));
+        console.log(text);
+    }
 
     finishQuiz() {
         const quizStudent: QuizEtudiant = new QuizEtudiant();

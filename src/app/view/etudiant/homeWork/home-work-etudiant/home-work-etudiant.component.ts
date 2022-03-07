@@ -9,12 +9,7 @@ import {DictionaryService} from '../../../../controller/service/dictionary.servi
 import {DomSanitizer} from '@angular/platform-browser';
 import {WebSocketService} from '../../../../controller/service/web-socket.service';
 import {ParcoursService} from '../../../../controller/service/parcours.service';
-import {Reponse} from '../../../../controller/model/reponse.model';
-import {Question} from '../../../../controller/model/question.model';
-import {Quiz} from '../../../../controller/model/quiz.model';
-import {QuizReponse} from '../../../../controller/model/quiz-reponse';
-import {ChatMessageDto} from '../../../../controller/model/chatMessageDto';
-import {Prof} from '../../../../controller/model/prof.model';
+
 import {Etudiant} from '../../../../controller/model/etudiant.model';
 import {Cours} from '../../../../controller/model/cours.model';
 import {HomeWork} from '../../../../controller/model/home-work.model';
