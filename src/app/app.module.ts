@@ -326,6 +326,7 @@ import {
     InvitedStudentListStudentComponent
 } from './view/etudiant/invited-student/invited-student-list-student/invited-student-list-student.component';
 import { HomeWorkReviewComponent } from './view/prof/home-work/home-work-review/home-work-review.component';
+import { FreetriallessonComponent } from './view/etudiant/freetriallesson/freetriallesson.component';
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -639,7 +640,8 @@ export function createTranslateLoader(http: HttpClient) {
         HomeWorkReviewComponent,
         ReclamationProfViewComponent,
         HomePageEtudiantComponent,
-        EtudiantpurchasepackComponent
+        EtudiantpurchasepackComponent,
+        FreetriallessonComponent
 
     ],
     providers: [

@@ -6,6 +6,8 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Etudiant} from '../model/etudiant.model';
 import {LoginService} from './login.service';
+import {GroupeEtudiant} from '../model/groupe-etudiant.model';
+import {GroupeEtudiantDetail} from '../model/groupe-etudiant-detail.model';
 
 @Injectable({
     providedIn: 'root'
@@ -14,6 +16,13 @@ export class SyntheseSessionCoursService {
 
     constructor(private http: HttpClient, private serviceUser: LoginService) {
     }
+    private urlBase = environment.baseApi  ;
+    private urlStudent = environment.etudiantUrl;
+    private urlAdmin = environment.adminUrl;
+    private urlParcours = '/admin/parcours/';
+    private urlGroupeEtude = '/admin/groupeEtude/';
+    private urlGroupeEtudiant = '/admin/groupeEtudiant/';
+    private urlGroupeEtudiantDetail = '/admin/groupeEtudiantDetail/' ;
     private adminUrl = environment.adminUrl;
     private url = environment.baseUrl + 'etat/';
     private _items: Array<SyntheseSessionCours>;
@@ -31,6 +40,12 @@ export class SyntheseSessionCoursService {
     }
     public findAllStudent(): Observable<Array<Etudiant>> {
         return this.http.get<Array<Etudiant>>(this.adminUrl + 'etudiant/prof/id/' + this.serviceUser.prof.id);
+    }
+    public findAllStudent2(): Observable<Array<GroupeEtudiant>> {
+        return this.http.get<Array<GroupeEtudiant>>('http://localhost:8036/admin/' + 'groupeEtudiant/groupeProf/' + this.serviceUser.prof.id);
+    }
+    public findAllGroupeEtudiantDetail(id: number): Observable<Array<GroupeEtudiantDetail>> {
+        return this.http.get<Array<GroupeEtudiantDetail>>(this.urlBase + this.urlGroupeEtudiant + 'id/' + id);
     }
     public save(): Observable<SyntheseSessionCours> {
         return this.http.post<SyntheseSessionCours>(this.adminUrl + 'etat/', this.selected);
