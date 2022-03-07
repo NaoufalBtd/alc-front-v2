@@ -29,4 +29,5 @@ export class User {
     public fonction = new Fonction();
     public statutSocial =  new StatutSocial();
     public skill = new Skill();
+
 }

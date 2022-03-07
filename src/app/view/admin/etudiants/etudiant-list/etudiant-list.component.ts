@@ -76,6 +76,7 @@ export class EtudiantListComponent implements OnInit {
     }
 
     findAll() {
+
         this.studentService.findAll().subscribe(
             data => {
                 this.users = data;
@@ -88,11 +89,14 @@ export class EtudiantListComponent implements OnInit {
     ngOnInit(): void {
         console.log(this.userInfo);
         this.findAll();
-
-        this.studentService.findByEtudiantId(this.user.id).subscribe(
+    }
+    public findEtud(i: number){
+       console.log('hahoa');
+        console.log(this.userInfo);
+        this.studentService.findByEtudiantId(i).subscribe(
             data => {
                 this.inscription = data;
-            console.log(this.inscription);
+                console.log(this.inscription);
             }
         );
     }
@@ -134,6 +138,7 @@ private _inscription =  new Inscription();
     }
 
     showEditDialog(user: User) {
+        this.findEtud(user.id);
         this.editDialog = true;
         this.userInfo = user;
     }

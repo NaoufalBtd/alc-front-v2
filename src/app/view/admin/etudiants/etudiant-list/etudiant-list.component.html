@@ -54,7 +54,7 @@
                         <td>{{user?.prof?.nom}} {{ user?.prof?.prenom}}</td>
                         <td>
                             <button pButton pRipple type="button" icon="pi pi-user-edit" (click)="showEditDialog(user)"
-                                    class="p-button-rounded p-button-warning"></button>
+                                      class="p-button-rounded p-button-warning"></button>
                             <button pButton pRipple type="button" icon="pi pi-times"
                                     (click)="showDeleteDialog(user,index)"
                                     class="p-button-rounded p-button-danger"></button>
@@ -98,7 +98,7 @@
                             </div>
                             <div class="col-sm-8">
                                 <div class="card-block">
-                                    <h6 class="m-b-20 p-b-5 b-b-default f-w-600">Information</h6>
+                                    <h6 class="m-b-20 p-b-5 b-b-default f-w-600" style="color: #f27463">Information</h6>
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <p class="m-b-10 f-w-600">First name</p>
@@ -130,26 +130,86 @@
                                             <input type="text" pInputText [(ngModel)]="userInfo.addresse">
                                         </div>
 
-                                    </div>
 
+
+                                    </div>
                                     <!--
-                                    <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Further information</h6>
-                                    <div class="row">
-                                        <div class="col-sm-6">
-                                            <p class="m-b-10 f-w-600">Skill</p>
-                                            <h6 class="text-muted f-w-400">Sam Disuja</h6>
+                                     <div  *ngIf="this.inscription.packStudent!=null" class="col-sm-6"  style="margin-top: 9px">
+                                            <div  *ngIf="this.inscription.packStudent!=null"  style="font-size: 20px"><label *ngIf="this.inscription.packStudent!=null" class="label">
+                                                <strong>Pack choosen:
+                                            </strong></label>  {{ inscription.packStudent.libelle}} : {{inscription.packStudent.nombreCours}}h | {{inscription.packStudent.prix}}$</div>
+
                                         </div>
-                                        <div class="col-sm-6">
-                                            <p class="m-b-10 f-w-600">Most Viewed</p>
-                                            <h6 class="text-muted f-w-400">Dinoter husainm</h6>
+                                    <div class="panel-body bio-graph-info margin" style="margin-left: 10px;">
+                                        <h6  style="  color: #f29263; font-weight: bold">Further information</h6>
+                                        <div class="row">
+                                            <div *ngIf="this.inscription.statutSocial!=null" class="bio-row">
+                                                <label > Status Social  : <strong>{{this.inscription.statutSocial.libelle}} </strong> </label>
+
+                                            </div>
+                                            <div class="bio-row">
+                                                <div  *ngIf="this.inscription.fonction!=null && this.inscription.statutSocial.libelle=='Employed'">
+                                                    <label class="status"  >Area of work :{{this.inscription.fonction.libelle}}</label>
+
+                                                </div>
+                                                <div *ngIf="this.inscription.niveauEtude!=null && this.inscription.statutSocial.libelle=='Student'">
+                                                    <label  class="status" >Study Level :{{this.inscription.niveauEtude.libelle}}</label>
+
+                                                </div>
+                                            </div>
+
+                                            <div *ngIf="this.inscription.niveauEtude!=null" class="bio-row">
+                                                <label> Main goal with learning English :{{this.inscription.interetEtudiant.libelle}}</label>
+
+                                            </div>
+                                            <div *ngIf="this.inscription.skill!=null"  class="bio-row">
+                                                <label > Skill : {{this.inscription.skill.libelle}}</label>
+
+                                            </div>
+
+                                        </div>
+-->
+
+
+
+                                    <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600" style="color: #f27463">Further information</h6>
+                                    <div class="row">
+                                        <div class="col-sm-6" *ngIf="this.userInfo.statutSocial!=null">
+                                            <p class="m-b-10 f-w-600">Social status</p>
+                                            <h6 class="text-muted f-w-400">{{this.userInfo.statutSocial.libelle}}</h6>
+                                        </div>
+                                        <div class="col-sm-6" *ngIf="this.userInfo.fonction!=null && this.userInfo.statutSocial.libelle=='Employed'">
+
+                                            <p class="m-b-10 f-w-600" >Area of work</p>
+                                            <h6 class="text-muted f-w-400">{{this.userInfo.fonction.libelle}}</h6>
+
+                                        </div>
+                                        <div  *ngIf="this.userInfo.fonction!=null && this.userInfo.statutSocial.libelle=='Student'" class="col-sm-6">
+
+                                                <p class="m-b-10 f-w-600">Study level</p>
+                                                <h6 class="text-muted f-w-400">{{this.userInfo.niveauEtude.libelle}}</h6>
+
+                                        </div>
+                                        <div class="col-sm-6" *ngIf="this.userInfo.interetEtudiant!=null">
+                                            <p class="m-b-10 f-w-600" style="margin-top: 10px;"> Main goal with learning English </p>
+                                            <h6 class="text-muted f-w-400">{{this.userInfo.interetEtudiant.libelle}}</h6>
+                                        </div>
+                                        <div class="col-sm-6" style="margin-top: 10px;" *ngIf="this.userInfo.skill!=null">
+                                            <p class="m-b-10 f-w-600"> Skill </p>
+                                            <h6 class="text-muted f-w-400">{{this.userInfo.skill.libelle}}</h6>
+                                        </div>
+
+                                        <div *ngIf="this.inscription.packStudent!=null" class="col-sm-6" style="margin-top: 10px;">
+                                            <p class="m-b-10 f-w-600">   Pack choosen </p>
+                                            <h6 class="text-muted f-w-400"> {{ inscription.packStudent.libelle}} : {{inscription.packStudent.nombreCours}}h | {{inscription.packStudent.prix}}$</h6>
                                         </div>
                                     </div>
-                                    -->
 
                                 </div>
                             </div>
+                            </div>
 
-    </div>
+
     <ng-template pTemplate="footer">
         <button pButton  type="button" icon="pi pi-save" label="Save changes"
                 (click)="updateOtherUser(userInfo) ; editDialog=false"

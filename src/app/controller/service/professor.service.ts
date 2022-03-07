@@ -13,6 +13,7 @@ import {TrancheHoraireProf} from '../model/tranche-horaire-prof.model';
 
 import {Etudiant} from '../model/etudiant.model';
 import {TypeTeacher} from '../model/type-teacher.model';
+import {GroupeEtudiantDetail} from '../model/groupe-etudiant-detail.model';
 
 
 
@@ -20,6 +21,7 @@ import {TypeTeacher} from '../model/type-teacher.model';
     providedIn: 'root'
 })
 export class ProfessorService {
+    private urlGroupeEtudiant = '/admin/groupeEtudiant/';
     private  urlProf = environment.profUrl;
     private _submitted: boolean;
     private _editDialog: boolean;
@@ -140,6 +142,9 @@ export class ProfessorService {
             this._sessionCours =  new Array<SessionCours>();
         }
         return this._sessionCours;
+    }
+    public findAllGroupeEtudiantDetail(id: number): Observable<Array<GroupeEtudiantDetail>> {
+        return this.http.get<Array<GroupeEtudiantDetail>>(this.urlBase + this.urlGroupeEtudiant + 'id/' + id);
     }
 
     set sessionCours(value: Array<SessionCours>) {

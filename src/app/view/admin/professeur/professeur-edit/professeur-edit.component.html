@@ -202,9 +202,18 @@
                                         <input [(ngModel)]="selected.numero" autofocus id="phoneNumber" pInputText required type="text"/>
                                         <small *ngIf="submitted && !selected.numero" class="p-invalid">Phone Number is required.</small>
                                     </div>
+                                    <div class="col-sm-6 " style="margin-top: 15px;">
+                                        <p class="m-b-10 f-w-600">Skype</p>
+                                        <input [(ngModel)]="selected.skype"  id="phoneNumber" pInputText  type="text"/>
+                                    </div>
                                     <div class="col-sm-6"  style="margin-top: 15px;">
                                         <p class="m-b-10 f-w-600">Level max</p>
                                         <p-dropdown [options]="parcoursList" [(ngModel)]="selected.levelMax"
+                                                    optionLabel="libelle"></p-dropdown>
+                                    </div>
+                                    <div class="col-sm-6"  style="margin-top: 15px;">
+                                        <p class="m-b-10 f-w-600">Level min</p>
+                                        <p-dropdown [options]="parcoursList" [(ngModel)]="selected.levelMin"
                                                     optionLabel="libelle"></p-dropdown>
                                     </div>
                                     <div class="col-sm-6"  style="margin-top: 15px;">
