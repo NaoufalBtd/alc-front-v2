@@ -10,6 +10,7 @@ import {AppComponent} from '../../../../app.component';
 import {User} from '../../../../controller/model/user.model';
 import {FileUploadStatus} from '../../../../controller/model/FileUploadStatus';
 import {Subscription} from 'rxjs';
+import {Inscription} from '../../../../controller/model/inscription.model';
 
 
 @Component({
@@ -75,6 +76,7 @@ export class EtudiantListComponent implements OnInit {
     }
 
     findAll() {
+
         this.studentService.findAll().subscribe(
             data => {
                 this.users = data;
@@ -85,9 +87,28 @@ export class EtudiantListComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        console.log(this.userInfo);
         this.findAll();
     }
+    public findEtud(i: number){
+       console.log('hahoa');
+        console.log(this.userInfo);
+        this.studentService.findByEtudiantId(i).subscribe(
+            data => {
+                this.inscription = data;
+                console.log(this.inscription);
+            }
+        );
+    }
+private _inscription =  new Inscription();
 
+    get inscription(): Inscription {
+        return this._inscription;
+    }
+
+    set inscription(value: Inscription) {
+        this._inscription = value;
+    }
 
     next() {
         this.first = this.first + this.rows;
@@ -117,6 +138,7 @@ export class EtudiantListComponent implements OnInit {
     }
 
     showEditDialog(user: User) {
+        this.findEtud(user.id);
         this.editDialog = true;
         this.userInfo = user;
     }

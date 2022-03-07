@@ -5,7 +5,9 @@
         <img [src]="user?.image" alt="Image" width="250">
     </div>
     <div class="p-col-6">
-        <h3>{{ user?.nom}} {{ user?.prenom}}</h3>         <!---- pi-user -->
+        <h3>{{ user?.nom}} {{ user?.prenom}}</h3>
+
+        <h1>{{prof.typeTeacher.libelle}}</h1><!---- pi-user -->
         <h5>Teacher</h5>
         <button pButton pRipple type="button" icon="pi pi-image " class="p-button-rounded p-button-secondary"
                 (click)="updateProfileImage()"
@@ -75,6 +77,10 @@
             </div>
 
             <div class="p-col-4">
+                 <span class="p-float-label">
+                 <input id="float-input" type="text" pInputText [(ngModel)]="user.skype"><label
+                         for="float-input">Skype</label>
+            </span>
             </div>
 
             <div class="p-col-4">

@@ -28,34 +28,40 @@ export class QuizService {
     private _homeWork: HomeWork;
     private _homeworkQST: HomeWorkQST;
     private _homeworkReponse: HomeWorkReponse;
-    constructor(private http: HttpClient, private messageService: MessageService, ) {
+
+    constructor(private http: HttpClient, private messageService: MessageService,) {
     }
 
-    get homeworkReponse(): HomeWorkReponse{
-        if (this._homeworkReponse == null){
+    get homeworkReponse(): HomeWorkReponse {
+        if (this._homeworkReponse == null) {
             this._homeworkReponse = new HomeWorkReponse();
         }
         return this._homeworkReponse;
     }
-    set homeworkReponse(homeWorkReponse){
+
+    set homeworkReponse(homeWorkReponse) {
         this._homeworkReponse = homeWorkReponse;
     }
+
     get HomeWorkQST(): HomeWorkQST {
-        if (this._homeworkQST == null){
+        if (this._homeworkQST == null) {
             this._homeworkQST = new HomeWorkQST();
         }
         return this._homeworkQST;
     }
-    set HomeWorkQST(homeWorkQST){
+
+    set HomeWorkQST(homeWorkQST) {
         this._homeworkQST = homeWorkQST;
     }
+
     get HomeWork(): HomeWork {
-        if (this._homeWork == null){
+        if (this._homeWork == null) {
             this._homeWork = new HomeWork();
         }
         return this._homeWork;
     }
-    set HomeWork(homeWork){
+
+    set HomeWork(homeWork) {
         this._homeWork = homeWork;
     }
 
@@ -464,6 +470,11 @@ export class QuizService {
         return this.http.post<Quiz>(this.adminUrl + 'quiz/save/', this.selected);
     }
 
+
+    public update(quiz: Quiz): Observable<Quiz> {
+        return this.http.post<Quiz>(this.adminUrl + 'quiz/update/', quiz);
+    }
+
     public saveHomeWork(): Observable<HomeWork> {
         return this.http.post<HomeWork>(this.adminUrl + 'homeWork/', this.HomeWork);
     }
@@ -693,16 +704,16 @@ export class QuizService {
         return this.http.get<Array<Reponse>>(this.adminUrl + 'reponse/question/id/' + question.id);
     }
 
-    public deleteQuiz(ref: string): Observable<Quiz> {
-        return this.http.delete<Quiz>(this.adminUrl + 'quiz/ref/' + ref);
+    public deleteQuiz(quiz: Quiz): Observable<Quiz> {
+        return this.http.post<Quiz>(this.adminUrl + 'quiz/deleteAll/' ,  quiz);
     }
 
     public updateQuiz(): Observable<Quiz> {
         return this.http.put<Quiz>(this.adminUrl + 'quiz/', this.selected);
     }
 
-    public deleteQuestion(id: string): Observable<Question> {
-        return this.http.delete<Question>(this.adminUrl + 'question/id/' + id);
+    public deleteQuestion(qst: Question): Observable<number> {
+        return this.http.post<number>(this.adminUrl + 'question/deleteQst/' , qst);
     }
 
     public saveQuetion(): Observable<Question> {

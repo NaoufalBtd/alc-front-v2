@@ -1,306 +1,3 @@
-<div *ngIf="showTakeQuiz" class="p-field">
-    <div class="p-grid">
-        <div class="p-col-12">
-            <p-breadcrumb [model]="items" [home]="home"></p-breadcrumb>
-        </div>
-        <div style=" background-color: #ffffff;  text-align: center;" class="p-col-12">
-            <div *ngIf="question.typeDeQuestion.ref === 't1'"
-                 style="float:left; display: inline-block; text-align: center">
-                Choose the correct alternative
-            </div>
-            <div *ngIf="question.typeDeQuestion.ref === 't3'"
-                 style="float:left; display: inline-block; text-align: center">
-                Translate the phrase
-            </div>
-            <div *ngIf="question.typeDeQuestion.ref === 't4'"
-                 style="float:left; display: inline-block; text-align: center">
-                Correct the mistake
-            </div>
-            <div *ngIf="question.typeDeQuestion.ref === 't6'"
-                 style="float:left; display: inline-block; text-align: center">
-                Write the correct form
-            </div>
-            <div *ngIf="question.typeDeQuestion.ref === 't5'"
-                 style="float:left; display: inline-block; text-align: center">
-                True or False
-            </div>
-
-
-            <div style="float:right;display: inline-block;text-align: center">{{index}}/{{numberOfQuestion}}</div>
-        </div>
-    </div>
-
-    <div style="background-color: #dee2e6" class="p-grid">
-        <div style="  background-color: transparent!important;" class="p-col-12">
-            <p-progressBar [style]="{'height': '6px'}" [showValue]="false"
-                           [value]="value"></p-progressBar>
-        </div>
-    </div>
-
-    <!--------------------------------- UNIQUE CHOICE-------------------------------------------------------->
-
-    <div *ngIf="question.typeDeQuestion.ref === 't1'" class="p-grid">
-        <div class="p-col-12 question">
-            <button  pButton pRipple type="button" (click)="sound(question)"
-                    icon="pi pi-volume-up" class="p-button-rounded sonButton "></button>
-            <h5 class="h5"> {{  questionSideLeft}}  </h5>
-            <span class="p-float-label">
-            <input *ngIf="answerSelected.lib === undefined" disabled id="inputDashedBorder" inputId="inputDashedBorder"
-                   type="text"
-                   [(ngModel)]="correctAnswersList.get(question.id)[0].lib"
-                   class="p-inputtext-sm " pInputText/>
-
-
-            <input *ngIf="answerSelected.lib !== undefined && answerIsCorrect(answerSelected, question) " disabled
-                   id="inputCorrectAnswer" inputId="inputDashedBorder" type="text"
-                   [(ngModel)]="answerSelected.lib"
-                   class="p-inputtext-sm " pInputText/>
-
-            <input *ngIf="answerSelected.lib !== undefined && !answerIsCorrect(answerSelected, question)" disabled
-                   id="inputFalseAnswer" inputId="inputDashedBorder" type="text"
-                   [(ngModel)]="answerSelected.lib"
-                   class="p-inputtext-sm " pInputText/>
-
-            <label [hidden]="answerSelected.lib === undefined || answerIsCorrect(answerSelected, question)"
-                   class="correctAnswer" for="inputDashedBorder"
-                   *ngFor="let ans of correctAnswersList?.get(question.id)">{{ ans.lib}}</label>
-            <label [hidden]="answerSelected.lib === undefined || answerIsCorrect(answerSelected, question)"
-                   id="triangle-down" for="inputDashedBorder">
-            </label>
-
-        </span>
-            <h5 class="h5"> {{  questionSideRight}}  </h5>
-            <h4 *ngIf="translateWord !== undefined">{{translateWord}}</h4>
-        </div>
-        <div class="p-col-12 answers">
-            <div *ngFor="let reponse of question?.reponses" class="p-field-checkbox textQuestion">
-                <p-radioButton [inputId]="reponse.lib" name="category" [(ngModel)]="myAnswer"
-                               (onClick)="showDontKnowButton = false; showCheckButton = true"
-                               [value]="reponse"></p-radioButton>
-                <label [for]="reponse.lib">{{reponse.lib}}</label>
-            </div>
-            <button *ngIf="showCheckButton && !saveDone" pButton pRipple type="button"
-                    icon="pi pi-check" iconPos="right"
-                    label="Check answer" class="p-button-raised check-button "
-                    (click)="saveAnswers(question)">
-            </button>
-
-            <button *ngIf="showDontKnowButton" pButton pRipple type="button"
-                    icon="pi pi-question" iconPos="right"
-                    label="DON'T KNOW" class="p-button-rounded dont-know-button "
-                    (click)="showAnswers(question)">
-            </button>
-        </div>
-    </div>
-
-
-    <!--------------------------------- TRANSLATE THE PHRASE -------------------------------------------------------->
-
-
-    <div *ngIf="question.typeDeQuestion.ref === 't3'" class="p-grid">
-        <div class="p-col-12 question">
-            <h5 class="translateQuestion"> {{  question?.libelle}}  </h5>
-
-            <span class="p-float-label">
-            <button *ngIf="answerSelected.lib !== undefined && answerIsCorrect(answerSelected, question)"
-                     pButton pRipple type="button" (click)="sound(question)"
-                    icon="pi pi-volume-up" class="p-button-rounded sonButton ">
-            </button>
-
-            <input *ngIf="answerSelected.lib === undefined" id="input-answer" type="text"
-                   (focus)="showDontKnowButton = false ; showCheckButton=true"
-                   [(ngModel)]="myAnswer.lib" pInputText>
-
-            <input disabled *ngIf="answerSelected.lib !== undefined && answerIsCorrect(answerSelected, question)"
-                   id="input-answer-correct" type="text"
-                   [(ngModel)]="answerSelected.lib" pInputText>
-
-            <input disabled *ngIf="answerSelected.lib !== undefined && !answerIsCorrect(answerSelected, question)"
-                   id="input-answer-incorrect" type="text"
-                   [(ngModel)]="answerSelected.lib" pInputText>
-        </span>
-
-        </div>
-
-        <div class="p-col-12 answers">
-            <button style="margin: 0 0 -13px 0;"
-                    *ngIf="answerSelected.lib !== undefined && !answerIsCorrect(answerSelected, question)"
-                     pButton pRipple type="button" (click)="sound(question)"
-                    icon="pi pi-volume-up" class="p-button-rounded sonButton ">
-            </button>
-
-            <h4 [hidden]="answerSelected.lib === undefined || answerIsCorrect(answerSelected, question)"
-                class=""
-                *ngFor="let ans of correctAnswersList?.get(question.id)">
-                {{ ans.lib}}
-            </h4>
-            <h4 *ngIf="translateWord !== undefined">{{translateWord}}</h4>
-
-
-            <button *ngIf="showCheckButton && !saveDone" pButton pRipple type="button"
-                    icon="pi pi-check" iconPos="right"
-                    label="Check answer" class="p-button-raised check-button "
-                    (click)="saveAnswers(question)">
-            </button>
-
-            <button *ngIf="showDontKnowButton" pButton pRipple type="button"
-                    icon="pi pi-question" iconPos="right"
-                    label="DON'T KNOW" class="p-button-rounded dont-know-button "
-                    (click)="showAnswers(question)">
-            </button>
-        </div>
-    </div>
-
-
-    <!--------------------------------- CORRECT THE MISTAKE -------------------------------------------------------->
-
-    <div *ngIf="question.typeDeQuestion.ref === 't4'" class="p-grid">
-        <div class="p-col-12 question">
-            <button pButton pRipple type="button" (click)="sound(question)"
-                    icon="pi pi-volume-up" class="p-button-rounded sonButton ">
-            </button>
-            <h5 class="h5"> {{  questionSideLeft}}  </h5>
-            <span class="p-float-label">
-            <input disabled id="inputDashedBorder"
-                   (focus)="showDontKnowButton =false; showCheckButton=true"
-                   inputId="inputDashedBorder" type="text"
-                   [(ngModel)]="inputAnswer" class="p-inputtext-sm " pInputText/>
-
-
-            <label class="correctAnswer" for="inputDashedBorder">
-                {{correctAnswersList?.get(question.id)[0]?.lib}}
-            </label>
-            <label id="triangle-down" for="inputDashedBorder"></label>
-        </span>
-            <h5 class="h5"> {{  questionSideRight}}  </h5>
-            <h4 *ngIf="translateWord !== undefined">{{translateWord}}</h4>
-
-        </div>
-    </div>
-
-
-    <!--------------------------------- WRITE  THE CORRECT FORM -------------------------------------------------------->
-
-    <div *ngIf="question.typeDeQuestion.ref === 't6'" class="p-grid">
-        <div class="p-col-12 question">
-            <button  pButton pRipple type="button" (click)="sound(question)"
-                    icon="pi pi-volume-up" class="p-button-rounded sonButton ">
-            </button>
-            <h5 class="h5"> {{  questionSideLeft}}  </h5>
-            <span class="p-float-label">
-            <input *ngIf="answerSelected.lib === undefined" id="inputDashedBorder"
-                   (focus)="showDontKnowButton =false; showCheckButton=true"
-                   inputId="inputDashedBorder" type="text"
-                   [(ngModel)]="inputAnswer" class="p-inputtext-sm " pInputText/>
-
-
-            <input *ngIf="answerSelected.lib !== undefined && answerIsCorrect(answerSelected, question) " disabled
-                   id="inputCorrectAnswer" inputId="inputDashedBorder" type="text"
-                   [(ngModel)]="answerSelected.lib"
-                   class="p-inputtext-sm " pInputText/>
-
-            <input *ngIf="answerSelected.lib !== undefined && !answerIsCorrect(answerSelected, question)" disabled
-                   id="inputFalseAnswer" inputId="inputDashedBorder" type="text"
-                   [(ngModel)]="answerSelected.lib"
-                   class="p-inputtext-sm " pInputText/>
-
-            <label [hidden]="answerSelected.lib === undefined || answerIsCorrect(answerSelected, question)"
-                   class="correctAnswer" for="inputDashedBorder"
-                   *ngFor="let ans of correctAnswersList?.get(question.id)">{{ ans.lib}}</label>
-            <label [hidden]="answerSelected.lib === undefined || answerIsCorrect(answerSelected, question)"
-                   id="triangle-down" for="inputDashedBorder">
-            </label>
-        </span>
-            <h5 class="h5"> {{  questionSideRight}}  </h5>
-            <h4 *ngIf="translateWord !== undefined">{{translateWord}}</h4>
-
-        </div>
-        <div class="p-col-12 answers">
-
-            <button *ngIf="showCheckButton && !saveDone" pButton pRipple type="button"
-                    icon="pi pi-check" iconPos="right"
-                    label="Check answer" class="p-button-raised check-button "
-                    (click)="saveAnswers(question)">
-            </button>
-
-            <button *ngIf="showDontKnowButton" pButton pRipple type="button"
-                    icon="pi pi-question" iconPos="right"
-                    label="DON'T KNOW" class="p-button-rounded dont-know-button "
-                    (click)="showAnswers(question)">
-            </button>
-        </div>
-    </div>
-
-
-    <!--------------------------------- TRUE OR FALSE -------------------------------------------------------->
-
-    <div *ngIf="question.typeDeQuestion.ref === 't5'" class="p-grid">
-        <div class="p-col-12 question ">
-            <div id="trueFalse" class="p-grid trueOrFalseQst">
-                <div class="p-col-9">
-                    {{  question?.libelle}}
-                </div>
-                <div style="padding-top: 2%;" class="p-col-3">
-                    <p-toggleButton [(ngModel)]="trueOrFalse" onLabel="True"
-                                    [disabled]="disableToggleButton"
-                                    (ngModelChange)="showCheckButton=true; showDontKnowButton=false"
-                                    offLabel="False" onIcon="pi pi-check"
-                                    offIcon="pi pi-times"
-                                    [style]="{'width': '7em',
-                                 'height': '23px'
-                                 }">
-                    </p-toggleButton>
-                </div>
-            </div>
-        </div>
-
-        <div class="p-col-12 answers">
-
-            <button *ngIf="showCheckButton && !saveDone" pButton pRipple type="button"
-                    icon="pi pi-check" iconPos="right"
-                    label="Check answer" class="p-button-raised check-button "
-                    (click)="saveAnswers(question)">
-            </button>
-
-            <button *ngIf="showDontKnowButton" pButton pRipple type="button"
-                    icon="pi pi-question" iconPos="right"
-                    label="DON'T KNOW" class="p-button-rounded dont-know-button "
-                    (click)="showAnswers(question)">
-            </button>
-        </div>
-    </div>
-
-
-    <div class="p-grid sideBar">
-        <div class="p-col-3">
-            <button *ngIf="question.id !== questionList[0]?.id"
-                    style="float:left"
-                    pButton pRipple
-                    type="button" icon="pi pi-arrow-left" iconPos="left"
-                    label="Previous" (click)="previousQuestionFct()"
-                    class="p-button-rounded p-button-secondary"></button>
-        </div>
-
-        <div class="p-col-6"></div>
-
-        <div class="p-col-3">
-            <button *ngIf="question.id !== questionList[questionList.length -1]?.id"
-                    style="float:right"
-                    pButton pRipple
-                    type="button" icon="pi pi-arrow-right" iconPos="right"
-                    label="Next" (click)="nextQuestionFct()"
-                    class="p-button-rounded p-button-secondary"></button>
-
-            <button *ngIf="question.id === questionList[questionList.length -1]?.id " style="float:right" pButton
-                    pRipple
-                    (click)="openUpdate()"
-                    type="button" icon="pi pi-pencil" iconPos="right"
-                    label="edit"
-                    class="p-button-rounded p-button-warning"></button>
-        </div>
-    </div>
-</div>
-
 <div *ngIf="showQuizReview" class="card">
     <p-table [value]="answersList | keyvalue" styleClass="p-datatable-sm" responsiveLayout="scroll">
         <ng-template pTemplate="caption">
@@ -325,3 +22,420 @@
         </ng-template>
     </p-table>
 </div>
+<p-breadcrumb [style]="{'marginBottom': '6px'}" [model]="items" [home]="home"></p-breadcrumb>
+
+
+<p-tabView >
+    <p-tabPanel header="Quiz">
+        <p-table #dt [value]="questionList" responsiveLayout="scroll" [paginator]="true" [rows]="rows"
+                 [showCurrentPageReport]="true"
+                 [globalFilterFields]="['libelle', 'numero', 'typeDeQuestion.lib']"
+                 [(first)]="first"
+                 [rowsPerPageOptions]="[10,25,50]">
+            <ng-template pTemplate="caption">
+
+                <div class="p-grid">
+                    <div class="p-col-3">
+                        <input class="searchValue" type="text" pInputText
+                               (input)="dt.filterGlobal($event.target.value, 'contains')"
+                               placeholder="Search..."/>
+                    </div>
+                    <div style="text-align: end" class="p-col-9">
+                        <button (click)="edit()"
+                                class="p-button-rounded p-button-success p-mr-2" icon="pi pi-pencil" pButton
+                                pTooltip="Edit quiz" tooltipPosition="top"
+                                pRipple></button>
+
+
+                        <button (click)="deleteQuiz()" class="p-button-rounded p-button-danger"
+                                pTooltip="Remove quiz" tooltipPosition="top"
+                                icon="pi pi-trash" pButton
+                                pRipple></button>
+                    </div>
+                </div>
+
+            </ng-template>
+
+
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Number</th>
+                    <th>Type</th>
+                    <th>Question</th>
+                    <th>True</th>
+                    <th>False</th>
+                    <th>Action</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-qst>
+                <tr>
+                    <td>{{qst?.numero}}</td>
+                    <td>{{qst?.typeDeQuestion?.lib}}</td>
+                    <td>{{qst?.libelle}}</td>
+                    <td>{{qst?.pointReponseJuste}}</td>
+                    <td>{{qst?.pointReponsefausse}}</td>
+
+                    <td>
+                        <button (click)="view(qst)"
+                                class="p-button-rounded p-button-info p-mr-2" icon="pi pi-list" pButton
+                                pTooltip="Answers" tooltipPosition="top"
+                                pRipple></button>
+
+
+                        <button (click)="delete(qst)" class="p-button-rounded p-button-danger"
+                                icon="pi pi-trash" pButton
+                                pTooltip="Remove Question" tooltipPosition="top"
+                                pRipple></button>
+
+
+                    </td>
+
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="summary">
+                <div class="flex align-items-center justify-content-between">
+                    In total there are {{ questionList?.length }} Question.
+                </div>
+            </ng-template>
+        </p-table>
+    </p-tabPanel>
+    <p-tabPanel header="Quiz Review">
+        <div *ngIf="showTakeQuiz" class="p-field">
+            <div class="p-grid">
+
+                <div style=" background-color: #ffffff;  text-align: center;" class="p-col-12">
+                    <div *ngIf="question.typeDeQuestion.ref === 't1'"
+                         style="float:left; display: inline-block; text-align: center">
+                        Choose the correct alternative
+                    </div>
+                    <div *ngIf="question.typeDeQuestion.ref === 't3'"
+                         style="float:left; display: inline-block; text-align: center">
+                        Translate the phrase
+                    </div>
+                    <div *ngIf="question.typeDeQuestion.ref === 't4'"
+                         style="float:left; display: inline-block; text-align: center">
+                        Correct the mistake
+                    </div>
+                    <div *ngIf="question.typeDeQuestion.ref === 't6'"
+                         style="float:left; display: inline-block; text-align: center">
+                        Write the correct form
+                    </div>
+                    <div *ngIf="question.typeDeQuestion.ref === 't5'"
+                         style="float:left; display: inline-block; text-align: center">
+                        True or False
+                    </div>
+
+
+                    <div style="float:right;display: inline-block;text-align: center">{{index}}
+                        /{{numberOfQuestion}}</div>
+                </div>
+            </div>
+
+            <div style="background-color: #dee2e6" class="p-grid">
+                <div style="  background-color: transparent!important;" class="p-col-12">
+                    <p-progressBar [style]="{'height': '6px'}" [showValue]="false"
+                                   [value]="value"></p-progressBar>
+                </div>
+            </div>
+
+            <!--------------------------------- UNIQUE CHOICE-------------------------------------------------------->
+
+            <div *ngIf="question.typeDeQuestion.ref === 't1'" class="p-grid">
+                <div class="p-col-12 question">
+                    <button pButton pRipple type="button" (click)="sound(question)"
+                            icon="pi pi-volume-up" class="p-button-rounded sonButton "></button>
+                    <h5 class="h5"> {{  questionSideLeft}}  </h5>
+                    <span class="p-float-label">
+            <input *ngIf="answerSelected.lib === undefined" disabled id="inputDashedBorder" inputId="inputDashedBorder"
+                   type="text"
+                   [(ngModel)]="correctAnswersList.get(question.id)[0].lib"
+                   class="p-inputtext-sm " pInputText/>
+
+
+            <input *ngIf="answerSelected.lib !== undefined && answerIsCorrect(answerSelected, question) " disabled
+                   id="inputCorrectAnswer" inputId="inputDashedBorder" type="text"
+                   [(ngModel)]="answerSelected.lib"
+                   class="p-inputtext-sm " pInputText/>
+
+            <input *ngIf="answerSelected.lib !== undefined && !answerIsCorrect(answerSelected, question)" disabled
+                   id="inputFalseAnswer" inputId="inputDashedBorder" type="text"
+                   [(ngModel)]="answerSelected.lib"
+                   class="p-inputtext-sm " pInputText/>
+
+            <label [hidden]="answerSelected.lib === undefined || answerIsCorrect(answerSelected, question)"
+                   class="correctAnswer" for="inputDashedBorder"
+                   *ngFor="let ans of correctAnswersList?.get(question.id)">{{ ans.lib}}</label>
+            <label [hidden]="answerSelected.lib === undefined || answerIsCorrect(answerSelected, question)"
+                   id="triangle-down" for="inputDashedBorder">
+            </label>
+
+        </span>
+                    <h5 class="h5"> {{  questionSideRight}}  </h5>
+                    <h4 *ngIf="translateWord !== undefined">{{translateWord}}</h4>
+                </div>
+                <div class="p-col-12 answers">
+                    <div *ngFor="let reponse of question?.reponses" class="p-field-checkbox textQuestion">
+                        <p-radioButton [inputId]="reponse.lib" name="category" [(ngModel)]="myAnswer"
+                                       (onClick)="showDontKnowButton = false; showCheckButton = true"
+                                       [value]="reponse"></p-radioButton>
+                        <label [for]="reponse.lib">{{reponse.lib}}</label>
+                    </div>
+                    <button *ngIf="showCheckButton && !saveDone" pButton pRipple type="button"
+                            icon="pi pi-check" iconPos="right"
+                            label="Check answer" class="p-button-raised check-button "
+                            (click)="saveAnswers(question)">
+                    </button>
+
+                    <button *ngIf="showDontKnowButton" pButton pRipple type="button"
+                            icon="pi pi-question" iconPos="right"
+                            label="DON'T KNOW" class="p-button-rounded dont-know-button "
+                            (click)="showAnswers(question)">
+                    </button>
+                </div>
+            </div>
+
+
+            <!--------------------------------- TRANSLATE THE PHRASE -------------------------------------------------------->
+
+
+            <div *ngIf="question.typeDeQuestion.ref === 't3'" class="p-grid">
+                <div class="p-col-12 question">
+                    <h5 class="translateQuestion"> {{  question?.libelle}}  </h5>
+
+                    <span class="p-float-label">
+            <button *ngIf="answerSelected.lib !== undefined && answerIsCorrect(answerSelected, question)"
+                    pButton pRipple type="button" (click)="sound(question)"
+                    icon="pi pi-volume-up" class="p-button-rounded sonButton ">
+            </button>
+
+            <input *ngIf="answerSelected.lib === undefined" id="input-answer" type="text"
+                   (focus)="showDontKnowButton = false ; showCheckButton=true"
+                   [(ngModel)]="myAnswer.lib" pInputText>
+
+            <input disabled *ngIf="answerSelected.lib !== undefined && answerIsCorrect(answerSelected, question)"
+                   id="input-answer-correct" type="text"
+                   [(ngModel)]="answerSelected.lib" pInputText>
+
+            <input disabled *ngIf="answerSelected.lib !== undefined && !answerIsCorrect(answerSelected, question)"
+                   id="input-answer-incorrect" type="text"
+                   [(ngModel)]="answerSelected.lib" pInputText>
+        </span>
+
+                </div>
+
+                <div class="p-col-12 answers">
+                    <button style="margin: 0 0 -13px 0;"
+                            *ngIf="answerSelected.lib !== undefined && !answerIsCorrect(answerSelected, question)"
+                            pButton pRipple type="button" (click)="sound(question)"
+                            icon="pi pi-volume-up" class="p-button-rounded sonButton ">
+                    </button>
+
+                    <h4 [hidden]="answerSelected.lib === undefined || answerIsCorrect(answerSelected, question)"
+                        class=""
+                        *ngFor="let ans of correctAnswersList?.get(question.id)">
+                        {{ ans.lib}}
+                    </h4>
+                    <h4 *ngIf="translateWord !== undefined">{{translateWord}}</h4>
+
+
+                    <button *ngIf="showCheckButton && !saveDone" pButton pRipple type="button"
+                            icon="pi pi-check" iconPos="right"
+                            label="Check answer" class="p-button-raised check-button "
+                            (click)="saveAnswers(question)">
+                    </button>
+
+                    <button *ngIf="showDontKnowButton" pButton pRipple type="button"
+                            icon="pi pi-question" iconPos="right"
+                            label="DON'T KNOW" class="p-button-rounded dont-know-button "
+                            (click)="showAnswers(question)">
+                    </button>
+                </div>
+            </div>
+
+
+            <!--------------------------------- CORRECT THE MISTAKE -------------------------------------------------------->
+
+            <div *ngIf="question.typeDeQuestion.ref === 't4'" class="p-grid">
+                <div class="p-col-12 question">
+                    <button pButton pRipple type="button" (click)="sound(question)"
+                            icon="pi pi-volume-up" class="p-button-rounded sonButton ">
+                    </button>
+                    <h5 class="h5"> {{  questionSideLeft}}  </h5>
+                    <span class="p-float-label">
+            <input disabled id="inputDashedBorder"
+                   (focus)="showDontKnowButton =false; showCheckButton=true"
+                   inputId="inputDashedBorder" type="text"
+                   [(ngModel)]="inputAnswer" class="p-inputtext-sm " pInputText/>
+
+
+            <label class="correctAnswer" for="inputDashedBorder">
+                {{correctAnswersList?.get(question.id)[0]?.lib}}
+            </label>
+            <label id="triangle-down" for="inputDashedBorder"></label>
+        </span>
+                    <h5 class="h5"> {{  questionSideRight}}  </h5>
+                    <h4 *ngIf="translateWord !== undefined">{{translateWord}}</h4>
+
+                </div>
+            </div>
+
+
+            <!--------------------------------- WRITE  THE CORRECT FORM -------------------------------------------------------->
+
+            <div *ngIf="question.typeDeQuestion.ref === 't6'" class="p-grid">
+                <div class="p-col-12 question">
+                    <button pButton pRipple type="button" (click)="sound(question)"
+                            icon="pi pi-volume-up" class="p-button-rounded sonButton ">
+                    </button>
+                    <h5 class="h5"> {{  questionSideLeft}}  </h5>
+                    <span class="p-float-label">
+            <input *ngIf="answerSelected.lib === undefined" id="inputDashedBorder"
+                   (focus)="showDontKnowButton =false; showCheckButton=true"
+                   inputId="inputDashedBorder" type="text"
+                   [(ngModel)]="inputAnswer" class="p-inputtext-sm " pInputText/>
+
+
+            <input *ngIf="answerSelected.lib !== undefined && answerIsCorrect(answerSelected, question) " disabled
+                   id="inputCorrectAnswer" inputId="inputDashedBorder" type="text"
+                   [(ngModel)]="answerSelected.lib"
+                   class="p-inputtext-sm " pInputText/>
+
+            <input *ngIf="answerSelected.lib !== undefined && !answerIsCorrect(answerSelected, question)" disabled
+                   id="inputFalseAnswer" inputId="inputDashedBorder" type="text"
+                   [(ngModel)]="answerSelected.lib"
+                   class="p-inputtext-sm " pInputText/>
+
+            <label [hidden]="answerSelected.lib === undefined || answerIsCorrect(answerSelected, question)"
+                   class="correctAnswer" for="inputDashedBorder"
+                   *ngFor="let ans of correctAnswersList?.get(question.id)">{{ ans.lib}}</label>
+            <label [hidden]="answerSelected.lib === undefined || answerIsCorrect(answerSelected, question)"
+                   id="triangle-down" for="inputDashedBorder">
+            </label>
+        </span>
+                    <h5 class="h5"> {{  questionSideRight}}  </h5>
+                    <h4 *ngIf="translateWord !== undefined">{{translateWord}}</h4>
+
+                </div>
+                <div class="p-col-12 answers">
+
+                    <button *ngIf="showCheckButton && !saveDone" pButton pRipple type="button"
+                            icon="pi pi-check" iconPos="right"
+                            label="Check answer" class="p-button-raised check-button "
+                            (click)="saveAnswers(question)">
+                    </button>
+
+                    <button *ngIf="showDontKnowButton" pButton pRipple type="button"
+                            icon="pi pi-question" iconPos="right"
+                            label="DON'T KNOW" class="p-button-rounded dont-know-button "
+                            (click)="showAnswers(question)">
+                    </button>
+                </div>
+            </div>
+
+
+            <!--------------------------------- TRUE OR FALSE -------------------------------------------------------->
+
+            <div *ngIf="question.typeDeQuestion.ref === 't5'" class="p-grid">
+                <div class="p-col-12 question ">
+                    <div id="trueFalse" class="p-grid trueOrFalseQst">
+                        <div class="p-col-9">
+                            {{  question?.libelle}}
+                        </div>
+                        <div style="padding-top: 2%;" class="p-col-3">
+                            <p-toggleButton [(ngModel)]="trueOrFalse" onLabel="True"
+                                            [disabled]="disableToggleButton"
+                                            (ngModelChange)="showCheckButton=true; showDontKnowButton=false"
+                                            offLabel="False" onIcon="pi pi-check"
+                                            offIcon="pi pi-times"
+                                            [style]="{'width': '7em',
+                                 'height': '23px'
+                                 }">
+                            </p-toggleButton>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-col-12 answers">
+
+                    <button *ngIf="showCheckButton && !saveDone" pButton pRipple type="button"
+                            icon="pi pi-check" iconPos="right"
+                            label="Check answer" class="p-button-raised check-button "
+                            (click)="saveAnswers(question)">
+                    </button>
+
+                    <button *ngIf="showDontKnowButton" pButton pRipple type="button"
+                            icon="pi pi-question" iconPos="right"
+                            label="DON'T KNOW" class="p-button-rounded dont-know-button "
+                            (click)="showAnswers(question)">
+                    </button>
+                </div>
+            </div>
+
+
+            <div class="p-grid sideBar">
+                <div class="p-col-3">
+                    <button *ngIf="question.id !== questionList[0]?.id"
+                            style="float:left"
+                            pButton pRipple
+                            type="button" icon="pi pi-arrow-left" iconPos="left"
+                            label="Previous" (click)="previousQuestionFct()"
+                            class="p-button-rounded p-button-secondary"></button>
+                </div>
+
+                <div class="p-col-6"></div>
+
+                <div class="p-col-3">
+                    <button *ngIf="question.id !== questionList[questionList.length -1]?.id"
+                            style="float:right"
+                            pButton pRipple
+                            type="button" icon="pi pi-arrow-right" iconPos="right"
+                            label="Next" (click)="nextQuestionFct()"
+                            class="p-button-rounded p-button-secondary"></button>
+                </div>
+            </div>
+        </div>
+    </p-tabPanel>
+
+</p-tabView>
+
+
+<p-dialog header="Answers" [(visible)]="displayReponsesDialog" [modal]="true" [style]="{width: '60vw'}"
+          [maximizable]="true"
+          [draggable]="true" [resizable]="false">
+    <p-table [value]="selectedQuestion.reponses" responsiveLayout="scroll" [paginator]="true" [rows]="rows"
+             [showCurrentPageReport]="true"
+             [(first)]="first"
+             [rowsPerPageOptions]="[10,25,50]">
+
+
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Number</th>
+                <th>Answer</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rps>
+            <tr>
+                <td>{{rps?.numero}}</td>
+                <td>{{rps?.lib}}</td>
+                <td>{{rps?.etatReponse}}</td>
+                <td>
+                    <button (click)="deleteAnswer(rps)" class="p-button-rounded p-button-danger"
+                            icon="pi pi-trash" pButton
+                            pTooltip="Remove Answer" tooltipPosition="top"
+                            pRipple></button>
+                </td>
+
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+            <div class="flex align-items-center justify-content-between">
+                In total there are {{ selectedQuestion?.reponses?.length }} Answers.
+            </div>
+        </ng-template>
+    </p-table>
+
+
+</p-dialog>

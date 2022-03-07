@@ -158,6 +158,7 @@ import {FreetriallessonComponent} from './view/etudiant/freetriallesson/freetria
                     {path: 'paiementlist', component: PaiementlistComponent},
                     {path: 'connected-student', component: ConnectedStudentComponent},
                     {path: 'reclamation-prof', component: ReclamationProfComponent}
+
                 ]
             },
             {

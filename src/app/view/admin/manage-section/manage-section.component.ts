@@ -5,6 +5,11 @@ import {Cours} from '../../../controller/model/cours.model';
 import {Section} from '../../../controller/model/section.model';
 import {CategorieSection} from '../../../controller/model/categorie-section.model';
 import {MessageService} from 'primeng/api';
+import {QuizService} from '../../../controller/service/quiz.service';
+import {QuizEtudiantService} from '../../../controller/service/quiz-etudiant.service';
+import {Quiz} from '../../../controller/model/quiz.model';
+import {Router} from '@angular/router';
+import {LearnService} from '../../../controller/service/learn.service';
 
 @Component({
     selector: 'app-manage-section',
@@ -25,7 +30,12 @@ export class ManageSectionComponent implements OnInit {
     showEditDialog: boolean;
     categorieSections: Array<CategorieSection> = new Array<CategorieSection>();
 
-    constructor(private parcoursService: ParcoursService, private messageService: MessageService,) {
+    constructor(private parcoursService: ParcoursService,
+                private quizEtudiantService: QuizEtudiantService,
+                private quizService: QuizService,
+                private learnService: LearnService,
+                private router: Router,
+                private messageService: MessageService) {
     }
 
     get selectedparcours(): Parcours {
@@ -44,6 +54,24 @@ export class ManageSectionComponent implements OnInit {
         this.parcoursService.selectedcours = value;
     }
 
+    set parcourCurrent(value: Parcours) {
+        this.learnService.parcourCurrent = value;
+    }
+
+
+
+
+    set sectionCurrent(value: Section) {
+        this.learnService.sectionCurrent = value;
+    }
+
+
+
+    set courseCurrent(value: Cours) {
+        this.learnService.courseCurrent = value;
+    }
+
+
     ngOnInit(): void {
         this.selectedparcours = new Parcours();
         this.selectedcours = new Cours();
@@ -55,6 +83,7 @@ export class ManageSectionComponent implements OnInit {
     }
 
     getCours() {
+        this.parcourCurrent = this.selectedparcours;
         console.log(this.selectedparcours.id);
         if (this.selectedparcours.id !== undefined) {
             this.parcoursService.afficheCours().subscribe(
@@ -65,6 +94,7 @@ export class ManageSectionComponent implements OnInit {
     }
 
     getSections() {
+        this.courseCurrent = this.selectedcours;
         console.log(this.selectedcours.id);
         if (this.selectedcours.id !== undefined) {
             if (this.selectedparcours.id !== undefined) {
@@ -133,5 +163,31 @@ export class ManageSectionComponent implements OnInit {
         } else {
             return section.contenu.length >= 5;
         }
+    }
+
+    get selectedQuiz(): Quiz {
+        return this.quizEtudiantService.selectedQuiz;
+    }
+
+    set selectedQuiz(value: Quiz) {
+        this.quizEtudiantService.selectedQuiz = value;
+    }
+
+    showQuiz(section: Section) {
+        this.sectionCurrent = section;
+        this.quizEtudiantService.findQuizBySectionId(section).subscribe(
+            data => {
+                this.selectedQuiz = data;
+                if (this.selectedQuiz.section.id == null) {
+                    this.router.navigate(['admin/quiz-create']);
+                } else {
+                    this.quizService.refQuiz = this.selectedQuiz.ref;
+                    console.log(this.quizService.refQuiz);
+                    this.router.navigate(['admin/quiz-preview-prof']);
+                }
+            }, error => {
+                // tslint:disable-next-line:no-unused-expression
+                this.selectedQuiz == null;
+            });
     }
 }

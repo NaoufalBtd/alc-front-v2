@@ -74,14 +74,16 @@ export class EtudiantProfileComponent implements OnInit {
   }
 
   public edit(){
-    console.log(this.etudiant);
+    console.log(this.etudiant.skype);
     this.userService.edit(this.etudiant).subscribe(data => {
       this.etudiant  = data;
+
     });
   }
   ngOnInit(): void {
-
-  this.etudiantService.findAllEtudiant().subscribe(data =>{
+  console.log(this.authenticationService.getUserFromLocalCache());
+  this.etudiantService.findAllEtudiant().subscribe(data =>
+  {
   this.etudiant = data ;
   this.getValue();});
   this.user = this.authenticationService.getUserFromLocalCache();
@@ -180,6 +182,7 @@ export class EtudiantProfileComponent implements OnInit {
               this.user = data;
               this.authenticationService.addUserToLocalCache(this.user);
               console.log(data);
+              console.log('ha skype:' +this.user.skype);
                 this.messageService.add({
                     severity: 'success',
                     summary: 'Successful',
