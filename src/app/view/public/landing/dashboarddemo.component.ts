@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, NgModule, OnInit} from '@angular/core';
 import {MenuItem, MessageService} from 'primeng/api';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
@@ -18,8 +18,9 @@ import {HeaderType} from '../../../enum/header-type.enum';
 import {AuthenticationService} from '../../../controller/service/authentication.service';
 import {Subscription} from 'rxjs';
 
-import { VonPrimengFormModule } from '@von-development-studio/primeng-form-validation';
+import {VonPrimengFormModule} from '@von-development-studio/primeng-form-validation';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+
 @Component({
     templateUrl: './dashboard.component.html',
     styleUrls: ['./tabledemo.scss']
@@ -27,7 +28,7 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 @NgModule({
     imports: [
 
-            VonPrimengFormModule,
+        VonPrimengFormModule,
     ]
 })
 export class DashboardDemoComponent implements OnInit {
@@ -63,11 +64,14 @@ export class DashboardDemoComponent implements OnInit {
     exform: FormGroup;
     isSuccessful = false;
     form2: any = {};
+
     constructor(private login: LoginService, public profservice: ProfService, public studentservice: EtudiantService, public parcoursService: ParcoursService,
                 public packStudentService: PackStudentService,
                 public etudiantService: EtudiantService,
                 public messageService: MessageService,
-                public profService: ProfService, public router: Router, public authenticationService: AuthenticationService) {}
+                public profService: ProfService, public router: Router, public authenticationService: AuthenticationService) {
+    }
+
     public progress = 0;
     public next = false;
     public previous = false;
@@ -77,9 +81,9 @@ export class DashboardDemoComponent implements OnInit {
     title = 'landingDemo';
     value = 10;
 
-    public showNext(){
-        if (this.progress >= 0 && this.progress < 3){
-            if (this.previous){
+    public showNext() {
+        if (this.progress >= 0 && this.progress < 3) {
+            if (this.previous) {
                 this.previous = false;
             }
             this.next = true;
@@ -89,9 +93,10 @@ export class DashboardDemoComponent implements OnInit {
         }
 
     }
-    public showPrevious(){
-        if (this.progress > 0){
-            if (this.next){
+
+    public showPrevious() {
+        if (this.progress > 0) {
+            if (this.next) {
                 this.next = false;
             }
             this.previous = true;
@@ -101,9 +106,10 @@ export class DashboardDemoComponent implements OnInit {
         }
 
     }
-    public showNextgroup(){
-        if (this.progressgroup >= 0 && this.progressgroup < 3){
-            if (this.previousgroup){
+
+    public showNextgroup() {
+        if (this.progressgroup >= 0 && this.progressgroup < 3) {
+            if (this.previousgroup) {
                 this.previousgroup = false;
             }
             this.nextgroup = true;
@@ -112,9 +118,10 @@ export class DashboardDemoComponent implements OnInit {
         }
 
     }
-    public showPreviousgroup(){
-        if (this.progressgroup > 0){
-            if (this.nextgroup){
+
+    public showPreviousgroup() {
+        if (this.progressgroup > 0) {
+            if (this.nextgroup) {
                 this.nextgroup = false;
             }
             this.previousgroup = true;
@@ -158,9 +165,11 @@ export class DashboardDemoComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.exform = new FormGroup({'fullName': new FormControl(null, Validators.required),
+        this.exform = new FormGroup({
+            'fullName': new FormControl(null, Validators.required),
 
-            'email': new FormControl(null, Validators.required) });
+            'email': new FormControl(null, Validators.required)
+        });
 
 
         console.log('nbr of student');
@@ -223,12 +232,12 @@ export class DashboardDemoComponent implements OnInit {
     }
 
     showPacks(b: boolean) {
-          if (b){
+        if (b) {
             this.showdialoggroupe = true;
-           }else {
-              this.showdialogindiv = true;
-          }
-          this.packStudentService.findPackIndividualOrgroupe(b);
+        } else {
+            this.showdialogindiv = true;
+        }
+        this.packStudentService.findPackIndividualOrgroupe(b);
     }
 
     public onLogin(user: User): void {
@@ -255,10 +264,10 @@ export class DashboardDemoComponent implements OnInit {
         );
     }
 
-    createEtudiant(){
+    createEtudiant() {
         this.etudiantService.create().subscribe(
             data => {
-                if (data != null){
+                if (data != null) {
                     console.log(data);
                     // this.onLogin(data);
                     this.authenticationService.addUserToLocalCache(data);
@@ -286,10 +295,11 @@ export class DashboardDemoComponent implements OnInit {
             }
         );
     }
-    createProf(){
+
+    createProf() {
         this.profService.save().subscribe(
             data => {
-                if (data != null){
+                if (data != null) {
                     this.messageService.add({
                         severity: 'success',
                         summary: 'Successful',
