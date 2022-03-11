@@ -526,7 +526,6 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
             data => {
                 this.itemsDict = data;
             });
-        // this.photoURL();
         this.quizService.section.id = this.selectedsection.id;
         this.quizService.findQuizSection().subscribe(data => this.selectedQuiz = data);
         this.quizService.findQuizBySectionId(this.selectedsection).subscribe(
@@ -564,51 +563,6 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
         this.vocab.findAllVocabSection().subscribe(data => {
             this.vocab.nombreVocab = data.length;
         });
-
-        this.menu = [
-            {
-                icon: 'pi pi-list', command: (event) => {
-                    this.service.affichelistSection().subscribe(
-                        data => {
-                            this.itemssection2 = data;
-                            // tslint:disable-next-line:no-shadowed-variable
-                        });
-                    document.getElementById('word').style.visibility = 'hidden';
-                    document.getElementById('chat').style.visibility = 'hidden';
-                    document.getElementById('word').style.height = '0px';
-                    document.getElementById('categoriess').style.visibility = 'visible';
-                    document.getElementById('categoriess').style.width = '100%';
-                    document.getElementById('categoriess').style.height = '100%';
-                    document.getElementById('categ').style.height = '100%';
-                    document.getElementById('chat').style.visibility = 'hidden';
-                }
-            }, {
-                icon: 'pi pi-fw pi-comments', command: (event) => {
-                    document.getElementById('categoriess').style.visibility = 'hidden';
-                    document.getElementById('categoriess').style.height = '0px';
-                    document.getElementById('word').style.visibility = 'hidden';
-                    document.getElementById('word').style.height = '0px';
-                    document.getElementById('chat').style.visibility = 'visible';
-
-                }
-            },
-            {
-                icon: 'pi pi-book', style: {width: '50%'}, command: (event) => {
-                    this.dictionnaryService.FindAllWord().subscribe(
-                        data => {
-                            this.itemsDict = data;
-                        });
-                    document.getElementById('categoriess').style.visibility = 'hidden';
-                    document.getElementById('categoriess').style.height = '0px';
-                    document.getElementById('word').style.visibility = 'visible';
-                    document.getElementById('word').style.width = '100%';
-                    document.getElementById('word').style.height = '100%';
-                    document.getElementById('wrd').style.height = '100%';
-                    document.getElementById('chat').style.visibility = 'hidden';
-
-                }
-            }
-        ];
 
         this.findhomeworkbycours(this.sectionItemService.coursofsection);
         if (this.webSocketService.isInSession) {
@@ -946,5 +900,14 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
             this.messageService.add({severity: 'error', life: 3000, detail: 'Text is too long! try again with small text'});
 
         });
+    }
+
+    nextSection(selectedsection: Section): string {
+        console.log(this.itemssection2);
+        for (let i = 0; i < this.itemssection2.length; i++) {
+            if (selectedsection.id === this.itemssection2[i].id) {
+                return this.itemssection2[i + 1].libelle;
+            }
+        }
     }
 }

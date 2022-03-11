@@ -108,16 +108,16 @@ tr.timeline > li {
 }
 
 tr.timeline > li:before {
-  content: '            ';
-  background: white;
+  content: " ";
+  background: #c8c8c8;
   display: inline-block;
   position: absolute;
   border-radius: 50%;
-  border: 3px solid #22c0e8;
-  left: 30px;
-  width: 10px;
-  height: 10px;
-  z-index: 200;
+  border: 2px solid #cfcfcf;
+  left: 32px;
+  width: 5px;
+  height: 5px;
+  z-index: 201;
 }
 
 .quiz {
@@ -183,6 +183,7 @@ tr.timeline > li:before {
   font-size: larger;
   font-weight: 500;
   letter-spacing: 2px;
+  margin-bottom: 10px
 }
 
 
@@ -206,4 +207,18 @@ tr.timeline > li:before {
   padding: 8px;
   cursor: pointer;
   margin-right: 5px;
+}
+
+
+.skipeContainer{
+  border: 2px dashed #bfbfbf;
+  height: 200px;
+  background: #fffdfa59;
+  margin-bottom: 10px;
+  text-align: center;
+  padding: 40px;
+}
+
+#startText{
+  color: #60788a;
 }

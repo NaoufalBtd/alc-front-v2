@@ -357,8 +357,6 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
     }
 
     NextSection() {
-        //this.quizService.section.id = this.selectedsection.id;
-        //this.quizService.findQuizSection().subscribe( data => this.selectedQuiz = data);
         this.service.affichelistSection().subscribe(
             data => {
                 this.itemssection2 = data;
@@ -547,4 +545,23 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
         this.dictionnaryService.submittedDictEdit = value;
     }
 
+    nextSection(selectedsection: Section): string {
+        console.log(this.itemssection2);
+        for (let i = 0; i < this.itemssection2.length; i++) {
+            if (selectedsection.id === this.itemssection2[i].id) {
+                return this.itemssection2[i + 1]?.categorieSection?.libelle;
+            }
+        }
+        return 'Next';
+    }
+
+    previousSection(selectedsection: Section) {
+        console.log(this.itemssection2);
+        for (let i = 0; i < this.itemssection2.length; i++) {
+            if (selectedsection.id === this.itemssection2[i].id) {
+                return this.itemssection2[i - 1]?.categorieSection?.libelle;
+            }
+        }
+        return 'Previous';
+    }
 }
