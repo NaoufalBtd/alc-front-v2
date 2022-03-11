@@ -10,6 +10,7 @@ body {
 
 .speech-wrapper {
   padding: 1px 6px;
+
   .bubble {
     width: 70%;
     height: auto;
@@ -19,32 +20,40 @@ body {
     box-shadow: 1px 1px 0 #7dc59f;
     position: relative;
     margin: 0 0 20px;
+
     &.alt {
       margin: 0 0 0 55px;
     }
+
     .txt {
       padding: 8px 55px 8px 14px;
+
       .name {
         font-weight: 600;
         font-size: 12px;
         margin: 0 0 4px;
         color: #3498db;
+
         span {
           font-weight: normal;
           color: #b3b3b3;
         }
+
         &.alt {
           color: #0a5c2d;
         }
+
         &.altTeacher {
           color: #cc952e;
         }
       }
+
       .message {
         font-size: 12px;
         margin: 0;
         color: #2b2b2b;
       }
+
       .timestamp {
         font-size: 11px;
         position: absolute;
@@ -54,18 +63,21 @@ body {
         color: #999;
       }
     }
+
     .bubble-arrow {
       position: absolute;
       width: 0;
       bottom: 42px;
       left: -16px;
       height: 0;
+
       &.alt {
         right: -2px;
         bottom: 40px;
         left: auto;
       }
     }
+
     .bubble-arrow:after {
       content: '';
       position: absolute;
@@ -76,12 +88,11 @@ body {
       height: 30px;
       transform: rotate(145deg);
     }
+
     .bubble-arrow.alt:after {
       transform: rotate(45deg) scaleY(-1);
     }
   }
-
-
 
 
   .bubbleTeacher {
@@ -93,32 +104,40 @@ body {
     box-shadow: 1px 1px 0 #8b8b90;
     position: relative;
     margin: 0 0 20px;
+
     &.alt {
       margin: 0 0 0 55px;
     }
+
     .txt {
       padding: 8px 55px 8px 14px;
+
       .name {
         font-weight: 600;
         font-size: 12px;
         margin: 0 0 4px;
         color: #3498db;
+
         span {
           font-weight: normal;
           color: #b3b3b3;
         }
+
         &.alt {
           color: #0a5c2d;
         }
+
         &.altTeacher {
           color: #8a6008;
         }
       }
+
       .message {
         font-size: 12px;
         margin: 0;
         color: #2b2b2b;
       }
+
       .timestamp {
         font-size: 11px;
         position: absolute;
@@ -128,17 +147,20 @@ body {
         color: #999;
       }
     }
+
     .bubble-arrow-teacher {
       position: absolute;
       width: 0;
       bottom: 42px;
       left: -10px;
       height: 0;
+
       &.alt {
         right: -2px;
         bottom: 50px;
       }
     }
+
     .bubble-arrow-teacher:after {
       content: '';
       position: absolute;
@@ -149,6 +171,7 @@ body {
       height: 30px;
       transform: rotate(145deg);
     }
+
     .bubble-arrow-teacher.alt:after {
       transform: rotate(190deg) scaleY(-1);
     }
@@ -210,4 +233,13 @@ div.chat-content {
 .time-left {
   float: left;
   color: #999;
+}
+
+
+.textMsg {
+  height: 45px;
+  overflow: hidden;
+  width: 100%;
+  margin: 10px;
+  border: 1px solid orange;
 }
