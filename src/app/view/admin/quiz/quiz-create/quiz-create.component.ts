@@ -25,17 +25,6 @@ import {TypeQuestionEnum} from '../../../../enum/type-question.enum';
 })
 export class QuizCreateComponent implements OnInit {
 
-    cols: any[];
-    isHomeWork: boolean = false;
-    num: number = 0;
-    numQuestion: number = -1;
-    nodes: TreeNode[];
-    question2: Question;
-    numeroQuestion: string = '';
-    deleteNumber: number;
-    isUpdate = 'false';
-    onOff_true = true;
-    onOff_false = false;
 
     // tslint:disable-next-line:max-line-length
     constructor(private service: QuizService,
@@ -54,13 +43,6 @@ export class QuizCreateComponent implements OnInit {
     get parcourCurrent(): Parcours {
         return this.learnService.parcourCurrent;
     }
-
-    home = {icon: 'pi pi-home', routerLink: '/admin/parcours'};
-    navigateItems = [
-        {label: this.parcourCurrent.libelle, routerLink: '/admin/parcours'},
-        {label: this.courseCurrent.libelle, routerLink: '/admin/parcours'},
-        {label: this.sectionCurrent.libelle, routerLink: '/admin/parcours'},
-    ];
 
     get homeworkReponse(): HomeWorkReponse {
         return this.service.homeworkReponse;
@@ -118,6 +100,11 @@ export class QuizCreateComponent implements OnInit {
 
         return this.service.reponse;
     }
+
+    set reponse(value: Reponse) {
+        this.service.reponse = value;
+    }
+
 
     get refQuiz(): string {
         return this.service.refQuiz;
@@ -203,6 +190,33 @@ export class QuizCreateComponent implements OnInit {
         this.service.HomeWork = homeWork1;
     }
 
+    cols: any[];
+    isHomeWork = false;
+    num = 0;
+    numQuestion = -1;
+    nodes: TreeNode[];
+    question2: Question;
+    numeroQuestion = '';
+    deleteNumber: number;
+    isUpdate = 'false';
+    onOff_true = true;
+    onOff_false = false;
+    libelle = String(' ');
+    booleanTypes: Array<boolean> = [true, false];
+
+    home = {icon: 'pi pi-home', routerLink: '/admin/parcours'};
+    navigateItems = [
+        {label: this.parcourCurrent.libelle, routerLink: '/admin/parcours'},
+        {label: this.courseCurrent.libelle, routerLink: '/admin/parcours'},
+        {label: this.sectionCurrent.libelle, routerLink: '/admin/parcours'},
+    ];
+
+    mapTranslate: Map<string, Array<Reponse>> = new Map<string, Array<Reponse>>();
+    private index = 1;
+    fullText = ' ';
+    disableAddQuestion = true;
+    stateOptions = [{value: true}, {value: false}];
+
     public deleteCard(index: number) {
         return this.service.deleteCard(index);
     }
@@ -256,7 +270,7 @@ export class QuizCreateComponent implements OnInit {
     }
 
     public clone(question: Question) {
-        let myClone = new Question();
+        const myClone = new Question();
         myClone.reponses = question.reponses;
         myClone.libelle = question.libelle;
         myClone.numero = question.numero;
@@ -277,7 +291,7 @@ export class QuizCreateComponent implements OnInit {
         this.question.pointReponseJuste = this.selected.questions[key].pointReponseJuste;
         this.question.pointReponsefausse = this.selected.questions[key].pointReponsefausse;
         this.reponses.length = 0;
-        for (var i = 0; i < this.selected.questions[key].reponses.length; i++) {
+        for (let i = 0; i < this.selected.questions[key].reponses.length; i++) {
             this.reponses.push(this.selected.questions[key].reponses[i]);
         }
         this.reponseNumero = this.selected.questions[key].reponses.length + 1;
@@ -533,4 +547,29 @@ export class QuizCreateComponent implements OnInit {
             return ' ';
         }
     }
+
+    addAnswers() {
+        const num = this.reponse.numero;
+        this.reponses.push({...this.reponse});
+        console.log(this.question);
+        this.reponse = new Reponse();
+        this.reponse.numero = num;
+    }
+
+    nextWord() {
+        this.mapTranslate.set(this.libelle, this.reponses.filter(t => t.numero === this.index));
+        this.fullText = this.fullText + ' ' + this.libelle + ' ';
+        this.libelle = '_' + String(this.index) + ' ' + this.libelle;
+        if (this.question.libelle !== undefined) {
+            this.question.libelle += this.libelle;
+        } else {
+            this.question.libelle = this.libelle;
+        }
+        this.index += 1;
+        this.reponse.numero = this.index;
+        console.log(this.reponse.lib);
+        this.libelle = String(' ');
+        this.disableAddQuestion = false;
+    }
+
 }

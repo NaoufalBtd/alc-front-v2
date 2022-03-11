@@ -1,25 +1,8 @@
 <div *ngIf="showTakeQuiz" class="p-field">
     <div class="p-grid">
         <div style=" background-color: #ffffff;  text-align: center;" class="p-col-12">
-            <div *ngIf="question.typeDeQuestion.ref === 't1'"
-                 style="float:left; display: inline-block; text-align: center">
-                Choose the correct alternative
-            </div>
-            <div *ngIf="question.typeDeQuestion.ref === 't3'"
-                 style="float:left; display: inline-block; text-align: center">
-                Translate the phrase
-            </div>
-            <div *ngIf="question.typeDeQuestion.ref === 't4'"
-                 style="float:left; display: inline-block; text-align: center">
-                Correct the mistake
-            </div>
-            <div *ngIf="question.typeDeQuestion.ref === 't6'"
-                 style="float:left; display: inline-block; text-align: center">
-                Write the correct form
-            </div>
-            <div *ngIf="question.typeDeQuestion.ref === 't5'"
-                 style="float:left; display: inline-block; text-align: center">
-                True or False
+            <div style="float:left; display: inline-block; text-align: center">
+                {{question?.typeDeQuestion?.lib}}
             </div>
 
 
@@ -296,6 +279,47 @@
                     (click)="showAnswers(question)">
             </button>
         </div>
+    </div>
+
+
+    <!--------------------------------- WORD BY WORD -------------------------------------------------------->
+
+    <div style="background-color: white;" *ngIf="question.typeDeQuestion.ref === 't12'"
+         class="p-grid">
+        <div class="p-col-12 question">
+            <button [disabled]="disableButtonSon" pButton pRipple type="button"
+                    (click)="sound(question)"
+                    icon="pi pi-volume-up" class="p-button-rounded sonButton "></button>
+
+            <h5 class="h5 libelleT12" [id]="item.key"
+                [pTooltip]="getCorrectAnswerForT12()" tooltipPosition="top"
+                *ngFor="let item of answersT12List| keyvalue">{{item.value}} </h5>
+        </div>
+        <div *ngIf="showT12AnswerDiv" class="p-col-12 correctAnswerT12">
+            {{correctAnswerT12}}
+        </div>
+
+        <div [id]="value.lib" *ngFor="let value of t12AnswersList"
+             (click)="onClick(value)"
+             class="p-col-3 answert12">
+            {{value.lib}}
+        </div>
+
+        <div class="p-col-12 answers">
+
+            <button *ngIf="showCheckButton && !saveDone" pButton pRipple type="button"
+                    icon="pi pi-check" iconPos="right"
+                    label="Check answer" class="p-button-raised check-button "
+                    (click)="saveAnswers(question)">
+            </button>
+
+            <button *ngIf="showDontKnowButton" pButton pRipple type="button"
+                    icon="pi pi-question" iconPos="right"
+                    label="DON'T KNOW" class="p-button-rounded dont-know-button "
+                    (click)="showAnswers(question)">
+            </button>
+        </div>
+
     </div>
 
 

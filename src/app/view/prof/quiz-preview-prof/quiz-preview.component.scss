@@ -315,3 +315,44 @@ h4 {
     background: #68c671 !important;
   }
 }
+
+
+.libelleT12 {
+  display: inline-block !important;
+  margin-right: 8px !important;
+  border-bottom: 2px dashed;
+  color: #7b8895;
+}
+
+.answert12 {
+  display: inline-block !important;
+  background-color: #dcdcdc;
+  margin: 2%;
+  text-align: center;
+  font-size: medium;
+  cursor: pointer;
+  color: black;
+  border-radius: 10px;
+  font-weight: 500;
+}
+
+@keyframes inCorrect {
+  from {
+    background-color: #f08080;
+  }
+  to {
+    background-color: #dcdcdc;
+  }
+}
+
+.correctAnswerT12 {
+  text-align: center;
+  border: 1px dashed #dadada;
+  border-radius: 5px;
+  font-size: large;
+  color: green;
+  background-color: #f4f4f4;
+  letter-spacing: 1px;
+  font-weight: 600;
+}
+
