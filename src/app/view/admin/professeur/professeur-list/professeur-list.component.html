@@ -67,6 +67,9 @@
                         <th pSortableColumn="email">Email
                             <p-sortIcon field="email"></p-sortIcon>
                         </th>
+                        <th pSortableColumn="email">TypeTeacher
+                            <p-sortIcon field="email"></p-sortIcon>
+                        </th>
                         <th pSortableColumn="City">Action
                         </th>
 
@@ -80,6 +83,7 @@
                         <td>{{professor?.prenom}} {{ professor?.nom}}</td>
                         <td>{{professor?.numero}}</td>
                         <td>{{professor?.username}}</td>
+                        <td>{{professor.typeTeacher?.libelle}}</td>
                         <td>
                             <button (click)="edit(professor); findByProfId(professor)"
                                     class="p-button-rounded p-button-success p-mr-2" icon="pi pi-pencil" pButton
@@ -187,7 +191,6 @@
         <!--     Header template -->
 
 
-
         <ng-template #quickInfoTemplatesFooter let-data>
             <div *ngIf="data.elementType == 'cell'" class="e-cell-footer">
                 <div class="left-button">
@@ -243,9 +246,6 @@
         <!--            </div>-->
 
 
-
-
-
         <!--        </ng-template>-->
         <ng-template #editorTemplate>
             <table class="custom-event-editor" width="100%" cellpadding="5">
@@ -253,7 +253,8 @@
                 <tr>
                     <td class="e-textlabel">Start time</td>
                     <td colspan="4">
-                        <p-calendar [style]="{width: '100%',marginBottom: '4%'}" id="start" [(ngModel)]="scheduleProf.startTime" [showTime]="true" name="StartTime"
+                        <p-calendar [style]="{width: '100%',marginBottom: '4%'}" id="start"
+                                    [(ngModel)]="scheduleProf.startTime" [showTime]="true" name="StartTime"
                                     class="e-field"
                                     data-name="startTime"
                                     [showIcon]="true"
@@ -264,7 +265,8 @@
                 <tr>
                     <td class="e-textlabel">End time</td>
                     <td colspan="4">
-                        <p-calendar [style]="{width: '100%',marginBottom: '4%'}" id="end" [(ngModel)]="scheduleProf.endTime" [showTime]="true" name="StartTime"
+                        <p-calendar [style]="{width: '100%',marginBottom: '4%'}" id="end"
+                                    [(ngModel)]="scheduleProf.endTime" [showTime]="true" name="StartTime"
                                     class="e-field"
                                     data-name="endTime"
                                     [showIcon]="true"
@@ -275,7 +277,8 @@
                 <tr>
                     <td class="e-textlabel">Group</td>
                     <td colspan="4">
-                        <p-dropdown [style]="{width: '100%',marginBottom: '4%'}" [(ngModel)]="scheduleProf.groupeEtudiant" [options]="groupeStudent"
+                        <p-dropdown [style]="{width: '100%',marginBottom: '4%'}"
+                                    [(ngModel)]="scheduleProf.groupeEtudiant" [options]="groupeStudent"
                                     optionLabel="libelle"
                                     class="e-field"
                                     data-name="groupeEtudiant" (ngModelChange)="getCourses(scheduleProf.groupeEtudiant)"
@@ -286,7 +289,7 @@
 
                 <tr>
                     <td class="e-textlabel">Teacher</td>
-                    <td  colspan="4">
+                    <td colspan="4">
                         <p-dropdown [style]="{width: '100%',marginBottom: '4%'}" [(ngModel)]="scheduleProf.prof"
                                     [options]="professors"
                                     [disabled]="true"
@@ -299,8 +302,9 @@
 
                 <tr>
                     <td class="e-textlabel">Subject</td>
-                    <td  colspan="4">
-                        <p-dropdown [style]="{width: '100%',marginBottom: '4%'}"  [(ngModel)]="scheduleProf.cours" [options]="courses" optionLabel="libelle"
+                    <td colspan="4">
+                        <p-dropdown [style]="{width: '100%',marginBottom: '4%'}" [(ngModel)]="scheduleProf.cours"
+                                    [options]="courses" optionLabel="libelle"
                                     class="e-field"
                                     data-name="cours"
                                     placeholder="subject"></p-dropdown>
@@ -309,8 +313,9 @@
 
                 <tr>
                     <td class="e-textlabel">Reference</td>
-                    <td  colspan="4">
-                        <input [style]="{width: '100%',marginBottom: '4%'}"  [(ngModel)]="scheduleProf.ref" autofocus id="ref" pInputText required type="text"
+                    <td colspan="4">
+                        <input [style]="{width: '100%',marginBottom: '4%'}" [(ngModel)]="scheduleProf.ref" autofocus
+                               id="ref" pInputText required type="text"
                                class="e-field"
                                data-name="ref"/>
                     </td>
@@ -318,8 +323,9 @@
 
                 <tr>
                     <td class="e-textlabel">Repeat</td>
-                    <td  colspan="4">
-                        <p-dropdown [style]="{width: '100%',marginBottom: '4%'}"  [(ngModel)]="optionSelected" [options]="repeats" optionLabel="option" class="e-field"
+                    <td colspan="4">
+                        <p-dropdown [style]="{width: '100%',marginBottom: '4%'}" [(ngModel)]="optionSelected"
+                                    [options]="repeats" optionLabel="option" class="e-field"
                                     data-name="optionSelected"
                                     placeholder="Repeat"></p-dropdown>
                     </td>
@@ -327,7 +333,7 @@
 
 
                 <tr>
-                    <div class="p-grid ">
+                    <div class="p-grid " style="width: 150%">
 
 
                         <div *ngIf="optionSelected.option === 'Daily' " class="p-col-7">
@@ -355,12 +361,15 @@
 
                         <div *ngIf="optionSelected.option === 'Weekly'" class="p-col-12">
                             <label for="iconDay">Until</label>
-                            <p-calendar [(ngModel)]="endDate" [showIcon]="true" id="iconDay" inputId="icon"></p-calendar>
+                            <p-calendar [(ngModel)]="endDate" [showIcon]="true" id="iconDay"
+                                        inputId="icon"></p-calendar>
                         </div>
 
 
-                        <div class="p-col-12">
-                            <button style="float: right" class="e-event-create e-text-ellipsis e-control e-btn e-lib e-flat e-primary" title="Save"
+                        <div class="p-col-12" style="text-align: center;">
+                            <button
+                                    class="e-event-create e-text-ellipsis e-control e-btn e-lib e-flat e-primary"
+                                    title="Save"
                                     (click)="onCloseClick() ; save()">
                                 Save
                             </button>
@@ -369,7 +378,6 @@
 
                     </div>
                 </tr>
-
 
 
                 </tbody>

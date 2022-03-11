@@ -20,10 +20,6 @@ export class Chat1Component implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        this.webSocketService.findbynumero(this.servicelogin.etudiant.prof.id);
-        // this.servicelogin.etudiant.prof.students[0] = null;
-        // this.servicelogin.etudiant.prof.students[0].chatMessageDto = null;
-        // this.webSocketService.findstudentlist(this.servicelogin.etudiant.prof.id);
     }
 
     ngOnDestroy(): void {
@@ -31,7 +27,7 @@ export class Chat1Component implements OnInit, OnDestroy {
     }
 
     sendMessage(sendForm: NgForm) {
-        const chatMessageDto = new ChatMessageDto(this.servicelogin.etudiant.nom + ' ' + this.servicelogin.etudiant.prenom,
+        let chatMessageDto = new ChatMessageDto(this.servicelogin.etudiant.nom + ' ' + this.servicelogin.etudiant.prenom,
             sendForm.value.message, true);
         console.log('___________________________ GRP ET PROF _____________________________');
         console.log(this.groupeEtudiant);

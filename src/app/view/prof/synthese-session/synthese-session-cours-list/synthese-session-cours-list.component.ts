@@ -47,13 +47,27 @@ export class SyntheseSessionCoursListComponent implements OnInit {
             {field: '', header: 'ED CLASS'}
         ];
     }
+    groupeEtudiant = new GroupeEtudiant;
+    groupeEtudiants = new Array<GroupeEtudiant>();
     ngOnInit(): void {
         this.initCol();
+        console.log('hi');
+        this.service.findAllStudent2().subscribe(
+
+            data => {
+                this.groupeEtudiants = data;
+
+                console.log(this.groupeEtudiants );
+            }
+        );
         this.service.findAllStudent().subscribe(
             data => {
                 this.itemsEtudiant = data;
+
+                console.log(this.itemsEtudiant);
             }
         );
+
 
         console.log(this.itemsEtudiant);
         this.service.findAll().subscribe(data => {
@@ -77,6 +91,13 @@ export class SyntheseSessionCoursListComponent implements OnInit {
         });
 
     }
+    public findAllGroupeEtudiantDetail(groupeEtudiant: GroupeEtudiant) {
+        console.log(groupeEtudiant.id);
+
+        this.servicePrf.findAllGroupeEtudiantDetail(groupeEtudiant.id).subscribe(
+            data => this.groupeEtudiant.groupeEtudiantDetails = data);
+        console.log(this.groupeEtudiant.groupeEtudiantDetails);
+    }
 
     get sessionCours(): Array<SessionCours> {
 
@@ -88,22 +109,35 @@ export class SyntheseSessionCoursListComponent implements OnInit {
         this.servicePrf.sessionCours = value;
     }
     public findEtudiantById(etudiant: Etudiant) {
+         console.log(etudiant.id);
         this.submitted = false;
         this.profilDiaglog = true;
-        this.servicePrf.findCoursByEtudiantId(etudiant.id).subscribe(data =>{ this.sessionCours = data;
+        this.servicePrf.findCoursByEtudiantId(etudiant.id).subscribe(data =>
+        { this.sessionCours = data;
         console.log( 'hahoa l cours ' + this.sessionCours); }) ;
         this.servicePrf.findEtudiantById(etudiant.id).subscribe(
             data =>
             {this.etudiant = data;
              console.log(this.etudiant);
-
             },
             error => { console.log(error); }
         );
-
     }
 
+    public findEtudiantById2(etudiant: Etudiant) {
+        console.log('.id');
+        console.log(etudiant.id);
+        this.profilDiaglog = true;
+        this.servicePrf.findEtudiantById(etudiant.id).subscribe(
 
+            data =>
+            {this.etudiant = data;
+                console.log(this.etudiant);
+            },
+
+            error => { console.log(error); }
+        );
+    }
 
     public viewSession(etd: Etudiant) {
         this.servicePrf.afficheSessionStd(etd.id).subscribe(

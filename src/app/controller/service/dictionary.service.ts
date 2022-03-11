@@ -201,7 +201,7 @@ export class DictionaryService {
     public Translate(word: string): Observable<Array<any>> {
         // tslint:disable-next-line:max-line-length
         // @ts-ignore
-        return this.http.get<Array<string>>(this.adminUrl + 'TranslateEnAr/text/synonymes/' + word, {responseType: 'text'});
+        return this.http.get<Array<any>>(this.adminUrl + 'TranslateEnAr/text/synonymes/' + word, {responseType: 'text'});
     }
 
     public save(): Observable<Dictionary> {

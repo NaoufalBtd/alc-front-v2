@@ -9,7 +9,7 @@ import {PackStudentService} from '../../../controller/service/pack-student.servi
 })
 export class HomePageEtudiantComponent implements OnInit {
 
-  constructor(private router: Router, private packService: PackStudentService) { }
+  constructor(public router: Router, private packService: PackStudentService) { }
 
   ngOnInit(): void {
   }

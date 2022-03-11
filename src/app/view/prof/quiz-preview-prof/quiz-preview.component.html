@@ -1,5 +1,5 @@
 <div *ngIf="showTakeQuiz" class="p-field">
-    <div class="p-grid">
+    <div class="p-grid" style="background-color: white;">
         <div style="text-align: start;" class="p-col-4">
             <div style="font-size: medium;font-weight: 600;">
                 {{question?.typeDeQuestion?.lib}}
@@ -43,7 +43,7 @@
 
     </div>
 
-    <div style="background-color: #dee2e6;     height: 13px" class="p-grid">
+    <div class="p-grid">
         <div style="  background-color: transparent!important;" class="p-col-12">
             <p-progressBar [style]="{'height': '6px'}" [showValue]="false"
                            [value]="value"></p-progressBar>
@@ -67,7 +67,7 @@
                     icon="pi pi-volume-up" class="p-button-rounded sonButton "></button>
             <h5 class="h5"> {{  questionSideLeft}}  </h5>
             <span class="p-float-label">
-            <input *ngIf="answerSelected.lib === undefined"  id="inputDashedBorder" inputId="inputDashedBorder"
+            <input *ngIf="answerSelected.lib === undefined" id="inputDashedBorder" inputId="inputDashedBorder"
                    type="text"
                    [pTooltip]="correctAnswersList.get(question.id)[0]?.lib" tooltipPosition="top"
                    [(ngModel)]="reponseQuiz.lib"
@@ -276,6 +276,33 @@
     </div>
 
 
+    <!--------------------------------- WORD BY WORD -------------------------------------------------------->
+
+    <div style="background-color: white;" *ngIf="question.typeDeQuestion.ref === 't12'"
+         class="p-grid">
+        <div class="p-col-12 question">
+            <button [disabled]="disableButtonSon" pButton pRipple type="button"
+                    (click)="sound(question)"
+                    icon="pi pi-volume-up" class="p-button-rounded sonButton "></button>
+
+            <h5 class="h5 libelleT12" [id]="item.key"
+                [pTooltip]="getCorrectAnswerForT12()" tooltipPosition="top"
+                *ngFor="let item of answersT12List| keyvalue">{{item.value}} </h5>
+        </div>
+        <div *ngIf="showT12AnswerDiv" class="p-col-12 correctAnswerT12">
+            {{correctAnswerT12}}
+        </div>
+
+        <div [id]="value.lib" *ngFor="let value of t12AnswersList"
+             (click)="checkAnswers(value)"
+             class="p-col-3 answert12">
+            {{value.lib}}
+
+        </div>
+
+    </div>
+
+
     <div class="p-grid sideBar">
         <div class="p-col-3">
             <button *ngIf="question.id !== questionList[0]?.id"
@@ -319,7 +346,7 @@
         <ng-template pTemplate="header">
             <tr>
                 <th>Student name</th>
-                <th>Result </th>
+                <th>Result</th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-reponse>
@@ -338,14 +365,15 @@
     </p-table>
 </div>
 
-<p-dialog [header]="listAnswers[0]?.quizEtudiant?.etudiant?.nom + ' ' + listAnswers[0]?.quizEtudiant?.etudiant?.prenom" [(visible)]="display" [style]="{width: '80vw'}">
-    <p-table [value]="listAnswers" styleClass="p-datatable-striped" >
+<p-dialog [header]="listAnswers[0]?.quizEtudiant?.etudiant?.nom + ' ' + listAnswers[0]?.quizEtudiant?.etudiant?.prenom"
+          [(visible)]="display" [style]="{width: '80vw'}">
+    <p-table [value]="listAnswers" styleClass="p-datatable-striped">
         <ng-template pTemplate="header">
             <tr>
                 <th style="width: 20px;"></th>
                 <th style="width: 20px;"></th>
                 <th>Question type</th>
-                <th>Student answer </th>
+                <th>Student answer</th>
                 <th>Correct answer</th>
                 <th>Note</th>
             </tr>
@@ -374,4 +402,5 @@
                 <td>{{answer?.note}}</td>
             </tr>
         </ng-template>
-    </p-table></p-dialog>
+    </p-table>
+</p-dialog>

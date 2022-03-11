@@ -15,7 +15,8 @@ export class ViewProfilEtudiantComponent implements OnInit {
   constructor(private messageService: MessageService, private confirmationService: ConfirmationService,
               private service: SyntheseSessionCoursService, private servicePrf: ProfessorService){ }
 
-  ngOnInit(): void { this.servicePrf.findEtudiantById(this.etudiant.id).subscribe(
+  ngOnInit(): void {
+      this.servicePrf.findEtudiantById(this.etudiant.id).subscribe(
       data => this.etudiant = data);
 
        this.servicePrf.findCoursByEtudiantId(this.etudiant.id).subscribe(data => this.sessionCours = data);

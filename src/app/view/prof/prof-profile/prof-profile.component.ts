@@ -7,6 +7,8 @@ import {AuthenticationService} from '../../../controller/service/authentication.
 import {UserService} from '../../../controller/service/user.service';
 
 import {HttpErrorResponse, HttpEvent, HttpEventType} from '@angular/common/http';
+import {Prof} from '../../../controller/model/prof.model';
+import {ProfService} from '../../../controller/service/prof.service';
 
 @Component({
   selector: 'app-prof-profile',
@@ -24,13 +26,20 @@ export class ProfProfileComponent implements OnInit {
 
   constructor(private menuService: MenuService,
               private authenticationService: AuthenticationService,
-              private userService: UserService, )
+              private userService: UserService,private profService: ProfService)
   {
   }
 
 
   ngOnInit(): void {
     this.user = this.authenticationService.getUserFromLocalCache();
+    this.profService.findbyid(this.user.id).subscribe(
+        data => {
+          this.prof= data;
+       console.log(this.prof.typeTeacher.libelle);
+        }
+    );
+
   }
 
   public onProfileImageChange(event: any): void {
@@ -102,6 +111,14 @@ export class ProfProfileComponent implements OnInit {
   private clickButton(buttonId: string): void {
     document.getElementById(buttonId).click();
   }
+private _prof = new Prof();
 
 
+  get prof(): Prof {
+    return this._prof;
+  }
+
+  set prof(value: Prof) {
+    this._prof = value;
+  }
 }

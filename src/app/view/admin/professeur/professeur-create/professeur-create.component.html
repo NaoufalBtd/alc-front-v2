@@ -34,6 +34,11 @@
             <input [(ngModel)]="selected.email" autofocus id="email" pInputText required type="text"/>
             <small *ngIf="submitted && !selected.email" class="p-invalid">total is required.</small>
         </div>
+    <div class="p-field">
+        <label for="email">Type</label>
+        <input [(ngModel)]="selected.typeTeacher.libelle" autofocus id="email" pInputText required type="text"/>
+
+    </div>
 </form>
 
     </ng-template>

@@ -7,7 +7,8 @@
         <div class="card toolbar-demo">
             <p-toolbar>
                 <div class="p-toolbar-group-left">
-                    <button (click)="openPreview()" class="p-button-secondary p-button-rounded p-mr-2 p-mb-2" icon="pi pi-eye" pButton
+                    <button (click)="openPreview()" class="p-button-secondary p-button-rounded p-mr-2 p-mb-2"
+                            icon="pi pi-eye" pButton
                             pRipple></button>
                 </div>
 
@@ -32,7 +33,8 @@
                         </div>
                         <div class="p-field p-col-12 p-md-3">
                             <label class="labelFormat">finish date</label><br/>
-                            <p-calendar [(ngModel)]="selected.dateFin" class="refQuiz" [showIcon]="true"  dateFormat="yy-mm-dd"
+                            <p-calendar [(ngModel)]="selected.dateFin" class="refQuiz" [showIcon]="true"
+                                        dateFormat="yy-mm-dd"
                                         inputId="fin"></p-calendar>
                         </div>
                         <div class="p-field p-col-12 p-md-3">
@@ -45,20 +47,25 @@
 
 
             <div class="p-grid">
-                <div class="p-col-fixed" id="formCard" style="width: 60%">
+                <div class=" p-col-4 ">
+                    <p-inputNumber [(ngModel)]="question.numero" id="firstname6"
+                                   [style]="{'width': '100%'}"
+                                   placeholder="Question number"></p-inputNumber>
+                </div>
+                <div class=" p-col-4 ">
+                    <p-dropdown [(ngModel)]="question.typeDeQuestion" [options]="types" inputId="type"
+                                optionLabel="lib" placeholder="Type of Question"
+                                [style]="{'width': '100%'}"
+                                (click)="chooseType()"></p-dropdown>
+                </div>
+                <div *ngIf="question.typeDeQuestion.ref !== 't12'" class="p-col-8" id="formCard">
                     <div class="card" styleClass="p-card-shadow">
                         <div class="p-fluid p-formgrid p-grid">
-                            <div class="p-field p-col-12 p-md-6">
-                                <p-inputNumber [(ngModel)]="question.numero" id="firstname6"
-                                               placeholder="Question number"></p-inputNumber>
-                            </div>
-                            <div class="p-field p-col-12 p-md-6">
-                                <p-dropdown [(ngModel)]="question.typeDeQuestion" [options]="types" inputId="type"
-                                            optionLabel="lib" placeholder="Type of Question" (click)="chooseType()"></p-dropdown>
-                            </div>
                             <div class="p-field p-col-12 ">
                                 <label>Question</label>
-                                <textarea [(ngModel)]="question.libelle" pInputTextarea rows="4" type="text"></textarea>
+                                <textarea [(ngModel)]="question.libelle" pInputTextarea
+                                          [placeholder]="getPlaceHolder()"
+                                          rows="4" type="text"></textarea>
 
                             </div>
                             <div class="p-col-12 " style="text-align: center; margin: 5px; ">
@@ -116,7 +123,8 @@
                                         <td>{{reponse.etatReponse}}</td>
                                         <td>{{question.pointReponseJuste}} pt</td>
                                         <td>{{question.pointReponsefausse}} pt</td>
-                                        <td><span (click)="delete(reponse)" class="pi pi-trash p-button-rounded p-button-danger"
+                                        <td><span (click)="delete(reponse)"
+                                                  class="pi pi-trash p-button-rounded p-button-danger"
                                                   style="cursor: pointer"></span></td>
                                     </tr>
                                 </ng-template>
@@ -124,16 +132,100 @@
                         </div>
                     </div>
                 </div>
-                <div class="p-col ">
+                <div *ngIf="question.typeDeQuestion.ref === 't12'" class="p-col-8">
+                    <div class="p-grid divT12">
+
+                        <div class="p-col-2">
+                            <h6>Number</h6>
+                            <input [style]="{'width': '100%'}" [(ngModel)]="reponse.numero"
+                                   pInputText
+                                   type="number"
+                                   placeholder="Answer number">
+                        </div>
+
+                        <div class="p-col-4">
+                            <h6>Word</h6>
+                            <input [style]="{'width': '100%'}" type="text" pInputText
+
+                                   [(ngModel)]="libelle">
+                        </div>
+                        <div class="p-col-6">
+                            <h6>Answers</h6>
+                            <input [style]="{'width': '100%'}" type="text" pInputText
+                                   [(ngModel)]="reponse.lib">
+                        </div>
+
+
+                        <div class="p-col-3">
+                            <h6>Correct answer</h6>
+                            <input [style]="{'width': '100%'}" [(ngModel)]="question.pointReponseJuste"
+                                   pInputText
+                                   type="number"
+                                   placeholder="True point">
+                        </div>
+                        <div class="p-col-3">
+                            <h6>Incorrect answer</h6>
+                            <input [style]="{'width': '100%'}" [(ngModel)]="question.pointReponsefausse"
+                                   type="number"
+                                   pInputText
+                                   placeholder="false point">
+                        </div>
+
+                        <div class="p-col-4">
+                            <div style="display: inline-block; margin-left: 20px" *ngFor="let bool of booleanTypes"
+                                 class="field-checkbox">
+                                <p-radioButton name="category" [value]="bool"
+                                               [(ngModel)]="reponse.etatReponse"></p-radioButton>
+                                <label>{{bool}}</label>
+                            </div>
+                        </div>
+                        <div class="p-col-2" style=" margin-top: 28px;">
+                            <button (click)="addAnswers()" class="p-button-raised p-button-info"
+                                    icon="pi pi-plus"
+                                    iconPos="right"
+                                    label="Add"
+                                    pButton pRipple type="button"></button>
+                        </div>
+                        <div class="p-col-12 fullText">{{fullText}}</div>
+                        <div class="p-col-12 fullText">
+                            <p-accordion>
+                                <p-accordionTab *ngFor="let item of mapTranslate | keyvalue" [header]="item.key">
+                                    <div class="answerContainer"  *ngFor="let value of item.value">
+                                        <input [style]="{'width': '65%'}" [(ngModel)]="value.lib"
+                                               type="text"
+                                               class="editInput"
+                                               pInputText
+                                               placeholder="false point">
+                                        <p-selectButton [options]="stateOptions" [(ngModel)]="value.etatReponse" optionLabel="value"
+                                                        class="editInput1"
+                                                        optionValue="value"></p-selectButton>
+                                    </div>
+
+                                </p-accordionTab>
+                            </p-accordion>
+                        </div>
+                        <div style="text-align: center!important;" class="p-col-12">
+                            <button id="saveWord" (click)="nextWord()" class="p-button-raised p-button-success"
+                                    icon="pi pi-arrow-right"
+                                    iconPos="right"
+                                    label="save word"
+                                    pButton pRipple type="button"></button>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="p-col-4 ">
                     <p-tree [value]="nodes">
                         <ng-template let-node pTemplate="default">
                             <output>{{node.label}}</output>
                         </ng-template>
                         <ng-template let-node pTemplate="default">
                             <b>{{node.label}}</b>
-                            <button (click)="update(node.key)" class="p-button-rounded p-button-success" icon="pi pi-undo" pButton
+                            <button (click)="update(node.key)" class="p-button-rounded p-button-success"
+                                    icon="pi pi-undo" pButton
                                     pRipple type="button"></button>
-                            <button (click)="deleteQuestion(node.key)" class="p-button-rounded p-button-danger" icon="pi pi-times" pButton
+                            <button (click)="deleteQuestion(node.key)" class="p-button-rounded p-button-danger"
+                                    icon="pi pi-times" pButton
                                     pRipple
                                     type="button"></button>
 
@@ -141,7 +233,8 @@
                     </p-tree>
                 </div>
             </div>
-            <button (click)="addFormule()" class="p-button-raised p-button-success" icon="pi pi-plus" iconPos="right" label="Add question"
+            <button (click)="addFormule()" class="p-button-raised p-button-success" icon="pi pi-plus" iconPos="right"
+                    label="Add question"
                     pButton pRipple style="margin-left: 20%" type="button"></button>
             <ng-template pTemplate="footer">
             </ng-template>
@@ -172,14 +265,22 @@
                 <textarea [(ngModel)]="question.libelle" pInputTextarea rows="4" type="text"></textarea>
 
             </div>
-            <output style="margin-left: 20px; margin-right: 30px; font-size: 30px; font-family: 'Goudy Old Style'">True  : </output> <p-inputSwitch [(ngModel)]="onOff_true" (click)="onOffTrue()"></p-inputSwitch>
+            <output style="margin-left: 20px; margin-right: 30px; font-size: 30px; font-family: 'Goudy Old Style'">True
+                :
+            </output>
+            <p-inputSwitch [(ngModel)]="onOff_true" (click)="onOffTrue()"></p-inputSwitch>
             <br>
-            <output style="margin-left: 20px; margin-right: 30px; font-size: 30px; font-family: 'Goudy Old Style'">False : </output> <p-inputSwitch [(ngModel)]="onOff_false" (click)="onOffFalse()"></p-inputSwitch>
+            <output style="margin-left: 20px; margin-right: 30px; font-size: 30px; font-family: 'Goudy Old Style'">False
+                :
+            </output>
+            <p-inputSwitch [(ngModel)]="onOff_false" (click)="onOffFalse()"></p-inputSwitch>
         </div>
     </ng-template>
 
     <ng-template pTemplate="footer">
-        <button (click)="submitOnOff()" class="p-button-text" icon="pi pi-check" label="Submit" pButton pRipple></button>
-        <button (click)="hideOnOffDialog()" class="p-button-text" icon="pi pi-times" label="Fermer" pButton pRipple></button>
+        <button (click)="submitOnOff()" class="p-button-text" icon="pi pi-check" label="Submit" pButton
+                pRipple></button>
+        <button (click)="hideOnOffDialog()" class="p-button-text" icon="pi pi-times" label="Fermer" pButton
+                pRipple></button>
     </ng-template>
 </p-dialog>

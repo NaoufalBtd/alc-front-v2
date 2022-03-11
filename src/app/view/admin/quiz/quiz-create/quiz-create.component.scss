@@ -65,3 +65,32 @@
   font-family: Algerian;
   color: cyan;
 }
+
+.divT12 {
+  background-color: #f0f0f3;
+  border-radius: 5px;
+}
+
+div.fullText {
+  text-align: center;
+  border-radius: 10px;
+  margin: 20px 0;
+  letter-spacing: 1px;
+  font-size: medium;
+  color: black;
+}
+
+.editInput{
+  display: inline-block;
+}
+.editInput1{
+  display: inline-block;
+  margin: 5px 0 0 10px;
+}
+
+.answerContainer{
+  height: 50px;
+  background-color: #f0f0f3;
+  margin: 5px;
+  border-radius: 5px;
+}

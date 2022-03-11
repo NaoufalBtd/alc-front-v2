@@ -32,6 +32,7 @@ import {TrancheHoraireProf} from '../../../controller/model/tranche-horaire-prof
 import {TrancheHoraireProfService} from '../../../controller/service/tranche-horaire-prof.service';
 import {ProfessorService} from '../../../controller/service/professor.service';
 import {SessionCoursService} from '../../../controller/service/session-cours.service';
+import {MenuService} from '../../shared/slide-bar/app.menu.service';
 
 L10n.load({
     'en-US': {
@@ -65,7 +66,15 @@ export class ScheduleLocalComponent implements OnInit {
                 private groupeEtudiantService: GroupeEtudiantService,
                 private webSocketService: WebSocketService,
                 private router: Router,
+                private menuService: MenuService,
                 private simulateSectionService: SimulateSectionService) {
+    }
+    get showTpBar(): boolean {
+        return this.menuService.showTpBar;
+    }
+
+    set showTpBar(value: boolean) {
+        this.menuService.showTpBar = value;
     }
 
 
@@ -418,6 +427,7 @@ export class ScheduleLocalComponent implements OnInit {
     }
 
     startSession() {
+        this.showTpBar = false;
         console.log(this.data.groupeEtudiant.id);
         this.webSocketService.sessionHasStarted = true;
         this.findAllGroupeEtudiantDetail(this.data.groupeEtudiant.id);

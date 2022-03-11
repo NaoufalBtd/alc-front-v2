@@ -8,12 +8,13 @@ import {Question} from '../../../../controller/model/question.model';
 import {TypeDeQuestion} from '../../../../controller/model/type-de-question.model';
 import {Reponse} from '../../../../controller/model/reponse.model';
 import {Section} from '../../../../controller/model/section.model';
-import {HomeWork} from "../../../../controller/model/home-work.model";
-import {HomeWorkQST} from "../../../../controller/model/home-work-qst.model";
-import {HomeWorkReponse} from "../../../../controller/model/home-work-reponse.model";
+import {HomeWork} from '../../../../controller/model/home-work.model';
+import {HomeWorkQST} from '../../../../controller/model/home-work-qst.model';
+import {HomeWorkReponse} from '../../../../controller/model/home-work-reponse.model';
 import {LearnService} from '../../../../controller/service/learn.service';
 import {Cours} from '../../../../controller/model/cours.model';
 import {Parcours} from '../../../../controller/model/parcours.model';
+import {TypeQuestionEnum} from '../../../../enum/type-question.enum';
 
 
 @Component({
@@ -24,25 +25,17 @@ import {Parcours} from '../../../../controller/model/parcours.model';
 })
 export class QuizCreateComponent implements OnInit {
 
-    cols: any[];
-    isHomeWork: boolean = false;
-    num: number = 0;
-    numQuestion: number = -1;
-    nodes: TreeNode[];
-    question2: Question;
-    numeroQuestion: string = '';
-    deleteNumber: number;
-    isUpdate = 'false';
-    onOff_true = true;
-    onOff_false = false;
+
     // tslint:disable-next-line:max-line-length
     constructor(private service: QuizService,
                 private learnService: LearnService,
                 private messageService: MessageService, private confirmationService: ConfirmationService, private router: Router, private serviceParcours: ParcoursService) {
     }
+
     get courseCurrent(): Cours {
         return this.learnService.courseCurrent;
     }
+
     get sectionCurrent(): Section {
         return this.learnService.sectionCurrent;
     }
@@ -50,25 +43,23 @@ export class QuizCreateComponent implements OnInit {
     get parcourCurrent(): Parcours {
         return this.learnService.parcourCurrent;
     }
-    home = {icon: 'pi pi-home', routerLink:  '/admin/parcours'};
-    navigateItems = [
-        {label: this.parcourCurrent.libelle, routerLink:  '/admin/parcours'},
-        {label: this.courseCurrent.libelle, routerLink:  '/admin/parcours'},
-        {label: this.sectionCurrent.libelle, routerLink:  '/admin/parcours'},
-    ];
 
-    get homeworkReponse(): HomeWorkReponse{
+    get homeworkReponse(): HomeWorkReponse {
         return this.service.homeworkReponse;
     }
-    set homeworkReponse(homeWorkReponse){
+
+    set homeworkReponse(homeWorkReponse) {
         this.service.homeworkReponse = homeWorkReponse;
     }
-    get homeworkQST(): HomeWorkQST{
+
+    get homeworkQST(): HomeWorkQST {
         return this.service.HomeWorkQST;
     }
-    set homeworkQST(homeWorkQST){
+
+    set homeworkQST(homeWorkQST) {
         this.service.HomeWorkQST = homeWorkQST;
     }
+
     get questionNumero(): number {
         return this.service.questionNumero;
     }
@@ -109,6 +100,11 @@ export class QuizCreateComponent implements OnInit {
 
         return this.service.reponse;
     }
+
+    set reponse(value: Reponse) {
+        this.service.reponse = value;
+    }
+
 
     get refQuiz(): string {
         return this.service.refQuiz;
@@ -185,12 +181,41 @@ export class QuizCreateComponent implements OnInit {
     set viewOnOffDialog(value: boolean) {
         this.service.viewOnOffDialog = value;
     }
+
     get homeWork(): HomeWork {
-        return  this.service.HomeWork;
+        return this.service.HomeWork;
     }
-    set homeWork(homeWork1){
+
+    set homeWork(homeWork1) {
         this.service.HomeWork = homeWork1;
     }
+
+    cols: any[];
+    isHomeWork = false;
+    num = 0;
+    numQuestion = -1;
+    nodes: TreeNode[];
+    question2: Question;
+    numeroQuestion = '';
+    deleteNumber: number;
+    isUpdate = 'false';
+    onOff_true = true;
+    onOff_false = false;
+    libelle = String(' ');
+    booleanTypes: Array<boolean> = [true, false];
+
+    home = {icon: 'pi pi-home', routerLink: '/admin/parcours'};
+    navigateItems = [
+        {label: this.parcourCurrent.libelle, routerLink: '/admin/parcours'},
+        {label: this.courseCurrent.libelle, routerLink: '/admin/parcours'},
+        {label: this.sectionCurrent.libelle, routerLink: '/admin/parcours'},
+    ];
+
+    mapTranslate: Map<string, Array<Reponse>> = new Map<string, Array<Reponse>>();
+    private index = 1;
+    fullText = ' ';
+    disableAddQuestion = true;
+    stateOptions = [{value: true}, {value: false}];
 
     public deleteCard(index: number) {
         return this.service.deleteCard(index);
@@ -201,7 +226,8 @@ export class QuizCreateComponent implements OnInit {
         this.service.findType().subscribe(
             data => {
                 console.log(data);
-                this.service.types = data;
+                this.service.types = data.filter(t => (t.ref !== 't10' &&
+                    t.ref !== 't8' && t.ref !== 't9' && t.ref !== 't7' && t.ref !== 't2'));
             }, error1 => {
                 console.log('can\'t bring data from database');
             }
@@ -244,7 +270,7 @@ export class QuizCreateComponent implements OnInit {
     }
 
     public clone(question: Question) {
-        let myClone = new Question();
+        const myClone = new Question();
         myClone.reponses = question.reponses;
         myClone.libelle = question.libelle;
         myClone.numero = question.numero;
@@ -265,7 +291,7 @@ export class QuizCreateComponent implements OnInit {
         this.question.pointReponseJuste = this.selected.questions[key].pointReponseJuste;
         this.question.pointReponsefausse = this.selected.questions[key].pointReponsefausse;
         this.reponses.length = 0;
-        for (var i = 0; i < this.selected.questions[key].reponses.length; i++) {
+        for (let i = 0; i < this.selected.questions[key].reponses.length; i++) {
             this.reponses.push(this.selected.questions[key].reponses[i]);
         }
         this.reponseNumero = this.selected.questions[key].reponses.length + 1;
@@ -376,6 +402,7 @@ export class QuizCreateComponent implements OnInit {
             this.isUpdate = 'false';
         }
     }
+
     public save() {
         this.selected.ref = 'quiz-' + this.selectedsection.id;
         this.selected.section.id = this.selectedsection.id;
@@ -396,6 +423,7 @@ export class QuizCreateComponent implements OnInit {
                     detail: 'Quiz Created',
                     life: 3000
                 });
+                this.router.navigate(['/admin/parcours']);
             });
     }
 
@@ -454,39 +482,34 @@ export class QuizCreateComponent implements OnInit {
         ];
     }
 
-    chooseType(){
-        if (this.question.typeDeQuestion.ref === 't5')
-        {
+    chooseType() {
+        if (this.question.typeDeQuestion.ref === 't5') {
             this.viewOnOffDialog = true;
         }
     }
 
-    hideOnOffDialog () {
+    hideOnOffDialog() {
         this.question = new Question();
-        this.question.numero = this.questionNumero ;
+        this.question.numero = this.questionNumero;
         this.question.pointReponsefausse = 0;
         this.question.pointReponseJuste = 1;
         this.viewOnOffDialog = false;
     }
 
-    submitOnOff(){
+    submitOnOff() {
         this.reponses.length = 0;
         this.reponse.lib = 'true';
-        if(this.onOff_true == true)
-        {
+        if (this.onOff_true == true) {
             this.reponse.etatReponse = 'true';
-        }
-        else {
+        } else {
             this.reponse.etatReponse = 'false';
         }
         this.reponse.numero = 1;
         this.addReponse();
         this.reponse.lib = 'false';
-        if(this.onOff_false == true)
-        {
+        if (this.onOff_false == true) {
             this.reponse.etatReponse = 'true';
-        }
-        else {
+        } else {
             this.reponse.etatReponse = 'false';
         }
         this.reponse.numero = 2;
@@ -494,21 +517,59 @@ export class QuizCreateComponent implements OnInit {
         this.viewOnOffDialog = false;
     }
 
-    onOffTrue(){
-        if(this.onOff_true == true){
+    onOffTrue() {
+        if (this.onOff_true == true) {
             this.onOff_false = false;
-        }
-        else {
+        } else {
             this.onOff_false = true;
         }
     }
-    onOffFalse(){
-        if(this.onOff_false == true){
+
+    onOffFalse() {
+        if (this.onOff_false == true) {
             this.onOff_true = false;
-        }
-        else {
+        } else {
             this.onOff_true = true;
         }
+    }
+
+    getPlaceHolder(): string {
+        if (this.question.typeDeQuestion.ref === TypeQuestionEnum.CHOOSE_THE_CORRECT_ALTERNATIVE) {
+            return 'Example: We must ... the train at the next stop. ' +
+                ' (Use at last 3 points)';
+        } else if (this.question.typeDeQuestion.ref === TypeQuestionEnum.CORRECT_THE_MISTAKE) {
+            return 'Example: We must @get on@  the train at the next stop. ' +
+                ' (Put the mistake between two "@")';
+        } else if (this.question.typeDeQuestion.ref === TypeQuestionEnum.WRITE_THE_CORRECT_FORM) {
+            return 'Example: He @to want@ all of them. ' +
+                ' (Put the verb between two "@")';
+        } else {
+            return ' ';
+        }
+    }
+
+    addAnswers() {
+        const num = this.reponse.numero;
+        this.reponses.push({...this.reponse});
+        console.log(this.question);
+        this.reponse = new Reponse();
+        this.reponse.numero = num;
+    }
+
+    nextWord() {
+        this.mapTranslate.set(this.libelle, this.reponses.filter(t => t.numero === this.index));
+        this.fullText = this.fullText + ' ' + this.libelle + ' ';
+        this.libelle = '_' + String(this.index) + ' ' + this.libelle;
+        if (this.question.libelle !== undefined) {
+            this.question.libelle += this.libelle;
+        } else {
+            this.question.libelle = this.libelle;
+        }
+        this.index += 1;
+        this.reponse.numero = this.index;
+        console.log(this.reponse.lib);
+        this.libelle = String(' ');
+        this.disableAddQuestion = false;
     }
 
 }
