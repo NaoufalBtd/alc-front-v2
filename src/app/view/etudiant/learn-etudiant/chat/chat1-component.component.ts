@@ -20,10 +20,6 @@ export class Chat1Component implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        this.webSocketService.findbynumero(this.servicelogin.etudiant.prof.id);
-        // this.servicelogin.etudiant.prof.students[0] = null;
-        // this.servicelogin.etudiant.prof.students[0].chatMessageDto = null;
-        // this.webSocketService.findstudentlist(this.servicelogin.etudiant.prof.id);
     }
 
     ngOnDestroy(): void {

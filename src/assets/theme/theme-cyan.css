@@ -3327,7 +3327,7 @@ p-togglebutton.ng-dirty.ng-invalid > .p-togglebutton.p-button {
   color: #6c757d;
 }
 .p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
-  background: #ffffff;
+  background: #edf2fb;
   border-color: #1BA7AF;
   color: #1BA7AF;
 }

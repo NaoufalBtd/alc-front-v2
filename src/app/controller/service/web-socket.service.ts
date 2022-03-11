@@ -155,7 +155,6 @@ export class WebSocketService {
             alert(event);
         };
         this.webSocket.onmessage = (event) => {
-            console.log('DAZ DAZ   DAZ   DAZ   DAZ   DAZ   DAZ   DAZ   DAZ   DAZ  DAZ DAZ');
             const data: ChatMessageDto = JSON.parse(event.data);
             console.log(data);
             if (data.type === 'message') {
@@ -207,7 +206,8 @@ export class WebSocketService {
                 console.log(this.prof);
                 console.log('=============== prof ======================');
 
-                const studentList = this.participants.get(this.prof.id);
+                let studentList = this.participants.get(this.prof.id);
+                console.log(this.participants);
                 for (const student of studentList) {
                     if (student.id === mydata.id) {
                         if (this.studentsEnLigne.get(student.id) === undefined) {
@@ -387,6 +387,7 @@ export class WebSocketService {
     set connectedUsers(value: any[]) {
         this._connectedUsers = value;
     }
+
     //
     // private studentIsInGroup(grpStudent: GroupeEtudiant): string {
     //     this.groupeEtudiantService.findAllGroupeEtudiantDetail(grpStudent.id).subscribe(data => {

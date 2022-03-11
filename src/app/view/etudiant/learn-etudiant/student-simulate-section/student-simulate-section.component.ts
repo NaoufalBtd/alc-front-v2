@@ -33,6 +33,8 @@ import {Prof} from '../../../../controller/model/prof.model';
 import {GroupeEtudiant} from '../../../../controller/model/groupe-etudiant.model';
 import {GroupeEtudiantService} from '../../../../controller/service/groupe-etudiant-service';
 import {AppComponent} from '../../../../app.component';
+import {newArray} from '@angular/compiler/src/util';
+import {MenuService} from '../../../shared/slide-bar/app.menu.service';
 
 @Pipe({name: 'safe'})
 export class SafePipe implements PipeTransform {
@@ -51,6 +53,7 @@ export class SafePipe implements PipeTransform {
     styleUrls: ['./student-simulate-section.component.scss']
 })
 export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
+    synonymes: string;
 
     // tslint:disable-next-line:max-line-lengthg max-line-length
     constructor(private messageService: MessageService,
@@ -60,6 +63,7 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
                 private sanitizer: DomSanitizer,
                 private confirmationService: ConfirmationService,
                 private service: ParcoursService,
+                private menuService: MenuService,
                 private http: HttpClient,
                 private quizService: QuizEtudiantService,
                 public loginService: LoginService,
@@ -295,6 +299,15 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
         return this.service.sectionAdditional;
     }
 
+    get showTpBar(): boolean {
+        return this.menuService.showTpBar;
+    }
+
+    set showTpBar(value: boolean) {
+        this.menuService.showTpBar = value;
+    }
+
+
     set sectionAdditional(value: Array<Section>) {
         this.service.sectionAdditional = value;
     }
@@ -382,6 +395,7 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
     word: string;
     wordDict: any;
     j: number;
+    searchInput: string;
 
     get selectedLanguage(): any {
         return this.learnService.selectedLanguage;
@@ -390,6 +404,7 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
     set selectedLanguage(value: any) {
         this.learnService.selectedLanguage = value;
     }
+
     public finish() {
         this.viewDialog = true;
     }
@@ -499,7 +514,7 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        if (this.loginService.getConnectedStudent().langue === 'fr'){
+        if (this.loginService.getConnectedStudent().langue === 'fr') {
             this.selectedLanguage = {code: 'fr', name: 'French', nativeName: 'français'};
         }
         this.showAppMenu = false;
@@ -877,6 +892,7 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
     }
 
     closeSession() {
+        this.showTpBar = true;
         this.webSocketService.closeWebSocket(this.loginService.getConnectedStudent());
         this.participants.delete(this.prof.id);
         this.connectedUsers.splice(0, this.connectedUsers.length);
@@ -895,6 +911,40 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
 
     getSelectedLanguage() {
         console.log(this.selectedLanguage);
-        
+
+    }
+
+    findAllSynonimes(word: string) {
+        console.log(word);
+        console.log(this.searchInput);
+        if (this.selectedLanguage.code === 'ar') {
+            this.quizService.translate(word).subscribe(data => {
+                console.log(data);
+                this.synonymes = data;
+            });
+        } else if (this.selectedLanguage.code === 'fr') {
+            this.quizService.translateEnFr(word).subscribe(data => {
+                this.synonymes = data;
+                console.log(data);
+            });
+        }
+    }
+
+    addToDictionary() {
+        let dict: Dictionary = new Dictionary();
+        dict.word = this.searchInput;
+        dict.definition = this.synonymes;
+        dict.etudiant = this.loginService.getConnectedStudent();
+
+        this.dictionnaryService.addToDictionary(dict).subscribe(data => {
+            this.itemsDict.push({...data});
+            this.searchInput = String();
+            this.synonymes = String();
+            this.messageService.add({severity: 'success', life: 3000, detail: 'Word added successfully'});
+        }, error => {
+            console.log(error);
+            this.messageService.add({severity: 'error', life: 3000, detail: 'Text is too long! try again with small text'});
+
+        });
     }
 }

@@ -46,6 +46,13 @@ export class EtudiantComponent implements OnInit{
 
   inlineUserMenuActive = false;
 
+  get showTpBar(): boolean {
+    return this.menuService.showTpBar;
+  }
+
+  set showTpBar(value: boolean) {
+    this.menuService.showTpBar = value;
+  }
 
 
   constructor(private menuService: MenuService,
