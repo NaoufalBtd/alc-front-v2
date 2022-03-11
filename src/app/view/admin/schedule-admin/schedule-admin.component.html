@@ -148,7 +148,7 @@
                 <div class="p-field">
                     <label> Group name </label>
                     <p-dropdown [(ngModel)]="scheduleProf.groupeEtudiant" [options]="groupeStudent"
-                                optionLabel="libelle"
+                                optionLabel="libelle" (onChange)="setProf(scheduleProf.groupeEtudiant.prof)"
                                 class="e-field"
                                 data-name="groupeEtudiant" (ngModelChange)="getCourses(scheduleProf.groupeEtudiant)"
                                 placeholder="Name of group"></p-dropdown>
@@ -157,10 +157,7 @@
 
                 <div class="p-field">
                     <label>Teacher Name </label>
-                    <p-dropdown (click)="getProf()" [(ngModel)]="scheduleProf.prof" [options]="professors"
-                                class="e-field"
-                                data-name="prof"
-                                optionLabel="prenom" placeholder="Name of Teacher"></p-dropdown>
+                    <p id="teacher">{{scheduleProf?.prof?.nom}} {{scheduleProf?.prof?.prenom}}</p>
                 </div>
 
 
