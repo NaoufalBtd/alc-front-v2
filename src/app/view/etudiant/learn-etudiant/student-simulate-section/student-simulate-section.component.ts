@@ -528,10 +528,7 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
             data => {
                 this.selectedReview = data;
             });
-        this.dictionnaryService.FindAllWord().subscribe(
-            data => {
-                this.itemsDict = data;
-            });
+        this.findAllDict();
         this.quizService.section.id = this.selectedsection.id;
         this.quizService.findQuizSection().subscribe(data => this.selectedQuiz = data);
         this.quizService.findQuizBySectionId(this.selectedsection).subscribe(
@@ -575,6 +572,13 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
             this.webSocketService.findCurrentSectionForstudent(this.service.selectedcours, this.prof);
             console.log(this.service.selectedsection);
         }
+    }
+
+    findAllDict() {
+        this.dictionnaryService.FindAllWord().subscribe(
+            data => {
+                this.itemsDict = data;
+            });
     }
 
     public findhomeworkbycours(cours: Cours) {

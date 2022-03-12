@@ -73,13 +73,6 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
         return this.service.sectionAdditional;
     }
 
-    set sectionAdditional(value: Array<Section>) {
-        this.service.sectionAdditional = value;
-    }
-
-    get homeWorkSelected(): HomeWork {
-        return this.homeWorkService.homeWorkSelected;
-    }
 
     get showAppMenu(): boolean {
         return this.learnService.showAppMenu;
@@ -288,22 +281,6 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
         this.router.navigate(['/prof/quiz-preview-teacher']);
     }
 
-    public dict() {
-        const selection = window.getSelection();
-        this.textSeleted = selection.toString();
-        console.log(this.textSeleted);
-        this.dictionnaryService.FindAllWord().subscribe(
-            data => {
-                this.itemsDict = data;
-            });
-        for (let i = 0; i < this.itemsDict.length; i++) {
-            if (this.textSeleted.length !== 0) {
-                this.selected.word = this.textSeleted;
-                this.submittedDict = false;
-                this.createDialogDict = true;
-            }
-        }
-    }
 
     public openCreateDict() {
         this.selectedDict = new Dictionary();
@@ -494,24 +471,41 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
     }
 
 
-    addToDictionary() {
-        let dict: Dictionary = new Dictionary();
-        dict.word = this.searchInput;
-        dict.definition = this.synonymes;
-        console.log(this.participants.get(this.loginService.getConnectedProf().id));
-        for (const etudiant of this.participants.get(this.loginService.getConnectedProf().id)) {
-            dict.etudiant = etudiant;
-            this.dictionnaryService.addToDictionary(dict).subscribe(data => {
-                this.itemsDict.push({...data});
-                this.searchInput = String();
-                this.synonymes = String();
-            }, error => {
-                console.log(error);
-                this.messageService.add({severity: 'error', life: 3000, detail: 'Text is too long! try again with small text'});
+    addToDictionary(type: string) {
+        if (type === 'SELECT') {
+            this.createDialogDict = false;
+            console.log(this.participants.get(this.loginService.getConnectedProf().id));
+            for (const etudiant of this.participants.get(this.loginService.getConnectedProf().id)) {
+                this.selectedNow.etudiant = etudiant;
+                this.dictionnaryService.addToDictionary(this.selectedNow).subscribe(data => {
+                    this.itemsDict.push({...data});
+                }, error => {
+                    console.log(error);
+                    this.messageService.add({severity: 'error', life: 3000, detail: 'Text is too long! try again with small text'});
 
-            });
-            this.messageService.add({severity: 'success', life: 3000, detail: 'Word added successfully'});
+                });
+                this.messageService.add({severity: 'success', life: 3000, detail: 'Word added successfully'});
+            }
+        } else {
+            let dict: Dictionary = new Dictionary();
+            dict.word = this.searchInput;
+            dict.definition = this.synonymes;
+            console.log(this.participants.get(this.loginService.getConnectedProf().id));
+            for (const etudiant of this.participants.get(this.loginService.getConnectedProf().id)) {
+                dict.etudiant = etudiant;
+                this.dictionnaryService.addToDictionary(dict).subscribe(data => {
+                    this.itemsDict.push({...data});
+                    this.searchInput = String();
+                    this.synonymes = String();
+                }, error => {
+                    console.log(error);
+                    this.messageService.add({severity: 'error', life: 3000, detail: 'Text is too long! try again with small text'});
+
+                });
+                this.messageService.add({severity: 'success', life: 3000, detail: 'Word added successfully'});
+            }
         }
+
 
     }
 
@@ -549,5 +543,35 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
         }, error => {
             this.quizExist = false;
         });
+    }
+
+    public dict() {
+        this.selectedNow = new Dictionary();
+        const selection = window.getSelection();
+        this.selectedNow.word = selection.toString();
+        console.log(this.selectedNow.word.length);
+        if (this.selectedNow.word.length > 3) {
+            console.log(this.selectedLanguage.code);
+            if (this.selectedLanguage.code === 'ar') {
+                this.quizService.translate(this.selectedNow.word).subscribe(data => {
+                    console.log(data);
+                    this.selectedNow.definition = data;
+                });
+            } else if (this.selectedLanguage.code === 'fr') {
+                this.quizService.translateEnFr(this.selectedNow.word).subscribe(data => {
+                    this.selectedNow.definition = data;
+                    console.log(data);
+                });
+            }
+            this.createDialogDict = true;
+        }
+    }
+
+    get selectedNow(): Dictionary {
+        return this.dictionnaryService.selectedNow;
+    }
+
+    set selectedNow(value: Dictionary) {
+        this.dictionnaryService.selectedNow = value;
     }
 }
