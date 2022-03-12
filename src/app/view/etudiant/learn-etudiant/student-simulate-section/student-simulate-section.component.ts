@@ -79,6 +79,7 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
     ) {
     }
 
+
     get coursecomplited(): boolean {
         return this.review.coursecomplited;
     }
@@ -376,6 +377,10 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
         this.webSocketService.prof = value;
     }
 
+    get groupeEtudiant(): GroupeEtudiant {
+        return this.webSocketService.groupeEtudiant;
+    }
+
 
     get studentsEnLigne(): Map<number, Etudiant> {
         return this.webSocketService.studentsEnLigne;
@@ -514,6 +519,7 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
+        this.selectedsection = this.itemssection2[0];
         if (this.loginService.getConnectedStudent().langue === 'fr') {
             this.selectedLanguage = {code: 'fr', name: 'French', nativeName: 'français'};
         }

@@ -193,9 +193,11 @@
                                     type="button"></button>
                         </div>
                     </div>
+
+
                     <div *ngIf="this.selectedQuiz.section.id == this.selectedsection.id" class="p-col quiz">
-                        <app-quiz-etudiant-view *ngIf="showViewQuiz"></app-quiz-etudiant-view>
-                        <app-quiz-take *ngIf="!showViewQuiz"></app-quiz-take>
+                        <app-quiz-etudiant-view *ngIf="quizView"></app-quiz-etudiant-view>
+                        <app-quiz-take *ngIf="!quizView"></app-quiz-take>
                     </div>
                     <!--                    <p-tabView>-->
                     <!--                        <p-tabPanel header="LESSON">-->
@@ -255,12 +257,10 @@
                                                 <tr class="timeline">
 
                                                     <li>
-                                                        <td
-                                                                [style.color]="(section.categorieSection.libelle) == (this.selectedsection.categorieSection.libelle)? 'orange' :'black' "
-                                                                style="cursor: pointer;
-                                                                 display: inline-block; margin-top: -1px;
+                                                        <td [style.color]="(section.categorieSection.libelle) == (this.selectedsection.categorieSection.libelle)? 'orange' :'black' "
+                                                            style="cursor: pointer;
                                                                  font-weight: 600;margin-left: 5px; font-size: 15px">
-                                                            <u>{{section.categorieSection.libelle}}</u></td>
+                                                            {{section.categorieSection.libelle}}</td>
                                                     </li>
                                                 </tr>
 
@@ -279,10 +279,9 @@
                                                 <tr class="timeline">
 
                                                     <li>
-                                                        <td
-                                                                [style.color]="(section.categorieSection.libelle) == (this.selectedsection.categorieSection.libelle)? 'orange' :'black' "
-                                                                style="cursor: pointer; font-weight: 600;margin-left: 5px; font-size: 15px">
-                                                            <u>{{section.categorieSection.libelle}}</u></td>
+                                                        <td [style.color]="(section.categorieSection.libelle) == (this.selectedsection.categorieSection.libelle)? 'orange' :'black' "
+                                                            style="cursor: pointer; font-weight: 600;margin-left: 5px; font-size: 15px">
+                                                            {{section.categorieSection.libelle}}</td>
                                                     </li>
                                                 </tr>
                                             </ng-template>

@@ -132,16 +132,16 @@
                         </div>
                     </div>
 
-                    <div *ngIf="this.selectedQuiz.section.id === this.selectedsection.id" class="p-col quiz">
-                        <app-quiz-preview-prof
-                                *ngIf="this.selectedQuiz.section.id == this.selectedsection.id"></app-quiz-preview-prof>
+                    <div *ngIf="quizExist" class="p-col quiz">
+                        <app-quiz-preview-prof  *ngIf="this.selectedQuiz?.section?.id === this.selectedsection?.id">
+                        </app-quiz-preview-prof>
                     </div>
 
                     <div class="p-grid" *ngIf="!this.webSocketService.isInSession"
                          style="background: white; border-top: 5px solid #f4f4f4;">
                         <div class="p-col-4">
                             <button *ngIf="this.selectedsection.numeroOrder !== 1"
-                                    (click)="PreviousSection()"
+                                    (click)="PreviousSection(selectedsection)"
                                     class="p-button-warning" icon="pi pi-caret-left" id="previous"
                                     [label]="previousSection(selectedsection)" pButton pRipple
                                     type="button"></button>
@@ -150,16 +150,25 @@
 
                         <div class="p-col-4" style="text-align: center">
                             <button [style]="{'width': '100%'}"
-                                    *ngIf="selectedsection.id === sectionStandard[sectionStandard.length - 1].id ||
-                                            selectedsection.categorieSection.superCategorieSection.libelle === 'Additional'"
+                                    *ngIf="!showFlowMeButton && (selectedsection.id === sectionStandard[sectionStandard.length - 1].id ||
+                                            selectedsection.categorieSection.superCategorieSection.libelle === 'Additional')"
                                     class="p-button-warning" icon="pi pi-check" label="SUMMARY" pButton pRipple
                                     type="button"></button>
+
+                            <button *ngIf="showFlowMeButton" pButton pRipple type="button"
+                                    (click)="goToSection(selectedsection)"
+                                    [style]="{'width': '100%',    'background': 'white', 'border': '2px solid', 'font-weight': '800', 'color': '#f2a142'}"
+                                    label="Flow me" class="p-button-outlined p-button-warning">
+                                <img id="flowMeImg" src="./assets/icons/icons-roller.gif" width="25px">
+                            </button>
+
+
                         </div>
 
 
                         <div class="p-col-4" style="text-align: end">
                             <button *ngIf="selectedsection.id !== itemssection2[itemssection2.length - 1].id"
-                                    (click)="NextSection()"
+                                    (click)="NextSection(selectedsection)"
                                     class="p-button-warning" icon="pi pi-caret-right" id="next"
                                     [label]="nextSection(selectedsection)"
                                     pButton pRipple
@@ -174,16 +183,8 @@
                         <!--                                    pRipple-->
                         <!--                                    type="button"></button>-->
                     </div>
-                    <!--                    <p-tabView>-->
-                    <!--                        <p-tabPanel header="LESSON">-->
-                    <!--                            -->
-                    <!--                        </p-tabPanel>-->
 
-                    <!--                        <p-tabPanel header="QUIZ">-->
-                    <!--                           -->
-                    <!--                        </p-tabPanel>-->
 
-                    <!--                    </p-tabView>-->
                 </div>
 
 
@@ -232,8 +233,8 @@
 
                                                 <tr class="timeline">
 
-                                                    <li >
-                                                        <td (click)="Section(section.categorieSection.libelle)"
+                                                    <li>
+                                                        <td (click)="allerVerSection(section)"
                                                             [style.color]="(section.categorieSection.libelle) == (this.selectedsection.categorieSection.libelle)? 'orange' :'black' "
                                                             style="cursor: pointer; font-weight: 600;margin-left: 5px;
                                                              font-size: 15px">
@@ -255,7 +256,7 @@
                                                 <tr class="timeline">
 
                                                     <li>
-                                                        <td (click)="Section(section.categorieSection.libelle)"
+                                                        <td (click)="allerVerSection(section)"
                                                             [style.color]="(section.categorieSection.libelle) == (this.selectedsection.categorieSection.libelle)? 'orange' :'black' "
                                                             style="cursor: pointer; font-weight: 600;margin-left: 5px; font-size: 15px">
                                                             {{section.categorieSection.libelle}}</td>
