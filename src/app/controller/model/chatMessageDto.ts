@@ -2,6 +2,7 @@ import {Etudiant} from './etudiant.model';
 import {Prof} from './prof.model';
 import {QuizReponse} from './quiz-reponse';
 import {GroupeEtudiant} from './groupe-etudiant.model';
+import {Section} from './section.model';
 
 export class ChatMessageDto {
     type: string;
@@ -13,10 +14,10 @@ export class ChatMessageDto {
     quizReponse: QuizReponse = new QuizReponse();
     grpStudent: GroupeEtudiant = new GroupeEtudiant();
 
-    constructor(user: string, message: string, student: boolean) {
+    constructor(user: string, message: string, isStudent: boolean) {
         this.user = user;
         this.message = message;
-        this.isStudent = student;
+        this.isStudent = isStudent;
     }
 
 

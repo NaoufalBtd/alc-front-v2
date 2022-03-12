@@ -55,6 +55,14 @@ export class ProfComponent implements OnInit {
                 public app: AppComponent) {
     }
 
+    get showTpBar(): boolean {
+        return this.menuService.showTpBar;
+    }
+
+    set showTpBar(value: boolean) {
+        this.menuService.showTpBar = value;
+    }
+
     ngOnInit(): void {
         this.user = this.authenticationService.getUserFromLocalCache();
         if (this.user === null) {

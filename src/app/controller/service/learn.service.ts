@@ -861,30 +861,42 @@ export class LearnService {
         );
     }
 
-    checkAnswers(answer: Reponse) {
+    checkAnswers(answer: Reponse): Reponse {
         if (answer.etatReponse === 'true') {
-            this.showT12AnswerDiv = true;
             if (this.correctAnswerT12 === undefined || this.correctAnswerT12 === null) {
                 this.correctAnswerT12 = answer.lib + ' ';
             } else {
                 this.correctAnswerT12 = this.correctAnswerT12 + answer.lib + ' ';
             }
             document.getElementById(answer.lib).style.backgroundColor = '#52b788';
-            document.getElementById(String(this.nextIndex)).style.borderBottom = '2px solid #52b788';
-            document.getElementById(String(this.nextIndex)).style.color = '#2d6a4f';
-            this.nextIndex += 1;
-            if (this.nextIndex <= this.answersT12List.size) {
-                this.filterDatat12(this.quizT12AnswersList, this.nextIndex);
-            } else {
-                this.disableButtonSon = false;
-                this.t12AnswersList = new Array<Reponse>();
-            }
         } else {
+            for (const item of this.t12AnswersList) {
+                if (item.etatReponse === 'true') {
+                    answer = item;
+                }
+            }
+            if (this.correctAnswerT12 === undefined || this.correctAnswerT12 === null) {
+                this.correctAnswerT12 = answer.lib + ' ';
+            } else {
+                this.correctAnswerT12 = this.correctAnswerT12 + answer.lib + ' ';
+            }
             document.getElementById(answer.lib).style.animationName = 'inCorrect';
             document.getElementById(answer.lib).style.animationDuration = '2s';
             document.getElementById(answer.lib).style.animationIterationCount = '1';
         }
+        this.showT12AnswerDiv = true;
+        document.getElementById(String(this.nextIndex)).style.borderBottom = '2px solid #52b788';
+        document.getElementById(String(this.nextIndex)).style.color = '#2d6a4f';
+        this.nextIndex += 1;
+        if (this.nextIndex <= this.answersT12List.size) {
+            this.filterDatat12(this.quizT12AnswersList, this.nextIndex);
+        } else {
+            this.disableButtonSon = false;
+            this.t12AnswersList = new Array<Reponse>();
+        }
+
         console.log(answer);
+        return answer;
     }
 
     private filterDatat12(reponses: Array<Reponse>, index: number) {

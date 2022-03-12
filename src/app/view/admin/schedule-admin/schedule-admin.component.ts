@@ -226,59 +226,68 @@ export class ScheduleAdminComponent implements OnInit {
     }
 
     save() {
-        const fixedRef = this.scheduleProf.ref;
-        const startedDate = this.scheduleProf.startTime;
-        const endedDate = this.scheduleProf.endTime;
-        const scheduleObj = this.scheduleObj;
-        scheduleObj.eventSettings.dataSource = null;
-        this.scheduleProf.subject = this.scheduleProf.cours.libelle;
-        this.scheduleProf.grpName = this.scheduleProf.groupeEtudiant.libelle;
-        this.scheduleProf.profName = this.scheduleProf.prof.nom + ' ' + this.scheduleProf.prof.prenom;
-        console.log(this.scheduleProf);
-        if (this.optionSelected.option === 'Daily') {
-            while (this.scheduleProf.startTime < this.endDate) {
-                this.saveSchedule(scheduleObj);
-                this.scheduleProf.startTime.setDate(startedDate.getDate() + this.repeatNumber);
-                this.scheduleProf.endTime.setDate(endedDate.getDate() + this.repeatNumber);
-            }
-        } else if (this.optionSelected.option === 'Weekly') {
-            let firstSubject = this.scheduleProf.subject;
-            console.log(this.selectedDays);
-            while (this.scheduleProf.startTime < this.endDate) {
-                for (const day of this.selectedDays) {
-                    if (this.scheduleProf.startTime.getDay() === day) {
-                        console.log(this.scheduleProf.startTime.getDay());
-                        console.log(this.scheduleProf.startTime.getDate());
-                        this.scheduleProf.ref = fixedRef + String(this.scheduleProf.startTime.getDay());
-                        console.log(this.courses);
-                        for (let i = 0; i < this.courses.length; i++) {
-                            if (this.scheduleProf.cours.libelle === this.courses[i].libelle) {
-                                if (this.scheduleProf.subject === firstSubject) {
-                                    firstSubject = null;
-                                    break;
-                                } else {
-                                    console.log(this.courses[i]);
-                                    console.log(this.courses[i + 1]);
-                                    this.scheduleProf.cours = this.courses[i + 1];
-                                    this.scheduleProf.subject = this.scheduleProf.cours.libelle;
-                                    break;
+        if (this.scheduleProf.prof ===  null) {
+            this.messageService.add({
+                severity: 'warn',
+                summary: 'Warning',
+                detail: 'Operation canceled, Group ' + this.scheduleProf.groupeEtudiant.libelle + ' has not a teacher yet!',
+                life: 5000
+            });
+        } else {
+            const fixedRef = this.scheduleProf.ref;
+            const startedDate = this.scheduleProf.startTime;
+            const endedDate = this.scheduleProf.endTime;
+            const scheduleObj = this.scheduleObj;
+            scheduleObj.eventSettings.dataSource = null;
+            this.scheduleProf.subject = this.scheduleProf.cours.libelle;
+            this.scheduleProf.grpName = this.scheduleProf.groupeEtudiant.libelle;
+            this.scheduleProf.profName = this.scheduleProf.prof.nom + ' ' + this.scheduleProf.prof.prenom;
+            console.log(this.scheduleProf);
+            if (this.optionSelected.option === 'Daily') {
+                while (this.scheduleProf.startTime < this.endDate) {
+                    this.saveSchedule(scheduleObj);
+                    this.scheduleProf.startTime.setDate(startedDate.getDate() + this.repeatNumber);
+                    this.scheduleProf.endTime.setDate(endedDate.getDate() + this.repeatNumber);
+                }
+            } else if (this.optionSelected.option === 'Weekly') {
+                let firstSubject = this.scheduleProf.subject;
+                console.log(this.selectedDays);
+                while (this.scheduleProf.startTime < this.endDate) {
+                    for (const day of this.selectedDays) {
+                        if (this.scheduleProf.startTime.getDay() === day) {
+                            console.log(this.scheduleProf.startTime.getDay());
+                            console.log(this.scheduleProf.startTime.getDate());
+                            this.scheduleProf.ref = fixedRef + String(this.scheduleProf.startTime.getDay());
+                            console.log(this.courses);
+                            for (let i = 0; i < this.courses.length; i++) {
+                                if (this.scheduleProf.cours.libelle === this.courses[i].libelle) {
+                                    if (this.scheduleProf.subject === firstSubject) {
+                                        firstSubject = null;
+                                        break;
+                                    } else {
+                                        console.log(this.courses[i]);
+                                        console.log(this.courses[i + 1]);
+                                        this.scheduleProf.cours = this.courses[i + 1];
+                                        this.scheduleProf.subject = this.scheduleProf.cours.libelle;
+                                        break;
+                                    }
                                 }
                             }
+                            this.saveSchedule(scheduleObj);
                         }
-                        this.saveSchedule(scheduleObj);
                     }
+                    this.scheduleProf.startTime.setDate(startedDate.getDate() + 1);
+                    this.scheduleProf.endTime.setDate(endedDate.getDate() + 1);
                 }
-                this.scheduleProf.startTime.setDate(startedDate.getDate() + 1);
-                this.scheduleProf.endTime.setDate(endedDate.getDate() + 1);
+
+
+            } else {
+                this.saveSchedule(scheduleObj);
             }
-
-
-        } else {
-            this.saveSchedule(scheduleObj);
+            this.scheduleProf = new ScheduleProf();
+            this.scheduleObj.eventWindow.refresh();
+            this.optionSelected = 'Never';
         }
-        this.scheduleProf = new ScheduleProf();
-        this.scheduleObj.eventWindow.refresh();
-        this.optionSelected = 'Never';
     }
 
     private saveSchedule(scheduleObj: any) {
@@ -457,5 +466,10 @@ export class ScheduleAdminComponent implements OnInit {
 
     public onTimezoneDropDownChange(args: any): void {
         this.scheduleObj.timezone = this.timezoneDropdownObj.value.toString();
+    }
+
+    setProf(prof: Prof) {
+        console.log(prof);
+        this.scheduleProf.prof = prof;
     }
 }

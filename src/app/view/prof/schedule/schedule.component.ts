@@ -32,6 +32,8 @@ import {TrancheHoraireProf} from '../../../controller/model/tranche-horaire-prof
 import {TrancheHoraireProfService} from '../../../controller/service/tranche-horaire-prof.service';
 import {ProfessorService} from '../../../controller/service/professor.service';
 import {SessionCoursService} from '../../../controller/service/session-cours.service';
+import {MenuService} from '../../shared/slide-bar/app.menu.service';
+import {Cours} from '../../../controller/model/cours.model';
 
 L10n.load({
     'en-US': {
@@ -65,7 +67,16 @@ export class ScheduleLocalComponent implements OnInit {
                 private groupeEtudiantService: GroupeEtudiantService,
                 private webSocketService: WebSocketService,
                 private router: Router,
+                private menuService: MenuService,
                 private simulateSectionService: SimulateSectionService) {
+    }
+
+    get showTpBar(): boolean {
+        return this.menuService.showTpBar;
+    }
+
+    set showTpBar(value: boolean) {
+        this.menuService.showTpBar = value;
     }
 
 
@@ -417,12 +428,18 @@ export class ScheduleLocalComponent implements OnInit {
         );
     }
 
+    set selectedcours(value: Cours) {
+        this.parcoursService.selectedcours = value;
+    }
+
     startSession() {
+        this.showTpBar = false;
         console.log(this.data.groupeEtudiant.id);
         this.webSocketService.sessionHasStarted = true;
         this.findAllGroupeEtudiantDetail(this.data.groupeEtudiant.id);
         console.log(this.data);
-        this.simulateSectionService.findSectionOneByOne(this.data.cours);
+        this.selectedcours = this.data.cours;
+        this.simulateSectionService.findSectionOneByCoursId(this.data.cours);
         this.parcoursService.afficheOneSectionByProf(this.data.cours).subscribe(
             dataSection => {
                 console.log('============ SCHEDULE SECTION ===========================');

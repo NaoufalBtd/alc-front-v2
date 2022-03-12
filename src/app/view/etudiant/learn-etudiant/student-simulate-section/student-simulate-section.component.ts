@@ -33,6 +33,8 @@ import {Prof} from '../../../../controller/model/prof.model';
 import {GroupeEtudiant} from '../../../../controller/model/groupe-etudiant.model';
 import {GroupeEtudiantService} from '../../../../controller/service/groupe-etudiant-service';
 import {AppComponent} from '../../../../app.component';
+import {newArray} from '@angular/compiler/src/util';
+import {MenuService} from '../../../shared/slide-bar/app.menu.service';
 
 @Pipe({name: 'safe'})
 export class SafePipe implements PipeTransform {
@@ -51,6 +53,7 @@ export class SafePipe implements PipeTransform {
     styleUrls: ['./student-simulate-section.component.scss']
 })
 export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
+    synonymes: string;
 
     // tslint:disable-next-line:max-line-lengthg max-line-length
     constructor(private messageService: MessageService,
@@ -60,6 +63,7 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
                 private sanitizer: DomSanitizer,
                 private confirmationService: ConfirmationService,
                 private service: ParcoursService,
+                private menuService: MenuService,
                 private http: HttpClient,
                 private quizService: QuizEtudiantService,
                 public loginService: LoginService,
@@ -74,6 +78,7 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
                 private grpEtudiantService: GroupeEtudiantService,
     ) {
     }
+
 
     get coursecomplited(): boolean {
         return this.review.coursecomplited;
@@ -295,6 +300,15 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
         return this.service.sectionAdditional;
     }
 
+    get showTpBar(): boolean {
+        return this.menuService.showTpBar;
+    }
+
+    set showTpBar(value: boolean) {
+        this.menuService.showTpBar = value;
+    }
+
+
     set sectionAdditional(value: Array<Section>) {
         this.service.sectionAdditional = value;
     }
@@ -363,6 +377,10 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
         this.webSocketService.prof = value;
     }
 
+    get groupeEtudiant(): GroupeEtudiant {
+        return this.webSocketService.groupeEtudiant;
+    }
+
 
     get studentsEnLigne(): Map<number, Etudiant> {
         return this.webSocketService.studentsEnLigne;
@@ -382,6 +400,7 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
     word: string;
     wordDict: any;
     j: number;
+    searchInput: string;
 
     get selectedLanguage(): any {
         return this.learnService.selectedLanguage;
@@ -390,6 +409,7 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
     set selectedLanguage(value: any) {
         this.learnService.selectedLanguage = value;
     }
+
     public finish() {
         this.viewDialog = true;
     }
@@ -499,7 +519,8 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        if (this.loginService.getConnectedStudent().langue === 'fr'){
+        this.selectedsection = this.itemssection2[0];
+        if (this.loginService.getConnectedStudent().langue === 'fr') {
             this.selectedLanguage = {code: 'fr', name: 'French', nativeName: 'français'};
         }
         this.showAppMenu = false;
@@ -511,7 +532,6 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
             data => {
                 this.itemsDict = data;
             });
-        // this.photoURL();
         this.quizService.section.id = this.selectedsection.id;
         this.quizService.findQuizSection().subscribe(data => this.selectedQuiz = data);
         this.quizService.findQuizBySectionId(this.selectedsection).subscribe(
@@ -549,51 +569,6 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
         this.vocab.findAllVocabSection().subscribe(data => {
             this.vocab.nombreVocab = data.length;
         });
-
-        this.menu = [
-            {
-                icon: 'pi pi-list', command: (event) => {
-                    this.service.affichelistSection().subscribe(
-                        data => {
-                            this.itemssection2 = data;
-                            // tslint:disable-next-line:no-shadowed-variable
-                        });
-                    document.getElementById('word').style.visibility = 'hidden';
-                    document.getElementById('chat').style.visibility = 'hidden';
-                    document.getElementById('word').style.height = '0px';
-                    document.getElementById('categoriess').style.visibility = 'visible';
-                    document.getElementById('categoriess').style.width = '100%';
-                    document.getElementById('categoriess').style.height = '100%';
-                    document.getElementById('categ').style.height = '100%';
-                    document.getElementById('chat').style.visibility = 'hidden';
-                }
-            }, {
-                icon: 'pi pi-fw pi-comments', command: (event) => {
-                    document.getElementById('categoriess').style.visibility = 'hidden';
-                    document.getElementById('categoriess').style.height = '0px';
-                    document.getElementById('word').style.visibility = 'hidden';
-                    document.getElementById('word').style.height = '0px';
-                    document.getElementById('chat').style.visibility = 'visible';
-
-                }
-            },
-            {
-                icon: 'pi pi-book', style: {width: '50%'}, command: (event) => {
-                    this.dictionnaryService.FindAllWord().subscribe(
-                        data => {
-                            this.itemsDict = data;
-                        });
-                    document.getElementById('categoriess').style.visibility = 'hidden';
-                    document.getElementById('categoriess').style.height = '0px';
-                    document.getElementById('word').style.visibility = 'visible';
-                    document.getElementById('word').style.width = '100%';
-                    document.getElementById('word').style.height = '100%';
-                    document.getElementById('wrd').style.height = '100%';
-                    document.getElementById('chat').style.visibility = 'hidden';
-
-                }
-            }
-        ];
 
         this.findhomeworkbycours(this.sectionItemService.coursofsection);
         if (this.webSocketService.isInSession) {
@@ -877,6 +852,7 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
     }
 
     closeSession() {
+        this.showTpBar = true;
         this.webSocketService.closeWebSocket(this.loginService.getConnectedStudent());
         this.participants.delete(this.prof.id);
         this.connectedUsers.splice(0, this.connectedUsers.length);
@@ -895,6 +871,49 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
 
     getSelectedLanguage() {
         console.log(this.selectedLanguage);
-        
+
+    }
+
+    findAllSynonimes(word: string) {
+        console.log(word);
+        console.log(this.searchInput);
+        if (this.selectedLanguage.code === 'ar') {
+            this.quizService.translate(word).subscribe(data => {
+                console.log(data);
+                this.synonymes = data;
+            });
+        } else if (this.selectedLanguage.code === 'fr') {
+            this.quizService.translateEnFr(word).subscribe(data => {
+                this.synonymes = data;
+                console.log(data);
+            });
+        }
+    }
+
+    addToDictionary() {
+        let dict: Dictionary = new Dictionary();
+        dict.word = this.searchInput;
+        dict.definition = this.synonymes;
+        dict.etudiant = this.loginService.getConnectedStudent();
+
+        this.dictionnaryService.addToDictionary(dict).subscribe(data => {
+            this.itemsDict.push({...data});
+            this.searchInput = String();
+            this.synonymes = String();
+            this.messageService.add({severity: 'success', life: 3000, detail: 'Word added successfully'});
+        }, error => {
+            console.log(error);
+            this.messageService.add({severity: 'error', life: 3000, detail: 'Text is too long! try again with small text'});
+
+        });
+    }
+
+    nextSection(selectedsection: Section): string {
+        console.log(this.itemssection2);
+        for (let i = 0; i < this.itemssection2.length; i++) {
+            if (selectedsection.id === this.itemssection2[i].id) {
+                return this.itemssection2[i + 1].libelle;
+            }
+        }
     }
 }

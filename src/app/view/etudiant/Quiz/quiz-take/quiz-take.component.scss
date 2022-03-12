@@ -190,31 +190,34 @@ h4 {
   color: #6197ba;
 }
 
-.trueOrFalseQst{
+.trueOrFalseQst {
   border: 3px solid grey;
 }
-.trueQst{
+
+.trueQst {
   border: 3px solid #52b788;
 }
-.falseQst{
+
+.falseQst {
   border: 3px solid #f08080;
 }
 
-.pi-check-circle{
+.pi-check-circle {
   color: #52b788;
 }
-.pi-times-circle{
+
+.pi-times-circle {
   color: #fc1b1b;
 }
 
 
-.p-col-9{
+.p-col-9 {
   text-align: left;
   font-weight: 500;
   color: #6197ba;
 }
 
-.sonButton{
+.sonButton {
   margin: 8px;
   background-color: transparent !important;
   color: #ffa500;
@@ -227,12 +230,12 @@ h4 {
   border: 2px solid #ffa500 !important;
 }
 
-.caption{
+.caption {
   text-align: center;
 
 }
 
-.noteFinal{
+.noteFinal {
   display: inline-block;
   margin-right: 2%;
   font-family: auto, fantasy;
@@ -245,10 +248,50 @@ h4 {
   font-weight: 700 !important;
 }
 
-.pi-exclamation-circle{
+.pi-exclamation-circle {
   color: #ffa500;
 }
 
-.pi-users{
+.pi-users {
   color: #ffa500;
 }
+
+@keyframes inCorrect {
+  from {
+    background-color: #f08080;
+  }
+  to {
+    background-color: #dcdcdc;
+  }
+}
+
+.correctAnswerT12 {
+  text-align: center;
+  border: 1px dashed #dadada;
+  border-radius: 5px;
+  font-size: large;
+  color: green;
+  background-color: #f4f4f4;
+  letter-spacing: 1px;
+  font-weight: 600;
+}
+
+.libelleT12 {
+  display: inline-block !important;
+  margin-right: 8px !important;
+  border-bottom: 2px dashed;
+  color: #7b8895;
+}
+
+.answert12 {
+  display: inline-block !important;
+  background-color: #dcdcdc;
+  margin: 2%;
+  text-align: center;
+  font-size: medium;
+  cursor: pointer;
+  color: black;
+  border-radius: 10px;
+  font-weight: 500;
+}
+

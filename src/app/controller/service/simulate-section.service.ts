@@ -23,6 +23,8 @@ import {Cours} from '../model/cours.model';
 import {HomeWork} from '../model/home-work.model';
 import {Section} from '../model/section.model';
 import {environment} from '../../../environments/environment';
+import {Observable} from 'rxjs';
+import {LearnService} from './learn.service';
 
 @Injectable({
     providedIn: 'root'
@@ -49,6 +51,7 @@ export class SimulateSectionService {
                 private confirmationService: ConfirmationService,
                 private service: ParcoursService,
                 private http: HttpClient,
+                private learnService: LearnService,
                 private quizService: QuizEtudiantService,
                 private loginService: LoginService,
                 private vocab: VocabularyService,
@@ -308,151 +311,65 @@ export class SimulateSectionService {
         );
     }
 
-    public nextSection() {
-        this.service.affichelistSection().subscribe(
-            data => {
-                this.itemssection2 = data;
-                // tslint:disable-next-line:no-shadowed-variable
-            });
-        this.selectedsection.numeroOrder = this.selectedsection.numeroOrder + 1;
-        // tslint:disable-next-line:triple-equals
-        if (this.selectedsection.numeroOrder <= this.itemssection2.length) {
-            this.service.afficheOneSection2().subscribe(
-                data => {
-                    this.selectedsection = data;
-                    console.log('selected section from simulate service');
-                    console.log(this.selectedsection);
-                    this.updateCurrentSection(this.loginService.prof.id, this.selectedsection);
-                    if (data.categorieSection.libelle === 'Vocabulary') {
-                        this.Vocab(data);
-                    } else {
-                        this.showVocabulary = false;
-                    }
+    get showTakeQuiz(): boolean {
+        return this.learnService.showTakeQuiz;
+    }
 
-                    this.quizService.findQuizBySectionId(this.selectedsection).subscribe(
-                        data => {
-                            this.selectedQuiz = data;
+    set showTakeQuiz(value: boolean) {
+        this.learnService.showTakeQuiz = value;
+    }
 
-                            this.quizService.findQuizEtudanitByEtudiantIdAndQuizId(this.loginService.etudiant, this.selectedQuiz).subscribe(
-                                data => {
-                                    this.quizEtudiantList = data;
-                                    console.log(this.quizEtudiantList);
-                                    this.quizService.findAllQuestions(this.selectedQuiz.ref).subscribe(
-                                        dataQuestions => {
-                                            if (data.questionCurrent > dataQuestions.length) {
-                                                this.passerQuiz = 'View Quiz';
-                                                this.quizView = true;
-                                            } else {
-                                                this.passerQuiz = 'Continue Quiz';
-                                                this.quizView = false;
-                                            }
-                                        }
-                                    );
-                                }, error => {
-                                    this.passerQuiz = 'Take Quiz';
-                                    this.quizView = false;
-                                }
-                            );
-                        },
-                    );
-                });
-        } else {
-            this.selectedsection.numeroOrder = 0;
-            this.PreviousSection();
+    get showQuizReview(): boolean {
+        return this.learnService.showQuizReview;
+    }
+
+    set showQuizReview(value: boolean) {
+        this.learnService.showQuizReview = value;
+    }
+
+    public nextSection(id: number) {
+        for (const section of this.itemssection2) {
+            if (id === section.id) {
+                this.selectedsection = section;
+            }
         }
 
-    }
-
-    PreviousSection() {
-
-        this.service.affichelistSection().subscribe(
-            data => {
-                this.itemssection2 = data;
-                // tslint:disable-next-line:no-shadowed-variable
-            });
-        this.selectedsection.numeroOrder = this.selectedsection.numeroOrder - 1;
-        // tslint:disable-next-line:triple-equals
-        if (this.selectedsection.numeroOrder != 0) {
-            this.service.afficheOneSection2().subscribe(
-                data => {
-                    this.selectedsection = data;
-                    this.updateCurrentSection(this.loginService.prof.id, this.selectedsection);
-                    if (data.categorieSection.libelle === 'Vocabulary') {
-                        this.Vocab(data);
-                    } else {
-                        this.showVocabulary = false;
-                    }
-                    this.quizService.findQuizBySectionId(this.selectedsection).subscribe(
-                        data => {
-                            this.selectedQuiz = data;
-                            this.quizService.findQuizEtudanitByEtudiantIdAndQuizId(this.loginService.etudiant, this.selectedQuiz).subscribe(
-                                data => {
-                                    this.quizEtudiantList = data;
-                                    console.log(this.quizEtudiantList);
-                                    this.quizService.findAllQuestions(this.selectedQuiz.ref).subscribe(
-                                        dataQuestions => {
-                                            if (data?.questionCurrent > dataQuestions?.length) {
-                                                this.passerQuiz = 'View Quiz';
-                                                this.quizView = true;
-                                            } else {
-                                                this.passerQuiz = 'Continue Quiz';
-                                                this.quizView = false;
-                                            }
-                                        }
-                                    );
-                                }, error => {
-                                    this.passerQuiz = 'Take Quiz';
-                                    this.quizView = false;
-                                }
-                            );
-                        },
-                    );
-                });
+        if (this.selectedsection.categorieSection.libelle === 'Vocabulary') {
+            this.Vocab(this.selectedsection);
         } else {
-            this.selectedsection.numeroOrder = this.itemssection2.length + 1;
-            this.nextSection();
+            this.showVocabulary = false;
         }
-    }
 
-    photoURL() {
-        // this.service.image = '';
-        //  for (let j = 0; j < 76 ; j++)
-        //  {
-        // this.service.image = this.selectedsection.urlImage;
-        //  }
-        //  this.service.image += 'preview';
-        //  console.log(this.selectedsection.id);
-        // const blob = UrlFetch(this.image,{headers})
-        //  return this.sanitizer.bypassSecurityTrustResourceUrl(this.service.image);
-        // return this.service.image;
-        this.service.image = '';
-        //  for (let j = 0; j < 76 ; j++)
-        //  {
-        this.service.image = this.selectedsection.urlImage;
-        //  }
-        //  this.service.image += 'preview';
-        //  console.log(this.service.image);
-        this.srcImg = this.service.image;
-        return this.srcImg;
+        this.quizService.findQuizBySectionId(this.selectedsection).subscribe(
+            data => {
+                this.selectedQuiz = data;
 
-        //   return this.sanitizer.bypassSecurityTrustResourceUrl(this.service.image);
-    }
-
-    URLVideo() {
-        this.service.video = '';
-        // tslint:disable-next-line:prefer-for-of
-        // for (let m = 0; m < 24 ; m++)
-        // {
-        this.service.video = this.selectedsection.urlVideo;
-        // }
-        //   for (let m = 32; m < 43 ; m++)
-        //   {
-        //  }
-        //   console.log(this.service.video);
-        // return this.sanitizer.bypassSecurityTrustResourceUrl(this.service.video);
-        return this.service.video;
+                this.quizService.findQuizEtudanitByEtudiantIdAndQuizId(this.loginService.etudiant, this.selectedQuiz).subscribe(
+                    data1 => {
+                        this.quizEtudiantList = data1;
+                        this.quizView = true;
+                        console.log(this.quizEtudiantList);
+                        this.quizService.findAllQuestions(this.selectedQuiz.ref).subscribe(
+                            dataQuestions => {
+                                if (data1.questionCurrent > dataQuestions.length) {
+                                    this.passerQuiz = 'View Quiz';
+                                    this.quizView = true;
+                                } else {
+                                    this.passerQuiz = 'Continue Quiz';
+                                    this.quizView = true;
+                                }
+                            }
+                        );
+                    }, error => {
+                        this.passerQuiz = 'Take Quiz';
+                        this.quizView = false;
+                    }
+                );
+            },
+        );
 
     }
+
 
     public dict() {
         const selection = window.getSelection();
@@ -509,9 +426,6 @@ export class SimulateSectionService {
             });
     }
 
-    get TranslateSynonymeDialog(): boolean {
-        return this.dictionnaryService.TranslateSynonymeDialog;
-    }
 
     set TranslateSynonymeDialog(value: boolean) {
         this.dictionnaryService.TranslateSynonymeDialog = value;
@@ -541,6 +455,7 @@ export class SimulateSectionService {
         this.dictionnaryService.Synonymes = value;
     }
 
+
     public findSectionOneByOne(cour: Cours): Section {
         this.selectedcours = cour;
         let i = 0;
@@ -554,12 +469,16 @@ export class SimulateSectionService {
                 console.log(this.itemssection2);
                 for (let _i = 0; _i < data.length; _i++) {
                     if (data[_i].categorieSection.superCategorieSection.libelle === 'Obligatory') {
-                        this.service.sectionStandard.push(data[_i]);
+                        this.sectionStandard.push({...data[_i]});
                     } else if (data[_i].categorieSection.superCategorieSection.libelle === 'Additional') {
-                        this.service.sectionAdditional.push(data[_i]);
+                        this.sectionAdditional.push({...data[_i]});
                     }
                 }
-                // tslint:disable-next-line:no-shadowed-variable
+                console.log('===========================Standra 1=========================');
+                console.log(this.sectionStandard);
+                console.log(this.sectionAdditional);
+                console.log('====================================================');
+
             });
         this.service.image = '';
         if (this.loginService.prof !== null) {
@@ -619,5 +538,30 @@ export class SimulateSectionService {
                     },
                 );
             }, error => console.log('erreeeeeeeeeeeeeeeeur'));
+    }
+
+    findSectionOneByCoursId(cours: Cours) {
+        return this.http.get<Array<Section>>(this.profUrl + 'section/cours/id/' + cours.id).subscribe(
+            data => {
+                this.itemssection2 = data;
+                this.selectedsection = data[0];
+                if (this.selectedsection.categorieSection.libelle === 'Vocabulary') {
+                    this.Vocab(this.selectedsection);
+                } else {
+                    this.showVocabulary = false;
+                }
+                this.service.sectionAdditional = new Array<Section>();
+                this.service.sectionStandard = new Array<Section>();
+                console.log('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
+                console.log(this.selectedsection);
+                for (let _i = 0; _i < data.length; _i++) {
+                    if (data[_i].categorieSection.superCategorieSection.libelle === 'Obligatory') {
+                        this.sectionStandard.push({...data[_i]});
+                    } else if (data[_i].categorieSection.superCategorieSection.libelle === 'Additional') {
+                        this.sectionAdditional.push({...data[_i]});
+                    }
+                }
+            }
+        );
     }
 }

@@ -1,5 +1,5 @@
-.p-grid{
-  margin-top: -12px!important; ;
+.p-grid {
+  margin-top: -12px !important;;
 }
 
 :host ::ng-deep {
@@ -108,58 +108,116 @@ tr.timeline > li {
 }
 
 tr.timeline > li:before {
-  content: '            ';
-  background: white;
+  content: " ";
+  background: #c8c8c8;
   display: inline-block;
   position: absolute;
   border-radius: 50%;
-  border: 3px solid #22c0e8;
-  left: 30px;
-  width: 10px;
-  height: 10px;
-  z-index: 200;
+  border: 2px solid #cfcfcf;
+  left: 32px;
+  width: 5px;
+  height: 5px;
+  z-index: 201;
 }
 
 .quiz {
-  border: 10px solid #e5e5e5 !important;
+  border: 10px solid #ffffff  !important;
 }
 
 .toopBar {
-  background-color: transparent;
-  margin-top: -8px;
-  border-radius: 6px;
+  background-color: #ffa500;
   height: 60px;
   padding: 11px 0;
-  border: 4px solid gainsboro;
 }
 
 .middleBar {
   background-color: transparent;
   margin-top: 10px;
   border-radius: 6px;
-  border: 6px solid gainsboro;
 }
 
 .clickedButton {
-  color: #ffa500 !important;
+  color: white !important;
 }
 
 .Topbutton {
   border: none !important;
-  font-weight: 500!important;
+  font-weight: 500 !important;
   font-family: "Inter UI", sans-serif;
 }
-.p-col-1{
+
+.p-col-1 {
   text-align: right;
 }
 
-.leftButton{
-  background: linear-gradient(90deg, #d53369 0%, #daae51 100%)!important;
+.leftButton {
+  //background: linear-gradient(90deg, #d53369 0%, #daae51 100%)!important;
   color: white;
-  border: none!important;
+  font-weight: bold;
+  border-width: 2px;
 }
-.leftButton:hover{
-  background: linear-gradient(90deg, #d53369 0%, #daae51 100%)!important;
-  color: black;
-  border: none!important;
+
+.leftButton:hover {
+  //background: linear-gradient(90deg, #d53369 0%, #daae51 100%)!important;
+  color: #ffa500 !important;
+  background: #252529 !important;
+  border: 1px solid #252529 !important;
+}
+
+.title {
+  color: white;
+  font-size: x-large;
+  font-weight: 600;
+  letter-spacing: 1px;
+  font-family: ui-monospace;
+}
+
+.homeWorkIcon {
+  width: 25px;
+}
+
+.sectionLibelle {
+  background: white;
+  height: 35px;
+  padding: 8px;
+  font-size: larger;
+  font-weight: 500;
+  letter-spacing: 2px;
+  margin-bottom: 10px
+}
+
+
+.btndark{
+  border:1px solid #252529!important;
+  background: white!important;
+  color: #252529!important;
+}
+.btndark:hover{
+  border:none!important;
+  background: #252529!important;
+  color: white!important;
+}
+
+.dict{
+  display: inline-block;
+  color: dimgrey;
+  font-size: medium;
+  font-weight: bold;
+  height: 35px;
+  padding: 8px;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+.skipeContainer{
+  border: 2px dashed #bfbfbf;
+  height: 200px;
+  background: #fffdfa59;
+  margin-bottom: 10px;
+  text-align: center;
+  padding: 40px;
+}
+
+#startText{
+  color: #60788a;
 }
