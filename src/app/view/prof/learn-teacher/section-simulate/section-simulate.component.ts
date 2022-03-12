@@ -60,6 +60,13 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
                 private confirmationService: ConfirmationService,
                 private service: ParcoursService, private http: HttpClient, private review: EtudiantReviewService) {
     }
+    get selectedNow(): Dictionary {
+        return this.dictionnaryService.selectedNow;
+    }
+
+    set selectedNow(value: Dictionary) {
+        this.dictionnaryService.selectedNow = value;
+    }
 
     get sectionStandard(): Array<Section> {
         return this.service.sectionStandard;
@@ -567,11 +574,5 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
         }
     }
 
-    get selectedNow(): Dictionary {
-        return this.dictionnaryService.selectedNow;
-    }
 
-    set selectedNow(value: Dictionary) {
-        this.dictionnaryService.selectedNow = value;
-    }
 }
