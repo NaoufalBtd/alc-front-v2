@@ -26,6 +26,7 @@ import {HomeworkService} from '../../../../controller/service/homework.service';
 import {HomeWorkEtudiantServiceService} from '../../../../controller/service/home-work-etudiant-service.service';
 import {HomeWork} from '../../../../controller/model/home-work.model';
 import {MenuService} from '../../../shared/slide-bar/app.menu.service';
+import {SimulateSectionService} from '../../../../controller/service/simulate-section.service';
 
 @Pipe({name: 'safe'})
 export class SafePipe1 implements PipeTransform {
@@ -50,6 +51,7 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
                 public loginService: LoginService,
                 public webSocketService: WebSocketService,
                 private menuService: MenuService,
+                private simulateSectionService: SimulateSectionService,
                 private learnService: LearnService,
                 private messageService: MessageService,
                 private dictionnaryService: DictionaryService,
@@ -60,6 +62,7 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
                 private confirmationService: ConfirmationService,
                 private service: ParcoursService, private http: HttpClient, private review: EtudiantReviewService) {
     }
+
     get selectedNow(): Dictionary {
         return this.dictionnaryService.selectedNow;
     }
@@ -263,6 +266,14 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
         this.dictionnaryService.submittedDictEdit = value;
     }
 
+    get quizExist(): boolean {
+        return this.simulateSectionService.quizExist;
+    }
+
+    set quizExist(value: boolean) {
+        this.simulateSectionService.quizExist = value;
+    }
+
     synonymes: string;
     searchInput: string;
     nodes: TreeNode[];
@@ -275,7 +286,7 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
     showFlowMeButton: boolean;
 
     // tslint:disable-next-line:adjacent-overload-signatures
-    quizExist: boolean;
+
 
     public Review() {
         this.review.viewDialogProf = true;
@@ -485,14 +496,25 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
             for (const etudiant of this.participants.get(this.loginService.getConnectedProf().id)) {
                 this.selectedNow.etudiant = etudiant;
                 this.dictionnaryService.addToDictionary(this.selectedNow).subscribe(data => {
-                    this.itemsDict.push({...data});
+                    let index = 0;
+                    if (this.itemsDict.length > 0) {
+                        for (const item of this.itemsDict) {
+                            if (item.word === data.word) {
+                                index = 1;
+                            }
+                        }
+                        if (index === 0) {
+                            this.itemsDict.push({...data});
+                        }
+                    } else {
+                        this.itemsDict.push({...data});
+                    }
                 }, error => {
-                    console.log(error);
                     this.messageService.add({severity: 'error', life: 3000, detail: 'Text is too long! try again with small text'});
 
                 });
-                this.messageService.add({severity: 'success', life: 3000, detail: 'Word added successfully'});
             }
+            this.messageService.add({severity: 'success', life: 3000, detail: 'Word added successfully'});
         } else {
             let dict: Dictionary = new Dictionary();
             dict.word = this.searchInput;
@@ -501,7 +523,19 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
             for (const etudiant of this.participants.get(this.loginService.getConnectedProf().id)) {
                 dict.etudiant = etudiant;
                 this.dictionnaryService.addToDictionary(dict).subscribe(data => {
-                    this.itemsDict.push({...data});
+                    let index = 0;
+                    if (this.itemsDict.length > 0) {
+                        for (const item of this.itemsDict) {
+                            if (item.word === data.word) {
+                                index = 1;
+                            }
+                        }
+                        if (index === 0) {
+                            this.itemsDict.push({...data});
+                        }
+                    } else {
+                        this.itemsDict.push({...data});
+                    }
                     this.searchInput = String();
                     this.synonymes = String();
                 }, error => {
@@ -509,8 +543,8 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
                     this.messageService.add({severity: 'error', life: 3000, detail: 'Text is too long! try again with small text'});
 
                 });
-                this.messageService.add({severity: 'success', life: 3000, detail: 'Word added successfully'});
             }
+            this.messageService.add({severity: 'success', life: 3000, detail: 'Word added successfully'});
         }
 
 
