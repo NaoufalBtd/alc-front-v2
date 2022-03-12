@@ -332,6 +332,8 @@ import { InfoEtudiantComponent } from './view/admin/info-etudiant/info-etudiant.
 import { StatutSocialComponent } from './view/admin/statut-social/statut-social.component';
 import { FonctionComponent } from './view/admin/fonction/fonction.component';
 import { NiveauEtudeComponent } from './view/admin/niveau-etude/niveau-etude.component';
+import { SkillComponent } from './view/admin/skill/skill.component';
+import { InteretEtudiantComponent } from './view/admin/interet-etudiant/interet-etudiant.component';
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -651,7 +653,9 @@ export function createTranslateLoader(http: HttpClient) {
         InfoEtudiantComponent,
         StatutSocialComponent,
         FonctionComponent,
-        NiveauEtudeComponent
+        NiveauEtudeComponent,
+        SkillComponent,
+        InteretEtudiantComponent
 
     ],
     providers: [

@@ -1,8 +1,9 @@
 
 <div class="p-grid">
-    <div class="p-col-6">
+    <div class="p-col-12">
 
         <div class="card" style="background-color: gainsboro;">
+            <h2> Area of work list</h2>
             <p-toolbar styleClass="p-mb-4">
                 <ng-template pTemplate="left">
                     <button   (click)="showEditDialog()" class="p-button-success p-mr-2 p-mb-2" icon="pi pi-plus" label="New" pButton
@@ -11,18 +12,16 @@
             </p-toolbar>
             <p-table #dt [(selection)]="fonctions" [columns]="cols" [globalFilterFields]="['libelle']"
                      [paginator]="true"
-                     [rowHover]="true"
-                     [rows]="5" [showCurrentPageReport]="true" [value]="fonctions"
+                     [rowHover]="false"
+                     [rows]="3" [showCurrentPageReport]="true" [value]="fonctions"
                      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
                      dataKey="id"
                      styleClass="p-datatable-customers">
 
                 <ng-template pTemplate="header">
                     <tr>
-                        <th style="width: 3rem">
-                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-                        </th>
-                        <th pSortableColumn="libelle">Fonction
+
+                        <th pSortableColumn="libelle">Area of work
                             <p-sortIcon field="libelle"></p-sortIcon>
                         </th>
                         <th pSortableColumn="prenom"> Action
@@ -32,9 +31,8 @@
                 </ng-template>
                 <ng-template let-type pTemplate="body">
                     <tr>
-                        <td>
-                            <p-tableCheckbox [value]="type"></p-tableCheckbox>
-                        </td>
+
+
                         <td>{{type.libelle}}</td>
                         <td>
 

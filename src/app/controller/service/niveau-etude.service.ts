@@ -22,7 +22,7 @@ export class NiveauEtudeService {
   public save(): Observable<number> {
     return this.http.post<number>(this.etudiantUrl + 'niveauEtude/', this.niveauEtude);
   }
-  public findAllStatutSocial(): Observable<Array<NiveauEtude>> {
+  public findAllNiveauEtude(): Observable<Array<NiveauEtude>> {
     return this.http.get<Array<NiveauEtude>>(this.etudiantUrl + 'niveauEtude/');
 
   }

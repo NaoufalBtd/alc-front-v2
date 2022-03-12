@@ -46,6 +46,7 @@ export class StatutSocialComponent implements OnInit {
   }
   showEditDialog() {
     this.createDialogEtud = true;
+    this.statutSocial = null;
 
   }
   hideCreateDialog() {

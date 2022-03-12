@@ -1,8 +1,9 @@
 
 <div class="p-grid">
-    <div class="p-col-4">
+    <div class="p-col-12">
 
         <div class="card" style="background-color: gainsboro;">
+            <h1 class="p-m-0">Teacher type List </h1>
             <p-toolbar styleClass="p-mb-4">
                 <ng-template pTemplate="left">
                     <button   (click)="showEditDialog()" class="p-button-success p-mr-2 p-mb-2" icon="pi pi-plus" label="New" pButton
@@ -10,17 +11,18 @@
                 </ng-template>
             </p-toolbar>
             <p-table
-                     [rows]="8" [showCurrentPageReport]="true" [value]="typeTeachers"
+                    [columns]="cols" [globalFilterFields]="['libelle']"
+                    [paginator]="true"
+                    [rowHover]="false"
+                    [rows]="3" [showCurrentPageReport]="true" [value]="typeTeachers"
                      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
                      dataKey="id"
                      styleClass="p-datatable-customers">
 
                 <ng-template pTemplate="header">
                     <tr>
-                        <th style="width: 3rem">
-                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-                        </th>
-                        <th pSortableColumn="libelle">Type Teacher
+
+                        <th pSortableColumn="libelle">Teacher type
                             <p-sortIcon field="libelle"></p-sortIcon>
                         </th>
                         <th pSortableColumn="prenom"> Action
@@ -30,9 +32,6 @@
                 </ng-template>
                 <ng-template let-type pTemplate="body">
                     <tr>
-                        <td>
-                            <p-tableCheckbox [value]="type"></p-tableCheckbox>
-                        </td>
                         <td>{{type.libelle}}</td>
                         <td>
 
@@ -63,17 +62,15 @@
     <ng-template pTemplate="content">
         <div class="p-field">
             <label for="libelle"> Label</label>
-            <input [(ngModel)]="selected.libelle" autofocus id="libelle" pInputText required type="text"/>
+            <input [(ngModel)]="typeTeacher.libelle" autofocus id="libelle" pInputText required type="text"/>
         </div>
     </ng-template>
     <ng-template pTemplate="footer">
-        <button (click)="hideCreateDialog()" class="p-button-text" icon="pi pi-times" label="Cancel" pButton
-                pRipple></button>
+
         <button (click)="save()" class="p-button-text" icon="pi pi-check" label="Save" pButton pRipple></button>
     </ng-template>
 
 </p-dialog>
-
 <!------Edit-------------------->
 
 <p-dialog header="Type Teacher edit" [(visible)]="editDialog" [style]="{width: '20vw'}">

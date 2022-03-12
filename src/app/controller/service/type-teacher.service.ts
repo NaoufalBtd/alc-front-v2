@@ -32,7 +32,7 @@ export class TypeTeacherService {
   }
 
   public deleteByLibelle(): Observable<number> {
-    return this.http.delete<number>(this.adminUrl + this.typeUrl + this.typeTeacher.libelle);
+    return this.http.delete<number>(this.adminUrl + this.typeUrl +'libelle/'+ this.typeTeacher.libelle);
   }
   public findIndexById(id: number): number {
     let index = -1;

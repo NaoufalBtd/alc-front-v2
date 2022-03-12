@@ -2,18 +2,19 @@
 <div class="p-grid">
     <div class="p-col-12">
         <div class="card" style="background-color: gainsboro;">
-            <h2 class="p-m-0">Social status list </h2>
+            <h2 class="p-m-0">Main goal with learning English List </h2>
             <p-toolbar styleClass="p-mb-4">
+
                 <ng-template pTemplate="left">
                     <button   (click)="showEditDialog()" class="p-button-success p-mr-2 p-mb-2" icon="pi pi-plus" label="New" pButton
                               pRipple style="width: 90px"></button>
                 </ng-template>
             </p-toolbar>
-            <p-table
-                    [columns]="cols" [globalFilterFields]="['libelle']"
-                    [paginator]="true"
-                    [rowHover]="false"
-                    [rows]="3" [showCurrentPageReport]="true" [value]="statutSocials"
+            <p-table  [columns]="cols" [globalFilterFields]="['libelle']"
+                      [paginator]="true"
+                      [rowHover]="false"
+                      [rows]="3" [showCurrentPageReport]="true"
+                     [value]="interetEtudiants"
                     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
                     dataKey="id"
                     styleClass="p-datatable-customers">
@@ -21,7 +22,7 @@
                 <ng-template pTemplate="header">
                     <tr>
 
-                        <th pSortableColumn="libelle">Social status
+                        <th pSortableColumn="libelle">Main goal with learning English
                             <p-sortIcon field="libelle"></p-sortIcon>
                         </th>
                         <th pSortableColumn="prenom"> Action
@@ -58,11 +59,11 @@
 
 <!------Create-------------------->
 
-<p-dialog header="Social status create" [(visible)]="createDialogEtud" [style]="{width: '20vw'}">
+<p-dialog header="Main goal with learning English create" [(visible)]="createDialogEtud" [style]="{width: '20vw'}">
     <ng-template pTemplate="content">
         <div class="p-field">
             <label for="libelle"> Label</label>
-            <input [(ngModel)]="statutSocial.libelle" autofocus id="libelle" pInputText required type="text"/>
+            <input [(ngModel)]="interetEtudiant.libelle" autofocus id="libelle" pInputText required type="text"/>
         </div>
     </ng-template>
     <ng-template pTemplate="footer">
@@ -75,11 +76,11 @@
 
 <!------Edit-------------------->
 
-<p-dialog header="Social status edit" [(visible)]="editDialog" [style]="{width: '20vw'}">
+<p-dialog header="Main goal with learning English edit" [(visible)]="editDialog" [style]="{width: '20vw'}">
     <ng-template pTemplate="content">
         <div class="p-field">
             <label for="libelle"> Label</label>
-            <input [(ngModel)]="statutSocial.libelle" autofocus id="libelle" pInputText required type="text"/>
+            <input [(ngModel)]="interetEtudiant.libelle" autofocus id="libelle" pInputText required type="text"/>
         </div>
     </ng-template>
     <ng-template pTemplate="footer">

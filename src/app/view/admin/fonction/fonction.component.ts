@@ -36,7 +36,7 @@ export class FonctionComponent implements OnInit {
         this.messageService.add({
           severity: 'success',
           summary: 'Successful',
-          detail: 'Social status Created',
+          detail: 'Area of work Created',
           life: 3000
         });
       });
@@ -94,7 +94,7 @@ export class FonctionComponent implements OnInit {
       this.messageService.add({
         severity: 'success',
         summary: 'Successful',
-        detail: 'Social status Updated',
+          detail: 'Area of work Updated',
         life: 3000
       });
     });
@@ -114,7 +114,7 @@ export class FonctionComponent implements OnInit {
           this.messageService.add({
             severity: 'success',
             summary: 'Successful',
-            detail: 'Social status  Deleted',
+            detail: 'Area of work  Deleted',
             life: 3000
           });
         });
