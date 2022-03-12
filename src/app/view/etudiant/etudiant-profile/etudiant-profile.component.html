@@ -123,22 +123,17 @@
             </div>
             <div class="profile-info col-md-9">
                 <div class="panel">
-<!--                    <div class="bio-graph-heading "  style="font-weight: bold">
+                  <div class="bio-graph-heading "  style="font-weight: bold">
                         In this page you can find all your informations you can update them.Your coordinates need to be correct
-                    </div>-->
+                    </div>
                     <div class="panel-body bio-graph-info " style="margin: 10px;">
                         <h1 style="  color: #f29263; font-weight: bold">Bio Graph</h1>
 
                         <div class="row">
                             <div class="bio-row">
-                                <label for="float-input">First name</label>
-                                <input id="float-input" type="text" style="margin-left: 5px;" pInputText [(ngModel)]="user.nom">
+                                <label for="float-input">Full name</label>
+                                <input id="float-input" type="text" style="margin-left: 5px;" pInputText [(ngModel)]="user.prenom">
                             </div>
-                            <div class="bio-row">
-                                <label for="float-input">Last name</label>
-                                <input id="float-input" type="text" style="margin-left: 5px;" pInputText [(ngModel)]="user.nom">
-                            </div>
-
                             <div class="bio-row">
                                 <label for="float-input">Age</label>
                                 <input id="float-input" type="number" style="margin-left: 40px;" pInputText [(ngModel)]="user.age">
