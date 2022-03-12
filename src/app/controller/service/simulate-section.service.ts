@@ -43,6 +43,7 @@ export class SimulateSectionService {
     j: number;
     private profUrl = environment.profUrl;
     private synchronizationUrl = 'synchronization';
+    private _quizExist: boolean;
 
     constructor(private messageService: MessageService,
                 private router: Router,
@@ -60,6 +61,15 @@ export class SimulateSectionService {
                 private sessioncoursservice: SessionCoursService,
                 private homeWorkService: HomeworkService,
                 private homeWorkEtudiantService: HomeWorkEtudiantServiceService) {
+    }
+
+
+    get quizExist(): boolean {
+        return this._quizExist;
+    }
+
+    set quizExist(value: boolean) {
+        this._quizExist = value;
     }
 
     get coursecomplited(): boolean {
@@ -545,6 +555,12 @@ export class SimulateSectionService {
             data => {
                 this.itemssection2 = data;
                 this.selectedsection = data[0];
+                this.quizService.findQuizBySectionId(this.selectedsection ).subscribe(data12 => {
+                    this.quizExist = true;
+                    this.selectedQuiz = data12;
+                }, error => {
+                    this.quizExist = false;
+                });
                 if (this.selectedsection.categorieSection.libelle === 'Vocabulary') {
                     this.Vocab(this.selectedsection);
                 } else {

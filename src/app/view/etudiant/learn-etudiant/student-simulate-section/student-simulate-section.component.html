@@ -237,9 +237,11 @@
 
                         </ng-template>
                     </p-overlayPanel>
+
+
                     <div class="product-grid-item-content" style="background-color: white;">
                         <div class="card">
-                            <p-tabView styleClass="tabview-custom">
+                            <p-tabView (onChange)="findAllDict()" styleClass="tabview-custom">
                                 <p-tabPanel>
                                     <ng-template pTemplate="header">
                                         <img src="./assets/icons/icons-lesson.png"
@@ -300,24 +302,26 @@
                                     </ng-template>
 
                                 </p-tabPanel>
-                                <p-tabPanel header="Header III">
-                                    <ng-template pTemplate="header">
-                                        <img src="./assets/icons/icon-dictionnaire.png"
-                                             pTooltip="Dictionary" tooltipPosition="top"
-                                             class="homeWorkIcon">
+
+
+                                <p-tabPanel   header="Header III">
+                                    <ng-template  pTemplate="header">
+                                            <img src="./assets/icons/icon-dictionnaire.png"
+
+                                                 pTooltip="Dictionary" tooltipPosition="top"
+                                                 class="homeWorkIcon">
                                     </ng-template>
 
-                                    <p-table [paginator]="true" [rowHover]="true" [rows]="5" [value]="itemsDict"
+                                    <p-table [paginator]="true" [rowHover]="true" [rows]="10" [value]="itemsDict"
                                              dataKey="id"
                                              id="wrd">
 
                                         <ng-template let-dict pTemplate="body">
                                             <tr>
 
-                                                <td (click)="dictEdit(dict)"
-                                                    style="font-weight: 800; text-align: center; cursor: pointer"><b
-                                                        style="font-size: 15px; color: black;">{{dict.word}}</b> : <b
-                                                        style="font-size: 20px; color: orange;">{{dict.definition}}</b>
+                                                <td (click)="dictEdit(dict)" style="text-align: center; cursor: pointer">
+                                                    <b style=" color: black;">{{dict.word}}</b> :
+                                                    <b style=" color: orange;">{{dict.definition}}</b>
                                                 </td>
                                             </tr>
                                         </ng-template>
