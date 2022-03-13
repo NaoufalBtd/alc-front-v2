@@ -19,6 +19,8 @@
 .disbaledcard {
     background-color: rgba(255, 255, 255, 0.25) ;
 }
-
+:host ::ng-deep .p-dropdown {
+    width: 14rem;
+}
 
 
