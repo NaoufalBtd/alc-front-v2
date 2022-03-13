@@ -327,6 +327,13 @@ import {
 } from './view/etudiant/invited-student/invited-student-list-student/invited-student-list-student.component';
 import { HomeWorkReviewComponent } from './view/prof/home-work/home-work-review/home-work-review.component';
 import { FreetriallessonComponent } from './view/etudiant/freetriallesson/freetriallesson.component';
+import { MoreInformationComponent } from './view/admin/more-information/more-information.component';
+import { InfoEtudiantComponent } from './view/admin/info-etudiant/info-etudiant.component';
+import { StatutSocialComponent } from './view/admin/statut-social/statut-social.component';
+import { FonctionComponent } from './view/admin/fonction/fonction.component';
+import { NiveauEtudeComponent } from './view/admin/niveau-etude/niveau-etude.component';
+import { SkillComponent } from './view/admin/skill/skill.component';
+import { InteretEtudiantComponent } from './view/admin/interet-etudiant/interet-etudiant.component';
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -641,7 +648,14 @@ export function createTranslateLoader(http: HttpClient) {
         ReclamationProfViewComponent,
         HomePageEtudiantComponent,
         EtudiantpurchasepackComponent,
-        FreetriallessonComponent
+        FreetriallessonComponent,
+        MoreInformationComponent,
+        InfoEtudiantComponent,
+        StatutSocialComponent,
+        FonctionComponent,
+        NiveauEtudeComponent,
+        SkillComponent,
+        InteretEtudiantComponent
 
     ],
     providers: [

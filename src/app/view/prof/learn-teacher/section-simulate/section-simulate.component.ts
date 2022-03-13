@@ -26,6 +26,7 @@ import {HomeworkService} from '../../../../controller/service/homework.service';
 import {HomeWorkEtudiantServiceService} from '../../../../controller/service/home-work-etudiant-service.service';
 import {HomeWork} from '../../../../controller/model/home-work.model';
 import {MenuService} from '../../../shared/slide-bar/app.menu.service';
+import {SimulateSectionService} from '../../../../controller/service/simulate-section.service';
 
 @Pipe({name: 'safe'})
 export class SafePipe1 implements PipeTransform {
@@ -44,31 +45,30 @@ export class SafePipe1 implements PipeTransform {
     styleUrls: ['./section-simulate.component.scss']
 })
 export class SectionSimulateComponent implements OnInit, OnDestroy {
-    synonymes: string;
-    searchInput: string;
-    prof: Prof = new Prof();
-    nodes: TreeNode[];
-    textSeleted: string;
-    srcImg: string;
-    value = 0;
-    word: string;
-    showTakeQuiz = false;
-    showViewQuiz = false;
 
-    // tslint:disable-next-line:max-line-length
     constructor(private sectionItemService: SectionItemService,
                 private sessionservice: SessionCoursService,
                 public loginService: LoginService,
                 public webSocketService: WebSocketService,
                 private menuService: MenuService,
+                private simulateSectionService: SimulateSectionService,
                 private learnService: LearnService,
                 private messageService: MessageService,
                 private dictionnaryService: DictionaryService,
                 private router: Router,
                 private app: AppComponent,
                 private homeWorkService: HomeworkService,
-                private serviceQuiz: QuizService, private sanitizer: DomSanitizer, private quizService: QuizEtudiantService, private confirmationService: ConfirmationService,
+                private serviceQuiz: QuizService, private sanitizer: DomSanitizer, private quizService: QuizEtudiantService,
+                private confirmationService: ConfirmationService,
                 private service: ParcoursService, private http: HttpClient, private review: EtudiantReviewService) {
+    }
+
+    get selectedNow(): Dictionary {
+        return this.dictionnaryService.selectedNow;
+    }
+
+    set selectedNow(value: Dictionary) {
+        this.dictionnaryService.selectedNow = value;
     }
 
     get sectionStandard(): Array<Section> {
@@ -83,13 +83,6 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
         return this.service.sectionAdditional;
     }
 
-    set sectionAdditional(value: Array<Section>) {
-        this.service.sectionAdditional = value;
-    }
-
-    get homeWorkSelected(): HomeWork {
-        return this.homeWorkService.homeWorkSelected;
-    }
 
     get showAppMenu(): boolean {
         return this.learnService.showAppMenu;
@@ -115,10 +108,6 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
     // tslint:disable-next-line:adjacent-overload-signatures
     set image(value: string) {
         this.service.image = value;
-    }
-
-    public Review() {
-        this.review.viewDialogProf = true;
     }
 
     get contenu(): string {
@@ -203,7 +192,6 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
         this.service.itemssection2 = value;
     }
 
-    // tslint:disable-next-line:adjacent-overload-signatures
     get selectedDict(): Dictionary {
         return this.dictionnaryService.selectedDict;
     }
@@ -220,21 +208,90 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
         this.service.selectessection = value;
     }
 
-    public Section(libelle: string) {
-        this.service.afficheSection(libelle).subscribe(
-            data => {
-                this.selectedsection = data;
-                if (data.categorieSection.libelle === 'Vocabulary') {
-                    this.Vocab(data);
-                } else {
-                    this.showVocabulary = false;
-                }
-                this.quizService.findQuizBySection(this.selectedsection.id).subscribe(
-                    data => {
-                        this.selectedQuiz = data;
-                    });
-            }, error => console.log('erreeeeeeeeeeeeeeeeur'));
+
+    get groupeEtudiant(): GroupeEtudiant {
+        return this.webSocketService.groupeEtudiant;
     }
+
+    get prof(): Prof {
+        return this.webSocketService.prof;
+    }
+
+    get showVocabulary(): boolean {
+        return this.sectionItemService.showVocabulary;
+    }
+
+    set showVocabulary(value: boolean) {
+        this.sectionItemService.showVocabulary = value;
+    }
+
+    get showTpBar(): boolean {
+        return this.menuService.showTpBar;
+    }
+
+    set showTpBar(value: boolean) {
+        this.menuService.showTpBar = value;
+    }
+
+    get connectedUsers(): any[] {
+        return this.webSocketService.connectedUsers;
+    }
+
+    set connectedUsers(value: any[]) {
+        this.webSocketService.connectedUsers = value;
+    }
+
+
+    get studentsEnLigne(): Map<number, Etudiant> {
+        return this.webSocketService.studentsEnLigne;
+    }
+
+    get selectedLanguage(): any {
+        return this.learnService.selectedLanguage;
+    }
+
+    set selectedLanguage(value: any) {
+        this.learnService.selectedLanguage = value;
+    }
+
+    set editDialogDict(value: boolean) {
+        this.dictionnaryService.editDialogDict = value;
+    }
+
+    get submittedDictEdit(): boolean {
+        return this.dictionnaryService.submittedDictEdit;
+    }
+
+    set submittedDictEdit(value: boolean) {
+        this.dictionnaryService.submittedDictEdit = value;
+    }
+
+    get quizExist(): boolean {
+        return this.simulateSectionService.quizExist;
+    }
+
+    set quizExist(value: boolean) {
+        this.simulateSectionService.quizExist = value;
+    }
+
+    synonymes: string;
+    searchInput: string;
+    nodes: TreeNode[];
+    textSeleted: string;
+    srcImg: string;
+    value = 0;
+    word: string;
+    showTakeQuiz = false;
+    showViewQuiz = false;
+    showFlowMeButton: boolean;
+
+    // tslint:disable-next-line:adjacent-overload-signatures
+
+
+    public Review() {
+        this.review.viewDialogProf = true;
+    }
+
 
     public quiz() {
         this.serviceQuiz.refQuiz = this.selectedQuiz.ref;
@@ -242,22 +299,6 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
         this.router.navigate(['/prof/quiz-preview-teacher']);
     }
 
-    public dict() {
-        const selection = window.getSelection();
-        this.textSeleted = selection.toString();
-        console.log(this.textSeleted);
-        this.dictionnaryService.FindAllWord().subscribe(
-            data => {
-                this.itemsDict = data;
-            });
-        for (let i = 0; i < this.itemsDict.length; i++) {
-            if (this.textSeleted.length !== 0) {
-                this.selected.word = this.textSeleted;
-                this.submittedDict = false;
-                this.createDialogDict = true;
-            }
-        }
-    }
 
     public openCreateDict() {
         this.selectedDict = new Dictionary();
@@ -275,37 +316,14 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
+        this.selectedsection = this.itemssection2[0];
         this.showAppMenu = false;
-        this.prof = this.loginService.getConnectedProf();
-
+        console.log('----------------------------------------------------------------------');
+        console.log(this.sectionStandard);
+        console.log(this.sectionAdditional);
+        console.log(this.selectedsection);
     }
 
-    PreviousSection() {
-        this.service.affichelistSection().subscribe(
-            data => {
-                this.itemssection2 = data;
-                // tslint:disable-next-line:no-shadowed-variable
-            });
-        this.selectedsection.numeroOrder = this.selectedsection.numeroOrder - 1;
-        // tslint:disable-next-line:triple-equals
-        if (this.selectedsection.numeroOrder != 0) {
-            this.service.afficheOneSection2().subscribe(data => {
-                this.selectedsection = data;
-                if (data.categorieSection.libelle === 'Vocabulary') {
-                    this.Vocab(data);
-                } else {
-                    this.showVocabulary = false;
-                }
-                this.quizService.findQuizBySection(this.selectedsection.id).subscribe(
-                    dataQuiz => {
-                        this.selectedQuiz = dataQuiz;
-                    });
-            });
-        } else {
-            this.selectedsection.numeroOrder = this.itemssection2.length + 1;
-            this.NextSection();
-        }
-    }
 
     URLVideo() {
         this.service.video = '';
@@ -356,56 +374,52 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
         return this.service.contenu;
     }
 
-    NextSection() {
-        this.service.affichelistSection().subscribe(
-            data => {
-                this.itemssection2 = data;
-                // tslint:disable-next-line:no-shadowed-variable
-            });
-        this.selectedsection.numeroOrder = this.selectedsection.numeroOrder + 1;
-        // tslint:disable-next-line:triple-equals
-        if (this.selectedsection.numeroOrder <= this.itemssection2.length) {
-            this.service.afficheOneSection2().subscribe(
-                data => {
-                    this.selectedsection = data;
-                    if (data.categorieSection.libelle === 'Vocabulary') {
-                        this.Vocab(data);
-                    } else {
-                        this.showVocabulary = false;
-                    }
-                    this.quizService.findQuizBySection(this.selectedsection.id).subscribe(
-                        data => {
-                            this.selectedQuiz = data;
-                        });
-                });
-        } else {
-            this.selectedsection.numeroOrder = 0;
-            this.PreviousSection();
-        }
-    }
+    PreviousSection(section: Section) {
+        this.showFlowMeButton = false;
+        for (let i = 0; i < this.itemssection2.length; i++) {
+            if (section.id === this.itemssection2[i].id) {
+                this.selectedsection = this.itemssection2[i - 1];
+                this.webSocketService.updateCurrentSection(this.prof.id, this.itemssection2[i - 1]);
+                this.goToSection(this.itemssection2[i - 1]);
 
-    public goToSection(type: string, message: string) {
-        if (this.webSocketService.sessionHasStarted) {
-            const chatMessageDto = new ChatMessageDto(this.prof.nom, message, false);
-            chatMessageDto.student = this.prof.students;
-            chatMessageDto.prof = this.prof;
-            chatMessageDto.type = type;
-            this.webSocketService.sendMessage(chatMessageDto, 'PROF');
-        } else {
-            if (type === 'NEXT') {
-                this.NextSection();
-            } else if (type === 'PREVIOUS') {
-                this.PreviousSection();
             }
         }
     }
 
-    get showVocabulary(): boolean {
-        return this.sectionItemService.showVocabulary;
+    NextSection(section: Section) {
+        for (let i = 0; i < this.itemssection2.length; i++) {
+            if (section.id === this.itemssection2[i].id) {
+                this.selectedsection = this.itemssection2[i + 1];
+                this.webSocketService.updateCurrentSection(this.prof.id, this.itemssection2[i + 1]);
+                this.goToSection(this.itemssection2[i + 1]);
+
+                this.showFlowMeButton = false;
+            }
+        }
     }
 
-    set showVocabulary(value: boolean) {
-        this.sectionItemService.showVocabulary = value;
+
+    public allerVerSection(section: Section) {
+        for (const sec of this.itemssection2) {
+            if (section.id === sec.id) {
+                this.selectedsection = sec;
+                this.webSocketService.updateCurrentSection(this.prof.id, sec);
+                this.showFlowMeButton = true;
+                this.findQuizIfExist(section);
+            }
+        }
+    }
+
+    public goToSection(section: Section) {
+        this.findQuizIfExist(section);
+        this.showFlowMeButton = false;
+        if (this.webSocketService.sessionHasStarted) {
+            const chatMessageDto = new ChatMessageDto(this.prof.nom, String(section.id), false);
+            chatMessageDto.grpStudent = this.groupeEtudiant;
+            chatMessageDto.prof = this.prof;
+            chatMessageDto.type = 'SECTION';
+            this.webSocketService.sendMessage(chatMessageDto, 'PROF');
+        }
     }
 
     Vocab(section: Section) {
@@ -428,14 +442,6 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
 
     }
 
-    get showTpBar(): boolean {
-        return this.menuService.showTpBar;
-    }
-
-    set showTpBar(value: boolean) {
-        this.menuService.showTpBar = value;
-    }
-
 
     closeSession() {
         this.showTpBar = true;
@@ -447,23 +453,10 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
         this.studentsEnLigne.clear();
     }
 
-    get connectedUsers(): any[] {
-        return this.webSocketService.connectedUsers;
-    }
-
-    set connectedUsers(value: any[]) {
-        this.webSocketService.connectedUsers = value;
-    }
-
     getData() {
         const grp = this.participants.get(this.prof.id);
         console.log(grp);
         console.log(this.participants);
-    }
-
-
-    get studentsEnLigne(): Map<number, Etudiant> {
-        return this.webSocketService.studentsEnLigne;
     }
 
     public saveSessionCoursForGroupEtudiant(idprof: number, idcours: number) {
@@ -477,14 +470,6 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
     getSelectedLanguage() {
         console.log(this.selectedLanguage);
 
-    }
-
-    get selectedLanguage(): any {
-        return this.learnService.selectedLanguage;
-    }
-
-    set selectedLanguage(value: any) {
-        this.learnService.selectedLanguage = value;
     }
 
     findAllSynonimes(word: string) {
@@ -504,24 +489,64 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
     }
 
 
-    addToDictionary() {
-        let dict: Dictionary = new Dictionary();
-        dict.word = this.searchInput;
-        dict.definition = this.synonymes;
-        console.log(this.participants.get(this.loginService.getConnectedProf().id));
-        for (const etudiant of this.participants.get(this.loginService.getConnectedProf().id)) {
-            dict.etudiant = etudiant;
-            this.dictionnaryService.addToDictionary(dict).subscribe(data => {
-                this.itemsDict.push({...data});
-                this.searchInput = String();
-                this.synonymes = String();
-            }, error => {
-                console.log(error);
-                this.messageService.add({severity: 'error', life: 3000, detail: 'Text is too long! try again with small text'});
+    addToDictionary(type: string) {
+        if (type === 'SELECT') {
+            this.createDialogDict = false;
+            console.log(this.participants.get(this.loginService.getConnectedProf().id));
+            for (const etudiant of this.participants.get(this.loginService.getConnectedProf().id)) {
+                this.selectedNow.etudiant = etudiant;
+                this.dictionnaryService.addToDictionary(this.selectedNow).subscribe(data => {
+                    let index = 0;
+                    if (this.itemsDict.length > 0) {
+                        for (const item of this.itemsDict) {
+                            if (item.word === data.word) {
+                                index = 1;
+                            }
+                        }
+                        if (index === 0) {
+                            this.itemsDict.push({...data});
+                        }
+                    } else {
+                        this.itemsDict.push({...data});
+                    }
+                }, error => {
+                    this.messageService.add({severity: 'error', life: 3000, detail: 'Text is too long! try again with small text'});
 
-            });
+                });
+            }
+            this.messageService.add({severity: 'success', life: 3000, detail: 'Word added successfully'});
+        } else {
+            let dict: Dictionary = new Dictionary();
+            dict.word = this.searchInput;
+            dict.definition = this.synonymes;
+            console.log(this.participants.get(this.loginService.getConnectedProf().id));
+            for (const etudiant of this.participants.get(this.loginService.getConnectedProf().id)) {
+                dict.etudiant = etudiant;
+                this.dictionnaryService.addToDictionary(dict).subscribe(data => {
+                    let index = 0;
+                    if (this.itemsDict.length > 0) {
+                        for (const item of this.itemsDict) {
+                            if (item.word === data.word) {
+                                index = 1;
+                            }
+                        }
+                        if (index === 0) {
+                            this.itemsDict.push({...data});
+                        }
+                    } else {
+                        this.itemsDict.push({...data});
+                    }
+                    this.searchInput = String();
+                    this.synonymes = String();
+                }, error => {
+                    console.log(error);
+                    this.messageService.add({severity: 'error', life: 3000, detail: 'Text is too long! try again with small text'});
+
+                });
+            }
             this.messageService.add({severity: 'success', life: 3000, detail: 'Word added successfully'});
         }
+
 
     }
 
@@ -533,20 +558,7 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
         }
     }
 
-    set editDialogDict(value: boolean) {
-        this.dictionnaryService.editDialogDict = value;
-    }
-
-    get submittedDictEdit(): boolean {
-        return this.dictionnaryService.submittedDictEdit;
-    }
-
-    set submittedDictEdit(value: boolean) {
-        this.dictionnaryService.submittedDictEdit = value;
-    }
-
     nextSection(selectedsection: Section): string {
-        console.log(this.itemssection2);
         for (let i = 0; i < this.itemssection2.length; i++) {
             if (selectedsection.id === this.itemssection2[i].id) {
                 return this.itemssection2[i + 1]?.categorieSection?.libelle;
@@ -564,4 +576,37 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
         }
         return 'Previous';
     }
+
+    private findQuizIfExist(section: Section) {
+        this.quizService.findQuizBySectionId(section).subscribe(data => {
+            this.quizExist = true;
+            this.selectedQuiz = data;
+        }, error => {
+            this.quizExist = false;
+        });
+    }
+
+    public dict() {
+        this.selectedNow = new Dictionary();
+        const selection = window.getSelection();
+        this.selectedNow.word = selection.toString();
+        console.log(this.selectedNow.word.length);
+        if (this.selectedNow.word.length > 3) {
+            console.log(this.selectedLanguage.code);
+            if (this.selectedLanguage.code === 'ar') {
+                this.quizService.translate(this.selectedNow.word).subscribe(data => {
+                    console.log(data);
+                    this.selectedNow.definition = data;
+                });
+            } else if (this.selectedLanguage.code === 'fr') {
+                this.quizService.translateEnFr(this.selectedNow.word).subscribe(data => {
+                    this.selectedNow.definition = data;
+                    console.log(data);
+                });
+            }
+            this.createDialogDict = true;
+        }
+    }
+
+
 }

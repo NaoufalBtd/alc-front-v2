@@ -92,6 +92,9 @@ import {InvitedStudentComponent} from './view/etudiant/invited-student/invited-s
 import {HomePageEtudiantComponent} from './view/etudiant/home-page-etudiant/home-page-etudiant.component';
 import {EtudiantpurchasepackComponent} from './view/etudiant/etudiantpurchasepack/etudiantpurchasepack.component';
 import {FreetriallessonComponent} from './view/etudiant/freetriallesson/freetriallesson.component';
+import {TypeTeacher} from './controller/model/type-teacher.model';
+import {MoreInformationComponent} from './view/admin/more-information/more-information.component';
+import {InfoEtudiantComponent} from './view/admin/info-etudiant/info-etudiant.component';
 
 
 @NgModule({
@@ -131,7 +134,9 @@ import {FreetriallessonComponent} from './view/etudiant/freetriallesson/freetria
                     {path: 'manage-section', component: ManageSectionComponent},
                     {path: 'home-work-review', component: HomeWorkPreviewComponent},
                     {path: 'complaint', component: ComplaintComponent},
-                    {path: 'typeofcomplaint', component: TypeReclamationComponent}
+                    {path: 'typeofcomplaint', component: TypeReclamationComponent},
+                    {path: 'moreInformation', component: MoreInformationComponent} ,
+                    {path: 'infoEtudiant', component: InfoEtudiantComponent}
                 ]
             },
             {

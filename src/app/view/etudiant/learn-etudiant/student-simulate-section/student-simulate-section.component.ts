@@ -79,6 +79,7 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
     ) {
     }
 
+
     get coursecomplited(): boolean {
         return this.review.coursecomplited;
     }
@@ -116,7 +117,13 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
     get showVocabulary(): boolean {
         return this.sectionItemService.showVocabulary;
     }
+    get selectedNow(): Dictionary {
+        return this.dictionnaryService.selectedNow;
+    }
 
+    set selectedNow(value: Dictionary) {
+        this.dictionnaryService.selectedNow = value;
+    }
     set showVocabulary(value: boolean) {
         this.sectionItemService.showVocabulary = value;
     }
@@ -376,6 +383,10 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
         this.webSocketService.prof = value;
     }
 
+    get groupeEtudiant(): GroupeEtudiant {
+        return this.webSocketService.groupeEtudiant;
+    }
+
 
     get studentsEnLigne(): Map<number, Etudiant> {
         return this.webSocketService.studentsEnLigne;
@@ -514,6 +525,7 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
+        this.selectedsection = this.itemssection2[0];
         if (this.loginService.getConnectedStudent().langue === 'fr') {
             this.selectedLanguage = {code: 'fr', name: 'French', nativeName: 'français'};
         }
@@ -522,10 +534,7 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
             data => {
                 this.selectedReview = data;
             });
-        this.dictionnaryService.FindAllWord().subscribe(
-            data => {
-                this.itemsDict = data;
-            });
+        this.findAllDict();
         this.quizService.section.id = this.selectedsection.id;
         this.quizService.findQuizSection().subscribe(data => this.selectedQuiz = data);
         this.quizService.findQuizBySectionId(this.selectedsection).subscribe(
@@ -571,6 +580,13 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
         }
     }
 
+    findAllDict() {
+        this.dictionnaryService.FindAllWord().subscribe(
+            data => {
+                this.itemsDict = data;
+            });
+    }
+
     public findhomeworkbycours(cours: Cours) {
         console.log(cours);
         this.homeWorkService.findhomeworkbyCoursId(cours).subscribe(
@@ -600,58 +616,25 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
     }
 
     public dict() {
+        this.selectedNow = new Dictionary();
         const selection = window.getSelection();
-        this.textSeleted = selection.toString();
-        this.selected = new Dictionary();
-
-        this.dictionnaryService.FindByWord(this.textSeleted).subscribe(
-            data => {
-                this.selected = data;
-                this.wordDict = '';
-                this.listSynonymes = new Array<any>();
-                // tslint:disable-next-line:triple-equals no-unused-expression
-                if (this.textSeleted.length != 0 && this.selected.word == null) {
-                    this.dictionnaryService.Translate(this.textSeleted).subscribe(
-                        data => {
-                            this.Synonymes = data;
-                            console.log(this.Synonymes);
-                            this.wordDict = '';
-                            this.j = 0;
-                            this.listSynonymes = new Array<any>();
-                            for (let i = this.j; i < this.Synonymes.length; i++) {
-                                // tslint:disable-next-line:triple-equals
-                                if (this.Synonymes[i] == '\"') {
-                                    this.j = i;
-                                    // @ts-ignore
-                                    for (let k = this.j + 1; k < this.Synonymes.length; k++) {
-                                        // tslint:disable-next-line:triple-equals
-                                        if (this.Synonymes[k] != '\"' && this.Synonymes[k] != ',') {
-                                            this.wordDict = this.wordDict + this.Synonymes[k];
-                                        } else if (this.Synonymes[k] === ',') {
-                                            break;
-                                        } else {
-                                            this.listSynonymes.push(this.wordDict);
-                                            this.wordDict = '';
-                                            this.j = k + 1;
-                                            break;
-                                        }
-                                    }
-                                }
-                            }
-                        });
-
-                    console.log(this.listSynonymes);
-                    this.selected.word = this.textSeleted;
-                    this.submittedDict = false;
-                    this.TranslateSynonymeDialog = true;
-                    // tslint:disable-next-line:triple-equals
-                } else if (this.textSeleted.length != 0 && this.selected.word != null) {
-                    this.selected.word = this.textSeleted;
-                    this.submittedDictEdit = false;
-                    this.editDialogDict = true;
-                    // console.log(this.selected.word);
-                }
-            });
+        this.selectedNow.word = selection.toString();
+        console.log(this.selectedNow.word.length);
+        if (this.selectedNow.word.length > 3) {
+            console.log(this.selectedLanguage.code);
+            if (this.selectedLanguage.code === 'ar') {
+                this.quizService.translate(this.selectedNow.word).subscribe(data => {
+                    console.log(data);
+                    this.selectedNow.definition = data;
+                });
+            } else if (this.selectedLanguage.code === 'fr') {
+                this.quizService.translateEnFr(this.selectedNow.word).subscribe(data => {
+                    this.selectedNow.definition = data;
+                    console.log(data);
+                });
+            }
+            this.createDialogDict = true;
+        }
     }
 
 

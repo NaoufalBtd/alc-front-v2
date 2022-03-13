@@ -26,7 +26,6 @@ export class ConnectedStudentComponent implements OnInit {
 
     ngOnInit(): void {
         this.prof = this.loginService.getConnectedProf();
-        this.profService.getConnectedStudent();
         console.log(this.listStudent);
     }
 

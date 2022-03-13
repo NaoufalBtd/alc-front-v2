@@ -16,6 +16,7 @@ import {ParcoursService} from '../../../controller/service/parcours.service';
 import {DropDownListComponent} from '@syncfusion/ej2-angular-dropdowns';
 import timezones from 'timezones-list';
 import {MenuService} from '../../shared/slide-bar/app.menu.service';
+import {Cours} from '../../../controller/model/cours.model';
 
 
 L10n.load({
@@ -162,12 +163,16 @@ export class ScheduleStudentComponent implements OnInit {
         this.scheduleObj.eventSettings.dataSource = null;
         this.findByGroupStudent();
     }
+    set selectedcours(value: Cours) {
+        this.parcoursService.selectedcours = value;
+    }
 
     joinSession() {
         this.showTpBar = false;
         this.webSocketService.openWebSocket(this.etudiant, this.selectedMeeting.prof, this.selectedMeeting.groupeEtudiant, 'STUDENT');
         this.webSocketService.isInSession = true;
-        this.simulatesectionService.findSectionOneByOne(this.selectedMeeting.cours);
+        this.selectedcours = this.selectedMeeting.cours;
+        this.simulatesectionService.findSectionOneByCoursId(this.selectedMeeting.cours);
         this.router.navigate(['etudiant/etudiant-simulate-sections']);
 
         // this.webSocketService.findCurrentSectionForstudent(this.parcoursService.selectedcours, this.selectedMeeting.prof );

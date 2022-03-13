@@ -2,6 +2,7 @@ import {Etudiant} from './etudiant.model';
 import {Prof} from './prof.model';
 import {QuizReponse} from './quiz-reponse';
 import {GroupeEtudiant} from './groupe-etudiant.model';
+import {Section} from './section.model';
 
 export class ChatMessageDto {
     type: string;

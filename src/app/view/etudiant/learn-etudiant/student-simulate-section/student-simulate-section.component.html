@@ -193,9 +193,11 @@
                                     type="button"></button>
                         </div>
                     </div>
+
+
                     <div *ngIf="this.selectedQuiz.section.id == this.selectedsection.id" class="p-col quiz">
-                        <app-quiz-etudiant-view *ngIf="showViewQuiz"></app-quiz-etudiant-view>
-                        <app-quiz-take *ngIf="!showViewQuiz"></app-quiz-take>
+                        <app-quiz-etudiant-view *ngIf="quizView"></app-quiz-etudiant-view>
+                        <app-quiz-take *ngIf="!quizView"></app-quiz-take>
                     </div>
                     <!--                    <p-tabView>-->
                     <!--                        <p-tabPanel header="LESSON">-->
@@ -235,9 +237,11 @@
 
                         </ng-template>
                     </p-overlayPanel>
+
+
                     <div class="product-grid-item-content" style="background-color: white;">
                         <div class="card">
-                            <p-tabView styleClass="tabview-custom">
+                            <p-tabView (onChange)="findAllDict()" styleClass="tabview-custom">
                                 <p-tabPanel>
                                     <ng-template pTemplate="header">
                                         <img src="./assets/icons/icons-lesson.png"
@@ -255,12 +259,10 @@
                                                 <tr class="timeline">
 
                                                     <li>
-                                                        <td
-                                                                [style.color]="(section.categorieSection.libelle) == (this.selectedsection.categorieSection.libelle)? 'orange' :'black' "
-                                                                style="cursor: pointer;
-                                                                 display: inline-block; margin-top: -1px;
+                                                        <td [style.color]="(section.categorieSection.libelle) == (this.selectedsection.categorieSection.libelle)? 'orange' :'black' "
+                                                            style="cursor: pointer;
                                                                  font-weight: 600;margin-left: 5px; font-size: 15px">
-                                                            <u>{{section.categorieSection.libelle}}</u></td>
+                                                            {{section.categorieSection.libelle}}</td>
                                                     </li>
                                                 </tr>
 
@@ -279,10 +281,9 @@
                                                 <tr class="timeline">
 
                                                     <li>
-                                                        <td
-                                                                [style.color]="(section.categorieSection.libelle) == (this.selectedsection.categorieSection.libelle)? 'orange' :'black' "
-                                                                style="cursor: pointer; font-weight: 600;margin-left: 5px; font-size: 15px">
-                                                            <u>{{section.categorieSection.libelle}}</u></td>
+                                                        <td [style.color]="(section.categorieSection.libelle) == (this.selectedsection.categorieSection.libelle)? 'orange' :'black' "
+                                                            style="cursor: pointer; font-weight: 600;margin-left: 5px; font-size: 15px">
+                                                            {{section.categorieSection.libelle}}</td>
                                                     </li>
                                                 </tr>
                                             </ng-template>
@@ -301,24 +302,26 @@
                                     </ng-template>
 
                                 </p-tabPanel>
-                                <p-tabPanel header="Header III">
-                                    <ng-template pTemplate="header">
-                                        <img src="./assets/icons/icon-dictionnaire.png"
-                                             pTooltip="Dictionary" tooltipPosition="top"
-                                             class="homeWorkIcon">
+
+
+                                <p-tabPanel   header="Header III">
+                                    <ng-template  pTemplate="header">
+                                            <img src="./assets/icons/icon-dictionnaire.png"
+
+                                                 pTooltip="Dictionary" tooltipPosition="top"
+                                                 class="homeWorkIcon">
                                     </ng-template>
 
-                                    <p-table [paginator]="true" [rowHover]="true" [rows]="5" [value]="itemsDict"
+                                    <p-table [paginator]="true" [rowHover]="true" [rows]="10" [value]="itemsDict"
                                              dataKey="id"
                                              id="wrd">
 
                                         <ng-template let-dict pTemplate="body">
                                             <tr>
 
-                                                <td (click)="dictEdit(dict)"
-                                                    style="font-weight: 800; text-align: center; cursor: pointer"><b
-                                                        style="font-size: 15px; color: black;">{{dict.word}}</b> : <b
-                                                        style="font-size: 20px; color: orange;">{{dict.definition}}</b>
+                                                <td (click)="dictEdit(dict)" style="text-align: center; cursor: pointer">
+                                                    <b style=" color: black;">{{dict.word}}</b> :
+                                                    <b style=" color: orange;">{{dict.definition}}</b>
                                                 </td>
                                             </tr>
                                         </ng-template>
