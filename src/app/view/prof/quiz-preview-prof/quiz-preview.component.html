@@ -1,5 +1,5 @@
 <div *ngIf="showTakeQuiz" class="p-field">
-    <div class="p-grid">
+    <div class="p-grid" style="background-color: white;">
         <div style="text-align: start;" class="p-col-4">
             <div style="font-size: medium;font-weight: 600;">
                 {{question?.typeDeQuestion?.lib}}
@@ -43,7 +43,7 @@
 
     </div>
 
-    <div style="background-color: #dee2e6;     height: 13px" class="p-grid">
+    <div class="p-grid">
         <div style="  background-color: transparent!important;" class="p-col-12">
             <p-progressBar [style]="{'height': '6px'}" [showValue]="false"
                            [value]="value"></p-progressBar>

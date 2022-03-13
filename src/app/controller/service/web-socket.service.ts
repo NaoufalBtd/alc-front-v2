@@ -155,28 +155,29 @@ export class WebSocketService {
             alert(event);
         };
         this.webSocket.onmessage = (event) => {
-            console.log('DAZ DAZ   DAZ   DAZ   DAZ   DAZ   DAZ   DAZ   DAZ   DAZ  DAZ DAZ');
             const data: ChatMessageDto = JSON.parse(event.data);
+            console.log(this.participants.get(data.prof.id));
             console.log(data);
             if (data.type === 'message') {
-                for (const students of this.participants.values()) {
-                    for (const etd of students) {
-                        if (this.loginservice.getConnectedStudent().id === etd.id) {
-                            this.chatMessages.push({...data});
-                        }
+                for (const etudiant of this.participants.get(data.prof.id)) {
+                    if (etudiant.id === this.loginservice.getConnectedStudent().id) {
+                        this.chatMessages.push({...data});
                     }
                 }
+
                 if (data.prof.id === this.loginservice.getConnecteUser().id) {
                     this.chatMessages.push({...data});
                 }
-            } else if (data.type === 'NEXT') {
-                console.log('hani ghandir next l student');
-                this.simulatesectionService.nextSection();
+            } else if (data.type === 'SECTION') {
+                const sectionId = Number(data.message);
+                console.log(sectionId);
+                console.log(this.participants.get(data.prof.id));
+                for (const etudiant of this.participants.get(data.prof.id)) {
+                    if (etudiant.id === this.loginservice.getConnectedStudent().id) {
+                        this.simulatesectionService.nextSection(sectionId);
+                    }
+                }
 
-            } else if (data.type === 'PREVIOUS') {
-                console.log('hani ghandir previous l student');
-                this.simulatesectionService.PreviousSection();
-                //   this.updateCurrentSection(this.loginservice.prof.id, this.simulatesectionService.selectedsection);
             } else if (data.type === 'FOLLOW-QUIZ') {
                 this.reponseQuiz = data.quizReponse;
                 this.question = this.reponseQuiz?.question;
@@ -207,7 +208,8 @@ export class WebSocketService {
                 console.log(this.prof);
                 console.log('=============== prof ======================');
 
-                const studentList = this.participants.get(this.prof.id);
+                let studentList = this.participants.get(this.prof.id);
+                console.log(this.participants);
                 for (const student of studentList) {
                     if (student.id === mydata.id) {
                         if (this.studentsEnLigne.get(student.id) === undefined) {
@@ -387,6 +389,7 @@ export class WebSocketService {
     set connectedUsers(value: any[]) {
         this._connectedUsers = value;
     }
+
     //
     // private studentIsInGroup(grpStudent: GroupeEtudiant): string {
     //     this.groupeEtudiantService.findAllGroupeEtudiantDetail(grpStudent.id).subscribe(data => {
@@ -401,4 +404,21 @@ export class WebSocketService {
     //     console.log('============ ANA F FALSE ==================');
     // }
 
+    private groupeEtudiantForThisStudent(student: Etudiant, grpStudent: GroupeEtudiant) {
+        this.groupeEtudiantService.findAllGroupeEtudiantDetail(grpStudent.id).subscribe(
+            data => {
+                const groupeEtudiantDetails = data;
+                for (let i = 0; i < groupeEtudiantDetails.length; i++) {
+                    if (groupeEtudiantDetails[i].etudiant.id === student.id) {
+                        console.log('========================== true ======================');
+                        return true;
+
+                    }
+                }
+                console.log('========================== false ======================');
+                return false;
+            }
+        );
+
+    }
 }

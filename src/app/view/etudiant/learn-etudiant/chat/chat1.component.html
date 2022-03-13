@@ -63,7 +63,11 @@ webSocketService.chatMessages
 <form #sendForm="ngForm" (ngSubmit)="sendMessage(sendForm)">
     <div class="chat-send row">
         <div>
-                <textarea autoResize="true" autofocus class="form-control" id="input-message" name="message"
+                <textarea autoResize="true" autofocus class="form-control" id="input-message"
+                          class="textMsg"
+                          rows="2"
+                          cols="2"
+                          name="message"
                           ngModel pInputTextarea required type="text"></textarea>
         </div>
         <div>

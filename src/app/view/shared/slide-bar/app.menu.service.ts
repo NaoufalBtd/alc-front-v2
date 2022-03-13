@@ -8,6 +8,16 @@ export class MenuService {
     menuSource$ = this.menuSource.asObservable();
     private resetSource = new Subject();
     resetSource$ = this.resetSource.asObservable();
+    private _showTpBar = true;
+
+
+    get showTpBar(): boolean {
+        return this._showTpBar;
+    }
+
+    set showTpBar(value: boolean) {
+        this._showTpBar = value;
+    }
 
     onMenuStateChange(key: string) {
         this.menuSource.next(key);

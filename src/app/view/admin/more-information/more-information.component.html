@@ -1,0 +1,89 @@
+
+<div class="p-grid">
+    <div class="p-col-12">
+
+        <div class="card" style="background-color: gainsboro;">
+            <h1 class="p-m-0">Teacher type List </h1>
+            <p-toolbar styleClass="p-mb-4">
+                <ng-template pTemplate="left">
+                    <button   (click)="showEditDialog()" class="p-button-success p-mr-2 p-mb-2" icon="pi pi-plus" label="New" pButton
+                              pRipple style="width: 90px"></button>
+                </ng-template>
+            </p-toolbar>
+            <p-table
+                    [columns]="cols" [globalFilterFields]="['libelle']"
+                    [paginator]="true"
+                    [rowHover]="false"
+                    [rows]="3" [showCurrentPageReport]="true" [value]="typeTeachers"
+                     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                     dataKey="id"
+                     styleClass="p-datatable-customers">
+
+                <ng-template pTemplate="header">
+                    <tr>
+
+                        <th pSortableColumn="libelle">Teacher type
+                            <p-sortIcon field="libelle"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="prenom"> Action
+                            <p-sortIcon field="prenom"></p-sortIcon>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template let-type pTemplate="body">
+                    <tr>
+                        <td>{{type.libelle}}</td>
+                        <td>
+
+                            <button (click)="delete(type)"  class="p-button-rounded p-button-danger" icon="pi pi-trash" pButton
+                                    pRipple></button>
+                            &nbsp;
+                            <button (click)="showEdit(type)"  class="p-button-rounded p-button-success p-mr-2" icon="pi pi-pencil" pButton
+                                    pRipple></button>
+                        </td>
+
+
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="summary">
+                    <div class="p-d-flex p-ai-center p-jc-between">
+                        In total there are  items.
+                    </div>
+                </ng-template>
+            </p-table>
+        </div>
+        <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+    </div>
+</div>
+
+<!------Create-------------------->
+
+<p-dialog header="Type Teacher create" [(visible)]="createDialogEtud" [style]="{width: '20vw'}">
+    <ng-template pTemplate="content">
+        <div class="p-field">
+            <label for="libelle"> Label</label>
+            <input [(ngModel)]="typeTeacher.libelle" autofocus id="libelle" pInputText required type="text"/>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="footer">
+
+        <button (click)="save()" class="p-button-text" icon="pi pi-check" label="Save" pButton pRipple></button>
+    </ng-template>
+
+</p-dialog>
+<!------Edit-------------------->
+
+<p-dialog header="Type Teacher edit" [(visible)]="editDialog" [style]="{width: '20vw'}">
+    <ng-template pTemplate="content">
+        <div class="p-field">
+            <label for="libelle"> Label</label>
+            <input [(ngModel)]="typeTeacher.libelle" autofocus id="libelle" pInputText required type="text"/>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <button (click)="hideCreateDialog()" class="p-button-text" icon="pi pi-times" label="Cancel" pButton
+                pRipple></button>
+        <button (click)="edit()" class="p-button-text" icon="pi pi-check" label="Edit" pButton pRipple></button>
+    </ng-template>
+
+</p-dialog>

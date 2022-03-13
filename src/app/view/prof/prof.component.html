@@ -10,7 +10,7 @@
     'layout-rtl': app.isRTL,
     'p-input-filled': app.inputStyle === 'filled',
     'p-ripple-disabled': !app.ripple}" class="layout-wrapper">
-    <app-topbar></app-topbar>
+    <app-topbar *ngIf="showTpBar"></app-topbar>
     <app-menu *ngIf="showAppMenu"></app-menu>
     <div *ngIf="!showAppMenu" class="">
         <div class="layout-content">
