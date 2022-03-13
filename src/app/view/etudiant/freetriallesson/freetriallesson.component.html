@@ -52,7 +52,7 @@
                     <ng-template pTemplate="left">
 
                         <label style="margin-right: 30px; font-size: 15px"><strong><i class="pi pi-calendar"></i>  Date of birth:</strong> </label>
-                        <p-calendar [(ngModel)]="datebirth"  [showIcon]="true" inputId="icon"></p-calendar>
+                        <p-calendar [(ngModel)]="loginService.getConnectedStudent().dateNaissance"  [showIcon]="true" inputId="icon"></p-calendar>
                     </ng-template>
                     <ng-template pTemplate="right">
                         <div class="p-grid p-grid-nogutter justify-content-end ">
@@ -73,26 +73,58 @@
             <ng-template pTemplate="content">
                 <div class="p-grid">
                     <div class="p-col-6">
-                        <h5>Social Status</h5>
-                        <p-selectButton [options]="daysOptions"  optionLabel="name"
-                                        [(ngModel)]="dayoption" optionValue="name"></p-selectButton>
+                        <h5 >Status Social</h5>
+                        <p-dropdown [options]="statutSocials"
+                                    optionLabel="libelle"
+                                    [(ngModel)]="freetrialService.freeTrialFormule.inscription.statutSocial"
+                        >
+<!--
+
+-->
+                        </p-dropdown>
                     </div>
                     <div class="p-col-6">
-                        <h5>Profession</h5>
-                        <p-selectButton [options]="timeOptions"  multiple="multiple" optionLabel="name"
-                                        [(ngModel)]="timeoption" optionValue="name"></p-selectButton>
+                        <h5   >Area of work</h5>
+                        <p-dropdown    [options]="fonctions"
+                                       placeholder="List of areas of work"
+                                       optionLabel="libelle"
+                                       [(ngModel)]="freetrialService.freeTrialFormule.inscription.fonction"
+                        >
+<!--                                       -->
+                        </p-dropdown>
                     </div>
                 </div>
                 <div class="p-grid">
                     <div class="p-col-6">
-                        <h5>Level of studies</h5>
-                        <p-selectButton [options]="teacherlolality"  optionLabel="name"
-                                        [(ngModel)]="teacherlocality" optionValue="name"></p-selectButton>
+                        <h5  class="status"  >Study Level</h5>
+                        <p-dropdown  [options]="niveauEtudes"
+                                     optionLabel="libelle"
+                                     [(ngModel)]="freetrialService.freeTrialFormule.inscription.niveauEtude"
+                        ></p-dropdown>
                     </div>
                     <div class="p-col-6">
-                        <h5>Main goal with learning:</h5>
-                        <p-selectButton [options]="teacherAgerange"  multiple="multiple" optionLabel="name"
-                                        [(ngModel)]="agerange" optionValue="name"></p-selectButton>
+                        <h5> Main goal with learning English</h5>
+                        <p-dropdown [options]="interetEtudiants"
+                                     optionLabel="libelle"
+                                    [(ngModel)]="freetrialService.freeTrialFormule.inscription.interetEtudiant"
+                        >
+<!--
+
+-->
+                        </p-dropdown>
+                    </div>
+                </div>
+                <div class="p-grid">
+                    <div class="p-col-6">
+                        <h5> Skill</h5>
+                        <p-dropdown [options]="skills"
+                                     optionLabel="libelle"
+                                    [(ngModel)]="freetrialService.freeTrialFormule.inscription.skill"
+                        >
+<!--
+
+-->
+                        </p-dropdown>
                     </div>
                 </div>
 
@@ -124,36 +156,36 @@
                     <div class="p-col-6">
                         <h5>Days peer week</h5>
                         <p-selectButton [options]="daysOptions"  optionLabel="name"
-                                        [(ngModel)]="dayoption" optionValue="name"></p-selectButton>
+                                        [(ngModel)]="freetrialService.freeTrialFormule.dayspeerweek" optionValue="name"></p-selectButton>
                     </div>
                     <div class="p-col-6">
                         <h5>Times</h5>
-                        <p-selectButton [options]="timeOptions"  multiple="multiple" optionLabel="name"
-                                        [(ngModel)]="timeoption" optionValue="name"></p-selectButton>
+                        <p-selectButton [options]="timeOptions"  optionLabel="name"
+                                        [(ngModel)]="freetrialService.freeTrialFormule.timeperday" optionValue="name"></p-selectButton>
                     </div>
                 </div>
                 <div class="p-grid">
                     <div class="p-col-6">
                         <h5>Teacher Locality</h5>
                         <p-selectButton [options]="teacherlolality"  optionLabel="name"
-                                        [(ngModel)]="teacherlocality" optionValue="name"></p-selectButton>
+                                        [(ngModel)]="loginService.getConnectedStudent().teacherLocality" optionValue="name"></p-selectButton>
                     </div>
                     <div class="p-col-6">
                         <h5>Teacher age range</h5>
-                        <p-selectButton [options]="teacherAgerange"  multiple="multiple" optionLabel="name"
-                                        [(ngModel)]="agerange" optionValue="name"></p-selectButton>
+                        <p-selectButton [options]="teacherAgerange"  optionLabel="name"
+                                        [(ngModel)]="freetrialService.freeTrialFormule.teacherAgeRange" optionValue="name"></p-selectButton>
                     </div>
                 </div>
                 <div class="p-grid">
                     <div class="p-col-6">
                         <h5>Teacher gender</h5>
                         <p-selectButton [options]="teacherGneder"   optionLabel="name"
-                                        [(ngModel)]="teachergendervalue" optionValue="name"></p-selectButton>
+                                        [(ngModel)]="freetrialService.freeTrialFormule.teacherGenderoption" optionValue="name"></p-selectButton>
                     </div>
                     <div class="p-col-6">
                         <h5>Teacher personnality</h5>
                         <p-selectButton [options]="teacherPersonnality"   optionLabel="name"
-                                        [(ngModel)]="teacherperson" optionValue="name"></p-selectButton>
+                                        [(ngModel)]="freetrialService.freeTrialFormule.teacherPersonnality" optionValue="name"></p-selectButton>
                     </div>
 
                 </div>
@@ -183,7 +215,7 @@
             </ng-template>
             <ng-template pTemplate="content">
                 <div class="p-fluid formgrid p-field">
-                    <label >Date of birth : <strong>{{datebirth}}</strong></label>
+                    <label >Date of birth : <strong>{{loginService.getConnectedStudent().dateNaissance}}</strong></label>
                 </div>
                 <div class="p-fluid formgrid p-field">
                     <label >gender :
@@ -192,22 +224,22 @@
                     </label>
                 </div>
                 <div class="p-fluid formgrid p-field">
-                    <label >days per week : <strong>{{dayoption}}</strong></label>
+                    <label >days per week : <strong>{{freetrialService.freeTrialFormule.dayspeerweek}}</strong></label>
                 </div>
                 <div class="p-fluid formgrid p-field">
-                    <label >time per day : <strong>{{timeoption}}</strong></label>
+                    <label >time per day : <strong>{{freetrialService.freeTrialFormule.timeperday}}</strong></label>
                 </div>
                 <div class="p-fluid formgrid p-field">
-                    <label >teacher locality : <strong>{{teacherlocality}}</strong></label>
+                    <label >teacher locality : <strong>{{loginService.getConnectedStudent().teacherLocality}}</strong></label>
                 </div>
                 <div class="p-fluid formgrid p-field">
-                    <label >teacher gender : <strong>{{teachergendervalue}}</strong></label>
+                    <label >teacher gender : <strong>{{freetrialService.freeTrialFormule.teacherGenderoption}}</strong></label>
                 </div>
                 <div class="p-fluid formgrid p-field">
-                    <label >teacher age rane : <strong>{{agerange}}</strong></label>
+                    <label >teacher age rane : <strong>{{freetrialService.freeTrialFormule.teacherAgeRange}}</strong></label>
                 </div>
                 <div class="p-fluid formgrid p-field">
-                    <label >teacher personnality: <strong>{{teacherperson}}</strong></label>
+                    <label >teacher personnality: <strong>{{freetrialService.freeTrialFormule.teacherPersonnality}}</strong></label>
                 </div>
             </ng-template>
 
@@ -218,7 +250,7 @@
                     </ng-template>
                     <ng-template pTemplate="right">
 
-                        <button pButton pRipple type="button" label="Confirm" icon="pi pi-check" iconPos="right" class="p-button-success"></button>                    </ng-template>
+                        <button pButton pRipple type="button" (click)="freetrialService.save()" label="Confirm" icon="pi pi-check" iconPos="right" class="p-button-success"></button>                    </ng-template>
                 </p-toolbar>
             </ng-template>
 
