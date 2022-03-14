@@ -105,10 +105,12 @@ export class InvitedStudentService {
 
     public sendInvitation(idStudent: number, emailInvited: string) {
         console.log('eded');
+        console.log(idStudent);
+        console.log(emailInvited);
         this.http.get(this.etudiantInvitedStudentUrl + '/' + idStudent + '/' + emailInvited).subscribe(
             data => {
+                console.log('eded1');
                 if (data === 1) {
-
                     this.messageService.add({
                         severity: 'success',
                         summary: 'Invitation Sent',
