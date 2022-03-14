@@ -4,6 +4,8 @@ import {HttpClient} from '@angular/common/http';
 import {InscriptionService} from './inscription.service';
 import {LoginService} from './login.service';
 import {environment} from '../../../environments/environment';
+import {MessageService} from 'primeng/api';
+import {Router, RouterModule} from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +17,7 @@ export class FreeTrialServiceService {
   private _freeTrialFormule: FreeTrialFormule;
   private _freeTrialFormuleVo: FreeTrialFormule;
   private _freeTrialList: Array<FreeTrialFormule>;
-  constructor(private http: HttpClient, public inscriptionService: InscriptionService, public loginService: LoginService) { }
+  constructor(private router: Router, public messageService: MessageService, private http: HttpClient, public inscriptionService: InscriptionService, public loginService: LoginService) { }
 
 
   get freeTrialFormule(): FreeTrialFormule {
@@ -58,7 +60,13 @@ export class FreeTrialServiceService {
     this.http.post<number>(this.adminUrl + 'freeTrial/', this.freeTrialFormule).subscribe(
         data => {
           if (data > 0) {
-            console.log('raha khedama');
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Successful',
+              detail: 'your free trial registration demand has been successfully added, our manager will contact you soon, while waiting please consider changing your password',
+              life: 16000
+            });
+            this.router.navigate(['etudiant/profile']);
             this.freeTrialFormule = new FreeTrialFormule();
           }
         }

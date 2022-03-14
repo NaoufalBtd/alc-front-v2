@@ -19,8 +19,10 @@
                                         optionLabel="nom"
                                         [showClear]="true"
                                         [filter]="false" style="margin-right: 5px"></p-dropdown>
-                            <input type="text" pInputText style="margin-right: 5px" placeholder="Date Complaint"
-                                   [(ngModel)]="reclamationProfSearch.dateReclamation"/>
+                   <input type="text" pInputText style="margin-right: 5px" placeholder="Date Complaint"
+                          [(ngModel)]="reclamationProfSearch.dateReclamation"/>
+
+
                             <p-dropdown placeholder="Etat" [itemSize]="2"
                                         [options]="processingStatus" [(ngModel)]="reclamationProfSearch.traite"
                                         [showClear]="true"
@@ -103,8 +105,10 @@
                                         optionValue="nom"
                                         [showClear]="true"
                                         [filter]="false" style="margin-right: 5px"></p-dropdown>
-                            <input type="text" pInputText style="margin-right: 5px" placeholder="Date Complaint"
-                                   [(ngModel)]="reclamationEtudiantSerch.dateReclamation"/>
+                            <input type="date"  pInputText placeholder="Date Complaint" 
+                                   style="margin-right: 5px"
+                                   [(ngModel)]="reclamationEtudiantSerch.dateReclamation" />
+
                             <p-dropdown placeholder="Etat" [itemSize]="2"
                                         [options]="processingStatus"
                                         [showClear]="true"
