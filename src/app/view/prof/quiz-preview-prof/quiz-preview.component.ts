@@ -25,6 +25,7 @@ import {QuizReponse} from '../../../controller/model/quiz-reponse';
 import {ChatMessageDto} from '../../../controller/model/chatMessageDto';
 import {findIndexInData} from '@syncfusion/ej2-angular-schedule';
 import {HomeWorkReponse} from '../../../controller/model/home-work-reponse.model';
+import {GroupeEtudiant} from '../../../controller/model/groupe-etudiant.model';
 
 @Component({
     selector: 'app-quiz-preview-prof',
@@ -46,6 +47,12 @@ export class QuizPreviewProfComponent implements OnInit, OnDestroy {
                 private webSocketService: WebSocketService,
                 private parcoursservice: ParcoursService) {
     }
+
+
+    get groupeEtudiant(): GroupeEtudiant {
+        return this.webSocketService.groupeEtudiant;
+    }
+
 
 
     get t12AnswersList(): Array<Reponse> {
@@ -492,5 +499,9 @@ export class QuizPreviewProfComponent implements OnInit, OnDestroy {
         }
 
 
+    }
+
+    valueOf(numero: number): number {
+        return ((numero / this.questionList.length) * 100);
     }
 }

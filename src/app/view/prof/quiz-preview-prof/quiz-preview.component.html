@@ -6,7 +6,7 @@
             </div>
         </div>
         <div class="p-col-4" style="text-align:center">
-            <p-button *ngIf="participants.get(login.getConnectedProf().id)?.length !== 1"
+            <p-button *ngIf="groupeEtudiant?.groupeEtude?.nombreEtudiant !== 1"
                       label="Answers"
                       (click)="op.toggle($event)"
                       styleClass="p-button-secondary  p-button-rounded"
@@ -46,7 +46,7 @@
     <div class="p-grid">
         <div style="  background-color: transparent!important;" class="p-col-12">
             <p-progressBar [style]="{'height': '6px'}" [showValue]="false"
-                           [value]="value"></p-progressBar>
+                           [value]="valueOf(question.numero)"></p-progressBar>
         </div>
         <!--        <div class="p-col-12">-->
         <!--            <input  type="text"-->

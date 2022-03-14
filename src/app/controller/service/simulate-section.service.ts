@@ -363,10 +363,10 @@ export class SimulateSectionService {
     }
 
 
-    public nextSection(id: number) {
+    public nextSection(id: number, type: string) {
         for (let i = 0; i < this.itemssection2.length; i++) {
             if (id === this.itemssection2[i].id) {
-                if (i !== 0) {
+                if (i !== 0 && (type === 'NEXT')) {
                     let index = 0;
                     for (const item of this.sessionCour.sections) {
                         if (item.id === this.itemssection2[i - 1].id) {
@@ -396,14 +396,14 @@ export class SimulateSectionService {
                         this.quizEtudiantList = data1;
                         this.quizView = true;
                         console.log(this.quizEtudiantList);
-                        this.quizService.findAllQuestions(this.selectedQuiz.ref).subscribe(
+                        this.quizService.findAllQuestions(this.selectedQuiz?.ref).subscribe(
                             dataQuestions => {
-                                if (data1.questionCurrent > dataQuestions.length) {
+                                if (data1?.questionCurrent > dataQuestions?.length) {
                                     this.passerQuiz = 'View Quiz';
                                     this.quizView = true;
                                 } else {
                                     this.passerQuiz = 'Continue Quiz';
-                                    this.quizView = true;
+                                    this.quizView = false;
                                 }
                             }
                         );

@@ -156,7 +156,7 @@
                                     type="button"></button>
 
                             <button *ngIf="showFlowMeButton" pButton pRipple type="button"
-                                    (click)="goToSection(selectedsection)"
+                                    (click)="goToSection(selectedsection, 'FLOW_ME')"
                                     [style]="{'width': '100%',    'background': 'white', 'border': '2px solid', 'font-weight': '800', 'color': '#f2a142'}"
                                     label="Flow me" class="p-button-outlined p-button-warning">
                                 <img id="flowMeImg" src="./assets/icons/icons-roller.gif" width="25px">

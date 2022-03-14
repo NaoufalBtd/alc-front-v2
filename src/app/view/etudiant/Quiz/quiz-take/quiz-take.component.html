@@ -14,7 +14,7 @@
     <div style="background-color: #dee2e6" class="p-grid">
         <div style="  background-color: transparent!important;" class="p-col-12">
             <p-progressBar [style]="{'height': '6px'}" [showValue]="false"
-                           [value]="value"></p-progressBar>
+                           [value]="valueOf(question.numero)"></p-progressBar>
         </div>
     </div>
 
@@ -330,7 +330,7 @@
         <div class="p-col-6"></div>
         <!-- -->
         <div class="p-col-3">
-            <button *ngIf="showNextButton && question?.id !== questionList[questionList?.length -1]?.id && this.participants?.get(this.prof.id).length === 1 "
+            <button *ngIf="showNextButton && question?.id !== questionList[questionList?.length -1]?.id && this.groupeEtudiant?.groupeEtude?.nombreEtudiant === 1 "
                     style="float:right"
                     pButton pRipple
                     type="button" icon="pi pi-arrow-right" iconPos="right"

@@ -383,7 +383,7 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
             if (section.id === this.itemssection2[i].id) {
                 this.selectedsection = this.itemssection2[i - 1];
                 this.webSocketService.updateCurrentSection(this.prof.id, this.itemssection2[i - 1]);
-                this.goToSection(this.itemssection2[i - 1]);
+                this.goToSection(this.itemssection2[i - 1], 'PREVIOUS');
             }
         }
     }
@@ -404,7 +404,7 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
             if (section.id === this.itemssection2[i].id) {
                 this.selectedsection = this.itemssection2[i + 1];
                 this.webSocketService.updateCurrentSection(this.prof.id, this.itemssection2[i + 1]);
-                this.goToSection(this.itemssection2[i + 1]);
+                this.goToSection(this.itemssection2[i + 1], 'NEXT');
                 this.showFlowMeButton = false;
             }
         }
@@ -422,11 +422,11 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
         }
     }
 
-    public goToSection(section: Section) {
+    public goToSection(section: Section, type: string) {
         this.findQuizIfExist(section);
         this.showFlowMeButton = false;
         if (this.webSocketService.sessionHasStarted) {
-            const chatMessageDto = new ChatMessageDto(this.prof.nom, String(section.id), false);
+            const chatMessageDto = new ChatMessageDto(type, String(section.id), false);
             chatMessageDto.grpStudent = this.groupeEtudiant;
             chatMessageDto.prof = this.prof;
             chatMessageDto.type = 'SECTION';
@@ -456,7 +456,7 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
 
     closeSession() {
         this.showTpBar = true;
-        let chatMessage: ChatMessageDto = new ChatMessageDto(this.loginService.getConnectedProf().nom, 'Quit the session',false);
+        let chatMessage: ChatMessageDto = new ChatMessageDto(this.loginService.getConnectedProf().nom, 'Quit the session', false);
         chatMessage.type = 'DISCONNECT';
         chatMessage.prof = this.loginService.getConnectedProf();
         this.webSocketService.deleteWhenSessionIsfiniched(this.prof.id);
