@@ -97,7 +97,6 @@ export class AppMenuComponent implements OnInit {
                     {label: 'Cloud', icon: 'pi pi-cloud', routerLink: ['/admin/driveApi']},
                     {label: 'Complaint', icon: 'pi pi-bell', routerLink: ['/admin/complaint']},
                     {label: 'Type of Complaint', icon: 'pi pi-bell', routerLink: ['/admin/typeofcomplaint']},
-                    {label: 'Type Teacher', icon: 'pi pi-plus', routerLink: ['/admin/moreInformation']},
                     {label: 'More information', icon: 'pi pi-plus', routerLink: ['/admin/infoEtudiant']},
 
 
