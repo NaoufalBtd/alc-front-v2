@@ -5,7 +5,7 @@
             <div class="col-12 md:col-4">
                 <div class="p-inputgroup">
                     <span class="p-inputgroup-addon"><i class="pi pi-google"></i></span>
-                    <input type="text" pInputText placeholder="E-mail">
+                    <input type="text" pInputText placeholder="E-mail" [(ngModel)]="email">
                 </div>
             </div>
         </div>
@@ -14,13 +14,13 @@
             <div class="col-12 md:col-4">
                 <div class="p-inputgroup">
                     <span class="p-inputgroup-addon"><i class="pi pi-key"></i></span>
-                    <input type="text" pInputText placeholder="Invitation Code">
+                    <input type="text" pInputText placeholder="Invitation Code" [(ngModel)]="code">
                 </div>
             </div>
         </div>
         <p-toolbar styleClass="p-mt-4"  [style]="{backgroundColor: '#ffffff',border:'none'}" >
             <ng-template pTemplate="right">
-                <p-button label="Check" (click)="this.router.navigate(['public/continueInfo'])" icon="pi pi-check" style="float: right"></p-button>
+                <p-button label="Check" (click)="findInvation()" icon="pi pi-check" style="float: right"></p-button>
 
             </ng-template>
             <ng-template pTemplate="left">

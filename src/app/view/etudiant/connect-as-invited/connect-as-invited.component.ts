@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
+import {InvitedStudentService} from '../../../controller/service/invited-student.service';
+import {EtudiantService} from '../../../controller/service/etudiant.service';
 
 @Component({
   selector: 'app-connect-as-invited',
@@ -8,11 +10,17 @@ import {Router} from '@angular/router';
 })
 export class ConnectAsInvitedComponent implements OnInit {
 
-  constructor(public router: Router) {
+  email: string;
+  code: string;
+
+  constructor( public router: Router, public invitationService: InvitedStudentService) {
   }
 
   ngOnInit(): void {
   }
 
 
+    findInvation() {
+        this.invitationService.findByEmailAndCode(this.email, this.code);
+    }
 }

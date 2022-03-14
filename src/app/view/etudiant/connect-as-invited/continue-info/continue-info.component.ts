@@ -10,6 +10,9 @@ import {StatutSocial} from '../../../../controller/model/statut-social.model';
 import {NiveauEtude} from '../../../../controller/model/niveau-etude.model';
 import {Skill} from '../../../../controller/model/skill.model';
 import {Router} from '@angular/router';
+import {EtudiantService} from '../../../../controller/service/etudiant.service';
+import {Etudiant} from '../../../../controller/model/etudiant.model';
+import {AuthenticationService} from '../../../../controller/service/authentication.service';
 
 @Component({
   selector: 'app-continue-info',
@@ -38,7 +41,7 @@ export class ContinueInfoComponent implements OnInit {
   teacherPersonnality: any[];
 
 
-  constructor(public loginService: LoginService, public freetrialService: FreeTrialServiceService, private messageService: MessageService, private userService: UserService, private inscriptionService: InscriptionService, public router: Router) {
+  constructor(public authenticationService: AuthenticationService, public etudiantService: EtudiantService, public loginService: LoginService, public freetrialService: FreeTrialServiceService, private messageService: MessageService, private userService: UserService, private inscriptionService: InscriptionService, public router: Router) {
     this.daysOptions = [
       {name: '1 day', value: 1},
       {name: '2 to 3 days', value: 2},
@@ -69,6 +72,13 @@ export class ContinueInfoComponent implements OnInit {
       {name: 'lenient', value: 2},
       {name: 'moderate', value: 3},
     ];
+  }
+
+  get etudiant(): Etudiant {
+    return this.etudiantService.selected;
+  }
+  set etudiant(value: Etudiant){
+    this.etudiantService.selected = value;
   }
 
   get interetEtudiant(): InteretEtudiant {
@@ -222,6 +232,31 @@ export class ContinueInfoComponent implements OnInit {
       this.femaleselected = false;
       this.maleselected = true;
     }
+  }
+
+  createEtudiant() {
+    this.etudiantService.create().subscribe(
+        data => {
+          if (data != null) {
+            console.log(data);
+            this.authenticationService.addUserToLocalCache(data);
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Successful',
+              detail: 'Registration added, please check your email to get your password.',
+              life: 4000
+            });
+            this.router.navigate(['public/etudiantchoosepack']);
+          }
+        }, error => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Registration Canceled',
+            life: 4000
+          });
+        }
+    );
   }
 
 }
