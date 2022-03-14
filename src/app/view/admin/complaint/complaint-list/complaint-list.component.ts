@@ -18,6 +18,7 @@ import {MenuItem} from 'primeng/api';
 })
 export class ComplaintListComponent implements OnInit {
     processingStatus: MenuItem[];
+    dateTraitementforEtudiant: Date;
 
     constructor(private typeReclamationEtudiantService: TypeReclamationEtudiantService, private typeReclamationProfService: TypeReclamationProfService, private reclamationProfService: ReclamationProfService, private reclamationEtudiantService: ReclamationEtudiantService, private profService: ProfService, private studentService: EtudiantService) {
         this.processingStatus = [];
@@ -193,6 +194,8 @@ export class ComplaintListComponent implements OnInit {
     }
 
     public findAllByCriteria() {
+        console.log('ha la date');
+        console.log(this.reclamationEtudiantSerch.dateReclamation);
         this.reclamationEtudiantService.findAllByCriteria();
     }
 

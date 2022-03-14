@@ -1,6 +1,7 @@
 import {Cours} from './cours.model';
 import {CategorieSection} from './categorie-section.model';
 import {SectionItemModel} from './section-item.model';
+import {SessionCours} from './session-cours.model';
 
 export class Section {
     public id: number;
@@ -19,5 +20,6 @@ export class Section {
     public cours = new Cours();
     public categorieSection = new CategorieSection();
     public sectionItems!: SectionItemModel[];
+    public sessionCours: SessionCours = new SessionCours();
 }
 

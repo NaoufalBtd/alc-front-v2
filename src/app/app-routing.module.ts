@@ -95,6 +95,8 @@ import {FreetriallessonComponent} from './view/etudiant/freetriallesson/freetria
 import {TypeTeacher} from './controller/model/type-teacher.model';
 import {MoreInformationComponent} from './view/admin/more-information/more-information.component';
 import {InfoEtudiantComponent} from './view/admin/info-etudiant/info-etudiant.component';
+import {ConnectAsInvitedComponent} from './view/etudiant/connect-as-invited/connect-as-invited.component';
+import {ContinueInfoComponent} from './view/etudiant/connect-as-invited/continue-info/continue-info.component';
 
 
 @NgModule({
@@ -204,6 +206,8 @@ import {InfoEtudiantComponent} from './view/admin/info-etudiant/info-etudiant.co
                     {path: 'public/etudiantinscriptionComponent', component: EtudiantinscriptionComponent},
                     {path: 'public/profinscriptionComponent', component: ProfinscriptionComponent},
                     {path: 'public/inscriptionEtudiant', component: FormLayoutDemoComponent},
+                    {path: 'public/connectAsInvited', component: ConnectAsInvitedComponent},
+                    {path: 'public/continueInfo', component: ContinueInfoComponent},
                     {path: 'resetPassword', component: ResetPasswordComponent},
                     {path: 'login', component: LoginComponent},
 
