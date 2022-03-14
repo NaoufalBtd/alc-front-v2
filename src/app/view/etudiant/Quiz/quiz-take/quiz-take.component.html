@@ -6,7 +6,7 @@
             </div>
 
 
-            <div style="float:right;display: inline-block;text-align: center">{{question.numero}}
+            <div style="float:right;display: inline-block;text-align: center">{{question?.numero}}
                 /{{numberOfQuestion}}</div>
         </div>
     </div>
@@ -20,31 +20,31 @@
 
     <!--------------------------------- UNIQUE CHOICE-------------------------------------------------------->
 
-    <div *ngIf="question.typeDeQuestion.ref === 't1'" class="p-grid">
+    <div *ngIf="question?.typeDeQuestion?.ref === 't1'" class="p-grid">
         <div class="p-col-12 question">
             <button [disabled]="disableButtonSon" pButton pRipple type="button" (click)="sound(question)"
                     icon="pi pi-volume-up" class="p-button-rounded sonButton "></button>
             <h5 class="h5"> {{  questionSideLeft}}  </h5>
             <span class="p-float-label">
-            <input *ngIf="answerSelected.lib === undefined" id="inputDashedBorder" inputId="inputDashedBorder"
+            <input *ngIf="answerSelected?.lib === undefined" id="inputDashedBorder" inputId="inputDashedBorder"
                    type="text" disabled
                    [(ngModel)]="reponseQuiz.lib"
                    class="p-inputtext-sm " pInputText/>
 
 
-            <input *ngIf="answerSelected.lib !== undefined && answerIsCorrect(answerSelected, question) " disabled
+            <input *ngIf="answerSelected?.lib !== undefined && answerIsCorrect(answerSelected, question) " disabled
                    id="inputCorrectAnswer" inputId="inputDashedBorder" type="text"
                    [(ngModel)]="answerSelected.lib"
                    class="p-inputtext-sm " pInputText/>
 
-                                <input *ngIf="answerSelected.lib !== undefined && !answerIsCorrect(answerSelected, question)"
+                                <input *ngIf="answerSelected?.lib !== undefined && !answerIsCorrect(answerSelected, question)"
                                        id="inputFalseAnswer" inputId="inputDashedBorder" type="text"
                                        disabled
                                        [(ngModel)]="answerSelected.lib"
                                        class="p-inputtext-sm " pInputText/>
 
 
-                            <label [hidden]="answerSelected.lib === undefined || answerIsCorrect(answerSelected, question)"
+                            <label [hidden]="answerSelected?.lib === undefined || answerIsCorrect(answerSelected, question)"
                                    class="correctAnswer" for="inputDashedBorder"
                                    *ngFor="let ans of correctAnswersList?.get(question.id)">{{ ans.lib}}</label>
 
@@ -78,26 +78,26 @@
     <!--------------------------------- TRANSLATE THE PHRASE -------------------------------------------------------->
 
 
-    <div *ngIf="question.typeDeQuestion.ref === 't3'" class="p-grid">
+    <div *ngIf="question?.typeDeQuestion?.ref === 't3'" class="p-grid">
         <div class="p-col-12 question">
             <h5 style="margin-top: -20px;" class="translateQuestion"> {{  question?.libelle}}  </h5>
 
             <span style="margin: 0" class="p-float-label">
-            <button *ngIf="answerSelected.lib !== undefined"
+            <button *ngIf="answerSelected?.lib !== undefined"
                     [disabled]="disableButtonSon" pButton pRipple type="button" (click)="sound(question)"
                     icon="pi pi-volume-up" class="p-button-rounded sonButton ">
             </button>
 
-            <input *ngIf="answerSelected.lib === undefined" id="input-answer" type="text"
+            <input *ngIf="answerSelected?.lib === undefined" id="input-answer" type="text"
                    (focus)="showDontKnowButton = false ; showCheckButton=true"
                    [(ngModel)]="reponseQuiz.lib" pInputText>
 
-            <input disabled *ngIf="answerSelected.lib !== undefined && answerIsCorrect(answerSelected, question)"
+            <input disabled *ngIf="answerSelected?.lib !== undefined && answerIsCorrect(answerSelected, question)"
                    id="input-answer-correct" type="text"
                    [(ngModel)]="answerSelected.lib" pInputText>
 
             <input style="text-decoration: 2px line-through red;" disabled
-                   *ngIf="answerSelected.lib !== undefined && !answerIsCorrect(answerSelected, question)"
+                   *ngIf="answerSelected?.lib !== undefined && !answerIsCorrect(answerSelected, question)"
                    id="input-answer-incorrect" type="text"
                    [(ngModel)]="answerSelected.lib" pInputText>
             <label style="
@@ -108,7 +108,7 @@
                 width: auto;
                  margin-top: 9px;
                  font-weight: 800;"
-                   [hidden]="answerSelected.lib === undefined || answerIsCorrect(answerSelected, question)"
+                   [hidden]="answerSelected?.lib === undefined || answerIsCorrect(answerSelected, question)"
                    class="" for="inputDashedBorder"
                    *ngFor="let ans of correctAnswersList?.get(question.id)">{{ ans.lib}}
             </label>
@@ -134,7 +134,7 @@
 
     <!--------------------------------- CORRECT THE MISTAKE -------------------------------------------------------->
 
-    <div *ngIf="question.typeDeQuestion.ref === 't4'" class="p-grid">
+    <div *ngIf="question?.typeDeQuestion?.ref === 't4'" class="p-grid">
         <div class="p-col-12 question">
             <button [disabled]="disableButtonSon" pButton pRipple type="button" (click)="sound(question)"
                     icon="pi pi-volume-up" class="p-button-rounded sonButton ">
@@ -150,17 +150,17 @@
                    [(ngModel)]="reponseQuiz.lib" class="p-inputtext-sm " pInputText/>
 
 
-            <input *ngIf="answerSelected.lib !== undefined && answerIsCorrect(answerSelected, question) " disabled
+            <input *ngIf="answerSelected?.lib !== undefined && answerIsCorrect(answerSelected, question) " disabled
                    id="inputCorrectAnswer" inputId="inputDashedBorder" type="text"
                    [(ngModel)]="answerSelected.lib"
                    class="p-inputtext-sm " pInputText/>
 
-            <input *ngIf="answerSelected.lib !== undefined && !answerIsCorrect(answerSelected, question)" disabled
+            <input *ngIf="answerSelected?.lib !== undefined && !answerIsCorrect(answerSelected, question)" disabled
                    id="inputFalseAnswer" inputId="inputDashedBorder" type="text"
                    [(ngModel)]="answerSelected.lib"
                    class="p-inputtext-sm " pInputText/>
 
-            <label [hidden]="answerSelected.lib === undefined || answerIsCorrect(answerSelected, question)"
+            <label [hidden]="answerSelected?.lib === undefined || answerIsCorrect(answerSelected, question)"
                    class="correctAnswer" for="inputDashedBorder"
                    *ngFor="let ans of correctAnswersList?.get(question.id)">{{ ans.lib}}</label>
 
@@ -188,14 +188,14 @@
 
     <!--------------------------------- WRITE  THE CORRECT FORM -------------------------------------------------------->
 
-    <div style="font-weight: normal;" *ngIf="question.typeDeQuestion.ref === 't6'" class="p-grid">
+    <div style="font-weight: normal;" *ngIf="question?.typeDeQuestion?.ref === 't6'" class="p-grid">
         <div class="p-col-12 question">
             <button [disabled]="disableButtonSon" pButton pRipple type="button" (click)="sound(question)"
                     icon="pi pi-volume-up" class="p-button-rounded sonButton ">
             </button>
             <h5 class="h5"> {{  questionSideLeft}}  </h5>
             <span class="p-float-label">
-            <input *ngIf="answerSelected.lib === undefined" id="inputQstT6"
+            <input *ngIf="answerSelected?.lib === undefined" id="inputQstT6"
                    (focus)="showDontKnowButton =false; showCheckButton=true"
                    (focusin)="hidePlaceHolder('HIDE')"
                    (focusout)="hidePlaceHolder('SHOW')"
@@ -204,17 +204,17 @@
                    [(ngModel)]="reponseQuiz.lib" class="p-inputtext-sm " pInputText/>
 
 
-            <input *ngIf="answerSelected.lib !== undefined && answerIsCorrect(answerSelected, question) " disabled
+            <input *ngIf="answerSelected?.lib !== undefined && answerIsCorrect(answerSelected, question) " disabled
                    id="inputCorrectAnswer" inputId="inputDashedBorder" type="text"
                    [(ngModel)]="answerSelected.lib"
                    class="p-inputtext-sm " pInputText/>
 
-            <input *ngIf="answerSelected.lib !== undefined && !answerIsCorrect(answerSelected, question)" disabled
+            <input *ngIf="answerSelected?.lib !== undefined && !answerIsCorrect(answerSelected, question)" disabled
                    id="inputFalseAnswer" inputId="inputDashedBorder" type="text"
                    [(ngModel)]="answerSelected.lib"
                    class="p-inputtext-sm " pInputText/>
 
-            <label [hidden]="answerSelected.lib === undefined || answerIsCorrect(answerSelected, question)"
+            <label [hidden]="answerSelected?.lib === undefined || answerIsCorrect(answerSelected, question)"
                    class="correctAnswer" for="inputDashedBorder"
                    *ngFor="let ans of correctAnswersList?.get(question.id)">{{ ans.lib}}</label>
 
@@ -242,7 +242,7 @@
 
     <!--------------------------------- TRUE OR FALSE -------------------------------------------------------->
 
-    <div *ngIf="question.typeDeQuestion.ref === 't5'" class="p-grid">
+    <div *ngIf="question?.typeDeQuestion?.ref === 't5'" class="p-grid">
         <div class="p-col-12 question ">
             <div id="trueFalse" class="p-grid trueOrFalseQst">
                 <div class="p-col-9">
@@ -284,7 +284,7 @@
 
     <!--------------------------------- WORD BY WORD -------------------------------------------------------->
 
-    <div style="background-color: white;" *ngIf="question.typeDeQuestion.ref === 't12'"
+    <div style="background-color: white;" *ngIf="question?.typeDeQuestion?.ref === 't12'"
          class="p-grid">
         <div class="p-col-12 question">
             <button [disabled]="disableButtonSon" pButton pRipple type="button"
@@ -302,7 +302,7 @@
         <div [id]="value.lib" *ngFor="let value of t12AnswersList"
              (click)="onClick(value)"
              class="p-col-3 answert12">
-            {{value.lib}}
+            {{value?.lib}}
         </div>
 
         <div class="p-col-12 answers">
@@ -330,7 +330,7 @@
         <div class="p-col-6"></div>
         <!-- -->
         <div class="p-col-3">
-            <button *ngIf="showNextButton && question.id !== questionList[questionList.length -1]?.id && this.participants.get(this.prof.id).length === 1 "
+            <button *ngIf="showNextButton && question?.id !== questionList[questionList?.length -1]?.id && this.participants?.get(this.prof.id).length === 1 "
                     style="float:right"
                     pButton pRipple
                     type="button" icon="pi pi-arrow-right" iconPos="right"
@@ -338,7 +338,7 @@
                     class="p-button-rounded p-button-secondary"></button>
 
 
-            <button *ngIf="question.id === questionList[questionList.length -1]?.id " style="float:right" pButton
+            <button *ngIf="question?.id === questionList[questionList.length -1]?.id " style="float:right" pButton
                     pRipple
                     (click)="finishQuiz()"
                     type="button" icon="pi pi-save" iconPos="right"

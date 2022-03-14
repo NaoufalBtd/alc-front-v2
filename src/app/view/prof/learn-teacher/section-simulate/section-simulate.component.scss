@@ -260,9 +260,39 @@ tr.timeline > li:before {
   }
 }
 
-#flowMeImg{
+#flowMeImg {
   animation-name: run;
   animation-duration: 10s;
   position: absolute;
   animation-iteration-count: infinite;
+}
+
+
+div.list-group {
+  height: 30px;
+  text-align: start;
+  //border-left: 1px solid #d4d9df;
+  font-weight: 900;
+  font-family: sans-serif;
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+  border-left: 2px solid #757f8a;
+  padding: 25px 0 0 23px;
+}
+
+#check-icon {
+  margin-left: -28px;
+  color: #757f8a;
+  font-weight: lighter;
+  font-size: xx-small;
+}
+
+.list-item {
+  cursor: pointer;
+}
+
+.pi-times-circle {
+  border-radius: 10px!important;
+  height: 8px!important;
+  width: 9px!important;
 }

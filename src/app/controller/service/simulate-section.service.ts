@@ -25,25 +25,12 @@ import {Section} from '../model/section.model';
 import {environment} from '../../../environments/environment';
 import {Observable} from 'rxjs';
 import {LearnService} from './learn.service';
+import {SessionCours} from '../model/session-cours.model';
 
 @Injectable({
     providedIn: 'root'
 })
 export class SimulateSectionService {
-    nodes: TreeNode[];
-    menu: MenuItem[];
-    srcImg: string;
-    translate: any;
-    textSeleted: string;
-    filteredDict: any[];
-    synonym: any[];
-    value = 0;
-    word: string;
-    wordDict: any;
-    j: number;
-    private profUrl = environment.profUrl;
-    private synchronizationUrl = 'synchronization';
-    private _quizExist: boolean;
 
     constructor(private messageService: MessageService,
                 private router: Router,
@@ -296,6 +283,60 @@ export class SimulateSectionService {
         this.sectionItemService.showVocabulary = value;
     }
 
+    get showTakeQuiz(): boolean {
+        return this.learnService.showTakeQuiz;
+    }
+
+    set showTakeQuiz(value: boolean) {
+        this.learnService.showTakeQuiz = value;
+    }
+
+    get showQuizReview(): boolean {
+        return this.learnService.showQuizReview;
+    }
+
+    set showQuizReview(value: boolean) {
+        this.learnService.showQuizReview = value;
+    }
+
+
+    set TranslateSynonymeDialog(value: boolean) {
+        this.dictionnaryService.TranslateSynonymeDialog = value;
+    }
+
+    get listSynonymes(): Array<any> {
+        return this.dictionnaryService.listSynonymes;
+    }
+
+    set listSynonymes(value: Array<any>) {
+        this.dictionnaryService.listSynonymes = value;
+    }
+
+    get Synonymes(): Array<any> {
+        return this.dictionnaryService.Synonymes;
+    }
+
+    set Synonymes(value: Array<any>) {
+        this.dictionnaryService.Synonymes = value;
+    }
+
+    nodes: TreeNode[];
+    menu: MenuItem[];
+    srcImg: string;
+    translate: any;
+    textSeleted: string;
+    filteredDict: any[];
+    synonym: any[];
+    value = 0;
+    word: string;
+    wordDict: any;
+    j: number;
+    private profUrl = environment.profUrl;
+    private synchronizationUrl = 'synchronization';
+    private _quizExist: boolean;
+
+    private sessionCour: SessionCours = new SessionCours();
+
     Vocab(section: Section) {
         this.sectionItemService.sectionSelected = section;
 
@@ -321,26 +362,22 @@ export class SimulateSectionService {
         );
     }
 
-    get showTakeQuiz(): boolean {
-        return this.learnService.showTakeQuiz;
-    }
-
-    set showTakeQuiz(value: boolean) {
-        this.learnService.showTakeQuiz = value;
-    }
-
-    get showQuizReview(): boolean {
-        return this.learnService.showQuizReview;
-    }
-
-    set showQuizReview(value: boolean) {
-        this.learnService.showQuizReview = value;
-    }
 
     public nextSection(id: number) {
-        for (const section of this.itemssection2) {
-            if (id === section.id) {
-                this.selectedsection = section;
+        for (let i = 0; i < this.itemssection2.length; i++) {
+            if (id === this.itemssection2[i].id) {
+                if (i !== 0) {
+                    let index = 0;
+                    for (const item of this.sessionCour.sections) {
+                        if (item.id === this.itemssection2[i - 1].id) {
+                            index = -2;
+                        }
+                    }
+                    if (index === 0) {
+                        this.sessionCour.sections.push({...this.itemssection2[i - 1]});
+                    }
+                }
+                this.selectedsection = this.itemssection2[i];
             }
         }
 
@@ -436,33 +473,12 @@ export class SimulateSectionService {
             });
     }
 
-
-    set TranslateSynonymeDialog(value: boolean) {
-        this.dictionnaryService.TranslateSynonymeDialog = value;
-    }
-
     public dictEdit(dict: Dictionary) {
         this.selected = dict;
         if (this.selected.word != null) {
             this.submittedDictEdit = false;
             this.editDialogDict = true;
         }
-    }
-
-    get listSynonymes(): Array<any> {
-        return this.dictionnaryService.listSynonymes;
-    }
-
-    set listSynonymes(value: Array<any>) {
-        this.dictionnaryService.listSynonymes = value;
-    }
-
-    get Synonymes(): Array<any> {
-        return this.dictionnaryService.Synonymes;
-    }
-
-    set Synonymes(value: Array<any>) {
-        this.dictionnaryService.Synonymes = value;
     }
 
 
@@ -555,7 +571,7 @@ export class SimulateSectionService {
             data => {
                 this.itemssection2 = data;
                 this.selectedsection = data[0];
-                this.quizService.findQuizBySectionId(this.selectedsection ).subscribe(data12 => {
+                this.quizService.findQuizBySectionId(this.selectedsection).subscribe(data12 => {
                     this.quizExist = true;
                     this.selectedQuiz = data12;
                 }, error => {
@@ -579,5 +595,17 @@ export class SimulateSectionService {
                 }
             }
         );
+    }
+
+    sectionIsFinished(section: Section): boolean {
+        if (this.sessionCour.sections.length > 0) {
+            for (const sec of this.sessionCour.sections) {
+                if (section.id === sec.id) {
+                    return true;
+                }
+            }
+        } else {
+            return false;
+        }
     }
 }

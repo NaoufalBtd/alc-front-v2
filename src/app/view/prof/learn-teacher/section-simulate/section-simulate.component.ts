@@ -27,6 +27,8 @@ import {HomeWorkEtudiantServiceService} from '../../../../controller/service/hom
 import {HomeWork} from '../../../../controller/model/home-work.model';
 import {MenuService} from '../../../shared/slide-bar/app.menu.service';
 import {SimulateSectionService} from '../../../../controller/service/simulate-section.service';
+import {SessionCours} from '../../../../controller/model/session-cours.model';
+import {User} from '../../../../controller/model/user.model';
 
 @Pipe({name: 'safe'})
 export class SafePipe1 implements PipeTransform {
@@ -45,6 +47,7 @@ export class SafePipe1 implements PipeTransform {
     styleUrls: ['./section-simulate.component.scss']
 })
 export class SectionSimulateComponent implements OnInit, OnDestroy {
+    sessionCour: SessionCours = new SessionCours();
 
     constructor(private sectionItemService: SectionItemService,
                 private sessionservice: SessionCoursService,
@@ -242,7 +245,7 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
     }
 
 
-    get studentsEnLigne(): Map<number, Etudiant> {
+    get studentsEnLigne(): Map<number, User> {
         return this.webSocketService.studentsEnLigne;
     }
 
@@ -381,18 +384,27 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
                 this.selectedsection = this.itemssection2[i - 1];
                 this.webSocketService.updateCurrentSection(this.prof.id, this.itemssection2[i - 1]);
                 this.goToSection(this.itemssection2[i - 1]);
-
             }
         }
     }
 
     NextSection(section: Section) {
+        let index = 0;
+        for (const item of this.sessionCour.sections) {
+            if (item.id === section.id) {
+                index = -2;
+            }
+        }
+        if (index === 0) {
+            this.sessionCour.sections.push({...section});
+        }
+        console.log(this.sessionCour.sections);
+
         for (let i = 0; i < this.itemssection2.length; i++) {
             if (section.id === this.itemssection2[i].id) {
                 this.selectedsection = this.itemssection2[i + 1];
                 this.webSocketService.updateCurrentSection(this.prof.id, this.itemssection2[i + 1]);
                 this.goToSection(this.itemssection2[i + 1]);
-
                 this.showFlowMeButton = false;
             }
         }
@@ -439,14 +451,16 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
 
     ngOnDestroy(): void {
         this.showAppMenu = true;
-
     }
 
 
     closeSession() {
         this.showTpBar = true;
+        let chatMessage: ChatMessageDto = new ChatMessageDto(this.loginService.getConnectedProf().nom, 'Quit the session',false);
+        chatMessage.type = 'DISCONNECT';
+        chatMessage.prof = this.loginService.getConnectedProf();
         this.webSocketService.deleteWhenSessionIsfiniched(this.prof.id);
-        this.webSocketService.closeWebSocket(this.prof);
+        this.webSocketService.closeWebSocket(chatMessage);
         this.participants.delete(this.prof.id);
         this.connectedUsers.splice(0, this.connectedUsers.length);
         console.log(this.participants);
@@ -609,4 +623,15 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
     }
 
 
+    sectionIsFinished(section: Section): boolean {
+        if (this.sessionCour.sections.length > 0) {
+            for (const sec of this.sessionCour.sections) {
+                if (section.id === sec.id) {
+                    return true;
+                }
+            }
+        } else {
+            return false;
+        }
+    }
 }

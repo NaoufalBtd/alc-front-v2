@@ -20,6 +20,7 @@ import {LearnService} from './learn.service';
 import {Question} from '../model/question.model';
 import {GroupeEtudiant} from '../model/groupe-etudiant.model';
 import {GroupeEtudiantService} from './groupe-etudiant-service';
+import {MessageService} from 'primeng/api';
 
 @Injectable({
     providedIn: 'root'
@@ -28,7 +29,7 @@ export class WebSocketService {
 
     publicUrl = environment.publicUrl;
     private _prof: Prof = new Prof();
-    private _studentsEnLigne: Map<number, Etudiant> = new Map<number, Etudiant>();
+    private _studentsEnLigne: Map<number, User> = new Map<number, User>();
     private socketUrl = environment.socketUrl;
     private baseUrl = environment.baseUrl;
     private profUrl = environment.profUrl;
@@ -52,6 +53,7 @@ export class WebSocketService {
                 private loginservice: LoginService, public serviceprof: ProfService,
                 private simulatesectionService: SimulateSectionService,
                 private parcoursService: ParcoursService,
+                private messageService: MessageService,
                 private router: Router,
                 private groupeEtudiantService: GroupeEtudiantService,
                 private learnService: LearnService
@@ -75,11 +77,11 @@ export class WebSocketService {
         this._grpStudentAnswers = value;
     }
 
-    get studentsEnLigne(): Map<number, Etudiant> {
+    get studentsEnLigne(): Map<number, User> {
         return this._studentsEnLigne;
     }
 
-    set studentsEnLigne(value: Map<number, Etudiant>) {
+    set studentsEnLigne(value: Map<number, User>) {
         this._studentsEnLigne = value;
     }
 
@@ -117,14 +119,11 @@ export class WebSocketService {
         this.learnService.question = value;
     }
 
-    public closeWebSocket(user: any) {
+    public closeWebSocket(chatMessageDto: ChatMessageDto) {
         this.chatMessages = [];
-        this.webSocket.send(JSON.stringify(user));
+        this.webSocket.send(JSON.stringify(chatMessageDto));
         this.webSocket.close();
         this.webSocket.onclose = (event) => {
-            console.log('Clooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooose: ');
-            console.log(event);
-            console.log('================================================================================');
         };
     }
 
@@ -134,9 +133,21 @@ export class WebSocketService {
             console.log('ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooopeeeeeeeeen');
             this.prof = prof;
             this.groupeEtudiant = grpEtudiant;
+            let index = 0;
+            for (let item of this.connectedUsers) {
+                if (item?.id === prof.id) {
+                    index = -1;
+                }
+            }
+            if (index === 0) {
+                this.connectedUsers.push({...prof});
+            }
             if (sender === 'PROF') {
                 this.participants.set(prof.id, this.connectedUsers);
                 console.log(this.participants);
+                if (this.studentsEnLigne.get(prof.id) === undefined) {
+                    this.studentsEnLigne.set(prof.id, prof);
+                }
             } else {
                 this.groupeEtudiantService.findAllGroupeEtudiantDetail(grpEtudiant.id).subscribe(
                     data => {
@@ -145,9 +156,16 @@ export class WebSocketService {
                             this.connectedUsers.push({...groupeEtudiantDetails[i].etudiant});
                         }
                         this.participants.set(prof.id, this.connectedUsers);
+                        if (this.studentsEnLigne.get(prof.id) === undefined) {
+                            this.studentsEnLigne.set(prof.id, prof);
+                        }
                     }
                 );
-                this.webSocket.send(JSON.stringify(user));
+                let chatMessage: ChatMessageDto = new ChatMessageDto(user.nom, 'join session', true);
+                chatMessage.prof = prof;
+                chatMessage.student = user;
+                chatMessage.type = 'CONNECT';
+                this.webSocket.send(JSON.stringify(chatMessage));
             }
         };
         this.webSocket.onerror = (event) => {
@@ -163,10 +181,6 @@ export class WebSocketService {
                     if (etudiant.id === this.loginservice.getConnectedStudent().id) {
                         this.chatMessages.push({...data});
                     }
-                }
-
-                if (data.prof.id === this.loginservice.getConnecteUser().id) {
-                    this.chatMessages.push({...data});
                 }
             } else if (data.type === 'SECTION') {
                 const sectionId = Number(data.message);
@@ -201,8 +215,8 @@ export class WebSocketService {
                     const rpsQuiz = data.quizReponse;
                     this.grpStudentAnswers.set(rpsQuiz.student, rpsQuiz);
                 }
-            } else {
-                const mydata = JSON.parse(event.data);
+            } else if (data?.type === 'CONNECT') {
+                const mydata: ChatMessageDto = JSON.parse(event.data);
                 console.log(mydata);
                 console.log('=============== prof ======================');
                 console.log(this.prof);
@@ -211,13 +225,25 @@ export class WebSocketService {
                 let studentList = this.participants.get(this.prof.id);
                 console.log(this.participants);
                 for (const student of studentList) {
-                    if (student.id === mydata.id) {
+                    if (student.id === mydata.student.id) {
                         if (this.studentsEnLigne.get(student.id) === undefined) {
                             this.studentsEnLigne.set(student.id, student);
-                        } else {
-                            this.studentsEnLigne.delete(student.id);
+                            this.messageService.add({
+                                severity: 'success',
+                                life: 3000,
+                                detail: data?.student?.nom + ' ' + data?.student?.prenom + ' join the classroom'
+                            });
                         }
                     }
+                }
+            } else if (data?.type === 'DISCONNECT') {
+                if (this.studentsEnLigne.get(data?.student?.id) !== undefined) {
+                    this.studentsEnLigne.delete(data?.student?.id);
+                    this.messageService.add({
+                        severity: 'warn',
+                        life: 4000,
+                        detail: data?.student?.nom + ' ' + data?.student?.prenom + ' is out of the classroom'
+                    });
                 }
             }
             console.log('==================== Last readyState==============');

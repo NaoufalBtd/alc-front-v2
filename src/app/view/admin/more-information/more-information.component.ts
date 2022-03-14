@@ -25,11 +25,11 @@ export class MoreInformationComponent implements OnInit {
   selected = new TypeTeacher();
   public save() {
 
-    if (this.selected.libelle.trim()) {
+    if (this.typeTeacher.libelle.trim()) {
       this.typeTeacherService.save().subscribe(data => {
         // tslint:disable-next-line:no-shadowed-variable
         this.typeTeacherService.findAllType().subscribe(data => this.typeTeachers = data);
-        this.typeTeachers.push({...this.selected});
+        this.typeTeachers.push({...this.typeTeacher});
         this.messageService.add({
           severity: 'success',
           summary: 'Successful',

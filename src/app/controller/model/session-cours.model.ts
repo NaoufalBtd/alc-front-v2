@@ -3,6 +3,7 @@ import {Prof} from './prof.model';
 import {Cours} from './cours.model';
 import {GroupeEtudiant} from './groupe-etudiant.model';
 import {Salary} from './salary.model';
+import {Section} from './section.model';
 
 export class SessionCours {
     public id: number;
@@ -18,4 +19,5 @@ export class SessionCours {
     public mois: number;
     public annee: number;
     public salary = new Salary();
+    public sections: Array<Section> = new Array<Section>();
 }
