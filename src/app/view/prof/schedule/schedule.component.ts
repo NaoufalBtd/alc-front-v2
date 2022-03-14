@@ -442,9 +442,6 @@ export class ScheduleLocalComponent implements OnInit {
         this.simulateSectionService.findSectionOneByCoursId(this.data.cours);
         this.parcoursService.afficheOneSectionByProf(this.data.cours).subscribe(
             dataSection => {
-                console.log('============ SCHEDULE SECTION ===========================');
-                console.log(dataSection);
-                console.log('============ SCHEDULE SECTION ===========================');
                 this.webSocketService.saveCurrentSection(this.prof.id, dataSection);
 
             }

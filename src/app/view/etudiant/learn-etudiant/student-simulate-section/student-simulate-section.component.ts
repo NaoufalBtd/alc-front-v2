@@ -35,6 +35,9 @@ import {GroupeEtudiantService} from '../../../../controller/service/groupe-etudi
 import {AppComponent} from '../../../../app.component';
 import {newArray} from '@angular/compiler/src/util';
 import {MenuService} from '../../../shared/slide-bar/app.menu.service';
+import {SimulateSectionService} from '../../../../controller/service/simulate-section.service';
+import {ChatMessageDto} from '../../../../controller/model/chatMessageDto';
+import {User} from '../../../../controller/model/user.model';
 
 @Pipe({name: 'safe'})
 export class SafePipe implements PipeTransform {
@@ -75,6 +78,7 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
                 private homeWorkEtudiantService: HomeWorkEtudiantServiceService,
                 private learnService: LearnService,
                 private app: AppComponent,
+                private simulateSectionService: SimulateSectionService,
                 private grpEtudiantService: GroupeEtudiantService,
     ) {
     }
@@ -117,6 +121,7 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
     get showVocabulary(): boolean {
         return this.sectionItemService.showVocabulary;
     }
+
     get selectedNow(): Dictionary {
         return this.dictionnaryService.selectedNow;
     }
@@ -124,6 +129,7 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
     set selectedNow(value: Dictionary) {
         this.dictionnaryService.selectedNow = value;
     }
+
     set showVocabulary(value: boolean) {
         this.sectionItemService.showVocabulary = value;
     }
@@ -388,7 +394,7 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
     }
 
 
-    get studentsEnLigne(): Map<number, Etudiant> {
+    get studentsEnLigne(): Map<number, User> {
         return this.webSocketService.studentsEnLigne;
     }
 
@@ -830,7 +836,10 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
 
     closeSession() {
         this.showTpBar = true;
-        this.webSocketService.closeWebSocket(this.loginService.getConnectedStudent());
+        let chatMessage: ChatMessageDto = new ChatMessageDto(this.loginService.getConnectedStudent().nom, 'Quit the session', true);
+        chatMessage.type = 'DISCONNECT';
+        chatMessage.student = this.loginService.getConnectedStudent();
+        this.webSocketService.closeWebSocket(chatMessage);
         this.participants.delete(this.prof.id);
         this.connectedUsers.splice(0, this.connectedUsers.length);
         console.log(this.participants);
@@ -892,5 +901,10 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
                 return this.itemssection2[i + 1].libelle;
             }
         }
+    }
+
+
+    sectionIsFinished(section: Section): boolean {
+        return this.simulateSectionService.sectionIsFinished(section);
     }
 }

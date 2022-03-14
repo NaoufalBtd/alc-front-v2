@@ -3,6 +3,7 @@ import {Prof} from './prof.model';
 import {QuizReponse} from './quiz-reponse';
 import {GroupeEtudiant} from './groupe-etudiant.model';
 import {Section} from './section.model';
+import {User} from './user.model';
 
 export class ChatMessageDto {
     type: string;
@@ -10,7 +11,7 @@ export class ChatMessageDto {
     message: string;
     isStudent: boolean;
     prof: Prof = new Prof();
-    student: Array<Etudiant>  = new Array<Etudiant>();
+    student: User  = new User();
     quizReponse: QuizReponse = new QuizReponse();
     grpStudent: GroupeEtudiant = new GroupeEtudiant();
 
