@@ -182,10 +182,6 @@ export class WebSocketService {
                         this.chatMessages.push({...data});
                     }
                 }
-
-                if (data.prof.id === this.loginservice.getConnecteUser().id) {
-                    this.chatMessages.push({...data});
-                }
             } else if (data.type === 'SECTION') {
                 const sectionId = Number(data.message);
                 console.log(sectionId);
