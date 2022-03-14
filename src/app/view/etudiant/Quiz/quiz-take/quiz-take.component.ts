@@ -25,6 +25,7 @@ import {Role} from '../../../../enum/role.enum';
 import {ChatMessageDto} from '../../../../controller/model/chatMessageDto';
 import {Prof} from '../../../../controller/model/prof.model';
 import {AppComponent} from '../../../../app.component';
+import {GroupeEtudiant} from '../../../../controller/model/groupe-etudiant.model';
 
 @Component({
     selector: 'app-quiz-take',
@@ -44,6 +45,12 @@ export class QuizTakeComponent implements OnInit, OnDestroy {
                 private confirmationService: ConfirmationService,
                 private webSocketService: WebSocketService) {
     }
+
+
+    get groupeEtudiant(): GroupeEtudiant {
+        return this.webSocketService.groupeEtudiant;
+    }
+
 
     get t12AnswersList(): Array<Reponse> {
         return this.learnService.t12AnswersList;
@@ -397,7 +404,7 @@ export class QuizTakeComponent implements OnInit, OnDestroy {
         this.correctAnswerT12 = String(' ');
         this.showT12AnswerDiv = false;
         const question = this.learnService.nextQuestionFct();
-        if (this.participants.get(this.prof.id).length === 1) {
+        if (this.groupeEtudiant?.groupeEtude?.nombreEtudiant === 1) {
             this.followMeFct(question);
         }
     }
@@ -445,5 +452,9 @@ export class QuizTakeComponent implements OnInit, OnDestroy {
         }
 
 
+    }
+
+    valueOf(numero: number): number {
+        return ((numero / this.questionList.length) * 100);
     }
 }

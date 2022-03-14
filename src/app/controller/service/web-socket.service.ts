@@ -188,7 +188,7 @@ export class WebSocketService {
                 console.log(this.participants.get(data.prof.id));
                 for (const etudiant of this.participants.get(data.prof.id)) {
                     if (etudiant.id === this.loginservice.getConnectedStudent().id) {
-                        this.simulatesectionService.nextSection(sectionId);
+                        this.simulatesectionService.nextSection(sectionId, data?.user);
                     }
                 }
 
@@ -197,7 +197,7 @@ export class WebSocketService {
                 this.question = this.reponseQuiz?.question;
                 this.learnService.nextQuestionFct();
             } else if (data.type === 'QUIZ') {
-                if (this.participants.get(this.loginservice.getConnecteUser().id)?.length === 1 ||
+                if (this.groupeEtudiant?.groupeEtude?.nombreEtudiant === 1 ||
                     data.quizReponse.sender === 'PROF') {
                     this.reponseQuiz = data.quizReponse;
                     console.log(this.reponseQuiz);
