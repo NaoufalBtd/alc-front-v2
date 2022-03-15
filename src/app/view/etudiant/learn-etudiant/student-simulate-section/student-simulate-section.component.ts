@@ -893,6 +893,8 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
     }
 
     closeSession() {
+        this.showLesson = true;
+        this.showSummary = false;
         this.showTpBar = true;
         let chatMessage: ChatMessageDto = new ChatMessageDto(this.loginService.getConnectedStudent().nom, 'Quit the session', true);
         chatMessage.type = 'DISCONNECT';
@@ -968,6 +970,6 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
 
     finishLesson(rating: string) {
         this.showRatingLessonTemplate = false;
-        this.closeSession();
+
     }
 }

@@ -741,7 +741,6 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
         chatMessage.type = 'SECTION';
         this.webSocketService.sendMessage(chatMessage, 'PROF');
         this.showSticky();
-        this.closeSession();
     }
 
     onConfirm() {
