@@ -97,6 +97,7 @@ import {MoreInformationComponent} from './view/admin/more-information/more-infor
 import {InfoEtudiantComponent} from './view/admin/info-etudiant/info-etudiant.component';
 import {ConnectAsInvitedComponent} from './view/etudiant/connect-as-invited/connect-as-invited.component';
 import {ContinueInfoComponent} from './view/etudiant/connect-as-invited/continue-info/continue-info.component';
+import {InvitedListeComponent} from './view/admin/invited-liste/invited-liste.component';
 
 
 @NgModule({
@@ -138,7 +139,8 @@ import {ContinueInfoComponent} from './view/etudiant/connect-as-invited/continue
                     {path: 'complaint', component: ComplaintComponent},
                     {path: 'typeofcomplaint', component: TypeReclamationComponent},
                     {path: 'moreInformation', component: MoreInformationComponent} ,
-                    {path: 'infoEtudiant', component: InfoEtudiantComponent}
+                    {path: 'infoEtudiant', component: InfoEtudiantComponent},
+                    {path: 'invitedList', component: InvitedListeComponent}
                 ]
             },
             {
