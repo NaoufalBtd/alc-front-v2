@@ -51,9 +51,9 @@
 
                         </td>
                         <td>
-                            <p-message *ngIf="!inviteStudentEtudiant.isAccepted" severity="error" text="Invitation Not Accepted"
+                            <p-message *ngIf="!inviteStudentEtudiant.accepted" severity="error" text="Invitation Not Accepted"
                                        styleClass="p-mr-2"></p-message>
-                            <p-message *ngIf="inviteStudentEtudiant.isAccepted" severity="success" text="Invite Accepted"
+                            <p-message *ngIf="inviteStudentEtudiant.accepted" severity="success" text="Invite Accepted"
                                        styleClass="p-mr-2"></p-message>
                         </td>
                     </tr>
