@@ -47,6 +47,8 @@ export class SafePipe1 implements PipeTransform {
     styleUrls: ['./section-simulate.component.scss']
 })
 export class SectionSimulateComponent implements OnInit, OnDestroy {
+    rows = 5;
+    first = 0;
     sessionCour: SessionCours = new SessionCours();
     data: any;
     finishedAdditionalSection = 0;

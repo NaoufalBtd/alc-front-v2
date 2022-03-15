@@ -1,6 +1,6 @@
 <h4 *ngIf="homeWorkList.length ===0" style="text-align: center; color: #ffa500">Home work not found !</h4>
 <div *ngIf="homeWorkList.length !==0" class="p-grid HomeWorkcontainer">
-    <div class="p-col-9 rightBar">
+    <div class="p-col-12 rightBar">
         <p-tabView>
             <p-tabPanel header="Home Work">
                 <div *ngIf="showTakeQuiz" class="p-field">
@@ -488,45 +488,40 @@
         </p-tabView>
 
     </div>
+</div>
+<p-dialog styleClass="dialogDict" [(visible)]="displayDictionaryDialog" position="right" [style]="{width: '27vw'}">
+    <ng-template pTemplate="header">
+        <h4 style="text-align: center">Dictionary</h4>
+    </ng-template>
 
-
-    <div class="p-col-3">
+    <ng-template pTemplate="content">
         <p-tabView>
-            <p-tabPanel header="Home Work">
-                <p-table [value]="homeWorkList" id="categ">
+            <p-tabPanel header="Add new words">
+                <h6>Text</h6>
+                <textarea
+                        [style]="{'width': '100%',  'font-size': 'medium', 'border': '1px solid rgb(156, 39, 176)'}"
+                        rows="2" [(ngModel)]="textSeleted"
+                        pInputTextarea
+                        autoResize="autoResize"></textarea>
+                <h6>Translation</h6>
+                <textarea
+                        [style]="{'width': '100%',  'font-size': 'medium', 'border': '1px solid rgb(156, 39, 176)'}"
+                        rows="2" [(ngModel)]="synonymes"
+                        pInputTextarea
+                        autoResize="autoResize"></textarea>
 
-                    <ng-template let-homeWork pTemplate="body">
-
-                        <tr class="timeline">
-
-                            <li style="margin-top: 20px">
-                                <td (click)="homeWorkSelectedFct(homeWork)"
-                                    [style.color]="(homeWork.id) == (this.selectedHomeWork?.id)? 'orange' :'black' "
-                                    style="cursor: pointer; font-weight: 600;margin-left: 5px; font-size: 15px">
-                                    <u style="margin-left: 33px">{{homeWork?.libelle}}</u>
-                                </td>
-                            </li>
-                        </tr>
-                    </ng-template>
-                </p-table>
+                <button [disabled]="textSeleted?.length < 3" [style]="{'width': '100%','margin-top': '35px'}"
+                        pButton
+                        pRipple type="button"
+                        label="Add to my dictionary" (click)="addToDictionary()"
+                        class="p-button-raised p-button-help"></button>
             </p-tabPanel>
-            <p-tabPanel header="Dictionary">
-                <p-table #dt [value]="dictionaryList" responsiveLayout="scroll" [paginator]="true" [rows]="rows"
+            <p-tabPanel header="My Dictionary">
+
+                <p-table [value]="dictionaryList" responsiveLayout="scroll" [paginator]="true" [rows]="rows"
                          [showCurrentPageReport]="true"
                          [(first)]="first"
-                         [globalFilterFields]="['word','definition']"
                          [rowsPerPageOptions]="[5,10,25,50]">
-                    <ng-template pTemplate="caption">
-                        <input class="searchValue" type="text" pInputText
-                               (input)="dt.filterGlobal($event.target.value, 'contains')"
-                               placeholder="Search..."/>
-
-
-                        <button style="float: right;" pButton pRipple type="button"
-                                (click)="displayDictionaryDialog = true"
-                                icon="pi pi-plus" class=" p-button-rounded p-button-success"></button>
-
-                    </ng-template>
 
 
                     <ng-template pTemplate="header">
@@ -549,74 +544,7 @@
                 </p-table>
             </p-tabPanel>
         </p-tabView>
+    </ng-template>
 
 
-    </div>
-
-    <!--    <p-dialog header="Dictionary" position="top" [(visible)]="displayDictionaryDialog" [style]="{width: '20vw'}">-->
-
-
-    <!--    </p-dialog>-->
-
-    <p-dialog styleClass="dialogDict" [(visible)]="displayDictionaryDialog" position="right" [style]="{width: '27vw'}">
-        <ng-template pTemplate="header">
-            <h4 style="text-align: center">Dictionary</h4>
-        </ng-template>
-
-        <ng-template pTemplate="content">
-            <p-tabView>
-                <p-tabPanel header="Add new words">
-                    <h6>Text</h6>
-                    <textarea
-                            [style]="{'width': '100%',  'font-size': 'medium', 'border': '1px solid rgb(156, 39, 176)'}"
-                            rows="2" [(ngModel)]="textSeleted"
-                            pInputTextarea
-                            autoResize="autoResize"></textarea>
-                    <h6>Translation</h6>
-                    <textarea
-                            [style]="{'width': '100%',  'font-size': 'medium', 'border': '1px solid rgb(156, 39, 176)'}"
-                            rows="2" [(ngModel)]="synonymes"
-                            pInputTextarea
-                            autoResize="autoResize"></textarea>
-
-                    <button [disabled]="textSeleted?.length < 3" [style]="{'width': '100%','margin-top': '35px'}"
-                            pButton
-                            pRipple type="button"
-                            label="Add to my dictionary" (click)="addToDictionary()"
-                            class="p-button-raised p-button-help"></button>
-                </p-tabPanel>
-                <p-tabPanel header="My Dictionary">
-
-                    <p-table [value]="dictionaryList" responsiveLayout="scroll" [paginator]="true" [rows]="rows"
-                             [showCurrentPageReport]="true"
-                             [(first)]="first"
-                             [rowsPerPageOptions]="[5,10,25,50]">
-
-
-                        <ng-template pTemplate="header">
-                            <tr>
-                                <th>Word</th>
-                                <th>Translation</th>
-                            </tr>
-                        </ng-template>
-                        <ng-template pTemplate="body" let-dict>
-                            <tr>
-                                <td>{{dict?.word}}</td>
-                                <td>{{dict?.definition}}</td>
-                            </tr>
-                        </ng-template>
-                        <ng-template pTemplate="summary">
-                            <div class="flex align-items-center justify-content-between">
-                                In total there are {{ dictionaryList?.length }} words.
-                            </div>
-                        </ng-template>
-                    </p-table>
-                </p-tabPanel>
-            </p-tabView>
-        </ng-template>
-
-
-    </p-dialog>
-
-
-</div>
+</p-dialog>

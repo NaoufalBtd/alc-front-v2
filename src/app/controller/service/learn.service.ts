@@ -765,6 +765,7 @@ export class LearnService {
         console.log(this.showCheckButton);
         this.noteQuiz = 0;
         this.homeWorkService.findhomeworkbyCoursId(course).subscribe(homeWorkData => {
+            console.log('0000000000000000000000000000000000000000000000000000000000000000000000000000000000');
             console.log(homeWorkData);
             this.homeWorkList = homeWorkData;
 

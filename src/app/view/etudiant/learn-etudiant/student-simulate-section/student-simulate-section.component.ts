@@ -38,6 +38,8 @@ import {MenuService} from '../../../shared/slide-bar/app.menu.service';
 import {SimulateSectionService} from '../../../../controller/service/simulate-section.service';
 import {ChatMessageDto} from '../../../../controller/model/chatMessageDto';
 import {User} from '../../../../controller/model/user.model';
+import {HomeWorkEtudiantComponent} from '../../homeWork/home-work-etudiant/home-work-etudiant.component';
+import {HomeWorkSimulateService} from '../../../../controller/service/home-work-simulate.service';
 
 @Pipe({name: 'safe'})
 export class SafePipe implements PipeTransform {
@@ -79,13 +81,14 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
                 private service: ParcoursService,
                 private menuService: MenuService,
                 private http: HttpClient,
+                private homeWorkEtudiantComponent: HomeWorkEtudiantComponent,
                 private quizService: QuizEtudiantService,
                 public loginService: LoginService,
                 private vocab: VocabularyService,
                 private review: EtudiantReviewService,
                 private sectionItemService: SectionItemService,
                 private sessioncoursservice: SessionCoursService,
-                private homeWorkService: HomeworkService,
+                private homeWorkService: HomeWorkSimulateService,
                 private homeWorkEtudiantService: HomeWorkEtudiantServiceService,
                 private learnService: LearnService,
                 private app: AppComponent,
@@ -392,13 +395,6 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
         this.service.selectessection = value;
     }
 
-    get homeWorkList(): Array<HomeWork> {
-        return this.homeWorkService.homeWorkList;
-    }
-
-    set homeWorkList(homeWorklist: Array<HomeWork>) {
-        this.homeWorkService.homeWorkList = homeWorklist;
-    }
 
     get selectedReview(): EtudiantReview {
         return this.review.selected;
@@ -642,6 +638,7 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
             this.webSocketService.findCurrentSectionForstudent(this.service.selectedcours, this.prof);
             console.log(this.service.selectedsection);
         }
+        this.learnService.onStartHomeWork(this.selectedcours);
     }
 
     findAllDict() {
@@ -970,6 +967,31 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
 
     finishLesson(rating: string) {
         this.showRatingLessonTemplate = false;
-
     }
+
+    showLessonFct(section: Section) {
+        this.showLesson = true;
+    }
+
+// ---------------------------------------------------home Work--------------------------------------------/
+
+    get homeWorkList(): Array<HomeWork> {
+        return this.learnService.homeWorkList;
+    }
+
+
+    homeWorkSelectedFct(homeWork: HomeWork) {
+        this.showLesson = false;
+        this.homeWorkService.homeWorkSelectedFct(homeWork);
+    }
+
+    get selectedHomeWork(): HomeWork {
+        return this.learnService.selectedHomeWork;
+    }
+
+    set selectedHomeWork(value: HomeWork) {
+        this.learnService.selectedHomeWork = value;
+    }
+
+
 }

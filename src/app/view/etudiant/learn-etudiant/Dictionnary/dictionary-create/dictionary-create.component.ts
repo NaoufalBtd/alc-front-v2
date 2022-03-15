@@ -10,6 +10,9 @@ import {DictionaryService} from '../../../../../controller/service/dictionary.se
     styleUrls: ['./dictionary-create.component.scss']
 })
 export class DictionaryCreateComponent implements OnInit {
+    rows = 5;
+    first = 0;
+
     constructor(private messageService: MessageService,
                 private serviceUser: LoginService,
                 private confirmationService: ConfirmationService, private dictionnaryService: DictionaryService) {
@@ -93,8 +96,8 @@ export class DictionaryCreateComponent implements OnInit {
         console.log(this.selected);
         this.dictionnaryService.save().subscribe(data => {
             this.dictionnaryService.FindAllWord().subscribe(
-                 data => {
-                    console.log( data);
+                data => {
+                    console.log(data);
                     this.itemsDict = data;
                 });
 
