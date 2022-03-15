@@ -1,39 +1,10 @@
 <div class="card toopBar">
     <div class="p-grid">
         <div class="p-col-4">
-
-            <button *ngIf="!showLesson" pButton pRipple type="button" label="LESSON"
-                    (click)="showLesson = true"
-                    class=" p-button-secondary  Topbutton p-button-outlined">
-                <img src="./assets/icons/icons-lesson.png" class="homeWorkIcon">
-            </button>
-
-            <button *ngIf="showLesson" pButton pRipple type="button"
-                    label="LESSON"
-                    class=" clickedButton p-button-outlined  Topbutton">
-                <img src="./assets/icons/icons-lesson.png" class="homeWorkIcon">
-            </button>
-
-
-            <button *ngIf="showLesson" pButton pRipple type="button" label="HOMEWORK"
-                    (click)="showLesson = false"
-                    class=" p-button-secondary Topbutton p-button-outlined">
-                <img src="./assets/icons/home-work-icon.png" class="homeWorkIcon">
-            </button>
-
-            <button *ngIf="!showLesson" pButton pRipple type="button" label="HOMEWORK"
-                    class=" clickedButton Topbutton  p-button-outlined ">
-                <img src="./assets/icons/home-work-icon.png" class="homeWorkIcon">
-            </button>
-
-
-        </div>
-
-
-        <div class="p-col-4">
             <h4 class="title"> {{selectedcours?.numeroOrder}}  {{selectedcours?.libelle}}</h4>
         </div>
 
+        <div class="p-col-4"></div>
 
         <div class="p-col-1">
             <p-overlayPanel #op [style]="{width: '400px'}"
