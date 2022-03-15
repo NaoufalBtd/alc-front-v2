@@ -183,12 +183,26 @@ export class WebSocketService {
                     }
                 }
             } else if (data.type === 'SECTION') {
-                const sectionId = Number(data.message);
-                console.log(sectionId);
-                console.log(this.participants.get(data.prof.id));
-                for (const etudiant of this.participants.get(data.prof.id)) {
-                    if (etudiant.id === this.loginservice.getConnectedStudent().id) {
-                        this.simulatesectionService.nextSection(sectionId, data?.user);
+                if (data?.user === 'SUMMARY' && data?.message === 'SUMMARY') {
+                    for (const etudiant of this.participants.get(data.prof.id)) {
+                        if (etudiant.id === this.loginservice.getConnectedStudent().id) {
+                            this.simulatesectionService.goToSummary();
+                        }
+                    }
+                } else if (data?.user === 'FINISHLESSON' && data?.message === 'FINISHLESSON') {
+                    for (const etudiant of this.participants.get(data.prof.id)) {
+                        if (etudiant.id === this.loginservice.getConnectedStudent().id) {
+                            this.simulatesectionService.finishLesson();
+                        }
+                    }
+                } else {
+                    const sectionId = Number(data.message);
+                    console.log(sectionId);
+                    console.log(this.participants.get(data.prof.id));
+                    for (const etudiant of this.participants.get(data.prof.id)) {
+                        if (etudiant.id === this.loginservice.getConnectedStudent().id) {
+                            this.simulatesectionService.nextSection(sectionId, data?.user);
+                        }
                     }
                 }
 

@@ -211,6 +211,51 @@
                     <!--                    </p-tabView>-->
                 </div>
 
+                <div *ngIf="showSummary" class="p-col-9">
+                    <div class="p-grid" style="background-color: white!important;">
+                        <div style="text-align: center" class="p-col-12"><h5 class="LessonSummary">Lesson summary</h5>
+                        </div>
+
+                        <div class="p-col-6">
+                            <div class="p-grid keys">
+                                <div class="p-col-8"><i style="background: #ff6384;  width: 20px; height: 20px;
+                                 margin: 1px 0 -5px 0; border-radius: 36px;" class="pi pi-circle-fill"></i>
+                                    Key sections
+                                </div>
+                                <div class="p-col-4 keysValue">
+                                    <i class="pi pi-circle-fill"></i> {{finishedSection }}
+                                    of {{ sectionStandard?.length}}
+                                </div>
+                            </div>
+                            <div class="p-grid keys">
+                                <div class="p-col-8"><i style="background: #FFCE56;  width: 20px;margin: 1px 0 -5px 0;
+                                 height: 20px; border-radius: 36px;" class="pi pi-circle-fill"></i>
+                                    Additional sections
+                                </div>
+                                <div class="p-col-4 keysValue">
+                                    <i class="pi pi-circle-fill"></i>   {{finishedAdditionalSection }}
+                                    of {{ sectionAdditional?.length}}
+                                </div>
+                            </div>
+                            <div class="p-grid keys">
+                                <div class="p-col-8">Exercise completed</div>
+                                <div class="p-col-4 keysValue">8</div>
+                            </div>
+                            <div class="p-grid keys">
+                                <div class="p-col-8">Words added</div>
+                                <div class="p-col-4 keysValue">
+                                    {{itemsDict?.length}}
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="p-col-6">
+                            <p-chart type="doughnut" [options]="options" [data]="data"
+                                     [style]="{'width': '100%'}"></p-chart>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="p-col-3 product-grid-item">
                     <div class="skipeContainer">
@@ -391,3 +436,24 @@
     <app-dictionary-edit></app-dictionary-edit>
     <app-translate></app-translate>
 </div>
+
+<p-dialog [(visible)]="showRatingLessonTemplate" [showHeader]="false"
+          [style]="{width: '70vw', 'border-radius': '5px'}">
+
+
+    <div class="p-grid" style="margin: 0!important;">
+        <div class="p-col-12 LessonFinished"><h4>Lesson is over</h4></div>
+        <div class="p-col-4">
+            <img src="./assets/icons/icon-amoureux.gif" (click)="finishLesson('LOVELY')" class="ratingIcon"
+                 width="150px" alt="">
+        </div>
+        <div class="p-col-4">
+            <img src="./assets/icons/icon-lol.gif" class="ratingIcon" (click)="finishLesson('LOL')" width="150px"
+                 alt="">
+        </div>
+        <div class="p-col-4">
+            <img src="./assets/icons/icon-neutre.gif" class="ratingIcon" (click)="finishLesson('NEUTRE')" width="150px"
+                 alt="">
+        </div>
+    </div>
+</p-dialog>

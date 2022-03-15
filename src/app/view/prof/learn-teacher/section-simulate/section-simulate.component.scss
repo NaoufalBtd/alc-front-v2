@@ -292,7 +292,24 @@ div.list-group {
 }
 
 .pi-times-circle {
-  border-radius: 10px!important;
-  height: 8px!important;
-  width: 9px!important;
+  border-radius: 10px !important;
+  height: 8px !important;
+  width: 9px !important;
+}
+
+.LessonSummary {
+  color: #dd933c;
+  font-weight: bold;
+  font-size: large;
+}
+
+div.keys {
+  border-bottom: 2px solid #d0d0d0;
+  padding: 15px;
+  font-family: monospace;
+  font-size: large;
+}
+
+div.keysValue {
+  font-weight: bold;
 }

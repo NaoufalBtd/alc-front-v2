@@ -57,6 +57,17 @@ export class SafePipe implements PipeTransform {
 })
 export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
     synonymes: string;
+    options: any = {
+        title: {
+            display: false,
+            text: 'Summary',
+            fontSize: 16,
+
+        },
+        legend: {
+            position: 'bottom'
+        },
+    };
 
     // tslint:disable-next-line:max-line-lengthg max-line-length
     constructor(private messageService: MessageService,
@@ -81,6 +92,54 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
                 private simulateSectionService: SimulateSectionService,
                 private grpEtudiantService: GroupeEtudiantService,
     ) {
+    }
+
+    get showRatingLessonTemplate(): boolean {
+        return this.simulateSectionService.showRatingLessonTemplate;
+    }
+
+    set showRatingLessonTemplate(value: boolean) {
+        this.simulateSectionService.showRatingLessonTemplate = value;
+    }
+
+    get data(): any {
+        return this.simulateSectionService.data;
+    }
+
+    set data(value: any) {
+        this.simulateSectionService.data = value;
+    }
+
+    get finishedAdditionalSection(): number {
+        return this.simulateSectionService.finishedAdditionalSection;
+    }
+
+    set finishedAdditionalSection(value: number) {
+        this.simulateSectionService.finishedAdditionalSection = value;
+    }
+
+    get finishedSection(): number {
+        return this.simulateSectionService.finishedSection;
+    }
+
+    set finishedSection(value: number) {
+        this.simulateSectionService.finishedSection = value;
+    }
+
+    get showLesson(): boolean {
+        return this.simulateSectionService.showLesson;
+    }
+
+    set showLesson(value: boolean) {
+        this.simulateSectionService.showLesson = value;
+    }
+
+    get showSummary(): boolean {
+        return this.simulateSectionService.showSummary;
+    }
+
+    set showSummary(value: boolean) {
+        this.simulateSectionService.showSummary = value;
     }
 
 
@@ -398,7 +457,6 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
         return this.webSocketService.studentsEnLigne;
     }
 
-    showLesson = true;
     showTakeQuiz = false;
     showViewQuiz = false;
     nodes: TreeNode[];
@@ -906,5 +964,10 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
 
     sectionIsFinished(section: Section): boolean {
         return this.simulateSectionService.sectionIsFinished(section);
+    }
+
+    finishLesson(rating: string) {
+        this.showRatingLessonTemplate = false;
+        this.closeSession();
     }
 }

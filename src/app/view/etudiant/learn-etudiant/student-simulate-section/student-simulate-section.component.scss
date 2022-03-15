@@ -121,7 +121,7 @@ tr.timeline > li:before {
 }
 
 .quiz {
-  border: 10px solid #ffffff  !important;
+  border: 10px solid #ffffff !important;
 }
 
 .toopBar {
@@ -187,18 +187,19 @@ tr.timeline > li:before {
 }
 
 
-.btndark{
-  border:1px solid #252529!important;
-  background: white!important;
-  color: #252529!important;
-}
-.btndark:hover{
-  border:none!important;
-  background: #252529!important;
-  color: white!important;
+.btndark {
+  border: 1px solid #252529 !important;
+  background: white !important;
+  color: #252529 !important;
 }
 
-.dict{
+.btndark:hover {
+  border: none !important;
+  background: #252529 !important;
+  color: white !important;
+}
+
+.dict {
   display: inline-block;
   color: dimgrey;
   font-size: medium;
@@ -209,7 +210,7 @@ tr.timeline > li:before {
   margin-right: 5px;
 }
 
-.skipeContainer{
+.skipeContainer {
   border: 2px dashed #bfbfbf;
   height: 200px;
   background: #fffdfa59;
@@ -218,7 +219,7 @@ tr.timeline > li:before {
   padding: 40px;
 }
 
-#startText{
+#startText {
   color: #60788a;
 }
 
@@ -246,8 +247,44 @@ div.list-group {
 }
 
 .pi-times-circle {
-  border-radius: 10px!important;
-  height: 8px!important;
-  width: 9px!important;
+  border-radius: 10px !important;
+  height: 8px !important;
+  width: 9px !important;
 }
 
+
+.LessonSummary {
+  color: #dd933c;
+  font-weight: bold;
+  font-size: large;
+}
+
+div.keys {
+  border-bottom: 2px solid #d0d0d0;
+  padding: 15px;
+  font-family: monospace;
+  font-size: large;
+}
+
+div.keysValue {
+  font-weight: bold;
+}
+
+.ratingIcon {
+  cursor: pointer;
+}
+
+
+.LessonFinished{
+  text-align: center;
+  border-bottom: 2px solid #feca2a;
+  color: #5288ab;
+  font-weight: bold;
+}
+
+.p-dialog .p-dialog-content {
+  background: #c66b68!important;
+  color: #276f9a!important;
+  padding: 0 1.5rem 2rem 1.5rem;
+  height: 100%;
+}

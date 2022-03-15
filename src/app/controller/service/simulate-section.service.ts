@@ -31,6 +31,12 @@ import {SessionCours} from '../model/session-cours.model';
     providedIn: 'root'
 })
 export class SimulateSectionService {
+    private _showLesson = true;
+    private _showSummary = false;
+    private _data: any;
+    private _finishedAdditionalSection = 0;
+    private _finishedSection = 0;
+    private _showRatingLessonTemplate = false;
 
     constructor(private messageService: MessageService,
                 private router: Router,
@@ -50,6 +56,54 @@ export class SimulateSectionService {
                 private homeWorkEtudiantService: HomeWorkEtudiantServiceService) {
     }
 
+
+    get showRatingLessonTemplate(): boolean {
+        return this._showRatingLessonTemplate;
+    }
+
+    set showRatingLessonTemplate(value: boolean) {
+        this._showRatingLessonTemplate = value;
+    }
+
+    get data(): any {
+        return this._data;
+    }
+
+    set data(value: any) {
+        this._data = value;
+    }
+
+    get finishedAdditionalSection(): number {
+        return this._finishedAdditionalSection;
+    }
+
+    set finishedAdditionalSection(value: number) {
+        this._finishedAdditionalSection = value;
+    }
+
+    get finishedSection(): number {
+        return this._finishedSection;
+    }
+
+    set finishedSection(value: number) {
+        this._finishedSection = value;
+    }
+
+    get showLesson(): boolean {
+        return this._showLesson;
+    }
+
+    set showLesson(value: boolean) {
+        this._showLesson = value;
+    }
+
+    get showSummary(): boolean {
+        return this._showSummary;
+    }
+
+    set showSummary(value: boolean) {
+        this._showSummary = value;
+    }
 
     get quizExist(): boolean {
         return this._quizExist;
@@ -363,6 +417,71 @@ export class SimulateSectionService {
     }
 
 
+    public goToSummary() {
+        let index = 0;
+        for (const item of this.sessionCour.sections) {
+            if (item.id === this.selectedsection.id) {
+                index = -2;
+            }
+        }
+        if (index === 0) {
+            this.sessionCour.sections.push({...this.selectedsection});
+        }
+
+        this.showLesson = false;
+        this.showSummary = true;
+
+        for (const item of this.sessionCour.sections) {
+            for (const sec of this.sectionAdditional) {
+                if (item.id === sec.id) {
+                    this.finishedAdditionalSection += 1;
+                }
+            }
+        }
+        for (const item of this.sessionCour.sections) {
+            for (const sec of this.sectionStandard) {
+                if (item.id === sec.id) {
+                    this.finishedSection += 1;
+                }
+            }
+        }
+        const keySections = (this.finishedSection / this.sectionStandard?.length) * 100;
+        const keySectionsRest = 100 - keySections;
+        const keySectionsAdditional = (this.finishedAdditionalSection / this.sectionAdditional?.length) * 100;
+        const keySectionsRestAdditional = 100 - keySectionsAdditional;
+
+
+        this.data = {
+            labels: ['Finished', 'Not Finished'],
+            datasets: [
+                {
+                    data: [keySections, keySectionsRest],
+                    backgroundColor: [
+                        '#FF6384',
+                        '#f4f4f4'
+                    ],
+                    hoverBackgroundColor: [
+                        '#FF6384',
+                        '#f4f4f4'
+                    ]
+                },
+                {
+                    data: [keySectionsAdditional, keySectionsRestAdditional],
+                    backgroundColor: [
+                        '#FFCE56',
+                        '#f4f4f4'
+                    ],
+                    hoverBackgroundColor: [
+                        '#FFCE56',
+                        '#f4f4f4'
+                    ],
+
+                }
+            ]
+        };
+    }
+
+
     public nextSection(id: number, type: string) {
         for (let i = 0; i < this.itemssection2.length; i++) {
             if (id === this.itemssection2[i].id) {
@@ -607,5 +726,9 @@ export class SimulateSectionService {
         } else {
             return false;
         }
+    }
+
+    finishLesson() {
+        this.showRatingLessonTemplate = true;
     }
 }

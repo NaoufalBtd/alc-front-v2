@@ -48,6 +48,20 @@ export class SafePipe1 implements PipeTransform {
 })
 export class SectionSimulateComponent implements OnInit, OnDestroy {
     sessionCour: SessionCours = new SessionCours();
+    data: any;
+    finishedAdditionalSection = 0;
+    finishedSection = 0;
+    options: any = {
+        title: {
+            display: false,
+            text: 'Summary',
+            fontSize: 16,
+
+        },
+        legend: {
+            position: 'bottom'
+        },
+    };
 
     constructor(private sectionItemService: SectionItemService,
                 private sessionservice: SessionCoursService,
@@ -287,8 +301,9 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
     showTakeQuiz = false;
     showViewQuiz = false;
     showFlowMeButton: boolean;
-
-    // tslint:disable-next-line:adjacent-overload-signatures
+    showLesson = true;
+    showSummary = false;
+    showFinishLesson = true;
 
 
     public Review() {
@@ -633,5 +648,124 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
         } else {
             return false;
         }
+    }
+
+    showSummaryFct() {
+        let chatMessage: ChatMessageDto = new ChatMessageDto('SUMMARY',
+            'SUMMARY', false);
+        chatMessage.prof = this.loginService.getConnectedProf();
+        chatMessage.type = 'SECTION';
+        this.webSocketService.sendMessage(chatMessage, 'PROF');
+
+        let index = 0;
+        for (const item of this.sessionCour.sections) {
+            if (item.id === this.selectedsection.id) {
+                index = -2;
+            }
+        }
+        if (index === 0) {
+            this.sessionCour.sections.push({...this.selectedsection});
+        }
+
+        this.showLesson = false;
+        this.showSummary = true;
+
+        for (const item of this.sessionCour.sections) {
+            for (const sec of this.sectionAdditional) {
+                if (item.id === sec.id) {
+                    this.finishedAdditionalSection += 1;
+                }
+            }
+        }
+        for (const item of this.sessionCour.sections) {
+            for (const sec of this.sectionStandard) {
+                if (item.id === sec.id) {
+                    this.finishedSection += 1;
+                }
+            }
+        }
+        const keySections = (this.finishedSection / this.sectionStandard?.length) * 100;
+        const keySectionsRest = 100 - keySections;
+        const keySectionsAdditional = (this.finishedAdditionalSection / this.sectionAdditional?.length) * 100;
+        const keySectionsRestAdditional = 100 - keySectionsAdditional;
+
+
+        this.data = {
+            labels: ['Finished', 'Not Finished'],
+            datasets: [
+                {
+                    data: [keySections, keySectionsRest],
+                    backgroundColor: [
+                        '#FF6384',
+                        '#f4f4f4'
+                    ],
+                    hoverBackgroundColor: [
+                        '#FF6384',
+                        '#f4f4f4'
+                    ]
+                },
+                {
+                    data: [keySectionsAdditional, keySectionsRestAdditional],
+                    backgroundColor: [
+                        '#FFCE56',
+                        '#f4f4f4'
+                    ],
+                    hoverBackgroundColor: [
+                        '#FFCE56',
+                        '#f4f4f4'
+                    ],
+
+                }
+            ]
+        };
+    }
+
+
+    finishLesson() {
+        this.showFinishLesson = false;
+        const date: Date = new Date();
+        this.sessionCour.prof = this.loginService.getConnectedProf();
+        this.sessionCour.cours = this.selectedcours;
+        this.sessionCour.groupeEtudiant = this.groupeEtudiant;
+        this.sessionCour.annee = date.getFullYear();
+        this.sessionCour.dateDebut = date.toDateString();
+        this.sessionCour.dateFin = date.toDateString();
+        this.sessionCour.duree = date.getHours() - date.getHours();
+        this.sessionCour.mois = date.getMonth();
+        this.sessionCour.payer = false;
+        this.sessionCour.reference = date.toString() + this.groupeEtudiant.libelle;
+        this.sessionCour.totalheure = date.getHours() - date.getHours();
+        console.log(this.sessionCour);
+        let chatMessage: ChatMessageDto = new ChatMessageDto('FINISHLESSON', 'FINISHLESSON', false);
+        chatMessage.prof = this.loginService.getConnectedProf();
+        chatMessage.type = 'SECTION';
+        this.webSocketService.sendMessage(chatMessage, 'PROF');
+        this.showSticky();
+        this.closeSession();
+    }
+
+    onConfirm() {
+        this.messageService.clear('c');
+        alert('Hi');
+        this.finishLesson();
+    }
+
+    showSticky() {
+        this.messageService.add({severity: 'success', summary: ' ', detail: 'Lesson is over', sticky: true});
+    }
+
+
+    showConfirm() {
+        this.messageService.clear();
+        this.messageService.add({key: 'c', sticky: true, severity: 'info', summary: 'Finish the lesson ?', detail: 'Confirm to proceed'});
+    }
+
+
+    onReject() {
+        this.messageService.clear('c');
+    }
+
+    clear() {
+        this.messageService.clear();
     }
 }
