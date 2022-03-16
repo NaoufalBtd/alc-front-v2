@@ -1,1 +1,85 @@
-<p>home-student works!</p>
+<div class="mycard">
+    <div class="p-grid">
+        <div class="p-col-6 Myclasses">
+            <h1 class="title">My classes</h1>
+            <div class="p-grid lessonContainer">
+                <div style="text-align: start" class="p-col-2">
+                    <img class="imgLesson" src="/assets/icons/icon-livres.png" alt=""></div>
+                <div class="p-col-7 courseName">
+                    <p class="lessonName">Intro lesson</p>
+                    <p class="lessonDate">March 15, 2022 (8:00 AM - 12:00 PM)</p>
+                </div>
+
+                <div style="padding-top: 23px;" class="p-col-3">
+                    <button pButton pRipple type="button" label="VIEW COURSE"
+                            class="p-button-success"></button>
+                </div>
+            </div>
+        </div>
+
+        <div class="p-col-3 Statements">
+            <h4 style="text-align: start;margin: 0 0 4px 0;font-size: x-large;" class="title">Statements</h4>
+            <div class="p-grid statementsGrid">
+                <div style="text-align: center" class="p-col-12">
+                    <img src="/assets/icons/icon-cup.gif" width="100px" alt="">
+                </div>
+                <div class="p-col-12 goals">Goals</div>
+                <div class="p-col-12">
+                    <p-progressBar [showValue]="true"
+                                   [value]="10"></p-progressBar>
+                </div>
+            </div>
+
+
+            <div class="p-grid statementsGrid">
+                <div class="p-col-6 statementsGrid-6 ">
+                    <img class="imgCourse" src="/assets/icons/icon-allCourse.png" alt="">
+                </div>
+                <div class="p-col-6 statementsGrid-6">
+                    <p class="NumberOfCourses">40</p>
+                    <p class="lessonDate">Lessons</p>
+                </div>
+
+
+                <div class="p-col-6">
+                    <img class="imgCourse" src="/assets/icons/icons-ouvrir.png" alt="">
+                </div>
+                <div class="p-col-6">
+                    <p class="NumberOfCourses">2</p>
+                    <p class="lessonDate">Completed Lessons</p>
+                </div>
+
+
+                <div class="p-col-6">
+                    <img class="imgCourse" src="/assets/icons/icon-cadenas.png" alt="">
+                </div>
+                <div class="p-col-6">
+                    <p class="NumberOfCourses">38</p>
+                    <p class="lessonDate">Lessons cumming</p>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="p-col-2 Nextlesson">
+            <p class="lessonDate">Welcome back Youssef, ready for your next lesson ?
+                <img style="    width: 15px; margin: 4px 0 -2px 0;"
+                     src="/assets/icons/icon-fire.png" alt=""></p>
+            <div class="p-grid lessonActuel">
+                <div style="text-align: center" class="p-col-12">
+                    <p style="font-size: small; color: white; margin-bottom: -10px;" class="lessonDate">Sunday</p>
+                </div>
+                <div class="p-col-12 nextLessonTitle">
+                    More about you
+                </div>
+                <div class="p-col-12">
+                    <button pButton pRipple type="button" label="Join now"
+                            class="p-button-help"></button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+

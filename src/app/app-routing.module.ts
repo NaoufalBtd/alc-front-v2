@@ -97,6 +97,7 @@ import {MoreInformationComponent} from './view/admin/more-information/more-infor
 import {InfoEtudiantComponent} from './view/admin/info-etudiant/info-etudiant.component';
 import {ConnectAsInvitedComponent} from './view/etudiant/connect-as-invited/connect-as-invited.component';
 import {ContinueInfoComponent} from './view/etudiant/connect-as-invited/continue-info/continue-info.component';
+import {HomeStudentComponent} from './view/etudiant/home-student/home-student.component';
 
 
 @NgModule({
@@ -171,6 +172,7 @@ import {ContinueInfoComponent} from './view/etudiant/connect-as-invited/continue
             {
                 path: 'etudiant', component: EtudiantComponent,
                 children: [
+                    {path: 'dashboard', component: HomeStudentComponent},
                     {path: 'faq-student', component: FaqStudentListComponent},
                     {path: 'news-student', component: NewsEtudiantListComponent},
                     {path: 'schedule-student', component: ScheduleStudentComponent},

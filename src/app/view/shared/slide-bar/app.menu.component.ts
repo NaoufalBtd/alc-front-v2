@@ -118,6 +118,7 @@ export class AppMenuComponent implements OnInit {
                 ];
             } else {
                 this.model = [
+                    {label: 'Dashboard ', icon: 'pi pi-fw pi-home', routerLink: ['/etudiant/dashboard']},
                     {label: 'Courses ', icon: 'pi pi-fw pi-briefcase', routerLink: ['/etudiant/etudiant-cours']},
                     {label: 'FAQ ', icon: 'pi pi-fw pi-question-circle', routerLink: ['/etudiant/faq-student']},
                     {label: 'News ', icon: 'pi pi-fw pi-clock', routerLink: ['/etudiant/news-student']},
