@@ -47,6 +47,7 @@ export class WebSocketService {
     private _groupeEtudiant: GroupeEtudiant = new GroupeEtudiant();
     private _grpStudentAnswers: Map<Etudiant, QuizReponse> = new Map<Etudiant, QuizReponse>();
     private _selectedSchedule: ScheduleProf = new ScheduleProf();
+    private _tabViewActiveIndex = 0;
 
     constructor(private serviceetudiant: EtudiantService,
                 private authService: AuthenticationService,
@@ -61,6 +62,14 @@ export class WebSocketService {
     ) {
     }
 
+
+    get tabViewActiveIndex(): number {
+        return this._tabViewActiveIndex;
+    }
+
+    set tabViewActiveIndex(value: number) {
+        this._tabViewActiveIndex = value;
+    }
 
     get selectedSchedule(): ScheduleProf {
         return this._selectedSchedule;

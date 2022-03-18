@@ -12,6 +12,8 @@ import {HomeWOrkEtudiant} from '../model/home-work-etudiant.model';
 import {Observable} from 'rxjs';
 import {HomeWork} from '../model/home-work.model';
 import {HomeWorkQST} from '../model/home-work-qst.model';
+import {Parcours} from '../model/parcours.model';
+import {HomeworkService} from './homework.service';
 
 @Injectable({
     providedIn: 'root'
@@ -26,7 +28,6 @@ export class HomeWorkSimulateService {
     private _types: Array<TypeDeQuestion>;
     private _reponses: Array<HomeWorkReponse>;
     private _section: Section;
-    private _homeWorkList: Array<HomeWork>;
     private _correctAnswers: Array<HomeWorkReponse>;
     private _showT12AnswerDiv: boolean;
     private _partOfStory: string = String('Part 0');
@@ -64,6 +65,7 @@ export class HomeWorkSimulateService {
     constructor(private http: HttpClient,
                 private learnService: LearnService,
                 private service: ParcoursService,
+                private homeWorkService: HomeworkService,
                 private homeWorkEtudiantService: HomeWorkEtudiantServiceService,
     ) {
     }
@@ -346,16 +348,6 @@ export class HomeWorkSimulateService {
         this._correctAnswers = value;
     }
 
-    get homeWorkList(): Array<HomeWork> {
-        if (this._homeWorkList == null) {
-            this._homeWorkList = new Array<HomeWork>();
-        }
-        return this._homeWorkList;
-    }
-
-    set homeWorkList(value: Array<HomeWork>) {
-        this._homeWorkList = value;
-    }
 
     get section(): Section {
         if (this._section == null) {
@@ -585,6 +577,7 @@ export class HomeWorkSimulateService {
 
     }
 
+
     private showT12Answers() {
         this.homeWorkAnswersList = new Array<HomeWorkReponse>();
         console.log(this.homeWorkAnswersList);
@@ -637,5 +630,21 @@ export class HomeWorkSimulateService {
         console.log(text);
     }
 
+    public onStartHomeWork(course: Cours) {
+        this.homeWorkService.findhomeworkbyCoursId(course).subscribe(homeWorkData => {
+            console.log(homeWorkData);
+            this.homeWorkList = homeWorkData;
+            this.homeWorkSelectedFct(this.homeWorkList[0]);
+        }, error => {
+            console.log(error);
+        });
+    }
 
+    get homeWorkList(): Array<HomeWork> {
+        return this.learnService.homeWorkList;
+    }
+
+    set homeWorkList(value: Array<HomeWork>) {
+        this.learnService.homeWorkList = value;
+    }
 }

@@ -134,15 +134,15 @@
                         <div style="position: relative;margin-top: 50px"
                              *ngIf="!this.webSocketService.isInSession">
                             <button (click)="PreviousSection()"
-                                    [style.visibility]="(this.selectedsection.numeroOrder != 1)? 'visible':'hidden'"
+                                    *ngIf="this.selectedsection.numeroOrder !== 1"
                                     class="p-button-warning" icon="pi pi-caret-left" id="previous"
-                                    label="Previous" pButton pRipple
+                                    [label]="previousSection(selectedsection)" pButton pRipple
 
                                     type="button"></button>
 
 
-                            <button (click)="NextSection()"
-                                    [style.visibility]="(this.selectedsection.numeroOrder < this.sectionStandard.length)? 'visible':'hidden'"
+                            <button style="float: right" (click)="NextSection()"
+                                    *ngIf="selectedsection.id !== itemssection2[itemssection2.length - 1].id"
                                     class="p-button-warning" icon="pi pi-caret-right" id="next"
                                     [label]="nextSection(selectedsection)"
                                     pButton pRipple
@@ -154,6 +154,8 @@
                                     [style.visibility]="(this.selectedsection.numeroOrder < this.itemssection2.length)? 'hidden':'visible'"
                                     class="p-button-warning" icon="pi pi-check" label="Finish" pButton pRipple
                                     type="button"></button>
+
+
                             <button *ngIf="this.coursecomplited"
                                     (click)="navigate()"
                                     [style.visibility]="(this.selectedsection.numeroOrder < this.itemssection2.length)? 'hidden':'visible'"
@@ -170,16 +172,6 @@
                         <app-quiz-etudiant-view *ngIf="quizView"></app-quiz-etudiant-view>
                         <app-quiz-take *ngIf="!quizView"></app-quiz-take>
                     </div>
-                    <!--                    <p-tabView>-->
-                    <!--                        <p-tabPanel header="LESSON">-->
-                    <!--                            -->
-                    <!--                        </p-tabPanel>-->
-
-                    <!--                        <p-tabPanel header="QUIZ">-->
-                    <!--                           -->
-                    <!--                        </p-tabPanel>-->
-
-                    <!--                    </p-tabView>-->
                 </div>
 
                 <div *ngIf="!showLesson && !showSummary" class="p-col-9">
@@ -261,7 +253,7 @@
 
                     <div class="product-grid-item-content" style="background-color: white;">
                         <div class="card">
-                            <p-tabView (onChange)="findAllDict()" styleClass="tabview-custom">
+                            <p-tabView (onChange)="findAllDict()" [(activeIndex)]="tabViewActiveIndex" styleClass="tabview-custom">
                                 <p-tabPanel>
                                     <ng-template pTemplate="header">
                                         <img src="./assets/icons/icons-lesson.png"

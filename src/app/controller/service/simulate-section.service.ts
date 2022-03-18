@@ -629,8 +629,9 @@ export class SimulateSectionService {
                     } else {
                         this.showVocabulary = false;
                     }
-                    this.quizService.findQuizBySection(this.selectedsection.id).subscribe(data => {
-                        this.selectedQuiz = data;
+                    this.quizService.findQuizBySection(this.selectedsection.id).subscribe(
+                        dataQuiz => {
+                        this.selectedQuiz = dataQuiz;
                         this.quizService.findQuizEtudanitByEtudiantIdAndQuizId(this.loginService.etudiant, this.selectedQuiz).subscribe(
                             data1 => {
                                 this.quizEtudiantList = data1;

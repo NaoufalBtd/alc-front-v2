@@ -97,6 +97,14 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
     ) {
     }
 
+    get tabViewActiveIndex(): number {
+        return this.webSocketService.tabViewActiveIndex;
+    }
+
+    set tabViewActiveIndex(value: number) {
+        this.webSocketService.tabViewActiveIndex = value;
+    }
+
     get showRatingLessonTemplate(): boolean {
         return this.simulateSectionService.showRatingLessonTemplate;
     }
@@ -486,7 +494,7 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
     }
 
     navigate() {
-        this.router.navigate(['etudiant/etudiant-cours']);
+        this.router.navigate(['etudiant/dashboard']);
     }
 
     public findByWord() {
@@ -639,6 +647,7 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
             console.log(this.service.selectedsection);
         }
         this.learnService.onStartHomeWork(this.selectedcours);
+        this.homeWorkService.onStartHomeWork(this.selectedcours);
     }
 
     findAllDict() {
@@ -952,10 +961,17 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
     }
 
     nextSection(selectedsection: Section): string {
-        console.log(this.itemssection2);
         for (let i = 0; i < this.itemssection2.length; i++) {
             if (selectedsection.id === this.itemssection2[i].id) {
-                return this.itemssection2[i + 1].libelle;
+                return this.itemssection2[i + 1].categorieSection.libelle;
+            }
+        }
+    }
+
+    previousSection(selectedsection: Section): string {
+        for (let i = 0; i < this.itemssection2.length; i++) {
+            if (selectedsection.id === this.itemssection2[i].id) {
+                return this.itemssection2[i - 1].categorieSection.libelle;
             }
         }
     }
@@ -974,6 +990,7 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
     }
 
 // ---------------------------------------------------home Work--------------------------------------------/
+
 
     get homeWorkList(): Array<HomeWork> {
         return this.learnService.homeWorkList;

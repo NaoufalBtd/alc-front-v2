@@ -735,7 +735,6 @@ export class LearnService {
     }
 
     public onStartHomeWork(course: Cours) {
-        this.reponseQuiz = new QuizReponse();
         this.translateWord = String();
         this.parcourCurrent = new Parcours();
         this.sectionCurrent = new Section();
@@ -743,15 +742,9 @@ export class LearnService {
         this.noteQuiz = 0;
         this.showTakeQuiz = true;
         this.showQuizReview = false;
-        this.myAnswer = new Reponse();
-        this.answerSelected = new Reponse();
         this.inputAnswer = String();
         this.trueOrFalse = true;
         this.disableToggleButton = false;
-        this.answersList = new Map<Question, Reponse>();
-        this.correctAnswersList = new Map<number, Array<Reponse>>();
-        this.answersPointStudent = new Map<Question, string>();
-        this.question = new Question();
         this.numberOfQuestion = 0;
         this.value = 10;
         this.index = 1;
@@ -761,17 +754,7 @@ export class LearnService {
         this.showNextButton = false;
         this.disableButtonSon = true;
         this.pourCentgage = 0;
-        console.log(this.showDontKnowButton);
-        console.log(this.showCheckButton);
         this.noteQuiz = 0;
-        this.homeWorkService.findhomeworkbyCoursId(course).subscribe(homeWorkData => {
-            console.log('0000000000000000000000000000000000000000000000000000000000000000000000000000000000');
-            console.log(homeWorkData);
-            this.homeWorkList = homeWorkData;
-
-        }, error => {
-            console.log(error);
-        });
     }
 
     public onStart() {
