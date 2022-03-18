@@ -315,4 +315,18 @@ export class SessionCoursService {
             }
         );
     }
+
+    public saveSessionCours(sessionCours: SessionCours) {
+        this.http.post(this.profUrlSession , sessionCours).subscribe(data => {
+            this.messageService.add({severity: 'success', summary: ' ', detail: 'Lesson is over', sticky: true});
+        }, error => {
+            this.messageService.add({
+                severity: 'error',
+                summary: ' ',
+                detail: 'We got same problems, please contact administration !',
+                sticky: true
+            });
+        });
+
+    }
 }

@@ -29,6 +29,7 @@ import {MenuService} from '../../../shared/slide-bar/app.menu.service';
 import {SimulateSectionService} from '../../../../controller/service/simulate-section.service';
 import {SessionCours} from '../../../../controller/model/session-cours.model';
 import {User} from '../../../../controller/model/user.model';
+import {ScheduleProf} from '../../../../controller/model/calendrier-prof.model';
 
 @Pipe({name: 'safe'})
 export class SafePipe1 implements PipeTransform {
@@ -722,27 +723,30 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
         };
     }
 
+    get selectedSchedule(): ScheduleProf {
+        return this.webSocketService.selectedSchedule;
+    }
 
     finishLesson() {
         this.showFinishLesson = false;
-        const date: Date = new Date();
         this.sessionCour.prof = this.loginService.getConnectedProf();
         this.sessionCour.cours = this.selectedcours;
         this.sessionCour.groupeEtudiant = this.groupeEtudiant;
-        this.sessionCour.annee = date.getFullYear();
-        this.sessionCour.dateDebut = date.toDateString();
-        this.sessionCour.dateFin = date.toDateString();
-        this.sessionCour.duree = date.getHours() - date.getHours();
-        this.sessionCour.mois = date.getMonth();
+        this.sessionCour.annee = this.selectedSchedule.startTime.getFullYear();
+        this.sessionCour.dateDebut = this.selectedSchedule.startTime;
+        this.sessionCour.dateFin = this.selectedSchedule.endTime;
+        this.sessionCour.duree = this.selectedSchedule.endTime.getHours() - this.selectedSchedule.startTime.getHours();
+        this.sessionCour.mois = this.selectedSchedule.startTime.getMonth();
         this.sessionCour.payer = false;
-        this.sessionCour.reference = date.toString() + this.groupeEtudiant.libelle;
-        this.sessionCour.totalheure = date.getHours() - date.getHours();
+        this.sessionCour.salary = null;
+        this.sessionCour.reference = this.selectedSchedule.startTime.toString() + this.groupeEtudiant.libelle;
+        this.sessionCour.totalheure = this.selectedSchedule.endTime.getHours() - this.selectedSchedule.startTime.getHours();
         console.log(this.sessionCour);
+        this.sessionservice.saveSessionCours(this.sessionCour);
         let chatMessage: ChatMessageDto = new ChatMessageDto('FINISHLESSON', 'FINISHLESSON', false);
         chatMessage.prof = this.loginService.getConnectedProf();
         chatMessage.type = 'SECTION';
         this.webSocketService.sendMessage(chatMessage, 'PROF');
-        this.showSticky();
     }
 
     onConfirm() {

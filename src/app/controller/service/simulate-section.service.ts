@@ -513,21 +513,15 @@ export class SimulateSectionService {
                 this.quizService.findQuizEtudanitByEtudiantIdAndQuizId(this.loginService.etudiant, this.selectedQuiz).subscribe(
                     data1 => {
                         this.quizEtudiantList = data1;
-                        this.quizView = true;
                         console.log(this.quizEtudiantList);
-                        this.quizService.findAllQuestions(this.selectedQuiz?.ref).subscribe(
-                            dataQuestions => {
-                                if (data1?.questionCurrent > dataQuestions?.length) {
-                                    this.passerQuiz = 'View Quiz';
-                                    this.quizView = true;
-                                } else {
-                                    this.passerQuiz = 'Continue Quiz';
-                                    this.quizView = false;
-                                }
-                            }
-                        );
+                        if (this.quizEtudiantList.id !== 0) {
+                            this.quizView = true;
+                        } else {
+                            this.quizView = false;
+                        }
                     }, error => {
                         this.passerQuiz = 'Take Quiz';
+                        console.log(error);
                         this.quizView = false;
                     }
                 );
@@ -637,6 +631,21 @@ export class SimulateSectionService {
                     }
                     this.quizService.findQuizBySection(this.selectedsection.id).subscribe(data => {
                         this.selectedQuiz = data;
+                        this.quizService.findQuizEtudanitByEtudiantIdAndQuizId(this.loginService.etudiant, this.selectedQuiz).subscribe(
+                            data1 => {
+                                this.quizEtudiantList = data1;
+                                console.log(this.quizEtudiantList);
+                                if (this.quizEtudiantList.id !== 0) {
+                                    this.quizView = true;
+                                } else {
+                                    this.quizView = false;
+                                }
+                            }, error => {
+                                this.passerQuiz = 'Take Quiz';
+                                console.log(error);
+                                this.quizView = false;
+                            }
+                        );
                     });
                     console.log(this.service.image);
                     this.service.image = this.selectedsection.urlImage;
@@ -661,22 +670,17 @@ export class SimulateSectionService {
                     data => {
                         this.selectedQuiz = data;
                         this.quizService.findQuizEtudanitByEtudiantIdAndQuizId(this.loginService.etudiant, this.selectedQuiz).subscribe(
-                            data => {
-                                this.quizEtudiantList = data;
+                            data1 => {
+                                this.quizEtudiantList = data1;
                                 console.log(this.quizEtudiantList);
-                                this.quizService.findAllQuestions(this.selectedQuiz.ref).subscribe(
-                                    dataQuestions => {
-                                        if (data?.questionCurrent > dataQuestions?.length) {
-                                            this.passerQuiz = 'View Quiz';
-                                            this.quizView = true;
-                                        } else {
-                                            this.passerQuiz = 'Continue Quiz';
-                                            this.quizView = false;
-                                        }
-                                    }
-                                );
+                                if (this.quizEtudiantList.id !== 0) {
+                                    this.quizView = true;
+                                } else {
+                                    this.quizView = false;
+                                }
                             }, error => {
                                 this.passerQuiz = 'Take Quiz';
+                                console.log(error);
                                 this.quizView = false;
                             }
                         );
@@ -693,6 +697,21 @@ export class SimulateSectionService {
                 this.quizService.findQuizBySectionId(this.selectedsection).subscribe(data12 => {
                     this.quizExist = true;
                     this.selectedQuiz = data12;
+                    this.quizService.findQuizEtudanitByEtudiantIdAndQuizId(this.loginService.etudiant, this.selectedQuiz).subscribe(
+                        data1 => {
+                            this.quizEtudiantList = data1;
+                            console.log(this.quizEtudiantList);
+                            if (this.quizEtudiantList.id !== 0) {
+                                this.quizView = true;
+                            } else {
+                                this.quizView = false;
+                            }
+                        }, error => {
+                            this.passerQuiz = 'Take Quiz';
+                            console.log(error);
+                            this.quizView = false;
+                        }
+                    );
                 }, error => {
                     this.quizExist = false;
                 });

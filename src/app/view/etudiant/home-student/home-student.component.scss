@@ -3,6 +3,12 @@ div.mycard {
   height: 100%;
 }
 
+.Myclasses{
+  height: 800px;
+  max-height: 1000px;
+ overflow: auto;
+}
+
 .title {
   margin-bottom: 26px;
   font-family: 'Ramaraja', fantasy;
@@ -42,14 +48,15 @@ div.mycard {
 }
 
 .imgLesson {
-  width: 90px;
+  width: 75px;
   margin-top: -15px;
 }
 
 .lessonContainer {
   background: #a6e1fa;
   border-radius: 8px;
-  height: 89px;
+  height: 70px;
+  margin-bottom: 20px;
 }
 
 .lessonName {
@@ -101,9 +108,10 @@ div.mycard {
   border-radius: 5px;
   color: #a6e1fa;
   font-weight: bold;
+  margin-bottom: 30px;
 }
 
-.p-button-help{
+.p-button-help {
   background: #a6e1fa;
   border: none;
   color: #ea5167;
@@ -111,16 +119,17 @@ div.mycard {
   height: 45px;
   width: 100%;
 }
-.p-button-help:hover{
-  background: #a6e1fa!important;
+
+.p-button-help:hover {
+  background: #a6e1fa !important;
   border: none;
-  color: #ea5167!important;
+  color: #ea5167 !important;
   font-weight: bold;
   height: 45px;
   width: 100%;
 }
 
-.nextLessonTitle{
+.nextLessonTitle {
   font-size: 25px;
   text-align: center;
   margin: -15px 0;
@@ -128,4 +137,38 @@ div.mycard {
   font-weight: bolder;
   letter-spacing: 2px;
   color: #a6e1fa;
+}
+
+.profGroup {
+  background: white;
+  border-radius: 5px;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.profImg {
+  width: 70px !important;
+  background: #e1d6ff;
+  border-radius: 10px;
+  padding: 2px;
+}
+
+.profName {
+  margin-top: -13px;
+  font-size: larger;
+  font-weight: bolder;
+}
+
+.skypeIcon {
+  display: inline-block;
+  float: left;
+}
+
+.profSkype {
+  text-align: start;
+  margin-top: -24px;
+}
+
+.studentSGroupImg{
+  width: 25px;
 }

@@ -21,6 +21,7 @@ import {Question} from '../model/question.model';
 import {GroupeEtudiant} from '../model/groupe-etudiant.model';
 import {GroupeEtudiantService} from './groupe-etudiant-service';
 import {MessageService} from 'primeng/api';
+import {ScheduleProf} from '../model/calendrier-prof.model';
 
 @Injectable({
     providedIn: 'root'
@@ -45,7 +46,7 @@ export class WebSocketService {
     public sessionHasStarted = false;
     private _groupeEtudiant: GroupeEtudiant = new GroupeEtudiant();
     private _grpStudentAnswers: Map<Etudiant, QuizReponse> = new Map<Etudiant, QuizReponse>();
-
+    private _selectedSchedule: ScheduleProf = new ScheduleProf();
 
     constructor(private serviceetudiant: EtudiantService,
                 private authService: AuthenticationService,
@@ -60,6 +61,14 @@ export class WebSocketService {
     ) {
     }
 
+
+    get selectedSchedule(): ScheduleProf {
+        return this._selectedSchedule;
+    }
+
+    set selectedSchedule(value: ScheduleProf) {
+        this._selectedSchedule = value;
+    }
 
     get groupeEtudiant(): GroupeEtudiant {
         return this._groupeEtudiant;
