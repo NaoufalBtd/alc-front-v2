@@ -99,7 +99,8 @@
         </div>
 
 
-        <div style="    background: #cac3ff57; border-left: 2px solid #b5a2ed;  border-radius: 0;"
+        <div *ngIf="scheduleProfs?.length > 0"
+             style="background: #cac3ff57; border-left: 2px solid #b5a2ed;  border-radius: 0;"
              class="p-col-2 Nextlesson">
             <p class="lessonDate">Welcome back {{student?.prenom}}, ready for your next lesson ?
                 <img style="    width: 15px; margin: 4px 0 -2px 0;"
