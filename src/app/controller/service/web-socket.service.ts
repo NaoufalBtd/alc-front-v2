@@ -448,19 +448,6 @@ export class WebSocketService {
         this._connectedUsers = value;
     }
 
-    //
-    // private studentIsInGroup(grpStudent: GroupeEtudiant): string {
-    //     this.groupeEtudiantService.findAllGroupeEtudiantDetail(grpStudent.id).subscribe(data => {
-    //         this.groupeEtudiant.groupeEtudiantDetails = data;
-    //         for (const grpEtudiantDetails of data) {
-    //             if (this.loginservice.getConnectedStudent().id === grpEtudiantDetails.etudiant.id) {
-    //                 console.log('============ ANA F TRUE ==================');
-    //                 return 'true';
-    //             }
-    //         }
-    //     });
-    //     console.log('============ ANA F FALSE ==================');
-    // }
 
     private groupeEtudiantForThisStudent(student: Etudiant, grpStudent: GroupeEtudiant) {
         this.groupeEtudiantService.findAllGroupeEtudiantDetail(grpStudent.id).subscribe(

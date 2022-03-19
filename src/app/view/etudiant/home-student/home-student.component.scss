@@ -3,10 +3,10 @@ div.mycard {
   height: 100%;
 }
 
-.Myclasses{
+.Myclasses {
   height: 800px;
   max-height: 1000px;
- overflow: auto;
+  overflow: auto;
 }
 
 .title {
@@ -169,6 +169,25 @@ div.mycard {
   margin-top: -24px;
 }
 
-.studentSGroupImg{
+.studentSGroupImg {
   width: 25px;
+}
+
+@keyframes joinNow {
+  0% {
+    background-color: #ea5167;
+  }
+  50% {
+    background-color: #a6e1fa;
+    color: #ea5167;
+  }
+  100% {
+    background-color: #ea5167;
+  }
+}
+
+.joinButton {
+  animation-name: joinNow;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
 }

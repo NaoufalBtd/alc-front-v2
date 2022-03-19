@@ -15,6 +15,7 @@ import {MenuService} from '../../shared/slide-bar/app.menu.service';
 import {SimulateSectionService} from '../../../controller/service/simulate-section.service';
 import {Router} from '@angular/router';
 import {WebSocketService} from '../../../controller/service/web-socket.service';
+import {GroupeEtudiant} from '../../../controller/model/groupe-etudiant.model';
 
 @Component({
     selector: 'app-home-student',
@@ -23,6 +24,27 @@ import {WebSocketService} from '../../../controller/service/web-socket.service';
 })
 export class HomeStudentComponent implements OnInit {
     getRestOfTime: string;
+    getRestOfDay: number;
+    getRestOfHour: number;
+    getRestOfMinutes: number;
+    getRestOfSecond: number;
+    student: Etudiant = this.loginService.getConnectedStudent();
+    studentList: Array<Etudiant> = new Array<Etudiant>();
+    scheduleProfs: Array<ScheduleProf> = new Array<ScheduleProf>();
+    lessonFinished: Array<ScheduleProf> = new Array<ScheduleProf>();
+    nextLesson: ScheduleProf = new ScheduleProf();
+    sessionCours: Array<SessionCours> = new Array<SessionCours>();
+    homeWorkList: Array<HomeWOrkEtudiant> = new Array<HomeWOrkEtudiant>();
+    showJoinNow: boolean;
+    daysOptions = [
+        {name: 'Sunday', value: 0},
+        {name: 'Monday', value: 1},
+        {name: 'Tuesday', value: 2},
+        {name: 'Wednesday', value: 3},
+        {name: 'Thursday', value: 4},
+        {name: 'Friday', value: 5},
+        {name: 'Saturday', value: 6},
+    ];
 
     constructor(private loginService: LoginService,
                 private scheduleService: ScheduleService,
@@ -57,22 +79,6 @@ export class HomeStudentComponent implements OnInit {
         this.webSocketService.tabViewActiveIndex = value;
     }
 
-    student: Etudiant = this.loginService.getConnectedStudent();
-    scheduleProfs: Array<ScheduleProf> = new Array<ScheduleProf>();
-    lessonFinished: Array<ScheduleProf> = new Array<ScheduleProf>();
-    nextLesson: ScheduleProf = new ScheduleProf();
-    sessionCours: Array<SessionCours> = new Array<SessionCours>();
-    homeWorkList: Array<HomeWOrkEtudiant> = new Array<HomeWOrkEtudiant>();
-
-    daysOptions = [
-        {name: 'Sunday', value: 0},
-        {name: 'Monday', value: 1},
-        {name: 'Tuesday', value: 2},
-        {name: 'Wednesday', value: 3},
-        {name: 'Thursday', value: 4},
-        {name: 'Friday', value: 5},
-        {name: 'Saturday', value: 6},
-    ];
 
     ngOnInit(): void {
         this.groupeEtudiantService.findGroupeEtudiantDetailByEtudiantId(this.student.id).subscribe(
@@ -94,6 +100,8 @@ export class HomeStudentComponent implements OnInit {
                                 }
                                 this.nextLesson = this.scheduleProfs[this.lessonFinished.length];
 
+                                this.getStudentOfGroup(this.nextLesson.groupeEtudiant);
+
                                 console.log(this.lessonFinished);
                                 console.log(this.nextLesson);
                                 setInterval(() => {
@@ -112,22 +120,6 @@ export class HomeStudentComponent implements OnInit {
         });
     }
 
-    getHours(startTime: Date): number {
-        const date = new Date(startTime);
-        const hour = date.getHours();
-        return hour;
-    }
-
-    getMinute(startTime: Date): string {
-        const date = new Date(startTime);
-        const minute = date.getMinutes();
-        if (minute === 0) {
-            return '00';
-        } else {
-            return String(minute);
-        }
-
-    }
 
     isLessonCompleted(cours: Cours): number {
         if (this.sessionCours.length === 0) {
@@ -182,6 +174,23 @@ export class HomeStudentComponent implements OnInit {
         }
     }
 
+    getHours(startTime: Date): number {
+        const date = new Date(startTime);
+        const hour = date.getHours();
+        return hour;
+    }
+
+    getMinute(startTime: Date): string {
+        const date = new Date(startTime);
+        const minute = date.getMinutes();
+        if (minute === 0) {
+            return '00';
+        } else {
+            return String(minute);
+        }
+
+    }
+
     updateRestOfTime() {
         const date = new Date(this.nextLesson.startTime);
         const dateNow = new Date();
@@ -207,12 +216,46 @@ export class HomeStudentComponent implements OnInit {
         const stringRestSecond = String(0 + firstValueOfSecond.toString().substring(firstValueOfSecond.indexOf('.')));
         const numberOfRstSecond = Number(stringRestSecond);
 
-        console.log(myDay);
-        console.log(myHour);
-        console.log(myMinute);
-        console.log(mySecond);
-        this.getRestOfTime = (String(myDay) + 'd : ' + String(myHour) + 'h : ' + String(myMinute) + 'm : ' + String(mySecond) + 's');
+        if (milliseconds < 0) {
+            this.getRestOfDay = myDay;
+            this.getRestOfHour = 0 - myHour;
+            this.getRestOfMinutes = 0 - myMinute;
+            this.getRestOfSecond = 0 - mySecond;
+            this.getRestOfTime = (String(myDay) + 'd : -' + String(myHour) + 'h : -' + String(myMinute) + 'm : -' + String(mySecond) + 's');
+        } else {
+            this.getRestOfDay = myDay;
+            this.getRestOfHour = myHour;
+            this.getRestOfMinutes = myMinute;
+            this.getRestOfSecond = mySecond;
+            this.getRestOfTime = (String(myDay) + 'd : ' + String(myHour) + 'h : ' + String(myMinute) + 'm : ' + String(mySecond) + 's');
+        }
     }
 
 
+    isTimeForLesson(): boolean {
+        if (this.getRestOfDay === 0 && this.getRestOfHour === 0 && 0 >= this.getRestOfMinutes && this.getRestOfMinutes >= -30) {
+            this.showJoinNow = true;
+            return false;
+        } else {
+            this.showJoinNow = false;
+            return true;
+        }
+    }
+
+    joinSession(cours: Cours) {
+        this.showTpBar = false;
+        this.webSocketService.openWebSocket(this.student, this.nextLesson.groupeEtudiant.prof, this.nextLesson.groupeEtudiant, 'STUDENT');
+        this.webSocketService.isInSession = true;
+        this.selectedcours = cours;
+        this.simulateSectionService.findSectionOneByCoursId(cours);
+        this.router.navigate(['etudiant/etudiant-simulate-sections']);
+    }
+
+    private getStudentOfGroup(groupeEtudiant: GroupeEtudiant) {
+        this.groupeEtudiantService.findAllGroupeEtudiantDetail(groupeEtudiant.id).subscribe(data => {
+            for (const grpEtudiantDetails of data) {
+                this.studentList.push({...grpEtudiantDetails.etudiant});
+            }
+        });
+    }
 }
