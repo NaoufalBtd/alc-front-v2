@@ -22,6 +22,7 @@ import {GroupeEtudiant} from '../model/groupe-etudiant.model';
 import {GroupeEtudiantService} from './groupe-etudiant-service';
 import {MessageService} from 'primeng/api';
 import {ScheduleProf} from '../model/calendrier-prof.model';
+import {Reponse} from '../model/reponse.model';
 
 @Injectable({
     providedIn: 'root'
@@ -148,7 +149,6 @@ export class WebSocketService {
     public openWebSocket(user: User, prof: Prof, grpEtudiant: GroupeEtudiant, sender: string) {
         this.webSocket = new WebSocket(this.socketUrl);
         this.webSocket.onopen = (event) => {
-            console.log('ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooopeeeeeeeeen');
             this.prof = prof;
             this.groupeEtudiant = grpEtudiant;
             let index = 0;
@@ -162,7 +162,6 @@ export class WebSocketService {
             }
             if (sender === 'PROF') {
                 this.participants.set(prof.id, this.connectedUsers);
-                console.log(this.participants);
                 if (this.studentsEnLigne.get(prof.id) === undefined) {
                     this.studentsEnLigne.set(prof.id, prof);
                 }
@@ -187,13 +186,9 @@ export class WebSocketService {
             }
         };
         this.webSocket.onerror = (event) => {
-            console.log(event);
-            alert(event);
         };
         this.webSocket.onmessage = (event) => {
             const data: ChatMessageDto = JSON.parse(event.data);
-            console.log(this.participants.get(data.prof.id));
-            console.log(data);
             if (data.type === 'message') {
                 for (const etudiant of this.participants.get(data.prof.id)) {
                     if (etudiant.id === this.loginservice.getConnectedStudent().id) {
@@ -215,8 +210,6 @@ export class WebSocketService {
                     }
                 } else {
                     const sectionId = Number(data.message);
-                    console.log(sectionId);
-                    console.log(this.participants.get(data.prof.id));
                     for (const etudiant of this.participants.get(data.prof.id)) {
                         if (etudiant.id === this.loginservice.getConnectedStudent().id) {
                             this.simulatesectionService.nextSection(sectionId, data?.user);
@@ -235,6 +228,20 @@ export class WebSocketService {
                     console.log(this.reponseQuiz);
                     if (this.reponseQuiz?.question?.typeDeQuestion?.ref === 't5') {
                         this.trueOrFalse = this.reponseQuiz.lib !== 'false';
+                    } else if (this.reponseQuiz?.question?.typeDeQuestion?.ref === 't12') {
+                        let reponse: Reponse = new Reponse();
+                        reponse.lib = this.reponseQuiz.lib;
+                        reponse.id = this.reponseQuiz.id;
+                        reponse.question = this.reponseQuiz.question;
+                        reponse.numero = this.reponseQuiz.numero;
+
+                        if (data.message === 'STUDENT_CHOICE_T12' && this.reponseQuiz.sender === 'STUDENT_CHOICE_T12') {
+                            this.learnService.onClickT12(reponse);
+                        } else {
+                            this.learnService.checkT12Answer(reponse.question);
+                        }
+
+                        // this.learnService.onClickT12(reponse);
                     }
                     if (this.reponseQuiz.sender === 'PROF') {
                         this.learnService.saveAnswers(this.question, 'TEACHER_ANSWER');
@@ -249,13 +256,7 @@ export class WebSocketService {
                 }
             } else if (data?.type === 'CONNECT') {
                 const mydata: ChatMessageDto = JSON.parse(event.data);
-                console.log(mydata);
-                console.log('=============== prof ======================');
-                console.log(this.prof);
-                console.log('=============== prof ======================');
-
                 let studentList = this.participants.get(this.prof.id);
-                console.log(this.participants);
                 for (const student of studentList) {
                     if (student.id === mydata.student.id) {
                         if (this.studentsEnLigne.get(student.id) === undefined) {
@@ -278,8 +279,6 @@ export class WebSocketService {
                     });
                 }
             }
-            console.log('==================== Last readyState==============');
-            console.log(this.webSocket.readyState);
         };
 
         if (this.webSocket.readyState === this.webSocket.CLOSING) {
@@ -296,9 +295,6 @@ export class WebSocketService {
     }
 
     public sendMessage(chatMessageDto: ChatMessageDto, sender: string) {
-        console.log('----------------- STATE ------------------------------------------');
-        console.log('-------------------------------------------------------------------');
-        console.log(this.webSocket.readyState);
         if (this.webSocket.readyState === this.webSocket.OPEN) {
             if (chatMessageDto.type === 'message') {
                 this.webSocket.send(JSON.stringify((chatMessageDto)));
@@ -309,15 +305,12 @@ export class WebSocketService {
                 this.webSocket.send(myData);
             }
             this.webSocket.onerror = (event) => {
-                console.log(event);
-                alert('erroor to send');
             };
         } else {
             if (chatMessageDto.type !== 'message') {
                 chatMessageDto.quizReponse.question.quiz = null;
                 chatMessageDto.quizReponse.question.reponses = null;
             }
-            console.log('=========WEB SOCKET WAS CLOSED===============');
             if (sender === 'PROF') {
                 this.openWebSocket(this.loginservice.getConnectedProf(), this.loginservice.getConnectedProf(),
                     this.groupeEtudiant, 'PROF');
@@ -373,17 +366,12 @@ export class WebSocketService {
     }
 
     public saveCurrentSection(id: number, section: Section) {
-        console.log(this.selectedsection);
         this.http.post<number>(this.profUrl + this.synchronizationUrl + '/id/' + id, section).subscribe(
             data => {
                 if (data > 0) {
-                    console.log(section);
-                    console.log('CurrentSection saved');
                 } else {
-                    console.log('section not saved');
                 }
             }, error => {
-                console.log('problem while saving current section');
             }
         );
     }

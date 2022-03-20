@@ -316,7 +316,6 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
 
     public quiz() {
         this.serviceQuiz.refQuiz = this.selectedQuiz.ref;
-        console.log(this.serviceQuiz.refQuiz);
         this.router.navigate(['/prof/quiz-preview-teacher']);
     }
 
@@ -339,25 +338,12 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.selectedsection = this.itemssection2[0];
         this.showAppMenu = false;
-        console.log('----------------------------------------------------------------------');
-        console.log(this.sectionStandard);
-        console.log(this.sectionAdditional);
-        console.log(this.selectedsection);
     }
 
 
     URLVideo() {
         this.service.video = '';
-        // tslint:disable-next-line:prefer-for-of
-        // for (let m = 0; m < 24 ; m++)
-        // {
         this.service.video = this.selectedsection.urlVideo;
-        // }
-        //   for (let m = 32; m < 43 ; m++)
-        //   {
-        //  }
-        console.log(this.service.video);
-        // return this.sanitizer.bypassSecurityTrustResourceUrl(this.service.video);
         return this.service.video;
     }
 
@@ -391,7 +377,6 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
                 }
             }
         }
-        console.log(this.service.contenu);
         return this.service.contenu;
     }
 
@@ -416,7 +401,6 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
         if (index === 0) {
             this.sessionCour.sections.push({...section});
         }
-        console.log(this.sessionCour.sections);
 
         for (let i = 0; i < this.itemssection2.length; i++) {
             if (section.id === this.itemssection2[i].id) {
@@ -457,7 +441,6 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
 
         this.sectionItemService.getSectionItems().subscribe(data => {
             this.sectionItemService.sectionSelected.sectionItems = data;
-            console.log(data);
             this.showVocabulary = true;
         });
 
@@ -481,14 +464,11 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
         this.webSocketService.closeWebSocket(chatMessage);
         this.participants.delete(this.prof.id);
         this.connectedUsers.splice(0, this.connectedUsers.length);
-        console.log(this.participants);
         this.studentsEnLigne.clear();
     }
 
     getData() {
         const grp = this.participants.get(this.prof.id);
-        console.log(grp);
-        console.log(this.participants);
     }
 
     public saveSessionCoursForGroupEtudiant(idprof: number, idcours: number) {
@@ -500,22 +480,16 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
     }
 
     getSelectedLanguage() {
-        console.log(this.selectedLanguage);
-
     }
 
     findAllSynonimes(word: string) {
-        console.log(word);
-        console.log(this.searchInput);
         if (this.selectedLanguage.code === 'ar') {
             this.quizService.translate(word).subscribe(data => {
-                console.log(data);
                 this.synonymes = data;
             });
         } else if (this.selectedLanguage.code === 'fr') {
             this.quizService.translateEnFr(word).subscribe(data => {
                 this.synonymes = data;
-                console.log(data);
             });
         }
     }
@@ -524,7 +498,6 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
     addToDictionary(type: string) {
         if (type === 'SELECT') {
             this.createDialogDict = false;
-            console.log(this.participants.get(this.loginService.getConnectedProf().id));
             for (const etudiant of this.participants.get(this.loginService.getConnectedProf().id)) {
                 this.selectedNow.etudiant = etudiant;
                 this.dictionnaryService.addToDictionary(this.selectedNow).subscribe(data => {
@@ -551,7 +524,6 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
             let dict: Dictionary = new Dictionary();
             dict.word = this.searchInput;
             dict.definition = this.synonymes;
-            console.log(this.participants.get(this.loginService.getConnectedProf().id));
             for (const etudiant of this.participants.get(this.loginService.getConnectedProf().id)) {
                 dict.etudiant = etudiant;
                 this.dictionnaryService.addToDictionary(dict).subscribe(data => {
@@ -571,7 +543,6 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
                     this.searchInput = String();
                     this.synonymes = String();
                 }, error => {
-                    console.log(error);
                     this.messageService.add({severity: 'error', life: 3000, detail: 'Text is too long! try again with small text'});
 
                 });
@@ -600,7 +571,6 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
     }
 
     previousSection(selectedsection: Section) {
-        console.log(this.itemssection2);
         for (let i = 0; i < this.itemssection2.length; i++) {
             if (selectedsection.id === this.itemssection2[i].id) {
                 return this.itemssection2[i - 1]?.categorieSection?.libelle;
@@ -622,18 +592,14 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
         this.selectedNow = new Dictionary();
         const selection = window.getSelection();
         this.selectedNow.word = selection.toString();
-        console.log(this.selectedNow.word.length);
         if (this.selectedNow.word.length > 3) {
-            console.log(this.selectedLanguage.code);
             if (this.selectedLanguage.code === 'ar') {
                 this.quizService.translate(this.selectedNow.word).subscribe(data => {
-                    console.log(data);
                     this.selectedNow.definition = data;
                 });
             } else if (this.selectedLanguage.code === 'fr') {
                 this.quizService.translateEnFr(this.selectedNow.word).subscribe(data => {
                     this.selectedNow.definition = data;
-                    console.log(data);
                 });
             }
             this.createDialogDict = true;
@@ -741,7 +707,6 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
         this.sessionCour.salary = null;
         this.sessionCour.reference = this.selectedSchedule.startTime.toString() + this.groupeEtudiant.libelle;
         this.sessionCour.totalheure = this.selectedSchedule.endTime.getHours() - this.selectedSchedule.startTime.getHours();
-        console.log(this.sessionCour);
         this.sessionservice.saveSessionCours(this.sessionCour);
         let chatMessage: ChatMessageDto = new ChatMessageDto('FINISHLESSON', 'FINISHLESSON', false);
         chatMessage.prof = this.loginService.getConnectedProf();

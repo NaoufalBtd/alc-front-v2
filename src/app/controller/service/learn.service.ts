@@ -43,7 +43,7 @@ export class LearnService {
     private _inputAnswer: string;
     private _trueOrFalse = true;
     private _disableToggleButton = false;
-    private _answersList: Map<Question, Reponse> = new Map<Question, Reponse>();
+    private _answersList: Map<Question, Reponse> = new Map<Question, Reponse>(); // Reponse of student
     private _correctAnswersList: Map<number, Array<Reponse>> = new Map<number, Array<Reponse>>();
     private _question: Question = new Question();
     private _questionSideLeft: string;
@@ -69,7 +69,6 @@ export class LearnService {
     private _textSeleted: string;
     private _dictionaryList: Array<Dictionary> = new Array<Dictionary>();
 
-    // --------------- Next_added
 
     private _dragAnswersList: Map<string, number> = new Map<string, number>();
     private _answersT12List: Map<number, string> = new Map<number, string>();
@@ -78,11 +77,40 @@ export class LearnService {
     private _dragData: string;
     private _nextIndex = Number(1);
 
-    private _correctAnswerT12: string;
+    private _studenta_answersT12: Map<number, string> = new Map<number, string>();
     private _showT12AnswerDiv: boolean;
     private _t12AnswersList: Array<Reponse> = new Array<Reponse>();
     private _quizT12AnswersList: Array<Reponse> = new Array<Reponse>();
+    // --------------- Next_added
+    private _questionOptions = [{label: 'True', value: 'true'}, {label: 'False', value: 'false'}];
+    private _selectedT12Reponse: Reponse = new Reponse();
 
+    private _dernierSelected: Reponse = new Reponse();
+
+
+    get questionOptions(): ({ label: string; value: string } | { label: string; value: string })[] {
+        return this._questionOptions;
+    }
+
+    set questionOptions(value: ({ label: string; value: string } | { label: string; value: string })[]) {
+        this._questionOptions = value;
+    }
+
+    get selectedT12Reponse(): Reponse {
+        return this._selectedT12Reponse;
+    }
+
+    set selectedT12Reponse(value: Reponse) {
+        this._selectedT12Reponse = value;
+    }
+
+    get dernierSelected(): Reponse {
+        return this._dernierSelected;
+    }
+
+    set dernierSelected(value: Reponse) {
+        this._dernierSelected = value;
+    }
 
     get quizT12AnswersList(): Array<Reponse> {
         return this._quizT12AnswersList;
@@ -100,12 +128,12 @@ export class LearnService {
         this._t12AnswersList = value;
     }
 
-    get correctAnswerT12(): string {
-        return this._correctAnswerT12;
+    get studenta_answersT12(): Map<number, string> {
+        return this._studenta_answersT12;
     }
 
-    set correctAnswerT12(value: string) {
-        this._correctAnswerT12 = value;
+    set studenta_answersT12(value: Map<number, string>) {
+        this._studenta_answersT12 = value;
     }
 
     get showT12AnswerDiv(): boolean {
@@ -555,10 +583,16 @@ export class LearnService {
                 this.answerSelected.numero = 2;
                 document.getElementById('trueFalse').className = 'falseQst p-grid';
             }
+        } else if (question.typeDeQuestion.ref === 't12') {
+            this.answerSelected.lib = this.reponseQuiz.lib;
+            this.answerSelected.id = this.reponseQuiz.id;
+            this.answerSelected.question = this.reponseQuiz.question;
+            this.answerSelected.numero = this.reponseQuiz.numero;
         }
         this.answersList.set(question, this.answerSelected);
         this.answersPointStudent.set(question, type);
         console.log(this.answersPointStudent);
+        console.log(this.answersList);
         this.showNextButton = true;
         this.showCheckButton = false;
         this.saveDone = true;
@@ -758,6 +792,9 @@ export class LearnService {
     }
 
     public onStart() {
+        this.nextIndex = Number(1);
+        this.t12AnswersList = new Array<Reponse>();
+        this.studenta_answersT12 = new Map<number, string>();
         this.reponseQuiz = new QuizReponse();
         this.translateWord = String();
         this.parcourCurrent = new Parcours();
@@ -822,7 +859,6 @@ export class LearnService {
                             this.question.libelle.lastIndexOf('@'));
                     } else if (this.question.typeDeQuestion.ref === 't12') {
                         this.extractedData(this.question.libelle, 't12');
-                        console.log('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
                         console.log(this.answersT12List);
                         this.showT12Answers();
                     }
@@ -845,45 +881,10 @@ export class LearnService {
         );
     }
 
-    checkAnswers(answer: Reponse): Reponse {
-        if (answer.etatReponse === 'true') {
-            if (this.correctAnswerT12 === undefined || this.correctAnswerT12 === null) {
-                this.correctAnswerT12 = answer.lib + ' ';
-            } else {
-                this.correctAnswerT12 = this.correctAnswerT12 + answer.lib + ' ';
-            }
-            document.getElementById(answer.lib).style.backgroundColor = '#52b788';
-        } else {
-            for (const item of this.t12AnswersList) {
-                if (item.etatReponse === 'true') {
-                    answer = item;
-                }
-            }
-            if (this.correctAnswerT12 === undefined || this.correctAnswerT12 === null) {
-                this.correctAnswerT12 = answer.lib + ' ';
-            } else {
-                this.correctAnswerT12 = this.correctAnswerT12 + answer.lib + ' ';
-            }
-            document.getElementById(answer.lib).style.animationName = 'inCorrect';
-            document.getElementById(answer.lib).style.animationDuration = '2s';
-            document.getElementById(answer.lib).style.animationIterationCount = '1';
-        }
-        this.showT12AnswerDiv = true;
-        document.getElementById(String(this.nextIndex)).style.borderBottom = '2px solid #52b788';
-        document.getElementById(String(this.nextIndex)).style.color = '#2d6a4f';
-        this.nextIndex += 1;
-        if (this.nextIndex <= this.answersT12List.size) {
-            this.filterDatat12(this.quizT12AnswersList, this.nextIndex);
-        } else {
-            this.disableButtonSon = false;
-            this.t12AnswersList = new Array<Reponse>();
-        }
-
-        console.log(answer);
-        return answer;
-    }
 
     private filterDatat12(reponses: Array<Reponse>, index: number) {
+        this.showDontKnowButton = true;
+        this.showCheckButton = false;
         this.t12AnswersList = reponses.filter(t => t.numero === index);
         document.getElementById(String(index)).style.borderBottom = '3px dashed #2196f3';
         document.getElementById(String(index)).style.color = '#2196f3';
@@ -893,7 +894,7 @@ export class LearnService {
         this.dragAnswersList = new Map<string, number>();
         this.dragList = new Array<string>();
         const text = libelle;
-        let counter = 2;                  //_1 It's been a while /_2 we have been in touch.
+        let counter = 2;                  // _1 It's been a while /_2 we have been in touch.
         while (counter !== -1) {
             const myNumIndex = libelle.indexOf(String(counter - 1));
             const myNumber = libelle[myNumIndex];
@@ -906,14 +907,8 @@ export class LearnService {
                 sentence = libelle.substring(myNumIndex + 1, libelle.length);
                 counter = -1;
             }
-            console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
-            console.log(libelle);
-            console.log(sentence);
-            console.log(myNumber);
 
             libelle = libelle.substring(sentence.length + 1, libelle.length);
-            console.log(libelle);
-            console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
             if (code === 't11') {
                 this.dragAnswersList.set(sentence, Number(myNumber));
             } else {
@@ -922,10 +917,7 @@ export class LearnService {
 
             this.dragList.push(sentence);
         }
-        console.log(this.dragAnswersList);
-        console.log(this.dragList);
         this.dragList = this.dragList.sort((a, b) => b.localeCompare(a));
-        console.log(text);
     }
 
     finishQuiz() {
@@ -1006,4 +998,45 @@ export class LearnService {
     }
 
 
+    onClickT12(answer: Reponse): Reponse {
+        this.studenta_answersT12.set(answer.numero, answer.lib);
+        this.showT12AnswerDiv = true;
+        this.nextIndex += 1;
+        if (this.nextIndex <= this.answersT12List.size) {
+            this.filterDatat12(this.quizT12AnswersList, this.nextIndex);
+        } else {
+            this.disableButtonSon = false;
+            this.showCheckButton = true;
+            this.showDontKnowButton = false;
+            this.t12AnswersList = new Array<Reponse>();
+        }
+        return answer;
+    }
+
+    checkT12Answer(qst: Question) {
+        let reponseStudent: Reponse = new Reponse();
+        console.log(this.quizT12AnswersList);
+        console.log(this.studenta_answersT12);
+        for (const item of this.studenta_answersT12.values()) {
+            for (const reponse of this.quizT12AnswersList) {
+                if (item === reponse.lib) {
+                    if (reponse.etatReponse === 'true') {
+                        document.getElementById(item).className = 'correctAnswerT12';
+                        reponseStudent.lib = reponseStudent.lib + ' / ' + item + '(true)';
+                    } else {
+                        reponseStudent.lib = reponseStudent.lib + ' / ' + item + '(false)';
+                        reponseStudent.etatReponse = 'false';
+                        document.getElementById(item).className = 'incorrectAnswerT12';
+                        document.getElementById(item).style.paddingTop = '5px';
+                        document.getElementById(reponse.numero.toString() + 'toooooltips').style.visibility = 'visible';
+                        document.getElementById(reponse.numero.toString() + 'toooooltips').innerText = this.quizT12AnswersList.filter(t =>
+                            t.numero === reponse.numero && t.etatReponse === 'true')[0]?.lib;
+                    }
+                }
+            }
+        }
+        reponseStudent.question = qst;
+        console.log(reponseStudent);
+        return reponseStudent;
+    }
 }

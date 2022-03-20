@@ -189,7 +189,8 @@ import {HomeStudentComponent} from './view/etudiant/home-student/home-student.co
                     {path: 'reclamation-etudiant', component: ReclamationEtudiantComponent},
                     {path: 'profile', component: EtudiantProfileComponent},
                     {path: 'profileEdit', component: ProfileComponent},
-                    {path: 'inviteStudent', component: InvitedStudentComponent}
+                    {path: 'inviteStudent', component: InvitedStudentComponent},
+                    {path: '*', component: HomeStudentComponent}
 
                 ]
             },

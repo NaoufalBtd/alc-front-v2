@@ -3,7 +3,7 @@ import {Question} from './question.model';
 export class Reponse {
     public id: number = Number(0);
     public ref: string;
-    public lib: string;
+    public lib = String(' ');
     public numero: number;
     public question = new Question();
     public etatReponse = String('true');

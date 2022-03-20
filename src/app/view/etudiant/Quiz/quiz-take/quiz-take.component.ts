@@ -46,6 +46,29 @@ export class QuizTakeComponent implements OnInit, OnDestroy {
                 private webSocketService: WebSocketService) {
     }
 
+    get questionOptions(): ({ label: string; value: string } | { label: string; value: string })[] {
+        return this.learnService.questionOptions;
+    }
+
+    set questionOptions(value: ({ label: string; value: string } | { label: string; value: string })[]) {
+        this.learnService.questionOptions = value;
+    }
+
+    get selectedT12Reponse(): Reponse {
+        return this.learnService.selectedT12Reponse;
+    }
+
+    set selectedT12Reponse(value: Reponse) {
+        this.learnService.selectedT12Reponse = value;
+    }
+
+    get dernierSelected(): Reponse {
+        return this.learnService.dernierSelected;
+    }
+
+    set dernierSelected(value: Reponse) {
+        this.learnService.dernierSelected = value;
+    }
 
     get groupeEtudiant(): GroupeEtudiant {
         return this.webSocketService.groupeEtudiant;
@@ -60,12 +83,12 @@ export class QuizTakeComponent implements OnInit, OnDestroy {
         this.learnService.t12AnswersList = value;
     }
 
-    get correctAnswerT12(): string {
-        return this.learnService.correctAnswerT12;
+    get correctAnswerT12(): Map<number, string> {
+        return this.learnService.studenta_answersT12;
     }
 
-    set correctAnswerT12(value: string) {
-        this.learnService.correctAnswerT12 = value;
+    set correctAnswerT12(value: Map<number, string>) {
+        this.learnService.studenta_answersT12 = value;
     }
 
     get showT12AnswerDiv(): boolean {
@@ -88,9 +111,6 @@ export class QuizTakeComponent implements OnInit, OnDestroy {
         this.learnService.quizT12AnswersList = value;
     }
 
-    set dragAnswersList(value: Map<string, number>) {
-        this.learnService.dragAnswersList = value;
-    }
 
     get answersT12List(): Map<number, string> {
         return this.learnService.answersT12List;
@@ -329,10 +349,6 @@ export class QuizTakeComponent implements OnInit, OnDestroy {
         return this.learnService.participants;
     }
 
-    questionOptions = [{label: 'True', value: 'true'}, {label: 'False', value: 'false'}];
-    selectedT12Reponse: Reponse = new Reponse();
-
-    dernierSelected: Reponse = new Reponse();
 
     ngOnInit(): void {
         this.learnService.onStart();
@@ -366,7 +382,7 @@ export class QuizTakeComponent implements OnInit, OnDestroy {
         let reponse: Reponse;
         if (question.typeDeQuestion.ref === 't12') {
             this.dernierSelected = new Reponse();
-            reponse = this.checkAnswers(this.selectedT12Reponse);
+            this.learnService.checkT12Answer(question);
         } else {
             reponse = this.learnService.saveAnswers(question, 'STUDENT_ANSWER');
         }
@@ -385,7 +401,13 @@ export class QuizTakeComponent implements OnInit, OnDestroy {
     }
 
     showAnswers(question: Question) {
-        const reponse = this.learnService.showAnswers(question);
+        let reponse: Reponse;
+        if (question.typeDeQuestion.ref === 't12') {
+            this.dernierSelected = new Reponse();
+            reponse = this.t12AnswersList.filter(t => t.etatReponse === 'true')[0];
+        } else {
+            reponse = this.learnService.showAnswers(question);
+        }
         this.reponseQuiz.lib = reponse.lib;
         this.reponseQuiz.id = reponse.id;
         this.reponseQuiz.question = reponse.question;
@@ -401,7 +423,7 @@ export class QuizTakeComponent implements OnInit, OnDestroy {
     }
 
     nextQuestionFct() {
-        this.correctAnswerT12 = String(' ');
+        this.correctAnswerT12 = new Map<number, string>();
         this.showT12AnswerDiv = false;
         const question = this.learnService.nextQuestionFct();
         if (this.groupeEtudiant?.groupeEtude?.nombreEtudiant === 1) {
@@ -429,19 +451,21 @@ export class QuizTakeComponent implements OnInit, OnDestroy {
         this.learnService.finishQuiz();
     }
 
-    checkAnswers(value: Reponse): Reponse {
-        return this.learnService.checkAnswers(value);
-    }
 
-    onClick(value: Reponse) {
-        this.showCheckButton = true;
-        this.showDontKnowButton = false;
-        this.selectedT12Reponse = value;
-        if (this.dernierSelected.id !== 0) {
-            document.getElementById(this.dernierSelected.lib).style.backgroundColor = '#dcdcdc';
-        }
-        document.getElementById(value.lib).style.backgroundColor = 'orange';
-        this.dernierSelected = value;
+    onClick(reponse: Reponse) {
+        this.reponseQuiz.lib = reponse.lib;
+        this.reponseQuiz.id = reponse.id;
+        this.reponseQuiz.question = reponse.question;
+        this.reponseQuiz.numero = reponse.numero;
+        this.reponseQuiz.type = 'QUIZ';
+        this.reponseQuiz.sender = 'STUDENT_CHOICE_T12';
+        this.reponseQuiz.student = this.login.getConnectedStudent();
+        this.reponseQuiz.etatReponse = reponse.etatReponse;
+        const chatMessageDto: ChatMessageDto = new ChatMessageDto(this.login.getConnectedStudent().id.toString(), 'STUDENT_CHOICE_T12', true);
+        chatMessageDto.quizReponse = this.reponseQuiz;
+        chatMessageDto.type = 'QUIZ';
+        this.webSocketService.sendMessage(chatMessageDto, 'STUDENT');
+
     }
 
     getCorrectAnswerForT12(): string {
@@ -450,8 +474,6 @@ export class QuizTakeComponent implements OnInit, OnDestroy {
                 return item.lib;
             }
         }
-
-
     }
 
     valueOf(numero: number): number {

@@ -54,7 +54,6 @@ export class QuizPreviewProfComponent implements OnInit, OnDestroy {
     }
 
 
-
     get t12AnswersList(): Array<Reponse> {
         return this.learnService.t12AnswersList;
     }
@@ -63,12 +62,12 @@ export class QuizPreviewProfComponent implements OnInit, OnDestroy {
         this.learnService.t12AnswersList = value;
     }
 
-    get correctAnswerT12(): string {
-        return this.learnService.correctAnswerT12;
+    get correctAnswerT12(): Map<number, string> {
+        return this.learnService.studenta_answersT12;
     }
 
-    set correctAnswerT12(value: string) {
-        this.learnService.correctAnswerT12 = value;
+    set correctAnswerT12(value: Map<number, string>) {
+        this.learnService.studenta_answersT12 = value;
     }
 
     get showT12AnswerDiv(): boolean {
@@ -383,26 +382,9 @@ export class QuizPreviewProfComponent implements OnInit, OnDestroy {
         return this.learnService.answerIsCorrect(answerSelected, question);
     }
 
-    saveAnswers(question: Question) {
-        const reponse = this.learnService.saveAnswers(question, 'TEACHER_ANSWER');
-        console.log(reponse);
-        this.reponseQuiz.lib = reponse.lib;
-        this.reponseQuiz.type = 'QUIZ';
-        this.reponseQuiz.id = reponse.id;
-        this.reponseQuiz.question = reponse.question;
-        this.reponseQuiz.question.reponses = reponse.question?.reponses;
-        this.reponseQuiz.numero = reponse.numero;
-        this.reponseQuiz.sender = 'PROF';
-        this.reponseQuiz.prof = this.login.getConnectedProf();
-        this.reponseQuiz.etatReponse = reponse.etatReponse;
-        const chatMessageDto: ChatMessageDto = new ChatMessageDto(this.login.getConnectedProf().toString(), ' ', false);
-        chatMessageDto.quizReponse = this.reponseQuiz;
-        chatMessageDto.type = 'QUIZ';
-        this.webSocketService.sendMessage(chatMessageDto, 'PROF');
-    }
 
     nextQuestionFct() {
-        this.correctAnswerT12 = String(' ');
+        this.correctAnswerT12 = new Map<number, string>();
         this.showT12AnswerDiv = false;
         this.grpStudentAnswers.clear();
         const question = this.learnService.nextQuestionFct();
@@ -410,7 +392,7 @@ export class QuizPreviewProfComponent implements OnInit, OnDestroy {
     }
 
     previousQuestionFct() {
-        this.correctAnswerT12 = String(' ');
+        this.correctAnswerT12 = new Map<number, string>();
         this.showT12AnswerDiv = false;
         this.grpStudentAnswers.clear();
         this.showFollowButton = true;
@@ -436,7 +418,6 @@ export class QuizPreviewProfComponent implements OnInit, OnDestroy {
 
     followMeFct(question: Question) {
         console.log(question);
-        // this.showFollowButton = false;
         const reponseQuiz: QuizReponse = new QuizReponse();
         for (let i = 0; i < (this.questionList.length); i++) {
             if (this.questionList[i].id === question.id) {
@@ -487,8 +468,39 @@ export class QuizPreviewProfComponent implements OnInit, OnDestroy {
     }
 
 
-    checkAnswers(value: Reponse) {
-        this.learnService.checkAnswers(value);
+    saveAnswers(question: Question) {
+        const reponse = this.learnService.saveAnswers(question, 'TEACHER_ANSWER');
+        console.log(reponse);
+        this.reponseQuiz.lib = reponse.lib;
+        this.reponseQuiz.type = 'QUIZ';
+        this.reponseQuiz.id = reponse.id;
+        this.reponseQuiz.question = reponse.question;
+        this.reponseQuiz.question.reponses = reponse.question?.reponses;
+        this.reponseQuiz.numero = reponse.numero;
+        this.reponseQuiz.sender = 'PROF';
+        this.reponseQuiz.prof = this.login.getConnectedProf();
+        this.reponseQuiz.etatReponse = reponse.etatReponse;
+        const chatMessageDto: ChatMessageDto = new ChatMessageDto(this.login.getConnectedProf().toString(), ' ', false);
+        chatMessageDto.quizReponse = this.reponseQuiz;
+        chatMessageDto.type = 'QUIZ';
+        this.webSocketService.sendMessage(chatMessageDto, 'PROF');
+    }
+
+
+    checkAnswers(reponse: Reponse) {
+        this.reponseQuiz.lib = reponse.lib;
+        this.reponseQuiz.type = 'QUIZ';
+        this.reponseQuiz.id = reponse.id;
+        this.reponseQuiz.question = reponse.question;
+        this.reponseQuiz.question.reponses = reponse.question?.reponses;
+        this.reponseQuiz.numero = reponse.numero;
+        this.reponseQuiz.sender = 'PROF';
+        this.reponseQuiz.prof = this.login.getConnectedProf();
+        this.reponseQuiz.etatReponse = reponse.etatReponse;
+        const chatMessageDto: ChatMessageDto = new ChatMessageDto(this.login.getConnectedProf().id.toString(), ' ', false);
+        chatMessageDto.quizReponse = this.reponseQuiz;
+        chatMessageDto.type = 'QUIZ';
+        this.webSocketService.sendMessage(chatMessageDto, 'PROF');
     }
 
     getCorrectAnswerForT12(): string {
@@ -503,5 +515,21 @@ export class QuizPreviewProfComponent implements OnInit, OnDestroy {
 
     valueOf(numero: number): number {
         return ((numero / this.questionList.length) * 100);
+    }
+
+    onClick(reponse: Reponse) {
+        this.reponseQuiz.lib = reponse.lib;
+        this.reponseQuiz.id = reponse.id;
+        this.reponseQuiz.question = reponse.question;
+        this.reponseQuiz.numero = reponse.numero;
+        this.reponseQuiz.type = 'QUIZ';
+        this.reponseQuiz.sender = 'STUDENT_CHOICE_T12';
+        this.reponseQuiz.student = this.login.getConnectedStudent();
+        this.reponseQuiz.etatReponse = reponse.etatReponse;
+        const chatMessageDto: ChatMessageDto = new ChatMessageDto(this.login.getConnectedStudent().id.toString(), 'STUDENT_CHOICE_T12', false);
+        chatMessageDto.quizReponse = this.reponseQuiz;
+        chatMessageDto.type = 'QUIZ';
+        this.webSocketService.sendMessage(chatMessageDto, 'PROF');
+
     }
 }

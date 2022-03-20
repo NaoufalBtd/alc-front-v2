@@ -145,6 +145,7 @@ export class HomeStudentComponent implements OnInit {
     }
 
     openSession(cours: Cours, type: string) {
+        this.webSocketService.isInSession = false;
         if (type === 'HOMWORK') {
             this.tabViewActiveIndex = 1;
             this.showLesson = false;

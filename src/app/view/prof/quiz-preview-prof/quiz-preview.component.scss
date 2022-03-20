@@ -344,15 +344,64 @@ h4 {
     background-color: #dcdcdc;
   }
 }
-
 .correctAnswerT12 {
   text-align: center;
-  border: 1px dashed #dadada;
-  border-radius: 5px;
   font-size: large;
   color: green;
   background-color: #f4f4f4;
   letter-spacing: 1px;
   font-weight: 600;
+}
+
+.incorrectAnswerT12 {
+  text-align: center;
+  font-size: large;
+  color: #ff0800;
+  background-color: #f4f4f4;
+  letter-spacing: 1px;
+  font-weight: 600;
+}
+
+.answerT12 {
+  padding-right: 40%;
+  text-align: center;
+  border: 1px dashed #dadada;
+  border-radius: 5px;
+  font-size: large;
+  color: #536c81;
+  background-color: #f4f4f4;
+  letter-spacing: 1px;
+  font-weight: 600;
+}
+
+.libelleT12 {
+  display: inline-block !important;
+  margin-right: 8px !important;
+  border-bottom: 2px dashed;
+  color: #7b8895;
+}
+
+.answert12 {
+  display: inline-block !important;
+  background-color: #dcdcdc;
+  margin: 2%;
+  text-align: center;
+  font-size: medium;
+  cursor: pointer;
+  color: black;
+  border-radius: 10px;
+  font-weight: 500;
+}
+
+.p-tooltip-top {
+  display: flex;
+  font-size: medium !important;
+  //border: 1px solid gainsboro !important;
+  border-radius: 5px;
+  letter-spacing: 1px;
+  padding: 5px;
+  color: black;
+  background: #dde4eb;
+  visibility: hidden;
 }
 

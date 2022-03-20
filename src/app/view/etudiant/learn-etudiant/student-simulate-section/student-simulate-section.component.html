@@ -72,7 +72,7 @@
 
         <div class="p-col-1">
             <button pButton pRipple type="button" icon="pi pi-fw pi-power-off" label="Quit"
-                    (click)="closeSession()" routerLink="/"
+                    (click)="closeSession()" [routerLink]="['/']"
                     class="p-button-rounded  leftButton  p-button-outlined">
 
             </button>
@@ -131,46 +131,47 @@
                                 <app-vocabulary-section (someEvent)="return($event)"></app-vocabulary-section>
                             </div>
                         </div>
-                        <div style="position: relative;margin-top: 50px"
-                             *ngIf="!this.webSocketService.isInSession">
-                            <button (click)="PreviousSection()"
-                                    *ngIf="this.selectedsection.numeroOrder !== 1"
-                                    class="p-button-warning" icon="pi pi-caret-left" id="previous"
-                                    [label]="previousSection(selectedsection)" pButton pRipple
 
-                                    type="button"></button>
-
-
-                            <button style="float: right" (click)="NextSection()"
-                                    *ngIf="selectedsection.id !== itemssection2[itemssection2.length - 1].id"
-                                    class="p-button-warning" icon="pi pi-caret-right" id="next"
-                                    [label]="nextSection(selectedsection)"
-                                    pButton pRipple
-                                    type="button"></button>
-
-
-                            <button *ngIf="!this.coursecomplited"
-                                    (click)="finish()"
-                                    [style.visibility]="(this.selectedsection.numeroOrder < this.itemssection2.length)? 'hidden':'visible'"
-                                    class="p-button-warning" icon="pi pi-check" label="Finish" pButton pRipple
-                                    type="button"></button>
-
-
-                            <button *ngIf="this.coursecomplited"
-                                    (click)="navigate()"
-                                    [style.visibility]="(this.selectedsection.numeroOrder < this.itemssection2.length)? 'hidden':'visible'"
-                                    class="p-button-warning" icon="pi pi-check" label="Bach to All Course"
-                                    pButton
-                                    pRipple
-                                    style=" width: 160px; background-color: orange; position: absolute;right: 15px;"
-                                    type="button"></button>
-                        </div>
                     </div>
 
 
                     <div *ngIf="this.selectedQuiz.section.id == this.selectedsection.id" class="p-col quiz">
                         <app-quiz-etudiant-view *ngIf="quizView"></app-quiz-etudiant-view>
                         <app-quiz-take *ngIf="!quizView"></app-quiz-take>
+                    </div>
+                    <div class="p-col" style="position: relative;background: white;"
+                         *ngIf="!this.webSocketService.isInSession">
+                        <button (click)="PreviousSection()"
+                                *ngIf="this.selectedsection.numeroOrder !== 1"
+                                class="p-button-warning" icon="pi pi-caret-left" id="previous"
+                                [label]="previousSection(selectedsection)" pButton pRipple
+
+                                type="button"></button>
+
+
+                        <button style="float: right" (click)="NextSection()"
+                                *ngIf="selectedsection.id !== itemssection2[itemssection2.length - 1].id"
+                                class="p-button-warning" icon="pi pi-caret-right" id="next"
+                                [label]="nextSection(selectedsection)"
+                                pButton pRipple
+                                type="button"></button>
+
+
+                        <button *ngIf="!this.coursecomplited"
+                                (click)="finish()"
+                                [style.visibility]="(this.selectedsection.numeroOrder < this.itemssection2.length)? 'hidden':'visible'"
+                                class="p-button-warning" icon="pi pi-check" label="Finish" pButton pRipple
+                                type="button"></button>
+
+
+                        <button *ngIf="this.coursecomplited"
+                                (click)="navigate()"
+                                [style.visibility]="(this.selectedsection.numeroOrder < this.itemssection2.length)? 'hidden':'visible'"
+                                class="p-button-warning" icon="pi pi-check" label="Bach to All Course"
+                                pButton
+                                pRipple
+                                style=" width: 160px; background-color: orange; position: absolute;right: 15px;"
+                                type="button"></button>
                     </div>
                 </div>
 

@@ -295,8 +295,12 @@
                 [pTooltip]="getCorrectAnswerForT12()" tooltipPosition="top"
                 *ngFor="let item of answersT12List| keyvalue">{{item.value}} </h5>
         </div>
-        <div *ngIf="showT12AnswerDiv" class="p-col-12 correctAnswerT12">
-            {{correctAnswerT12}}
+        <div *ngIf="showT12AnswerDiv" class="p-col-12 answerT12">
+
+            <p [id]="item.value" style="display: inline-block;  margin: 0 5px; float: right"
+               *ngFor="let item of correctAnswerT12 | keyvalue">
+                <span [id]="item.key + 'toooooltips'" class="p-tooltip-top"></span>
+                {{item.value}}</p>
         </div>
 
         <div [id]="value.lib" *ngFor="let value of t12AnswersList"
