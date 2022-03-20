@@ -716,7 +716,6 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
 
     onConfirm() {
         this.messageService.clear('c');
-        alert('Hi');
         this.finishLesson();
     }
 
