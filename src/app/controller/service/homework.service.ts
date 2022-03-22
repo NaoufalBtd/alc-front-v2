@@ -20,7 +20,7 @@ import {ParcoursService} from './parcours.service';
 export class HomeworkService {
 
     private adminUrl = environment.adminUrl;
-    private _homeWork: HomeWork;
+    private _homeWork: HomeWork = new HomeWork();
     private _homeWorkSelected: HomeWork = new HomeWork();
     private _homeworkQST: HomeWorkQST;
     private _homeworkReponse: HomeWorkReponse;
@@ -112,14 +112,14 @@ export class HomeworkService {
         this._homeworkQST = homeWorkQST;
     }
 
-    get HomeWork(): HomeWork {
+    get homeWork(): HomeWork {
         if (this._homeWork == null) {
             this._homeWork = new HomeWork();
         }
         return this._homeWork;
     }
 
-    set HomeWork(homeWork) {
+    set homeWork(homeWork) {
         this._homeWork = homeWork;
     }
 
@@ -130,13 +130,13 @@ export class HomeworkService {
 
 
     public saveHomeWork(): Observable<HomeWork> {
-        console.log(this.HomeWork.questions);
-        return this.http.post<HomeWork>(this.adminUrl + 'homeWork/', this.HomeWork);
+        console.log(this.homeWork.questions);
+        return this.http.post<HomeWork>(this.adminUrl + 'homeWork/', this.homeWork);
     }
 
 
     public updateHomeWork(homeWork: HomeWork): Observable<HomeWork> {
-        console.log(this.HomeWork.questions);
+        console.log(this.homeWork.questions);
         return this.http.post<HomeWork>(this.adminUrl + 'homeWork/', homeWork);
     }
 
@@ -154,4 +154,10 @@ export class HomeworkService {
     }
 
 
+    deleteQst(rps: HomeWorkQST) {
+        this.http.delete(this.adminUrl + 'homeWorkQST/id/' + rps.id).subscribe(data => {
+        }, error => {
+            console.log(error);
+        });
+    }
 }

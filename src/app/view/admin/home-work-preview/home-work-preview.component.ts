@@ -134,6 +134,7 @@ export class HomeWorkPreviewComponent implements OnInit {
         this.courseSelected = this.selectedcours;
         this.parcourCurrent = this.selectedparcours;
         this.homeWorkSelected = homework;
+        console.log(this.homeWorkSelected);
         if (homework.libelle === 'WRITE IT UP' || homework.libelle === 'READING' || homework.libelle === 'Watch it') {
             this.editWriteItUp(homework);
         } else {
@@ -173,8 +174,13 @@ export class HomeWorkPreviewComponent implements OnInit {
         console.log(this.answers);
     }
 
-    set homeWorkSelected(homeWork1) {
-        this.homeWorkService.HomeWork = homeWork1;
+
+    get homeWorkSelected(): HomeWork {
+        return this.homeWorkService.homeWork;
+    }
+
+    set homeWorkSelected(homeWork) {
+        this.homeWorkService.homeWork = homeWork;
     }
 
     editWriteItUp(homeWork: HomeWork) {
