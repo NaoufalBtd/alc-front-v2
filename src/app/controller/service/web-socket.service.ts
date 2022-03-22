@@ -49,6 +49,7 @@ export class WebSocketService {
     private _grpStudentAnswers: Map<Etudiant, QuizReponse> = new Map<Etudiant, QuizReponse>();
     private _selectedSchedule: ScheduleProf = new ScheduleProf();
     private _tabViewActiveIndex = 0;
+    private numerOft12Qst = -1;
 
     constructor(private serviceetudiant: EtudiantService,
                 private authService: AuthenticationService,
@@ -209,6 +210,7 @@ export class WebSocketService {
                         }
                     }
                 } else {
+                    this.grpStudentAnswers = new Map<Etudiant, QuizReponse>();
                     const sectionId = Number(data.message);
                     for (const etudiant of this.participants.get(data.prof.id)) {
                         if (etudiant.id === this.loginservice.getConnectedStudent().id) {
@@ -221,6 +223,9 @@ export class WebSocketService {
                 this.reponseQuiz = data.quizReponse;
                 this.question = this.reponseQuiz?.question;
                 this.learnService.nextQuestionFct();
+                if (this.question.typeDeQuestion.ref === 't5') {
+                    document.getElementById('trueFalse').className = 'p-grid trueOrFalseQst';
+                }
             } else if (data.type === 'QUIZ') {
                 if (this.groupeEtudiant?.groupeEtude?.nombreEtudiant === 1 ||
                     data.quizReponse.sender === 'PROF') {
@@ -231,17 +236,17 @@ export class WebSocketService {
                     } else if (this.reponseQuiz?.question?.typeDeQuestion?.ref === 't12') {
                         let reponse: Reponse = new Reponse();
                         reponse.lib = this.reponseQuiz.lib;
+                        reponse.etatReponse = this.reponseQuiz.etatReponse;
                         reponse.id = this.reponseQuiz.id;
                         reponse.question = this.reponseQuiz.question;
                         reponse.numero = this.reponseQuiz.numero;
 
                         if (data.message === 'STUDENT_CHOICE_T12' && this.reponseQuiz.sender === 'STUDENT_CHOICE_T12') {
-                            this.learnService.onClickT12(reponse);
+                            this.showCheckButton = this.learnService.onClickT12(reponse);
+                            console.log(this.showCheckButton);
                         } else {
                             this.learnService.checkT12Answer(reponse.question);
                         }
-
-                        // this.learnService.onClickT12(reponse);
                     }
                     if (this.reponseQuiz.sender === 'PROF') {
                         this.learnService.saveAnswers(this.question, 'TEACHER_ANSWER');
@@ -251,8 +256,35 @@ export class WebSocketService {
                         this.learnService.saveAnswers(this.question, 'STUDENT_DONT_KNOW');
                     }
                 } else {
-                    const rpsQuiz = data.quizReponse;
-                    this.grpStudentAnswers.set(rpsQuiz.student, rpsQuiz);
+                    if (data.message === 'STUDENT_CHOICE_T12') {
+                        this.reponseQuiz = data.quizReponse;
+                        if (data.quizReponse.sender === 'STUDENT_CHOICE_T12_FOR_GRP') {
+                            console.log('IN ELSE');
+                            let reponse: Reponse = new Reponse();
+                            reponse.lib = this.reponseQuiz.lib;
+                            reponse.etatReponse = this.reponseQuiz.etatReponse;
+                            reponse.id = this.reponseQuiz.id;
+                            reponse.question = this.reponseQuiz.question;
+                            reponse.numero = this.reponseQuiz.numero;
+                            this.numerOft12Qst = reponse.numero;
+                            this.showCheckButton = this.learnService.onClickT12(reponse);
+                        } else if (Number(data.user) > this.numerOft12Qst) {
+                            this.numerOft12Qst = Number(data.user);
+                            if (data.prof.id === this.loginservice.getConnectedProf().id) {
+                                let reponse: Reponse = new Reponse();
+                                for (const rep of this.quizT12AnswersList.filter(t => t.numero === Number(data.user))) {
+                                    if (rep.etatReponse === 'true') {
+                                        reponse = rep;
+                                    }
+                                }
+                                this.learnService.onClickT12(reponse);
+                            }
+                        }
+                    } else {
+                        const rpsQuiz = data.quizReponse;
+                        this.grpStudentAnswers.set(rpsQuiz.student, rpsQuiz);
+                    }
+
                 }
             } else if (data?.type === 'CONNECT') {
                 const mydata: ChatMessageDto = JSON.parse(event.data);
@@ -286,12 +318,24 @@ export class WebSocketService {
         }
     }
 
+    get quizT12AnswersList(): Array<Reponse> {
+        return this.learnService.quizT12AnswersList;
+    }
+
     get trueOrFalse(): boolean {
         return this.learnService.trueOrFalse;
     }
 
     set trueOrFalse(value: boolean) {
         this.learnService.trueOrFalse = value;
+    }
+
+    get showCheckButton(): boolean {
+        return this.learnService.showCheckButton;
+    }
+
+    set showCheckButton(value: boolean) {
+        this.learnService.showCheckButton = value;
     }
 
     public sendMessage(chatMessageDto: ChatMessageDto, sender: string) {

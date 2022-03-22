@@ -349,9 +349,18 @@ export class QuizTakeComponent implements OnInit, OnDestroy {
         return this.learnService.participants;
     }
 
+    get grpStudentAnswers(): Map<Etudiant, QuizReponse> {
+        return this.webSocketService.grpStudentAnswers;
+    }
+
+    set grpStudentAnswers(value: Map<Etudiant, QuizReponse>) {
+        this.webSocketService.grpStudentAnswers = value;
+    }
+
 
     ngOnInit(): void {
         this.learnService.onStart();
+        this.grpStudentAnswers = new Map<Etudiant, QuizReponse>();
     }
 
 
@@ -382,11 +391,13 @@ export class QuizTakeComponent implements OnInit, OnDestroy {
         let reponse: Reponse;
         if (question.typeDeQuestion.ref === 't12') {
             this.dernierSelected = new Reponse();
-            this.learnService.checkT12Answer(question);
+            document.getElementById('showCheckButtonForT12').style.visibility = 'hidden';
+            reponse = this.learnService.checkT12Answer(question);
         } else {
             reponse = this.learnService.saveAnswers(question, 'STUDENT_ANSWER');
         }
         this.reponseQuiz.lib = reponse.lib;
+        this.reponseQuiz.etatReponse = reponse.etatReponse;
         this.reponseQuiz.id = reponse.id;
         this.reponseQuiz.question = reponse.question;
         this.reponseQuiz.numero = reponse.numero;
@@ -426,6 +437,7 @@ export class QuizTakeComponent implements OnInit, OnDestroy {
         this.correctAnswerT12 = new Map<number, string>();
         this.showT12AnswerDiv = false;
         const question = this.learnService.nextQuestionFct();
+
         if (this.groupeEtudiant?.groupeEtude?.nombreEtudiant === 1) {
             this.followMeFct(question);
         }
@@ -453,18 +465,28 @@ export class QuizTakeComponent implements OnInit, OnDestroy {
 
 
     onClick(reponse: Reponse) {
-        this.reponseQuiz.lib = reponse.lib;
-        this.reponseQuiz.id = reponse.id;
-        this.reponseQuiz.question = reponse.question;
-        this.reponseQuiz.numero = reponse.numero;
-        this.reponseQuiz.type = 'QUIZ';
-        this.reponseQuiz.sender = 'STUDENT_CHOICE_T12';
-        this.reponseQuiz.student = this.login.getConnectedStudent();
-        this.reponseQuiz.etatReponse = reponse.etatReponse;
-        const chatMessageDto: ChatMessageDto = new ChatMessageDto(this.login.getConnectedStudent().id.toString(), 'STUDENT_CHOICE_T12', true);
-        chatMessageDto.quizReponse = this.reponseQuiz;
-        chatMessageDto.type = 'QUIZ';
-        this.webSocketService.sendMessage(chatMessageDto, 'STUDENT');
+        if (this.groupeEtudiant.groupeEtude.nombreEtudiant === 1) {
+            this.reponseQuiz.lib = reponse.lib;
+            this.reponseQuiz.id = reponse.id;
+            this.reponseQuiz.question = reponse.question;
+            this.reponseQuiz.numero = reponse.numero;
+            this.reponseQuiz.type = 'QUIZ';
+            this.reponseQuiz.sender = 'STUDENT_CHOICE_T12';
+            this.reponseQuiz.student = this.login.getConnectedStudent();
+            this.reponseQuiz.etatReponse = reponse.etatReponse;
+            const chatMessageDto: ChatMessageDto = new ChatMessageDto(this.login.getConnectedStudent().id.toString(),
+                'STUDENT_CHOICE_T12', true);
+            chatMessageDto.quizReponse = this.reponseQuiz;
+            chatMessageDto.type = 'QUIZ';
+            this.webSocketService.sendMessage(chatMessageDto, 'STUDENT');
+        } else {
+            const chatMessageDto: ChatMessageDto = new ChatMessageDto(reponse.numero.toString(),
+                'STUDENT_CHOICE_T12', true);
+            chatMessageDto.type = 'QUIZ';
+            chatMessageDto.prof = this.prof;
+            this.webSocketService.sendMessage(chatMessageDto, 'STUDENT');
+            this.learnService.onClickT12(reponse);
+        }
 
     }
 

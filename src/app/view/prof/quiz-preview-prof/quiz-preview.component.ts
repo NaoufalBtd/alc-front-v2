@@ -523,13 +523,17 @@ export class QuizPreviewProfComponent implements OnInit, OnDestroy {
         this.reponseQuiz.question = reponse.question;
         this.reponseQuiz.numero = reponse.numero;
         this.reponseQuiz.type = 'QUIZ';
-        this.reponseQuiz.sender = 'STUDENT_CHOICE_T12';
-        this.reponseQuiz.student = this.login.getConnectedStudent();
+        if (this.groupeEtudiant.groupeEtude.nombreEtudiant === 1){
+            this.reponseQuiz.sender = 'STUDENT_CHOICE_T12';
+        } else{
+            this.reponseQuiz.sender = 'STUDENT_CHOICE_T12_FOR_GRP';
+        }
+        this.reponseQuiz.prof = this.login.getConnectedProf();
         this.reponseQuiz.etatReponse = reponse.etatReponse;
-        const chatMessageDto: ChatMessageDto = new ChatMessageDto(this.login.getConnectedStudent().id.toString(), 'STUDENT_CHOICE_T12', false);
+        const chatMessageDto: ChatMessageDto = new ChatMessageDto(this.login.getConnectedStudent().id.toString(),
+            'STUDENT_CHOICE_T12', false);
         chatMessageDto.quizReponse = this.reponseQuiz;
         chatMessageDto.type = 'QUIZ';
         this.webSocketService.sendMessage(chatMessageDto, 'PROF');
-
     }
 }

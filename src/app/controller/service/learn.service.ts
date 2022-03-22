@@ -541,7 +541,9 @@ export class LearnService {
 
 
     saveAnswers(question: Question, type: string): Reponse {
-        this.translate(question);
+        if (question?.typeDeQuestion?.ref !== 't12') {
+            this.translate(question);
+        }
         this.disableButtonSon = false;
         if (question.typeDeQuestion.ref === 't1') {
             for (const item of question.reponses) {
@@ -588,6 +590,7 @@ export class LearnService {
             this.answerSelected.id = this.reponseQuiz.id;
             this.answerSelected.question = this.reponseQuiz.question;
             this.answerSelected.numero = this.reponseQuiz.numero;
+            this.answerSelected.etatReponse = this.reponseQuiz.etatReponse;
         }
         this.answersList.set(question, this.answerSelected);
         this.answersPointStudent.set(question, type);
@@ -651,9 +654,6 @@ export class LearnService {
 
 
     nextQuestionFct(): Question {
-        console.log('=========================== NEXT QUESTION  FUNCTION =================================');
-        console.log(this.question);
-        console.log('=========================== NEXT QUESTION  FUNCTION =================================');
         this.reponseQuiz = new QuizReponse();
         this.translateWord = String();
         this.wordDictionnary = String();
@@ -683,22 +683,16 @@ export class LearnService {
                     this.inputAnswer = this.question.libelle.substring(this.question.libelle.indexOf('@') + 1,
                         this.question.libelle.lastIndexOf('@'));
                 } else if (this.question.typeDeQuestion.ref === 't3') {
-                    console.log('====================== T3 =======================================');
-                    console.log(this.correctAnswersList.get(this.question.id)[0]);
-                    console.log('====================== T3 =======================================');
                     this.placeHolderAnswer = this.correctAnswersList.get(this.question.id)[0]?.lib;
                 } else if (this.question.typeDeQuestion.ref === 't12') {
                     this.extractedData(this.question.libelle, 't12');
-                    console.log('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
                     console.log(this.answersT12List);
                     this.showT12Answers();
                 }
                 break;
             }
         }
-        console.log('==============================================================');
-        console.log(this.question);
-        console.log('==============================================================');
+
         return this.question;
     }
 
@@ -886,7 +880,7 @@ export class LearnService {
         this.showDontKnowButton = true;
         this.showCheckButton = false;
         this.t12AnswersList = reponses.filter(t => t.numero === index);
-        document.getElementById(String(index)).style.borderBottom = '3px dashed #2196f3';
+        document.getElementById(String(index)).style.borderBottom = '2px solid #2196f3';
         document.getElementById(String(index)).style.color = '#2196f3';
     }
 
@@ -998,33 +992,52 @@ export class LearnService {
     }
 
 
-    onClickT12(answer: Reponse): Reponse {
+    onClickT12(answer: Reponse): boolean {
+        console.log('================================');
+        console.log(this.nextIndex);
+        console.log(this.answersT12List.size);
         this.studenta_answersT12.set(answer.numero, answer.lib);
         this.showT12AnswerDiv = true;
         this.nextIndex += 1;
         if (this.nextIndex <= this.answersT12List.size) {
+            this.showCheckButton = false;
+            this.showDontKnowButton = true;
             this.filterDatat12(this.quizT12AnswersList, this.nextIndex);
+            console.log('ANA F NOT  SHOW CHECK BUTTON');
+            console.log(this.showCheckButton);
+            document.getElementById('showCheckButtonForT12').style.visibility = 'hidden';
+            return false;
         } else {
+            console.log('ANA F ELSE SHOW CHECK BUTTON');
             this.disableButtonSon = false;
             this.showCheckButton = true;
             this.showDontKnowButton = false;
             this.t12AnswersList = new Array<Reponse>();
+            console.log(this.showCheckButton);
+            document.getElementById('showCheckButtonForT12').style.visibility = 'visible';
+            return true;
         }
-        return answer;
     }
 
-    checkT12Answer(qst: Question) {
+    checkT12Answer(qst: Question): Reponse {
         let reponseStudent: Reponse = new Reponse();
-        console.log(this.quizT12AnswersList);
-        console.log(this.studenta_answersT12);
         for (const item of this.studenta_answersT12.values()) {
             for (const reponse of this.quizT12AnswersList) {
                 if (item === reponse.lib) {
                     if (reponse.etatReponse === 'true') {
                         document.getElementById(item).className = 'correctAnswerT12';
-                        reponseStudent.lib = reponseStudent.lib + ' / ' + item + '(true)';
+                        if (reponseStudent.lib !== undefined) {
+                            reponseStudent.lib = reponseStudent.lib + ' / ' + item + '(true)';
+                        } else {
+                            reponseStudent.lib = item + '(true)';
+                        }
+
                     } else {
-                        reponseStudent.lib = reponseStudent.lib + ' / ' + item + '(false)';
+                        if (reponseStudent.lib !== undefined) {
+                            reponseStudent.lib = reponseStudent.lib + ' / ' + item + '(false)';
+                        } else {
+                            reponseStudent.lib = item + '(false)';
+                        }
                         reponseStudent.etatReponse = 'false';
                         document.getElementById(item).className = 'incorrectAnswerT12';
                         document.getElementById(item).style.paddingTop = '5px';
@@ -1036,7 +1049,6 @@ export class LearnService {
             }
         }
         reponseStudent.question = qst;
-        console.log(reponseStudent);
         return reponseStudent;
     }
 }

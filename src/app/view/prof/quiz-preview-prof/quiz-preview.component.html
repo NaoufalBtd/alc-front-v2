@@ -302,6 +302,14 @@
              class="p-col-3 answert12">
             {{value?.lib}}
         </div>
+        <div class="p-col-12 answers">
+
+            <button id="showCheckButtonForT12" style="visibility: hidden" pButton pRipple type="button"
+                    icon="pi pi-check" iconPos="right"
+                    label="Check answer" class="p-button-raised check-button "
+                    (click)="saveAnswers(question)">
+            </button>
+        </div>
 
     </div>
 
@@ -318,11 +326,6 @@
 
         <div style="text-align: center" class="p-col-6">
 
-            <!--            <button *ngIf="question.id !== questionList[0]?.id && showFollowButton"-->
-            <!--                    pButton pRipple-->
-            <!--                    type="button" icon="pi pi-arrow-down" iconPos="right"-->
-            <!--                    label="Follow me" (click)="followMeFct(question)"-->
-            <!--                    class="p-button-rounded p-button-info"></button>-->
         </div>
 
         <div class="p-col-3">

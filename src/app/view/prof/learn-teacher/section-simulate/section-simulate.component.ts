@@ -30,6 +30,7 @@ import {SimulateSectionService} from '../../../../controller/service/simulate-se
 import {SessionCours} from '../../../../controller/model/session-cours.model';
 import {User} from '../../../../controller/model/user.model';
 import {ScheduleProf} from '../../../../controller/model/calendrier-prof.model';
+import {QuizReponse} from '../../../../controller/model/quiz-reponse';
 
 @Pipe({name: 'safe'})
 export class SafePipe1 implements PipeTransform {
@@ -380,7 +381,16 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
         return this.service.contenu;
     }
 
+    get grpStudentAnswers(): Map<Etudiant, QuizReponse> {
+        return this.webSocketService.grpStudentAnswers;
+    }
+
+    set grpStudentAnswers(value: Map<Etudiant, QuizReponse>) {
+        this.webSocketService.grpStudentAnswers = value;
+    }
+
     PreviousSection(section: Section) {
+        this.grpStudentAnswers = new Map<Etudiant, QuizReponse>();
         this.showFlowMeButton = false;
         for (let i = 0; i < this.itemssection2.length; i++) {
             if (section.id === this.itemssection2[i].id) {
@@ -392,6 +402,7 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
     }
 
     NextSection(section: Section) {
+        this.grpStudentAnswers = new Map<Etudiant, QuizReponse>();
         let index = 0;
         for (const item of this.sessionCour.sections) {
             if (item.id === section.id) {

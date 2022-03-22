@@ -311,17 +311,12 @@
 
         <div class="p-col-12 answers">
 
-            <button *ngIf="showCheckButton && !saveDone" pButton pRipple type="button"
+            <button id="showCheckButtonForT12" style="visibility: hidden" pButton pRipple type="button"
                     icon="pi pi-check" iconPos="right"
                     label="Check answer" class="p-button-raised check-button "
                     (click)="saveAnswers(question)">
             </button>
 
-            <button *ngIf="showDontKnowButton" pButton pRipple type="button"
-                    icon="pi pi-question" iconPos="right"
-                    label="DON'T KNOW" class="p-button-rounded dont-know-button "
-                    (click)="showAnswers(question)">
-            </button>
         </div>
 
     </div>
