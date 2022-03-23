@@ -12,6 +12,7 @@ import {HomeWorkReponse} from '../../../controller/model/home-work-reponse.model
 import {Router} from '@angular/router';
 import {LearnService} from '../../../controller/service/learn.service';
 import {MessageService} from 'primeng/api';
+import {TypeHomeWorkEnum} from '../../../enum/type-question.enum';
 
 @Component({
     selector: 'app-home-work-preview',
@@ -135,7 +136,8 @@ export class HomeWorkPreviewComponent implements OnInit {
         this.parcourCurrent = this.selectedparcours;
         this.homeWorkSelected = homework;
         console.log(this.homeWorkSelected);
-        if (homework.libelle === 'WRITE IT UP' || homework.libelle === 'READING' || homework.libelle === 'Watch it') {
+        if (homework.typeHomeWork.lib === TypeHomeWorkEnum.WRITE_IT_UP || homework.typeHomeWork.lib === TypeHomeWorkEnum.READING ||
+            homework.typeHomeWork.lib === TypeHomeWorkEnum.WATCH_IT) {
             this.editWriteItUp(homework);
         } else {
             this.router.navigate(['/admin/homeWork']);
@@ -233,11 +235,11 @@ export class HomeWorkPreviewComponent implements OnInit {
     }
 
     isValidated(homework: HomeWork): boolean {
-        if (homework.libelle === 'Watch it') {
+        if (homework.typeHomeWork.lib === TypeHomeWorkEnum.WATCH_IT) {
             return (homework.urlVideo?.length >= 5 || homework.urlImage == null || undefined);
-        } else if (homework.libelle === 'READING') {
+        } else if (homework.typeHomeWork.lib === TypeHomeWorkEnum.READING) {
             return !(homework.urlImage?.length < 5);
-        } else if (homework.libelle === 'WRITE IT UP') {
+        } else if (homework.typeHomeWork.lib === TypeHomeWorkEnum.WRITE_IT_UP) {
             return !(homework.urlImage === null || homework.urlImage?.length < 5);
         } else {
             return true;
