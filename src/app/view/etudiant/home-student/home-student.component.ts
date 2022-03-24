@@ -193,7 +193,7 @@ export class HomeStudentComponent implements OnInit {
     }
 
     updateRestOfTime() {
-        const date = new Date(this.nextLesson.startTime);
+        const date = new Date(2022, 2, 24, 13, 14, 0);
         const dateNow = new Date();
         const milliseconds = date.getTime() - dateNow.getTime();
         // ----------------------- Days -----------------------------

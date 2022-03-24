@@ -97,6 +97,14 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
     ) {
     }
 
+    get badgeNrMsg(): number {
+        return this.learnService.badgeNrMsg;
+    }
+
+    set badgeNrMsg(value: number) {
+        this.learnService.badgeNrMsg = value;
+    }
+
     get tabViewActiveIndex(): number {
         return this.webSocketService.tabViewActiveIndex;
     }
@@ -602,7 +610,7 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
             data => {
                 this.selectedReview = data;
             });
-        this.findAllDict();
+        this.onTabViewChange();
         this.quizService.section.id = this.selectedsection.id;
         this.quizService.findQuizSection().subscribe(data => this.selectedQuiz = data);
         this.quizService.findQuizBySectionId(this.selectedsection).subscribe(
@@ -650,11 +658,16 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
         this.homeWorkService.onStartHomeWork(this.selectedcours);
     }
 
-    findAllDict() {
-        this.dictionnaryService.FindAllWord().subscribe(
-            data => {
-                this.itemsDict = data;
-            });
+    onTabViewChange() {
+        if (this.tabViewActiveIndex === 2) {
+            this.dictionnaryService.FindAllWord().subscribe(
+                data => {
+                    this.itemsDict = data;
+                });
+        } else if (this.tabViewActiveIndex === 3) { // chat
+            this.badgeNrMsg = 0;
+        }
+
     }
 
     public findhomeworkbycours(cours: Cours) {

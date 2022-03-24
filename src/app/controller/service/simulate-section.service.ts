@@ -301,9 +301,6 @@ export class SimulateSectionService {
         return this.service.sectionStandard;
     }
 
-    set sectionStandard(value: Array<Section>) {
-        this.service.sectionStandard = value;
-    }
 
     get sectionAdditional(): Array<Section> {
         return this.service.sectionAdditional;
@@ -631,23 +628,23 @@ export class SimulateSectionService {
                     }
                     this.quizService.findQuizBySection(this.selectedsection.id).subscribe(
                         dataQuiz => {
-                        this.selectedQuiz = dataQuiz;
-                        this.quizService.findQuizEtudanitByEtudiantIdAndQuizId(this.loginService.etudiant, this.selectedQuiz).subscribe(
-                            data1 => {
-                                this.quizEtudiantList = data1;
-                                console.log(this.quizEtudiantList);
-                                if (this.quizEtudiantList.id !== 0) {
-                                    this.quizView = true;
-                                } else {
+                            this.selectedQuiz = dataQuiz;
+                            this.quizService.findQuizEtudanitByEtudiantIdAndQuizId(this.loginService.etudiant, this.selectedQuiz).subscribe(
+                                data1 => {
+                                    this.quizEtudiantList = data1;
+                                    console.log(this.quizEtudiantList);
+                                    if (this.quizEtudiantList.id !== 0) {
+                                        this.quizView = true;
+                                    } else {
+                                        this.quizView = false;
+                                    }
+                                }, error => {
+                                    this.passerQuiz = 'Take Quiz';
+                                    console.log(error);
                                     this.quizView = false;
                                 }
-                            }, error => {
-                                this.passerQuiz = 'Take Quiz';
-                                console.log(error);
-                                this.quizView = false;
-                            }
-                        );
-                    });
+                            );
+                        });
                     console.log(this.service.image);
                     this.service.image = this.selectedsection.urlImage;
                     this.quizService.section.id = this.selectedsection.id;

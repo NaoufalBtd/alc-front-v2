@@ -23,6 +23,7 @@ import {GroupeEtudiantService} from './groupe-etudiant-service';
 import {MessageService} from 'primeng/api';
 import {ScheduleProf} from '../model/calendrier-prof.model';
 import {Reponse} from '../model/reponse.model';
+import {Role} from '../../enum/role.enum';
 
 @Injectable({
     providedIn: 'root'
@@ -50,6 +51,7 @@ export class WebSocketService {
     private _selectedSchedule: ScheduleProf = new ScheduleProf();
     private _tabViewActiveIndex = 0;
     private numerOft12Qst = -1;
+    private _activeIndexForTabView: number;
 
     constructor(private serviceetudiant: EtudiantService,
                 private authService: AuthenticationService,
@@ -64,6 +66,22 @@ export class WebSocketService {
     ) {
     }
 
+
+    get activeIndexForTabView(): number {
+        return this._activeIndexForTabView;
+    }
+
+    set activeIndexForTabView(value: number) {
+        this._activeIndexForTabView = value;
+    }
+
+    get badgeNrMsg(): number {
+        return this.learnService.badgeNrMsg;
+    }
+
+    set badgeNrMsg(value: number) {
+        this.learnService.badgeNrMsg = value;
+    }
 
     get tabViewActiveIndex(): number {
         return this._tabViewActiveIndex;
@@ -194,6 +212,23 @@ export class WebSocketService {
                 for (const etudiant of this.participants.get(data.prof.id)) {
                     if (etudiant.id === this.loginservice.getConnectedStudent().id) {
                         this.chatMessages.push({...data});
+                        if (this.loginservice.getConnecteUser().role === Role.PROF) {
+                            if (this.activeIndexForTabView === 2) { // chat Prof
+                                this.badgeNrMsg = 0;
+                            } else {
+                                this.badgeNrMsg = this.chatMessages.length;
+                                this.notificationMessageSound();
+                            }
+                        } else {
+                            if (this.tabViewActiveIndex === 3) { // chat student
+                                this.badgeNrMsg = 0;
+                            } else {
+                                this.badgeNrMsg = this.chatMessages.length;
+                                this.notificationMessageSound();
+                            }
+                        }
+
+
                     }
                 }
             } else if (data.type === 'SECTION') {
@@ -498,4 +533,12 @@ export class WebSocketService {
         );
 
     }
+
+    notificationMessageSound() {
+        const audio = new Audio();
+        audio.src = './assets/Notification/message-pop-alert.mp3';
+        audio.load();
+        audio.play();
+    }
+
 }

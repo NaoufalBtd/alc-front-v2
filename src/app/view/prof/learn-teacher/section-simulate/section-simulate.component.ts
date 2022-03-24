@@ -84,6 +84,15 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
                 private service: ParcoursService, private http: HttpClient, private review: EtudiantReviewService) {
     }
 
+    get badgeNrMsg(): number {
+        return this.learnService.badgeNrMsg;
+    }
+
+    set badgeNrMsg(value: number) {
+        this.learnService.badgeNrMsg = value;
+    }
+
+
     get selectedNow(): Dictionary {
         return this.dictionnaryService.selectedNow;
     }
@@ -293,6 +302,14 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
 
     set quizExist(value: boolean) {
         this.simulateSectionService.quizExist = value;
+    }
+
+    get activeIndexForTabView(): number {
+        return this.webSocketService.activeIndexForTabView;
+    }
+
+    set activeIndexForTabView(value: number) {
+        this.webSocketService.activeIndexForTabView = value;
     }
 
     synonymes: string;
@@ -731,7 +748,7 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
     }
 
     showSticky() {
-        this.messageService.add({severity: 'success', summary: ' ', detail: 'Lesson is over', sticky: true});
+        this.messageService.add({severity: 'success', summary: ' ', detail: 'Lesson is over', life: 5000, sticky: true});
     }
 
 
@@ -747,5 +764,12 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
 
     clear() {
         this.messageService.clear();
+    }
+
+    tabViewChange() {
+        console.log(this.activeIndexForTabView);
+        if (this.activeIndexForTabView === 2) { // chat
+            this.badgeNrMsg = 0;
+        }
     }
 }

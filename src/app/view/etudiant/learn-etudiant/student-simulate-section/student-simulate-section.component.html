@@ -254,7 +254,8 @@
 
                     <div class="product-grid-item-content" style="background-color: white;">
                         <div class="card">
-                            <p-tabView (onChange)="findAllDict()" [(activeIndex)]="tabViewActiveIndex" styleClass="tabview-custom">
+                            <p-tabView (onChange)="onTabViewChange()" [(activeIndex)]="tabViewActiveIndex"
+                                       styleClass="tabview-custom">
                                 <p-tabPanel>
                                     <ng-template pTemplate="header">
                                         <img src="./assets/icons/icons-lesson.png"
@@ -335,10 +336,6 @@
                                                class="pi pi-times-circle"></i>
 
 
-                                            <!--                                            <i id="check-icon"-->
-                                            <!--                                               class="pi pi-check-circle"></i>-->
-
-
                                             <a (click)="homeWorkSelectedFct(homeWork)"
                                                [style.color]="(homeWork.id) === (this.selectedHomeWork?.id)? 'orange' :'#757f8a' "
                                                class="list-item">
@@ -350,23 +347,6 @@
                                         <div style="background-color: #e9ecef;margin-top: 33px; margin-bottom: -13px;">
                                             <h6 style="color: black ">ADDITIONAL</h6>
                                         </div>
-
-
-                                        <!--                                        <div *ngFor="let homeWork of homeWorkList"-->
-                                        <!--                                             class="list-group">-->
-                                        <!--                                            <i id="check-icon"-->
-                                        <!--                                               class="pi pi-times-circle"></i>-->
-
-
-                                        <!--                                            &lt;!&ndash;                                            <i id="check-icon"&ndash;&gt;-->
-                                        <!--                                            &lt;!&ndash;                                               class="pi pi-check-circle"></i>&ndash;&gt;-->
-
-
-                                        <!--                                            <a (click)="homeWorkSelectedFct(homeWork)" class="list-item">-->
-                                        <!--                                                {{homeWork?.libelle}}-->
-                                        <!--                                            </a>-->
-                                        <!--                                        </div>-->
-
 
                                     </div>
 
@@ -405,6 +385,9 @@
                                         <img src="./assets/icons/icon-chat.png"
                                              pTooltip="Chat" tooltipPosition="top"
                                              class="homeWorkIcon">
+                                        <p-badge *ngIf="badgeNrMsg !== 0" [value]="badgeNrMsg.toString()"
+                                                 severity="warning"
+                                                 styleClass="mr-1"></p-badge>
                                     </ng-template>
 
                                     <app-chat1 id="chat"></app-chat1>

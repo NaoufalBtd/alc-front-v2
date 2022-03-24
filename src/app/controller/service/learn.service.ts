@@ -86,7 +86,15 @@ export class LearnService {
     private _selectedT12Reponse: Reponse = new Reponse();
 
     private _dernierSelected: Reponse = new Reponse();
+    private _badgeNrMsg = 0;
 
+    get badgeNrMsg(): number {
+        return this._badgeNrMsg;
+    }
+
+    set badgeNrMsg(value: number) {
+        this._badgeNrMsg = value;
+    }
 
     get questionOptions(): ({ label: string; value: string } | { label: string; value: string })[] {
         return this._questionOptions;

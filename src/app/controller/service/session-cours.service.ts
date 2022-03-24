@@ -319,7 +319,7 @@ export class SessionCoursService {
 
     public saveSessionCours(sessionCours: SessionCours) {
         this.http.post(this.profUrlSession, sessionCours).subscribe(data => {
-            this.messageService.add({severity: 'success', summary: ' ', detail: 'Lesson is over', sticky: true});
+            this.messageService.add({severity: 'success', summary: ' ', life: 5000, detail: 'Lesson is over', sticky: true});
         }, error => {
             this.messageService.add({
                 severity: 'error',
@@ -332,6 +332,6 @@ export class SessionCoursService {
     }
 
     public findSessionCoursByGroupeEtudiantId(groupeEtudiant: GroupeEtudiant): Observable<Array<SessionCours>> {
-        return  this.http.get<Array<SessionCours>>(this.profUrlSession + 'groupeEtudiant/id/' + groupeEtudiant.id);
+        return this.http.get<Array<SessionCours>>(this.profUrlSession + 'groupeEtudiant/id/' + groupeEtudiant.id);
     }
 }
