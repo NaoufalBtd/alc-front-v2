@@ -21,6 +21,7 @@ import {TypeHomeWorkEnum, TypeQuestionEnum} from '../../../enum/type-question.en
     styleUrls: ['./home-work-component.component.scss']
 })
 export class HomeWorkComponentComponent implements OnInit {
+    public TypeHomeWorkEnum = TypeHomeWorkEnum;
 
     constructor(private service: HomeworkService,
                 private homeWorkEtudiantService: HomeWorkEtudiantServiceService,
@@ -425,6 +426,7 @@ export class HomeWorkComponentComponent implements OnInit {
     }
 
     filterTypeOfQsts() {
+        console.log(this.typeHomeWork.lib);
         if (this.typeHomeWork.lib === TypeHomeWorkEnum.LET_S_PRACTICE) {
             this.typeOfQuestions = this.typeOfQuestions.filter(t => (t.ref !== 't10' &&
                 t.ref !== 't8' && t.ref !== 't9' && t.ref !== 't7' && t.ref !== 't2'));

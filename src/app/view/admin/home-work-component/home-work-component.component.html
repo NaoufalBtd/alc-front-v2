@@ -12,13 +12,13 @@
                             pRipple></button>
                 </div>
 
-                <div *ngIf="typeHomeWork.lib === 'Let\'s Practice'" class="p-toolbar-group-right">
+                <div *ngIf="typeHomeWork.lib === TypeHomeWorkEnum.LET_S_PRACTICE" class="p-toolbar-group-right">
                     <button (click)="saveHomeWork()" icon="pi pi-check" label="Save" pButton pRipple
                             type="button"></button>
                 </div>
 
 
-                <div *ngIf="typeHomeWork.lib === 'PHRASEBOOK'" class="p-toolbar-group-right">
+                <div *ngIf="typeHomeWork.lib === TypeHomeWorkEnum.PHRASEBOOK" class="p-toolbar-group-right">
                     <button (click)="saveHomeWork()" icon="pi pi-check" label="Save" pButton pRipple
                             type="button"></button>
                 </div>
@@ -49,7 +49,7 @@
                 </div>
             </div>
 
-            <div *ngIf="typeHomeWork?.lib === 'READING' || typeHomeWork?.lib === 'WRITE IT UP'" class="p-grid">
+            <div *ngIf="typeHomeWork?.lib === TypeHomeWorkEnum.READING || typeHomeWork?.lib === TypeHomeWorkEnum.WRITE_IT_UP" class="p-grid">
                 <div class="p-col-4">
                     <h6>Image Url</h6>
                     <input required [style]="{'width': '100%'}" type="text" pInputText [(ngModel)]="homeWork.urlImage">
@@ -86,7 +86,7 @@
             </div>
 
 
-            <div *ngIf="typeHomeWork?.lib === 'PHRASEBOOK'" class="p-grid">
+            <div *ngIf="typeHomeWork?.lib === TypeHomeWorkEnum.PHRASEBOOK" class="p-grid">
 
                 <div class="p-col-3">
                     <h6>Number</h6>
@@ -162,7 +162,7 @@
             </div>
 
 
-            <div *ngIf="typeHomeWork?.lib === 'Watch it'" class="p-grid">
+            <div *ngIf="typeHomeWork?.lib === TypeHomeWorkEnum.WATCH_IT" class="p-grid">
                 <div class="p-col-8 ">
                     <h6>Url video</h6>
                     <textarea required [style]="{'width':'100%', 'padding': '10px'}" rows="1"
@@ -181,7 +181,7 @@
             </div>
 
 
-            <div *ngIf="typeHomeWork.lib === 'Let\'s Practice'" class="p-grid">
+            <div *ngIf="typeHomeWork.lib === TypeHomeWorkEnum.LET_S_PRACTICE" class="p-grid">
 
 
                 <div class="p-col-2">
@@ -445,7 +445,7 @@
 
             </div>
 
-            <div *ngIf="typeHomeWork.lib === 'Drag and Drop'" class="p-grid">
+            <div *ngIf="typeHomeWork.lib === TypeHomeWorkEnum.DRAG_AND_DROP" class="p-grid">
                 <div class="p-col-4">
                     <h6>Image Url</h6>
                     <input [style]="{'width': '100%'}" type="text" pInputText [(ngModel)]="homeWork.urlImage">

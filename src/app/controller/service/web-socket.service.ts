@@ -227,8 +227,6 @@ export class WebSocketService {
                                 this.notificationMessageSound();
                             }
                         }
-
-
                     }
                 }
             } else if (data.type === 'SECTION') {

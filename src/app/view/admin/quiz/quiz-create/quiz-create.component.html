@@ -58,7 +58,8 @@
                                 [style]="{'width': '100%'}"
                                 (click)="chooseType()"></p-dropdown>
                 </div>
-                <div *ngIf="question.typeDeQuestion.ref !== 't12'" class="p-col-8" id="formCard">
+                <div *ngIf="question.typeDeQuestion.ref !== 't12' && question.typeDeQuestion.ref !== 't13'"
+                     class="p-col-8" id="formCard">
                     <div class="card" styleClass="p-card-shadow">
                         <div class="p-fluid p-formgrid p-grid">
                             <div class="p-field p-col-12 ">
@@ -132,7 +133,8 @@
                         </div>
                     </div>
                 </div>
-                <div *ngIf="question.typeDeQuestion.ref === 't12'" class="p-col-8">
+                <div *ngIf="question.typeDeQuestion.ref === 't12' && question.typeDeQuestion.ref !== 't13'"
+                     class="p-col-8">
                     <div class="p-grid divT12">
 
                         <div class="p-col-2">
@@ -190,13 +192,14 @@
                         <div class="p-col-12 fullText">
                             <p-accordion>
                                 <p-accordionTab *ngFor="let item of mapTranslate | keyvalue" [header]="item.key">
-                                    <div class="answerContainer"  *ngFor="let value of item.value">
+                                    <div class="answerContainer" *ngFor="let value of item.value">
                                         <input [style]="{'width': '65%'}" [(ngModel)]="value.lib"
                                                type="text"
                                                class="editInput"
                                                pInputText
                                                placeholder="false point">
-                                        <p-selectButton [options]="stateOptions" [(ngModel)]="value.etatReponse" optionLabel="value"
+                                        <p-selectButton [options]="stateOptions" [(ngModel)]="value.etatReponse"
+                                                        optionLabel="value"
                                                         class="editInput1"
                                                         optionValue="value"></p-selectButton>
                                     </div>
@@ -211,6 +214,42 @@
                                     label="save word"
                                     pButton pRipple type="button"></button>
                         </div>
+
+                    </div>
+                </div>
+
+
+                <div *ngIf="question.typeDeQuestion.ref === 't13'"
+                     style="background: gainsboro;  border-radius: 5px; margin-bottom: 20px;" class="p-col-8">
+                    <div class="p-grid">
+                        <div class="p-col-4">
+                            <h6>Image Url</h6>
+                            <input [style]="{'width': '100%'}" type="text" pInputText [(ngModel)]="question.urlImg">
+                        </div>
+
+                        <div class="p-col-4">
+                            <h6>Video Url</h6>
+                            <input [style]="{'width': '100%'}" type="text" pInputText [(ngModel)]="question.urlVideo">
+                        </div>
+
+                        <div class="p-col-4">
+                            <h6>Title</h6>
+                            <input [style]="{'width': '100%'}" type="text" pInputText [(ngModel)]="question.ref">
+                        </div>
+
+
+                        <div class="p-col-12 ">
+                            <h6>Content</h6>
+                            <textarea required="required"
+                                      [style]="{'width':'100%', 'padding': '10px'}" rows="2"
+                                      [(ngModel)]="question.libelle"
+                                      pInputTextarea
+                                      placeholder=" Example:
+Lucas goes to @school@ every day of the week. He has many subjects to @go@ to each school day: English, art, science, mathematics, gym, and history.
+His @mother@ packs a big backpack full of @books@ and lunch for Lucas."
+                                      autoResize="autoResize"></textarea>
+                        </div>
+
 
                     </div>
                 </div>
