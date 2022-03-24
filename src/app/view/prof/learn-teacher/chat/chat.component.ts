@@ -6,6 +6,7 @@ import {LoginService} from '../../../../controller/service/login.service';
 import {ProfService} from '../../../../controller/service/prof.service';
 import {Etudiant} from '../../../../controller/model/etudiant.model';
 import {GroupeEtudiant} from '../../../../controller/model/groupe-etudiant.model';
+import {LearnService} from '../../../../controller/service/learn.service';
 
 @Component({
     selector: 'app-chat',
@@ -16,12 +17,22 @@ export class ChatComponent implements OnInit, OnDestroy {
     today = Date.now();
 
     constructor(public webSocketService: WebSocketService,
+                private learnService: LearnService,
                 public loginService: LoginService, public serviceprof: ProfService) {
+    }
+
+    get badgeNrMsg(): number {
+        return this.learnService.badgeNrMsg;
+    }
+
+    set badgeNrMsg(value: number) {
+        this.learnService.badgeNrMsg = value;
     }
 
     ngOnInit(): void {
         this.webSocketService.findbynumero(this.loginService.prof.id);
         this.webSocketService.findstudentlist(this.loginService.prof.id);
+
     }
 
     get listStudent(): Array<Etudiant> {
@@ -51,4 +62,6 @@ export class ChatComponent implements OnInit, OnDestroy {
     get groupeEtudiant(): GroupeEtudiant {
         return this.webSocketService.groupeEtudiant;
     }
+
+
 }
