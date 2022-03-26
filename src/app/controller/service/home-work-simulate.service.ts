@@ -478,7 +478,7 @@ export class HomeWorkSimulateService {
         this.showTypeOfQstBar = true;
         this.showWatchItHomeWork = false;
         this.showDragHomeWork = false;
-        if (homeWork.libelle === 'Watch it' || homeWork.libelle === 'Drag and Drop') {
+        if (homeWork.libelle === 'Watch it' || homeWork.libelle === 'Life Story') {
             this.selectedHomeWork = homeWork;
             this.homeWorkQuestion = new HomeWorkQST();
             if (homeWork.libelle === 'Watch it') {

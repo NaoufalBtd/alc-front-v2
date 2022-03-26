@@ -72,6 +72,8 @@
                     <td>
                         <button pButton pRipple type="button" icon="pi pi-question-circle" (click)="showQuiz(section)"
                                 pTooltip="Quiz" tooltipPosition="top"
+                                label="Create quiz"
+                                iconPos="left"
                                 class="p-button-rounded p-button-help "></button>
                     </td>
 
@@ -101,30 +103,30 @@
     <div class="p-grid">
         <div class="p-col-3 ">
             <h6>ID</h6>
-            <input disabled type="text" pInputText [(ngModel)]="sectionSelected.id">
+            <input disabled type="text" pInputText [(ngModel)]="localSectionSelected.id">
         </div>
 
         <div class="p-col-3 ">
             <h6>Number</h6>
-            <input type="number" pInputText [(ngModel)]="sectionSelected.numeroOrder">
+            <input type="number" pInputText [(ngModel)]="localSectionSelected.numeroOrder">
         </div>
 
 
         <div class="p-col-3 ">
             <h6>Title</h6>
-            <input type="text" pInputText [(ngModel)]="sectionSelected.libelle">
+            <input type="text" pInputText [(ngModel)]="localSectionSelected.libelle">
         </div>
 
 
         <div class="p-col-3 ">
             <h6>Code</h6>
-            <input type="text" pInputText [(ngModel)]="sectionSelected.code">
+            <input type="text" pInputText [(ngModel)]="localSectionSelected.code">
         </div>
 
 
         <div class="p-col-3 ">
             <h6>Category</h6>
-            <p-dropdown [options]="categorieSections" [(ngModel)]="sectionSelected.categorieSection.libelle"
+            <p-dropdown [options]="categorieSections" [(ngModel)]="localSectionSelected.categorieSection.libelle"
                         optionLabel="libelle" [filter]="true" filterBy="libelle"
                         [style]="{'width': '100%'}"
                         [showClear]="false">
@@ -134,7 +136,7 @@
 
         <div class="p-col-3 ">
             <h6>Course</h6>
-            <p-dropdown [options]="cours" [(ngModel)]="sectionSelected.cours.libelle"
+            <p-dropdown [options]="cours" [(ngModel)]="localSectionSelected.cours.libelle"
                         optionLabel="libelle" [filter]="true" filterBy="libelle"
                         [style]="{'width': '100%'}"
                         [showClear]="false">
@@ -144,7 +146,7 @@
 
         <div class="p-col-3 ">
             <h6>Indication of Teacher's</h6>
-            <input type="text" pInputText [(ngModel)]="sectionSelected.indicationProf">
+            <input type="text" pInputText [(ngModel)]="localSectionSelected.indicationProf">
         </div>
 
 
@@ -153,36 +155,36 @@
 
         <div class="p-col-3 ">
             <h6>Question</h6>
-            <input type="text" pInputText [(ngModel)]="sectionSelected.questions">
+            <input type="text" pInputText [(ngModel)]="localSectionSelected.questions">
         </div>
 
 
         <div class="p-col-3 ">
             <h6>Url image</h6>
-            <input type="text" pInputText [(ngModel)]="sectionSelected.urlImage">
+            <input type="text" pInputText [(ngModel)]="localSectionSelected.urlImage">
         </div>
 
 
         <div class="p-col-3 ">
             <h6>Url image 2</h6>
-            <input type="text" pInputText [(ngModel)]="sectionSelected.urlImage2">
+            <input type="text" pInputText [(ngModel)]="localSectionSelected.urlImage2">
         </div>
 
 
         <div class="p-col-3 ">
             <h6>Url image 3</h6>
-            <input type="text" pInputText [(ngModel)]="sectionSelected.urlImage3">
+            <input type="text" pInputText [(ngModel)]="localSectionSelected.urlImage3">
         </div>
 
 
         <div class="p-col-3 ">
             <h6>Url video</h6>
-            <input type="text" pInputText [(ngModel)]="sectionSelected.urlVideo">
+            <input type="text" pInputText [(ngModel)]="localSectionSelected.urlVideo">
         </div>
 
         <div class="p-col-12">
             <h6>Content</h6>
-            <textarea rows="5" cols="100%" [(ngModel)]="sectionSelected.contenu" pInputTextarea
+            <textarea rows="5" cols="100%" [(ngModel)]="localSectionSelected.contenu" pInputTextarea
                       autoResize="autoResize"></textarea>
         </div>
 

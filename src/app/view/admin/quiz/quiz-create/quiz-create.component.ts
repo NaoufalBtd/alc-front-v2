@@ -405,26 +405,36 @@ export class QuizCreateComponent implements OnInit {
 
     public save() {
         this.selected.ref = 'quiz-' + this.selectedsection.id;
-        this.selected.section.id = this.selectedsection.id;
+        this.selected.section = this.selectedsection;
         console.log(this.selected.section.id);
         this.service.refQuiz = this.service.selected.ref;
         console.log('========================= QUIZ ====================================');
         console.log(this.selected);
-        this.service.save().subscribe(
-            data => {
-                this.items.push({...data});
-                console.log(this.questions);
-                console.log(this.items);
-                this.question = null;
-                this.selected = null;
-                this.messageService.add({
-                    severity: 'success',
-                    summary: 'Successful',
-                    detail: 'Quiz Created',
-                    life: 3000
-                });
-                this.router.navigate(['/admin/parcours']);
+        if (this.selected.section.id === undefined) {
+            this.messageService.add({
+                severity: 'error',
+                summary: 'Error',
+                detail: 'Section is null please choose a section from "Manage section"',
+                life: 3000
             });
+        } else {
+            this.service.save().subscribe(
+                data => {
+                    this.items.push({...data});
+                    console.log(this.questions);
+                    console.log(this.items);
+                    this.question = null;
+                    this.selected = null;
+                    this.messageService.add({
+                        severity: 'success',
+                        summary: 'Successful',
+                        detail: 'Quiz Created',
+                        life: 3000
+                    });
+                    this.router.navigate(['/admin/manage-section']);
+                });
+        }
+
     }
 
     public edit() {

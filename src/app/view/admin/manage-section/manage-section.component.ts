@@ -20,7 +20,7 @@ export class ManageSectionComponent implements OnInit {
     public parcours: Array<Parcours> = new Array<Parcours>();
     public cours: Array<Cours> = new Array<Cours>();
     public sections: Array<Section> = new Array<Section>();
-    public sectionSelected: Section = new Section();
+    public localSectionSelected: Section = new Section();
     public section: Section = new Section();
     visibleSidebar: boolean;
     rows = 10;
@@ -59,12 +59,9 @@ export class ManageSectionComponent implements OnInit {
     }
 
 
-
-
     set sectionCurrent(value: Section) {
         this.learnService.sectionCurrent = value;
     }
-
 
 
     set courseCurrent(value: Cours) {
@@ -112,7 +109,7 @@ export class ManageSectionComponent implements OnInit {
     }
 
     showEditDialogFct(section: Section) {
-        this.sectionSelected = section;
+        this.localSectionSelected = section;
         this.findAllCategorie();
         this.showEditDialog = true;
         console.log(section);
@@ -137,7 +134,7 @@ export class ManageSectionComponent implements OnInit {
 
     save() {
         this.showEditDialog = false;
-        this.parcoursService.updateSection(this.sectionSelected).subscribe(data => {
+        this.parcoursService.updateSection(this.localSectionSelected).subscribe(data => {
             this.messageService.add({
                 severity: 'info',
                 summary: 'Successful',
@@ -173,7 +170,16 @@ export class ManageSectionComponent implements OnInit {
         this.quizEtudiantService.selectedQuiz = value;
     }
 
+    get sectionSelected(): Section {
+        return this.quizService.sectionSelected;
+    }
+
+    set sectionSelected(value: Section) {
+        this.quizService.sectionSelected = value;
+    }
+
     showQuiz(section: Section) {
+        this.sectionSelected = section;
         this.sectionCurrent = section;
         this.quizEtudiantService.findQuizBySectionId(section).subscribe(
             data => {

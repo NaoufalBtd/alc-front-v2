@@ -88,6 +88,64 @@ export class LearnService {
     private _dernierSelected: Reponse = new Reponse();
     private _badgeNrMsg = 0;
 
+    // DRAG AND DROP
+    private _listOfWords: Array<string> = new Array<string>();
+    private _listOfText: Map<number, string> = new Map<number, string>();
+    private _dragAndDropData: string;
+    private _dragAndDropCorrectAnswersList: Map<number, string> = new Map<number, string>();
+    private _dragAndDropStudentAnswersList: Map<number, string> = new Map<number, string>();
+    private _showToolTipForT13: boolean;
+
+
+    get showToolTipForT13(): boolean {
+        return this._showToolTipForT13;
+    }
+
+    set showToolTipForT13(value: boolean) {
+        this._showToolTipForT13 = value;
+    }
+
+    get dragAndDropStudentAnswersList(): Map<number, string> {
+        return this._dragAndDropStudentAnswersList;
+    }
+
+    set dragAndDropStudentAnswersList(value: Map<number, string>) {
+        this._dragAndDropStudentAnswersList = value;
+    }
+
+    get dragAndDropCorrectAnswersList(): Map<number, string> {
+        return this._dragAndDropCorrectAnswersList;
+    }
+
+    set dragAndDropCorrectAnswersList(value: Map<number, string>) {
+        this._dragAndDropCorrectAnswersList = value;
+    }
+
+    get dragAndDropData(): string {
+        return this._dragAndDropData;
+    }
+
+    set dragAndDropData(value: string) {
+        this._dragAndDropData = value;
+    }
+
+    get listOfWords(): Array<string> {
+        return this._listOfWords;
+    }
+
+    set listOfWords(value: Array<string>) {
+        this._listOfWords = value;
+    }
+
+    get listOfText(): Map<number, string> {
+        return this._listOfText;
+    }
+
+    set listOfText(value: Map<number, string>) {
+        this._listOfText = value;
+    }
+
+
     get badgeNrMsg(): number {
         return this._badgeNrMsg;
     }
@@ -599,6 +657,23 @@ export class LearnService {
             this.answerSelected.question = this.reponseQuiz.question;
             this.answerSelected.numero = this.reponseQuiz.numero;
             this.answerSelected.etatReponse = this.reponseQuiz.etatReponse;
+        } else if (question.typeDeQuestion.ref === 't13') {
+            for (const key of this.dragAndDropCorrectAnswersList.keys()) {
+                console.log(key);
+                if (this.dragAndDropCorrectAnswersList.get(key) === this.dragAndDropStudentAnswersList.get(Number(key))) {
+                    document.getElementById(key.toString()).style.border = '2px solid green';
+                } else {
+                    document.getElementById(key.toString()).style.border = '2px solid red';
+                    document.getElementById('toolTipT13' + key.toString()).style.visibility = 'visible';
+                    this.answerSelected.etatReponse = 'false';
+                }
+                if (this.answerSelected.lib === undefined) {
+                    this.answerSelected.lib = key + this.dragAndDropStudentAnswersList.get(key) + ' ';
+                } else {
+                    this.answerSelected.lib += key + this.dragAndDropStudentAnswersList.get(key) + ' ';
+                }
+                this.answerSelected.question = question;
+            }
         }
         this.answersList.set(question, this.answerSelected);
         this.answersPointStudent.set(question, type);
@@ -696,6 +771,8 @@ export class LearnService {
                     this.extractedData(this.question.libelle, 't12');
                     console.log(this.answersT12List);
                     this.showT12Answers();
+                } else if (this.question.typeDeQuestion.ref === 't13') {
+                    this.extractDataForDragAndDrop(this.question.libelle);
                 }
                 break;
             }
@@ -739,6 +816,8 @@ export class LearnService {
                     console.log('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
                     console.log(this.answersT12List);
                     this.showT12Answers();
+                } else if (this.question.typeDeQuestion.ref === 't13') {
+                    this.extractDataForDragAndDrop(this.question.libelle);
                 }
                 break;
             }
@@ -863,6 +942,8 @@ export class LearnService {
                         this.extractedData(this.question.libelle, 't12');
                         console.log(this.answersT12List);
                         this.showT12Answers();
+                    } else if (this.question.typeDeQuestion.ref === 't13') {
+                        this.extractDataForDragAndDrop(this.question.libelle);
                     }
                 }
             }
@@ -952,8 +1033,15 @@ export class LearnService {
                 for (const entry of this.answersList.entries()) {
                     this.answer.question = entry[0];
                     this.answer.quizEtudiant = quitEtudiant;
-                    this.answer.reponse = this.correctAnswersList.get(entry[0].id)[0];
-                    this.answer.answer = entry[1].lib;
+                    console.log(this.correctAnswersList);
+                    if (entry[0].typeDeQuestion.ref === 't13') {
+                        this.answer.reponse = entry[1];
+                        this.answer.answer = entry[1].lib;
+                    } else {
+                        this.answer.reponse = this.correctAnswersList.get(entry[0].id)[0];
+                        this.answer.answer = entry[1].lib;
+                    }
+
                     if (entry[1].etatReponse === 'true') {
                         if (this.answersPointStudent.get(entry[0]) === 'STUDENT_ANSWER') {
                             this.answer.note = entry[0].pointReponseJuste;
@@ -966,6 +1054,7 @@ export class LearnService {
                     } else {
                         this.answer.note = entry[0].pointReponsefausse;
                     }
+                    console.log(this.answer);
                     this.reponseEtudiantService.save().subscribe(
                         reponse => {
                             console.log(reponse);
@@ -1058,5 +1147,72 @@ export class LearnService {
         }
         reponseStudent.question = qst;
         return reponseStudent;
+    }
+
+
+    drop(ev): string {
+        console.log(ev.target.id);
+        const id: number = Number(ev.target.id);
+        this.dragAndDropStudentAnswersList.set(id, this.dragAndDropData);
+        ev.target.value = this.dragAndDropData;
+        this.listOfWords.splice(this.listOfWords.indexOf(this.dragAndDropData), 1);
+        console.log(this.dragAndDropStudentAnswersList);
+        console.log(this.dragAndDropCorrectAnswersList);
+        if (this.listOfWords.length === 0) {
+            this.showCheckButton = true;
+        }
+        return this.dragAndDropData;
+    }
+
+    dropSynch(id: number): string {
+        console.log(id);
+        this.dragAndDropStudentAnswersList.set(id, this.dragAndDropData);
+        // @ts-ignore
+        document.getElementById(String(id)).value = this.dragAndDropData;
+        this.listOfWords.splice(this.listOfWords.indexOf(this.dragAndDropData), 1);
+        console.log(this.dragAndDropStudentAnswersList);
+        console.log(this.dragAndDropCorrectAnswersList);
+        if (this.listOfWords.length === 0) {
+            this.showCheckButton = true;
+        }
+        return this.dragAndDropData;
+    }
+
+    drag(ev) {
+        this.dragAndDropData = String();
+        this.dragAndDropData = ev.target.value;
+        console.log(this.dragAndDropData);
+    }
+
+    private extractDataForDragAndDrop(qstLibelle: string) {
+        let libelle = qstLibelle;
+        console.log(libelle);
+        let index = 1;
+        let test = '@';
+        while (test === '@') {
+            const firstIndex = qstLibelle.indexOf('@');
+            if (firstIndex !== -1) {
+                this.listOfText.set(index, qstLibelle.slice(0, qstLibelle.indexOf('@')));
+                qstLibelle = qstLibelle.slice(firstIndex + 1, qstLibelle.length);
+                const word = qstLibelle.substring(0, qstLibelle.indexOf('@'));
+                this.dragAndDropCorrectAnswersList.set(index, word);
+                console.log(qstLibelle);
+                qstLibelle = qstLibelle.slice(word.length + 1, qstLibelle.length);
+                console.log('--------------------------------------------------------------');
+                console.log(qstLibelle);
+                libelle = libelle.replace(word, ' ');
+                index++;
+                test = '@';
+            } else {
+                this.listOfText.set(index, qstLibelle.slice(0, qstLibelle.length));
+                test = 'finish';
+            }
+        }
+        for (const value of this.dragAndDropCorrectAnswersList.values()) {
+            if (this.listOfWords.indexOf(value) === -1) {
+                this.listOfWords.push(value);
+            }
+        }
+        this.listOfWords = this.listOfWords.sort((a, b) => b.localeCompare(a));
     }
 }

@@ -322,6 +322,49 @@
     </div>
 
 
+    <!--------------------------------- Drag and Drop -------------------------------------------------------->
+
+    <div style="background-color: white;" *ngIf="question?.typeDeQuestion?.ref === 't13'" class="p-grid">
+        <div class="p-col-12 topDiv">
+            <div class="p-grid">
+                <input id="p-col-2" disabled *ngFor="let item of listOfWords" class="answers p-col-2" draggable="true"
+                       (drag)="drag($event)" type="text"
+                       pInputText [value]="item"/>
+            </div>
+
+        </div>
+        <div id="answers" class="p-col-12 ">
+            <h4 *ngIf="question?.ref !== null ||question?.ref !== undefined ">{{question?.ref}}</h4>
+            <span id="span" *ngFor="let item of listOfText| keyvalue">
+                <span id="span">{{item.value}}</span>
+                <span [id]="'toolTipT13' + item.key"
+                      (click)="hideTooltipsT13(item.key)"
+                      class="tooltipT13">
+                    {{getCorrectAnswerForT13(item.key)}}</span>
+                <input style="
+  display: inline-block !important;
+  width: auto !important;
+  font-weight: bold;
+  color: black !important;"
+
+                       (click)="showToolTipsT13(item.key)"
+                       *ngIf="listOfText.has(item.key+ 1)" disabled [id]="item.key.toString()"
+                       (drop)="drop($event)" (dragover)="allowDrop($event)" type="text"
+                       pInputText/>
+            </span>
+        </div>
+
+        <div class="p-col-12 answers">
+            <button *ngIf="showCheckButton" pButton pRipple type="button"
+                    icon="pi pi-check" iconPos="right"
+                    label="Check answer" class="p-button-raised check-button "
+                    (click)="saveAnswers(question)">
+            </button>
+
+        </div>
+    </div>
+
+
     <div class="p-grid sideBar">
         <div class="p-col-3">
         </div>

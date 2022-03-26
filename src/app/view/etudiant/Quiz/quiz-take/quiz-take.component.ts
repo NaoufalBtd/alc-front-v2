@@ -407,6 +407,7 @@ export class QuizTakeComponent implements OnInit, OnDestroy {
         this.reponseQuiz.etatReponse = reponse.etatReponse;
         const chatMessageDto: ChatMessageDto = new ChatMessageDto(this.login.getConnectedStudent().toString(), '', true);
         chatMessageDto.quizReponse = this.reponseQuiz;
+        chatMessageDto.prof = this.prof;
         chatMessageDto.type = 'QUIZ';
         this.webSocketService.sendMessage(chatMessageDto, 'STUDENT');
     }
@@ -500,5 +501,75 @@ export class QuizTakeComponent implements OnInit, OnDestroy {
 
     valueOf(numero: number): number {
         return ((numero / this.questionList.length) * 100);
+    }
+
+
+    //  -------------------------------------- DRAG AND DROP-------------------------------------
+
+
+    get listOfWords(): Array<string> {
+        return this.learnService.listOfWords;
+    }
+
+    set listOfWords(value: Array<string>) {
+        this.learnService.listOfWords = value;
+    }
+
+    get listOfText(): Map<number, string> {
+        return this.learnService.listOfText;
+    }
+
+    set listOfText(value: Map<number, string>) {
+        this.learnService.listOfText = value;
+    }
+
+    get dragAndDropData(): string {
+        return this.learnService.dragAndDropData;
+    }
+
+    set dragAndDropData(value: string) {
+        this.learnService.dragAndDropData = value;
+    }
+
+    get dragAndDropCorrectAnswersList(): Map<number, string> {
+        return this.learnService.dragAndDropCorrectAnswersList;
+    }
+
+    set dragAndDropCorrectAnswersList(value: Map<number, string>) {
+        this.learnService.dragAndDropCorrectAnswersList = value;
+    }
+
+    drag(ev) {
+        this.learnService.drag(ev);
+
+    }
+
+    allowDrop(ev) {
+        ev.preventDefault();
+    }
+
+    drop(ev) {
+        console.log(ev.target);
+        const data = this.dragAndDropData;
+        const chatMessage: ChatMessageDto = new ChatMessageDto('T13', 'QUESTION_T13', true);
+        chatMessage.prof = this.prof;
+        chatMessage.type = 'QUIZ';
+        chatMessage.ev = ev.target.id;
+        chatMessage.quizReponse.question = this.question;
+        chatMessage.quizReponse.type = 'T13';
+        chatMessage.quizReponse.lib = data;
+        this.webSocketService.sendMessage(chatMessage, 'STUDENT');
+    }
+
+    getCorrectAnswerForT13(key: number): string {
+        return this.dragAndDropCorrectAnswersList.get(key);
+    }
+
+    showToolTipsT13(key: number) {
+        document.getElementById('toolTipT13' + key.toString()).style.visibility = 'visible';
+    }
+
+    hideTooltipsT13(key: number) {
+        document.getElementById('toolTipT13' + key.toString()).style.visibility = 'hidden';
     }
 }

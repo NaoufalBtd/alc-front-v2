@@ -326,3 +326,70 @@ h4 {
   visibility: hidden;
 }
 
+//drag and drop
+
+
+#div2 {
+  margin-left: 200px;
+}
+
+
+#p-col-2 {
+  background-color: #d9d9d9 !important;
+  border-radius: 25px !important;
+  border: none !important;
+  text-align: center !important;
+  color: black !important;
+  font-weight: bold !important;
+  cursor: move !important;
+  margin: 2% 5% 0 0 !important;
+  height: 36px !important;
+  padding: 0 !important;
+}
+
+#text {
+  display: inline-block !important;
+  width: auto !important;
+  font-weight: bold;
+  color: black !important;
+  margin: 1% !important;
+}
+
+#span {
+  margin: 10px 2px 2px 1px !important;;
+  color: black !important;
+}
+
+.topDiv {
+  border: 2px dashed #e8e8e8;
+  border-radius: 5px;
+  margin: 15px 0;
+}
+
+
+.tooltipT13 {
+  visibility: hidden;
+  position: absolute;
+  width: auto;
+  color: white;
+  text-align: center;
+  margin: -35px 0 0 78px;
+  padding: 6px;
+  border-radius: 6px;
+  z-index: 1000;
+  opacity: 8;
+  transition: opacity 0.6s;
+  border: 1px solid #555;
+  background: #555;
+}
+
+.tooltipT13::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}

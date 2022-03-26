@@ -7,6 +7,7 @@ import {User} from './user.model';
 
 export class ChatMessageDto {
     type: string;
+    ev: any;
     user: string;
     message: string;
     isStudent: boolean;

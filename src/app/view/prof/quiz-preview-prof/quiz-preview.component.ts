@@ -26,6 +26,7 @@ import {ChatMessageDto} from '../../../controller/model/chatMessageDto';
 import {findIndexInData} from '@syncfusion/ej2-angular-schedule';
 import {HomeWorkReponse} from '../../../controller/model/home-work-reponse.model';
 import {GroupeEtudiant} from '../../../controller/model/groupe-etudiant.model';
+import {measureColumnDepth} from '@syncfusion/ej2-angular-grids';
 
 @Component({
     selector: 'app-quiz-preview-prof',
@@ -434,6 +435,10 @@ export class QuizPreviewProfComponent implements OnInit, OnDestroy {
     }
 
     finishQuiz() {
+        const messageDto: ChatMessageDto = new ChatMessageDto('FINISH_QUIZ', 'FINISH_QUIZ', false);
+        messageDto.type = 'FINISH_QUIZ';
+        messageDto.prof = this.login.getConnectedProf();
+        this.webSocketService.sendMessage(messageDto, 'PROF');
         this.showTakeQuiz = false;
         this.showQuizReview = true;
         this.quizEtudiantService.findQuizEtudiantByQuizId(this.selectedQuiz.id).subscribe(
@@ -523,9 +528,9 @@ export class QuizPreviewProfComponent implements OnInit, OnDestroy {
         this.reponseQuiz.question = reponse.question;
         this.reponseQuiz.numero = reponse.numero;
         this.reponseQuiz.type = 'QUIZ';
-        if (this.groupeEtudiant.groupeEtude.nombreEtudiant === 1){
+        if (this.groupeEtudiant.groupeEtude.nombreEtudiant === 1) {
             this.reponseQuiz.sender = 'STUDENT_CHOICE_T12';
-        } else{
+        } else {
             this.reponseQuiz.sender = 'STUDENT_CHOICE_T12_FOR_GRP';
         }
         this.reponseQuiz.prof = this.login.getConnectedProf();
@@ -535,5 +540,87 @@ export class QuizPreviewProfComponent implements OnInit, OnDestroy {
         chatMessageDto.quizReponse = this.reponseQuiz;
         chatMessageDto.type = 'QUIZ';
         this.webSocketService.sendMessage(chatMessageDto, 'PROF');
+    }
+
+
+    //  -------------------------------------- DRAG AND DROP-------------------------------------
+    get showToolTipForT13(): boolean {
+        return this.learnService.showToolTipForT13;
+    }
+
+    set showToolTipForT13(value: boolean) {
+        this.learnService.showToolTipForT13 = value;
+    }
+
+    get dragAndDropStudentAnswersList(): Map<number, string> {
+        return this.learnService.dragAndDropStudentAnswersList;
+    }
+
+
+    get listOfWords(): Array<string> {
+        return this.learnService.listOfWords;
+    }
+
+    set listOfWords(value: Array<string>) {
+        this.learnService.listOfWords = value;
+    }
+
+    get listOfText(): Map<number, string> {
+        return this.learnService.listOfText;
+    }
+
+    set listOfText(value: Map<number, string>) {
+        this.learnService.listOfText = value;
+    }
+
+    get dragAndDropData(): string {
+        return this.learnService.dragAndDropData;
+    }
+
+    set dragAndDropData(value: string) {
+        this.learnService.dragAndDropData = value;
+    }
+
+    get dragAndDropCorrectAnswersList(): Map<number, string> {
+        return this.learnService.dragAndDropCorrectAnswersList;
+    }
+
+    set dragAndDropCorrectAnswersList(value: Map<number, string>) {
+        this.learnService.dragAndDropCorrectAnswersList = value;
+    }
+
+    drag(ev) {
+        this.learnService.drag(ev);
+
+    }
+
+    allowDrop(ev) {
+        ev.preventDefault();
+    }
+
+    drop(ev) {
+        console.log(ev.target);
+        const data = this.dragAndDropData;
+        const chatMessage: ChatMessageDto = new ChatMessageDto('T13', 'QUESTION_T13', false);
+        chatMessage.prof = this.login.getConnectedProf();
+        chatMessage.type = 'QUIZ';
+        chatMessage.ev = ev.target.id;
+        chatMessage.quizReponse.question = this.question;
+        chatMessage.quizReponse.type = 'T13';
+        chatMessage.quizReponse.lib = data;
+        this.webSocketService.sendMessage(chatMessage, 'PROF');
+    }
+
+    getCorrectAnswerForT13(key: number): string {
+        return this.dragAndDropCorrectAnswersList.get(key);
+    }
+
+    showToolTipsT13(key: number) {
+        console.log(key);
+        document.getElementById('toolTipT13' + key.toString()).style.visibility = 'visible';
+    }
+
+    hideTooltipsT13(key: number) {
+        document.getElementById('toolTipT13' + key.toString()).style.visibility = 'hidden';
     }
 }
