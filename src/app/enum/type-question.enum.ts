@@ -14,11 +14,10 @@ export enum TypeQuestionEnum {
 }
 
 export enum TypeHomeWorkEnum {
-    READING = 'READING',
+    READING = 'Reading',
     LET_S_PRACTICE = 'Let\'s Practice',
-    WRITE_IT_UP = 'WRITE IT UP',
-    PHRASEBOOK = 'PHRASEBOOK',
+    WRITE_IT_UP = 'Write it Up',
+    PHRASEBOOK = 'Phrasebook',
     WATCH_IT = 'Watch it',
-    DRAG_AND_DROP = 'Drag and Drop',
-
+    DRAG_AND_DROP = 'Life Story',
 }

@@ -38,6 +38,8 @@ import {MenuService} from '../../../shared/slide-bar/app.menu.service';
 import {SimulateSectionService} from '../../../../controller/service/simulate-section.service';
 import {ChatMessageDto} from '../../../../controller/model/chatMessageDto';
 import {User} from '../../../../controller/model/user.model';
+import {HomeWorkEtudiantComponent} from '../../homeWork/home-work-etudiant/home-work-etudiant.component';
+import {HomeWorkSimulateService} from '../../../../controller/service/home-work-simulate.service';
 
 @Pipe({name: 'safe'})
 export class SafePipe implements PipeTransform {
@@ -57,6 +59,17 @@ export class SafePipe implements PipeTransform {
 })
 export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
     synonymes: string;
+    options: any = {
+        title: {
+            display: false,
+            text: 'Summary',
+            fontSize: 16,
+
+        },
+        legend: {
+            position: 'bottom'
+        },
+    };
 
     // tslint:disable-next-line:max-line-lengthg max-line-length
     constructor(private messageService: MessageService,
@@ -68,19 +81,84 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
                 private service: ParcoursService,
                 private menuService: MenuService,
                 private http: HttpClient,
+                private homeWorkEtudiantComponent: HomeWorkEtudiantComponent,
                 private quizService: QuizEtudiantService,
                 public loginService: LoginService,
                 private vocab: VocabularyService,
                 private review: EtudiantReviewService,
                 private sectionItemService: SectionItemService,
                 private sessioncoursservice: SessionCoursService,
-                private homeWorkService: HomeworkService,
+                private homeWorkService: HomeWorkSimulateService,
                 private homeWorkEtudiantService: HomeWorkEtudiantServiceService,
                 private learnService: LearnService,
                 private app: AppComponent,
                 private simulateSectionService: SimulateSectionService,
                 private grpEtudiantService: GroupeEtudiantService,
     ) {
+    }
+
+    get badgeNrMsg(): number {
+        return this.learnService.badgeNrMsg;
+    }
+
+    set badgeNrMsg(value: number) {
+        this.learnService.badgeNrMsg = value;
+    }
+
+    get tabViewActiveIndex(): number {
+        return this.webSocketService.tabViewActiveIndex;
+    }
+
+    set tabViewActiveIndex(value: number) {
+        this.webSocketService.tabViewActiveIndex = value;
+    }
+
+    get showRatingLessonTemplate(): boolean {
+        return this.simulateSectionService.showRatingLessonTemplate;
+    }
+
+    set showRatingLessonTemplate(value: boolean) {
+        this.simulateSectionService.showRatingLessonTemplate = value;
+    }
+
+    get data(): any {
+        return this.simulateSectionService.data;
+    }
+
+    set data(value: any) {
+        this.simulateSectionService.data = value;
+    }
+
+    get finishedAdditionalSection(): number {
+        return this.simulateSectionService.finishedAdditionalSection;
+    }
+
+    set finishedAdditionalSection(value: number) {
+        this.simulateSectionService.finishedAdditionalSection = value;
+    }
+
+    get finishedSection(): number {
+        return this.simulateSectionService.finishedSection;
+    }
+
+    set finishedSection(value: number) {
+        this.simulateSectionService.finishedSection = value;
+    }
+
+    get showLesson(): boolean {
+        return this.simulateSectionService.showLesson;
+    }
+
+    set showLesson(value: boolean) {
+        this.simulateSectionService.showLesson = value;
+    }
+
+    get showSummary(): boolean {
+        return this.simulateSectionService.showSummary;
+    }
+
+    set showSummary(value: boolean) {
+        this.simulateSectionService.showSummary = value;
     }
 
 
@@ -333,13 +411,6 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
         this.service.selectessection = value;
     }
 
-    get homeWorkList(): Array<HomeWork> {
-        return this.homeWorkService.homeWorkList;
-    }
-
-    set homeWorkList(homeWorklist: Array<HomeWork>) {
-        this.homeWorkService.homeWorkList = homeWorklist;
-    }
 
     get selectedReview(): EtudiantReview {
         return this.review.selected;
@@ -398,7 +469,6 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
         return this.webSocketService.studentsEnLigne;
     }
 
-    showLesson = true;
     showTakeQuiz = false;
     showViewQuiz = false;
     nodes: TreeNode[];
@@ -432,7 +502,7 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
     }
 
     navigate() {
-        this.router.navigate(['etudiant/etudiant-cours']);
+        this.router.navigate(['etudiant/dashboard']);
     }
 
     public findByWord() {
@@ -540,7 +610,7 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
             data => {
                 this.selectedReview = data;
             });
-        this.findAllDict();
+        this.onTabViewChange();
         this.quizService.section.id = this.selectedsection.id;
         this.quizService.findQuizSection().subscribe(data => this.selectedQuiz = data);
         this.quizService.findQuizBySectionId(this.selectedsection).subscribe(
@@ -584,13 +654,20 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
             this.webSocketService.findCurrentSectionForstudent(this.service.selectedcours, this.prof);
             console.log(this.service.selectedsection);
         }
+        this.learnService.onStartHomeWork(this.selectedcours);
+        this.homeWorkService.onStartHomeWork(this.selectedcours);
     }
 
-    findAllDict() {
-        this.dictionnaryService.FindAllWord().subscribe(
-            data => {
-                this.itemsDict = data;
-            });
+    onTabViewChange() {
+        if (this.tabViewActiveIndex === 2) {
+            this.dictionnaryService.FindAllWord().subscribe(
+                data => {
+                    this.itemsDict = data;
+                });
+        } else if (this.tabViewActiveIndex === 3) { // chat
+            this.badgeNrMsg = 0;
+        }
+
     }
 
     public findhomeworkbycours(cours: Cours) {
@@ -835,6 +912,8 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
     }
 
     closeSession() {
+        this.showLesson = true;
+        this.showSummary = false;
         this.showTpBar = true;
         let chatMessage: ChatMessageDto = new ChatMessageDto(this.loginService.getConnectedStudent().nom, 'Quit the session', true);
         chatMessage.type = 'DISCONNECT';
@@ -895,10 +974,17 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
     }
 
     nextSection(selectedsection: Section): string {
-        console.log(this.itemssection2);
         for (let i = 0; i < this.itemssection2.length; i++) {
             if (selectedsection.id === this.itemssection2[i].id) {
-                return this.itemssection2[i + 1].libelle;
+                return this.itemssection2[i + 1].categorieSection.libelle;
+            }
+        }
+    }
+
+    previousSection(selectedsection: Section): string {
+        for (let i = 0; i < this.itemssection2.length; i++) {
+            if (selectedsection.id === this.itemssection2[i].id) {
+                return this.itemssection2[i - 1].categorieSection.libelle;
             }
         }
     }
@@ -907,4 +993,35 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
     sectionIsFinished(section: Section): boolean {
         return this.simulateSectionService.sectionIsFinished(section);
     }
+
+    finishLesson(rating: string) {
+        this.showRatingLessonTemplate = false;
+    }
+
+    showLessonFct(section: Section) {
+        this.showLesson = true;
+    }
+
+// ---------------------------------------------------home Work--------------------------------------------/
+
+
+    get homeWorkList(): Array<HomeWork> {
+        return this.learnService.homeWorkList;
+    }
+
+
+    homeWorkSelectedFct(homeWork: HomeWork) {
+        this.showLesson = false;
+        this.homeWorkService.homeWorkSelectedFct(homeWork);
+    }
+
+    get selectedHomeWork(): HomeWork {
+        return this.learnService.selectedHomeWork;
+    }
+
+    set selectedHomeWork(value: HomeWork) {
+        this.learnService.selectedHomeWork = value;
+    }
+
+
 }

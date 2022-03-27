@@ -24,6 +24,7 @@ import {QuizService} from '../../../../controller/service/quiz.service';
 import {TypeDeQuestion} from '../../../../controller/model/type-de-question.model';
 import {Dictionary} from '../../../../controller/model/dictionary.model';
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
+import {HomeWorkSimulateService} from '../../../../controller/service/home-work-simulate.service';
 
 @Component({
     selector: 'app-home-work-etudiant',
@@ -31,18 +32,7 @@ import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
     styleUrls: ['./home-work-etudiant.component.scss']
 })
 export class HomeWorkEtudiantComponent implements OnInit {
-    partOfStory: string = String('Part 0');
-    showWatchItHomeWork: boolean;
-    listOftypeQuestions: Array<TypeDeQuestion> = new Array<TypeDeQuestion>();
 
-    rows = 5;
-    first = 0;
-    dragAnswersList: Map<string, number> = new Map<string, number>();
-    answersT12List: Map<number, string> = new Map<number, string>();
-    dragList: Array<string> = new Array<string>();
-    private dragIndex: number;
-    private dragData: string;
-    private nextIndex = Number(1);
 
     constructor(
         private learnService: LearnService,
@@ -53,12 +43,268 @@ export class HomeWorkEtudiantComponent implements OnInit {
         private messageService: MessageService,
         private router: Router,
         private dictionnaryService: DictionaryService,
-        private homeWorkService: HomeworkService,
+        private homeWorkService: HomeWorkSimulateService,
         private homeWorkEtudiantService: HomeWorkEtudiantServiceService,
         private sanitizer: DomSanitizer,
         private confirmationService: ConfirmationService,
         private webSocketService: WebSocketService,
         private parcoursService: ParcoursService) {
+    }
+
+    get showT12AnswerDiv(): boolean {
+        return this.homeWorkService.showT12AnswerDiv;
+    }
+
+    set showT12AnswerDiv(value: boolean) {
+        this.homeWorkService.showT12AnswerDiv = value;
+    }
+
+    get homeWork(): HomeWork {
+        return this.homeWorkService.homeWork;
+    }
+
+    set homeWork(value: HomeWork) {
+        this.homeWorkService.homeWork = value;
+    }
+
+    get homeworkQST(): HomeWorkQST {
+        return this.homeWorkService.homeworkQST;
+    }
+
+    set homeworkQST(value: HomeWorkQST) {
+        this.homeWorkService.homeworkQST = value;
+    }
+
+    get partOfStory(): string {
+        return this.homeWorkService.partOfStory;
+    }
+
+    set partOfStory(value: string) {
+        this.homeWorkService.partOfStory = value;
+    }
+
+    get showWatchItHomeWork(): boolean {
+        return this.homeWorkService.showWatchItHomeWork;
+    }
+
+    set showWatchItHomeWork(value: boolean) {
+        this.homeWorkService.showWatchItHomeWork = value;
+    }
+
+    get listOftypeQuestions(): Array<TypeDeQuestion> {
+        return this.homeWorkService.listOftypeQuestions;
+    }
+
+    set listOftypeQuestions(value: Array<TypeDeQuestion>) {
+        this.homeWorkService.listOftypeQuestions = value;
+    }
+
+    get rows(): number {
+        return this.homeWorkService.rows;
+    }
+
+    set rows(value: number) {
+        this.homeWorkService.rows = value;
+    }
+
+    get first(): number {
+        return this.homeWorkService.first;
+    }
+
+    set first(value: number) {
+        this.homeWorkService.first = value;
+    }
+
+    get dragAnswersList(): Map<string, number> {
+        return this.homeWorkService.dragAnswersList;
+    }
+
+    set dragAnswersList(value: Map<string, number>) {
+        this.homeWorkService.dragAnswersList = value;
+    }
+
+    get answersT12List(): Map<number, string> {
+        return this.homeWorkService.answersT12List;
+    }
+
+    set answersT12List(value: Map<number, string>) {
+        this.homeWorkService.answersT12List = value;
+    }
+
+    get dragList(): Array<string> {
+        return this.homeWorkService.dragList;
+    }
+
+    set dragList(value: Array<string>) {
+        this.homeWorkService.dragList = value;
+    }
+
+    get dragIndex(): number {
+        return this.homeWorkService.dragIndex;
+    }
+
+    set dragIndex(value: number) {
+        this.homeWorkService.dragIndex = value;
+    }
+
+    get dragData(): string {
+        return this.homeWorkService.dragData;
+    }
+
+    set dragData(value: string) {
+        this.homeWorkService.dragData = value;
+    }
+
+    get nextIndex(): number {
+        return this.homeWorkService.nextIndex;
+    }
+
+    set nextIndex(value: number) {
+        this.homeWorkService.nextIndex = value;
+    }
+
+    get homeWorkQuestionList(): Array<HomeWorkQST> {
+        return this.homeWorkService.homeWorkQuestionList;
+    }
+
+    set homeWorkQuestionList(value: Array<HomeWorkQST>) {
+        this.homeWorkService.homeWorkQuestionList = value;
+    }
+
+    get homeWorkQuestion(): HomeWorkQST {
+        return this.homeWorkService.homeWorkQuestion;
+    }
+
+    set homeWorkQuestion(value: HomeWorkQST) {
+        this.homeWorkService.homeWorkQuestion = value;
+    }
+
+    get homeWorkAnswersList(): Array<HomeWorkReponse> {
+        return this.homeWorkService.homeWorkAnswersList;
+    }
+
+    set homeWorkAnswersList(value: Array<HomeWorkReponse>) {
+        this.homeWorkService.homeWorkAnswersList = value;
+    }
+
+    get t12AnswersList(): Array<HomeWorkReponse> {
+        return this.homeWorkService.t12AnswersList;
+    }
+
+    set t12AnswersList(value: Array<HomeWorkReponse>) {
+        this.homeWorkService.t12AnswersList = value;
+    }
+
+    get correctAnswersList(): Map<number, Array<HomeWorkReponse>> {
+        return this.homeWorkService.correctAnswersList;
+    }
+
+    set correctAnswersList(value: Map<number, Array<HomeWorkReponse>>) {
+        this.homeWorkService.correctAnswersList = value;
+    }
+
+    get answersList(): Map<HomeWorkQST, HomeWorkReponse> {
+        return this.homeWorkService.answersList;
+    }
+
+    set answersList(value: Map<HomeWorkQST, HomeWorkReponse>) {
+        this.homeWorkService.answersList = value;
+    }
+
+    get answerSelected(): HomeWorkReponse {
+        return this.homeWorkService.answerSelected;
+    }
+
+    set answerSelected(value: HomeWorkReponse) {
+        this.homeWorkService.answerSelected = value;
+    }
+
+    get answersPointStudent(): Map<HomeWorkQST, string> {
+        return this.homeWorkService.answersPointStudent;
+    }
+
+    set answersPointStudent(value: Map<HomeWorkQST, string>) {
+        this.homeWorkService.answersPointStudent = value;
+    }
+
+    get myAnswer(): HomeWorkReponse {
+        return this.homeWorkService.myAnswer;
+    }
+
+    set myAnswer(value: HomeWorkReponse) {
+        this.homeWorkService.myAnswer = value;
+    }
+
+    get homeWorkReponse(): HomeWorkReponse {
+        return this.homeWorkService.homeWorkReponse;
+    }
+
+    set homeWorkReponse(value: HomeWorkReponse) {
+        this.homeWorkService.homeWorkReponse = value;
+    }
+
+    get progressBarValue(): number {
+        return this.homeWorkService.progressBarValue;
+    }
+
+    set progressBarValue(value: number) {
+        this.homeWorkService.progressBarValue = value;
+    }
+
+    get showTypeOfQstBar(): boolean {
+        return this.homeWorkService.showTypeOfQstBar;
+    }
+
+    set showTypeOfQstBar(value: boolean) {
+        this.homeWorkService.showTypeOfQstBar = value;
+    }
+
+    get showHomeWorkEtudiantResult(): boolean {
+        return this.homeWorkService.showHomeWorkEtudiantResult;
+    }
+
+    set showHomeWorkEtudiantResult(value: boolean) {
+        this.homeWorkService.showHomeWorkEtudiantResult = value;
+    }
+
+    get questionOptions(): ({ label: string; value: string } | { label: string; value: string })[] {
+        return this.homeWorkService.questionOptions;
+    }
+
+    set questionOptions(value: ({ label: string; value: string } | { label: string; value: string })[]) {
+        this.homeWorkService.questionOptions = value;
+    }
+
+    get wordDictionnary(): string {
+        return this.homeWorkService.wordDictionnary;
+    }
+
+    set wordDictionnary(value: string) {
+        this.homeWorkService.wordDictionnary = value;
+    }
+
+    get son(): string {
+        return this.homeWorkService.son;
+    }
+
+    set son(value: string) {
+        this.homeWorkService.son = value;
+    }
+
+    get showDragHomeWork(): boolean {
+        return this.homeWorkService.showDragHomeWork;
+    }
+
+    set showDragHomeWork(value: boolean) {
+        this.homeWorkService.showDragHomeWork = value;
+    }
+
+    get correctAnswerT12(): string {
+        return this.homeWorkService.correctAnswerT12;
+    }
+
+    set correctAnswerT12(value: string) {
+        this.homeWorkService.correctAnswerT12 = value;
     }
 
     get selectedHomeWork(): HomeWork {
@@ -257,30 +503,6 @@ export class HomeWorkEtudiantComponent implements OnInit {
         this.homeWorkEtudiantService.homeWorkEtudiantList = value;
     }
 
-    public homeWorkQuestionList: Array<HomeWorkQST> = new Array<HomeWorkQST>();
-    public homeWorkQuestion: HomeWorkQST = new HomeWorkQST();
-    public homeWorkAnswersList: Array<HomeWorkReponse> = new Array<HomeWorkReponse>();
-    public t12AnswersList: Array<HomeWorkReponse> = new Array<HomeWorkReponse>();
-    public correctAnswersList: Map<number, Array<HomeWorkReponse>> = new Map<number, Array<HomeWorkReponse>>();
-    public answersList: Map<HomeWorkQST, HomeWorkReponse> = new Map<HomeWorkQST, HomeWorkReponse>();
-    public answerSelected: HomeWorkReponse = new HomeWorkReponse();
-    public answersPointStudent: Map<HomeWorkQST, string> = new Map<HomeWorkQST, string>();
-    public myAnswer: HomeWorkReponse = new HomeWorkReponse();
-    public homeWorkReponse: HomeWorkReponse = new HomeWorkReponse();
-    public progressBarValue = 0;
-    showTypeOfQstBar = false;
-    showHomeWorkEtudiantResult = false;
-
-    questionOptions = [{label: 'True', value: 'true'}, {label: 'False', value: 'false'}];
-
-
-    wordDictionnary: string;
-
-    son = '';
-    showDragHomeWork: boolean;
-    correctAnswerT12: string;
-    showT12AnswerDiv: boolean;
-
 
     set displayDictionaryDialog(value: boolean) {
         this.learnService.displayDictionaryDialog = value;
@@ -292,7 +514,6 @@ export class HomeWorkEtudiantComponent implements OnInit {
 
     ngOnInit(): void {
         console.log(this.selectedcours);
-        this.learnService.onStartHomeWork(this.selectedcours);
         this.quizService.findType().subscribe(data => {
             this.listOftypeQuestions = data;
         });
@@ -589,111 +810,6 @@ export class HomeWorkEtudiantComponent implements OnInit {
         this.homeWorkReponse = new HomeWorkReponse();
     }
 
-    homeWorkSelectedFct(homeWork: HomeWork) {
-        this.answersT12List = new Map<number, string>();
-        this.correctAnswerT12 = String();
-        this.showT12AnswerDiv = false;
-        this.showTypeOfQstBar = true;
-        this.showWatchItHomeWork = false;
-        this.showDragHomeWork = false;
-        if (homeWork.libelle === 'Watch it' || homeWork.libelle === 'Drag and Drop') {
-            this.selectedHomeWork = homeWork;
-            this.homeWorkQuestion = new HomeWorkQST();
-            if (homeWork.libelle === 'Watch it') {
-                this.homeWorkQuestion.typeDeQuestion = this.listOftypeQuestions.filter(t => t.ref === 't9')[0];
-                this.showDragHomeWork = false;
-                this.showWatchItHomeWork = true;
-            } else {
-                this.homeWorkQuestion.typeDeQuestion = this.listOftypeQuestions.filter(t => t.ref === 't10')[0];
-                this.showWatchItHomeWork = false;
-                this.showDragHomeWork = true;
-            }
-        } else {
-            this.showWatchItHomeWork = false;
-            this.showDragHomeWork = false;
-            this.homeWorkReponse = new HomeWorkReponse();
-            this.answersList = new Map<HomeWorkQST, HomeWorkReponse>();
-            this.answersPointStudent = new Map<HomeWorkQST, string>();
-            this.correctAnswersList = new Map<number, Array<HomeWorkReponse>>();
-            this.answerSelected = new HomeWorkReponse();
-            this.myAnswer = new HomeWorkReponse();
-            this.learnService.onStartHomeWork(this.selectedcours);
-            this.selectedHomeWork = homeWork;
-            this.homeWorkEtudiantService.findQuestions(homeWork).subscribe(qstData => {
-                this.homeWorkQuestionList = qstData;
-                console.log(this.homeWorkQuestionList);
-                this.numberOfQuestion = this.homeWorkQuestionList.length;
-                this.progressBarValue = 100 / this.numberOfQuestion;
-                console.log(this.homeWorkQuestionList);
-                for (let i = 0; i < this.homeWorkQuestionList.length; i++) {
-                    this.homeWorkQuestion = this.homeWorkQuestionList[0];
-                    this.homeWorkEtudiantService.findReponsesByQuestionId(this.homeWorkQuestionList[i].id).subscribe(
-                        data1 => {
-                            this.homeWorkQuestionList[i].reponses = data1;
-                            this.correctAnswersList.set(this.homeWorkQuestionList[i].id, data1.filter(r => r.etatReponse === 'true'));
-                            console.log(this.correctAnswersList);
-                            if (this.homeWorkQuestion.typeDeQuestion.ref === 't3') {
-                                console.log(this.correctAnswersList);
-                            }
-                        }, error => {
-                            console.log(error);
-                        }
-                    );
-                    console.log(this.homeWorkQuestion);
-                    console.log(this.questionSideLeft);
-                    console.log(this.questionSideRight);
-                    if (this.homeWorkQuestion.typeDeQuestion.ref === 't1') {
-                        this.questionSideLeft = this.homeWorkQuestion.libelle.substring(0, this.homeWorkQuestion.libelle.indexOf('...'));
-                        this.questionSideRight = this.homeWorkQuestion.libelle.substring(this.homeWorkQuestion.libelle.lastIndexOf('...') + 3);
-                    } else if (this.homeWorkQuestion.typeDeQuestion.ref === 't4' || this.homeWorkQuestion.typeDeQuestion.ref === 't6') {
-                        this.questionSideLeft = this.homeWorkQuestion.libelle.substring(0, this.homeWorkQuestion.libelle.indexOf('@'));
-                        this.questionSideRight = this.homeWorkQuestion.libelle.substring(this.homeWorkQuestion.libelle.lastIndexOf('@') + 1);
-                        this.inputAnswer = this.homeWorkQuestion.libelle.substring(this.homeWorkQuestion.libelle.indexOf('@') + 1,
-                            this.homeWorkQuestion.libelle.lastIndexOf('@'));
-                    } else if (this.homeWorkQuestion.typeDeQuestion.ref === 't8') {
-                        console.log(this.homeWorkQuestion.libelle);
-                        if (this.homeWorkQuestion.ref !== '') {
-                            const ref = this.homeWorkQuestion.ref.substring((this.homeWorkQuestion.ref.length - 10),
-                                this.homeWorkQuestion.ref.length);
-                            const index = this.homeWorkQuestion.libelle.lastIndexOf(ref);
-                            console.log(index);
-                            console.log(ref);
-                            if (index !== 0 && index !== -1) {
-                                this.homeWorkQuestion.libelle = this.homeWorkQuestion.libelle.substring(index + ref.length,
-                                    this.homeWorkQuestion.libelle.length);
-                            }
-                            let part = this.homeWorkQuestion.libelle.substring(0, 5);
-                            part = part.replace(/\s/g, '');
-                            if (part.toUpperCase() === 'PART') {
-                                this.partOfStory = this.homeWorkQuestion.libelle.substring(0, 8);
-                                this.homeWorkQuestion.libelle = this.homeWorkQuestion.libelle.substring(this.partOfStory.length,
-                                    this.homeWorkQuestion.libelle.length);
-                            }
-                        }
-                    } else if (this.homeWorkQuestion.typeDeQuestion.ref === 't11') {
-                        this.extractedData(this.homeWorkQuestion.libelle, 't11');
-                    } else if (this.homeWorkQuestion.typeDeQuestion.ref === 't12') {
-                        this.extractedData(this.homeWorkQuestion.libelle, 't12');
-                        console.log('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
-                        console.log(this.answersT12List);
-                        this.showT12Answers();
-                    }
-                }
-            });
-            this.homeWorkEtudiantService.findbyetudiantIdAndHomeWorkID(homeWork).subscribe(homeWorkEtudianData => {
-                if (homeWorkEtudianData.length !== 0) {
-                    this.showHomeWorkEtudiantResult = true;
-                    this.homeWorkEtudiantList = homeWorkEtudianData;
-                } else {
-                    this.showHomeWorkEtudiantResult = false;
-
-                }
-            }, error => {
-                this.showHomeWorkEtudiantResult = false;
-            });
-        }
-
-    }
 
     dict() {
         this.synonymes = String();

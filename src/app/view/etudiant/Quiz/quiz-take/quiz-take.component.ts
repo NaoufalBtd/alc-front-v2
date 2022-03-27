@@ -46,6 +46,29 @@ export class QuizTakeComponent implements OnInit, OnDestroy {
                 private webSocketService: WebSocketService) {
     }
 
+    get questionOptions(): ({ label: string; value: string } | { label: string; value: string })[] {
+        return this.learnService.questionOptions;
+    }
+
+    set questionOptions(value: ({ label: string; value: string } | { label: string; value: string })[]) {
+        this.learnService.questionOptions = value;
+    }
+
+    get selectedT12Reponse(): Reponse {
+        return this.learnService.selectedT12Reponse;
+    }
+
+    set selectedT12Reponse(value: Reponse) {
+        this.learnService.selectedT12Reponse = value;
+    }
+
+    get dernierSelected(): Reponse {
+        return this.learnService.dernierSelected;
+    }
+
+    set dernierSelected(value: Reponse) {
+        this.learnService.dernierSelected = value;
+    }
 
     get groupeEtudiant(): GroupeEtudiant {
         return this.webSocketService.groupeEtudiant;
@@ -60,12 +83,12 @@ export class QuizTakeComponent implements OnInit, OnDestroy {
         this.learnService.t12AnswersList = value;
     }
 
-    get correctAnswerT12(): string {
-        return this.learnService.correctAnswerT12;
+    get correctAnswerT12(): Map<number, string> {
+        return this.learnService.studenta_answersT12;
     }
 
-    set correctAnswerT12(value: string) {
-        this.learnService.correctAnswerT12 = value;
+    set correctAnswerT12(value: Map<number, string>) {
+        this.learnService.studenta_answersT12 = value;
     }
 
     get showT12AnswerDiv(): boolean {
@@ -88,9 +111,6 @@ export class QuizTakeComponent implements OnInit, OnDestroy {
         this.learnService.quizT12AnswersList = value;
     }
 
-    set dragAnswersList(value: Map<string, number>) {
-        this.learnService.dragAnswersList = value;
-    }
 
     get answersT12List(): Map<number, string> {
         return this.learnService.answersT12List;
@@ -329,13 +349,18 @@ export class QuizTakeComponent implements OnInit, OnDestroy {
         return this.learnService.participants;
     }
 
-    questionOptions = [{label: 'True', value: 'true'}, {label: 'False', value: 'false'}];
-    selectedT12Reponse: Reponse = new Reponse();
+    get grpStudentAnswers(): Map<Etudiant, QuizReponse> {
+        return this.webSocketService.grpStudentAnswers;
+    }
 
-    dernierSelected: Reponse = new Reponse();
+    set grpStudentAnswers(value: Map<Etudiant, QuizReponse>) {
+        this.webSocketService.grpStudentAnswers = value;
+    }
+
 
     ngOnInit(): void {
         this.learnService.onStart();
+        this.grpStudentAnswers = new Map<Etudiant, QuizReponse>();
     }
 
 
@@ -366,11 +391,13 @@ export class QuizTakeComponent implements OnInit, OnDestroy {
         let reponse: Reponse;
         if (question.typeDeQuestion.ref === 't12') {
             this.dernierSelected = new Reponse();
-            reponse = this.checkAnswers(this.selectedT12Reponse);
+            document.getElementById('showCheckButtonForT12').style.visibility = 'hidden';
+            reponse = this.learnService.checkT12Answer(question);
         } else {
             reponse = this.learnService.saveAnswers(question, 'STUDENT_ANSWER');
         }
         this.reponseQuiz.lib = reponse.lib;
+        this.reponseQuiz.etatReponse = reponse.etatReponse;
         this.reponseQuiz.id = reponse.id;
         this.reponseQuiz.question = reponse.question;
         this.reponseQuiz.numero = reponse.numero;
@@ -380,12 +407,19 @@ export class QuizTakeComponent implements OnInit, OnDestroy {
         this.reponseQuiz.etatReponse = reponse.etatReponse;
         const chatMessageDto: ChatMessageDto = new ChatMessageDto(this.login.getConnectedStudent().toString(), '', true);
         chatMessageDto.quizReponse = this.reponseQuiz;
+        chatMessageDto.prof = this.prof;
         chatMessageDto.type = 'QUIZ';
         this.webSocketService.sendMessage(chatMessageDto, 'STUDENT');
     }
 
     showAnswers(question: Question) {
-        const reponse = this.learnService.showAnswers(question);
+        let reponse: Reponse;
+        if (question.typeDeQuestion.ref === 't12') {
+            this.dernierSelected = new Reponse();
+            reponse = this.t12AnswersList.filter(t => t.etatReponse === 'true')[0];
+        } else {
+            reponse = this.learnService.showAnswers(question);
+        }
         this.reponseQuiz.lib = reponse.lib;
         this.reponseQuiz.id = reponse.id;
         this.reponseQuiz.question = reponse.question;
@@ -401,9 +435,10 @@ export class QuizTakeComponent implements OnInit, OnDestroy {
     }
 
     nextQuestionFct() {
-        this.correctAnswerT12 = String(' ');
+        this.correctAnswerT12 = new Map<number, string>();
         this.showT12AnswerDiv = false;
         const question = this.learnService.nextQuestionFct();
+
         if (this.groupeEtudiant?.groupeEtude?.nombreEtudiant === 1) {
             this.followMeFct(question);
         }
@@ -429,19 +464,31 @@ export class QuizTakeComponent implements OnInit, OnDestroy {
         this.learnService.finishQuiz();
     }
 
-    checkAnswers(value: Reponse): Reponse {
-        return this.learnService.checkAnswers(value);
-    }
 
-    onClick(value: Reponse) {
-        this.showCheckButton = true;
-        this.showDontKnowButton = false;
-        this.selectedT12Reponse = value;
-        if (this.dernierSelected.id !== 0) {
-            document.getElementById(this.dernierSelected.lib).style.backgroundColor = '#dcdcdc';
+    onClick(reponse: Reponse) {
+        if (this.groupeEtudiant.groupeEtude.nombreEtudiant === 1) {
+            this.reponseQuiz.lib = reponse.lib;
+            this.reponseQuiz.id = reponse.id;
+            this.reponseQuiz.question = reponse.question;
+            this.reponseQuiz.numero = reponse.numero;
+            this.reponseQuiz.type = 'QUIZ';
+            this.reponseQuiz.sender = 'STUDENT_CHOICE_T12';
+            this.reponseQuiz.student = this.login.getConnectedStudent();
+            this.reponseQuiz.etatReponse = reponse.etatReponse;
+            const chatMessageDto: ChatMessageDto = new ChatMessageDto(this.login.getConnectedStudent().id.toString(),
+                'STUDENT_CHOICE_T12', true);
+            chatMessageDto.quizReponse = this.reponseQuiz;
+            chatMessageDto.type = 'QUIZ';
+            this.webSocketService.sendMessage(chatMessageDto, 'STUDENT');
+        } else {
+            const chatMessageDto: ChatMessageDto = new ChatMessageDto(reponse.numero.toString(),
+                'STUDENT_CHOICE_T12', true);
+            chatMessageDto.type = 'QUIZ';
+            chatMessageDto.prof = this.prof;
+            this.webSocketService.sendMessage(chatMessageDto, 'STUDENT');
+            this.learnService.onClickT12(reponse);
         }
-        document.getElementById(value.lib).style.backgroundColor = 'orange';
-        this.dernierSelected = value;
+
     }
 
     getCorrectAnswerForT12(): string {
@@ -450,11 +497,79 @@ export class QuizTakeComponent implements OnInit, OnDestroy {
                 return item.lib;
             }
         }
-
-
     }
 
     valueOf(numero: number): number {
         return ((numero / this.questionList.length) * 100);
+    }
+
+
+    //  -------------------------------------- DRAG AND DROP-------------------------------------
+
+
+    get listOfWords(): Array<string> {
+        return this.learnService.listOfWords;
+    }
+
+    set listOfWords(value: Array<string>) {
+        this.learnService.listOfWords = value;
+    }
+
+    get listOfText(): Map<number, string> {
+        return this.learnService.listOfText;
+    }
+
+    set listOfText(value: Map<number, string>) {
+        this.learnService.listOfText = value;
+    }
+
+    get dragAndDropData(): string {
+        return this.learnService.dragAndDropData;
+    }
+
+    set dragAndDropData(value: string) {
+        this.learnService.dragAndDropData = value;
+    }
+
+    get dragAndDropCorrectAnswersList(): Map<number, string> {
+        return this.learnService.dragAndDropCorrectAnswersList;
+    }
+
+    set dragAndDropCorrectAnswersList(value: Map<number, string>) {
+        this.learnService.dragAndDropCorrectAnswersList = value;
+    }
+
+    drag(ev) {
+        this.learnService.drag(ev);
+
+    }
+
+    allowDrop(ev) {
+        ev.preventDefault();
+    }
+
+    drop(ev) {
+        console.log(ev.target);
+        const data = this.dragAndDropData;
+        const chatMessage: ChatMessageDto = new ChatMessageDto('T13', 'QUESTION_T13', true);
+        chatMessage.prof = this.prof;
+        chatMessage.type = 'QUIZ';
+        chatMessage.ev = ev.target.id;
+        chatMessage.quizReponse.question = this.question;
+        chatMessage.quizReponse.type = 'T13';
+        chatMessage.quizReponse.lib = data;
+        this.webSocketService.sendMessage(chatMessage, 'STUDENT');
+    }
+
+    getCorrectAnswerForT13(key: number): string {
+        return this.dragAndDropCorrectAnswersList.get(key);
+    }
+
+    showToolTipsT13(key: number) {
+        document.getElementById('toolTipT13' + key.toString()).style.visibility = 'visible';
+    }
+
+    hideTooltipsT13(key: number) {
+        document.getElementById('toolTipT13' + key.toString()).style.visibility = 'hidden';
     }
 }

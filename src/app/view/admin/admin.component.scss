@@ -1,3 +1,16 @@
 .layout-wrapper.layout-slim .layout-main {
   margin-left: 16%;
 }
+
+.dictButton {
+  right: 20px;
+  border: none;
+  position: fixed;
+  bottom: 25px !important;
+  padding-bottom: 10px;
+  z-index: 9001;
+  height: 85px !important;
+  cursor: pointer;
+}
+
+

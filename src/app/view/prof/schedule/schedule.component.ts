@@ -70,6 +70,13 @@ export class ScheduleLocalComponent implements OnInit {
                 private menuService: MenuService,
                 private simulateSectionService: SimulateSectionService) {
     }
+    get selectedSchedule(): ScheduleProf {
+        return this.webSocketService.selectedSchedule;
+    }
+
+    set selectedSchedule(value: ScheduleProf) {
+        this.webSocketService.selectedSchedule = value;
+    }
 
     get showTpBar(): boolean {
         return this.menuService.showTpBar;
@@ -190,7 +197,7 @@ export class ScheduleLocalComponent implements OnInit {
     public scheduleObj: ScheduleComponent;
     display = false;
     private selectionTarget: Element;
-    public data: ScheduleProf = new ScheduleProf();
+
     public timeScale: TimeScaleModel = {interval: 60, slotCount: 1};
     public selectedDate: Date = new Date();
     public showWeekend = true;
@@ -333,15 +340,15 @@ export class ScheduleLocalComponent implements OnInit {
 
 
     public onPopupOpen(args: PopupOpenEventArgs): void {
-        this.data.subject = args.data.subject;
-        this.data.startTime = args.data.startTime;
-        this.data.endTime = args.data.endTime;
-        this.data.cours = args.data.cours;
+        this.selectedSchedule.subject = args.data.subject;
+        this.selectedSchedule.startTime = args.data.startTime;
+        this.selectedSchedule.endTime = args.data.endTime;
+        this.selectedSchedule.cours = args.data.cours;
         this.scheduleProf.startTime = args.data.startTime;
         this.scheduleProf.endTime = args.data.endTime;
         this.selectionTarget = null;
         this.selectionTarget = args.target;
-        this.data.groupeEtudiant = args.data.groupeEtudiant;
+        this.selectedSchedule.groupeEtudiant = args.data.groupeEtudiant;
         console.log(args.data);
     }
 
@@ -434,21 +441,21 @@ export class ScheduleLocalComponent implements OnInit {
 
     startSession() {
         this.showTpBar = false;
-        console.log(this.data.groupeEtudiant.id);
+        console.log(this.selectedSchedule.groupeEtudiant.id);
         this.webSocketService.sessionHasStarted = true;
-        this.findAllGroupeEtudiantDetail(this.data.groupeEtudiant.id);
-        console.log(this.data);
-        this.selectedcours = this.data.cours;
-        this.simulateSectionService.findSectionOneByCoursId(this.data.cours);
-        this.parcoursService.afficheOneSectionByProf(this.data.cours).subscribe(
+        this.findAllGroupeEtudiantDetail(this.selectedSchedule.groupeEtudiant.id);
+        console.log(this.selectedSchedule);
+        this.selectedcours = this.selectedSchedule.cours;
+        this.simulateSectionService.findSectionOneByCoursId(this.selectedSchedule.cours);
+        this.parcoursService.afficheOneSectionByProf(this.selectedSchedule.cours).subscribe(
             dataSection => {
                 this.webSocketService.saveCurrentSection(this.prof.id, dataSection);
 
             }
         );
         console.log(this.selectedsection);
-        this.webSocketService.openWebSocket(this.prof, this.prof, this.data.groupeEtudiant, 'PROF');
-        this.sessionService._idgroup = this.data.groupeEtudiant.id;
+        this.webSocketService.openWebSocket(this.prof, this.prof, this.selectedSchedule.groupeEtudiant, 'PROF');
+        this.sessionService._idgroup = this.selectedSchedule.groupeEtudiant.id;
         this.router.navigate(['prof/sections-simulate']);
     }
 

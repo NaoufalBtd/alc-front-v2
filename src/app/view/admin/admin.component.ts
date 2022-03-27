@@ -6,6 +6,7 @@ import {Router} from '@angular/router';
 import {AuthenticationService} from '../../controller/service/authentication.service';
 import {User} from '../../controller/model/user.model';
 import {Role} from '../../enum/role.enum';
+import {QuizEtudiantService} from '../../controller/service/quiz-etudiant.service';
 
 @Component({
     selector: 'app-admin',
@@ -54,9 +55,13 @@ export class AdminComponent implements OnInit {
     profileClick: boolean;
 
     inlineUserMenuActive = false;
+    displayDictionaryDialogAdmin: boolean;
+    textSeleted: string;
+    synonymes: string;
 
     constructor(private menuService: MenuService, private primengConfig: PrimeNGConfig,
                 private router: Router,
+                private quizEtudiantService: QuizEtudiantService,
                 private authenticationService: AuthenticationService,
                 public app: AppComponent) {
     }
@@ -247,6 +252,13 @@ export class AdminComponent implements OnInit {
             }
         }
 
+    }
+
+    getTranslation() {
+        this.quizEtudiantService.translate(this.textSeleted).subscribe(data => {
+            console.log(data);
+            this.synonymes = data;
+        });
     }
 }
 

@@ -29,6 +29,8 @@ import {MenuService} from '../../../shared/slide-bar/app.menu.service';
 import {SimulateSectionService} from '../../../../controller/service/simulate-section.service';
 import {SessionCours} from '../../../../controller/model/session-cours.model';
 import {User} from '../../../../controller/model/user.model';
+import {ScheduleProf} from '../../../../controller/model/calendrier-prof.model';
+import {QuizReponse} from '../../../../controller/model/quiz-reponse';
 
 @Pipe({name: 'safe'})
 export class SafePipe1 implements PipeTransform {
@@ -47,7 +49,23 @@ export class SafePipe1 implements PipeTransform {
     styleUrls: ['./section-simulate.component.scss']
 })
 export class SectionSimulateComponent implements OnInit, OnDestroy {
+    rows = 5;
+    first = 0;
     sessionCour: SessionCours = new SessionCours();
+    data: any;
+    finishedAdditionalSection = 0;
+    finishedSection = 0;
+    options: any = {
+        title: {
+            display: false,
+            text: 'Summary',
+            fontSize: 16,
+
+        },
+        legend: {
+            position: 'bottom'
+        },
+    };
 
     constructor(private sectionItemService: SectionItemService,
                 private sessionservice: SessionCoursService,
@@ -65,6 +83,15 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
                 private confirmationService: ConfirmationService,
                 private service: ParcoursService, private http: HttpClient, private review: EtudiantReviewService) {
     }
+
+    get badgeNrMsg(): number {
+        return this.learnService.badgeNrMsg;
+    }
+
+    set badgeNrMsg(value: number) {
+        this.learnService.badgeNrMsg = value;
+    }
+
 
     get selectedNow(): Dictionary {
         return this.dictionnaryService.selectedNow;
@@ -277,6 +304,14 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
         this.simulateSectionService.quizExist = value;
     }
 
+    get activeIndexForTabView(): number {
+        return this.webSocketService.activeIndexForTabView;
+    }
+
+    set activeIndexForTabView(value: number) {
+        this.webSocketService.activeIndexForTabView = value;
+    }
+
     synonymes: string;
     searchInput: string;
     nodes: TreeNode[];
@@ -287,8 +322,9 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
     showTakeQuiz = false;
     showViewQuiz = false;
     showFlowMeButton: boolean;
-
-    // tslint:disable-next-line:adjacent-overload-signatures
+    showLesson = true;
+    showSummary = false;
+    showFinishLesson = true;
 
 
     public Review() {
@@ -298,7 +334,6 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
 
     public quiz() {
         this.serviceQuiz.refQuiz = this.selectedQuiz.ref;
-        console.log(this.serviceQuiz.refQuiz);
         this.router.navigate(['/prof/quiz-preview-teacher']);
     }
 
@@ -321,25 +356,12 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.selectedsection = this.itemssection2[0];
         this.showAppMenu = false;
-        console.log('----------------------------------------------------------------------');
-        console.log(this.sectionStandard);
-        console.log(this.sectionAdditional);
-        console.log(this.selectedsection);
     }
 
 
     URLVideo() {
         this.service.video = '';
-        // tslint:disable-next-line:prefer-for-of
-        // for (let m = 0; m < 24 ; m++)
-        // {
         this.service.video = this.selectedsection.urlVideo;
-        // }
-        //   for (let m = 32; m < 43 ; m++)
-        //   {
-        //  }
-        console.log(this.service.video);
-        // return this.sanitizer.bypassSecurityTrustResourceUrl(this.service.video);
         return this.service.video;
     }
 
@@ -373,11 +395,19 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
                 }
             }
         }
-        console.log(this.service.contenu);
         return this.service.contenu;
     }
 
+    get grpStudentAnswers(): Map<Etudiant, QuizReponse> {
+        return this.webSocketService.grpStudentAnswers;
+    }
+
+    set grpStudentAnswers(value: Map<Etudiant, QuizReponse>) {
+        this.webSocketService.grpStudentAnswers = value;
+    }
+
     PreviousSection(section: Section) {
+        this.grpStudentAnswers = new Map<Etudiant, QuizReponse>();
         this.showFlowMeButton = false;
         for (let i = 0; i < this.itemssection2.length; i++) {
             if (section.id === this.itemssection2[i].id) {
@@ -389,6 +419,7 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
     }
 
     NextSection(section: Section) {
+        this.grpStudentAnswers = new Map<Etudiant, QuizReponse>();
         let index = 0;
         for (const item of this.sessionCour.sections) {
             if (item.id === section.id) {
@@ -398,7 +429,6 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
         if (index === 0) {
             this.sessionCour.sections.push({...section});
         }
-        console.log(this.sessionCour.sections);
 
         for (let i = 0; i < this.itemssection2.length; i++) {
             if (section.id === this.itemssection2[i].id) {
@@ -439,7 +469,6 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
 
         this.sectionItemService.getSectionItems().subscribe(data => {
             this.sectionItemService.sectionSelected.sectionItems = data;
-            console.log(data);
             this.showVocabulary = true;
         });
 
@@ -463,14 +492,11 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
         this.webSocketService.closeWebSocket(chatMessage);
         this.participants.delete(this.prof.id);
         this.connectedUsers.splice(0, this.connectedUsers.length);
-        console.log(this.participants);
         this.studentsEnLigne.clear();
     }
 
     getData() {
         const grp = this.participants.get(this.prof.id);
-        console.log(grp);
-        console.log(this.participants);
     }
 
     public saveSessionCoursForGroupEtudiant(idprof: number, idcours: number) {
@@ -482,22 +508,16 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
     }
 
     getSelectedLanguage() {
-        console.log(this.selectedLanguage);
-
     }
 
     findAllSynonimes(word: string) {
-        console.log(word);
-        console.log(this.searchInput);
         if (this.selectedLanguage.code === 'ar') {
             this.quizService.translate(word).subscribe(data => {
-                console.log(data);
                 this.synonymes = data;
             });
         } else if (this.selectedLanguage.code === 'fr') {
             this.quizService.translateEnFr(word).subscribe(data => {
                 this.synonymes = data;
-                console.log(data);
             });
         }
     }
@@ -506,7 +526,6 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
     addToDictionary(type: string) {
         if (type === 'SELECT') {
             this.createDialogDict = false;
-            console.log(this.participants.get(this.loginService.getConnectedProf().id));
             for (const etudiant of this.participants.get(this.loginService.getConnectedProf().id)) {
                 this.selectedNow.etudiant = etudiant;
                 this.dictionnaryService.addToDictionary(this.selectedNow).subscribe(data => {
@@ -533,7 +552,6 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
             let dict: Dictionary = new Dictionary();
             dict.word = this.searchInput;
             dict.definition = this.synonymes;
-            console.log(this.participants.get(this.loginService.getConnectedProf().id));
             for (const etudiant of this.participants.get(this.loginService.getConnectedProf().id)) {
                 dict.etudiant = etudiant;
                 this.dictionnaryService.addToDictionary(dict).subscribe(data => {
@@ -553,7 +571,6 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
                     this.searchInput = String();
                     this.synonymes = String();
                 }, error => {
-                    console.log(error);
                     this.messageService.add({severity: 'error', life: 3000, detail: 'Text is too long! try again with small text'});
 
                 });
@@ -582,7 +599,6 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
     }
 
     previousSection(selectedsection: Section) {
-        console.log(this.itemssection2);
         for (let i = 0; i < this.itemssection2.length; i++) {
             if (selectedsection.id === this.itemssection2[i].id) {
                 return this.itemssection2[i - 1]?.categorieSection?.libelle;
@@ -604,18 +620,14 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
         this.selectedNow = new Dictionary();
         const selection = window.getSelection();
         this.selectedNow.word = selection.toString();
-        console.log(this.selectedNow.word.length);
         if (this.selectedNow.word.length > 3) {
-            console.log(this.selectedLanguage.code);
             if (this.selectedLanguage.code === 'ar') {
                 this.quizService.translate(this.selectedNow.word).subscribe(data => {
-                    console.log(data);
                     this.selectedNow.definition = data;
                 });
             } else if (this.selectedLanguage.code === 'fr') {
                 this.quizService.translateEnFr(this.selectedNow.word).subscribe(data => {
                     this.selectedNow.definition = data;
-                    console.log(data);
                 });
             }
             this.createDialogDict = true;
@@ -632,6 +644,132 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
             }
         } else {
             return false;
+        }
+    }
+
+    showSummaryFct() {
+        let chatMessage: ChatMessageDto = new ChatMessageDto('SUMMARY',
+            'SUMMARY', false);
+        chatMessage.prof = this.loginService.getConnectedProf();
+        chatMessage.type = 'SECTION';
+        this.webSocketService.sendMessage(chatMessage, 'PROF');
+
+        let index = 0;
+        for (const item of this.sessionCour.sections) {
+            if (item.id === this.selectedsection.id) {
+                index = -2;
+            }
+        }
+        if (index === 0) {
+            this.sessionCour.sections.push({...this.selectedsection});
+        }
+
+        this.showLesson = false;
+        this.showSummary = true;
+
+        for (const item of this.sessionCour.sections) {
+            for (const sec of this.sectionAdditional) {
+                if (item.id === sec.id) {
+                    this.finishedAdditionalSection += 1;
+                }
+            }
+        }
+        for (const item of this.sessionCour.sections) {
+            for (const sec of this.sectionStandard) {
+                if (item.id === sec.id) {
+                    this.finishedSection += 1;
+                }
+            }
+        }
+        const keySections = (this.finishedSection / this.sectionStandard?.length) * 100;
+        const keySectionsRest = 100 - keySections;
+        const keySectionsAdditional = (this.finishedAdditionalSection / this.sectionAdditional?.length) * 100;
+        const keySectionsRestAdditional = 100 - keySectionsAdditional;
+
+
+        this.data = {
+            labels: ['Finished', 'Not Finished'],
+            datasets: [
+                {
+                    data: [keySections, keySectionsRest],
+                    backgroundColor: [
+                        '#FF6384',
+                        '#f4f4f4'
+                    ],
+                    hoverBackgroundColor: [
+                        '#FF6384',
+                        '#f4f4f4'
+                    ]
+                },
+                {
+                    data: [keySectionsAdditional, keySectionsRestAdditional],
+                    backgroundColor: [
+                        '#FFCE56',
+                        '#f4f4f4'
+                    ],
+                    hoverBackgroundColor: [
+                        '#FFCE56',
+                        '#f4f4f4'
+                    ],
+
+                }
+            ]
+        };
+    }
+
+    get selectedSchedule(): ScheduleProf {
+        return this.webSocketService.selectedSchedule;
+    }
+
+    finishLesson() {
+        this.showFinishLesson = false;
+        this.sessionCour.prof = this.loginService.getConnectedProf();
+        this.sessionCour.cours = this.selectedcours;
+        this.sessionCour.groupeEtudiant = this.groupeEtudiant;
+        this.sessionCour.annee = this.selectedSchedule.startTime.getFullYear();
+        this.sessionCour.dateDebut = this.selectedSchedule.startTime;
+        this.sessionCour.dateFin = this.selectedSchedule.endTime;
+        this.sessionCour.duree = this.selectedSchedule.endTime.getHours() - this.selectedSchedule.startTime.getHours();
+        this.sessionCour.mois = this.selectedSchedule.startTime.getMonth();
+        this.sessionCour.payer = false;
+        this.sessionCour.salary = null;
+        this.sessionCour.reference = this.selectedSchedule.startTime.toString() + this.groupeEtudiant.libelle;
+        this.sessionCour.totalheure = this.selectedSchedule.endTime.getHours() - this.selectedSchedule.startTime.getHours();
+        this.sessionservice.saveSessionCours(this.sessionCour);
+        let chatMessage: ChatMessageDto = new ChatMessageDto('FINISHLESSON', 'FINISHLESSON', false);
+        chatMessage.prof = this.loginService.getConnectedProf();
+        chatMessage.type = 'SECTION';
+        this.webSocketService.sendMessage(chatMessage, 'PROF');
+    }
+
+    onConfirm() {
+        this.messageService.clear('c');
+        this.finishLesson();
+    }
+
+    showSticky() {
+        this.messageService.add({severity: 'success', summary: ' ', detail: 'Lesson is over', life: 5000, sticky: true});
+    }
+
+
+    showConfirm() {
+        this.messageService.clear();
+        this.messageService.add({key: 'c', sticky: true, severity: 'info', summary: 'Finish the lesson ?', detail: 'Confirm to proceed'});
+    }
+
+
+    onReject() {
+        this.messageService.clear('c');
+    }
+
+    clear() {
+        this.messageService.clear();
+    }
+
+    tabViewChange() {
+        console.log(this.activeIndexForTabView);
+        if (this.activeIndexForTabView === 2) { // chat
+            this.badgeNrMsg = 0;
         }
     }
 }

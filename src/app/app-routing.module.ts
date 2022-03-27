@@ -100,6 +100,7 @@ import {ContinueInfoComponent} from './view/etudiant/connect-as-invited/continue
 import {InvitedListeComponent} from './view/admin/invited-liste/invited-liste.component';
 import {PromotionComponent} from './view/admin/promotion/promotion.component';
 import {MyPromotionListComponent} from './view/etudiant/my-promotion-list/my-promotion-list.component';
+import {HomeStudentComponent} from './view/etudiant/home-student/home-student.component';
 
 
 @NgModule({
@@ -176,6 +177,7 @@ import {MyPromotionListComponent} from './view/etudiant/my-promotion-list/my-pro
             {
                 path: 'etudiant', component: EtudiantComponent,
                 children: [
+                    {path: 'dashboard', component: HomeStudentComponent},
                     {path: 'faq-student', component: FaqStudentListComponent},
                     {path: 'news-student', component: NewsEtudiantListComponent},
                     {path: 'schedule-student', component: ScheduleStudentComponent},
@@ -194,6 +196,8 @@ import {MyPromotionListComponent} from './view/etudiant/my-promotion-list/my-pro
                     {path: 'profileEdit', component: ProfileComponent},
                     {path: 'inviteStudent', component: InvitedStudentComponent},
                     {path: 'myPromotionList', component: MyPromotionListComponent}
+                    {path: 'inviteStudent', component: InvitedStudentComponent},
+                    {path: '*', component: HomeStudentComponent}
 
                 ]
             },

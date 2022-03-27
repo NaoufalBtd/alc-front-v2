@@ -14,8 +14,41 @@
     <app-menu></app-menu>
     <div class="layout-main">
         <div class="layout-content">
+            <img class="dictButton"
+                 (click)="displayDictionaryDialogAdmin = true"
+                 src="/assets/icons/icons8-livre.png">
+
             <router-outlet></router-outlet>
         </div>
         <app-footer></app-footer>
     </div>
+
 </div>
+<p-dialog styleClass="dialogDict" [(visible)]="displayDictionaryDialogAdmin" position="right" [style]="{width: '27vw'}">
+    <ng-template pTemplate="header">
+        <h4 style="text-align: center">Dictionary</h4>
+    </ng-template>
+
+    <ng-template pTemplate="content">
+        <h6>Text</h6>
+        <textarea
+                [style]="{'width': '100%',  'font-size': 'medium', 'border': '1px solid rgb(156, 39, 176)'}"
+                rows="2" [(ngModel)]="textSeleted"
+                pInputTextarea
+                autoResize="autoResize"></textarea>
+        <h6>Translation</h6>
+        <textarea
+                [style]="{'width': '100%',  'font-size': 'medium', 'border': '1px solid rgb(156, 39, 176)'}"
+                rows="2" [(ngModel)]="synonymes"
+                pInputTextarea
+                autoResize="autoResize"></textarea>
+
+        <button [disabled]="textSeleted?.length < 3" [style]="{'width': '100%','margin-top': '35px'}"
+                pButton
+                pRipple type="button"
+                label="get translation" (click)="getTranslation()"
+                class="p-button-raised p-button-help"></button>
+
+
+    </ng-template>
+</p-dialog>

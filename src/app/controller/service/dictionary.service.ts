@@ -84,7 +84,7 @@ export class DictionaryService {
         this._items = value;
     }
 
-    private _itemsDict: Array<Dictionary>;
+    private _itemsDict: Array<Dictionary> = new Array<Dictionary>();
 
     get itemsDict(): Array<Dictionary> {
         if (this._itemsDict == null) {

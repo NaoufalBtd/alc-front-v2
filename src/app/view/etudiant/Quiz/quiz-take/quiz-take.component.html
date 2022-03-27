@@ -295,8 +295,12 @@
                 [pTooltip]="getCorrectAnswerForT12()" tooltipPosition="top"
                 *ngFor="let item of answersT12List| keyvalue">{{item.value}} </h5>
         </div>
-        <div *ngIf="showT12AnswerDiv" class="p-col-12 correctAnswerT12">
-            {{correctAnswerT12}}
+        <div *ngIf="showT12AnswerDiv" class="p-col-12 answerT12">
+
+            <p [id]="item.value" style="display: inline-block;  margin: 0 5px; float: right"
+               *ngFor="let item of correctAnswerT12 | keyvalue">
+                <span [id]="item.key + 'toooooltips'" class="p-tooltip-top"></span>
+                {{item.value}}</p>
         </div>
 
         <div [id]="value.lib" *ngFor="let value of t12AnswersList"
@@ -307,19 +311,57 @@
 
         <div class="p-col-12 answers">
 
-            <button *ngIf="showCheckButton && !saveDone" pButton pRipple type="button"
+            <button id="showCheckButtonForT12" style="visibility: hidden" pButton pRipple type="button"
                     icon="pi pi-check" iconPos="right"
                     label="Check answer" class="p-button-raised check-button "
                     (click)="saveAnswers(question)">
             </button>
 
-            <button *ngIf="showDontKnowButton" pButton pRipple type="button"
-                    icon="pi pi-question" iconPos="right"
-                    label="DON'T KNOW" class="p-button-rounded dont-know-button "
-                    (click)="showAnswers(question)">
-            </button>
         </div>
 
+    </div>
+
+
+    <!--------------------------------- Drag and Drop -------------------------------------------------------->
+
+    <div style="background-color: white;" *ngIf="question?.typeDeQuestion?.ref === 't13'" class="p-grid">
+        <div class="p-col-12 topDiv">
+            <div class="p-grid">
+                <input id="p-col-2" disabled *ngFor="let item of listOfWords" class="answers p-col-2" draggable="true"
+                       (drag)="drag($event)" type="text"
+                       pInputText [value]="item"/>
+            </div>
+
+        </div>
+        <div id="answers" class="p-col-12 ">
+            <h4 *ngIf="question?.ref !== null ||question?.ref !== undefined ">{{question?.ref}}</h4>
+            <span id="span" *ngFor="let item of listOfText| keyvalue">
+                <span id="span">{{item.value}}</span>
+                <span [id]="'toolTipT13' + item.key"
+                      (click)="hideTooltipsT13(item.key)"
+                      class="tooltipT13">
+                    {{getCorrectAnswerForT13(item.key)}}</span>
+                <input style="
+  display: inline-block !important;
+  width: auto !important;
+  font-weight: bold;
+  color: black !important;"
+
+                       (click)="showToolTipsT13(item.key)"
+                       *ngIf="listOfText.has(item.key+ 1)" disabled [id]="item.key.toString()"
+                       (drop)="drop($event)" (dragover)="allowDrop($event)" type="text"
+                       pInputText/>
+            </span>
+        </div>
+
+        <div class="p-col-12 answers">
+            <button *ngIf="showCheckButton" pButton pRipple type="button"
+                    icon="pi pi-check" iconPos="right"
+                    label="Check answer" class="p-button-raised check-button "
+                    (click)="saveAnswers(question)">
+            </button>
+
+        </div>
     </div>
 
 

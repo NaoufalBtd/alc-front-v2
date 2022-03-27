@@ -26,6 +26,7 @@ import {ChatMessageDto} from '../../../controller/model/chatMessageDto';
 import {findIndexInData} from '@syncfusion/ej2-angular-schedule';
 import {HomeWorkReponse} from '../../../controller/model/home-work-reponse.model';
 import {GroupeEtudiant} from '../../../controller/model/groupe-etudiant.model';
+import {measureColumnDepth} from '@syncfusion/ej2-angular-grids';
 
 @Component({
     selector: 'app-quiz-preview-prof',
@@ -54,7 +55,6 @@ export class QuizPreviewProfComponent implements OnInit, OnDestroy {
     }
 
 
-
     get t12AnswersList(): Array<Reponse> {
         return this.learnService.t12AnswersList;
     }
@@ -63,12 +63,12 @@ export class QuizPreviewProfComponent implements OnInit, OnDestroy {
         this.learnService.t12AnswersList = value;
     }
 
-    get correctAnswerT12(): string {
-        return this.learnService.correctAnswerT12;
+    get correctAnswerT12(): Map<number, string> {
+        return this.learnService.studenta_answersT12;
     }
 
-    set correctAnswerT12(value: string) {
-        this.learnService.correctAnswerT12 = value;
+    set correctAnswerT12(value: Map<number, string>) {
+        this.learnService.studenta_answersT12 = value;
     }
 
     get showT12AnswerDiv(): boolean {
@@ -383,26 +383,9 @@ export class QuizPreviewProfComponent implements OnInit, OnDestroy {
         return this.learnService.answerIsCorrect(answerSelected, question);
     }
 
-    saveAnswers(question: Question) {
-        const reponse = this.learnService.saveAnswers(question, 'TEACHER_ANSWER');
-        console.log(reponse);
-        this.reponseQuiz.lib = reponse.lib;
-        this.reponseQuiz.type = 'QUIZ';
-        this.reponseQuiz.id = reponse.id;
-        this.reponseQuiz.question = reponse.question;
-        this.reponseQuiz.question.reponses = reponse.question?.reponses;
-        this.reponseQuiz.numero = reponse.numero;
-        this.reponseQuiz.sender = 'PROF';
-        this.reponseQuiz.prof = this.login.getConnectedProf();
-        this.reponseQuiz.etatReponse = reponse.etatReponse;
-        const chatMessageDto: ChatMessageDto = new ChatMessageDto(this.login.getConnectedProf().toString(), ' ', false);
-        chatMessageDto.quizReponse = this.reponseQuiz;
-        chatMessageDto.type = 'QUIZ';
-        this.webSocketService.sendMessage(chatMessageDto, 'PROF');
-    }
 
     nextQuestionFct() {
-        this.correctAnswerT12 = String(' ');
+        this.correctAnswerT12 = new Map<number, string>();
         this.showT12AnswerDiv = false;
         this.grpStudentAnswers.clear();
         const question = this.learnService.nextQuestionFct();
@@ -410,7 +393,7 @@ export class QuizPreviewProfComponent implements OnInit, OnDestroy {
     }
 
     previousQuestionFct() {
-        this.correctAnswerT12 = String(' ');
+        this.correctAnswerT12 = new Map<number, string>();
         this.showT12AnswerDiv = false;
         this.grpStudentAnswers.clear();
         this.showFollowButton = true;
@@ -436,7 +419,6 @@ export class QuizPreviewProfComponent implements OnInit, OnDestroy {
 
     followMeFct(question: Question) {
         console.log(question);
-        // this.showFollowButton = false;
         const reponseQuiz: QuizReponse = new QuizReponse();
         for (let i = 0; i < (this.questionList.length); i++) {
             if (this.questionList[i].id === question.id) {
@@ -453,6 +435,10 @@ export class QuizPreviewProfComponent implements OnInit, OnDestroy {
     }
 
     finishQuiz() {
+        const messageDto: ChatMessageDto = new ChatMessageDto('FINISH_QUIZ', 'FINISH_QUIZ', false);
+        messageDto.type = 'FINISH_QUIZ';
+        messageDto.prof = this.login.getConnectedProf();
+        this.webSocketService.sendMessage(messageDto, 'PROF');
         this.showTakeQuiz = false;
         this.showQuizReview = true;
         this.quizEtudiantService.findQuizEtudiantByQuizId(this.selectedQuiz.id).subscribe(
@@ -487,8 +473,39 @@ export class QuizPreviewProfComponent implements OnInit, OnDestroy {
     }
 
 
-    checkAnswers(value: Reponse) {
-        this.learnService.checkAnswers(value);
+    saveAnswers(question: Question) {
+        const reponse = this.learnService.saveAnswers(question, 'TEACHER_ANSWER');
+        console.log(reponse);
+        this.reponseQuiz.lib = reponse.lib;
+        this.reponseQuiz.type = 'QUIZ';
+        this.reponseQuiz.id = reponse.id;
+        this.reponseQuiz.question = reponse.question;
+        this.reponseQuiz.question.reponses = reponse.question?.reponses;
+        this.reponseQuiz.numero = reponse.numero;
+        this.reponseQuiz.sender = 'PROF';
+        this.reponseQuiz.prof = this.login.getConnectedProf();
+        this.reponseQuiz.etatReponse = reponse.etatReponse;
+        const chatMessageDto: ChatMessageDto = new ChatMessageDto(this.login.getConnectedProf().toString(), ' ', false);
+        chatMessageDto.quizReponse = this.reponseQuiz;
+        chatMessageDto.type = 'QUIZ';
+        this.webSocketService.sendMessage(chatMessageDto, 'PROF');
+    }
+
+
+    checkAnswers(reponse: Reponse) {
+        this.reponseQuiz.lib = reponse.lib;
+        this.reponseQuiz.type = 'QUIZ';
+        this.reponseQuiz.id = reponse.id;
+        this.reponseQuiz.question = reponse.question;
+        this.reponseQuiz.question.reponses = reponse.question?.reponses;
+        this.reponseQuiz.numero = reponse.numero;
+        this.reponseQuiz.sender = 'PROF';
+        this.reponseQuiz.prof = this.login.getConnectedProf();
+        this.reponseQuiz.etatReponse = reponse.etatReponse;
+        const chatMessageDto: ChatMessageDto = new ChatMessageDto(this.login.getConnectedProf().id.toString(), ' ', false);
+        chatMessageDto.quizReponse = this.reponseQuiz;
+        chatMessageDto.type = 'QUIZ';
+        this.webSocketService.sendMessage(chatMessageDto, 'PROF');
     }
 
     getCorrectAnswerForT12(): string {
@@ -503,5 +520,107 @@ export class QuizPreviewProfComponent implements OnInit, OnDestroy {
 
     valueOf(numero: number): number {
         return ((numero / this.questionList.length) * 100);
+    }
+
+    onClick(reponse: Reponse) {
+        this.reponseQuiz.lib = reponse.lib;
+        this.reponseQuiz.id = reponse.id;
+        this.reponseQuiz.question = reponse.question;
+        this.reponseQuiz.numero = reponse.numero;
+        this.reponseQuiz.type = 'QUIZ';
+        if (this.groupeEtudiant.groupeEtude.nombreEtudiant === 1) {
+            this.reponseQuiz.sender = 'STUDENT_CHOICE_T12';
+        } else {
+            this.reponseQuiz.sender = 'STUDENT_CHOICE_T12_FOR_GRP';
+        }
+        this.reponseQuiz.prof = this.login.getConnectedProf();
+        this.reponseQuiz.etatReponse = reponse.etatReponse;
+        const chatMessageDto: ChatMessageDto = new ChatMessageDto(this.login.getConnectedStudent().id.toString(),
+            'STUDENT_CHOICE_T12', false);
+        chatMessageDto.quizReponse = this.reponseQuiz;
+        chatMessageDto.type = 'QUIZ';
+        this.webSocketService.sendMessage(chatMessageDto, 'PROF');
+    }
+
+
+    //  -------------------------------------- DRAG AND DROP-------------------------------------
+    get showToolTipForT13(): boolean {
+        return this.learnService.showToolTipForT13;
+    }
+
+    set showToolTipForT13(value: boolean) {
+        this.learnService.showToolTipForT13 = value;
+    }
+
+    get dragAndDropStudentAnswersList(): Map<number, string> {
+        return this.learnService.dragAndDropStudentAnswersList;
+    }
+
+
+    get listOfWords(): Array<string> {
+        return this.learnService.listOfWords;
+    }
+
+    set listOfWords(value: Array<string>) {
+        this.learnService.listOfWords = value;
+    }
+
+    get listOfText(): Map<number, string> {
+        return this.learnService.listOfText;
+    }
+
+    set listOfText(value: Map<number, string>) {
+        this.learnService.listOfText = value;
+    }
+
+    get dragAndDropData(): string {
+        return this.learnService.dragAndDropData;
+    }
+
+    set dragAndDropData(value: string) {
+        this.learnService.dragAndDropData = value;
+    }
+
+    get dragAndDropCorrectAnswersList(): Map<number, string> {
+        return this.learnService.dragAndDropCorrectAnswersList;
+    }
+
+    set dragAndDropCorrectAnswersList(value: Map<number, string>) {
+        this.learnService.dragAndDropCorrectAnswersList = value;
+    }
+
+    drag(ev) {
+        this.learnService.drag(ev);
+
+    }
+
+    allowDrop(ev) {
+        ev.preventDefault();
+    }
+
+    drop(ev) {
+        console.log(ev.target);
+        const data = this.dragAndDropData;
+        const chatMessage: ChatMessageDto = new ChatMessageDto('T13', 'QUESTION_T13', false);
+        chatMessage.prof = this.login.getConnectedProf();
+        chatMessage.type = 'QUIZ';
+        chatMessage.ev = ev.target.id;
+        chatMessage.quizReponse.question = this.question;
+        chatMessage.quizReponse.type = 'T13';
+        chatMessage.quizReponse.lib = data;
+        this.webSocketService.sendMessage(chatMessage, 'PROF');
+    }
+
+    getCorrectAnswerForT13(key: number): string {
+        return this.dragAndDropCorrectAnswersList.get(key);
+    }
+
+    showToolTipsT13(key: number) {
+        console.log(key);
+        document.getElementById('toolTipT13' + key.toString()).style.visibility = 'visible';
+    }
+
+    hideTooltipsT13(key: number) {
+        document.getElementById('toolTipT13' + key.toString()).style.visibility = 'hidden';
     }
 }

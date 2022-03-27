@@ -289,17 +289,72 @@
                 [pTooltip]="getCorrectAnswerForT12()" tooltipPosition="top"
                 *ngFor="let item of answersT12List| keyvalue">{{item.value}} </h5>
         </div>
-        <div *ngIf="showT12AnswerDiv" class="p-col-12 correctAnswerT12">
-            {{correctAnswerT12}}
+        <div *ngIf="showT12AnswerDiv" class="p-col-12 answerT12">
+
+            <p [id]="item.value" style="display: inline-block;  margin: 0 5px; float: right"
+               *ngFor="let item of correctAnswerT12 | keyvalue">
+                <span [id]="item.key + 'toooooltips'" class="p-tooltip-top"></span>
+                {{item.value}}</p>
         </div>
 
         <div [id]="value.lib" *ngFor="let value of t12AnswersList"
-             (click)="checkAnswers(value)"
+             (click)="onClick(value)"
              class="p-col-3 answert12">
-            {{value.lib}}
+            {{value?.lib}}
+        </div>
+        <div class="p-col-12 answers">
 
+            <button id="showCheckButtonForT12" style="visibility: hidden" pButton pRipple type="button"
+                    icon="pi pi-check" iconPos="right"
+                    label="Check answer" class="p-button-raised check-button "
+                    (click)="saveAnswers(question)">
+            </button>
         </div>
 
+    </div>
+
+
+    <!--------------------------------- Drag and Drop -------------------------------------------------------->
+
+    <div style="background-color: white;" *ngIf="question?.typeDeQuestion?.ref === 't13'" class="p-grid">
+        <div class="p-col-12 topDiv">
+            <div class="p-grid">
+                <input id="p-col-2" disabled *ngFor="let item of listOfWords" class="answers p-col-2" draggable="true"
+                       (drag)="drag($event)" type="text"
+                       pInputText [value]="item"/>
+            </div>
+
+        </div>
+        <div id="answers" class="p-col-12 ">
+            <h4 *ngIf="question?.ref !== null ||question?.ref !== undefined ">{{question?.ref}}</h4>
+
+            <span id="span" *ngFor="let item of listOfText| keyvalue">
+                <span id="span">{{item.value}}</span>
+                <span [id]="'toolTipT13' + item.key" (click)="hideTooltipsT13(item.key)" class="tooltipT13">
+                    {{getCorrectAnswerForT13(item.key)}}</span>
+                <input style="
+  display: inline-block !important;
+  width: auto !important;
+  font-weight: bold;
+  color: black !important;"
+                       (click)="showToolTipsT13(item.key)"
+                       tooltipPosition="top"
+                       [pTooltip]="getCorrectAnswerForT13(item.key)"
+                       *ngIf="listOfText.has(item.key+ 1)" [id]="item.key.toString()"
+                       (drop)="drop($event)" (dragover)="allowDrop($event)" type="text"
+                       pInputText/>
+            </span>
+        </div>
+
+        <div class="p-col-12 answers">
+
+            <button *ngIf="showCheckButton" pButton pRipple type="button"
+                    icon="pi pi-check" iconPos="right"
+                    label="Check answer" class="p-button-raised check-button "
+                    (click)="saveAnswers(question)">
+            </button>
+
+        </div>
     </div>
 
 
@@ -315,11 +370,6 @@
 
         <div style="text-align: center" class="p-col-6">
 
-            <!--            <button *ngIf="question.id !== questionList[0]?.id && showFollowButton"-->
-            <!--                    pButton pRipple-->
-            <!--                    type="button" icon="pi pi-arrow-down" iconPos="right"-->
-            <!--                    label="Follow me" (click)="followMeFct(question)"-->
-            <!--                    class="p-button-rounded p-button-info"></button>-->
         </div>
 
         <div class="p-col-3">
@@ -380,25 +430,26 @@
         </ng-template>
         <ng-template pTemplate="body" let-answer>
             <tr>
-                <th scope="row" *ngIf="answer.answer === answer?.reponse?.lib && answer.note !== 0.5 ">
+                <th scope="row" *ngIf="answer?.answer === answer?.reponse?.lib && answer.note !== 0.5 ">
                     <i class="pi pi-check-circle" pTooltip="Correct answer" tooltipPosition="top"></i>
                 </th>
 
-                <th scope="row" *ngIf="answer.answer !== answer.reponse.lib && answer.answer !== null || undefined">
+                <th scope="row" *ngIf="answer.answer !== answer?.reponse?.lib && answer?.answer !== null || undefined">
                     <i pTooltip="Incorrect answer" tooltipPosition="top" class="pi pi-times-circle"></i></th>
 
-                <th scope="row" *ngIf="answer.note === 0.5">
+                <th scope="row" *ngIf="answer?.note === 0.5">
                     <i pTooltip="Professor is answered" tooltipPosition="top" class="pi pi-users"></i>
                 </th>
 
-                <th scope="row" *ngIf="answer.answer === null || undefined">
+                <th scope="row" *ngIf="answer?.answer === null || undefined">
                     <i pTooltip="Student don't know" tooltipPosition="top" class="pi pi-exclamation-circle"></i>
                 </th>
 
                 <th scope="row">{{answer?.question?.numero}}</th>
                 <td>{{answer?.question?.typeDeQuestion?.lib}}</td>
                 <td>{{answer?.answer}}</td>
-                <td>{{answer?.reponse?.lib}}</td>
+                <td *ngIf="answer?.question?.typeDeQuestion?.ref !== 't13'">{{answer?.reponse?.lib}}</td>
+                <td *ngIf="answer?.question?.typeDeQuestion?.ref === 't13'">{{answer?.question?.libelle}}</td>
                 <td>{{answer?.note}}</td>
             </tr>
         </ng-template>

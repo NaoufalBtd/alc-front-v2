@@ -340,6 +340,7 @@ import { PromotionComponent } from './view/admin/promotion/promotion.component';
 import {PromotionCreateComponent} from './view/admin/promotion/promotion-create/promotion-create.component';
 import {PromotionListComponent} from './view/admin/promotion/promotion-list/promotion-list.component';
 import { MyPromotionListComponent } from './view/etudiant/my-promotion-list/my-promotion-list.component';
+import {HomeStudentComponent} from './view/etudiant/home-student/home-student.component';
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -667,12 +668,15 @@ export function createTranslateLoader(http: HttpClient) {
         PromotionComponent,
         PromotionCreateComponent,
         PromotionListComponent,
-        MyPromotionListComponent
+        MyPromotionListComponent,
+        ContinueInfoComponent,
+        HomeStudentComponent
 
     ],
     providers: [
         {provide: LocationStrategy, useClass: HashLocationStrategy},
         MenuService, MessageService, ConfirmationService,
+        HomeWorkEtudiantComponent,
         WeekService, MonthService, DayService, WeekService, WorkWeekService, MonthService,
         AgendaService, MonthAgendaService, TimelineViewsService,
         TimelineMonthService

@@ -31,6 +31,12 @@ import {SessionCours} from '../model/session-cours.model';
     providedIn: 'root'
 })
 export class SimulateSectionService {
+    private _showLesson = true;
+    private _showSummary = false;
+    private _data: any;
+    private _finishedAdditionalSection = 0;
+    private _finishedSection = 0;
+    private _showRatingLessonTemplate = false;
 
     constructor(private messageService: MessageService,
                 private router: Router,
@@ -50,6 +56,54 @@ export class SimulateSectionService {
                 private homeWorkEtudiantService: HomeWorkEtudiantServiceService) {
     }
 
+
+    get showRatingLessonTemplate(): boolean {
+        return this._showRatingLessonTemplate;
+    }
+
+    set showRatingLessonTemplate(value: boolean) {
+        this._showRatingLessonTemplate = value;
+    }
+
+    get data(): any {
+        return this._data;
+    }
+
+    set data(value: any) {
+        this._data = value;
+    }
+
+    get finishedAdditionalSection(): number {
+        return this._finishedAdditionalSection;
+    }
+
+    set finishedAdditionalSection(value: number) {
+        this._finishedAdditionalSection = value;
+    }
+
+    get finishedSection(): number {
+        return this._finishedSection;
+    }
+
+    set finishedSection(value: number) {
+        this._finishedSection = value;
+    }
+
+    get showLesson(): boolean {
+        return this._showLesson;
+    }
+
+    set showLesson(value: boolean) {
+        this._showLesson = value;
+    }
+
+    get showSummary(): boolean {
+        return this._showSummary;
+    }
+
+    set showSummary(value: boolean) {
+        this._showSummary = value;
+    }
 
     get quizExist(): boolean {
         return this._quizExist;
@@ -247,9 +301,6 @@ export class SimulateSectionService {
         return this.service.sectionStandard;
     }
 
-    set sectionStandard(value: Array<Section>) {
-        this.service.sectionStandard = value;
-    }
 
     get sectionAdditional(): Array<Section> {
         return this.service.sectionAdditional;
@@ -363,6 +414,71 @@ export class SimulateSectionService {
     }
 
 
+    public goToSummary() {
+        let index = 0;
+        for (const item of this.sessionCour.sections) {
+            if (item.id === this.selectedsection.id) {
+                index = -2;
+            }
+        }
+        if (index === 0) {
+            this.sessionCour.sections.push({...this.selectedsection});
+        }
+
+        this.showLesson = false;
+        this.showSummary = true;
+
+        for (const item of this.sessionCour.sections) {
+            for (const sec of this.sectionAdditional) {
+                if (item.id === sec.id) {
+                    this.finishedAdditionalSection += 1;
+                }
+            }
+        }
+        for (const item of this.sessionCour.sections) {
+            for (const sec of this.sectionStandard) {
+                if (item.id === sec.id) {
+                    this.finishedSection += 1;
+                }
+            }
+        }
+        const keySections = (this.finishedSection / this.sectionStandard?.length) * 100;
+        const keySectionsRest = 100 - keySections;
+        const keySectionsAdditional = (this.finishedAdditionalSection / this.sectionAdditional?.length) * 100;
+        const keySectionsRestAdditional = 100 - keySectionsAdditional;
+
+
+        this.data = {
+            labels: ['Finished', 'Not Finished'],
+            datasets: [
+                {
+                    data: [keySections, keySectionsRest],
+                    backgroundColor: [
+                        '#FF6384',
+                        '#f4f4f4'
+                    ],
+                    hoverBackgroundColor: [
+                        '#FF6384',
+                        '#f4f4f4'
+                    ]
+                },
+                {
+                    data: [keySectionsAdditional, keySectionsRestAdditional],
+                    backgroundColor: [
+                        '#FFCE56',
+                        '#f4f4f4'
+                    ],
+                    hoverBackgroundColor: [
+                        '#FFCE56',
+                        '#f4f4f4'
+                    ],
+
+                }
+            ]
+        };
+    }
+
+
     public nextSection(id: number, type: string) {
         for (let i = 0; i < this.itemssection2.length; i++) {
             if (id === this.itemssection2[i].id) {
@@ -394,21 +510,15 @@ export class SimulateSectionService {
                 this.quizService.findQuizEtudanitByEtudiantIdAndQuizId(this.loginService.etudiant, this.selectedQuiz).subscribe(
                     data1 => {
                         this.quizEtudiantList = data1;
-                        this.quizView = true;
                         console.log(this.quizEtudiantList);
-                        this.quizService.findAllQuestions(this.selectedQuiz?.ref).subscribe(
-                            dataQuestions => {
-                                if (data1?.questionCurrent > dataQuestions?.length) {
-                                    this.passerQuiz = 'View Quiz';
-                                    this.quizView = true;
-                                } else {
-                                    this.passerQuiz = 'Continue Quiz';
-                                    this.quizView = false;
-                                }
-                            }
-                        );
+                        if (this.quizEtudiantList.id !== 0) {
+                            this.quizView = true;
+                        } else {
+                            this.quizView = false;
+                        }
                     }, error => {
                         this.passerQuiz = 'Take Quiz';
+                        console.log(error);
                         this.quizView = false;
                     }
                 );
@@ -516,9 +626,25 @@ export class SimulateSectionService {
                     } else {
                         this.showVocabulary = false;
                     }
-                    this.quizService.findQuizBySection(this.selectedsection.id).subscribe(data => {
-                        this.selectedQuiz = data;
-                    });
+                    this.quizService.findQuizBySection(this.selectedsection.id).subscribe(
+                        dataQuiz => {
+                            this.selectedQuiz = dataQuiz;
+                            this.quizService.findQuizEtudanitByEtudiantIdAndQuizId(this.loginService.etudiant, this.selectedQuiz).subscribe(
+                                data1 => {
+                                    this.quizEtudiantList = data1;
+                                    console.log(this.quizEtudiantList);
+                                    if (this.quizEtudiantList.id !== 0) {
+                                        this.quizView = true;
+                                    } else {
+                                        this.quizView = false;
+                                    }
+                                }, error => {
+                                    this.passerQuiz = 'Take Quiz';
+                                    console.log(error);
+                                    this.quizView = false;
+                                }
+                            );
+                        });
                     console.log(this.service.image);
                     this.service.image = this.selectedsection.urlImage;
                     this.quizService.section.id = this.selectedsection.id;
@@ -542,22 +668,17 @@ export class SimulateSectionService {
                     data => {
                         this.selectedQuiz = data;
                         this.quizService.findQuizEtudanitByEtudiantIdAndQuizId(this.loginService.etudiant, this.selectedQuiz).subscribe(
-                            data => {
-                                this.quizEtudiantList = data;
+                            data1 => {
+                                this.quizEtudiantList = data1;
                                 console.log(this.quizEtudiantList);
-                                this.quizService.findAllQuestions(this.selectedQuiz.ref).subscribe(
-                                    dataQuestions => {
-                                        if (data?.questionCurrent > dataQuestions?.length) {
-                                            this.passerQuiz = 'View Quiz';
-                                            this.quizView = true;
-                                        } else {
-                                            this.passerQuiz = 'Continue Quiz';
-                                            this.quizView = false;
-                                        }
-                                    }
-                                );
+                                if (this.quizEtudiantList.id !== 0) {
+                                    this.quizView = true;
+                                } else {
+                                    this.quizView = false;
+                                }
                             }, error => {
                                 this.passerQuiz = 'Take Quiz';
+                                console.log(error);
                                 this.quizView = false;
                             }
                         );
@@ -574,6 +695,21 @@ export class SimulateSectionService {
                 this.quizService.findQuizBySectionId(this.selectedsection).subscribe(data12 => {
                     this.quizExist = true;
                     this.selectedQuiz = data12;
+                    this.quizService.findQuizEtudanitByEtudiantIdAndQuizId(this.loginService.etudiant, this.selectedQuiz).subscribe(
+                        data1 => {
+                            this.quizEtudiantList = data1;
+                            console.log(this.quizEtudiantList);
+                            if (this.quizEtudiantList.id !== 0) {
+                                this.quizView = true;
+                            } else {
+                                this.quizView = false;
+                            }
+                        }, error => {
+                            this.passerQuiz = 'Take Quiz';
+                            console.log(error);
+                            this.quizView = false;
+                        }
+                    );
                 }, error => {
                     this.quizExist = false;
                 });
@@ -607,5 +743,9 @@ export class SimulateSectionService {
         } else {
             return false;
         }
+    }
+
+    finishLesson() {
+        this.showRatingLessonTemplate = true;
     }
 }
