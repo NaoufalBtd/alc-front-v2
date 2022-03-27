@@ -122,8 +122,8 @@
 <div class="layout-topbar" style="background-color: #ffffff" *ngIf="this.authenticationService.getUserFromLocalCache() == null">
     <div class="mainnav">
     <img [routerLink]="['']" style="width: 120px; height: auto"  src="assets/picture/icon/logo.png" alt="logo">
-    <a style="margin-left: 35px; padding: 10px"  class="get-started">{{'courses' | translate}}</a>
-    <a  class="get-started" style="padding: 10px">{{'prices' | translate}}</a>
+    <a style="margin-left: 35px; padding: 10px;cursor: pointer"  class="get-started" >{{'courses' | translate}}</a>
+    <a  class="get-started" style="padding: 10px;cursor: pointer">{{'prices' | translate}}</a>
         <select (change)="selectedLangage($event)" style="margin-left: 15px; margin-top:15px; padding: 10px">
             <option value="en" style="padding: 10px">English</option>
             <option value="fr" style="padding: 10px">Français</option>
@@ -135,8 +135,8 @@
 
         <li  [ngClass]="{'active-topmenuitem fadeInDown': appMain.topbarUserMenuActive}"  class="user-profile">
 
-            <a  class="get-started" style="border-radius: 5px; top: 0">{{'treetrialLesson' | translate}}</a>
-            <a  class="get-started" style="border-radius: 5px; top: 0" (click)="appMain.onTopbarUserMenuButtonClick($event); hidePopUp=false" *ngIf="!app.inlineUser">
+            <a  class="get-started" style="border-radius: 5px; top: 0;cursor: pointer">{{'treetrialLesson' | translate}}</a>
+            <a  class="get-started" style="border-radius: 5px; top: 0;cursor: pointer" (click)="appMain.onTopbarUserMenuButtonClick($event); hidePopUp=false" *ngIf="!app.inlineUser">
                 {{'signin' | translate}}
             </a>
             <ul *ngIf="hidePopUp === false" class="fadeInDown">

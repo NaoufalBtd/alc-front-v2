@@ -4,7 +4,7 @@
         <div class="card">
             <p-toolbar styleClass="p-mb-4">
                 <ng-template pTemplate="left">
-                    <button pButton pRipple type="button" icon="pi pi-plus" label="Reclamation" class="p-mr-2"
+                    <button pButton pRipple type="button" icon="pi pi-plus" label="Complaint" class="p-mr-2"
                             (click)="showReclamationProf()"
                     ></button>
 
@@ -21,9 +21,11 @@
 
                 <ng-template pTemplate="header">
                     <tr>
-                        <th pSortableColumn="prof">Message</th>
+                        <th pSortableColumn="prof">Code</th>
+                        <th pSortableColumn="prof">Objet Message</th>
                         <th pSortableColumn="Date">Date Reclamation</th>
                         <th pSortableColumn="Number Of Sessions">Processing Status</th>
+                        <th pSortableColumn="Number Of Sessions">View Status</th>
                         <th>Action</th>
                     </tr>
                 </ng-template>
@@ -31,9 +33,10 @@
                     <tr>
                         <td>
                             <strong>
-                                {{reclamationProf.objetReclamationProf}}
-                            </strong>
-
+                                {{reclamationProf.reference}}   </strong>
+                        </td>
+                        <td><strong>
+                            {{reclamationProf.objetReclamationProf}}   </strong>
                         </td>
                         <td>
                             <strong>
@@ -45,24 +48,21 @@
                             </strong>
 
                         </td>
-
                         <td>
                             <p-message *ngIf="!reclamationProf.traite" severity="warn" text="Being Processed"
                                        styleClass="p-mr-2"></p-message>
                             <p-message *ngIf="reclamationProf.traite" severity="success" text="Processed"
                                        styleClass="p-mr-2"></p-message>
-
+                        </td>
+                        <td>
+                            <p-message *ngIf="!reclamationProf.postView" severity="error" text="Not seen yet"
+                                       styleClass="p-mr-2"></p-message>
+                            <p-message *ngIf="reclamationProf.postView" severity="info" text="Message has been seen"
+                                       styleClass="p-mr-2"></p-message>
                         </td>
 
-                    <!--    <td>
-                            <p-message *ngIf="reclamationProf.postView" severity="info"
-                                       text="Message has been seen"></p-message>
-
-                            <p-message *ngIf="!reclamationProf.postView" severity="error"
-                                       text="The message has not been seen"></p-message>
-                        </td>-->
                         <td>
-                            <button pButton type="button" class="p-button-info p-mr-2"
+                            <button pButton type="button" class="p-button-info p-mr-2" label="Details"
                                     (click)="showReclamationProfView(reclamationProf.id,this.serviceLogin.getConnectedProf().id)"
                                     icon="pi pi-align-justify"></button>
                         </td>
