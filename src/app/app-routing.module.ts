@@ -195,7 +195,7 @@ import {HomeStudentComponent} from './view/etudiant/home-student/home-student.co
                     {path: 'profile', component: EtudiantProfileComponent},
                     {path: 'profileEdit', component: ProfileComponent},
                     {path: 'inviteStudent', component: InvitedStudentComponent},
-                    {path: 'myPromotionList', component: MyPromotionListComponent}
+                    {path: 'myPromotionList', component: MyPromotionListComponent},
                     {path: 'inviteStudent', component: InvitedStudentComponent},
                     {path: '*', component: HomeStudentComponent}
 
