@@ -6,11 +6,12 @@
             <h2 class="p-m-0">Study level list </h2>
             <p-toolbar styleClass="p-mb-4">
                 <ng-template pTemplate="left">
-                    <button   (click)="showEditDialog()" class="p-button-success p-mr-2 p-mb-2" icon="pi pi-plus" label="New" pButton
+                    <button   (click)="showEditDialog()" class="p-button-success p-mr-2 p-mb-2" icon="pi pi-plus"
+                              label="New" pButton
                               pRipple style="width: 90px"></button>
                 </ng-template>
             </p-toolbar>
-            <p-table #dt [(selection)]="niveauEtudes" [columns]="cols" [globalFilterFields]="['libelle']"
+            <p-table #dt [columns]="cols" [globalFilterFields]="['libelle']"
                      [paginator]="true"
                      [rowHover]="false"
                      [rows]="3" [showCurrentPageReport]="true" [value]="niveauEtudes"
@@ -31,18 +32,15 @@
                 </ng-template>
                 <ng-template let-type pTemplate="body">
                     <tr>
-
-
                         <td>{{type.libelle}}</td>
                         <td>
 
-                            <button (click)="delete(type)"  class="p-button-rounded p-button-danger" icon="pi pi-trash" pButton
+                            <button (click)="confirmationDelete(type)"  class="p-button-rounded p-button-danger" icon="pi pi-trash" pButton
                                     pRipple></button>
                             &nbsp;
                             <button (click)="showEdit(type)"  class="p-button-rounded p-button-success p-mr-2" icon="pi pi-pencil" pButton
                                     pRipple></button>
                         </td>
-
 
                     </tr>
                 </ng-template>
@@ -91,4 +89,19 @@
 
 </p-dialog>
 
+<!------delee-------------------->
+<p-dialog header="Confirm" [(visible)]="deleteConfirmation" [style]="{width: '30vw'}">
+    <ng-template pTemplate="content">
+<div>
+    <i class="pi pi-exclamation-triangle" style="font-size: 2rem ; color:red;">
+    Are you sure you want to delete {{this.niveauEtude.libelle }} ? </i>
+</div>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <button (click)="delete()" class="p-button-text" icon="pi pi-check" label="Delete" pButton pRipple></button>
+        <button (click)="hideCreateDialog()" class="p-button-text" icon="pi pi-times" label="Cancel" pButton
+                pRipple></button>
 
+    </ng-template>
+
+</p-dialog>

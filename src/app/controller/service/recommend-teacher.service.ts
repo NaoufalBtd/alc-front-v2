@@ -16,9 +16,10 @@ import {SalaryVo} from '../model/salary-vo.model';
 export class RecommendTeacherService {
 
     private adminUrl = environment.adminUrl;
-
+    private profUrl = environment.profUrl;
     constructor(private http: HttpClient) {
     }
+
 
     // private _recommendTeacher: RecommendTeacher;
     private _selected: RecommendTeacher;
@@ -260,6 +261,9 @@ export class RecommendTeacherService {
 
     public findAllRecommend(): Observable<Array<RecommendTeacher>> {
         return this.http.get<Array<RecommendTeacher>>(this.adminUrl + 'teacher/');
+    }
+    public findAllRecommendTeacher(): Observable<Array<RecommendTeacher>> {
+        return this.http.get<Array<RecommendTeacher>>(this.profUrl + 'teacher/Prof/id/' + this.prof.id);
     }
 
     public findAllEtudiantByProf(): Observable<Array<Etudiant>> {

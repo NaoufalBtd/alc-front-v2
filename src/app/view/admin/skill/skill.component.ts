@@ -5,6 +5,7 @@ import {StatutSocial} from '../../../controller/model/statut-social.model';
 import {TypeTeacher} from '../../../controller/model/type-teacher.model';
 import {SkillService} from '../../../controller/service/skill.service';
 import {Skill} from '../../../controller/model/skill.model';
+import {NiveauEtude} from '../../../controller/model/niveau-etude.model';
 
 @Component({
   selector: 'app-skill',
@@ -85,6 +86,19 @@ export class SkillComponent implements OnInit {
   set skills(value: Array<Skill>) {
     this.skillService.skills = value;
   }
+  public confirmationDelete(skill: Skill) {
+    this.skill = skill;
+    console.log(this.skill);
+    this.deleteConfirmation = true;
+
+  }
+
+  hideCreateDialog1() {
+    this.deleteConfirmation = false;
+
+  }
+
+  deleteConfirmation: boolean;
   public edit() {
     this.skills[this.skillService.findIndexById(this.skill.id)] = this.skill;
     this.skillService.edit().subscribe(data => {
@@ -100,13 +114,9 @@ export class SkillComponent implements OnInit {
     this.editDialog = false;
     this.skill = new Skill();
   }
-  public delete(skill: Skill) {
-    this.skill = skill;
-    this.confirmationService.confirm({
-      message: 'Are you sure you want to delete ' + skill.libelle + '?',
-      header: 'Confirm',
-      icon: 'pi pi-exclamation-triangle',
-      accept: () => {
+  public delete() {
+
+
         this.skillService.deleteByLibelle().subscribe(data => {
           this.skills = this.skills.filter(val => val.id !== this.skill.id);
           this.skill = new TypeTeacher();
@@ -117,7 +127,7 @@ export class SkillComponent implements OnInit {
             life: 3000
           });
         });
+    this.deleteConfirmation = false;
       }
-    });
-  }
+
 }

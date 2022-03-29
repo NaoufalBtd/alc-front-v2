@@ -3,6 +3,7 @@ import {ConfirmationService, MessageService} from 'primeng/api';
 import {StatutSocialService} from '../../../controller/service/statut-social.service';
 import {StatutSocial} from '../../../controller/model/statut-social.model';
 import {TypeTeacher} from '../../../controller/model/type-teacher.model';
+import {Skill} from '../../../controller/model/skill.model';
 
 @Component({
   selector: 'app-statut-social',
@@ -21,6 +22,13 @@ export class StatutSocialComponent implements OnInit {
       this.statutSocials = data;
       console.log(this.statutSocials);
     } );
+  }
+  deleteConfirmation: boolean;
+  public confirmationDelete(statusSocial: StatutSocial) {
+    this.statutSocial = statusSocial;
+    console.log(this.statutSocial);
+    this.deleteConfirmation = true;
+
   }
   public save() {
 
@@ -98,13 +106,11 @@ export class StatutSocialComponent implements OnInit {
     this.editDialog = false;
     this.statutSocial = new StatutSocial();
   }
-  public delete(statutSocial: StatutSocial) {
-    this.statutSocial = statutSocial;
-    this.confirmationService.confirm({
-      message: 'Are you sure you want to delete ' + statutSocial.libelle + '?',
-      header: 'Confirm',
-      icon: 'pi pi-exclamation-triangle',
-      accept: () => {
+  hideCreateDialog1(){
+    this.deleteConfirmation = false;
+  }
+  public delete() {
+
         this.statutSocialService.deleteByLibelle().subscribe(data => {
           this.statutSocials = this.statutSocials.filter(val => val.id !== this.statutSocial.id);
           this.statutSocial = new TypeTeacher();
@@ -114,9 +120,9 @@ export class StatutSocialComponent implements OnInit {
             detail: 'Social status  Deleted',
             life: 3000
           });
-        });
-      }
+
     });
+        this.deleteConfirmation = false;
   }
 
 }

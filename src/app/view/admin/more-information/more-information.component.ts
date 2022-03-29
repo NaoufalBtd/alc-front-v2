@@ -5,6 +5,7 @@ import {TypeTeacher} from '../../../controller/model/type-teacher.model';
 import {TypeTeacherService} from '../../../controller/service/type-teacher.service';
 import {GroupeEtude} from '../../../controller/model/groupe-etude.model';
 import {User} from '../../../controller/model/user.model';
+import {InteretEtudiant} from '../../../controller/model/interet-etudiant.model';
 
 @Component({
   selector: 'app-more-information',
@@ -23,6 +24,7 @@ export class MoreInformationComponent implements OnInit {
     } );
   }
   selected = new TypeTeacher();
+    deleteConfirmation: boolean;
   public save() {
 
     if (this.typeTeacher.libelle.trim()) {
@@ -100,13 +102,8 @@ export class MoreInformationComponent implements OnInit {
     this.editDialog = false;
     this.typeTeacher = new TypeTeacher();
   }
-  public delete(typeTeacher: TypeTeacher) {
-    this.typeTeacher = typeTeacher;
-    this.confirmationService.confirm({
-      message: 'Are you sure you want to delete ' + typeTeacher.libelle + '?',
-      header: 'Confirm',
-      icon: 'pi pi-exclamation-triangle',
-      accept: () => {
+  public delete() {
+
         this.typeTeacherService.deleteByLibelle().subscribe(data => {
           this.typeTeachers = this.typeTeachers.filter(val => val.id !== this.typeTeacher.id);
           this.typeTeacher = new TypeTeacher();
@@ -117,8 +114,16 @@ export class MoreInformationComponent implements OnInit {
             life: 3000
           });
         });
-      }
-    });
+   this.deleteConfirmation = false ;
   }
 
+  hideCreateDialog1() {
+    this.deleteConfirmation = false;
+  }
+  public confirmationDelete(typeTeaher: TypeTeacher) {
+    this.typeTeacher = typeTeaher;
+    console.log(this.typeTeacher);
+    this.deleteConfirmation = true;
+
+  }
 }

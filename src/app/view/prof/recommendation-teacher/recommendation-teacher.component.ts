@@ -3,6 +3,7 @@ import {ConfirmationService, MessageService} from 'primeng/api';
 import {LoginService} from '../../../controller/service/login.service';
 import {RecommendTeacherService} from '../../../controller/service/recommend-teacher.service';
 import {RecommendTeacher} from '../../../controller/model/recommend-teacher.model';
+import {Prof} from '../../../controller/model/prof.model';
 
 @Component({
   selector: 'app-recommendation-teacher',
@@ -16,9 +17,23 @@ export class RecommendationTeacherComponent implements OnInit {
               private confirmationService: ConfirmationService, private service: RecommendTeacherService) { }
 
   ngOnInit(): void {
-    console.log(this.selected);
+
+    console.log('ha data');
+    console.log(this.prof.id);
+    console.log(this.items);
+
 
   }
+  dialog: boolean;
+  get prof(): Prof {
+
+    return this.service.prof;
+  }
+
+  set prof(value: Prof) {
+    this.service.prof = value;
+  }
+
   get items(): Array<RecommendTeacher> {
     return this.service.items;
   }
@@ -65,6 +80,11 @@ export class RecommendationTeacherComponent implements OnInit {
 
     this.selected == null;
     this.editDialog = false;
+  }
+
+  showEditDialog() {
+    this.dialog = true;
+    this.service.findAllRecommendTeacher().subscribe(data => this.items = data);
   }
 }
 

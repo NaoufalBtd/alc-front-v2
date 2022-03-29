@@ -5,6 +5,7 @@ import {TypeTeacher} from '../../../controller/model/type-teacher.model';
 import {InteretEtudiantService} from '../../../controller/service/interet-etudiant.service';
 import {InteretEtudiant} from '../../../controller/model/interet-etudiant.model';
 import {Fonction} from '../../../controller/model/fonction.model';
+import {StatutSocial} from '../../../controller/model/statut-social.model';
 
 @Component({
   selector: 'app-interet-etudiant',
@@ -23,6 +24,7 @@ export class InteretEtudiantComponent implements OnInit {
       console.log(this.interetEtudiants);
     } );
   }
+  deleteConfirmation:boolean;
 
   public save() {
 
@@ -102,13 +104,8 @@ export class InteretEtudiantComponent implements OnInit {
     this.interetEtudiant = new InteretEtudiant();
   }
 
-  public delete(interetEtudiant: InteretEtudiant) {
-    this.interetEtudiant = interetEtudiant;
-    this.confirmationService.confirm({
-      message: 'Are you sure you want to delete ' + interetEtudiant.libelle + '?',
-      header: 'Confirm',
-      icon: 'pi pi-exclamation-triangle',
-      accept: () => {
+  public delete() {
+
         this.interetEtudiantService.deleteByLibelle().subscribe(data => {
           this.interetEtudiants = this.interetEtudiants.filter(val => val.id !== this.interetEtudiant.id);
           this.interetEtudiant = new InteretEtudiant();
@@ -119,7 +116,16 @@ export class InteretEtudiantComponent implements OnInit {
             life: 3000
           });
         });
-      }
-    });
+this.deleteConfirmation= false;
+  }
+
+  hideCreateDialog1() {
+    this.deleteConfirmation = false ;
+  }
+  public confirmationDelete(interetEtudiant : InteretEtudiant) {
+    this.interetEtudiant = interetEtudiant;
+    console.log(this.interetEtudiant);
+    this.deleteConfirmation = true;
+
   }
 }

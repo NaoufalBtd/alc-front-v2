@@ -334,6 +334,7 @@ import { FonctionComponent } from './view/admin/fonction/fonction.component';
 import { NiveauEtudeComponent } from './view/admin/niveau-etude/niveau-etude.component';
 import { SkillComponent } from './view/admin/skill/skill.component';
 import { InteretEtudiantComponent } from './view/admin/interet-etudiant/interet-etudiant.component';
+import { ConfirmationPopoverModule} from 'angular-confirmation-popover';
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -341,6 +342,7 @@ export function createTranslateLoader(http: HttpClient) {
 
 @NgModule({
     imports: [
+        ConfirmationPopoverModule.forRoot({ confirmButtonType : 'danger'  }),
         ReactiveFormsModule,
         BrowserModule,
         CommonModule,
