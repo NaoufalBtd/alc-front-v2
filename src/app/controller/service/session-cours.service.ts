@@ -13,6 +13,7 @@ import {EtudiantReviewService} from './etudiant-review.service';
 import {GroupeEtudiantDetail} from '../model/groupe-etudiant-detail.model';
 import {WorkloadBonusProf} from '../model/workload-bonus-prof.model';
 import {ClassAverageBonusProf} from '../model/class-average-bonus-prof.model';
+import {GroupeEtudiant} from '../model/groupe-etudiant.model';
 
 @Injectable({
     providedIn: 'root'
@@ -314,5 +315,23 @@ export class SessionCoursService {
                 this.classAverageBonusProf = data;
             }
         );
+    }
+
+    public saveSessionCours(sessionCours: SessionCours) {
+        this.http.post(this.profUrlSession, sessionCours).subscribe(data => {
+            this.messageService.add({severity: 'success', summary: ' ', life: 5000, detail: 'Lesson is over', sticky: true});
+        }, error => {
+            this.messageService.add({
+                severity: 'error',
+                summary: ' ',
+                detail: 'We got same problems, please contact administration !',
+                sticky: true
+            });
+        });
+
+    }
+
+    public findSessionCoursByGroupeEtudiantId(groupeEtudiant: GroupeEtudiant): Observable<Array<SessionCours>> {
+        return this.http.get<Array<SessionCours>>(this.profUrlSession + 'groupeEtudiant/id/' + groupeEtudiant.id);
     }
 }

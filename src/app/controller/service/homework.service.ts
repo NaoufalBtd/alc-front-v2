@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {MessageService} from 'primeng/api';
 import {HomeWork} from '../model/home-work.model';
 import {HomeWorkQST} from '../model/home-work-qst.model';
 import {HomeWorkReponse} from '../model/home-work-reponse.model';
@@ -10,6 +9,10 @@ import {TypeDeQuestion} from '../model/type-de-question.model';
 import {Section} from '../model/section.model';
 import {Cours} from '../model/cours.model';
 import {HomeWOrkEtudiant} from '../model/home-work-etudiant.model';
+import {LearnService} from './learn.service';
+
+import {HomeWorkEtudiantServiceService} from './home-work-etudiant-service.service';
+import {ParcoursService} from './parcours.service';
 
 @Injectable({
     providedIn: 'root'
@@ -17,7 +20,7 @@ import {HomeWOrkEtudiant} from '../model/home-work-etudiant.model';
 export class HomeworkService {
 
     private adminUrl = environment.adminUrl;
-    private _homeWork: HomeWork;
+    private _homeWork: HomeWork = new HomeWork();
     private _homeWorkSelected: HomeWork = new HomeWork();
     private _homeworkQST: HomeWorkQST;
     private _homeworkReponse: HomeWorkReponse;
@@ -25,9 +28,12 @@ export class HomeworkService {
     private _reponses: Array<HomeWorkReponse>;
     private _section: Section;
     private _homeWorkList: Array<HomeWork>;
-    private _correctAnswers: Array<HomeWorkReponse>;
 
-    constructor(private http: HttpClient, private messageService: MessageService,) {
+
+    constructor(private http: HttpClient,
+                private service: ParcoursService,
+                private homeWorkEtudiantService: HomeWorkEtudiantServiceService,
+    ) {
     }
 
 
@@ -39,16 +45,6 @@ export class HomeworkService {
         this._homeWorkSelected = value;
     }
 
-    get correctAnswers(): Array<HomeWorkReponse> {
-        if (this._correctAnswers == null) {
-            this._correctAnswers = new Array<HomeWorkReponse>();
-        }
-        return this._correctAnswers;
-    }
-
-    set correctAnswers(value: Array<HomeWorkReponse>) {
-        this._correctAnswers = value;
-    }
 
     get homeWorkList(): Array<HomeWork> {
         if (this._homeWorkList == null) {
@@ -116,25 +112,31 @@ export class HomeworkService {
         this._homeworkQST = homeWorkQST;
     }
 
-    get HomeWork(): HomeWork {
+    get homeWork(): HomeWork {
         if (this._homeWork == null) {
             this._homeWork = new HomeWork();
         }
         return this._homeWork;
     }
 
-    set HomeWork(homeWork) {
+    set homeWork(homeWork) {
         this._homeWork = homeWork;
     }
 
+
+    set homeWorkEtudiantList(value: Array<HomeWOrkEtudiant>) {
+        this.homeWorkEtudiantService.homeWorkEtudiantList = value;
+    }
+
+
     public saveHomeWork(): Observable<HomeWork> {
-        console.log(this.HomeWork.questions);
-        return this.http.post<HomeWork>(this.adminUrl + 'homeWork/', this.HomeWork);
+        console.log(this.homeWork.questions);
+        return this.http.post<HomeWork>(this.adminUrl + 'homeWork/', this.homeWork);
     }
 
 
     public updateHomeWork(homeWork: HomeWork): Observable<HomeWork> {
-        console.log(this.HomeWork.questions);
+        console.log(this.homeWork.questions);
         return this.http.post<HomeWork>(this.adminUrl + 'homeWork/', homeWork);
     }
 
@@ -149,5 +151,13 @@ export class HomeworkService {
 
     findHomeWorkEtudiantByHomeWorkId(homeWorkSelected: HomeWork): Observable<Array<HomeWOrkEtudiant>> {
         return this.http.get<Array<HomeWOrkEtudiant>>(this.adminUrl + 'homeWorkEtudiant/homeWork/id/' + homeWorkSelected.id);
+    }
+
+
+    deleteQst(rps: HomeWorkQST) {
+        this.http.delete(this.adminUrl + 'homeWorkQST/id/' + rps.id).subscribe(data => {
+        }, error => {
+            console.log(error);
+        });
     }
 }

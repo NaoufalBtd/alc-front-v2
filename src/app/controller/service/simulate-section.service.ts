@@ -25,25 +25,18 @@ import {Section} from '../model/section.model';
 import {environment} from '../../../environments/environment';
 import {Observable} from 'rxjs';
 import {LearnService} from './learn.service';
+import {SessionCours} from '../model/session-cours.model';
 
 @Injectable({
     providedIn: 'root'
 })
 export class SimulateSectionService {
-    nodes: TreeNode[];
-    menu: MenuItem[];
-    srcImg: string;
-    translate: any;
-    textSeleted: string;
-    filteredDict: any[];
-    synonym: any[];
-    value = 0;
-    word: string;
-    wordDict: any;
-    j: number;
-    private profUrl = environment.profUrl;
-    private synchronizationUrl = 'synchronization';
-    private _quizExist: boolean;
+    private _showLesson = true;
+    private _showSummary = false;
+    private _data: any;
+    private _finishedAdditionalSection = 0;
+    private _finishedSection = 0;
+    private _showRatingLessonTemplate = false;
 
     constructor(private messageService: MessageService,
                 private router: Router,
@@ -63,6 +56,54 @@ export class SimulateSectionService {
                 private homeWorkEtudiantService: HomeWorkEtudiantServiceService) {
     }
 
+
+    get showRatingLessonTemplate(): boolean {
+        return this._showRatingLessonTemplate;
+    }
+
+    set showRatingLessonTemplate(value: boolean) {
+        this._showRatingLessonTemplate = value;
+    }
+
+    get data(): any {
+        return this._data;
+    }
+
+    set data(value: any) {
+        this._data = value;
+    }
+
+    get finishedAdditionalSection(): number {
+        return this._finishedAdditionalSection;
+    }
+
+    set finishedAdditionalSection(value: number) {
+        this._finishedAdditionalSection = value;
+    }
+
+    get finishedSection(): number {
+        return this._finishedSection;
+    }
+
+    set finishedSection(value: number) {
+        this._finishedSection = value;
+    }
+
+    get showLesson(): boolean {
+        return this._showLesson;
+    }
+
+    set showLesson(value: boolean) {
+        this._showLesson = value;
+    }
+
+    get showSummary(): boolean {
+        return this._showSummary;
+    }
+
+    set showSummary(value: boolean) {
+        this._showSummary = value;
+    }
 
     get quizExist(): boolean {
         return this._quizExist;
@@ -260,9 +301,6 @@ export class SimulateSectionService {
         return this.service.sectionStandard;
     }
 
-    set sectionStandard(value: Array<Section>) {
-        this.service.sectionStandard = value;
-    }
 
     get sectionAdditional(): Array<Section> {
         return this.service.sectionAdditional;
@@ -296,6 +334,60 @@ export class SimulateSectionService {
         this.sectionItemService.showVocabulary = value;
     }
 
+    get showTakeQuiz(): boolean {
+        return this.learnService.showTakeQuiz;
+    }
+
+    set showTakeQuiz(value: boolean) {
+        this.learnService.showTakeQuiz = value;
+    }
+
+    get showQuizReview(): boolean {
+        return this.learnService.showQuizReview;
+    }
+
+    set showQuizReview(value: boolean) {
+        this.learnService.showQuizReview = value;
+    }
+
+
+    set TranslateSynonymeDialog(value: boolean) {
+        this.dictionnaryService.TranslateSynonymeDialog = value;
+    }
+
+    get listSynonymes(): Array<any> {
+        return this.dictionnaryService.listSynonymes;
+    }
+
+    set listSynonymes(value: Array<any>) {
+        this.dictionnaryService.listSynonymes = value;
+    }
+
+    get Synonymes(): Array<any> {
+        return this.dictionnaryService.Synonymes;
+    }
+
+    set Synonymes(value: Array<any>) {
+        this.dictionnaryService.Synonymes = value;
+    }
+
+    nodes: TreeNode[];
+    menu: MenuItem[];
+    srcImg: string;
+    translate: any;
+    textSeleted: string;
+    filteredDict: any[];
+    synonym: any[];
+    value = 0;
+    word: string;
+    wordDict: any;
+    j: number;
+    private profUrl = environment.profUrl;
+    private synchronizationUrl = 'synchronization';
+    private _quizExist: boolean;
+
+    private sessionCour: SessionCours = new SessionCours();
+
     Vocab(section: Section) {
         this.sectionItemService.sectionSelected = section;
 
@@ -321,26 +413,87 @@ export class SimulateSectionService {
         );
     }
 
-    get showTakeQuiz(): boolean {
-        return this.learnService.showTakeQuiz;
+
+    public goToSummary() {
+        let index = 0;
+        for (const item of this.sessionCour.sections) {
+            if (item.id === this.selectedsection.id) {
+                index = -2;
+            }
+        }
+        if (index === 0) {
+            this.sessionCour.sections.push({...this.selectedsection});
+        }
+
+        this.showLesson = false;
+        this.showSummary = true;
+
+        for (const item of this.sessionCour.sections) {
+            for (const sec of this.sectionAdditional) {
+                if (item.id === sec.id) {
+                    this.finishedAdditionalSection += 1;
+                }
+            }
+        }
+        for (const item of this.sessionCour.sections) {
+            for (const sec of this.sectionStandard) {
+                if (item.id === sec.id) {
+                    this.finishedSection += 1;
+                }
+            }
+        }
+        const keySections = (this.finishedSection / this.sectionStandard?.length) * 100;
+        const keySectionsRest = 100 - keySections;
+        const keySectionsAdditional = (this.finishedAdditionalSection / this.sectionAdditional?.length) * 100;
+        const keySectionsRestAdditional = 100 - keySectionsAdditional;
+
+
+        this.data = {
+            labels: ['Finished', 'Not Finished'],
+            datasets: [
+                {
+                    data: [keySections, keySectionsRest],
+                    backgroundColor: [
+                        '#FF6384',
+                        '#f4f4f4'
+                    ],
+                    hoverBackgroundColor: [
+                        '#FF6384',
+                        '#f4f4f4'
+                    ]
+                },
+                {
+                    data: [keySectionsAdditional, keySectionsRestAdditional],
+                    backgroundColor: [
+                        '#FFCE56',
+                        '#f4f4f4'
+                    ],
+                    hoverBackgroundColor: [
+                        '#FFCE56',
+                        '#f4f4f4'
+                    ],
+
+                }
+            ]
+        };
     }
 
-    set showTakeQuiz(value: boolean) {
-        this.learnService.showTakeQuiz = value;
-    }
 
-    get showQuizReview(): boolean {
-        return this.learnService.showQuizReview;
-    }
-
-    set showQuizReview(value: boolean) {
-        this.learnService.showQuizReview = value;
-    }
-
-    public nextSection(id: number) {
-        for (const section of this.itemssection2) {
-            if (id === section.id) {
-                this.selectedsection = section;
+    public nextSection(id: number, type: string) {
+        for (let i = 0; i < this.itemssection2.length; i++) {
+            if (id === this.itemssection2[i].id) {
+                if (i !== 0 && (type === 'NEXT')) {
+                    let index = 0;
+                    for (const item of this.sessionCour.sections) {
+                        if (item.id === this.itemssection2[i - 1].id) {
+                            index = -2;
+                        }
+                    }
+                    if (index === 0) {
+                        this.sessionCour.sections.push({...this.itemssection2[i - 1]});
+                    }
+                }
+                this.selectedsection = this.itemssection2[i];
             }
         }
 
@@ -357,21 +510,15 @@ export class SimulateSectionService {
                 this.quizService.findQuizEtudanitByEtudiantIdAndQuizId(this.loginService.etudiant, this.selectedQuiz).subscribe(
                     data1 => {
                         this.quizEtudiantList = data1;
-                        this.quizView = true;
                         console.log(this.quizEtudiantList);
-                        this.quizService.findAllQuestions(this.selectedQuiz.ref).subscribe(
-                            dataQuestions => {
-                                if (data1.questionCurrent > dataQuestions.length) {
-                                    this.passerQuiz = 'View Quiz';
-                                    this.quizView = true;
-                                } else {
-                                    this.passerQuiz = 'Continue Quiz';
-                                    this.quizView = true;
-                                }
-                            }
-                        );
+                        if (this.quizEtudiantList.id !== 0) {
+                            this.quizView = true;
+                        } else {
+                            this.quizView = false;
+                        }
                     }, error => {
                         this.passerQuiz = 'Take Quiz';
+                        console.log(error);
                         this.quizView = false;
                     }
                 );
@@ -436,33 +583,12 @@ export class SimulateSectionService {
             });
     }
 
-
-    set TranslateSynonymeDialog(value: boolean) {
-        this.dictionnaryService.TranslateSynonymeDialog = value;
-    }
-
     public dictEdit(dict: Dictionary) {
         this.selected = dict;
         if (this.selected.word != null) {
             this.submittedDictEdit = false;
             this.editDialogDict = true;
         }
-    }
-
-    get listSynonymes(): Array<any> {
-        return this.dictionnaryService.listSynonymes;
-    }
-
-    set listSynonymes(value: Array<any>) {
-        this.dictionnaryService.listSynonymes = value;
-    }
-
-    get Synonymes(): Array<any> {
-        return this.dictionnaryService.Synonymes;
-    }
-
-    set Synonymes(value: Array<any>) {
-        this.dictionnaryService.Synonymes = value;
     }
 
 
@@ -500,9 +626,25 @@ export class SimulateSectionService {
                     } else {
                         this.showVocabulary = false;
                     }
-                    this.quizService.findQuizBySection(this.selectedsection.id).subscribe(data => {
-                        this.selectedQuiz = data;
-                    });
+                    this.quizService.findQuizBySection(this.selectedsection.id).subscribe(
+                        dataQuiz => {
+                            this.selectedQuiz = dataQuiz;
+                            this.quizService.findQuizEtudanitByEtudiantIdAndQuizId(this.loginService.etudiant, this.selectedQuiz).subscribe(
+                                data1 => {
+                                    this.quizEtudiantList = data1;
+                                    console.log(this.quizEtudiantList);
+                                    if (this.quizEtudiantList.id !== 0) {
+                                        this.quizView = true;
+                                    } else {
+                                        this.quizView = false;
+                                    }
+                                }, error => {
+                                    this.passerQuiz = 'Take Quiz';
+                                    console.log(error);
+                                    this.quizView = false;
+                                }
+                            );
+                        });
                     console.log(this.service.image);
                     this.service.image = this.selectedsection.urlImage;
                     this.quizService.section.id = this.selectedsection.id;
@@ -526,22 +668,17 @@ export class SimulateSectionService {
                     data => {
                         this.selectedQuiz = data;
                         this.quizService.findQuizEtudanitByEtudiantIdAndQuizId(this.loginService.etudiant, this.selectedQuiz).subscribe(
-                            data => {
-                                this.quizEtudiantList = data;
+                            data1 => {
+                                this.quizEtudiantList = data1;
                                 console.log(this.quizEtudiantList);
-                                this.quizService.findAllQuestions(this.selectedQuiz.ref).subscribe(
-                                    dataQuestions => {
-                                        if (data?.questionCurrent > dataQuestions?.length) {
-                                            this.passerQuiz = 'View Quiz';
-                                            this.quizView = true;
-                                        } else {
-                                            this.passerQuiz = 'Continue Quiz';
-                                            this.quizView = false;
-                                        }
-                                    }
-                                );
+                                if (this.quizEtudiantList.id !== 0) {
+                                    this.quizView = true;
+                                } else {
+                                    this.quizView = false;
+                                }
                             }, error => {
                                 this.passerQuiz = 'Take Quiz';
+                                console.log(error);
                                 this.quizView = false;
                             }
                         );
@@ -555,9 +692,24 @@ export class SimulateSectionService {
             data => {
                 this.itemssection2 = data;
                 this.selectedsection = data[0];
-                this.quizService.findQuizBySectionId(this.selectedsection ).subscribe(data12 => {
+                this.quizService.findQuizBySectionId(this.selectedsection).subscribe(data12 => {
                     this.quizExist = true;
                     this.selectedQuiz = data12;
+                    this.quizService.findQuizEtudanitByEtudiantIdAndQuizId(this.loginService.etudiant, this.selectedQuiz).subscribe(
+                        data1 => {
+                            this.quizEtudiantList = data1;
+                            console.log(this.quizEtudiantList);
+                            if (this.quizEtudiantList.id !== 0) {
+                                this.quizView = true;
+                            } else {
+                                this.quizView = false;
+                            }
+                        }, error => {
+                            this.passerQuiz = 'Take Quiz';
+                            console.log(error);
+                            this.quizView = false;
+                        }
+                    );
                 }, error => {
                     this.quizExist = false;
                 });
@@ -579,5 +731,21 @@ export class SimulateSectionService {
                 }
             }
         );
+    }
+
+    sectionIsFinished(section: Section): boolean {
+        if (this.sessionCour.sections.length > 0) {
+            for (const sec of this.sessionCour.sections) {
+                if (section.id === sec.id) {
+                    return true;
+                }
+            }
+        } else {
+            return false;
+        }
+    }
+
+    finishLesson() {
+        this.showRatingLessonTemplate = true;
     }
 }

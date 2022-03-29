@@ -1,0 +1,310 @@
+<div class="p-grid" style="background-color: white">
+    <div class="p-col-2"></div>
+    <div class="p-col-8">
+        <h3>Guide</h3>
+        <p-steps [model]="items" [(activeIndex)]="activeIndex" [readonly]="true"></p-steps>
+    </div>
+</div>
+<div class="p-grid" style="background-color: white">
+    <div class="p-col-2"></div>
+    <div class="p-col-8">
+        <p-card *ngIf="activeIndex ==0" [style]="{backgroundColor: '#DCF7FF'}">
+            <ng-template pTemplate="title">
+                Personnel Information
+            </ng-template>
+            <ng-template pTemplate="subtitle">
+                <i class="pi pi-user"></i> Please fill out your Personnel Information
+            </ng-template>
+            <ng-template pTemplate="content">
+                <div class="p-grid">
+                    <div class="p-col-2"></div>
+                    <div class="p-col-4">
+                        <div class="transimage" style="width: 170px">
+                            <p-card id="male" [style]="{width: '170px', backgroundColor: '#66C1FF'}">
+                                <ng-template pTemplate="content">
+                                    <img alt="Card" src="../assets/manimage.png" [style]="{width: '140px'}">
+                                </ng-template>
+                                <ng-template pTemplate="footer">
+                                    <h3 style="text-align: center">Male</h3>
+                                    <button (click)="disabelcard('female')" [disabled]="maleselected"
+                                            class="p-button-info p-button-rounded" pButton icon="pi pi-check"></button>
+                                </ng-template>
+                            </p-card>
+                        </div>
+                    </div>
+                    <div class="p-col-4">
+                        <div class="transimage" style="width: 170px">
+                            <p-card id="female" [style]="{width: '170px', backgroundColor: '#FFB4EA'}">
+                                <ng-template pTemplate="content" class="p-card-shadowfemale">
+                                    <img alt="Card" src="../assets/femaleimage.png" [style]="{width: '140px'}">
+                                </ng-template>
+                                <ng-template pTemplate="footer" class="p-card-shadowfemale">
+                                    <h3 style="text-align: center">Female</h3>
+                                    <button (click)="disabelcard('male')" [disabled]="femaleselected"
+                                            class="p-button-help p-button-rounded" pButton icon="pi pi-check"></button>
+                                </ng-template>
+                            </p-card>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-grid">
+                    <div class="p-col-2"></div>
+                    <div class="p-col-8">
+                        <div class="p-grid">
+                            <div class="p-col-4">
+                                <strong>
+                                    <label for="firstname" style="margin-right: 12px">First Name</label>
+
+                                </strong>
+                            </div>
+                            <div class="p-col-8">
+
+                                <input type="text" id="firstname" pInputText [(ngModel)]="this.etudiant.prenom"/>
+                            </div>
+
+                        </div>
+                        <div class="p-grid">
+                            <div class="p-col-4">
+                                <strong>
+                                    <label for="lastname" style="margin-right: 12px">Last Name</label>
+
+                                </strong>
+                            </div>
+                            <div class="p-col-8">
+                                <input type="text" id="lastname" pInputText [(ngModel)]="this.etudiant.nom"/>
+                            </div>
+
+                        </div>
+                        <div class="p-grid">
+                            <div class="p-col-4">
+                                <strong>
+                                    <label for="num" style="margin-right: 12px">Numero</label>
+
+                                </strong>
+                            </div>
+                            <div class="p-col-8">
+                                <input type="text" id="num" pInputText [(ngModel)]="this.etudiant.numero"/>
+                            </div>
+
+                        </div>
+                        <div class="p-grid">
+                            <div class="p-col-4">
+                                <strong>
+                                    <label for="age" style="margin-right: 12px">Age</label>
+
+                                </strong>
+                            </div>
+
+                            <div class="p-col-8">
+
+                                <input type="text" id="age" pInputText [(ngModel)]="this.etudiant.age"/>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </ng-template>
+            <ng-template pTemplate="footer">
+                <p-toolbar styleClass="p-mb-4" [style]="{background: 'none', border: 'none'}">
+                    <ng-template pTemplate="left">
+<!--                        <p-button (click)="this.router.navigate()" label="Back" icon="pi pi-angle-left"-->
+<!--                                  iconPos="right"></p-button>-->
+                    </ng-template>
+                    <ng-template pTemplate="right">
+                        <p-button (click)="activeIndex= activeIndex+1" label="Next" icon="pi pi-angle-right"
+                                  iconPos="right"></p-button>
+                    </ng-template>
+                </p-toolbar>
+            </ng-template>
+
+        </p-card>
+        <p-card *ngIf="activeIndex ==1" [style]="{backgroundColor: '#DCF7FF'}">
+            <ng-template pTemplate="title">
+                Social Status
+            </ng-template>
+            <ng-template pTemplate="subtitle">
+                please tell us further information about your social status:
+            </ng-template>
+            <ng-template pTemplate="content">
+                <div class="p-grid">
+                    <div class="p-col-6">
+                        <h5>Status Social</h5>
+                        <p-dropdown [options]="statutSocials"
+                                    optionLabel="libelle" [(ngModel)]="this.etudiant.statutSocial">
+                        </p-dropdown>
+                    </div>
+                    <div class="p-col-6">
+                        <h5>Area of work</h5>
+                        <p-dropdown [options]="fonctions"
+                                    placeholder="List of areas of work"
+                                    optionLabel="libelle" [(ngModel)]="this.etudiant.fonction">
+                        </p-dropdown>
+                    </div>
+                </div>
+                <div class="p-grid">
+                    <div class="p-col-6">
+                        <h5 class="status">Study Level</h5>
+                        <p-dropdown [options]="niveauEtudes"
+                                    optionLabel="libelle" [(ngModel)]="this.etudiant.niveauEtude"></p-dropdown>
+                    </div>
+                    <div class="p-col-6">
+                        <h5> Main goal with learning English</h5>
+                        <p-dropdown [options]="interetEtudiants"
+                                    optionLabel="libelle" [(ngModel)]="this.etudiant.interetEtudiant">
+                        </p-dropdown>
+                    </div>
+                </div>
+                <div class="p-grid">
+                    <div class="p-col-6">
+                        <h5> Skill</h5>
+                        <p-dropdown [options]="skills"
+                                    optionLabel="libelle" [(ngModel)]="this.etudiant.skill">
+                        </p-dropdown>
+                    </div>
+                </div>
+            </ng-template>
+
+            <ng-template pTemplate="footer">
+                <p-toolbar styleClass="p-mb-4" [style]="{background: 'none', border: 'none'}">
+                    <ng-template pTemplate="left">
+                        <p-button (click)="activeIndex = activeIndex - 1" label="Back" icon="pi pi-angle-left"
+                                  iconPos="left"></p-button>
+                    </ng-template>
+                    <ng-template pTemplate="right">
+                        <div class="p-grid p-grid-nogutter justify-content-end ">
+                            <p-button (click)="activeIndex = activeIndex + 1" label="Next" icon="pi pi-angle-right"
+                                      iconPos="right"></p-button>
+                        </div>
+                    </ng-template>
+                </p-toolbar>
+            </ng-template>
+
+        </p-card>
+        <p-card *ngIf="activeIndex ==2" [style]="{backgroundColor: '#DCF7FF'}">
+            <ng-template pTemplate="title">
+                Schedule & Teacher options
+            </ng-template>
+            <ng-template pTemplate="subtitle">
+                please tell us about when and how do you want to study in our plateforme
+            </ng-template>
+            <ng-template pTemplate="content">
+                <div class="p-grid">
+                    <div class="p-col-6">
+                        <h5>Days peer week</h5>
+                        <p-selectButton [options]="daysOptions" optionLabel="name"
+                                        optionValue="name" [(ngModel)]="this.dayoption"></p-selectButton>
+                    </div>
+                    <div class="p-col-6">
+                        <h5>Times</h5>
+                        <p-selectButton [options]="timeOptions" optionLabel="name"
+                                        optionValue="name" [(ngModel)]="this.timeoption"></p-selectButton>
+                    </div>
+                </div>
+                <div class="p-grid">
+                    <div class="p-col-6">
+                        <h5>Teacher Locality</h5>
+                        <p-selectButton [options]="teacherlolality" optionLabel="name"
+                                        optionValue="name" [(ngModel)]="this.etudiant.teacherLocality"></p-selectButton>
+                    </div>
+                    <div class="p-col-6">
+                        <h5>Teacher age range</h5>
+                        <p-selectButton [options]="teacherAgerange" optionLabel="name"
+                                        optionValue="name" [(ngModel)]="this.agerange"></p-selectButton>
+                    </div>
+                </div>
+                <div class="p-grid">
+                    <div class="p-col-6">
+                        <h5>Teacher gender</h5>
+                        <p-selectButton [options]="teacherGneder" optionLabel="name"
+                                        optionValue="name" [(ngModel)]="this.teachergendervalue"></p-selectButton>
+                    </div>
+                    <div class="p-col-6">
+                        <h5>Teacher personnality</h5>
+                        <p-selectButton [options]="teacherPersonnality" optionLabel="name"
+                                        optionValue="name" [(ngModel)]="this.teacherperson"></p-selectButton>
+                    </div>
+
+                </div>
+
+            </ng-template>
+
+            <ng-template pTemplate="footer">
+                <p-toolbar styleClass="p-mb-4" [style]="{background: 'none', border: 'none'}">
+                    <ng-template pTemplate="left">
+                        <p-button (click)="activeIndex = activeIndex - 1" label="Back" icon="pi pi-angle-left"
+                                  iconPos="left"></p-button>
+                    </ng-template>
+                    <ng-template pTemplate="right">
+                        <div class="p-grid p-grid-nogutter justify-content-end ">
+                            <p-button (click)="activeIndex = activeIndex + 1" label="Next" icon="pi pi-angle-right"
+                                      iconPos="right"></p-button>
+                        </div>
+                    </ng-template>
+                </p-toolbar>
+            </ng-template>
+
+        </p-card>
+        <p-card *ngIf="activeIndex ==3" [style]="{backgroundColor: '#DCF7FF'}">
+            <ng-template pTemplate="title">
+                Confirmation
+            </ng-template>
+            <ng-template pTemplate="subtitle">
+                here is what you choosed:
+            </ng-template>
+            <ng-template pTemplate="content">
+                <div class="p-fluid formgrid p-field">
+                    <label>First Name : <strong>{{this.etudiant.prenom}}</strong></label>
+                </div>
+                <div class="p-fluid formgrid p-field">
+                    <label>Last Name : <strong>{{this.etudiant.nom}}</strong></label>
+                </div>
+                <div class="p-fluid formgrid p-field">
+                    <label>Age : <strong></strong>{{this.etudiant.age}}</label>
+                </div>
+                <div class="p-fluid formgrid p-field">
+                    <label>Gender :
+                        <strong *ngIf="maleselected">Male</strong>
+                        <strong *ngIf="femaleselected">Female</strong>
+                    </label>
+                </div>
+                <div class="p-fluid formgrid p-field">
+                    <label>Days per week : <strong>{{this.dayoption}}</strong></label>
+                </div>
+                <div class="p-fluid formgrid p-field">
+                    <label>Time per day : <strong> {{this.timeoption}}</strong></label>
+                </div>
+                <div class="p-fluid formgrid p-field">
+                    <label>Teacher locality : <strong>{{this.etudiant.teacherLocality}}</strong></label>
+                </div>
+                <div class="p-fluid formgrid p-field">
+                    <label>Teacher gender : <strong>{{this.teachergendervalue}}</strong></label>
+                </div>
+                <div class="p-fluid formgrid p-field">
+                    <label>Teacher age rane : <strong>{{this.agerange}}</strong></label>
+                </div>
+                <div class="p-fluid formgrid p-field">
+                    <label>Teacher personnality: <strong>{{this.teacherperson}}</strong></label>
+                </div>
+            </ng-template>
+
+            <ng-template pTemplate="footer">
+                <p-toolbar styleClass="p-mb-4" [style]="{background: 'none', border: 'none'}">
+                    <ng-template pTemplate="left">
+                        <p-button (click)="activeIndex = activeIndex - 1" label="Back" icon="pi pi-angle-left"
+                                  iconPos="left"></p-button>
+                    </ng-template>
+                    <ng-template pTemplate="right">
+
+                        <button pButton pRipple type="button" label="Confirm" icon="pi pi-check" iconPos="right"
+                                class="p-button-success" (click)="this.createEtudiant()"></button>
+                    </ng-template>
+                </p-toolbar>
+            </ng-template>
+
+        </p-card>
+    </div>
+</div>
+

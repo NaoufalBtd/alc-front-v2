@@ -21,6 +21,7 @@ import {TypeHomeWorkEnum, TypeQuestionEnum} from '../../../enum/type-question.en
     styleUrls: ['./home-work-component.component.scss']
 })
 export class HomeWorkComponentComponent implements OnInit {
+    public TypeHomeWorkEnum = TypeHomeWorkEnum;
 
     constructor(private service: HomeworkService,
                 private homeWorkEtudiantService: HomeWorkEtudiantServiceService,
@@ -83,11 +84,11 @@ export class HomeWorkComponentComponent implements OnInit {
     }
 
     get homeWork(): HomeWork {
-        return this.service.HomeWork;
+        return this.service.homeWork;
     }
 
     set homeWork(homeWork1) {
-        this.service.HomeWork = homeWork1;
+        this.service.homeWork = homeWork1;
     }
 
     nodes: TreeNode[];
@@ -118,10 +119,12 @@ export class HomeWorkComponentComponent implements OnInit {
     keyForEdit: string;
 
     ngOnInit(): void {
+        console.log(this.homeWork);
         this.typeHomeWorkService.findAll();
         this.homeWork.cours = this.courseSelected;
         this.questionTypes();
         if (this.homeWork.id !== undefined) {
+            this.typeHomeWork = this.homeWork.typeHomeWork;
             this.homeWorkEtudiantService.findQuestions(this.homeWork).subscribe(data => {
                 this.homeWork.questions = data;
                 for (let i = 0; i < this.homeWork.questions.length; i++) {
@@ -263,15 +266,15 @@ export class HomeWorkComponentComponent implements OnInit {
         } else {
             let typeqst: TypeDeQuestion = new TypeDeQuestion();
             console.log(this.homeWork);
-            if (this.homeWork.typeHomeWork.lib === TypeHomeWorkEnum.READING || this.homeWork.typeHomeWork.lib === TypeHomeWorkEnum.WRITE_IT_UP ) {
-                if (this.homeWork.typeHomeWork.lib === TypeHomeWorkEnum.READING ) {
+            if (this.homeWork.typeHomeWork.lib === TypeHomeWorkEnum.READING || this.homeWork.typeHomeWork.lib === TypeHomeWorkEnum.WRITE_IT_UP) {
+                if (this.homeWork.typeHomeWork.lib === TypeHomeWorkEnum.READING) {
                     typeqst = this.typeOfQuestions.filter(t => t.ref === TypeQuestionEnum.READ_AND_ADD_NEW_WORDS)[0];
 
                 } else {
                     typeqst = this.typeOfQuestions.filter(t => t.ref === TypeQuestionEnum.WRITE_IT_UP)[0];
                 }
-            } else if (this.homeWork.typeHomeWork.lib ===  TypeHomeWorkEnum.DRAG_AND_DROP ) {
-                typeqst = this.typeOfQuestions.filter(t => t.ref === TypeQuestionEnum.PUT_WORDS_TO_GAP )[0];
+            } else if (this.homeWork.typeHomeWork.lib === TypeHomeWorkEnum.DRAG_AND_DROP) {
+                typeqst = this.typeOfQuestions.filter(t => t.ref === TypeQuestionEnum.PUT_WORDS_TO_GAP)[0];
             }
             console.log(typeqst);
             this.homeworkQST.typeDeQuestion = typeqst;
@@ -283,7 +286,6 @@ export class HomeWorkComponentComponent implements OnInit {
 
     saveHomeWork() {
         if (this.courseSelected.id !== null && this.courseSelected.id !== undefined) {
-            this.homeWork.cours = this.courseSelected;
             this.homeWork.typeHomeWork = this.typeHomeWork;
             this.homeWork.libelle = this.typeHomeWork.lib;
             this.homeWork.cours = this.courseSelected;
@@ -424,7 +426,8 @@ export class HomeWorkComponentComponent implements OnInit {
     }
 
     filterTypeOfQsts() {
-        if (this.typeHomeWork.lib === TypeHomeWorkEnum.LET_S_PRACTICE ) {
+        console.log(this.typeHomeWork.lib);
+        if (this.typeHomeWork.lib === TypeHomeWorkEnum.LET_S_PRACTICE) {
             this.typeOfQuestions = this.typeOfQuestions.filter(t => (t.ref !== 't10' &&
                 t.ref !== 't8' && t.ref !== 't9' && t.ref !== 't7' && t.ref !== 't2'));
         }
@@ -447,7 +450,7 @@ export class HomeWorkComponentComponent implements OnInit {
         this.homeworkReponse.etatReponse = 'true';
         this.homeworkQST.reponses.push({...this.homeworkReponse});
         this.homeworkQST.numero = this.numero;
-        this.homeworkQST.typeDeQuestion = this.typeOfQuestions.filter(t => t.ref === TypeQuestionEnum.TRANSLATE_THE_PHRASE )[0];
+        this.homeworkQST.typeDeQuestion = this.typeOfQuestions.filter(t => t.ref === TypeQuestionEnum.TRANSLATE_THE_PHRASE)[0];
         this.homeWork.questions.push({...this.homeworkQST});
         this.homeWork.libelle = this.typeHomeWork.lib;
         this.homeWork.typeHomeWork = this.typeHomeWork;
@@ -474,13 +477,13 @@ export class HomeWorkComponentComponent implements OnInit {
         for (let i = 0; i < this.homeWork.questions.length; i++) {
             if (this.homeWork.questions[i].numero === rps.numero) {
                 this.homeWork.questions.splice(i, 1);
+                if (rps.id !== undefined && rps.id !== null) {
+                    this.service.deleteQst(rps);
+                }
             }
         }
     }
 
-    getPlaceHolder() {
-
-    }
 
     addAnswers() {
         const num = this.homeworkReponse.numero;

@@ -1,0 +1,82 @@
+<div class="p-grid">
+    <div class="p-col-6">
+        <p-toast></p-toast>
+        <div class="card">
+            <p-table #dt [rows]="10" [paginator]="true" [value]="studentWhoInvitedPromotionList"
+                     [globalFilterFields]="['reference','total','totalPaye']"
+                     [rowHover]="true" dataKey="id" styleClass="p-datatable-customers"
+                     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                     [showCurrentPageReport]="true">
+                <ng-template pTemplate="caption">
+                    <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
+                        <h5 class="p-m-0">Promotion list for the student who invited</h5>
+                        <button pButton type="button" class="p-button-info p-mr-2"
+                                (click)="addPromotionStudentWhoInvited()"
+                                icon="pi pi-plus" label="New Promotion"></button>
+                    </div>
+                </ng-template>
+
+                <ng-template pTemplate="header">
+                    <tr>
+
+                        <th pSortableColumn="Code">Code Promotion</th>
+                        <th pSortableColumn="prof">Promotion Percentage</th>
+                        <th pSortableColumn="prof">Actions</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-studentWhoInvitedPromotion>
+                    <tr>
+                        <td><strong>{{studentWhoInvitedPromotion.code}}</strong></td>
+                        <td><strong>{{studentWhoInvitedPromotion.pourcentage}} %</strong></td>
+                        <td>  <button class="p-button-rounded p-button-success p-mr-2" icon="pi pi-pencil"
+                                      pButton label="Update"
+                                      pRipple></button></td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="summary">
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+    <div class="p-col-6">
+        <div class="card">
+
+            <p-table #dt [rows]="10" [paginator]="true" [value]="studentInvitedPromotionList"
+                     [globalFilterFields]="['reference','total','totalPaye']"
+                     [rowHover]="true" dataKey="id" styleClass="p-datatable-customers"
+                     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                     [showCurrentPageReport]="true">
+                <ng-template pTemplate="caption">
+                    <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
+                        <h5 class="p-m-0">List of promotions for the invited student</h5>
+                        <button pButton type="button" class="p-button-info p-mr-2"
+                                (click)="addPromotionStudentInvited()"
+                                icon="pi pi-plus" label="New Promotion"></button>
+                    </div>
+                </ng-template>
+
+                <ng-template pTemplate="header">
+                    <tr>
+
+                        <th pSortableColumn="Code">Code Promotion</th>
+                        <th pSortableColumn="prof">Promotion Percentage</th>
+                        <th pSortableColumn="prof">Actions</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-studentInvitedPromotion>
+                    <tr>
+
+                        <td><strong>{{studentInvitedPromotion.code}}</strong></td>
+                        <td><strong>{{studentInvitedPromotion.pourcentage}} %</strong></td>
+                        <td>  <button class="p-button-rounded p-button-success p-mr-2" icon="pi pi-pencil"
+                                      pButton label="Update"
+                                      pRipple></button></td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="summary">
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+</div>
+<app-promotion-create></app-promotion-create>

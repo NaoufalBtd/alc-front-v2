@@ -3,6 +3,8 @@ import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
 import {InvitedStudent} from '../model/invited-student.model';
 import {MessageService} from 'primeng/api';
+import {Router} from '@angular/router';
+import {EtudiantService} from './etudiant.service';
 
 @Injectable({
     providedIn: 'root'
@@ -81,16 +83,38 @@ export class InvitedStudentService {
         );
     }
 
-    public findAllByStudentId(idStudent) {
-        this.http.get<Array<InvitedStudent>>(this.etudiantInvitedStudentUrl + '/' + idStudent).subscribe(
+    public findByEmailAndCode(email: string, code: string) {
+        this.http.get<InvitedStudent>(this.etudiantInvitedStudentUrl + '/email/' + email + '/code/' + code).subscribe(
             data => {
                 if (data != null) {
-                    this.inviteStudentEtudiantList = data;
+                    this.etudiantService.selected.username = email;
+                    this.router.navigate(['public/continueInfo']);
+                    this.messageService.add({
+                        severity: 'success',
+                        summary: 'Welcome to Platform English  E-Learning',
+                        detail: 'Please fill out your Personnel Information '
+                    });
+                } else {
+                    this.messageService.add({
+                        severity: 'error',
+                        summary: 'Invitation not found',
+                        detail: 'we couldn\'t find any invitation with the given code and email '
+                    });
                 }
             }
         );
     }
 
+    public findAllByStudentId(idStudent) {
+        this.http.get<Array<InvitedStudent>>(this.etudiantInvitedStudentUrl + '/' + idStudent).subscribe(
+            data => {
+                if (data != null) {
+                    this.inviteStudentEtudiantList = data;
+                    console.log(this.inviteStudentEtudiantList);
+                }
+            }
+        );
+    }
 
     public findAllByCriteria() {
         this.http.post<Array<InvitedStudent>>(this.adminInvitedStudentUrl + '/', this.inviteStudentAdminSearch).subscribe(
@@ -105,10 +129,12 @@ export class InvitedStudentService {
 
     public sendInvitation(idStudent: number, emailInvited: string) {
         console.log('eded');
+        console.log(idStudent);
+        console.log(emailInvited);
         this.http.get(this.etudiantInvitedStudentUrl + '/' + idStudent + '/' + emailInvited).subscribe(
             data => {
+                console.log('eded1');
                 if (data === 1) {
-
                     this.messageService.add({
                         severity: 'success',
                         summary: 'Invitation Sent',
@@ -119,7 +145,7 @@ export class InvitedStudentService {
                 }
                 if (data === -2) {
                     this.messageService.add({
-                        severity: 'warn',
+                        severity: 'error',
                         summary: 'Invitation Cancel',
                         detail: 'This email is already used'
                     });
@@ -127,10 +153,17 @@ export class InvitedStudentService {
                     this.inviteStudentEtudiant = null;
 
                 }
+                if (data === -3) {
+                    this.messageService.add({
+                        severity: 'warn',
+                        summary: 'Invitation Cancel',
+                        detail: 'This email is already invited'
+                    });
+                }
             }
         );
     }
 
-    constructor(private http: HttpClient, private messageService: MessageService) {
+    constructor(public etudiantService: EtudiantService, public router: Router, private http: HttpClient, private messageService: MessageService) {
     }
 }

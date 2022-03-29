@@ -169,7 +169,7 @@ export class ScheduleStudentComponent implements OnInit {
 
     joinSession() {
         this.showTpBar = false;
-        this.webSocketService.openWebSocket(this.etudiant, this.selectedMeeting.prof, this.selectedMeeting.groupeEtudiant, 'STUDENT');
+        this.webSocketService.openWebSocket(this.etudiant, this.selectedMeeting.groupeEtudiant.prof, this.selectedMeeting.groupeEtudiant, 'STUDENT');
         this.webSocketService.isInSession = true;
         this.selectedcours = this.selectedMeeting.cours;
         this.simulatesectionService.findSectionOneByCoursId(this.selectedMeeting.cours);

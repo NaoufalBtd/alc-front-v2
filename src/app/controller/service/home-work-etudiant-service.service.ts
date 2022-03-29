@@ -166,6 +166,12 @@ export class HomeWorkEtudiantServiceService {
         return this.http.get<Array<HomeWOrkEtudiant>>(this.etudianturl + 'homeWorkEtudiant/etudiant/id/' + this.loginservice.etudiant.id + '/homeWork/id/' + homeWork.id);
     }
 
+
+
+    public findbyetudiantId(): Observable<Array<HomeWOrkEtudiant>> {
+        return this.http.get<Array<HomeWOrkEtudiant>>(this.etudianturl + 'homeWorkEtudiant/etudiant/id/' + this.loginservice.etudiant.id);
+    }
+
     public findReponsesByQuestionId(id: number): Observable<Array<HoweWorkQSTReponse>> {
         return this.http.get<Array<HoweWorkQSTReponse>>(this.etudianturl + 'homeWorkqstReponse/question/' + id);
     }

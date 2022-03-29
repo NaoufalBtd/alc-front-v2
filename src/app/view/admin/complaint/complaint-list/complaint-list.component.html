@@ -19,8 +19,10 @@
                                         optionLabel="nom"
                                         [showClear]="true"
                                         [filter]="false" style="margin-right: 5px"></p-dropdown>
-                            <input type="text" pInputText style="margin-right: 5px" placeholder="Date Complaint"
-                                   [(ngModel)]="reclamationProfSearch.dateReclamation"/>
+                   <input type="text" pInputText style="margin-right: 5px" placeholder="Date Complaint"
+                          [(ngModel)]="reclamationProfSearch.dateReclamation"/>
+
+
                             <p-dropdown placeholder="Etat" [itemSize]="2"
                                         [options]="processingStatus" [(ngModel)]="reclamationProfSearch.traite"
                                         [showClear]="true"
@@ -45,6 +47,7 @@
                                 <th pSortableColumn="Date">Date Reclamation</th>
                                 <th pSortableColumn="Number Of Sessions">Etat</th>
                                 <th>Action</th>
+                                <th></th>
                             </tr>
                         </ng-template>
                         <ng-template pTemplate="body" let-reclamationProf>
@@ -73,10 +76,13 @@
 
                                 <td>
 
-                                    <button pButton type="button" class="p-button-info p-mr-2"
+                                    <button pButton type="button" class="p-button-info p-mr-2" label="See The Message"
                                             (click)="showReclamationViewProf(reclamationProf.id)"
                                             icon="pi pi-align-justify"></button>
-                                    <button pButton type="button" class="p-button-success p-mr-2"
+
+                                </td>
+                                <td>
+                                    <button pButton type="button" class="p-button-success p-mr-2" label="Reply To Message"
                                             (click)="showReclamationEditProf(reclamationProf)"
                                             icon="pi pi-pencil"></button>
                                 </td>
@@ -103,8 +109,10 @@
                                         optionValue="nom"
                                         [showClear]="true"
                                         [filter]="false" style="margin-right: 5px"></p-dropdown>
-                            <input type="text" pInputText style="margin-right: 5px" placeholder="Date Complaint"
-                                   [(ngModel)]="reclamationEtudiantSerch.dateReclamation"/>
+                            <input type="date"  pInputText placeholder="Date Complaint" 
+                                   style="margin-right: 5px"
+                                   [(ngModel)]="reclamationEtudiantSerch.dateReclamation" />
+
                             <p-dropdown placeholder="Etat" [itemSize]="2"
                                         [options]="processingStatus"
                                         [showClear]="true"
@@ -128,6 +136,7 @@
                                 <th pSortableColumn="Date">Date Reclamation</th>
                                 <th pSortableColumn="Number Of Sessions">Etat</th>
                                 <th>Action</th>
+                                <th></th>
                             </tr>
                         </ng-template>
                         <ng-template pTemplate="body" let-reclamationEtudiant>
@@ -155,10 +164,14 @@
                                 <td>
 
                                     <button pButton type="button" class="p-button-info p-mr-2"
-                                            (click)="showReclamationViewEtudiant(reclamationEtudiant.id,reclamationEtudiant.etudiant.id)"
+                                            (click)="showReclamationViewEtudiant(reclamationEtudiant.id,reclamationEtudiant.etudiant.id)" label="See The Message"
                                             icon="pi pi-align-justify"></button>
+
+
+                                </td>
+                                <td>
                                     <button pButton type="button" class="p-button-success p-mr-2"
-                                            (click)="showEtudiantEdit(reclamationEtudiant.id,reclamationEtudiant.etudiant.id)"
+                                            (click)="showEtudiantEdit(reclamationEtudiant.id,reclamationEtudiant.etudiant.id)" label="Reply To Message"
                                             icon="pi pi-pencil"></button>
                                 </td>
                             </tr>

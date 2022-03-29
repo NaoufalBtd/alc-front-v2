@@ -1,0 +1,34 @@
+<p-dialog [(visible)]="promotionStudentWhoInvited" [modal]="true" [style]="{width: '450px'}"
+          header="Add Promotion Student Who Invited" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <div class="p-field">
+            <label for="objetmessage">Promotion Percentage</label>
+            <input type="text"  id="objetmessage" placeholder="Promotion Percentage" [(ngModel)]="studentWhoInvitedPromotion.pourcentage" pInputText/>
+        </div>
+
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <p-button label="Close" (click)="hide()"></p-button>
+        <p-button label="Save" (click)="savePromotionStudentWhoInvited()"></p-button>
+
+
+    </ng-template>
+</p-dialog>
+<p-dialog [(visible)]="promotionInvited" [modal]="true" [style]="{width: '450px'}"
+          header="Add Promotion Student Invited"  styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <div class="p-field">
+            <label for="objetmessage">Promotion Percentage</label>
+            <input type="text"  id="objetmessage1" placeholder="Promotion Percentage" [(ngModel)]="studentInvitedPromotion.pourcentage" pInputText/>
+        </div>
+
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <p-button label="Close" (click)="close()"></p-button>
+        <p-button label="Save" (click)="savePromotionInvited()" ></p-button>
+
+
+    </ng-template>
+</p-dialog>

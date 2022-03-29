@@ -95,6 +95,12 @@ import {FreetriallessonComponent} from './view/etudiant/freetriallesson/freetria
 import {TypeTeacher} from './controller/model/type-teacher.model';
 import {MoreInformationComponent} from './view/admin/more-information/more-information.component';
 import {InfoEtudiantComponent} from './view/admin/info-etudiant/info-etudiant.component';
+import {ConnectAsInvitedComponent} from './view/etudiant/connect-as-invited/connect-as-invited.component';
+import {ContinueInfoComponent} from './view/etudiant/connect-as-invited/continue-info/continue-info.component';
+import {InvitedListeComponent} from './view/admin/invited-liste/invited-liste.component';
+import {PromotionComponent} from './view/admin/promotion/promotion.component';
+import {MyPromotionListComponent} from './view/etudiant/my-promotion-list/my-promotion-list.component';
+import {HomeStudentComponent} from './view/etudiant/home-student/home-student.component';
 
 
 @NgModule({
@@ -136,7 +142,9 @@ import {InfoEtudiantComponent} from './view/admin/info-etudiant/info-etudiant.co
                     {path: 'complaint', component: ComplaintComponent},
                     {path: 'typeofcomplaint', component: TypeReclamationComponent},
                     {path: 'moreInformation', component: MoreInformationComponent} ,
-                    {path: 'infoEtudiant', component: InfoEtudiantComponent}
+                    {path: 'infoEtudiant', component: InfoEtudiantComponent},
+                    {path: 'invitedList', component: InvitedListeComponent},
+                    {path: 'promotion', component: PromotionComponent}
                 ]
             },
             {
@@ -169,6 +177,7 @@ import {InfoEtudiantComponent} from './view/admin/info-etudiant/info-etudiant.co
             {
                 path: 'etudiant', component: EtudiantComponent,
                 children: [
+                    {path: 'dashboard', component: HomeStudentComponent},
                     {path: 'faq-student', component: FaqStudentListComponent},
                     {path: 'news-student', component: NewsEtudiantListComponent},
                     {path: 'schedule-student', component: ScheduleStudentComponent},
@@ -185,7 +194,10 @@ import {InfoEtudiantComponent} from './view/admin/info-etudiant/info-etudiant.co
                     {path: 'reclamation-etudiant', component: ReclamationEtudiantComponent},
                     {path: 'profile', component: EtudiantProfileComponent},
                     {path: 'profileEdit', component: ProfileComponent},
-                    {path: 'inviteStudent', component: InvitedStudentComponent}
+                    {path: 'inviteStudent', component: InvitedStudentComponent},
+                    {path: 'myPromotionList', component: MyPromotionListComponent},
+                    {path: 'inviteStudent', component: InvitedStudentComponent},
+                    {path: '*', component: HomeStudentComponent}
 
                 ]
             },
@@ -204,6 +216,8 @@ import {InfoEtudiantComponent} from './view/admin/info-etudiant/info-etudiant.co
                     {path: 'public/etudiantinscriptionComponent', component: EtudiantinscriptionComponent},
                     {path: 'public/profinscriptionComponent', component: ProfinscriptionComponent},
                     {path: 'public/inscriptionEtudiant', component: FormLayoutDemoComponent},
+                    {path: 'public/connectAsInvited', component: ConnectAsInvitedComponent},
+                    {path: 'public/continueInfo', component: ContinueInfoComponent},
                     {path: 'resetPassword', component: ResetPasswordComponent},
                     {path: 'login', component: LoginComponent},
 

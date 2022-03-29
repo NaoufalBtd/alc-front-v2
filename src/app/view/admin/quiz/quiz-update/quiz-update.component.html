@@ -7,7 +7,12 @@
                             [header]=" (qst.numero.toString()) + ' ' + qst.typeDeQuestion.lib">
 
                 <div class="p-grid">
-                    <div class="p-col-8">
+                    <div class="p-col-1">
+                        <h6>Number</h6>
+                        <input [style]="{'width': '100%'}" pInputText type="number" name="numero"  [(ngModel)]="qst.numero">
+                    </div>
+
+                    <div class="p-col-7">
                         <h6>Question</h6>
                         <textarea required [style]="{'width':'100%', 'padding': '10px'}" rows="2"
                                   [(ngModel)]="qst.libelle"

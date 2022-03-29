@@ -1,0 +1,35 @@
+<div class="p-grid" style="justify-content: center" >
+    <p-card header="Enter Your Invitation Information" subheader="You will get 3 free courses for your first purchase" [style]="{width: '460px',margin:'40px'}" styleClass="p-card-shadow">
+
+        <div class="p-fluid">
+            <div class="col-12 md:col-4">
+                <div class="p-inputgroup">
+                    <span class="p-inputgroup-addon"><i class="pi pi-google"></i></span>
+                    <input type="text" pInputText placeholder="E-mail" [(ngModel)]="email">
+                </div>
+            </div>
+        </div>
+        <div class="p-fluid" style="margin-top: 10px">
+
+            <div class="col-12 md:col-4">
+                <div class="p-inputgroup">
+                    <span class="p-inputgroup-addon"><i class="pi pi-key"></i></span>
+                    <input type="text" pInputText placeholder="Invitation Code" [(ngModel)]="code">
+                </div>
+            </div>
+        </div>
+        <p-toolbar styleClass="p-mt-4"  [style]="{backgroundColor: '#ffffff',border:'none'}" >
+            <ng-template pTemplate="right">
+                <p-button label="Check" (click)="findInvation()" iconPos="right" icon="pi pi-arrow-right" style="float: right"></p-button>
+
+            </ng-template>
+            <ng-template pTemplate="left">
+                <p-button routerLink="" label="Back" icon="pi pi-arrow-left" styleClass="p-button-secondary"></p-button>
+
+            </ng-template>
+        </p-toolbar>
+
+
+    </p-card>
+
+</div>

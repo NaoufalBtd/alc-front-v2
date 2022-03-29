@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {WorkloadBonus} from '../../../controller/model/workload-bonus.model';
 import {BonusProfService} from '../../../controller/service/bonus-prof.service';
 import {ClassAverageBonus} from '../../../controller/model/class-average-bonus.model';
+import {LoginService} from '../../../controller/service/login.service';
 
 @Component({
     selector: 'app-bonus-prof',
@@ -10,7 +11,7 @@ import {ClassAverageBonus} from '../../../controller/model/class-average-bonus.m
 })
 export class BonusProfComponent implements OnInit {
 
-    constructor(private bonusProfService: BonusProfService) {
+    constructor(private bonusProfService: BonusProfService, private loginService: LoginService) {
     }
 
     ngOnInit(): void {

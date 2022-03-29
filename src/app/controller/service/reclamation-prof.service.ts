@@ -238,8 +238,8 @@ export class ReclamationProfService {
                     this.displayReclamationProf = false;
                     this.messageService.add({
                         severity: 'success',
-                        summary: 'Teacher Complaint',
-                        detail: 'Complaint sent with successfully'
+                        summary: 'Complaint Sent',
+                        detail: 'Complaint sent successfully'
                     });
                 }
             }

@@ -12,4 +12,6 @@ export class Question {
     public typeDeQuestion = new TypeDeQuestion();
     public quiz = new Quiz();
     public reponses: Array<Reponse> = new Array<Reponse>();
+    public urlImg: string;
+    public urlVideo: string;
 }

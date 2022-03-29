@@ -1,0 +1,73 @@
+<div class="p-grid">
+    <div class="p-col-12">
+        <p-toast></p-toast>
+        <div class="card">
+            <p-table #dt [rows]="10" [paginator]="true" [value]="inviteStudentAdminList"
+                     [globalFilterFields]="['reference','total','totalPaye']"
+                     [rowHover]="true" dataKey="id" styleClass="p-datatable-customers"
+                     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                     [showCurrentPageReport]="true">
+                <ng-template pTemplate="caption">
+                    <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
+                        <h5 class="p-m-0">List of Student Invited</h5>
+
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+
+                        <th pSortableColumn="Code">Code</th>
+                        <th pSortableColumn="prof">Student</th>
+                        <th pSortableColumn="prof">Email Invited</th>
+                        <th pSortableColumn="prof">Status</th>
+                        <th pSortableColumn="Date">Date Sent Invitation</th>
+                        <th pSortableColumn="Date">Date Accept Invitation</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-inviteStudent>
+                    <tr>
+                        <td>
+                            <strong>{{inviteStudent.code}}</strong>
+                        </td>
+                        <td>
+                            <strong style="color: darkred">{{inviteStudent.etudiant.nom}} {{inviteStudent.etudiant.prenom}}</strong>
+                        </td>
+                        <td>
+                            <strong style="color: #3a518d">{{inviteStudent.emailInvited}}</strong>
+                        </td>
+                        <td>
+                            <p-message *ngIf="!inviteStudent.accepted" severity="error" text="Invitation Not Accepted"
+                                       styleClass="p-mr-2"></p-message>
+                            <p-message *ngIf="inviteStudent.accepted" severity="success" text="Invite Accepted"
+                                       styleClass="p-mr-2"></p-message>
+                        </td>
+                        <td>
+                            <strong style="color: darkblue">
+                                <i class="pi pi-calendar"></i>   {{ inviteStudent.dateSentInvitation | date : "yyyy-MM-dd"}}
+                            </strong>
+                            <br>
+                            <strong style="color: cadetblue">
+                                <i class="pi pi-clock"></i> {{ inviteStudent.dateSentInvitation | date : "HH:mm"}}
+                            </strong>
+                        </td>
+                        <td>
+                            <strong style="color: darkblue">
+                                <i class="pi pi-calendar"></i>   {{ inviteStudent.dateAcceptInvitation | date : "yyyy-MM-dd"}}
+                            </strong>
+                            <br>
+                            <strong style="color: cadetblue">
+                                <i class="pi pi-clock"></i> {{ inviteStudent.dateAcceptInvitation | date : "HH:mm"}}
+                            </strong>
+                        </td>
+
+                    </tr>
+
+                </ng-template>
+                <ng-template pTemplate="summary">
+                </ng-template>
+            </p-table>
+        </div>
+        <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+    </div>
+    <app-categorie-prof-view></app-categorie-prof-view>
+</div>
