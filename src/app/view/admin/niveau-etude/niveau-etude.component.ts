@@ -15,7 +15,10 @@ export class NiveauEtudeComponent implements OnInit {
 
   constructor(private messageService: MessageService, private niveauEtudeService: NiveauEtudeService,
               private confirmationService: ConfirmationService) { }
-
+  public popoverTitle1 = 'Confirmation';
+  public popoverMessage1 = 'Êtes-vous sûr de vouloir supprimer la marque ?';
+  public confirmCliked1 = false;
+  public cancelCliked1 = false;
   first = 0;
   rows = 10;
   cols: any[];
@@ -70,7 +73,14 @@ export class NiveauEtudeComponent implements OnInit {
   set createDialogEtud(value: boolean) {
     this.niveauEtudeService.createDialog = value;
   }
+    deleteConfirmation: boolean;
 
+  public confirmationDelete(niveauEtude: NiveauEtude) {
+       this.niveauEtude = niveauEtude;
+       console.log(this.niveauEtude);
+       this.deleteConfirmation = true;
+
+  }
   get niveauEtude(): NiveauEtude {
     return this.niveauEtudeService.niveauEtude;
   }
@@ -100,24 +110,20 @@ export class NiveauEtudeComponent implements OnInit {
     this.editDialog = false;
     this.niveauEtude = new NiveauEtude();
   }
-  public delete(niveauEtude: NiveauEtude) {
-    this.niveauEtude = niveauEtude;
-    this.confirmationService.confirm({
-      message: 'Are you sure you want to delete ' + niveauEtude.libelle + '?',
-      header: 'Confirm',
-      icon: 'pi pi-exclamation-triangle',
-      accept: () => {
+  public delete() {
+
         this.niveauEtudeService.deleteByLibelle().subscribe(data => {
           this.niveauEtudes = this.niveauEtudes.filter(val => val.id !== this.niveauEtude.id);
-          this.niveauEtude = new NiveauEtude();
+
           this.messageService.add({
             severity: 'success',
             summary: 'Successful',
             detail: 'Social status  Deleted',
             life: 3000
           });
+
         });
-      }
-    });
+    this.deleteConfirmation = false;
   }
+
 }

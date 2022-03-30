@@ -321,7 +321,6 @@ import {DragHomeWorkComponent} from './view/etudiant/homeWork/drag-home-work/dra
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {InvitedStudentComponent} from './view/etudiant/invited-student/invited-student.component';
 import {InvitedStudentCreateComponent} from './view/etudiant/invited-student/invited-student-create/invited-student-create.component';
-import {InvitedStudentListComponent} from './view/admin/invited-student-list/invited-student-list.component';
 import {
     InvitedStudentListStudentComponent
 } from './view/etudiant/invited-student/invited-student-list-student/invited-student-list-student.component';
@@ -336,6 +335,11 @@ import { SkillComponent } from './view/admin/skill/skill.component';
 import { InteretEtudiantComponent } from './view/admin/interet-etudiant/interet-etudiant.component';
 import { ConnectAsInvitedComponent } from './view/etudiant/connect-as-invited/connect-as-invited.component';
 import { ContinueInfoComponent } from './view/etudiant/connect-as-invited/continue-info/continue-info.component';
+import { InvitedListeComponent } from './view/admin/invited-liste/invited-liste.component';
+import { PromotionComponent } from './view/admin/promotion/promotion.component';
+import {PromotionCreateComponent} from './view/admin/promotion/promotion-create/promotion-create.component';
+import {PromotionListComponent} from './view/admin/promotion/promotion-list/promotion-list.component';
+import { MyPromotionListComponent } from './view/etudiant/my-promotion-list/my-promotion-list.component';
 import {HomeStudentComponent} from './view/etudiant/home-student/home-student.component';
 
 export function createTranslateLoader(http: HttpClient) {
@@ -642,7 +646,6 @@ export function createTranslateLoader(http: HttpClient) {
         ReclamationEtudiantViewComponent,
         ReclamationProfViewComponent,
         DragHomeWorkComponent,
-        InvitedStudentListComponent,
         InvitedStudentComponent,
         InvitedStudentCreateComponent,
         InvitedStudentListStudentComponent,
@@ -660,6 +663,12 @@ export function createTranslateLoader(http: HttpClient) {
         SkillComponent,
         InteretEtudiantComponent,
         ConnectAsInvitedComponent,
+        ContinueInfoComponent,
+        InvitedListeComponent,
+        PromotionComponent,
+        PromotionCreateComponent,
+        PromotionListComponent,
+        MyPromotionListComponent,
         ContinueInfoComponent,
         HomeStudentComponent
 

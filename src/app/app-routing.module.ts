@@ -97,6 +97,9 @@ import {MoreInformationComponent} from './view/admin/more-information/more-infor
 import {InfoEtudiantComponent} from './view/admin/info-etudiant/info-etudiant.component';
 import {ConnectAsInvitedComponent} from './view/etudiant/connect-as-invited/connect-as-invited.component';
 import {ContinueInfoComponent} from './view/etudiant/connect-as-invited/continue-info/continue-info.component';
+import {InvitedListeComponent} from './view/admin/invited-liste/invited-liste.component';
+import {PromotionComponent} from './view/admin/promotion/promotion.component';
+import {MyPromotionListComponent} from './view/etudiant/my-promotion-list/my-promotion-list.component';
 import {HomeStudentComponent} from './view/etudiant/home-student/home-student.component';
 
 
@@ -139,7 +142,9 @@ import {HomeStudentComponent} from './view/etudiant/home-student/home-student.co
                     {path: 'complaint', component: ComplaintComponent},
                     {path: 'typeofcomplaint', component: TypeReclamationComponent},
                     {path: 'moreInformation', component: MoreInformationComponent} ,
-                    {path: 'infoEtudiant', component: InfoEtudiantComponent}
+                    {path: 'infoEtudiant', component: InfoEtudiantComponent},
+                    {path: 'invitedList', component: InvitedListeComponent},
+                    {path: 'promotion', component: PromotionComponent}
                 ]
             },
             {
@@ -190,6 +195,8 @@ import {HomeStudentComponent} from './view/etudiant/home-student/home-student.co
                     {path: 'reclamation-etudiant', component: ReclamationEtudiantComponent},
                     {path: 'profile', component: EtudiantProfileComponent},
                     {path: 'profileEdit', component: ProfileComponent},
+                    {path: 'inviteStudent', component: InvitedStudentComponent},
+                    {path: 'myPromotionList', component: MyPromotionListComponent},
                     {path: 'inviteStudent', component: InvitedStudentComponent},
                     {path: '*', component: HomeStudentComponent}
 

@@ -5,6 +5,7 @@ import {StatutSocial} from '../../../controller/model/statut-social.model';
 import {TypeTeacher} from '../../../controller/model/type-teacher.model';
 import {FonctionService} from '../../../controller/service/fonction.service';
 import {Fonction} from '../../../controller/model/fonction.model';
+import {InteretEtudiant} from '../../../controller/model/interet-etudiant.model';
 
 @Component({
   selector: 'app-fonction',
@@ -20,6 +21,7 @@ export class FonctionComponent implements OnInit {
   first = 0;
   rows = 10;
   cols: any[];
+    deleteConfirmation: boolean;
   ngOnInit(): void {
     this.fonctionService.findAllStatutSocial().subscribe(data => {
       this.fonctions = data;
@@ -101,13 +103,8 @@ export class FonctionComponent implements OnInit {
     this.editDialog = false;
     this.fonction = new Fonction();
   }
-  public delete(fonction: Fonction) {
-    this.fonction = fonction;
-    this.confirmationService.confirm({
-      message: 'Are you sure you want to delete ' + fonction.libelle + '?',
-      header: 'Confirm',
-      icon: 'pi pi-exclamation-triangle',
-      accept: () => {
+  public delete() {
+
         this.fonctionService.deleteByLibelle().subscribe(data => {
           this.fonctions = this.fonctions.filter(val => val.id !== this.fonction.id);
           this.fonction = new Fonction();
@@ -118,7 +115,15 @@ export class FonctionComponent implements OnInit {
             life: 3000
           });
         });
-      }
-    });
+        this.deleteConfirmation =  false;
+  }
+  public confirmationDelete(fonction: Fonction) {
+    this.fonction = fonction;
+    console.log(this.fonction);
+    this.deleteConfirmation = true;
+
+  }
+  hideCreateDialog1() {
+    this.deleteConfirmation = false;
   }
 }

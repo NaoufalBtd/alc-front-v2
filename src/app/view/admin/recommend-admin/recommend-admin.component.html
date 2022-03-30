@@ -4,6 +4,7 @@
         <p-toast></p-toast>
 
         <div class="card" style="background-color: gainsboro">
+            <!--
             <p-toolbar styleClass="p-mb-2">
 
                 <ng-template pTemplate="right">
@@ -14,7 +15,7 @@
                 </ng-template>
             </p-toolbar>
 
-
+-->
             <p-table #dt [(selection)]="selectesRecommend" [paginator]="true" [rowHover]="true"
                      [rows]="10" [showCurrentPageReport]="true" [value]="itemsRecommend"
                      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
@@ -24,7 +25,7 @@
                     <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
                         <h5 class="p-m-0">Recommendation List</h5>
                         <span>
-                        <input [(ngModel)]="recommendVo.nom  " pInputText placeholder="Search By Recommended LastName"
+                        <input [(ngModel)]="recommendVo.nom  " pInputText placeholder="Search By Recommended Full name"
                                style="margin-right: 5px;width: 250px" type="text"/>
 <button (click)="findByCriteria()" class="p-button-rounded p-button-info " icon="pi pi-search" pButton pRipple
         type="button">

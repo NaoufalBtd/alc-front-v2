@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {TypeReclamationEtudiant} from '../model/type-reclamation-etudiant.model';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
+import {MessageService} from 'primeng/api';
 
 @Injectable({
     providedIn: 'root'
@@ -59,13 +60,18 @@ export class TypeReclamationEtudiantService {
                 if (data > 0) {
                     this.typeReclamationEtudiant = null;
                     this.findAll();
-                    this.displayTypeReclamationEtudiant=false;
+                    this.displayTypeReclamationEtudiant = false;
+                    this.messageService.add({
+                        severity: 'success',
+                        summary: 'Type Reclamation Student',
+                        detail: 'Type Reclamation Student Added successfully'
+                    });
                 }
             }
         );
     }
 
 // constructor
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient, private messageService: MessageService) {
     }
 }

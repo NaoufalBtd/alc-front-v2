@@ -35,7 +35,8 @@
                         <td>{{type.libelle}}</td>
                         <td>
 
-                            <button (click)="delete(type)"  class="p-button-rounded p-button-danger" icon="pi pi-trash" pButton
+                            <button (click)="confirmationDelete(type)"  class="p-button-rounded p-button-danger" icon="pi pi-trash"
+                                    pButton
                                     pRipple></button>
                             &nbsp;
                             <button (click)="showEdit(type)"  class="p-button-rounded p-button-success p-mr-2" icon="pi pi-pencil" pButton
@@ -92,3 +93,20 @@
 
 
 
+<p-dialog header="Confirm" [(visible)]="deleteConfirmation" [style]="{width: '30vw'}">
+    <ng-template pTemplate="content">
+        <div>
+            <i class="pi pi-exclamation-triangle" style="font-size: 2rem ; color :red;">
+                Are you sure you want to delete {{this.skill.libelle }} ?
+               </i>
+
+        </div>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <button (click)="delete()" class="p-button-text" icon="pi pi-check" label="Delete" pButton pRipple></button>
+        <button (click)="hideCreateDialog1()" class="p-button-text" icon="pi pi-times" label="Cancel" pButton
+                pRipple></button>
+
+    </ng-template>
+
+</p-dialog>

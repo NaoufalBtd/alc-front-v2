@@ -1,4 +1,6 @@
-<p-card [style]="{'width': '75%', 'margin-bottom': '10%','height': '50%','margin-left': '10%', 'backgroundColor': '#FEBF7E'}">
+<button   (click)="showEditDialog()" class="p-button-success p-mr-2 p-mb-2" icon="pi pi-plus" label="All reconmendation" pButton
+          pRipple style="width: 150px ;  margin-top: 10px;"></button>
+<p-card [style]="{'width': '75%', 'margin-bottom': '10%','height': '80%','margin-left': '10%', 'backgroundColor': '#FEBF7E'}">
     <p-toast></p-toast>
     <ng-template pTemplate="header">
         <span> <h2  style="color: white; text-align: center"  >Recommend a teacher to EngglishDom
@@ -28,6 +30,7 @@
         </div>
 
         <h4  style="color: white; text-align: center">RECOMMEND A TEACHER</h4>
+
         <div class="p-grid p-fluid">
 
             <div class="p-field p-md-4  class1 ">
@@ -55,3 +58,53 @@
     </ng-template>
 
 </p-card>
+
+<p-dialog [(visible)]="dialog" [style]="{width: '60vw'}">
+
+
+<p-table #dt  [value]="items"
+         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+         dataKey="id"
+         styleClass="p-datatable-customers">
+    <ng-template pTemplate="caption">
+        <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
+            <h5 class="p-m-0">Recommendation List</h5>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+        <tr>
+            <th pSortableColumn="student">Recommended Teacher Full Name
+                <p-sortIcon field="student"></p-sortIcon>
+            </th>
+            <th pSortableColumn="start at">Recommended By
+                <p-sortIcon field="dateDebut"></p-sortIcon>
+            </th>
+
+            <th pSortableColumn="duration">Phone Number
+                <p-sortIcon field="duration"></p-sortIcon>
+            </th>
+            <th pSortableColumn="duration">Email
+                <p-sortIcon field="duration"></p-sortIcon>
+            </th>
+            <th pSortableColumn="duration">Recommendation Date
+                <p-sortIcon field="duration"></p-sortIcon>
+            </th>
+        </tr>
+    </ng-template>
+    <ng-template let-recommend pTemplate="body">
+        <tr>
+            <td>{{recommend.nom}} </td>
+            <td>{{recommend.prof.nom}}  {{recommend.prof.prenom}}</td>
+            <td>{{recommend.telephone}}</td>
+            <td>{{recommend.login}}</td>
+            <td>{{recommend.dateRecommamdation | date:' yyyy-MM-dd\' Time \'HH:mm:ss'}}</td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="summary">
+        <div class="p-d-flex p-ai-center p-jc-between">
+            In total there are {{items ? items.length : 0 }} items.
+        </div>
+    </ng-template>
+</p-table>
+
+</p-dialog>

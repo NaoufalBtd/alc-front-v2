@@ -83,14 +83,18 @@ export class InvitedStudentService {
         );
     }
 
-    public findByEmailAndCode(email: string, code: string){
-        this.http.get<InvitedStudent>(this.etudiantInvitedStudentUrl + '/email/' + email + '/code/' + code ).subscribe(
+    public findByEmailAndCode(email: string, code: string) {
+        this.http.get<InvitedStudent>(this.etudiantInvitedStudentUrl + '/email/' + email + '/code/' + code).subscribe(
             data => {
-                if (data != null){
+                if (data != null) {
                     this.etudiantService.selected.username = email;
                     this.router.navigate(['public/continueInfo']);
-                }
-                else {
+                    this.messageService.add({
+                        severity: 'success',
+                        summary: 'Welcome to Platform English  E-Learning',
+                        detail: 'Please fill out your Personnel Information '
+                    });
+                } else {
                     this.messageService.add({
                         severity: 'error',
                         summary: 'Invitation not found',
@@ -111,7 +115,6 @@ export class InvitedStudentService {
             }
         );
     }
-
 
     public findAllByCriteria() {
         this.http.post<Array<InvitedStudent>>(this.adminInvitedStudentUrl + '/', this.inviteStudentAdminSearch).subscribe(
@@ -142,13 +145,20 @@ export class InvitedStudentService {
                 }
                 if (data === -2) {
                     this.messageService.add({
-                        severity: 'warn',
+                        severity: 'error',
                         summary: 'Invitation Cancel',
                         detail: 'This email is already used'
                     });
                     this.findAllByStudentId(idStudent);
                     this.inviteStudentEtudiant = null;
 
+                }
+                if (data === -3) {
+                    this.messageService.add({
+                        severity: 'warn',
+                        summary: 'Invitation Cancel',
+                        detail: 'This email is already invited'
+                    });
                 }
             }
         );

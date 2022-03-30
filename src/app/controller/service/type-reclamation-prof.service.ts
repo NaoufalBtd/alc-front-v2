@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {environment} from '../../../environments/environment';
-import {TypeReclamationEtudiant} from '../model/type-reclamation-etudiant.model';
 import {HttpClient} from '@angular/common/http';
 import {TypeReclamationProf} from '../model/type-reclamation-prof.model';
+import {MessageService} from 'primeng/api';
 
 @Injectable({
     providedIn: 'root'
@@ -61,12 +61,17 @@ export class TypeReclamationProfService {
                     this.typeReclamationProf = null;
                     this.findAll();
                     this.displayTypeReclamationProf = false;
+                    this.messageService.add({
+                        severity: 'success',
+                        summary: 'Type Reclamation Student',
+                        detail: 'Type Reclamation Prof Added successfully'
+                    });
                 }
             }
         );
     }
 
 // constructor
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient, private messageService: MessageService) {
     }
 }

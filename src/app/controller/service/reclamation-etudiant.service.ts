@@ -207,6 +207,11 @@ export class ReclamationEtudiantService {
                     console.log(this.reclamationEtudiant.id);
                     this.reclamationEtudiant = null;
                     this.displayReclamationEtudiant = false;
+                    this.messageService.add({
+                        severity: 'success',
+                        summary: 'Complaint Sent',
+                        detail: 'Complaint Sent successfully'
+                    });
                 }
             }
         );

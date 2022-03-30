@@ -92,11 +92,13 @@ export class AppMenuComponent implements OnInit {
                     {label: 'FAQ List', icon: 'pi pi-fw pi-info-circle', routerLink: ['/admin/faq-admin-list']},
                     {label: 'CREATE NEWS', icon: 'pi pi-fw pi-calendar-times', routerLink: ['/admin/news-admin']},
                     {label: 'Schedule', icon: 'pi pi-calendar', routerLink: ['/admin/schedule']},
+                    {label: 'Promotion', icon: 'pi pi-slack', routerLink: ['/admin/promotion']},
                     {label: 'Bonus', icon: 'pi pi-fw pi-wallet', routerLink: ['/admin/bonus']},
                     {label: 'Packs', icon: 'pi pi-briefcase', routerLink: ['/admin/PackStudent']},
                     {label: 'Cloud', icon: 'pi pi-cloud', routerLink: ['/admin/driveApi']},
                     {label: 'Complaint', icon: 'pi pi-bell', routerLink: ['/admin/complaint']},
                     {label: 'Type of Complaint', icon: 'pi pi-bell', routerLink: ['/admin/typeofcomplaint']},
+                    {label: 'Invited List', icon: 'pi pi-share-alt', routerLink: ['/admin/invitedList']},
                     {label: 'More information', icon: 'pi pi-plus', routerLink: ['/admin/infoEtudiant']},
 
 
@@ -125,6 +127,7 @@ export class AppMenuComponent implements OnInit {
                     {label: 'Schedule', icon: 'pi pi-fw pi-calendar-times', routerLink: ['/etudiant/schedule-student']},
                     {label: 'Reclamation', icon: 'pi pi-fw pi-exclamation-triangle', routerLink: ['/etudiant/reclamation-etudiant']},
                     {label: 'Invited Student', icon: 'pi pi-fw pi-share-alt', routerLink: ['/etudiant/inviteStudent']},
+                    {label: 'My Promotion', icon: 'pi pi-th-large', routerLink: ['/etudiant/myPromotionList']},
 
 
                 ];
