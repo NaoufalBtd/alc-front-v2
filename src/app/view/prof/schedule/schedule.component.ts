@@ -70,6 +70,7 @@ export class ScheduleLocalComponent implements OnInit {
                 private menuService: MenuService,
                 private simulateSectionService: SimulateSectionService) {
     }
+
     get selectedSchedule(): ScheduleProf {
         return this.webSocketService.selectedSchedule;
     }
@@ -440,6 +441,7 @@ export class ScheduleLocalComponent implements OnInit {
     }
 
     startSession() {
+        this.webSocketService.isInSession = true;
         this.showTpBar = false;
         console.log(this.selectedSchedule.groupeEtudiant.id);
         this.webSocketService.sessionHasStarted = true;

@@ -145,6 +145,7 @@ import {HomeStudentComponent} from './view/etudiant/home-student/home-student.co
             {
                 path: 'prof', component: ProfComponent,
                 children: [
+                    {path: '', component: HomeComponent},
                     {path: 'home', component: HomeComponent},
                     {path: 'quiz-preview-prof', component: QuizPreviewComponent},
                     {path: 'courses', component: EdCoursesComponent},

@@ -66,9 +66,8 @@ export class ProfComponent implements OnInit {
     ngOnInit(): void {
         this.user = this.authenticationService.getUserFromLocalCache();
         if (this.user === null) {
-            this.router.navigate(['#/']);
+            this.router.navigate(['/']);
         } else {
-            // @ts-ignore
             if (this.user.role === Role.ADMIN || this.user.role === Role.STUDENT
                 || this.user.authorities.length === 0) {
                 this.router.navigate(['**']);

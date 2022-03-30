@@ -1,44 +1,139 @@
-<div class="p-fluid p-formgrid p-grid">
-    <div class="p-field p-col-4 p-md-4 ">
-        <p-card [style]="{width: '100%'}" header="Professor" styleClass="p-card-shadow">
-            <ng-template pTemplate="header" style="  height: 50%;width: 100%">
-                <img alt="Card" src="../../../../assets/images/Course.png" style=" height: 400px;width: 100%">
-            </ng-template>
-            <p>Hello!! {{this.serviceUser.prof.nom}} you can add A student </p>
-            <ng-template pTemplate="footer">
+<div class="p-grid">
+    <div class="p-col-3 ">
+        <p-card [style]="{width: '100%', background: '#263238', color: 'white'}" header="Lessons"
+                styleClass="p-card-shadow lessons">
+            <i class="pi pi-book" style="font-size: 2rem; float: right; margin: -40px 0 0 0;"></i>
 
-                <button (click)="openCreateEtud()" class="p-button-help" label="Add Student" pButton pRipple
-                        style="background-color: orange" type="button"></button>
+            <h1 class="LessonNumber">{{allLesson?.length}}</h1>
+            <div class="LessonNumberInMonth">+{{numberOfCourseInThisMonth()}} this month</div>
 
-            </ng-template>
+
+            <div class="p-grid progressBarLesson">
+                <div [style.width.%]="getProgressValueForLesson().toFixed(.2)" class="finishLessonProgressBar"
+                     pTooltip="Workload" tooltipPosition="top">
+                    {{getProgressValueForLesson().toFixed(.2)}}%
+                </div>
+                <div class="restLessonProgressBar"></div>
+                <div></div>
+            </div>
+
         </p-card>
     </div>
 
 
-    <div class="p-field p-col-4 p-md-4">
-        <p-card [style]="{'width': '100%', 'height' : '100%','backgroundColor':'white'}">
+    <div class="p-col-3">
+        <p-card [style]="{width: '100%', background: '#ff725e', color: 'white'}" header="Hours"
+                styleClass="p-card-shadow lessons">
+            <i class="pi pi-clock" style="font-size: 2rem; float: right; margin: -40px 0 0 0;"></i>
+
+            <h1 class="LessonNumber">{{numberOfHours}}</h1>
+            <div class="LessonNumberInMonth">+{{numberOfHoursInThisMonth()}} this month</div>
+
+
+            <div class="p-grid progressBarHours">
+                <div [style.width.%]="getProgressValueForHours.toFixed(.2)" class="finishHoursProgressBar"
+                     pTooltip="Workload" tooltipPosition="top">
+                    {{getProgressValueForHours.toFixed(.2)}}%
+                </div>
+                <div class="restLessonProgressBar"></div>
+                <div></div>
+            </div>
+
+        </p-card>
+    </div>
+
+    <div class="p-col-3 student">
+        <p-card [style]="{width: '100%', background: '#f34b63', color: 'white'}" header="Students"
+                styleClass="p-card-shadow lessons">
+            <i class="pi pi-users" style="font-size: 2rem; float: right; margin: -40px 0 0 0;"></i>
+
+            <h1 class="LessonNumber">{{studentList.length}}</h1>
+            <div class="LessonNumberInMonth">+1 this month</div>
+            <div style="height: 13px">
+            </div>
+        </p-card>
+    </div>
+
+    <div class="p-col-3 student">
+        <p-card [style]="{width: '100%', background: 'white', color: '#263238'}" header="Current pay"
+                styleClass="p-card-shadow lessons">
+            <i class="pi pi-wallet" style="font-size: 2rem; float: right; margin: -40px 0 0 0;"></i>
+
+            <h1 style="margin-right: 0!important;" class="LessonNumber">10000</h1>
+            <div class="LessonNumberInMonth">Dhs</div>
+            <div style="height: 13px">
+            </div>
+        </p-card>
+    </div>
+
+
+</div>
+
+
+<div style="  height: 100%;" class="p-grid">
+    <div class="p-col-8">
+        <p-card [style]="{width: '100%'}" header="Professor" styleClass="p-card-shadow">
+
             <ng-template pTemplate="header">
-                <img [style]="{'height': '20rem'}"
-                     alt="Card"
-                     src="../../../../assets/images/imgHome2.png">
+                <p style="    font-size: 1.5rem; font-weight: 700; padding: 7px 0 0 9px; margin-bottom: 0.5rem;">
+                    Nearest Lesson <img style="    width: 20px; margin: 4px 0 -3px 0;"
+                                        src="/assets/icons/icon-fire.png" alt="">
+                </p>
+                <div style=" padding: 5px " class="p-field">
+                    <div class="p-grid lessonContainer">
+                        <div style="text-align: start" class="p-col-3">
+                            <img style="width: 100%!important;background: white;"
+                                 alt="Card"
+                                 src="../../../../assets/images/imgHome2.png">
+                        </div>
+                        <div class="p-col-6 courseName">
+                            <p class="lessonName">{{nextLesson?.subject}}</p>
+                            <p class="lessonDate">
+                                <i class="pi pi-clock"></i> {{nextLesson?.startTime | date: 'EEEE, d MMMM yyyy'}}
+                                (
+                                {{getHours(nextLesson?.startTime)}}:{{getMinute(nextLesson?.startTime)}}  -
+                                {{getHours(nextLesson?.endTime)}}:{{getMinute(nextLesson?.endTime)}})
+                            </p>
+                            <p class="lessonDate">
+                                <i class="pi pi-users"></i>
+                                {{nextLesson?.groupeEtudiant?.libelle}}</p>
+                        </div>
+                        <div style="padding: 6% 5px;"  class="p-col-3">
+                            <button *ngIf="!showStartCourseNow"
+                                    pButton pRipple type="button"
+                                    (click)="viewLesson()"
+                                    [label]="getRestOfTime"
+                                    class="joinButton"></button>
+
+
+                            <button id="startLessonButton" *ngIf="showStartCourseNow"
+                                    pButton pRipple type="button"
+                                    (click)="startSession()"
+                                    label="Start Lesson"
+                                    class="joinButton"></button>
+
+                        </div>
+                    </div>
+                </div>
             </ng-template>
+
             <ul style=" background-color: white ">
                 <li style=" background-color: white ">
 
-                    <span style="color: darkslateblue; background-color: white ">CURRENT PAY </span>
-                    <h4 style="  background-color: white;">{{this.selectedsalaryVo.nbrSessionGlobale * this.selectedsalaryVo.prof.categorieProf.lessonRate}}
+                    <span style="color: #ff725e; background-color: white ">CURRENT PAY </span>
+                    <h4 style="  background-color: white;">100000
                         $</h4>
 
                 </li>
                 <li>
-                    <i class="pi pi-chevron-circle-down"></i> <span style="color: darkslateblue">Workload </span>
+                    <span style="color: #ff725e">Workload </span>
 
-                    <h4>{{this.selectedsalaryVo.nbrSessionGlobale}} lessons</h4>
+                    <h4>50 lessons</h4>
                 </li>
                 <li>
 
-                    <span style="color: darkslateblue">PREMIEUM STUDENTS</span>
-                    <h4>{{this.items.length}} STUDENTS</h4>
+                    <span style="color: #ff725e">PREMIUM STUDENTS</span>
+                    <h4>10 STUDENTS</h4>
 
                 </li>
 
@@ -46,32 +141,34 @@
             </ul>
         </p-card>
     </div>
-    <div class="p-field p-col-4 p-md-4">
-        <p-card [style]="{'width': '100%', 'margin-bottom': '2em','height' : '100%','backgroundColor':'white'}"
+
+
+    <div class=" p-col-4">
+        <p-card [style]="{'width': '100%', 'margin-bottom': '2em','backgroundColor':'white'}"
                 header="What's News">
 
             <ul>
-                <li style="height: 60px;color: black">
+                <li style="height: 60px;color: #ff725e">
                     <span>04 Oct:</span>
                     <a routerLink="/prof/news-teacher" style="margin-left: 30px;color: darkslateblue">Happy Teachers Day
                         2019</a>
                 </li>
-                <li style="height: 60px;color: black">
+                <li style="height: 60px;color: #ff725e">
                     <span>31 Juil:</span>
                     <a routerLink="/prof/news-teacher" style="margin-left: 30px;color: darkslateblue">Summer 2019
                         Champions</a>
                 </li>
-                <li style="height: 60px;color: black">
+                <li style="height: 60px;color: #ff725e">
                     <span>11 juin:</span>
                     <a routerLink="/prof/news-teacher" style="margin-left: 30px;color: darkslateblue">Webinars for
                         Teacher</a>
                 </li>
-                <li style="height: 60px;color: black">
+                <li style="height: 60px;color: #ff725e">
                     <span>31 May:</span>
                     <a routerLink="/prof/news-teacher" style="margin-left: 30px;color: darkslateblue">Summer plan
                         2019</a>
                 </li>
-                <li style="height: 60px;color: black">
+                <li style="height: 60px;color: #ff725e">
                     <span>18 April</span>
                     <a routerLink="/prof/news-teacher" style="margin-left: 30px;color: darkslateblue">May Lifehack</a>
 
@@ -81,7 +178,6 @@
 
 
         </p-card>
-        <app-ajout-etudiant></app-ajout-etudiant>
 
     </div>
 </div>

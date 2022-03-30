@@ -137,7 +137,7 @@
                         </app-quiz-preview-prof>
                     </div>
 
-                    <div class="p-grid" *ngIf="!this.webSocketService.isInSession"
+                    <div class="p-grid"
                          style="background: white; border-top: 5px solid #f4f4f4;">
                         <div class="p-col-4">
                             <button *ngIf="this.selectedsection.numeroOrder !== 1"
@@ -148,7 +148,9 @@
                         </div>
 
 
-                        <div class="p-col-4" style="text-align: center">
+                        <div *ngIf="!webSocketService.isInSession" class="p-col-4" style="text-align: center">
+                        </div>
+                        <div *ngIf="webSocketService.isInSession" class="p-col-4" style="text-align: center">
                             <button
                                     (click)="showSummaryFct()"
                                     [style]="{'width': '100%'}"
@@ -163,7 +165,6 @@
                                     label="Flow me" class="p-button-outlined p-button-warning">
                                 <img id="flowMeImg" src="./assets/icons/icons-roller.gif" width="25px">
                             </button>
-
 
                         </div>
 
@@ -228,7 +229,7 @@
 
                         <div class="p-col-4"></div>
                         <div style="margin-top: 30px " class="p-col-4">
-                            <button *ngIf="showFinishLesson"
+                            <button *ngIf="showFinishLesson && webSocketService.isInSession"
                                     [style]="{'width': '100%','color': '#dd933c','font-size': 'medium', 'font-weight': 'bold'}"
                                     pButton pRipple
                                     (click)="showConfirm()"
@@ -243,8 +244,11 @@
 
                 <div class="p-col-3 product-grid-item">
                     <div class="skipeContainer">
-                        <img src="./assets/icons/icon-book.png" alt="">
-                        <h4 id="startText">Let's Start</h4>
+                        <img *ngIf="webSocketService.isInSession" src="./assets/icons/icon-book.png" alt="">
+                        <img *ngIf="!webSocketService.isInSession" width="70px"
+                             src="./assets/icons/icons-yeux-cartoon.png" alt="">
+                        <h4 *ngIf="webSocketService.isInSession" id="startText">Let's Start</h4>
+                        <h4 *ngIf="!webSocketService.isInSession" id="startText">Teacher's preview mode</h4>
                     </div>
 
                     <div class="p-inputgroup" style="margin-bottom: 10px;">
