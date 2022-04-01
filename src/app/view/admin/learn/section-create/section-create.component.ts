@@ -132,4 +132,10 @@ export class SectionCreateComponent implements OnInit {
             this.selectedsection = new Section();
         }
     }
+
+    passNumeroOrder(code: number) {
+        const categorieSection = this.itemscategoriesection.filter(s => s.id === code)[0];
+        console.log(categorieSection);
+        this.selectedsection.numeroOrder = categorieSection.numeroOrder;
+    }
 }
