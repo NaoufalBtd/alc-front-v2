@@ -3,7 +3,8 @@
     <ng-template pTemplate="p-field">
         <div class="p-field">
             <label for="cours"> Courses </label>
-            <select (click)="findAllCours()" [(ngModel)]="selectedsection.cours.id" class="btn btn-block btn-outline-light form-control" id="cours"
+            <select (click)="findAllCours()" [(ngModel)]="selectedsection.cours.id"
+                    class="btn btn-block btn-outline-light form-control" id="cours"
                     name="Parcours" pInputText style="background-color: lavender"
                     type="text">
                 <option *ngFor="let c of itemscours" [ngValue]="c.id" selected="selected"> {{c.libelle}}</option>
@@ -11,10 +12,12 @@
             <small *ngIf="submittedSection && !selectedsection.cours.libelle" class="p-invalid">cours is
                 required.</small>
             <label for="categorie"> CategorieSections </label>
-            <select (click)="findAllCategorie()" [(ngModel)]="selectedsection.categorieSection.code" class="btn btn-block btn-outline-light form-control" id="categorie"
+            <select (click)="findAllCategorie()" [(ngModel)]="selectedsection.categorieSection.id"
+                    class="btn btn-block btn-outline-light form-control" id="categorie"
                     name="Parcours" pInputText style="background-color: lavender"
+                    (ngModelChange)="passNumeroOrder(selectedsection.categorieSection.id)"
                     type="text">
-                <option *ngFor="let s of itemscategoriesection" [ngValue]="s.code"
+                <option *ngFor="let s of itemscategoriesection" [ngValue]="s.id"
                         selected="selected"> {{s.libelle}}</option>
             </select>
             <small *ngIf="submittedSection && !selectedsection.categorieSection.libelle" class="p-invalid">categorie is
@@ -22,7 +25,8 @@
         </div>
         <div class="p-field">
             <label for="Number">Number</label>
-            <input [(ngModel)]="selectedsection.numeroOrder" autofocus id="Number" pInputText required type="text"/>
+            <input [(ngModel)]="selectedsection.numeroOrder" disabled autofocus id="Number" pInputText required
+                   type="text"/>
             <small *ngIf="submittedSection && !selectedsection.numeroOrder" class="p-invalid">Number is
                 required.</small>
         </div>
