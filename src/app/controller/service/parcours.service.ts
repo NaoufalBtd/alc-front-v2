@@ -25,6 +25,7 @@ export class ParcoursService {
     private _index: number;
     private _contenuSection: Array<string>;
     private adminUrl = environment.adminUrl;
+    private profUrl = environment.profUrl;
     private _sectionStandard: Array<Section>;
     private _sectionAdditional: Array<Section>;
     private _listcours: Array<Cours>;
@@ -641,8 +642,9 @@ export class ParcoursService {
         return this.http.put<Cours>(this.adminUrl + 'cours/', this.selectedcours);
     }
 
-    public SaveCours(): Observable<number> {
-        return this.http.post<number>(this.adminUrl + 'cours/', this.selectedcours);
+    public SaveCours(): Observable<Cours> {
+        console.log(this.selectedcours);
+        return this.http.post<Cours>(this.adminUrl + 'cours/', this.selectedcours);
     }
 
     public AjoutSection(id: number): Observable<number> {
@@ -910,6 +912,10 @@ export class ParcoursService {
 
     public findAll(): Observable<Array<Cours>> {
         return this.http.get<Array<Cours>>(this.adminUrl + 'cours/');
+    }
+
+    public findCousByParcoursIdOrderByNumeroOrder(parcours_id): Observable<Array<Cours>> {
+        return this.http.get<Array<Cours>>(this.profUrl + 'cours/parcours/id/' + parcours_id);
     }
 
 }

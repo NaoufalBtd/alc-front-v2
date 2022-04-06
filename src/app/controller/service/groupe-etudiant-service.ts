@@ -51,6 +51,7 @@ export class GroupeEtudiantService {
   private _etudiant: Etudiant;
   private _etudiant2: Etudiant;
   private adminUrl = environment.adminUrl;
+  private profUrl = environment.profUrl;
 
   public save(): Observable<number>{
     return this.http.post<number>(this.urlBase + this.urlGroupeEtudiant, this.groupeEtudiant);
@@ -62,6 +63,13 @@ export class GroupeEtudiantService {
   public findAll(): Observable<Array<GroupeEtudiant>> {
     return this.http.get<Array<GroupeEtudiant>>(this.urlBase + this.urlGroupeEtudiant);
   }
+  public findAllByProfId(id: number): Observable<Array<GroupeEtudiant>> {
+    return this.http.get<Array<GroupeEtudiant>>(this.profUrl + 'groupeEtudiant/prof/id/' + id);
+  }
+
+
+
+
   public findAllGroupeEtude(): Observable<Array<GroupeEtude>> {
     return this.http.get<Array<GroupeEtude>>(this.urlBase + this.urlGroupeEtude);
   }

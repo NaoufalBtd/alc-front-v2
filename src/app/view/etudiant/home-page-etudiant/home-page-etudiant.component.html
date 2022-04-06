@@ -1,102 +1,141 @@
-<!-- CSS only -->
+<div id="Mycontainer" class="p-grid">
 
-<div class="p-grid" >
-    <div class="p-col-3"></div>
-    <div class="col-6" style="margin-top: 60px">
-        <p-messages severity="success">
-            <ng-template pTemplate >
-                <div class="ml-2" style="font-size: 20px"><h1>Your application has been successfully sent!</h1>
-                    <h6 style="justify-content: center; font-size: 15px; margin-top: 5px">Already know about our school? Don't want to waste time on a trial lesson?
-                        Then pay immediately and get bonus lessons!</h6>
+    <div class="p-grid">
+        <div style="text-align: center" class="p-col-12">
+            <h1 style="    font-family: system-ui; letter-spacing: 1px;">Your application has been successfully sent!</h1>
+        </div>
+        <div class="p-col-2"></div>
+        <div style="text-align: center" class="p-col-8">
+            <p style=" font-size: medium; font-family: cursive;">Already know about our school?
+                Don't want to waste time on a trial lesson?
+                Then pay immediately and get bonus lessons!</p>
+        </div>
+        <div class="p-col-2"></div>
+    </div>
+
+
+    <div class="p-grid justify-content-center">
+        <div class="p-col-2"></div>
+        <div class="p-col-4">
+
+            <div [style]="{width: '100%', height: '100%' ,  background:'#ff725e', color: '#263238'}" class="p-grid">
+                <div style="text-align: center" class="p-col-12"><h2>Continue to purchase</h2></div>
+
+
+                <div style="text-align: start" class="p-col-1">
+                    <img style="width: 30px" src="/assets/icons/icon-gift.png">
                 </div>
-            </ng-template>
-        </p-messages>
+                <div style="text-align: start" class="p-col-11">
+                    You get a bonus up to 3 lessons when you pay now
+                </div>
 
-    </div>
-</div>
 
-<div class="p-grid justify-content-center">
-    <div class="p-col-3"></div>
-    <div class="p-col-3"  >
-        <p-card header="Continue to purchase"  [style]="{width: '100%', background:'#FF5733', color: 'white'}" styleClass="p-card-shadow">
-            <hr class="my-3 mx-0 border-top-1 border-none surface-border" />
-            <div class="p-float-label align-items-center">
-                <span style="font-size: 20px; " class="p-card-shadow">from $20</span>
-                <span style="font-size: 10px">  per month</span>
+                <div style="text-align: start" class="p-col-1">
+                    <img style="width: 30px" src="/assets/icons/icon-prof.png">
+                </div>
+                <div style="text-align: start" class="p-col-11">
+                    We will immediately coordinate the schedule of classes with the teacher
+                </div>
+
+
+                <div style="text-align: start" class="p-col-1">
+                    <img style="width: 30px" src="/assets/icons/icons8-clock-48.png">
+                </div>
+                <div style="text-align: start" class="p-col-11">
+                    Pay immediately and save time and money
+                </div>
+
+                <div class="p-col-2"></div>
+                <div class="p-col-8">
+                    <button pButton pRipple (click)="navigatetopurchase()"
+                            label="Pay now" icon="pi pi-check"
+                            class="joinButton"></button>
+                </div>
+                <div class="p-col-2"></div>
+
             </div>
-            <hr class="my-3 mx-0 border-top-1 border-none surface-border" />
-            <ul class="list-none p-0 m-0 flex-grow-1" style="list-style-type: none;margin: 0;padding: 0;">
-                <li style="text-decoration: none; font-size: 15px; margin-top: 10px" >
-                    <strong>
-                        <i class="pi pi-check-circle " style="color: white"></i>
-                    </strong>
-                    <span>  Pay immediately</span>
-                </li>
-                <li style="text-decoration: none; font-size: 15px; margin-top: 10px">
-                    <strong>
-                        <i class="pi pi-check-circle " style="color: white"></i>
-                    </strong>
-                    <span>  You get a bonus up to 3 lessons when you pay now</span>
-                </li>
-                <li style="text-decoration: none; font-size: 15px; margin-top: 10px">
-                    <strong>
-                        <i class="pi pi-check-circle " style="color: white"></i>
-                    </strong>
-                    <span>  We will immediately coordinate the schedule of classes with the teacher</span>
-                </li>
-                <li style="text-decoration: none; font-size: 15px;margin-top: 10px">
-                    <strong>
-                        <i class="pi pi-check-circle " style="color: white"></i>
-                    </strong>
-                    <span>  Save time and money</span>
-                </li>
-            </ul>
-            <hr class="mb-3 mx-0 border-top-1 border-none surface-border mt-auto" />
-            <ng-template pTemplate="footer">
-                <p-button (click)="navigatetopurchase()" label="Pay now" icon="pi pi-check" styleClass="p-button-info" [style]="{'margin-left': '.5em'}"></p-button>
-            </ng-template>
-        </p-card>
-    </div>
-    <div class="p-col-3"  >
-        <p-card header="Free trial lesson"  [style]="{width: '100%', margin:'30px 0px 0px 0px', color:'#2e2e2e'}" styleClass="p-card-shadow">
-            <hr class="my-3 mx-0 border-top-1 border-none surface-border" />
-            <ul class="list-none p-0 m-0 flex-grow-1" style="list-style-type: none;margin: 0;padding: 0;">
-                <li style="text-decoration: none; font-size: 15px; margin-top: 10px" >
-                    <strong>
-                        <i class="pi pi-check-circle " style="color: #2e2e2e"></i>
-                    </strong>
-                    <span>  Take a trial lesson</span>
-                </li>
-                <li style="text-decoration: none; font-size: 15px; margin-top: 10px">
-                    <strong>
-                        <i class="pi pi-check-circle " style="color: #2e2e2e"></i>
-                    </strong>
-                    <span>  We'll pick you up in 15 minutes</span>
-                </li>
-                <li style="text-decoration: none; font-size: 15px; margin-top: 10px">
-                    <strong>
-                        <i class="pi pi-check-circle " style="color: #2e2e2e"></i>
-                    </strong>
-                    <span>  Appoint a trial lesson with a methodologist</span>
-                </li>
-                <li style="text-decoration: none; font-size: 15px;margin-top: 10px">
-                    <strong>
-                        <i class="pi pi-check-circle " style="color: #2e2e2e"></i>
-                    </strong>
-                    <span>  Show the platform and determine your level</span>
-                </li>
-            </ul>
-            <hr class="mb-3 mx-0 border-top-1 border-none surface-border mt-auto" />
-            <ng-template pTemplate="footer">
-                <p-button (click)="router.navigate(['public/etudiantTrialLesson'])" label="Start now" icon="pi pi-check" styleClass="p-button-warning" [style]="{'margin-left': '.5em'}"></p-button>
-            </ng-template>
-        </p-card>
+
+        </div>
+        <div class="p-col-4">
+            <div [style]="{width: '100%', height: '100%', background:'#263238', color: '#ff725e'}" class="p-grid">
+                <div style="text-align: center" class="p-col-12"><h2>Free trial lesson</h2></div>
+
+
+                <div style="text-align: start" class="p-col-1">
+                    <img style="width: 30px" src="/assets/icons/icon-historical.png">
+                </div>
+                <div style="text-align: start" class="p-col-11">
+                    We'll pick you up in 15 minutes
+
+                </div>
+
+
+                <div style="text-align: start" class="p-col-1">
+                    <img style="width: 30px" src="/assets/icons/icon-running.png">
+                </div>
+                <div style="text-align: start" class="p-col-11">
+                    Appoint a trial lesson with a methodologies
+                </div>
+
+
+                <div style="text-align: start" class="p-col-1">
+                    <img style="width: 30px" src="/assets/icons/home-work-icon.png">
+                </div>
+                <div style="text-align: start" class="p-col-11">
+                    Show the platform and determine your level
+                </div>
+
+                <div class="p-col-2"></div>
+                <div class="p-col-8">
+                    <button pButton pRipple (click)="router.navigate(['public/etudiantTrialLesson'])"
+                            label="Start now" icon="pi pi-check"
+                            class="Startnow"></button>
+                </div>
+                <div class="p-col-2"></div>
+
+            </div>
+
+
+            <!--        <p-card header="Free trial lesson" [style]="{width: '100%',  color:'#2e2e2e'}"-->
+            <!--                styleClass="p-card-shadow">-->
+            <!--            <hr class="my-3 mx-0 border-top-1 border-none surface-border"/>-->
+            <!--            <ul class="list-none p-0 m-0 flex-grow-1" style="list-style-type: none;margin: 0;padding: 0;">-->
+            <!--                <li style="text-decoration: none; font-size: 15px; margin-top: 10px">-->
+            <!--                    <strong>-->
+            <!--                        <i class="pi pi-check-circle " style="color: #2e2e2e"></i>-->
+            <!--                    </strong>-->
+            <!--                    <span>  Take a trial lesson</span>-->
+            <!--                </li>-->
+            <!--                <li style="text-decoration: none; font-size: 15px; margin-top: 10px">-->
+            <!--                    <strong>-->
+            <!--                        <i class="pi pi-check-circle " style="color: #2e2e2e"></i>-->
+            <!--                    </strong>-->
+            <!--                    <span>  We'll pick you up in 15 minutes</span>-->
+            <!--                </li>-->
+            <!--                <li style="text-decoration: none; font-size: 15px; margin-top: 10px">-->
+            <!--                    <strong>-->
+            <!--                        <i class="pi pi-check-circle " style="color: #2e2e2e"></i>-->
+            <!--                    </strong>-->
+            <!--                    <span>  Appoint a trial lesson with a methodologies</span>-->
+            <!--                </li>-->
+            <!--                <li style="text-decoration: none; font-size: 15px;margin-top: 10px">-->
+            <!--                    <strong>-->
+            <!--                        <i class="pi pi-check-circle " style="color: #2e2e2e"></i>-->
+            <!--                    </strong>-->
+            <!--                    <span>  Show the platform and determine your level</span>-->
+            <!--                </li>-->
+            <!--            </ul>-->
+            <!--            <hr class="mb-3 mx-0 border-top-1 border-none surface-border mt-auto"/>-->
+            <!--            <ng-template pTemplate="footer">-->
+            <!--                <p-button  label="Start now" icon="pi pi-check"-->
+            <!--                          styleClass="p-button-warning" [style]="{'margin-left': '.5em'}"></p-button>-->
+            <!--            </ng-template>-->
+            <!--        </p-card>-->
+        </div>
+        <div class="p-col-2"></div>
+
     </div>
 </div>
-
-
-
-
 
 
 <!--

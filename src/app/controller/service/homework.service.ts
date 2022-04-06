@@ -13,6 +13,7 @@ import {LearnService} from './learn.service';
 
 import {HomeWorkEtudiantServiceService} from './home-work-etudiant-service.service';
 import {ParcoursService} from './parcours.service';
+import {GroupeEtudiant} from "../model/groupe-etudiant.model";
 
 @Injectable({
     providedIn: 'root'
@@ -28,6 +29,8 @@ export class HomeworkService {
     private _reponses: Array<HomeWorkReponse>;
     private _section: Section;
     private _homeWorkList: Array<HomeWork>;
+    private _groupStudent: GroupeEtudiant = new GroupeEtudiant();
+
 
 
     constructor(private http: HttpClient,
@@ -36,6 +39,14 @@ export class HomeworkService {
     ) {
     }
 
+
+    get groupStudent(): GroupeEtudiant {
+        return this._groupStudent;
+    }
+
+    set groupStudent(value: GroupeEtudiant) {
+        this._groupStudent = value;
+    }
 
     get homeWorkSelected(): HomeWork {
         return this._homeWorkSelected;

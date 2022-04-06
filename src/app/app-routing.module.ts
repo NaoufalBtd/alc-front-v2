@@ -178,6 +178,9 @@ import {HomeStudentComponent} from './view/etudiant/home-student/home-student.co
             {
                 path: 'etudiant', component: EtudiantComponent,
                 children: [
+                    {path: 'etudiantTrialLesson', component: FreetriallessonComponent},
+                    {path: 'etudianthomepage', component: HomePageEtudiantComponent},
+
                     {path: 'dashboard', component: HomeStudentComponent},
                     {path: 'faq-student', component: FaqStudentListComponent},
                     {path: 'news-student', component: NewsEtudiantListComponent},

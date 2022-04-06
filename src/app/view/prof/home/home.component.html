@@ -43,12 +43,12 @@
     </div>
 
     <div class="p-col-3 student">
-        <p-card [style]="{width: '100%', background: '#f34b63', color: 'white'}" header="Students"
+        <p-card [style]="{width: '100%', background: '#f34b63', color: 'white'}" header="Groups"
                 styleClass="p-card-shadow lessons">
             <i class="pi pi-users" style="font-size: 2rem; float: right; margin: -40px 0 0 0;"></i>
 
-            <h1 class="LessonNumber">{{studentList.length}}</h1>
-            <div class="LessonNumberInMonth">+1 this month</div>
+            <h1 class="LessonNumber">{{groupList?.length}}</h1>
+            <div class="LessonNumberInMonth">({{studentList?.length}} total students)</div>
             <div style="height: 13px">
             </div>
         </p-card>
@@ -79,42 +79,51 @@
                     Nearest Lesson <img style="    width: 20px; margin: 4px 0 -3px 0;"
                                         src="/assets/icons/icon-fire.png" alt="">
                 </p>
-                <div style=" padding: 5px " class="p-field">
-                    <div class="p-grid lessonContainer">
-                        <div style="text-align: start" class="p-col-3">
-                            <img style="width: 100%!important;background: white;"
-                                 alt="Card"
-                                 src="../../../../assets/images/imgHome2.png">
-                        </div>
-                        <div class="p-col-6 courseName">
-                            <p class="lessonName">{{nextLesson?.subject}}</p>
-                            <p class="lessonDate">
-                                <i class="pi pi-clock"></i> {{nextLesson?.startTime | date: 'EEEE, d MMMM yyyy'}}
-                                (
-                                {{getHours(nextLesson?.startTime)}}:{{getMinute(nextLesson?.startTime)}}  -
-                                {{getHours(nextLesson?.endTime)}}:{{getMinute(nextLesson?.endTime)}})
-                            </p>
-                            <p class="lessonDate">
-                                <i class="pi pi-users"></i>
-                                {{nextLesson?.groupeEtudiant?.libelle}}</p>
-                        </div>
-                        <div style="padding: 6% 5px;"  class="p-col-3">
-                            <button *ngIf="!showStartCourseNow"
-                                    pButton pRipple type="button"
-                                    (click)="viewLesson()"
-                                    [label]="getRestOfTime"
-                                    class="joinButton"></button>
+
+                <p-tabView>
+                    <p-tabPanel *ngFor="let item of nearestLesson | keyvalue" [header]="item?.key?.libelle">
+
+                        <div style=" padding: 5px " class="p-field">
+                            <div class="p-grid lessonContainer">
+                                <div style="text-align: start" class="p-col-3">
+                                    <img style="width: 100%!important;background: white;"
+                                         alt="Card"
+                                         src="../../../../assets/images/imgHome2.png">
+                                </div>
+                                <div class="p-col-6 courseName">
+                                    <p class="lessonName">{{item?.value?.subject}}</p>
+                                    <p class="lessonDate">
+                                        <i class="pi pi-clock"></i> {{item?.value?.startTime | date: 'EEEE, d MMMM yyyy'}}
+                                        (
+                                        {{getHours(item?.value?.startTime)}}:{{getMinute(item?.value?.startTime)}}  -
+                                        {{getHours(item?.value?.endTime)}}:{{getMinute(item?.value?.endTime)}})
+                                    </p>
+                                    <p class="lessonDate">
+                                        <i class="pi pi-users"></i>
+                                        {{item?.value?.groupeEtudiant?.libelle}}</p>
+                                </div>
+                                <div style="padding: 6% 5px;" class="p-col-3">
+                                    <button *ngIf="!showStartCourseNow.get(item?.key)"
+                                            pButton pRipple type="button"
+                                            (click)="viewLesson(item?.value)"
+                                            [label]="getRestOfTime.get(item.key)"
+                                            class="joinButton"></button>
 
 
-                            <button id="startLessonButton" *ngIf="showStartCourseNow"
-                                    pButton pRipple type="button"
-                                    (click)="startSession()"
-                                    label="Start Lesson"
-                                    class="joinButton"></button>
+                                    <button id="startLessonButton" *ngIf="showStartCourseNow.get(item?.key)"
+                                            pButton pRipple type="button"
+                                            (click)="startSession(item?.value)"
+                                            label="Start Lesson"
+                                            class="joinButton"></button>
 
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
+                    </p-tabPanel>
+
+                </p-tabView>
+
+
             </ng-template>
 
             <ul style=" background-color: white ">

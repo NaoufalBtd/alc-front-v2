@@ -1,10 +1,10 @@
 <div class="p-grid">
     <div class="p-col-4">
         <h6>Students</h6>
-        <p-dropdown [options]="participants.get(loginService.prof.id)" [(ngModel)]="selectedStudent"
+        <p-dropdown [options]="studentList" [(ngModel)]="selectedStudent"
                     (ngModelChange)="getResult()"
                     [style]="{'width': '100%'}"
-                    optionLabel="nom" [filter]="true" filterBy="nom" [showClear]="true"
+                    optionLabel="prenom" [filter]="true" filterBy="prenom" [showClear]="true"
                     placeholder="Select a student">
         </p-dropdown>
     </div>

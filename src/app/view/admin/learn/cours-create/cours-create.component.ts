@@ -62,6 +62,7 @@ export class CoursCreateComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.findAllParcours();
     }
 
     public hideCreateDialog() {
@@ -94,14 +95,19 @@ export class CoursCreateComponent implements OnInit {
                 this.selectedcours.image = this.urlfind(this.selectedcours.image);
             }
             this.service.SaveCours().subscribe(data => {
-                // @ts-ignore
                 this.itemscours.push({...data});
-                // tslint:disable-next-line:no-shadowed-variable
-                this.service.afficheCours().subscribe(data => this.itemscours = data);
                 this.messageService.add({
                     severity: 'success',
                     summary: 'Successful',
-                    detail: 'Cours Created',
+                    detail: 'Course Created',
+                    life: 3000
+                });
+            }, error => {
+                console.log(error);
+                this.messageService.add({
+                    severity: 'error',
+                    summary: 'error',
+                    detail: error.error.message,
                     life: 3000
                 });
             });

@@ -91,7 +91,6 @@ export class ParcoursCreateComponent implements OnInit {
             }
         });
         this.createDialog = false;
-      //  this.selecteddparcours = null;
     }
 
     findAllCentre() {

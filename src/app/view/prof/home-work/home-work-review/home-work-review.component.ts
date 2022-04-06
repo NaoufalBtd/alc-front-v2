@@ -12,6 +12,10 @@ import {ReponseEtudiantHomeWork} from '../../../../controller/model/reponse-etud
 import {HomeWorkReponse} from '../../../../controller/model/home-work-reponse.model';
 import {HomeWorkQST} from '../../../../controller/model/home-work-qst.model';
 import {MessageService} from 'primeng/api';
+import {TypeHomeWorkEnum} from '../../../../enum/type-question.enum';
+import {GroupeEtudiant} from "../../../../controller/model/groupe-etudiant.model";
+import {WebSocketService} from "../../../../controller/service/web-socket.service";
+import {GroupeEtudiantService} from "../../../../controller/service/groupe-etudiant-service";
 
 @Component({
     selector: 'app-home-work-review',
@@ -20,6 +24,7 @@ import {MessageService} from 'primeng/api';
 })
 export class HomeWorkReviewComponent implements OnInit {
     selectedStudent: Etudiant = new Etudiant();
+    studentList: Array<Etudiant> = new Array<Etudiant>();
     question: HomeWorkQST = new HomeWorkQST();
     homeWorkEtudiantList: Array<HomeWOrkEtudiant> = new Array<HomeWOrkEtudiant>();
     homeWorkEtudiantSelected: HomeWOrkEtudiant = new HomeWOrkEtudiant();
@@ -31,9 +36,16 @@ export class HomeWorkReviewComponent implements OnInit {
                 private parcoursService: ParcoursService,
                 private learnService: LearnService,
                 private messageService: MessageService,
+                private groupeEtudiantService: GroupeEtudiantService,
                 public loginService: LoginService,
+                private webSocketService: WebSocketService,
                 private homeWorkEtudiantService: HomeWorkEtudiantServiceService) {
     }
+
+    get groupStudent(): GroupeEtudiant {
+        return this.homeWorkService.groupStudent;
+    }
+
 
     get selectedcours(): Cours {
         return this.parcoursService.selectedcours;
@@ -52,19 +64,46 @@ export class HomeWorkReviewComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.homeWorkService.findhomeworkbyCoursId(this.selectedcours).subscribe(homeWork => {
-            console.log(homeWork);
-            this.homeWorkSelected = homeWork.filter(h => h.libelle === 'WRITE IT UP')[0];
-            if (this.homeWorkSelected.id !== undefined && this.homeWorkSelected.id !== null && this.homeWorkSelected.id !== 0) {
-                this.homeWorkService.findHomeWorkEtudiantByHomeWorkId(this.homeWorkSelected).subscribe(homeWorkEtudiantData => {
-                    console.log(homeWorkEtudiantData);
-                    this.homeWorkEtudiantList = homeWorkEtudiantData;
-                });
-                this.homeWorkEtudiantService.findQuestions(this.homeWorkSelected).subscribe(data2 => {
-                    this.question = data2[0];
-                });
+        if (this.webSocketService.isInSession) {
+            this.studentList = this.participants.get(this.loginService.prof.id);
+            for (let i = 0; i < this.studentList.length; i++) {
+                if (this.studentList[i].id === this.loginService.prof.id) {
+                    this.studentList.splice(i, 1);
+                }
             }
+        } else {
+            this.groupeEtudiantService.findAllGroupeEtudiantDetail(this.groupStudent.id).subscribe(
+                data => {
+                    for (let i = 0; i < data.length; i++) {
+                        this.studentList.push({...data[i].etudiant});
+                    }
+
+                }
+            );
+        }
+        let course: Cours = new Cours();
+        this.parcoursService.findCousByParcoursIdOrderByNumeroOrder(this.selectedcours.parcours.id).subscribe(data => {
+
+            for (let i = 0; i < data.length; i++) {
+                if (this.selectedcours.id === data[i].id) {
+                    course = data[i - 1];
+                }
+            }
+            this.homeWorkService.findhomeworkbyCoursId(course).subscribe(homeWork => {
+                console.log(homeWork);
+                this.homeWorkSelected = homeWork.filter(h => h.libelle === TypeHomeWorkEnum.WRITE_IT_UP)[0];
+                if (this.homeWorkSelected.id !== undefined && this.homeWorkSelected.id !== null && this.homeWorkSelected.id !== 0) {
+                    this.homeWorkService.findHomeWorkEtudiantByHomeWorkId(this.homeWorkSelected).subscribe(homeWorkEtudiantData => {
+                        console.log(homeWorkEtudiantData);
+                        this.homeWorkEtudiantList = homeWorkEtudiantData;
+                    });
+                    this.homeWorkEtudiantService.findQuestions(this.homeWorkSelected).subscribe(data2 => {
+                        this.question = data2[0];
+                    });
+                }
+            });
         });
+
     }
 
 

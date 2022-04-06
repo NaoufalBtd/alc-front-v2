@@ -23,8 +23,7 @@ import {Etudiant} from '../../../../controller/model/etudiant.model';
 import {SessionCoursService} from '../../../../controller/service/session-cours.service';
 import {AppComponent} from '../../../../app.component';
 import {HomeworkService} from '../../../../controller/service/homework.service';
-import {HomeWorkEtudiantServiceService} from '../../../../controller/service/home-work-etudiant-service.service';
-import {HomeWork} from '../../../../controller/model/home-work.model';
+
 import {MenuService} from '../../../shared/slide-bar/app.menu.service';
 import {SimulateSectionService} from '../../../../controller/service/simulate-section.service';
 import {SessionCours} from '../../../../controller/model/session-cours.model';

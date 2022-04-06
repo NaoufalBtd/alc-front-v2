@@ -187,7 +187,6 @@ import {NewsEtudiantListComponent} from './view/etudiant/news-etudiant/news-etud
 import {NewsEtudiantViewComponent} from './view/etudiant/news-etudiant/news-etudiant-view/news-etudiant-view.component';
 import {NewsAdminEditComponent} from './view/admin/news-admin/news-admin-edit/news-admin-edit.component';
 import {NewsAdminDeleteComponent} from './view/admin/news-admin/news-admin-delete/news-admin-delete.component';
-// import {PaiementListComponent} from './view/admin/allSalary/allSalary-list/allSalary-list.component';
 import {ScheduleAdminComponent} from './view/admin/schedule-admin/schedule-admin.component';
 import {ScheduleStudentComponent} from './view/etudiant/schedule-student/schedule-student.component';
 import {QuizUpdateComponent} from './view/admin/quiz/quiz-update/quiz-update.component';
@@ -230,6 +229,7 @@ import {
     ScheduleAllModule,
     WeekService
 } from '@syncfusion/ej2-angular-schedule';
+
 import {
     AgendaService,
     DayService,

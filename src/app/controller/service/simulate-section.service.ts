@@ -691,6 +691,9 @@ export class SimulateSectionService {
         return this.http.get<Array<Section>>(this.profUrl + 'section/cours/id/' + cours.id).subscribe(
             data => {
                 this.itemssection2 = data;
+                if (cours.numeroOrder === 0) {
+                    this.itemssection2.splice(1, 1);
+                }
                 this.selectedsection = data[0];
                 this.quizService.findQuizBySectionId(this.selectedsection).subscribe(data12 => {
                     this.quizExist = true;
@@ -724,7 +727,11 @@ export class SimulateSectionService {
                 console.log(this.selectedsection);
                 for (let _i = 0; _i < data.length; _i++) {
                     if (data[_i].categorieSection.superCategorieSection.libelle === 'Obligatory') {
-                        this.sectionStandard.push({...data[_i]});
+                        if (data[_i].categorieSection.numeroOrder === 2 && cours.numeroOrder === 0) {
+
+                        } else {
+                            this.sectionStandard.push({...data[_i]});
+                        }
                     } else if (data[_i].categorieSection.superCategorieSection.libelle === 'Additional') {
                         this.sectionAdditional.push({...data[_i]});
                     }

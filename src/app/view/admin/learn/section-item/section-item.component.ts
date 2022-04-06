@@ -57,6 +57,7 @@ export class SectionItemComponent implements OnInit {
     }
 
     save() {
+        console.log(this.sctionItem);
         this.sectionItemService.createSectionItems().subscribe(data => {
             if (data === 1) {
                 this.messageService.add({
@@ -120,6 +121,7 @@ export class SectionItemComponent implements OnInit {
             const found = this.imageUrl.match(/d\/([A-Za-z0-9\-\_]+)/);
             const srcImg = 'https://drive.google.com/uc?export=view&id=' + found[1];
             this.sctionItem.imageUrl = srcImg;
+            console.log(this.sctionItem.imageUrl);
         }
     }
 

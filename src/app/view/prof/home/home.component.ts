@@ -20,6 +20,8 @@ import {Router} from '@angular/router';
 import {MenuService} from '../../shared/slide-bar/app.menu.service';
 import {SimulateSectionService} from '../../../controller/service/simulate-section.service';
 import {Section} from '../../../controller/model/section.model';
+import {GroupeEtudiant} from "../../../controller/model/groupe-etudiant.model";
+import {HomeworkService} from "../../../controller/service/homework.service";
 
 @Component({
     selector: 'app-home',
@@ -27,17 +29,18 @@ import {Section} from '../../../controller/model/section.model';
     styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-    getRestOfTime: string;
-    getRestOfDay: number;
-    getRestOfHour: number;
-    getRestOfMinutes: number;
-    getRestOfSecond: number;
-    showStartCourseNow: boolean;
+    getRestOfTime: Map<GroupeEtudiant, string> = new Map<GroupeEtudiant, string>();
+    getRestOfDay: Map<GroupeEtudiant, number> = new Map<GroupeEtudiant, number>();
+    getRestOfHour: Map<GroupeEtudiant, number> = new Map<GroupeEtudiant, number>();
+    getRestOfMinutes: Map<GroupeEtudiant, number> = new Map<GroupeEtudiant, number>();
+    getRestOfSecond: Map<GroupeEtudiant, number> = new Map<GroupeEtudiant, number>();
+    showStartCourseNow: Map<GroupeEtudiant, boolean> = new Map<GroupeEtudiant, boolean>();
 
     constructor(public serviceUser: LoginService, private scheduleService: ScheduleService,
                 private groupeEtudiantService: GroupeEtudiantService,
                 private webSocketService: WebSocketService,
                 private router: Router,
+                private homeworkService: HomeworkService,
                 private simulateSectionService: SimulateSectionService,
                 private parcoursService: ParcoursService,
                 private menuService: MenuService,
@@ -45,18 +48,23 @@ export class HomeComponent implements OnInit {
     ) {
     }
 
+    set groupStudent(value: GroupeEtudiant) {
+        this.homeworkService.groupStudent = value;
+    }
+
     get prof(): Prof {
         return this.serviceUser.prof;
 
     }
 
+    nearestLesson: Map<GroupeEtudiant, ScheduleProf> = new Map<GroupeEtudiant, ScheduleProf>();
     allLesson: Array<ScheduleProf> = new Array<ScheduleProf>();
     lessonFinished: Array<SessionCours> = new Array<SessionCours>();
-    nextLesson: ScheduleProf = new ScheduleProf();
     actuallyDate: Date = new Date();
     numberOfHours = 0;
     numberOfFinishedOfHours = 0;
     studentList: Array<Etudiant> = new Array<Etudiant>();
+    groupList: Array<GroupeEtudiant> = new Array<GroupeEtudiant>();
     getProgressValueForHours = 0;
     daysOptions = [
         {name: 'Sunday', value: 0},
@@ -70,9 +78,7 @@ export class HomeComponent implements OnInit {
 
     ngOnInit(): void {
         this.findByProf();
-        setInterval(() => {
-            this.updateRestOfTime();
-        }, 1000);
+
     }
 
 
@@ -82,7 +88,7 @@ export class HomeComponent implements OnInit {
                 this.allLesson = data;
                 this.getNumberOfHours(data);
                 console.log(data);
-                this.findFirstLesson(data);
+                this.getNumberOfStudents(data);
 
             }, error => {
                 console.log(error);
@@ -90,25 +96,6 @@ export class HomeComponent implements OnInit {
         );
     }
 
-    private findFirstLesson(scheduleProfs1: Array<ScheduleProf>) {
-        this.sessionCourService.findSessionByProfId(this.prof.id).subscribe(
-            data => {
-                console.log('--------------------------- SESSION COURS ______________________');
-                console.log(data);
-                this.nextLesson = scheduleProfs1[0];
-                for (let i = 0; i < scheduleProfs1.length; i++) {
-                    for (const item of data) {
-                        if (scheduleProfs1[i].cours.id === item.cours.id) {
-                            this.nextLesson = scheduleProfs1[i + 1];
-                            this.lessonFinished.push({...item});
-                            this.getNumberOfStudents(this.nextLesson);
-                        }
-                    }
-                }
-                this.getProgressValueForHoursFct(this.lessonFinished);
-            }
-        );
-    }
 
     getProgressValueForLesson(): number {
         return (this.lessonFinished.length / this.allLesson.length) * 100;
@@ -143,17 +130,25 @@ export class HomeComponent implements OnInit {
         return hoursInThisMonth;
     }
 
-    getNumberOfStudents(lesson: ScheduleProf) {
-
-        this.groupeEtudiantService.findAllGroupeEtudiantDetail(lesson.groupeEtudiant.id).subscribe(data => {
-            for (const item of data) {
-                this.studentList.push({...item.etudiant});
+    getNumberOfStudents(scheduleProfs: Array<ScheduleProf>) {
+        this.groupeEtudiantService.findAllByProfId(this.prof.id).subscribe(data => {
+            this.groupList = data;
+            console.log(this.groupList);
+            for (const item1 of data) {
+                this.groupeEtudiantService.findAllGroupeEtudiantDetail(item1.id).subscribe(dataGrpEtd => {
+                    for (const value of dataGrpEtd) {
+                        this.studentList.push({...value.etudiant});
+                        console.log(this.groupList);
+                    }
+                });
             }
+            this.getNearestLessonForEveryGroup(data, scheduleProfs);
+
         });
     }
 
-    getDay(): string {
-        const date = new Date(this.nextLesson.startTime);
+    getDay(nextLesson: ScheduleProf): string {
+        const date = new Date(nextLesson.startTime);
         const day = date.getDay();
         for (const item of this.daysOptions) {
             if (day === item.value) {
@@ -195,23 +190,23 @@ export class HomeComponent implements OnInit {
         this.parcoursService.selectedsection = value;
     }
 
-    startSession() {
+    startSession(nextLesson: ScheduleProf) {
         this.showTpBar = false;
-        console.log(this.nextLesson.groupeEtudiant.id);
+        console.log(nextLesson.groupeEtudiant.id);
         this.webSocketService.sessionHasStarted = true;
         this.webSocketService.isInSession = true;
-        this.findAllGroupeEtudiantDetail(this.nextLesson.groupeEtudiant.id);
-        console.log(this.nextLesson);
-        this.selectedcours = this.nextLesson.cours;
-        this.simulateSectionService.findSectionOneByCoursId(this.nextLesson.cours);
-        this.parcoursService.afficheOneSectionByProf(this.nextLesson.cours).subscribe(
+        this.findAllGroupeEtudiantDetail(nextLesson.groupeEtudiant.id);
+        console.log(nextLesson);
+        this.selectedcours = nextLesson.cours;
+        this.simulateSectionService.findSectionOneByCoursId(nextLesson.cours);
+        this.parcoursService.afficheOneSectionByProf(nextLesson.cours).subscribe(
             dataSection => {
                 this.webSocketService.saveCurrentSection(this.prof.id, dataSection);
             }
         );
         console.log(this.selectedsection);
-        this.webSocketService.openWebSocket(this.prof, this.prof, this.nextLesson.groupeEtudiant, 'PROF');
-        this.sessionCourService._idgroup = this.nextLesson.groupeEtudiant.id;
+        this.webSocketService.openWebSocket(this.prof, this.prof, nextLesson.groupeEtudiant, 'PROF');
+        this.sessionCourService._idgroup = nextLesson.groupeEtudiant.id;
         this.router.navigate(['prof/sections-simulate']);
     }
 
@@ -227,69 +222,113 @@ export class HomeComponent implements OnInit {
     }
 
 
-    isTimeForLesson(): boolean {
-        if (this.getRestOfDay === 0 && this.getRestOfHour === 0 && 0 >= this.getRestOfMinutes && this.getRestOfMinutes >= -30) {
-            this.showStartCourseNow = true;
-            return false;
+    isTimeForLesson(group: GroupeEtudiant) {
+        if (this.getRestOfDay.get(group) === 0 && this.getRestOfHour.get(group) === 0 && 0 >= this.getRestOfMinutes.get(group)
+            && this.getRestOfMinutes.get(group) >= -30) {
+            this.showStartCourseNow.set(group, true);
         } else {
-            this.showStartCourseNow = false;
-            return true;
+            this.showStartCourseNow.set(group, false);
         }
     }
 
-    updateRestOfTime() {
-        const date = new Date(this.nextLesson.startTime);
-        const dateNow = new Date();
-        const milliseconds = date.getTime() - dateNow.getTime();
-        // ----------------------- Days -----------------------------
-        const firstValueOfDay = String((milliseconds / (24 * 60 * 60 * 1000)));
-        const myDay = Number(firstValueOfDay.substring(0, firstValueOfDay.indexOf('.')));
-        const stringRestday = String(0 + firstValueOfDay.toString().substring(firstValueOfDay.indexOf('.')));
-        const numberOfRstDay = Number(stringRestday);
-        // -----------------------Hour-----------------------------
-        const firstValueOfHour = String(numberOfRstDay * (24));
-        const myHour = Number(firstValueOfHour.substring(0, firstValueOfHour.indexOf('.')));
-        const stringRestHour = String(0 + firstValueOfHour.toString().substring(firstValueOfHour.indexOf('.')));
-        const numberOfRstHour = Number(stringRestHour);
-        // -----------------------Minutes-----------------------------
-        const firstValueOfMinute = String(numberOfRstHour * (60));
-        const myMinute = Number(firstValueOfMinute.substring(0, firstValueOfMinute.indexOf('.')));
-        const stringRestMinute = String(0 + firstValueOfMinute.toString().substring(firstValueOfMinute.indexOf('.')));
-        const numberOfRstMinute = Number(stringRestMinute);
-        // -----------------------Seconds-----------------------------
-        const firstValueOfSecond = String(numberOfRstMinute * (60));
-        const mySecond = Number(firstValueOfSecond.substring(0, firstValueOfSecond.indexOf('.')));
-        const stringRestSecond = String(0 + firstValueOfSecond.toString().substring(firstValueOfSecond.indexOf('.')));
-        const numberOfRstSecond = Number(stringRestSecond);
+    updateRestOfTime(nearestLesson: Map<GroupeEtudiant, ScheduleProf>) {
+        this.getRestOfDay.clear();
+        this.getRestOfHour.clear();
+        this.getRestOfMinutes.clear();
+        this.getRestOfSecond.clear();
+        this.getRestOfTime.clear();
+        console.log('_________________________________');
+        console.log(nearestLesson);
+        for (const group of nearestLesson.keys()) {
+            console.log(nearestLesson.get(group).startTime);
 
-        if (milliseconds < 0) {
-            this.getRestOfDay = myDay;
-            this.getRestOfHour = 0 - myHour;
-            this.getRestOfMinutes = 0 - myMinute;
-            this.getRestOfSecond = 0 - mySecond;
-            this.getRestOfTime = (String(myDay) + 'd : -' + String(myHour) + 'h : -' + String(myMinute) + 'm : -' + String(mySecond) + 's');
-        } else {
-            this.getRestOfDay = myDay;
-            this.getRestOfHour = myHour;
-            this.getRestOfMinutes = myMinute;
-            this.getRestOfSecond = mySecond;
-            this.getRestOfTime = (String(myDay) + 'd : ' + String(myHour) + 'h : ' + String(myMinute) + 'm : ' + String(mySecond) + 's');
+            const date = new Date(nearestLesson.get(group).startTime);
+            const dateNow = new Date();
+            const milliseconds = date.getTime() - dateNow.getTime();
+            // ----------------------- Days -----------------------------
+            const firstValueOfDay = String((milliseconds / (24 * 60 * 60 * 1000)));
+            const myDay = Number(firstValueOfDay.substring(0, firstValueOfDay.indexOf('.')));
+            const stringRestday = String(0 + firstValueOfDay.toString().substring(firstValueOfDay.indexOf('.')));
+            const numberOfRstDay = Number(stringRestday);
+            // -----------------------Hour-----------------------------
+            const firstValueOfHour = String(numberOfRstDay * (24));
+            const myHour = Number(firstValueOfHour.substring(0, firstValueOfHour.indexOf('.')));
+            const stringRestHour = String(0 + firstValueOfHour.toString().substring(firstValueOfHour.indexOf('.')));
+            const numberOfRstHour = Number(stringRestHour);
+            // -----------------------Minutes-----------------------------
+            const firstValueOfMinute = String(numberOfRstHour * (60));
+            const myMinute = Number(firstValueOfMinute.substring(0, firstValueOfMinute.indexOf('.')));
+            const stringRestMinute = String(0 + firstValueOfMinute.toString().substring(firstValueOfMinute.indexOf('.')));
+            const numberOfRstMinute = Number(stringRestMinute);
+            // -----------------------Seconds-----------------------------
+            const firstValueOfSecond = String(numberOfRstMinute * (60));
+            const mySecond = Number(firstValueOfSecond.substring(0, firstValueOfSecond.indexOf('.')));
+            const stringRestSecond = String(0 + firstValueOfSecond.toString().substring(firstValueOfSecond.indexOf('.')));
+            const numberOfRstSecond = Number(stringRestSecond);
+
+            if (milliseconds < 0) {
+                this.getRestOfDay.set(group, myDay);
+                this.getRestOfHour.set(group, 0 - myHour);
+                this.getRestOfMinutes.set(group, 0 - myMinute);
+                this.getRestOfSecond.set(group, 0 - mySecond);
+                this.getRestOfTime.set(group, (String(myDay) + 'd : -' + String(myHour) + 'h : -' + String(myMinute) +
+                    'm : -' + String(mySecond) + 's'));
+            } else {
+                this.getRestOfDay.set(group, myDay);
+                this.getRestOfHour.set(group, myHour);
+                this.getRestOfMinutes.set(group, myMinute);
+                this.getRestOfSecond.set(group, mySecond);
+                this.getRestOfTime.set(group, (String(myDay) + 'd : ' + String(myHour) + 'h : ' + String(myMinute) +
+                    'm : ' + String(mySecond) + 's'));
+            }
+            this.isTimeForLesson(group);
         }
-        this.isTimeForLesson();
     }
 
 
-    viewLesson() {
+    viewLesson(nextLesson: ScheduleProf) {
         this.showTpBar = false;
-        console.log(this.nextLesson.groupeEtudiant.id);
+        console.log(nextLesson.groupeEtudiant.id);
         this.webSocketService.sessionHasStarted = false;
         this.webSocketService.isInSession = false;
-        this.findAllGroupeEtudiantDetail(this.nextLesson.groupeEtudiant.id);
-        console.log(this.nextLesson);
-        this.selectedcours = this.nextLesson.cours;
-        this.simulateSectionService.findSectionOneByCoursId(this.nextLesson.cours);
+        this.findAllGroupeEtudiantDetail(nextLesson.groupeEtudiant.id);
+        console.log(nextLesson);
+        this.selectedcours = nextLesson.cours;
+        this.simulateSectionService.findSectionOneByCoursId(nextLesson.cours);
         console.log(this.selectedsection);
-        this.sessionCourService._idgroup = this.nextLesson.groupeEtudiant.id;
+        this.sessionCourService._idgroup = nextLesson.groupeEtudiant.id;
+        this.groupStudent = nextLesson.groupeEtudiant;
         this.router.navigate(['prof/sections-simulate']);
+    }
+
+    private getNearestLessonForEveryGroup(groupeEtudiantList: Array<GroupeEtudiant>, scheduleProfs: Array<ScheduleProf>) {
+        this.nearestLesson.clear();
+        this.sessionCourService.findSessionByProfId(this.prof.id).subscribe(
+            data => {
+                for (const group of groupeEtudiantList) {
+                    const courseList = scheduleProfs.filter(s => s.groupeEtudiant.id === group.id);
+                    const sessionList = data.filter(s => s.groupeEtudiant.id === group.id);
+                    for (let i = 0; i < courseList.length; i++) {
+                        for (const item of sessionList) {
+                            if (courseList[i].cours.id === item.cours.id) {
+                                this.lessonFinished.push({...item});
+                                console.log(courseList[i + 1]);
+                                this.nearestLesson.set(group, courseList[i + 1]);
+                            }
+                        }
+                    }
+                    if (this.nearestLesson.has(group) === false) {
+                        this.nearestLesson.set(group, courseList[0]);
+
+                    }
+                }
+                console.log(this.nearestLesson);
+                console.log(this.lessonFinished);
+                this.getProgressValueForHoursFct(this.lessonFinished);
+                setInterval(() => {
+                    this.updateRestOfTime(this.nearestLesson);
+                }, 1000);
+            }
+        );
     }
 }
