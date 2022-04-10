@@ -11,6 +11,8 @@ import {environment} from "../../../environments/environment";
 export class VocabularyService {
 
     private adminUrl = environment.adminUrl;
+    private studentUrl = environment.etudiantUrl;
+    private profUrl = environment.profUrl;
 
 
     constructor(private http: HttpClient) {
@@ -159,6 +161,7 @@ export class VocabularyService {
         return this.http.get<Vocabulary>(this.adminUrl + 'vocabulary/ref/' + selected.ref);
     }
 
+
     public edit(): Observable<Vocabulary> {
         return this.http.put<Vocabulary>(this.adminUrl + 'vocabulary/', this.selected);
     }
@@ -180,5 +183,14 @@ export class VocabularyService {
 
     public deleteIndexById(id: number) {
         this.items.splice(this.findIndexById(id), 1);
+    }
+
+
+    public findExample(text: string): Observable<string> {
+        return this.http.get<string>(this.studentUrl + 'TranslateEnAr/text/example/' + text);
+    }
+
+    public findExplanation(text: string): Observable<string> {
+        return this.http.get<string>(this.studentUrl + 'TranslateEnAr/text/explanation/' + text);
     }
 }

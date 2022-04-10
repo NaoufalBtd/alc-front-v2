@@ -7,6 +7,7 @@ import {Observable} from 'rxjs';
 import {environment} from '../../../environments/environment';
 import {MenuItem} from 'primeng/api';
 import {User} from '../model/user.model';
+import {Inscription} from "../model/inscription.model";
 
 @Injectable({
     providedIn: 'root'
@@ -19,8 +20,18 @@ export class LoginService {
     private _model: MenuItem[];
     private _admin: Admin;
     public hasloged: boolean=false;
+    private _inscreption: Inscription = new Inscription();
 
     constructor(private http: HttpClient) {
+    }
+
+
+    get inscreption(): Inscription {
+        return this._inscreption;
+    }
+
+    set inscreption(value: Inscription) {
+        this._inscreption = value;
     }
 
     public getConnectedStudent(): Etudiant {

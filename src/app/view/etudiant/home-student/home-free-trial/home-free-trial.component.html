@@ -1,0 +1,82 @@
+<div class="p-grid">
+    <div class="p-col-7">
+        <div class="cta-block">
+            <div class="cta-wrapper">
+
+                <div class="field field--name-field-title field--type-string field--label-hidden field--item">
+                    Discover
+                    your current English level by taking our free online test
+                </div>
+
+                <div class="field field--name-field-content-link field--type-link field--label-hidden field--item">
+                    <button id="startLessonButton"
+                            pButton pRipple type="button"
+
+                            label="Discover your level"
+                            class="takeTest"></button>
+                </div>
+            </div>
+        </div>
+
+        <div id="explanationText" style="width: 100%">
+            Here you can find activities to practise your reading skills. Reading will help you to improve your
+            understanding of the language and build your vocabulary.
+
+            The self-study lessons in this section are written and organised according to the levels of the Common
+            European Framework of Reference for languages (CEFR). There are different types of texts and interactive
+            exercises that practise the reading skills you need to do well in your studies, to get ahead at work and
+            to
+            communicate in English in your free time.
+
+            Take our free online English test to find out which level to choose. Select your level, from beginner
+            (CEFR
+            level A1) to advanced (CEFR level C1), and improve your reading skills at your own speed, whenever it's
+            convenient for you.
+        </div>
+
+        <h2 style="color: #263238">Choose your level to practise your reading</h2>
+
+
+        <div *ngFor="let level of freeLevelsList" class="views-row">
+            <div class="layout layout--onecol">
+                <div class="layout__region layout__region--content">
+
+                    <div class="field field--name-field-image field--type-image field--label-hidden field--items">
+                        <div class="field--item"><a>
+
+                            <img
+                                    sizes="100vw"
+                                    src="https://learnenglish.britishcouncil.org/sites/podcasts/files/styles/430x261_4/public/RS8037_GettyImages-985388610-hig.jpg?itok=6esjPBYy"
+                                    alt="" typeof="foaf:Image" class="img-responsive">
+
+                        </a>
+                        </div>
+                    </div>
+
+                    <div class="content-wrapper">
+
+                        <div class="field field--name-taxonomy-term-title field--type-ds field--label-hidden field--item">
+                            <h2>
+                                <a style="color: #00aee0;" hreflang="en">{{level?.libelle.substr(4)}}</a>
+                            </h2>
+                        </div>
+
+                        <div style="font-size: medium; line-height: 30px;color: #263238;"
+                             class="field field--name-field-text-teaser field--type-string-long field--label-hidden field--item">
+                            {{level?.description}}
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="p-col-5 imgContainer">
+        <img style="width: 100%" src="/assets/images/flame-1001.png" alt="">
+    </div>
+
+
+</div>

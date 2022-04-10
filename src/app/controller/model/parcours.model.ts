@@ -3,7 +3,7 @@ import {Centre} from './centre.model';
 
 export class Parcours {
     public id: number;
-    public code: string;
+    public code: string; // FREE || PAY
     public libelle: string;
     public description: string;
     public datePublication: Date = new Date();

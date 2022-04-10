@@ -341,6 +341,7 @@ import {PromotionCreateComponent} from './view/admin/promotion/promotion-create/
 import {PromotionListComponent} from './view/admin/promotion/promotion-list/promotion-list.component';
 import { MyPromotionListComponent } from './view/etudiant/my-promotion-list/my-promotion-list.component';
 import {HomeStudentComponent} from './view/etudiant/home-student/home-student.component';
+import { HomeFreeTrialComponent } from './view/etudiant/home-student/home-free-trial/home-free-trial.component';
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -670,7 +671,8 @@ export function createTranslateLoader(http: HttpClient) {
         PromotionListComponent,
         MyPromotionListComponent,
         ContinueInfoComponent,
-        HomeStudentComponent
+        HomeStudentComponent,
+        HomeFreeTrialComponent
 
     ],
     providers: [

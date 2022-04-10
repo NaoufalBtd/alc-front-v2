@@ -16,6 +16,9 @@ import {SimulateSectionService} from '../../../controller/service/simulate-secti
 import {Router} from '@angular/router';
 import {WebSocketService} from '../../../controller/service/web-socket.service';
 import {GroupeEtudiant} from '../../../controller/model/groupe-etudiant.model';
+import {InscriptionService} from '../../../controller/service/inscription.service';
+import {Inscription} from '../../../controller/model/inscription.model';
+import {Parcours} from "../../../controller/model/parcours.model";
 
 @Component({
     selector: 'app-home-student',
@@ -23,6 +26,8 @@ import {GroupeEtudiant} from '../../../controller/model/groupe-etudiant.model';
     styleUrls: ['./home-student.component.scss']
 })
 export class HomeStudentComponent implements OnInit {
+
+
     getRestOfTime: string;
     getRestOfDay: number;
     getRestOfHour: number;
@@ -46,12 +51,21 @@ export class HomeStudentComponent implements OnInit {
         {name: 'Saturday', value: 6},
     ];
 
+    get inscreption(): Inscription {
+        return this.loginService.inscreption;
+    }
+
+    set inscreption(value: Inscription) {
+        this.loginService.inscreption = value;
+    }
+
     constructor(private loginService: LoginService,
                 private scheduleService: ScheduleService,
                 private groupeEtudiantService: GroupeEtudiantService,
                 private sessionCourService: SessionCoursService,
                 private parcoursService: ParcoursService,
                 private menuService: MenuService,
+                private inscriptionService: InscriptionService,
                 private simulateSectionService: SimulateSectionService,
                 private router: Router,
                 private webSocketService: WebSocketService,
@@ -81,6 +95,11 @@ export class HomeStudentComponent implements OnInit {
 
 
     ngOnInit(): void {
+        if (this.inscreption.id === undefined || this.inscreption.id === 0) {
+            this.inscriptionService.findByEtudiantId(this.loginService.getConnectedStudent().id).subscribe(data => {
+                this.inscreption = data;
+            });
+        }
         this.groupeEtudiantService.findGroupeEtudiantDetailByEtudiantId(this.student.id).subscribe(
             data => {
                 console.log(data);

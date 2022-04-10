@@ -1,4 +1,4 @@
-<div class="mycard">
+<div *ngIf="inscreption?.etatInscription?.libelle === 'Validated'" class="mycard">
     <div class="p-grid">
         <div class="p-col-6 Myclasses">
             <h1 class="title">My classes</h1>
@@ -173,5 +173,10 @@
 
         </div>
     </div>
+</div>
+
+
+<div *ngIf="inscreption?.etatInscription?.libelle !== 'Validated'" class="mycard">
+    <app-home-free-trial></app-home-free-trial>
 </div>
 

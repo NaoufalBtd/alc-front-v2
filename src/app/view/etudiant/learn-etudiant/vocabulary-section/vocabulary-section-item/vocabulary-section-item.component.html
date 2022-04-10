@@ -17,11 +17,11 @@
         <p-accordion>
             <div class="p-text-left">
                 <h5>Explanation</h5>
-                <p>{{current.explanation}}</p>
+                <p>{{current?.explanation}}</p>
                 <h5>Example</h5>
                 <p>{{current.example}}</p>
                 <h5>Synonyms</h5>
-                <ul  *ngIf="current.synonyms!==null">
+                <ul *ngIf="current.synonyms!==null">
                     <li style="display: inline;margin-right: 10px" *ngFor="let s of current.synonyms; let i = index">
                         <i class="pi pi-volume-up p-mr-2 p-d-inline"
                            style="font-size: 1.5rem; cursor: pointer;color: #343a40"

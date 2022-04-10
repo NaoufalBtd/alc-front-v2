@@ -3,7 +3,8 @@
     <ng-template pTemplate="content">
         <div class="p-field">
             <label for="centre"> Center </label>
-            <select [(ngModel)]="selecteddparcours.centre" class="btn btn-block btn-outline-light form-control" id="centre"
+            <select [(ngModel)]="selecteddparcours.centre" class="btn btn-block btn-outline-light form-control"
+                    id="centre"
                     name="Parcours" pInputText style="background-color: lavender"
                     type="text">
                 <option *ngFor="let c of itemsscentre" [ngValue]="c" selected="selected"> {{c.libelle}}</option>
@@ -20,11 +21,20 @@
             <input [(ngModel)]="selecteddparcours.description" autofocus id="libelle" pInputText required type="text"/>
             <small *ngIf="submitted && !selecteddparcours.description" class="p-invalid">ref is required.</small>
         </div>
+
+
         <div class="p-field">
             <label for="nombreCours">Number of Courses</label>
             <input [(ngModel)]="selecteddparcours.nombreCours" autofocus id="nombreCours" pInputText required
                    type="text"/>
             <small *ngIf="submitted && !selecteddparcours.nombreCours" class="p-invalid">total is required.</small>
+        </div>
+
+        <div class="p-field">
+            <div class="field-checkbox">
+                <p-checkbox [(ngModel)]="selecteddparcours.code" [binary]="true" id="binary"></p-checkbox>
+                <label style="margin-left: 10px;" for="binary">check to add free trial for this level</label>
+            </div>
         </div>
 
 
