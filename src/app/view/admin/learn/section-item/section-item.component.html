@@ -46,11 +46,16 @@
                         <div class="p-col-5 p-d-flex p-ai-center p-jc-center">
                             <div class="p-fluid" style="width: 100%;text-align: center;margin-left: 20px">
                                 <h5>Image Description</h5>
-                                <span class="p-float-label" style="margin-bottom: 30px">
-                             <input [(ngModel)]="sctionItem.response" id="response-input" pInputText type="text"
-                                    (change)="translate()">
+                                <span class="p-float-label" style="margin-bottom: 30px; display: inline-block">
+                             <input [(ngModel)]="sctionItem.response" id="response-input" pInputText type="text">
                              <label for="response-input">Response</label>
                         </span>
+                                <button style="margin: 0 0 30px 10px;" pButton
+                                        (click)="translate()"
+                                        pRipple type="button" icon="pi pi-angle-double-down"
+                                        class="p-button-rounded p-button-secondary p-button-outlined"></button>
+
+
                                 <span class="p-float-label" style="margin-bottom: 30px">
                             <input [(ngModel)]="sctionItem.translation" id="translation-input" pInputText type="text">
                             <label for="translation-input">Translation</label>
