@@ -372,7 +372,9 @@
         <div class="p-col-6"></div>
         <!-- -->
         <div class="p-col-3">
-            <button *ngIf="showNextButton && question?.id !== questionList[questionList?.length -1]?.id && this.groupeEtudiant?.groupeEtude?.nombreEtudiant === 1 "
+            <button *ngIf="(showNextButton && question?.id !== questionList[questionList?.length -1]?.id &&
+             this.groupeEtudiant?.groupeEtude?.nombreEtudiant === 1) ||
+              ( !webSocketService.isInSession && showNextButton && question?.id !== questionList[questionList?.length -1]?.id)"
                     style="float:right"
                     pButton pRipple
                     type="button" icon="pi pi-arrow-right" iconPos="right"

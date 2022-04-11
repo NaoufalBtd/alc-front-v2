@@ -290,8 +290,6 @@ export class WebSocketService {
                         this.dragAndDropData = data.quizReponse.lib;
                         this.learnService.dropSynch(Number(data.ev));
                     }
-                    console.log('--------------------------------------- DATA---------------------------------');
-                    console.log(data);
                     if (this.reponseQuiz.sender === 'PROF') {
                         this.learnService.saveAnswers(this.question, 'TEACHER_ANSWER');
                     } else if (this.reponseQuiz.sender === 'STUDENT') {
@@ -303,7 +301,6 @@ export class WebSocketService {
                     if (data.message === 'STUDENT_CHOICE_T12') {
                         this.reponseQuiz = data.quizReponse;
                         if (data.quizReponse.sender === 'STUDENT_CHOICE_T12_FOR_GRP') {
-                            console.log('IN ELSE');
                             let reponse: Reponse = new Reponse();
                             reponse.lib = this.reponseQuiz.lib;
                             reponse.etatReponse = this.reponseQuiz.etatReponse;

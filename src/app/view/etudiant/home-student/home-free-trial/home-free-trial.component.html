@@ -1,5 +1,5 @@
 <div class="p-grid">
-    <div class="p-col-7">
+    <div *ngIf="!displayCourses" class="p-col-7">
         <div class="cta-block">
             <div class="cta-wrapper">
 
@@ -44,10 +44,10 @@
                     <div class="field field--name-field-image field--type-image field--label-hidden field--items">
                         <div class="field--item"><a>
 
-                            <img
-                                    sizes="100vw"
-                                    src="https://learnenglish.britishcouncil.org/sites/podcasts/files/styles/430x261_4/public/RS8037_GettyImages-985388610-hig.jpg?itok=6esjPBYy"
-                                    alt="" typeof="foaf:Image" class="img-responsive">
+                            <img style="cursor: pointer"
+                                 sizes="100vw"
+                                 src="https://learnenglish.britishcouncil.org/sites/podcasts/files/styles/430x261_4/public/RS8037_GettyImages-985388610-hig.jpg?itok=6esjPBYy"
+                                 alt="" typeof="foaf:Image" class="img-responsive">
 
                         </a>
                         </div>
@@ -57,7 +57,9 @@
 
                         <div class="field field--name-taxonomy-term-title field--type-ds field--label-hidden field--item">
                             <h2>
-                                <a style="color: #00aee0;" hreflang="en">{{level?.libelle.substr(4)}}</a>
+                                <a style="color: #00aee0;cursor: pointer"
+                                   (click)="showCoursesForLevel(level)"
+                                >{{level?.libelle.substr(4)}}</a>
                             </h2>
                         </div>
 
@@ -71,6 +73,22 @@
                 </div>
             </div>
 
+        </div>
+    </div>
+
+    <div *ngIf="displayCourses" class="p-col-7">
+        <div *ngFor="let cours of freeCourseList" class="p-grid lessonContainer">
+            <div style="text-align: start" class="p-col-2">
+                <img class="imgLesson" src="/assets/icons/icon-livres.png" alt=""></div>
+            <div class="p-col-7 courseName">
+                <p class="lessonName">{{cours?.libelle}}</p>
+            </div>
+            <div class="p-col-3">
+                <button pButton pRipple type="button"
+                        label="Start lesson"
+                        (click)="openSession(cours)"
+                        class="p-button-secondary"></button>
+            </div>
         </div>
     </div>
 

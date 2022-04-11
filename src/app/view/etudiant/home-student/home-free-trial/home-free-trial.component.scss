@@ -178,3 +178,46 @@
   position: relative;
   z-index: 2;
 }
+
+
+//free courses
+
+.p-button-secondary {
+  width: 100%;
+  height: 45px;
+  font-size: small !important;
+  font-weight: bold;
+  background: #f04e23;
+  border: none;
+  color: #263238;
+}
+
+.p-button-secondary:hover {
+  width: 100%;
+  height: 45px;
+  font-size: small !important;
+  font-weight: bold;
+  background: #f04e23 !important;
+  border: none !important;
+  color: #263238;
+}
+.lessonName {
+  font-family: 'Ramaraja', serif;
+  font-size: x-large;
+  font-weight: bolder;
+  letter-spacing: 2px;
+  margin-bottom: -5px;
+  color: #f04e23;
+}
+.imgLesson {
+  width: 75px;
+  margin-top: -15px;
+}
+
+.lessonContainer {
+  background: #263238;
+  border-radius: 8px;
+  height: 70px;
+  margin-bottom: 20px;
+}
+

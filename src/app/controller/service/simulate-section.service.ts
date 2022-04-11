@@ -478,8 +478,10 @@ export class SimulateSectionService {
         };
     }
 
+    i = 0;
 
     public nextSection(id: number, type: string) {
+        this.i++;
         for (let i = 0; i < this.itemssection2.length; i++) {
             if (id === this.itemssection2[i].id) {
                 if (i !== 0 && (type === 'NEXT')) {
@@ -496,35 +498,40 @@ export class SimulateSectionService {
                 this.selectedsection = this.itemssection2[i];
             }
         }
-
+        console.log(this.selectedsection);
         if (this.selectedsection.categorieSection.libelle === 'Vocabulary') {
             this.Vocab(this.selectedsection);
         } else {
             this.showVocabulary = false;
-        }
-
-        this.quizService.findQuizBySectionId(this.selectedsection).subscribe(
-            data => {
-                this.selectedQuiz = data;
-
-                this.quizService.findQuizEtudanitByEtudiantIdAndQuizId(this.loginService.etudiant, this.selectedQuiz).subscribe(
-                    data1 => {
-                        this.quizEtudiantList = data1;
-                        console.log(this.quizEtudiantList);
-                        if (this.quizEtudiantList.id !== 0) {
-                            this.quizView = true;
-                        } else {
-                            this.quizView = false;
-                        }
-                    }, error => {
-                        this.passerQuiz = 'Take Quiz';
-                        console.log(error);
+            this.quizService.findQuizBySectionId(this.selectedsection).subscribe(
+                data => {
+                    this.selectedQuiz = data;
+                    console.log(this.selectedQuiz);
+                    console.log(data);
+                    if (data !== null) {
+                        this.quizService.findQuizEtudanitByEtudiantIdAndQuizId(this.loginService.etudiant, this.selectedQuiz).subscribe(
+                            data1 => {
+                                this.quizEtudiantList = data1;
+                                console.log(this.quizEtudiantList);
+                                if (this.quizEtudiantList.id !== 0) {
+                                    this.quizView = true;
+                                } else {
+                                    this.quizView = false;
+                                }
+                            }, error => {
+                                this.passerQuiz = 'Take Quiz';
+                                this.quizView = false;
+                            }
+                        );
+                    } else {
                         this.quizView = false;
                     }
-                );
-            },
-        );
-
+                },
+            );
+        }
+        console.log('------------------------------------------------------');
+        console.log(this.i);
+        console.log('------------------------------------------------------');
     }
 
 

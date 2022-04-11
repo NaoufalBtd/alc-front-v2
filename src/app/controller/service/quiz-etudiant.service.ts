@@ -402,7 +402,7 @@ export class QuizEtudiantService {
   private _reponsesEtudiantView: Array<ReponseEtudiant>;
   private _correctAnswerView: Array<Reponse>;
   private _viewDialogQuiz: boolean;
-  private _selectedQuiz: Quiz;
+  private _selectedQuiz: Quiz = new Quiz();
   private _myAnswer: Reponse;
   private _numReponses= 0;
   private _numCorrectAnswers= 0;

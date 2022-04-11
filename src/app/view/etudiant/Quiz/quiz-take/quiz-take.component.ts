@@ -2,29 +2,19 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {QuizEtudiantService} from '../../../../controller/service/quiz-etudiant.service';
 import {LoginService} from '../../../../controller/service/login.service';
 import {Reponse} from '../../../../controller/model/reponse.model';
-import {ReponseEtudiant} from '../../../../controller/model/reponse-etudiant.model';
 import {Etudiant} from '../../../../controller/model/etudiant.model';
 import {Quiz} from '../../../../controller/model/quiz.model';
 import {Question} from '../../../../controller/model/question.model';
-import {QuizEtudiant} from '../../../../controller/model/quiz-etudiant.model';
-import {VocabularyService} from '../../../../controller/service/vocabulary.service';
 import {ConfirmationService, MenuItem, MessageService, TreeNode} from 'primeng/api';
 import {Router} from '@angular/router';
 import {DictionaryService} from '../../../../controller/service/dictionary.service';
 import {DomSanitizer} from '@angular/platform-browser';
-import {ParcoursService} from '../../../../controller/service/parcours.service';
-import {HttpClient} from '@angular/common/http';
-import {Dictionary} from '../../../../controller/model/dictionary.model';
-import {EtudiantCours} from '../../../../controller/model/etudiant-cours.model';
-import {Section} from '../../../../controller/model/section.model';
 import {ReponseEtudiantService} from '../../../../controller/service/reponse-etudiant.service';
 import {WebSocketService} from '../../../../controller/service/web-socket.service';
 import {QuizReponse} from '../../../../controller/model/quiz-reponse';
 import {LearnService} from '../../../../controller/service/learn.service';
-import {Role} from '../../../../enum/role.enum';
 import {ChatMessageDto} from '../../../../controller/model/chatMessageDto';
 import {Prof} from '../../../../controller/model/prof.model';
-import {AppComponent} from '../../../../app.component';
 import {GroupeEtudiant} from '../../../../controller/model/groupe-etudiant.model';
 
 @Component({
@@ -43,7 +33,7 @@ export class QuizTakeComponent implements OnInit, OnDestroy {
                 private dictionnaryService: DictionaryService,
                 private sanitizer: DomSanitizer,
                 private confirmationService: ConfirmationService,
-                private webSocketService: WebSocketService) {
+                public webSocketService: WebSocketService) {
     }
 
     get questionOptions(): ({ label: string; value: string } | { label: string; value: string })[] {
@@ -389,27 +379,38 @@ export class QuizTakeComponent implements OnInit, OnDestroy {
 
     saveAnswers(question: Question) {
         let reponse: Reponse;
-        if (question.typeDeQuestion.ref === 't12') {
-            this.dernierSelected = new Reponse();
-            document.getElementById('showCheckButtonForT12').style.visibility = 'hidden';
-            reponse = this.learnService.checkT12Answer(question);
+        if (!this.webSocketService.isInSession) {
+            if (question.typeDeQuestion.ref === 't12') {
+                this.dernierSelected = new Reponse();
+                document.getElementById('showCheckButtonForT12').style.visibility = 'hidden';
+                reponse = this.learnService.checkT12Answer(question);
+            } else {
+                reponse = this.learnService.saveAnswers(question, 'STUDENT_ANSWER');
+            }
         } else {
-            reponse = this.learnService.saveAnswers(question, 'STUDENT_ANSWER');
+            if (question.typeDeQuestion.ref === 't12') {
+                this.dernierSelected = new Reponse();
+                document.getElementById('showCheckButtonForT12').style.visibility = 'hidden';
+                reponse = this.learnService.checkT12Answer(question);
+            } else {
+                reponse = this.learnService.saveAnswers(question, 'STUDENT_ANSWER');
+            }
+            this.reponseQuiz.lib = reponse.lib;
+            this.reponseQuiz.etatReponse = reponse.etatReponse;
+            this.reponseQuiz.id = reponse.id;
+            this.reponseQuiz.question = reponse.question;
+            this.reponseQuiz.numero = reponse.numero;
+            this.reponseQuiz.type = 'QUIZ';
+            this.reponseQuiz.sender = 'STUDENT';
+            this.reponseQuiz.student = this.login.getConnectedStudent();
+            this.reponseQuiz.etatReponse = reponse.etatReponse;
+            const chatMessageDto: ChatMessageDto = new ChatMessageDto(this.login.getConnectedStudent().toString(), '', true);
+            chatMessageDto.quizReponse = this.reponseQuiz;
+            chatMessageDto.prof = this.prof;
+            chatMessageDto.type = 'QUIZ';
+            this.webSocketService.sendMessage(chatMessageDto, 'STUDENT');
         }
-        this.reponseQuiz.lib = reponse.lib;
-        this.reponseQuiz.etatReponse = reponse.etatReponse;
-        this.reponseQuiz.id = reponse.id;
-        this.reponseQuiz.question = reponse.question;
-        this.reponseQuiz.numero = reponse.numero;
-        this.reponseQuiz.type = 'QUIZ';
-        this.reponseQuiz.sender = 'STUDENT';
-        this.reponseQuiz.student = this.login.getConnectedStudent();
-        this.reponseQuiz.etatReponse = reponse.etatReponse;
-        const chatMessageDto: ChatMessageDto = new ChatMessageDto(this.login.getConnectedStudent().toString(), '', true);
-        chatMessageDto.quizReponse = this.reponseQuiz;
-        chatMessageDto.prof = this.prof;
-        chatMessageDto.type = 'QUIZ';
-        this.webSocketService.sendMessage(chatMessageDto, 'STUDENT');
+
     }
 
     showAnswers(question: Question) {
@@ -420,18 +421,20 @@ export class QuizTakeComponent implements OnInit, OnDestroy {
         } else {
             reponse = this.learnService.showAnswers(question);
         }
-        this.reponseQuiz.lib = reponse.lib;
-        this.reponseQuiz.id = reponse.id;
-        this.reponseQuiz.question = reponse.question;
-        this.reponseQuiz.numero = reponse.numero;
-        this.reponseQuiz.type = 'QUIZ';
-        this.reponseQuiz.sender = 'STUDENT_DONT_KNOW';
-        this.reponseQuiz.student = this.login.getConnectedStudent();
-        this.reponseQuiz.etatReponse = reponse.etatReponse;
-        const chatMessageDto: ChatMessageDto = new ChatMessageDto(this.login.getConnectedStudent().toString(), '', true);
-        chatMessageDto.quizReponse = this.reponseQuiz;
-        chatMessageDto.type = 'QUIZ';
-        this.webSocketService.sendMessage(chatMessageDto, 'STUDENT');
+        if (this.webSocketService.isInSession) {
+            this.reponseQuiz.lib = reponse.lib;
+            this.reponseQuiz.id = reponse.id;
+            this.reponseQuiz.question = reponse.question;
+            this.reponseQuiz.numero = reponse.numero;
+            this.reponseQuiz.type = 'QUIZ';
+            this.reponseQuiz.sender = 'STUDENT_DONT_KNOW';
+            this.reponseQuiz.student = this.login.getConnectedStudent();
+            this.reponseQuiz.etatReponse = reponse.etatReponse;
+            const chatMessageDto: ChatMessageDto = new ChatMessageDto(this.login.getConnectedStudent().toString(), '', true);
+            chatMessageDto.quizReponse = this.reponseQuiz;
+            chatMessageDto.type = 'QUIZ';
+            this.webSocketService.sendMessage(chatMessageDto, 'STUDENT');
+        }
     }
 
     nextQuestionFct() {
@@ -452,12 +455,14 @@ export class QuizTakeComponent implements OnInit, OnDestroy {
                 reponseQuiz.question = this.questionList[i - 1];
             }
         }
-        reponseQuiz.type = 'FOLLOW-QUIZ';
-        reponseQuiz.student = this.login.getConnectedStudent();
-        const chatMessageDto: ChatMessageDto = new ChatMessageDto(this.login.getConnectedStudent().toString(), ' ', false);
-        chatMessageDto.quizReponse = reponseQuiz;
-        chatMessageDto.type = 'FOLLOW-QUIZ';
-        this.webSocketService.sendMessage(chatMessageDto, 'PROF');
+        if (this.webSocketService.isInSession) {
+            reponseQuiz.type = 'FOLLOW-QUIZ';
+            reponseQuiz.student = this.login.getConnectedStudent();
+            const chatMessageDto: ChatMessageDto = new ChatMessageDto(this.login.getConnectedStudent().toString(), ' ', false);
+            chatMessageDto.quizReponse = reponseQuiz;
+            chatMessageDto.type = 'FOLLOW-QUIZ';
+            this.webSocketService.sendMessage(chatMessageDto, 'PROF');
+        }
     }
 
     finishQuiz() {
@@ -479,13 +484,19 @@ export class QuizTakeComponent implements OnInit, OnDestroy {
                 'STUDENT_CHOICE_T12', true);
             chatMessageDto.quizReponse = this.reponseQuiz;
             chatMessageDto.type = 'QUIZ';
-            this.webSocketService.sendMessage(chatMessageDto, 'STUDENT');
+            if (this.webSocketService.isInSession) {
+                this.webSocketService.sendMessage(chatMessageDto, 'STUDENT');
+            } else {
+                this.learnService.onClickT12(reponse);
+            }
         } else {
             const chatMessageDto: ChatMessageDto = new ChatMessageDto(reponse.numero.toString(),
                 'STUDENT_CHOICE_T12', true);
             chatMessageDto.type = 'QUIZ';
             chatMessageDto.prof = this.prof;
-            this.webSocketService.sendMessage(chatMessageDto, 'STUDENT');
+            if (this.webSocketService.isInSession) {
+                this.webSocketService.sendMessage(chatMessageDto, 'STUDENT');
+            }
             this.learnService.onClickT12(reponse);
         }
 
@@ -558,7 +569,11 @@ export class QuizTakeComponent implements OnInit, OnDestroy {
         chatMessage.quizReponse.question = this.question;
         chatMessage.quizReponse.type = 'T13';
         chatMessage.quizReponse.lib = data;
-        this.webSocketService.sendMessage(chatMessage, 'STUDENT');
+        if (this.webSocketService.isInSession) {
+            this.webSocketService.sendMessage(chatMessage, 'STUDENT');
+        } else {
+            this.learnService.dropSynch(ev.target.id);
+        }
     }
 
     getCorrectAnswerForT13(key: number): string {

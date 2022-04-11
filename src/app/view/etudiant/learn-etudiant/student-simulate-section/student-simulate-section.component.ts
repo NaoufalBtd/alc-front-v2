@@ -722,60 +722,11 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
 
 
     PreviousSection() {
-
-
-        this.service.affichelistSection().subscribe(
-            data => {
-                this.itemssection2 = data;
-                // tslint:disable-next-line:no-shadowed-variable
-            });
-        this.selectedsection.numeroOrder = this.selectedsection.numeroOrder - 1;
-        // tslint:disable-next-line:triple-equals
-        if (this.selectedsection.numeroOrder != 0) {
-            this.service.afficheOneSection2().subscribe(
-                data => {
-                    this.selectedsection = data;
-                    if (data.categorieSection.libelle === 'Vocabulary') {
-                        this.Vocab(data);
-                    } else {
-                        this.showVocabulary = false;
-                    }
-                    this.quizService.findQuizBySectionId(this.selectedsection).subscribe(
-                        data => {
-                            this.selectedQuiz = data;
-                            this.quizService.findQuizEtudanitByEtudiantIdAndQuizId(this.loginService.etudiant, this.selectedQuiz).subscribe(
-                                data => {
-                                    this.quizEtudiantList = data;
-                                    console.log(this.quizEtudiantList);
-                                    this.quizService.findAllQuestions(this.selectedQuiz.ref).subscribe(
-                                        dataQuestions => {
-                                            if (data === null) {
-                                                this.showTakeQuiz = true;
-                                                this.showViewQuiz = false;
-                                            } else {
-                                                if (data.questionCurrent === dataQuestions.length) {
-                                                    // this.passerQuiz = 'View Quiz';
-                                                    // this.quizView = true;
-                                                    this.showTakeQuiz = false;
-                                                    this.showViewQuiz = true;
-                                                } else {
-                                                    this.showTakeQuiz = true;
-                                                    this.showViewQuiz = false;
-                                                }
-                                            }
-                                        }
-                                    );
-                                }, error => {
-                                    this.passerQuiz = 'Take Quiz';
-                                    this.quizView = false;
-                                }
-                            );
-                        },
-                    );
-                });
-        } else {
-            this.selectedsection.numeroOrder = this.itemssection2.length + 1;
-            this.NextSection();
+        for (let i = 0; i < this.itemssection2.length; i++) {
+            if (this.selectedsection.id === this.itemssection2[i].id) {
+                this.simulateSectionService.nextSection(this.itemssection2[i - 1].id, 'PREVIOUS');
+                break;
+            }
         }
     }
 
@@ -820,63 +771,14 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
     }
 
     public NextSection() {
-        this.service.affichelistSection().subscribe(
-            data => {
-                this.itemssection2 = data;
-                // tslint:disable-next-line:no-shadowed-variable
-            });
-        this.selectedsection.numeroOrder = this.selectedsection.numeroOrder + 1;
-        // tslint:disable-next-line:triple-equals
-        if (this.selectedsection.numeroOrder <= this.itemssection2.length) {
-            this.service.afficheOneSection2().subscribe(
-                async data => {
-                    this.selectedsection = data;
-                    if (data.categorieSection.libelle === 'Vocabulary') {
-                        this.Vocab(data);
-                    } else {
-                        this.showVocabulary = false;
-                    }
-
-                    this.quizService.findQuizBySectionId(this.selectedsection).subscribe(
-                        data => {
-                            this.selectedQuiz = data;
-
-                            this.quizService.findQuizEtudanitByEtudiantIdAndQuizId(this.loginService.etudiant, this.selectedQuiz).subscribe(
-                                data => {
-                                    this.quizEtudiantList = data;
-                                    console.log(this.quizEtudiantList);
-                                    this.quizService.findAllQuestions(this.selectedQuiz.ref).subscribe(
-                                        dataQuestions => {
-                                            if (data === null) {
-                                                this.showTakeQuiz = true;
-                                                this.showViewQuiz = false;
-                                            } else {
-                                                if (data.questionCurrent === dataQuestions.length) {
-                                                    // this.passerQuiz = 'View Quiz';
-                                                    // this.quizView = true;
-                                                    this.showTakeQuiz = false;
-                                                    this.showViewQuiz = true;
-                                                } else {
-                                                    this.showTakeQuiz = true;
-                                                    this.showViewQuiz = false;
-                                                }
-                                            }
-                                        }
-                                    );
-                                }, error => {
-                                    this.passerQuiz = 'Take Quiz';
-                                    this.quizView = false;
-                                }
-                            );
-                        },
-                    );
-                });
-        } else {
-            this.selectedsection.numeroOrder = 0;
-            this.PreviousSection();
+        console.log(this.itemssection2);
+        console.log(this.selectedsection);
+        for (let i = 0; i < this.itemssection2.length; i++) {
+            if (this.selectedsection.id === this.itemssection2[i].id) {
+                this.simulateSectionService.nextSection(this.itemssection2[i + 1].id, 'NEXT');
+                break;
+            }
         }
-
-
     }
 
 
