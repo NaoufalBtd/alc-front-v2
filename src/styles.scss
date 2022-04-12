@@ -214,8 +214,89 @@ $gutter: 1rem; //for primeflex grid system
 div.p-grid {
   display: flex;
   /* flex-wrap: wrap; */
-  margin-right: 0!important;
-  margin-left: 0!important;
-  margin-top: 0!important;
+  margin-right: 0 !important;
+  margin-left: 0 !important;
+  margin-top: 0 !important;
 }
 
+/******************* Black => Orange **********************/
+
+
+.ngFlexyBlackButton {
+  width: 100%;
+  background: #263238;
+  color: #ff725e;
+  border: none;
+  height: 40px;
+
+
+}
+
+.ngFlexyBlackButton:hover {
+  width: 100%;
+  background: #ff725e;
+  border: 1px solid #263238;
+  color: #263238;
+  font-weight: bold;
+  height: 40px;
+}
+
+.ngFlexyBlackButton:active {
+  width: 100%;
+  background: #263238;
+  border: 2px solid #263238;
+  color: #ff725e;
+  font-weight: bold;
+  height: 40px;
+}
+
+.ngFlexyBlackButton:focus {
+  outline: 0 none;
+  outline-offset: 0;
+  box-shadow: 0 0 0 0.2rem #ff9e90;
+}
+
+/*************************************************/
+
+
+
+
+
+/******************* Orange => Black **********************/
+
+
+.ngFlexyOrangeButton {
+  width: 100%;
+  background: #ff725e!important;
+  color: #263238!important;
+  border: none!important;
+  height: 40px!important;
+
+
+}
+
+.ngFlexyOrangeButton:hover {
+  width: 100%;
+  background: #263238!important;
+  border: 1px solid #ff725e!important;
+  color:  #ff725e!important;
+  font-weight: bold!important;
+  height: 40px!important;
+}
+
+.ngFlexyOrangeButton:active {
+  width: 100%;
+  background:  #ff725e!important;
+  border: 2px solid  #ff725e!important;
+  color: #263238!important;
+  font-weight: bold!important;
+  height: 40px!important;
+}
+
+.ngFlexyOrangeButton:focus {
+  outline: 0 none!important;
+  outline-offset: 0!important;
+  box-shadow: 0 0 0 0.2rem #ff9e90!important;
+}
+
+/*************************************************/

@@ -129,7 +129,7 @@
                                 </div>
                             </div>
                             <div *ngIf="showVocabulary===true" class="p-col">
-                                <app-vocabulary-section (someEvent)="return($event)"></app-vocabulary-section>
+                                <app-vocabulary-section-prof (someEvent)="return($event)"></app-vocabulary-section-prof>
                             </div>
                         </div>
                     </div>
@@ -149,7 +149,7 @@
                         <div class="p-col-4">
                             <button *ngIf="this.selectedsection.numeroOrder !== 1"
                                     (click)="PreviousSection(selectedsection)"
-                                    class="p-button-warning" icon="pi pi-caret-left" id="previous"
+                                    class="ngFlexyBlackButton" icon="pi pi-caret-left" id="previous"
                                     [label]="previousSection(selectedsection)" pButton pRipple
                                     type="button"></button>
                         </div>
@@ -163,7 +163,7 @@
                                     [style]="{'width': '100%'}"
                                     *ngIf="!showFlowMeButton && (selectedsection?.id === sectionStandard[sectionStandard.length - 1]?.id ||
                                             selectedsection?.categorieSection?.superCategorieSection?.libelle === 'Additional')"
-                                    class="p-button-warning" icon="pi pi-check" label="SUMMARY" pButton pRipple
+                                    class="ngFlexyBlackButton" icon="pi pi-check" label="SUMMARY" pButton pRipple
                                     type="button"></button>
 
                             <button *ngIf="showFlowMeButton" pButton pRipple type="button"
@@ -179,7 +179,7 @@
                         <div class="p-col-4" style="text-align: end">
                             <button *ngIf="selectedsection?.id !== itemssection2[itemssection2.length - 1]?.id"
                                     (click)="NextSection(selectedsection)"
-                                    class="p-button-warning" icon="pi pi-caret-right" id="next"
+                                    class="ngFlexyBlackButton" icon="pi pi-caret-right" id="next"
                                     [label]="nextSection(selectedsection)"
                                     pButton pRipple
                                     iconPos="right"
@@ -294,18 +294,18 @@
                                              [style.border-left]="(section?.id === sectionStandard[0]?.id)? 'none': '2px solid #757f8a'"
                                              class="list-group">
                                             <i *ngIf="sectionIsFinished(section)"
-                                               [style.color]="(section?.categorieSection?.libelle) == (this.selectedsection?.categorieSection?.libelle)? 'orange' :'#757f8a' "
+                                               [style.color]="(section?.categorieSection?.libelle) == (this.selectedsection?.categorieSection?.libelle)? '#ff725e' :'#757f8a' "
                                                id="check-icon" class="pi pi-check-circle"></i>
 
 
                                             <i *ngIf="!sectionIsFinished(section)"
-                                               [style.background]="(section?.categorieSection?.libelle) == (this.selectedsection?.categorieSection?.libelle)? 'orange' :'#757f8a' "
-                                               [style.color]="(section?.categorieSection?.libelle) == (this.selectedsection?.categorieSection?.libelle)? 'orange' :'#757f8a' "
+                                               [style.background]="(section?.categorieSection?.libelle) == (this.selectedsection?.categorieSection?.libelle)? '#ff725e' :'#757f8a' "
+                                               [style.color]="(section?.categorieSection?.libelle) == (this.selectedsection?.categorieSection?.libelle)? '#ff725e' :'#757f8a' "
                                                id="check-icon" class="pi pi-times-circle"></i>
 
 
                                             <a (click)="allerVerSection(section)"
-                                               [style.color]="(section?.categorieSection?.libelle) == (this.selectedsection?.categorieSection?.libelle)? 'orange' :'#757f8a' "
+                                               [style.color]="(section?.categorieSection?.libelle) == (this.selectedsection?.categorieSection?.libelle)? '#ff725e' :'#757f8a' "
                                                class="list-item">
                                                 {{section?.categorieSection?.libelle}}
                                             </a>
@@ -321,18 +321,18 @@
                                              [style.border-left]="(section?.id === sectionAdditional[0]?.id)? 'none': '2px solid #757f8a'"
                                              class="list-group">
                                             <i *ngIf="!sectionIsFinished(section)" id="check-icon"
-                                               [style.color]="(section?.categorieSection?.libelle) == (this.selectedsection?.categorieSection?.libelle)? 'orange' :'#757f8a' "
-                                               [style.background]="(section?.categorieSection?.libelle) == (this.selectedsection?.categorieSection?.libelle)? 'orange' :'#757f8a' "
+                                               [style.color]="(section?.categorieSection?.libelle) == (this.selectedsection?.categorieSection?.libelle)? '#ff725e' :'#757f8a' "
+                                               [style.background]="(section?.categorieSection?.libelle) == (this.selectedsection?.categorieSection?.libelle)? '#ff725e' :'#757f8a' "
                                                class="pi pi-times-circle"></i>
 
 
                                             <i *ngIf="sectionIsFinished(section)" id="check-icon"
-                                               [style.color]="(section?.categorieSection?.libelle) == (this.selectedsection?.categorieSection?.libelle)? 'orange' :'#757f8a' "
+                                               [style.color]="(section?.categorieSection?.libelle) == (this.selectedsection?.categorieSection?.libelle)? '#ff725e' :'#757f8a' "
                                                class="pi pi-check-circle"></i>
 
 
                                             <a (click)="allerVerSection(section)"
-                                               [style.color]="(section?.categorieSection?.libelle) == (this.selectedsection?.categorieSection?.libelle)? 'orange' :'#757f8a' "
+                                               [style.color]="(section?.categorieSection?.libelle) == (this.selectedsection?.categorieSection?.libelle)? '#ff725e' :'#757f8a' "
                                                class="list-item">
                                                 {{section?.categorieSection?.libelle}}
                                             </a>

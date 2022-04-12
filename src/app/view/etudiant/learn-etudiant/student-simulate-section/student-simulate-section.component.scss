@@ -125,7 +125,7 @@ tr.timeline > li:before {
 }
 
 .toopBar {
-  background-color: #ffa500;
+  background-color: #ff725e;
   height: 60px;
   padding: 11px 0;
 }
@@ -159,9 +159,9 @@ tr.timeline > li:before {
 
 .leftButton:hover {
   //background: linear-gradient(90deg, #d53369 0%, #daae51 100%)!important;
-  color: #ffa500 !important;
-  background: #252529 !important;
-  border: 1px solid #252529 !important;
+  color: #ff725e !important;
+  background: #263238 !important;
+  border: 1px solid #263238 !important;
 }
 
 .title {
@@ -173,7 +173,8 @@ tr.timeline > li:before {
 }
 
 .homeWorkIcon {
-  width: 25px;
+  width: 40px;
+  margin: -5px;
 }
 
 .sectionLibelle {
@@ -254,7 +255,7 @@ div.list-group {
 
 
 .LessonSummary {
-  color: #dd933c;
+  color: #ff725e;
   font-weight: bold;
   font-size: large;
 }
@@ -277,7 +278,7 @@ div.keysValue {
 
 .LessonFinished{
   text-align: center;
-  border-bottom: 2px solid #feca2a;
+  border-bottom: 2px solid #ff725e;
   color: #5288ab;
   font-weight: bold;
 }

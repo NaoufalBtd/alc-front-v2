@@ -143,35 +143,39 @@
 
                     <div class="p-col" style="position: relative;background: white;"
                          *ngIf="!this.webSocketService.isInSession">
-                        <button (click)="PreviousSection()"
-                                *ngIf="this.selectedsection.numeroOrder !== 1"
-                                class="p-button-warning" icon="pi pi-caret-left" id="previous"
-                                [label]="previousSection(selectedsection)" pButton pRipple
 
-                                type="button"></button>
+                        <div class="p-grid">
+                            <div class="p-col-4">
+                                <button (click)="PreviousSection()"
+                                        *ngIf="this.selectedsection.numeroOrder !== 1"
+                                        class="ngFlexyOrangeButton" icon="pi pi-caret-left" id="previous"
+                                        [label]="previousSection(selectedsection)" pButton pRipple
 
-
-                        <button style="float: right" (click)="NextSection()"
-                                *ngIf="selectedsection.id !== itemssection2[itemssection2.length - 1].id"
-                                class="p-button-warning" icon="pi pi-caret-right" id="next"
-                                [label]="nextSection(selectedsection)"
-                                pButton pRipple
-                                type="button"></button>
+                                        type="button"></button>
+                            </div>
 
 
-                        <button *ngIf="selectedsection.id === itemssection2[itemssection2.length - 1].id" style="float: right"
-                                (click)="finish()"
-                                class="p-button-warning" icon="pi pi-check" label="Finish" pButton pRipple
-                                type="button"></button>
+                            <div class="p-col-4">
+
+                                <button *ngIf="selectedsection.id === itemssection2[itemssection2.length - 1].id"
+                                        (click)="navigate()"
+                                        class="p-button-warning" icon="pi pi-check" label="Bach to All Course"
+                                        pButton
+                                        pRipple
+                                        type="button"></button>
+                            </div>
 
 
-                        <button *ngIf="this.coursecomplited"
-                                (click)="navigate()"
-                                class="p-button-warning" icon="pi pi-check" label="Bach to All Course"
-                                pButton
-                                pRipple
-                                style=" width: 160px; background-color: orange; position: absolute;right: 15px;"
-                                type="button"></button>
+                            <div class="p-col-4">
+                                <button (click)="NextSection()"
+                                        *ngIf="selectedsection.id !== itemssection2[itemssection2.length - 1].id"
+                                        class="ngFlexyOrangeButton" icon="pi pi-caret-right" id="next"
+                                        [label]="nextSection(selectedsection)"
+                                        pButton pRipple
+                                        type="button"></button>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
 
@@ -267,18 +271,18 @@
                                              [style.border-left]="(section.id === sectionStandard[0]?.id)? 'none': '2px solid #757f8a'"
                                              class="list-group">
                                             <i *ngIf="sectionIsFinished(section)" id="check-icon"
-                                               [style.color]="(section.categorieSection.libelle) == (this.selectedsection.categorieSection.libelle)? 'orange' :'#757f8a' "
+                                               [style.color]="(section.categorieSection.libelle) == (this.selectedsection.categorieSection.libelle)? '#ff725e' :'#757f8a' "
                                                class="pi pi-check-circle"></i>
 
 
                                             <i *ngIf="!sectionIsFinished(section)" id="check-icon"
-                                               [style.color]="(section.categorieSection.libelle) == (this.selectedsection.categorieSection.libelle)? 'orange' :'#757f8a' "
-                                               [style.background]="(section.categorieSection.libelle) == (this.selectedsection.categorieSection.libelle)? 'orange' :'#757f8a' "
+                                               [style.color]="(section.categorieSection.libelle) == (this.selectedsection.categorieSection.libelle)? '#ff725e' :'#757f8a' "
+                                               [style.background]="(section.categorieSection.libelle) == (this.selectedsection.categorieSection.libelle)? '#ff725e' :'#757f8a' "
                                                class="pi pi-times-circle"></i>
 
 
                                             <a (click)="showLessonFct(section)"
-                                               [style.color]="(section.categorieSection.libelle) == (this.selectedsection.categorieSection.libelle)? 'orange' :'#757f8a' "
+                                               [style.color]="(section.categorieSection.libelle) == (this.selectedsection.categorieSection.libelle)? '#ff725e' :'#757f8a' "
                                                class="list-item">
                                                 {{section?.categorieSection?.libelle}}
                                             </a>
@@ -294,18 +298,18 @@
                                              [style.border-left]="(section.id === sectionAdditional[0]?.id)? 'none': '2px solid #757f8a'"
                                              class="list-group">
                                             <i *ngIf="!sectionIsFinished(section)" id="check-icon"
-                                               [style.color]="(section.categorieSection.libelle) == (this.selectedsection.categorieSection.libelle)? 'orange' :'#757f8a' "
-                                               [style.background]="(section.categorieSection.libelle) == (this.selectedsection.categorieSection.libelle)? 'orange' :'#757f8a' "
+                                               [style.color]="(section.categorieSection.libelle) == (this.selectedsection.categorieSection.libelle)? '#ff725e' :'#757f8a' "
+                                               [style.background]="(section.categorieSection.libelle) == (this.selectedsection.categorieSection.libelle)? '#ff725e' :'#757f8a' "
                                                class="pi pi-times-circle"></i>
 
 
                                             <i *ngIf="sectionIsFinished(section)" id="check-icon"
-                                               [style.color]="(section.categorieSection.libelle) == (this.selectedsection.categorieSection.libelle)? 'orange' :'#757f8a' "
+                                               [style.color]="(section.categorieSection.libelle) == (this.selectedsection.categorieSection.libelle)? '#ff725e' :'#757f8a' "
                                                class="pi pi-check-circle"></i>
 
 
                                             <a (click)="showLessonFct(section)"
-                                               [style.color]="(section.categorieSection.libelle) == (this.selectedsection.categorieSection.libelle)? 'orange' :'#757f8a' "
+                                               [style.color]="(section.categorieSection.libelle) == (this.selectedsection.categorieSection.libelle)? '#ff725e' :'#757f8a' "
                                                class="list-item">
                                                 {{section?.categorieSection?.libelle}}
                                             </a>
@@ -330,14 +334,14 @@
                                              [style.border-left]="(homeWork.id === homeWorkList[0]?.id)? 'none': '2px solid #757f8a'"
                                              class="list-group">
                                             <i id="check-icon"
-                                               [style.color]="(homeWork.id) === (this.selectedHomeWork?.id)? 'orange' :'#757f8a' "
-                                               [style.background]="(homeWork.id) === (this.selectedHomeWork?.id)? 'orange' :'#757f8a' "
+                                               [style.color]="(homeWork.id) === (this.selectedHomeWork?.id)? '#ff725e' :'#757f8a' "
+                                               [style.background]="(homeWork.id) === (this.selectedHomeWork?.id)? '#ff725e' :'#757f8a' "
 
                                                class="pi pi-times-circle"></i>
 
 
                                             <a (click)="homeWorkSelectedFct(homeWork)"
-                                               [style.color]="(homeWork.id) === (this.selectedHomeWork?.id)? 'orange' :'#757f8a' "
+                                               [style.color]="(homeWork.id) === (this.selectedHomeWork?.id)? '#ff725e' :'#757f8a' "
                                                class="list-item">
                                                 {{homeWork?.libelle}}
                                             </a>

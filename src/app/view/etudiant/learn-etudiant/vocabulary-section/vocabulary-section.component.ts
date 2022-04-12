@@ -1,11 +1,14 @@
 import {Component, OnInit, Output, ViewChild, EventEmitter} from '@angular/core';
-import {ImageItemComponent} from '../../../admin/learn/section-item-preview/image-item/image-item.component';
 import {SectionItemModel} from '../../../../controller/model/section-item.model';
 import {MessageService} from 'primeng/api';
 import {SectionItemService} from '../../../../controller/service/section-item.service';
-import {Router} from '@angular/router';
 import {VocabularySectionItemComponent} from './vocabulary-section-item/vocabulary-section-item.component';
-import {VocabularyService} from "../../../../controller/service/vocabulary.service";
+import {VocabularyService} from '../../../../controller/service/vocabulary.service';
+import {ChatMessageDto} from '../../../../controller/model/chatMessageDto';
+import {WebSocketService} from '../../../../controller/service/web-socket.service';
+import {LoginService} from '../../../../controller/service/login.service';
+import {GroupeEtudiant} from '../../../../controller/model/groupe-etudiant.model';
+import {Prof} from '../../../../controller/model/prof.model';
 
 @Component({
     selector: 'app-vocabulary-section',
@@ -13,23 +16,110 @@ import {VocabularyService} from "../../../../controller/service/vocabulary.servi
     styleUrls: ['./vocabulary-section.component.scss']
 })
 export class VocabularySectionComponent implements OnInit {
-    @ViewChild(VocabularySectionItemComponent) child: VocabularySectionItemComponent;
 
-    @Output() someEvent = new EventEmitter<string>();
+    @ViewChild(VocabularySectionItemComponent) private child: VocabularySectionItemComponent;
 
-    listItems: SectionItemModel[];
-    currentItem: SectionItemModel;
-    showPrevious: boolean;
-    showNext: boolean;
-    showfinish: boolean;
-    showEnd: boolean;
-    showItems: boolean;
-    currentIndex: number;
-    fliped: boolean;
-    progressBarValue: number;
+    constructor(private messageService: MessageService,
+                private vocabularyService: VocabularyService,
+                private login: LoginService,
+                private webSocketService: WebSocketService,
+                private sectionItemService: SectionItemService) {
+    }
+    get groupeEtudiant(): GroupeEtudiant {
+        return this.webSocketService.groupeEtudiant;
+    }
 
+    get prof(): Prof {
+        return this.webSocketService.prof;
+    }
 
-    constructor(private messageService: MessageService, private vocabularyService: VocabularyService, private sectionItemService: SectionItemService, private router: Router) {
+    get someEvent(): EventEmitter<string> {
+        return this.vocabularyService.someEvent;
+    }
+
+    @Output()
+    set someEvent(value: EventEmitter<string>) {
+        this.vocabularyService.someEvent = value;
+    }
+
+    get listItems(): SectionItemModel[] {
+        return this.vocabularyService.listItems;
+    }
+
+    set listItems(value: SectionItemModel[]) {
+        this.vocabularyService.listItems = value;
+    }
+
+    get currentItem(): SectionItemModel {
+        return this.vocabularyService.currentItem;
+    }
+
+    set currentItem(value: SectionItemModel) {
+        this.vocabularyService.currentItem = value;
+    }
+
+    get showPrevious(): boolean {
+        return this.vocabularyService.showPrevious;
+    }
+
+    set showPrevious(value: boolean) {
+        this.vocabularyService.showPrevious = value;
+    }
+
+    get showNext(): boolean {
+        return this.vocabularyService.showNext;
+    }
+
+    set showNext(value: boolean) {
+        this.vocabularyService.showNext = value;
+    }
+
+    get showfinish(): boolean {
+        return this.vocabularyService.showfinish;
+    }
+
+    set showfinish(value: boolean) {
+        this.vocabularyService.showfinish = value;
+    }
+
+    get showEnd(): boolean {
+        return this.vocabularyService.showEnd;
+    }
+
+    set showEnd(value: boolean) {
+        this.vocabularyService.showEnd = value;
+    }
+
+    get showItems(): boolean {
+        return this.vocabularyService.showItems;
+    }
+
+    set showItems(value: boolean) {
+        this.vocabularyService.showItems = value;
+    }
+
+    get currentIndex(): number {
+        return this.vocabularyService.currentIndex;
+    }
+
+    set currentIndex(value: number) {
+        this.vocabularyService.currentIndex = value;
+    }
+
+    get fliped(): boolean {
+        return this.vocabularyService.fliped;
+    }
+
+    set fliped(value: boolean) {
+        this.vocabularyService.fliped = value;
+    }
+
+    get progressBarValue(): number {
+        return this.vocabularyService.progressBarValue;
+    }
+
+    set progressBarValue(value: number) {
+        this.vocabularyService.progressBarValue = value;
     }
 
     ngOnInit(): void {
@@ -39,72 +129,86 @@ export class VocabularySectionComponent implements OnInit {
         this.calculProgressBarValue(this.currentIndex);
         this.showNext = true;
         this.showPrevious = false;
-
+        this.showfinish = false;
         this.showItems = true;
         this.showEnd = false;
         this.fliped = false;
     }
 
 
-    previousItem() {
-        const index = this.listItems.indexOf(this.currentItem);
-        if (index > 0) {
-            if (index - 1 >= 0) {
-                this.showNext = true;
-                this.currentItem = this.listItems[index - 1];
-                this.child.reloadComponent();
-                this.showPrevious = true;
-                this.showfinish = false;
-            }
-            if (index - 1 === 0) {
-                this.showPrevious = false;
-            }
-        }
-    }
+    // previousItem() {
+    //     const index = this.listItems.indexOf(this.currentItem);
+    //     if (index > 0) {
+    //         if (index - 1 >= 0) {
+    //             this.showNext = true;
+    //             this.currentItem = this.listItems[index - 1];
+    //             this.childStudent.reloadComponent();
+    //             this.showPrevious = true;
+    //             this.showfinish = false;
+    //         }
+    //         if (index - 1 === 0) {
+    //             this.showPrevious = false;
+    //         }
+    //     }
+    // }
 
     nextItem() {
-        const index = this.listItems.indexOf(this.currentItem);
-        if (index < this.listItems.length - 1) {
-            this.child.reloadComponent();
-            this.currentItem = this.listItems[index + 1];
-            this.currentIndex = index + 2;
-            this.calculProgressBarValue(this.currentIndex);
-            this.showNext = true;
-            this.showfinish = false;
-            this.fliped = false;
-            this.child.fliped = false;
-            console.log('Hada howa index' + index + 1);
-
-        }
-        if (index + 1 >= this.listItems.length) {
-            this.showNext = false;
-            this.showfinish = true;
+        console.log(this.webSocketService.isInSession);
+        if (this.webSocketService.isInSession) {
+            const chatMessage: ChatMessageDto = new ChatMessageDto('VOC_NEXT', 'VOC_NEXT', true);
+            chatMessage.prof = this.prof;
+            chatMessage.grpStudent = this.groupeEtudiant;
+            chatMessage.type = 'VOC';
+            this.webSocketService.sendMessage(chatMessage, 'STUDENT');
+        } else {
+            this.vocabularyService.nextItem();
         }
     }
+
+
 
 
     endShow() {
-        this.showItems = false;
-        this.showEnd = true;
-    }
-
-    finish() {
-        this.someEvent.next();
-    }
-
-    flip() {
-        this.fliped = true;
-        this.child.showHidden();
-        const index = this.listItems.indexOf(this.currentItem);
-        if (index + 1 >= this.listItems.length) {
-            this.showNext = false;
-            this.showfinish = true;
+        if (this.webSocketService.isInSession && this.groupeEtudiant?.groupeEtude?.nombreEtudiant === 1) {
+            const chatMessage: ChatMessageDto = new ChatMessageDto('VOC_FINISH', 'VOC_FINISH', true);
+            chatMessage.prof = this.prof;
+            chatMessage.grpStudent = this.groupeEtudiant;
+            chatMessage.type = 'VOC';
+            this.webSocketService.sendMessage(chatMessage, 'STUDENT');
+        } else {
+            this.vocabularyService.endShow();
         }
     }
 
+    finish() {
+        if (this.webSocketService.isInSession && this.groupeEtudiant?.groupeEtude?.nombreEtudiant === 1) {
+            const chatMessage: ChatMessageDto = new ChatMessageDto('VOC_FINISH', 'VOC_FINISH', true);
+            chatMessage.prof = this.prof;
+            chatMessage.grpStudent = this.groupeEtudiant;
+            chatMessage.type = 'VOC';
+            this.webSocketService.sendMessage(chatMessage, 'STUDENT');
+        } else {
+            this.vocabularyService.finish();
+        }
+    }
+
+    flip() {
+        console.log('TEST');
+        console.log(this.webSocketService.isInSession);
+        if (this.webSocketService.isInSession && this.groupeEtudiant?.groupeEtude?.nombreEtudiant === 1) {
+            const chatMessage: ChatMessageDto = new ChatMessageDto('VOC_FLIP', 'VOC_FLIP', true);
+            chatMessage.prof = this.prof;
+            chatMessage.grpStudent = this.groupeEtudiant;
+            chatMessage.type = 'VOC';
+            this.webSocketService.sendMessage(chatMessage, 'STUDENT');
+        } else {
+            this.vocabularyService.flip();
+        }
+    }
+
+
     calculProgressBarValue(index: number) {
-        const length = this.listItems.length;
-        this.progressBarValue = (index * 100) / length;
+        this.vocabularyService.calculProgressBarValue(index);
     }
 
 }

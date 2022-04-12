@@ -1,9 +1,13 @@
-import {Injectable} from '@angular/core';
+import {EventEmitter, Injectable, Output, ViewChild, ViewChildren} from '@angular/core';
 import {Section} from '../model/section.model';
 import {Vocabulary} from '../model/vocabulary.model';
 import {Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
-import {environment} from "../../../environments/environment";
+import {environment} from '../../../environments/environment';
+import {VocabularySectionItemProfComponent} from '../../view/prof/learn-teacher/vocabulary-section-prof/vocabulary-section-item-prof/vocabulary-section-item-prof.component';
+import {SectionItemModel} from '../model/section-item.model';
+import {VocabularySectionItemComponent} from '../../view/etudiant/learn-etudiant/vocabulary-section/vocabulary-section-item/vocabulary-section-item.component';
+import {VocabularySectionItemService} from './vocabulary-section-item.service';
 
 @Injectable({
     providedIn: 'root'
@@ -15,7 +19,111 @@ export class VocabularyService {
     private profUrl = environment.profUrl;
 
 
-    constructor(private http: HttpClient) {
+    @Output() private _someEvent = new EventEmitter<string>();
+
+    private _listItems: SectionItemModel[];
+    private _currentItem: SectionItemModel;
+    private _showPrevious: boolean;
+    private _showNext: boolean;
+    private _showfinish: boolean;
+    private _showEnd: boolean;
+    private _showItems: boolean;
+    private _currentIndex: number;
+    private _fliped: boolean;
+    private _progressBarValue: number;
+
+
+    constructor(private http: HttpClient,
+                private vocabularySectionItemService: VocabularySectionItemService) {
+    }
+
+
+    get someEvent(): EventEmitter<string> {
+        return this._someEvent;
+    }
+
+    set someEvent(value: EventEmitter<string>) {
+        this._someEvent = value;
+    }
+
+    get listItems(): SectionItemModel[] {
+        return this._listItems;
+    }
+
+    set listItems(value: SectionItemModel[]) {
+        this._listItems = value;
+    }
+
+    get currentItem(): SectionItemModel {
+        return this._currentItem;
+    }
+
+    set currentItem(value: SectionItemModel) {
+        this._currentItem = value;
+    }
+
+    get showPrevious(): boolean {
+        return this._showPrevious;
+    }
+
+    set showPrevious(value: boolean) {
+        this._showPrevious = value;
+    }
+
+    get showNext(): boolean {
+        return this._showNext;
+    }
+
+    set showNext(value: boolean) {
+        this._showNext = value;
+    }
+
+    get showfinish(): boolean {
+        return this._showfinish;
+    }
+
+    set showfinish(value: boolean) {
+        this._showfinish = value;
+    }
+
+    get showEnd(): boolean {
+        return this._showEnd;
+    }
+
+    set showEnd(value: boolean) {
+        this._showEnd = value;
+    }
+
+    get showItems(): boolean {
+        return this._showItems;
+    }
+
+    set showItems(value: boolean) {
+        this._showItems = value;
+    }
+
+    get currentIndex(): number {
+        return this._currentIndex;
+    }
+
+    set currentIndex(value: number) {
+        this._currentIndex = value;
+    }
+
+    get fliped(): boolean {
+        return this._fliped;
+    }
+
+    set fliped(value: boolean) {
+        this._fliped = value;
+    }
+
+    get progressBarValue(): number {
+        return this._progressBarValue;
+    }
+
+    set progressBarValue(value: number) {
+        this._progressBarValue = value;
     }
 
     private _sectionSelected: Section;
@@ -192,5 +300,55 @@ export class VocabularyService {
 
     public findExplanation(text: string): Observable<string> {
         return this.http.get<string>(this.studentUrl + 'TranslateEnAr/text/explanation/' + text);
+    }
+
+
+    // Partie de sync
+
+    nextItem() {
+        const index = this.listItems.indexOf(this.currentItem);
+        if (index < this.listItems.length - 1) {
+            this.vocabularySectionItemService.reloadComponent();
+            this.currentItem = this.listItems[index + 1];
+            this.currentIndex = index + 2;
+            this.calculProgressBarValue(this.currentIndex);
+            this.showNext = true;
+            this.showfinish = false;
+            this.fliped = false;
+            this.vocabularySectionItemService.fliped = false;
+            console.log('Hada howa index' + index + 1);
+
+        }
+        if (index + 1 >= this.listItems.length) {
+            this.showNext = false;
+            this.showfinish = true;
+        }
+    }
+
+
+    endShow() {
+        this.showItems = false;
+        this.showEnd = true;
+    }
+
+    finish() {
+        this.someEvent.next();
+    }
+
+    flip() {
+        this.fliped = true;
+        this.vocabularySectionItemService.showHidden();
+        const index = this.listItems.indexOf(this.currentItem);
+        if (index + 1 >= this.listItems.length) {
+            this.showNext = false;
+            this.showfinish = true;
+        }
+    }
+
+
+
+    calculProgressBarValue(index: number) {
+        const length = this.listItems.length;
+        this.progressBarValue = (index * 100) / length;
     }
 }

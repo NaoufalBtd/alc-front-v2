@@ -24,6 +24,7 @@ import {MessageService} from 'primeng/api';
 import {ScheduleProf} from '../model/calendrier-prof.model';
 import {Reponse} from '../model/reponse.model';
 import {Role} from '../../enum/role.enum';
+import {VocabularyService} from './vocabulary.service';
 
 @Injectable({
     providedIn: 'root'
@@ -62,6 +63,7 @@ export class WebSocketService {
                 private parcoursService: ParcoursService,
                 private messageService: MessageService,
                 private router: Router,
+                private vocabularyService: VocabularyService,
                 private groupeEtudiantService: GroupeEtudiantService,
                 private learnService: LearnService
     ) {
@@ -327,8 +329,7 @@ export class WebSocketService {
                     }
 
                 }
-            }
-            else if (data.user === 'FINISH_QUIZ' && data.type === 'FINISH_QUIZ') {
+            } else if (data.user === 'FINISH_QUIZ' && data.type === 'FINISH_QUIZ') {
                 if (data.prof.id === this.prof.id) {
                     this.learnService.finishQuiz();
                 }
@@ -355,6 +356,16 @@ export class WebSocketService {
                         life: 4000,
                         detail: data?.student?.nom + ' ' + data?.student?.prenom + ' is out of the classroom'
                     });
+                }
+            } else if (data.type === 'VOC') {
+                if (this.groupeEtudiantForThisStudent(data.prof) === true) {
+                    if (data?.user === 'VOC_FLIP' && data?.message === 'VOC_FLIP') {
+                        this.vocabularyService.flip();
+                    } else if (data?.user === 'VOC_NEXT' && data?.message === 'VOC_NEXT') {
+                        this.vocabularyService.nextItem();
+                    } else if (data?.user === 'VOC_FINISH' && data?.message === 'VOC_FINISH') {
+                        this.vocabularyService.endShow();
+                    }
                 }
             }
         };
@@ -527,22 +538,14 @@ export class WebSocketService {
     }
 
 
-    private groupeEtudiantForThisStudent(student: Etudiant, grpStudent: GroupeEtudiant) {
-        this.groupeEtudiantService.findAllGroupeEtudiantDetail(grpStudent.id).subscribe(
-            data => {
-                const groupeEtudiantDetails = data;
-                for (let i = 0; i < groupeEtudiantDetails.length; i++) {
-                    if (groupeEtudiantDetails[i].etudiant.id === student.id) {
-                        console.log('========================== true ======================');
-                        return true;
-
-                    }
-                }
-                console.log('========================== false ======================');
-                return false;
+    private groupeEtudiantForThisStudent(prof: Prof): boolean {
+        let studentList = this.participants.get(this.prof.id);
+        for (const student of studentList) {
+            if (student.id === this.loginservice.getConnecteUser().id) {
+                return true;
             }
-        );
-
+        }
+        return false;
     }
 
     notificationMessageSound() {

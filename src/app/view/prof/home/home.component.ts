@@ -237,10 +237,7 @@ export class HomeComponent implements OnInit {
         this.getRestOfMinutes.clear();
         this.getRestOfSecond.clear();
         this.getRestOfTime.clear();
-        console.log('_________________________________');
-        console.log(nearestLesson);
         for (const group of nearestLesson.keys()) {
-            console.log(nearestLesson.get(group).startTime);
 
             const date = new Date(nearestLesson.get(group).startTime);
             const dateNow = new Date();
