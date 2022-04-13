@@ -21,6 +21,8 @@ import {QuizEtudiantService} from '../../../../controller/service/quiz-etudiant.
 import {QuizEtudiant} from '../../../../controller/model/quiz-etudiant.model';
 import {ReponseEtudiant} from '../../../../controller/model/reponse-etudiant.model';
 import {QuizPreviewStudentTeacherComponent} from './quiz-preview-student-teacher/quiz-preview-student-teacher.component';
+import {Role} from '../../../../enum/role.enum';
+import {ChatMessageDto} from '../../../../controller/model/chatMessageDto';
 
 @Component({
     selector: 'app-home-work-review',
@@ -28,13 +30,13 @@ import {QuizPreviewStudentTeacherComponent} from './quiz-preview-student-teacher
     styleUrls: ['./home-work-review.component.scss']
 })
 export class HomeWorkReviewComponent implements OnInit {
+    public ROLE = Role;
     @ViewChild(QuizPreviewStudentTeacherComponent) private child: QuizPreviewStudentTeacherComponent;
     selectedStudent: Etudiant = new Etudiant();
     studentList: Array<Etudiant> = new Array<Etudiant>();
     question: HomeWorkQST = new HomeWorkQST();
     homeWorkEtudiantList: Array<HomeWOrkEtudiant> = new Array<HomeWOrkEtudiant>();
     homeWorkEtudiantSelected: HomeWOrkEtudiant = new HomeWOrkEtudiant();
-    reponse: ReponseEtudiantHomeWork = new ReponseEtudiantHomeWork();
     noteProf: HomeWorkReponse = new HomeWorkReponse();
     showResult: boolean;
     quizEtudiantMap: Map<QuizEtudiant, Array<ReponseEtudiant>> = new Map<QuizEtudiant, Array<ReponseEtudiant>>();
@@ -50,6 +52,16 @@ export class HomeWorkReviewComponent implements OnInit {
                 private webSocketService: WebSocketService,
                 private homeWorkEtudiantService: HomeWorkEtudiantServiceService) {
     }
+
+
+    get reponse(): ReponseEtudiantHomeWork {
+        return this.webSocketService.reponseHomeWorkReviewComponent;
+    }
+
+    set reponse(value: ReponseEtudiantHomeWork) {
+        this.webSocketService.reponseHomeWorkReviewComponent = value;
+    }
+
 
     get groupStudent(): GroupeEtudiant {
         return this.homeWorkService.groupStudent;
@@ -78,12 +90,17 @@ export class HomeWorkReviewComponent implements OnInit {
 
     ngOnInit(): void {
         if (this.webSocketService.isInSession) {
-            this.studentList = this.participants.get(this.loginService.prof.id);
-            for (let i = 0; i < this.studentList.length; i++) {
-                if (this.studentList[i].id === this.loginService.prof.id) {
-                    this.studentList.splice(i, 1);
+            if (this.loginService.getConnecteUser().role === Role.PROF) {
+                this.studentList = this.participants.get(this.loginService.prof.id);
+                for (let i = 0; i < this.studentList.length; i++) {
+                    if (this.studentList[i].id === this.loginService.prof.id) {
+                        this.studentList.splice(i, 1);
+                    }
                 }
+            } else {
+                this.studentList.push({...this.loginService.getConnectedStudent()});
             }
+
         } else {
             this.groupeEtudiantService.findAllGroupeEtudiantDetail(this.groupStudent.id).subscribe(
                 data => {
@@ -109,7 +126,7 @@ export class HomeWorkReviewComponent implements OnInit {
                     this.homeWorkService.findHomeWorkEtudiantByHomeWorkId(this.homeWorkSelected).subscribe(homeWorkEtudiantData => {
                         console.log(homeWorkEtudiantData);
                         this.homeWorkEtudiantList = homeWorkEtudiantData;
-                        if (this.groupeEtudiant.groupeEtude.nombreEtudiant === 1) {
+                        if (this.studentList.length === 1) {
                             this.selectedStudent = this.studentList[0];
                             console.log(this.studentList[0]);
                             this.getResult(this.selectedStudent, this.homeWorkEtudiantList);
@@ -121,7 +138,6 @@ export class HomeWorkReviewComponent implements OnInit {
                 }
             });
         });
-
     }
 
 
@@ -145,13 +161,11 @@ export class HomeWorkReviewComponent implements OnInit {
                     });
                 }
             }
-            console.log(this.quizEtudiantMap);
         });
 
     }
 
     saveNotes() {
-        console.log(this.reponse);
         this.homeWorkEtudiantSelected.reponseEtudiantHomeWork = new Array<ReponseEtudiantHomeWork>();
         this.homeWorkEtudiantSelected.reponseEtudiantHomeWork.push({...this.reponse});
         this.homeWorkEtudiantSelected.resultat = this.reponse.note + '/10';
@@ -164,6 +178,12 @@ export class HomeWorkReviewComponent implements OnInit {
                 life: 6000
             });
         });
-        console.log(this.reponse);
+    }
+
+    syncWithStudent() {
+        const chatMessage: ChatMessageDto = new ChatMessageDto('HOME_WORK_REVIEW_NOTES', this.reponse.profNote, false);
+        chatMessage.prof = this.loginService.getConnectedProf();
+        chatMessage.type = 'HOME_WORK_REVIEW_NOTES';
+        this.webSocketService.sendMessage(chatMessage, 'PROF');
     }
 }

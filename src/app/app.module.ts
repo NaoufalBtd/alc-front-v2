@@ -342,6 +342,7 @@ import {PromotionListComponent} from './view/admin/promotion/promotion-list/prom
 import { MyPromotionListComponent } from './view/etudiant/my-promotion-list/my-promotion-list.component';
 import {HomeStudentComponent} from './view/etudiant/home-student/home-student.component';
 import { HomeFreeTrialComponent } from './view/etudiant/home-student/home-free-trial/home-free-trial.component';
+import { QuizPreviewStudentTeacherComponent } from './view/prof/home-work/home-work-review/quiz-preview-student-teacher/quiz-preview-student-teacher.component';
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -672,7 +673,8 @@ export function createTranslateLoader(http: HttpClient) {
         MyPromotionListComponent,
         ContinueInfoComponent,
         HomeStudentComponent,
-        HomeFreeTrialComponent
+        HomeFreeTrialComponent,
+        QuizPreviewStudentTeacherComponent
 
     ],
     providers: [

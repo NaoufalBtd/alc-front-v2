@@ -486,7 +486,6 @@ export class QuizTakeComponent implements OnInit, OnDestroy {
                 chatMessageDto.quizReponse = this.reponseQuiz;
                 chatMessageDto.type = 'QUIZ';
                 this.webSocketService.sendMessage(chatMessageDto, 'STUDENT');
-
             } else {
                 const chatMessageDto: ChatMessageDto = new ChatMessageDto(reponse.numero.toString(),
                     'STUDENT_CHOICE_T12', true);

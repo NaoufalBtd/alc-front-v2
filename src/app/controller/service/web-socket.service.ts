@@ -25,6 +25,7 @@ import {ScheduleProf} from '../model/calendrier-prof.model';
 import {Reponse} from '../model/reponse.model';
 import {Role} from '../../enum/role.enum';
 import {VocabularyService} from './vocabulary.service';
+import {ReponseEtudiantHomeWork} from '../model/reponse-etudiant-home-work.model';
 
 @Injectable({
     providedIn: 'root'
@@ -53,6 +54,7 @@ export class WebSocketService {
     private _tabViewActiveIndex = 0;
     private numerOft12Qst = -1;
     private _activeIndexForTabView: number;
+    private _reponseHomeWorkReviewComponent: ReponseEtudiantHomeWork = new ReponseEtudiantHomeWork(); // used in sync between teacher and student in HomeWorkReviewComponent
 
 
     constructor(private serviceetudiant: EtudiantService,
@@ -69,6 +71,14 @@ export class WebSocketService {
     ) {
     }
 
+
+    get reponseHomeWorkReviewComponent(): ReponseEtudiantHomeWork {
+        return this._reponseHomeWorkReviewComponent;
+    }
+
+    set reponseHomeWorkReviewComponent(value: ReponseEtudiantHomeWork) {
+        this._reponseHomeWorkReviewComponent = value;
+    }
 
     get activeIndexForTabView(): number {
         return this._activeIndexForTabView;
@@ -366,6 +376,10 @@ export class WebSocketService {
                     } else if (data?.user === 'VOC_FINISH' && data?.message === 'VOC_FINISH') {
                         this.vocabularyService.endShow();
                     }
+                }
+            } else if (data.type === 'HOME_WORK_REVIEW_NOTES') {
+                if (this.groupeEtudiantForThisStudent(data.prof) === true) {
+                    this.reponseHomeWorkReviewComponent.profNote = data.message;
                 }
             }
         };

@@ -26,21 +26,23 @@
         <div *ngIf="showResult" class="p-grid">
             <div class="p-col-6">
                 <h6>notes</h6>
-                <textarea required [style]="{'width':'100%', 'padding': '10px'}" rows="2"
+                <textarea [disabled]="loginService.getConnecteUser().role === ROLE.STUDENT" required
+                          [style]="{'width':'100%', 'padding': '10px'}" rows="2"
                           [(ngModel)]="reponse.profNote"
                           pInputTextarea
+                          (input)="syncWithStudent()"
                           autoResize="autoResize"></textarea>
             </div>
             <div class="p-col-3">
                 <h6>Rating</h6>
-                <p-rating [(ngModel)]="reponse.note" stars="10" [cancel]="false"></p-rating>
+                <p-rating [readonly]="loginService.getConnecteUser().role === ROLE.STUDENT" [(ngModel)]="reponse.note"
+                          stars="10" [cancel]="false"></p-rating>
             </div>
 
             <div class="p-col-3 subDiv">
-                <button pButton pRipple type="button"
+                <button *ngIf="loginService.getConnecteUser().role === ROLE.PROF" pButton pRipple type="button"
                         (click)="saveNotes()"
                         label="Send" class="p-button-outlined p-button-success"></button>
-
             </div>
         </div>
     </p-tabPanel>
