@@ -2,43 +2,55 @@
     <div class="p-col-4">
         <h6>Students</h6>
         <p-dropdown [options]="studentList" [(ngModel)]="selectedStudent"
-                    (ngModelChange)="getResult()"
+                    (ngModelChange)="getResult(selectedStudent, homeWorkEtudiantList)"
                     [style]="{'width': '100%'}"
                     optionLabel="prenom" [filter]="true" filterBy="prenom" [showClear]="true"
                     placeholder="Select a student">
         </p-dropdown>
     </div>
 </div>
-<div *ngIf="showResult" class="p-grid">
-    <img [src]="homeWorkSelected?.urlImage" width="100%" alt="image not found !">
-    <div class="p-col-12">
-        <h5>Question</h5>
-        <p>{{question?.libelle}}</p>
-        <h5>Student answer</h5>
-        <p>{{reponse?.answer}}</p>
-    </div>
 
-</div>
+<p-tabView>
+    <p-tabPanel [header]="homeWorkSelected?.libelle">
+        <div *ngIf="showResult" class="p-grid">
+            <img [src]="homeWorkSelected?.urlImage" width="100%" alt="image not found !">
+            <div class="p-col-12">
+                <h5>Question</h5>
+                <p>{{question?.libelle}}</p>
+                <h5>Student answer</h5>
+                <p>{{reponse?.answer}}</p>
+            </div>
 
-<div *ngIf="showResult" class="p-grid">
-    <div class="p-col-6">
-        <h6>notes</h6>
-        <textarea required [style]="{'width':'100%', 'padding': '10px'}" rows="2"
-                  [(ngModel)]="reponse.profNote"
-                  pInputTextarea
-                  autoResize="autoResize"></textarea>
-    </div>
-    <div class="p-col-3">
-        <h6>Rating</h6>
-        <p-rating [(ngModel)]="reponse.note" stars="10" [cancel]="false"></p-rating>
-    </div>
+        </div>
 
-    <div class="p-col-3 subDiv">
-        <button pButton pRipple type="button"
-                (click)="saveNotes()"
-                label="Send" class="p-button-outlined p-button-success"></button>
+        <div *ngIf="showResult" class="p-grid">
+            <div class="p-col-6">
+                <h6>notes</h6>
+                <textarea required [style]="{'width':'100%', 'padding': '10px'}" rows="2"
+                          [(ngModel)]="reponse.profNote"
+                          pInputTextarea
+                          autoResize="autoResize"></textarea>
+            </div>
+            <div class="p-col-3">
+                <h6>Rating</h6>
+                <p-rating [(ngModel)]="reponse.note" stars="10" [cancel]="false"></p-rating>
+            </div>
 
-    </div>
-</div>
+            <div class="p-col-3 subDiv">
+                <button pButton pRipple type="button"
+                        (click)="saveNotes()"
+                        label="Send" class="p-button-outlined p-button-success"></button>
+
+            </div>
+        </div>
+    </p-tabPanel>
+
+
+    <p-tabPanel *ngFor="let item of quizEtudiantMap | keyvalue" [header]="item?.key?.quiz?.section?.libelle">
+        <app-quiz-preview-student-teacher [quizStudent]="item.key"></app-quiz-preview-student-teacher>
+    </p-tabPanel>
+</p-tabView>
+
+
 
 

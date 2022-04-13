@@ -471,35 +471,32 @@ export class QuizTakeComponent implements OnInit, OnDestroy {
 
 
     onClick(reponse: Reponse) {
-        if (this.groupeEtudiant.groupeEtude.nombreEtudiant === 1) {
-            this.reponseQuiz.lib = reponse.lib;
-            this.reponseQuiz.id = reponse.id;
-            this.reponseQuiz.question = reponse.question;
-            this.reponseQuiz.numero = reponse.numero;
-            this.reponseQuiz.type = 'QUIZ';
-            this.reponseQuiz.sender = 'STUDENT_CHOICE_T12';
-            this.reponseQuiz.student = this.login.getConnectedStudent();
-            this.reponseQuiz.etatReponse = reponse.etatReponse;
-            const chatMessageDto: ChatMessageDto = new ChatMessageDto(this.login.getConnectedStudent().id.toString(),
-                'STUDENT_CHOICE_T12', true);
-            chatMessageDto.quizReponse = this.reponseQuiz;
-            chatMessageDto.type = 'QUIZ';
-            if (this.webSocketService.isInSession) {
+        if (this.webSocketService.isInSession) {
+            if (this.groupeEtudiant.groupeEtude.nombreEtudiant === 1) {
+                this.reponseQuiz.lib = reponse.lib;
+                this.reponseQuiz.id = reponse.id;
+                this.reponseQuiz.question = reponse.question;
+                this.reponseQuiz.numero = reponse.numero;
+                this.reponseQuiz.type = 'QUIZ';
+                this.reponseQuiz.sender = 'STUDENT_CHOICE_T12';
+                this.reponseQuiz.student = this.login.getConnectedStudent();
+                this.reponseQuiz.etatReponse = reponse.etatReponse;
+                const chatMessageDto: ChatMessageDto = new ChatMessageDto(this.login.getConnectedStudent().id.toString(),
+                    'STUDENT_CHOICE_T12', true);
+                chatMessageDto.quizReponse = this.reponseQuiz;
+                chatMessageDto.type = 'QUIZ';
                 this.webSocketService.sendMessage(chatMessageDto, 'STUDENT');
+
             } else {
-                this.learnService.onClickT12(reponse);
+                const chatMessageDto: ChatMessageDto = new ChatMessageDto(reponse.numero.toString(),
+                    'STUDENT_CHOICE_T12', true);
+                chatMessageDto.type = 'QUIZ';
+                chatMessageDto.prof = this.prof;
+                this.webSocketService.sendMessage(chatMessageDto, 'STUDENT');
             }
         } else {
-            const chatMessageDto: ChatMessageDto = new ChatMessageDto(reponse.numero.toString(),
-                'STUDENT_CHOICE_T12', true);
-            chatMessageDto.type = 'QUIZ';
-            chatMessageDto.prof = this.prof;
-            if (this.webSocketService.isInSession) {
-                this.webSocketService.sendMessage(chatMessageDto, 'STUDENT');
-            }
             this.learnService.onClickT12(reponse);
         }
-
     }
 
     getCorrectAnswerForT12(): string {

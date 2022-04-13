@@ -639,7 +639,7 @@ p-chips.ng-dirty.ng-invalid > .p-chips > .p-inputtext {
 .p-dropdown:not(.p-disabled).p-focus {
     outline: 0 none;
     outline-offset: 0;
-    box-shadow: 0 0 0 0.2rem #c84230;
+    box-shadow: 0 0 0 0.2rem #feaf61;
     border-color: #ff725e;
 }
 
@@ -3933,6 +3933,8 @@ p-togglebutton.ng-dirty.ng-invalid > .p-togglebutton.p-button {
 
 .p-tabview .p-tabview-nav {
     background: #ffffff;
+    border-bottom: 2px solid #f4f4f4;
+    padding-bottom: 10px;
 }
 
 .p-tabview .p-tabview-nav li {

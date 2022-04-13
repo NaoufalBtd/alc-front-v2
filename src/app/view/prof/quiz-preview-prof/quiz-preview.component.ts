@@ -45,7 +45,7 @@ export class QuizPreviewProfComponent implements OnInit, OnDestroy {
                 private sanitizer: DomSanitizer,
                 private quizEtudiantService: QuizEtudiantService,
                 private confirmationService: ConfirmationService,
-                private webSocketService: WebSocketService,
+                public webSocketService: WebSocketService,
                 private parcoursservice: ParcoursService) {
     }
 
@@ -351,24 +351,41 @@ export class QuizPreviewProfComponent implements OnInit, OnDestroy {
     display: boolean = false;
 
     ngOnInit(): void {
-        this.quizEtudiantService.findQuizEtudiantByQuizId(this.selectedQuiz.id).subscribe(
-            data => {
-                for (const student of this.participants.get(this.login.getConnectedProf().id)) {
-                    for (const reponse of data) {
-                        if (reponse.etudiant.id === student.id) {
-                            this.reponseQuizList.push({...reponse});
+        console.log(this.selectedQuiz);
+        console.log(this.webSocketService.isInSession);
+        if (this.webSocketService.isInSession) {
+            this.quizEtudiantService.findQuizEtudiantByQuizId(this.selectedQuiz.id).subscribe(
+                data => {
+                    for (const student of this.participants.get(this.login.getConnectedProf().id)) {
+                        for (const quizStd of data) {
+                            if (quizStd.etudiant.id === student.id) {
+                                this.reponseQuizList.push({...quizStd});
+                            }
                         }
                     }
+                    console.log(this.reponseQuizList);
+                    if (this.reponseQuizList.length === 0) {
+                        this.learnService.onStart();
+                    } else {
+                        this.showTakeQuiz = false;
+                        this.showQuizReview = true;
+                    }
                 }
-                console.log(this.reponseQuizList);
-                if (this.reponseQuizList.length === 0) {
-                    this.learnService.onStart();
-                } else {
-                    this.showTakeQuiz = false;
-                    this.showQuizReview = true;
+            );
+        } else {
+            this.quizEtudiantService.findQuizEtudiantByQuizId(this.selectedQuiz.id).subscribe(
+                data => {
+                    this.reponseQuizList = data;
+                    console.log(this.reponseQuizList);
+                    if (this.reponseQuizList.length === 0) {
+                        this.learnService.onStart();
+                    } else {
+                        this.showTakeQuiz = false;
+                        this.showQuizReview = true;
+                    }
                 }
-            }
-        );
+            );
+        }
     }
 
 
@@ -488,7 +505,13 @@ export class QuizPreviewProfComponent implements OnInit, OnDestroy {
         const chatMessageDto: ChatMessageDto = new ChatMessageDto(this.login.getConnectedProf().toString(), ' ', false);
         chatMessageDto.quizReponse = this.reponseQuiz;
         chatMessageDto.type = 'QUIZ';
-        this.webSocketService.sendMessage(chatMessageDto, 'PROF');
+        if (this.webSocketService.isInSession) {
+            this.webSocketService.sendMessage(chatMessageDto, 'PROF');
+        } else {
+            if (question?.typeDeQuestion?.ref === 't12') {
+                this.learnService.checkT12Answer(question);
+            }
+        }
     }
 
 
@@ -523,23 +546,27 @@ export class QuizPreviewProfComponent implements OnInit, OnDestroy {
     }
 
     onClick(reponse: Reponse) {
-        this.reponseQuiz.lib = reponse.lib;
-        this.reponseQuiz.id = reponse.id;
-        this.reponseQuiz.question = reponse.question;
-        this.reponseQuiz.numero = reponse.numero;
-        this.reponseQuiz.type = 'QUIZ';
-        if (this.groupeEtudiant.groupeEtude.nombreEtudiant === 1) {
-            this.reponseQuiz.sender = 'STUDENT_CHOICE_T12';
+        if (this.webSocketService.isInSession) {
+            this.reponseQuiz.lib = reponse.lib;
+            this.reponseQuiz.id = reponse.id;
+            this.reponseQuiz.question = reponse.question;
+            this.reponseQuiz.numero = reponse.numero;
+            this.reponseQuiz.type = 'QUIZ';
+            if (this.groupeEtudiant.groupeEtude.nombreEtudiant === 1) {
+                this.reponseQuiz.sender = 'STUDENT_CHOICE_T12';
+            } else {
+                this.reponseQuiz.sender = 'STUDENT_CHOICE_T12_FOR_GRP';
+            }
+            this.reponseQuiz.prof = this.login.getConnectedProf();
+            this.reponseQuiz.etatReponse = reponse.etatReponse;
+            const chatMessageDto: ChatMessageDto = new ChatMessageDto(this.login.getConnectedStudent().id.toString(),
+                'STUDENT_CHOICE_T12', false);
+            chatMessageDto.quizReponse = this.reponseQuiz;
+            chatMessageDto.type = 'QUIZ';
+            this.webSocketService.sendMessage(chatMessageDto, 'PROF');
         } else {
-            this.reponseQuiz.sender = 'STUDENT_CHOICE_T12_FOR_GRP';
+            this.learnService.onClickT12(reponse);
         }
-        this.reponseQuiz.prof = this.login.getConnectedProf();
-        this.reponseQuiz.etatReponse = reponse.etatReponse;
-        const chatMessageDto: ChatMessageDto = new ChatMessageDto(this.login.getConnectedStudent().id.toString(),
-            'STUDENT_CHOICE_T12', false);
-        chatMessageDto.quizReponse = this.reponseQuiz;
-        chatMessageDto.type = 'QUIZ';
-        this.webSocketService.sendMessage(chatMessageDto, 'PROF');
     }
 
 
@@ -608,7 +635,11 @@ export class QuizPreviewProfComponent implements OnInit, OnDestroy {
         chatMessage.quizReponse.question = this.question;
         chatMessage.quizReponse.type = 'T13';
         chatMessage.quizReponse.lib = data;
-        this.webSocketService.sendMessage(chatMessage, 'PROF');
+        if (this.webSocketService.isInSession) {
+            this.webSocketService.sendMessage(chatMessage, 'PROF');
+        } else {
+            this.learnService.dropSynch(ev.target.id);
+        }
     }
 
     getCorrectAnswerForT13(key: number): string {

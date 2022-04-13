@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {HomeworkService} from '../../../../controller/service/homework.service';
 import {HomeWorkEtudiantServiceService} from '../../../../controller/service/home-work-etudiant-service.service';
 import {Cours} from '../../../../controller/model/cours.model';
@@ -13,9 +13,14 @@ import {HomeWorkReponse} from '../../../../controller/model/home-work-reponse.mo
 import {HomeWorkQST} from '../../../../controller/model/home-work-qst.model';
 import {MessageService} from 'primeng/api';
 import {TypeHomeWorkEnum} from '../../../../enum/type-question.enum';
-import {GroupeEtudiant} from "../../../../controller/model/groupe-etudiant.model";
-import {WebSocketService} from "../../../../controller/service/web-socket.service";
-import {GroupeEtudiantService} from "../../../../controller/service/groupe-etudiant-service";
+import {GroupeEtudiant} from '../../../../controller/model/groupe-etudiant.model';
+import {WebSocketService} from '../../../../controller/service/web-socket.service';
+import {GroupeEtudiantService} from '../../../../controller/service/groupe-etudiant-service';
+import {QuizService} from '../../../../controller/service/quiz.service';
+import {QuizEtudiantService} from '../../../../controller/service/quiz-etudiant.service';
+import {QuizEtudiant} from '../../../../controller/model/quiz-etudiant.model';
+import {ReponseEtudiant} from '../../../../controller/model/reponse-etudiant.model';
+import {QuizPreviewStudentTeacherComponent} from './quiz-preview-student-teacher/quiz-preview-student-teacher.component';
 
 @Component({
     selector: 'app-home-work-review',
@@ -23,6 +28,7 @@ import {GroupeEtudiantService} from "../../../../controller/service/groupe-etudi
     styleUrls: ['./home-work-review.component.scss']
 })
 export class HomeWorkReviewComponent implements OnInit {
+    @ViewChild(QuizPreviewStudentTeacherComponent) private child: QuizPreviewStudentTeacherComponent;
     selectedStudent: Etudiant = new Etudiant();
     studentList: Array<Etudiant> = new Array<Etudiant>();
     question: HomeWorkQST = new HomeWorkQST();
@@ -31,10 +37,13 @@ export class HomeWorkReviewComponent implements OnInit {
     reponse: ReponseEtudiantHomeWork = new ReponseEtudiantHomeWork();
     noteProf: HomeWorkReponse = new HomeWorkReponse();
     showResult: boolean;
+    quizEtudiantMap: Map<QuizEtudiant, Array<ReponseEtudiant>> = new Map<QuizEtudiant, Array<ReponseEtudiant>>();
 
     constructor(private homeWorkService: HomeworkService,
                 private parcoursService: ParcoursService,
                 private learnService: LearnService,
+                private quizService: QuizService,
+                private quizEtudiantService: QuizEtudiantService,
                 private messageService: MessageService,
                 private groupeEtudiantService: GroupeEtudiantService,
                 public loginService: LoginService,
@@ -61,6 +70,10 @@ export class HomeWorkReviewComponent implements OnInit {
 
     get participants(): Map<number, Array<Etudiant>> {
         return this.learnService.participants;
+    }
+
+    get groupeEtudiant(): GroupeEtudiant {
+        return this.webSocketService.groupeEtudiant;
     }
 
     ngOnInit(): void {
@@ -96,6 +109,11 @@ export class HomeWorkReviewComponent implements OnInit {
                     this.homeWorkService.findHomeWorkEtudiantByHomeWorkId(this.homeWorkSelected).subscribe(homeWorkEtudiantData => {
                         console.log(homeWorkEtudiantData);
                         this.homeWorkEtudiantList = homeWorkEtudiantData;
+                        if (this.groupeEtudiant.groupeEtude.nombreEtudiant === 1) {
+                            this.selectedStudent = this.studentList[0];
+                            console.log(this.studentList[0]);
+                            this.getResult(this.selectedStudent, this.homeWorkEtudiantList);
+                        }
                     });
                     this.homeWorkEtudiantService.findQuestions(this.homeWorkSelected).subscribe(data2 => {
                         this.question = data2[0];
@@ -107,10 +125,10 @@ export class HomeWorkReviewComponent implements OnInit {
     }
 
 
-    getResult() {
-        console.log(this.homeWorkEtudiantList);
-        console.log(this.selectedStudent);
-        this.homeWorkEtudiantSelected = this.homeWorkEtudiantList.filter(h => h.etudiant.id === this.selectedStudent.id)[0];
+    getResult(selectedStudent: Etudiant, homeWorkEtudiantList: Array<HomeWOrkEtudiant>) {
+        console.log(homeWorkEtudiantList);
+        console.log(selectedStudent);
+        this.homeWorkEtudiantSelected = homeWorkEtudiantList.filter(h => h.etudiant.id === selectedStudent.id)[0];
         if (this.homeWorkEtudiantSelected.id !== undefined) {
             this.homeWorkEtudiantService.findHomeWorkEtudiantReponseByHomeWorkEtudiantId(this.homeWorkEtudiantSelected.id).subscribe(
                 data => {
@@ -118,6 +136,18 @@ export class HomeWorkReviewComponent implements OnInit {
                 });
         }
         this.showResult = true;
+        // find quiz etudiant
+        this.quizEtudiantService.findAllQuizByEtudiantId(selectedStudent.id).subscribe(data => {
+            for (const quizEtudiant of data) {
+                if (quizEtudiant.note < quizEtudiant.questionCurrent) {
+                    this.quizEtudiantService.findReponseEtudiantByQuizEtudiantId(quizEtudiant).subscribe(reponseList => {
+                        this.quizEtudiantMap.set(quizEtudiant, reponseList);
+                    });
+                }
+            }
+            console.log(this.quizEtudiantMap);
+        });
+
     }
 
     saveNotes() {

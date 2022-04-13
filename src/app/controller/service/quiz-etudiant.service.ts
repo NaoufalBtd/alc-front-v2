@@ -12,7 +12,7 @@ import {EtudiantClassRoom} from '../model/etudiant-class-room.model';
 import {QuizClassRoom} from '../model/quiz-class-room.model';
 import {ClassRoom} from '../model/class-room.model';
 import {Section} from '../model/section.model';
-import {environment} from "../../../environments/environment";
+import {environment} from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -376,6 +376,7 @@ export class QuizEtudiantService {
   constructor(private http: HttpClient) { }
 
   private adminUrl = environment.adminUrl;
+  private profUrl = environment.profUrl;
 
 
   private _etudiant: Etudiant;
@@ -542,6 +543,12 @@ export class QuizEtudiantService {
     return this.http.get<Array<ReponseEtudiant>>(this.adminUrl + 'reponseEtudiant/quizEtudiant/ref/' + quizEtudiant.ref);
   }
 
+
+  public findReponseEtudiantByQuizEtudiantId(quizEtudiant: QuizEtudiant): Observable<Array<ReponseEtudiant>>
+  {
+    return this.http.get<Array<ReponseEtudiant>>(this.profUrl + 'reponseEtudiant/quizEtudiant/id/' + quizEtudiant.id);
+  }
+
   public findMyReponseEtudiant(quizEtudiant: QuizEtudiant, reponse: Reponse): Observable<ReponseEtudiant>
   {
     // tslint:disable-next-line:max-line-length
@@ -593,6 +600,6 @@ export class QuizEtudiantService {
 
 
   public findAllQuizByEtudiantId(id: number): Observable<Array<QuizEtudiant>> {
-    return this.http.get<Array<QuizEtudiant>>(this.adminUrl + 'quizEtudiant/etudiant/id/' + id);
+    return this.http.get<Array<QuizEtudiant>>(this.profUrl + 'quizEtudiant/etudiant/id/' + id);
   }
 }
