@@ -226,7 +226,7 @@ export class ScheduleAdminComponent implements OnInit {
     }
 
     save() {
-        if (this.scheduleProf.prof ===  null) {
+        if (this.scheduleProf.prof === null) {
             this.messageService.add({
                 severity: 'warn',
                 summary: 'Warning',
@@ -350,27 +350,27 @@ export class ScheduleAdminComponent implements OnInit {
 
     public onPopupOpen(args: PopupOpenEventArgs): void {
         this.scheduleProf = new ScheduleProf();
-        this.data.subject = args.data.subject;
-        this.data.startTime = args.data.startTime;
-        this.data.endTime = args.data.endTime;
-        this.scheduleProf.startTime = args.data.startTime;
-        this.scheduleProf.endTime = args.data.endTime;
-        this.scheduleProf.grpName = args.data?.groupeEtudiant.libelle;
+        this.data.subject = args.data?.subject;
+        this.data.startTime = args.data?.startTime;
+        this.data.endTime = args.data?.endTime;
+        this.scheduleProf.startTime = args.data?.startTime;
+        this.scheduleProf.endTime = args.data?.endTime;
+        this.scheduleProf.grpName = args.data?.groupeEtudiant?.libelle;
         this.scheduleProf.profName = args.data?.prof.nom;
-        this.scheduleProf.subject = args.data.subject;
+        this.scheduleProf.subject = args.data?.subject;
         this.scheduleProf.prof = args.data.prof;
         this.scheduleProf.id = args.data.id;
         console.log(this.scheduleProf.id);
-        this.scheduleProf.groupeEtudiant = args.data.groupeEtudiant;
-        this.grpEtudiant = this.scheduleProf.groupeEtudiant;
+        this.scheduleProf.groupeEtudiant = args.data?.groupeEtudiant;
+        this.grpEtudiant = this.scheduleProf?.groupeEtudiant;
         this.selectionTarget = null;
         this.selectionTarget = args.target;
     }
 
     public onDetailsClick(event: any): void {
         this.scheduleProf = new ScheduleProf();
-        const data: Object = this.scheduleObj.getCellDetails(this.scheduleObj.getSelectedElements()) as Object;
-        this.scheduleObj.openEditor(data, 'Add');
+        const data: Object = this.scheduleObj?.getCellDetails(this.scheduleObj?.getSelectedElements()) as Object;
+        this.scheduleObj?.openEditor(data, 'Add');
     }
 
 

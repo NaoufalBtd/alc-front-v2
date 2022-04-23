@@ -13,8 +13,8 @@ import {
     ScheduleComponent,
     TimeScaleModel, View
 } from '@syncfusion/ej2-angular-schedule';
-import { DropDownList } from '@syncfusion/ej2-dropdowns';
-import { DateTimePicker } from '@syncfusion/ej2-calendars';
+import {DropDownList} from '@syncfusion/ej2-dropdowns';
+import {DateTimePicker} from '@syncfusion/ej2-calendars';
 import {ScheduleService} from '../../../../controller/service/schedule.service';
 import {Islamic, TimePickerComponent} from '@syncfusion/ej2-angular-calendars';
 import {addClass, Internationalization} from '@syncfusion/ej2-base';
@@ -325,7 +325,7 @@ export class ProfesseurListComponent implements OnInit {
 
             }
         );
-        this.groupeStudent = this.groupeStudent.filter( e => e.prof.id === prof.id);
+        this.groupeStudent = this.groupeStudent.filter(e => e.prof.id === prof.id);
         this.scheduleObj.eventWindow.refresh();
     }
 
@@ -363,8 +363,8 @@ export class ProfesseurListComponent implements OnInit {
         this.data.endTime = args.data.endTime;
         this.scheduleProf.startTime = args.data.startTime;
         this.scheduleProf.endTime = args.data.endTime;
-        this.scheduleProf.grpName = args.data?.groupeEtudiant.libelle;
-        this.scheduleProf.profName = args.data?.prof.nom;
+        this.scheduleProf.grpName = args.data?.groupeEtudiant?.libelle;
+        this.scheduleProf.profName = args.data?.prof?.nom;
         this.scheduleProf.subject = args.data.subject;
         this.scheduleProf.prof = args.data.prof;
         this.scheduleProf.id = args.data.id;
