@@ -439,8 +439,12 @@ export class ScheduleLocalComponent implements OnInit {
     set selectedcours(value: Cours) {
         this.parcoursService.selectedcours = value;
     }
+    set selectedSession(value: ScheduleProf) {
+        this.webSocketService.selectedSession = value;
+    }
 
     startSession() {
+        this.selectedSession = this.selectedSchedule;
         this.webSocketService.isInSession = true;
         this.showTpBar = false;
         console.log(this.selectedSchedule.groupeEtudiant.id);

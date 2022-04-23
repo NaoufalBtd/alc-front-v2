@@ -674,6 +674,7 @@ export function createTranslateLoader(http: HttpClient) {
         ContinueInfoComponent,
         HomeStudentComponent,
         HomeFreeTrialComponent,
+        ProfileComponent,
         QuizPreviewStudentTeacherComponent
 
     ],

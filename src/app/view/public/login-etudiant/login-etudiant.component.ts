@@ -40,7 +40,6 @@ export class LoginEtudiantComponent implements OnInit {
     }
 
     public onLogin(user: User): void {
-        // this.showLoading = true;
         this.subscriptions.push(
             this.authenticationService.login(user).subscribe(
                 (response: HttpResponse<User>) => {
@@ -48,16 +47,8 @@ export class LoginEtudiantComponent implements OnInit {
                     this.authenticationService.saveToken(token);
                     this.authenticationService.addUserToLocalCache(response.body);
                     this.studentService.connectedStudent.set(response.body.id, response.body);
-                    this.model = [
-                        {label: 'Courses ', icon: 'pi pi-fw pi-briefcase', routerLink: ['/etudiant/etudiant-cours']},
-                        {label: 'FAQ ', icon: 'pi pi-fw pi-question-circle', routerLink: ['/etudiant/faq-student']},
-                        {label: 'News ', icon: 'pi pi-fw pi-clock', routerLink: ['/etudiant/news-student']},
-                        {label: 'Schedule', icon: 'pi pi-fw pi-calendar-times', routerLink: ['/etudiant/schedule-student']},
-                        {label: 'LogOut ', icon: 'pi pi-fw pi-sign-out', routerLink: ['']},
-                    ];
                     this.service.hasloged = true;
-
-                    this.router.navigate(['/etudiant/etudiant-cours']);
+                    this.router.navigate(['/etudiant/dashboard']);
                 },
                 (errorResponse: HttpErrorResponse) => {
                     console.log(errorResponse.message);
@@ -66,35 +57,10 @@ export class LoginEtudiantComponent implements OnInit {
         );
     }
 
-    //
-    // public findEtudiant() {
-    //
-    //     this.service.findEtudiant(this.login, this.password).subscribe(
-    //         data => {
-    //             this.etudiant = data;
-    //             this.admin = null;
-    //             this.prof = null;
-    //             console.log(this.etudiant);
-    //             this.correct = true;
-    //
-    //         },
-    //         error => {
-    //             document.getElementById('log-pass').style.visibility = 'visible';
-    //             this.correct = false;
-    //         });
-    // }
-
 
     ngOnInit(): void {
         if (this.authenticationService.isUserLoggedIn()) {
-            this.model = [
-                {label: 'Courses ', icon: 'pi pi-fw pi-briefcase', routerLink: ['/etudiant/etudiant-cours']},
-                {label: 'FAQ ', icon: 'pi pi-fw pi-question-circle', routerLink: ['/etudiant/faq-student']},
-                {label: 'News ', icon: 'pi pi-fw pi-clock', routerLink: ['/etudiant/news-student']},
-                {label: 'Schedule', icon: 'pi pi-fw pi-calendar-times', routerLink: ['/etudiant/schedule-student']},
-                {label: 'LogOut ', icon: 'pi pi-fw pi-sign-out', routerLink: ['']},
-            ];
-            this.router.navigate(['/etudiant/etudiant-cours']);
+            this.router.navigate(['/etudiant/dashboard']);
         } else {
             this.router.navigateByUrl('public/login-etudiant');
         }

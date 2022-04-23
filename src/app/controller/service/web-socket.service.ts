@@ -48,6 +48,7 @@ export class WebSocketService {
     idprof: number;
     public isInSession = false;
     public sessionHasStarted = false;
+    private _selectedSession: ScheduleProf = new ScheduleProf();
     private _groupeEtudiant: GroupeEtudiant = new GroupeEtudiant();
     private _grpStudentAnswers: Map<Etudiant, QuizReponse> = new Map<Etudiant, QuizReponse>();
     private _selectedSchedule: ScheduleProf = new ScheduleProf();
@@ -71,6 +72,14 @@ export class WebSocketService {
     ) {
     }
 
+
+    get selectedSession(): ScheduleProf {
+        return this._selectedSession;
+    }
+
+    set selectedSession(value: ScheduleProf) {
+        this._selectedSession = value;
+    }
 
     get reponseHomeWorkReviewComponent(): ReponseEtudiantHomeWork {
         return this._reponseHomeWorkReviewComponent;

@@ -18,7 +18,7 @@ import {WebSocketService} from '../../../controller/service/web-socket.service';
 import {GroupeEtudiant} from '../../../controller/model/groupe-etudiant.model';
 import {InscriptionService} from '../../../controller/service/inscription.service';
 import {Inscription} from '../../../controller/model/inscription.model';
-import {Parcours} from "../../../controller/model/parcours.model";
+import {Parcours} from '../../../controller/model/parcours.model';
 
 @Component({
     selector: 'app-home-student',
@@ -95,9 +95,11 @@ export class HomeStudentComponent implements OnInit {
 
 
     ngOnInit(): void {
+
         if (this.inscreption.id === undefined || this.inscreption.id === 0) {
             this.inscriptionService.findByEtudiantId(this.loginService.getConnectedStudent().id).subscribe(data => {
                 this.inscreption = data;
+                console.log(this.inscreption?.etatInscription?.libelle);
             });
         }
         this.groupeEtudiantService.findGroupeEtudiantDetailByEtudiantId(this.student.id).subscribe(

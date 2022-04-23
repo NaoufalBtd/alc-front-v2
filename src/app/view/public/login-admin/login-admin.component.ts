@@ -56,20 +56,6 @@ export class LoginAdminComponent implements OnInit {
                     const token = response.headers.get(HeaderType.JWT_TOKEN);
                     this.authenticationService.saveToken(token);
                     this.authenticationService.addUserToLocalCache(response.body);
-                    this.model = [
-                        {label: 'Manage Parcours', icon: 'pi pi-fw pi-table', routerLink: ['/admin/parcours']},
-                        {label: 'Inscriptions List', icon: 'pi pi-fw pi-check-square', routerLink: ['/admin/inscription']},
-                        {label: 'Students List', icon: 'pi pi-fw pi-list', routerLink: ['/admin/students-List']},
-                        {label: 'Professor', icon: 'pi pi-fw pi-user', routerLink: ['/admin/teacher-lists']},
-                        {label: 'Professor Recommendation', icon: 'pi pi-fw pi-user-plus', routerLink: ['/admin/recommend-admin']},
-                        {label: 'Paiement', icon: 'pi pi-fw pi-wallet', routerLink: ['/admin/allSalary']},
-                        {label: 'FAQ ANSWER', icon: 'pi pi-fw pi-reply', routerLink: ['/admin/faq-admin']},
-                        {label: 'FAQ List', icon: 'pi pi-fw pi-info-circle', routerLink: ['/admin/faq-admin-list']},
-                        {label: 'CREATE NEWS', icon: 'pi pi-fw pi-calendar-times', routerLink: ['/admin/news-admin']},
-                        {label: 'Schedule', icon: 'pi pi-fw pi-calendar-times', routerLink: ['/admin/schedule']},
-                        {label: 'Schedule', icon: 'pi pi-fw pi-calendar-times', routerLink: ['/admin/schedule']},
-                        {label: 'Schedule', icon: 'pi pi-fw pi-calendar-times', routerLink: ['/admin/schedule']},
-                    ];
                     this.service.hasloged = true;
                     this.router.navigate(['admin/parcours']);
                     this.showLoading = false;

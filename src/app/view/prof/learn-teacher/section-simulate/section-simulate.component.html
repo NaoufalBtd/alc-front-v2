@@ -4,7 +4,20 @@
             <h4 class="title"> {{selectedcours?.numeroOrder}}  {{selectedcours?.libelle}}</h4>
         </div>
 
-        <div class="p-col-4"></div>
+        <div class="p-col-2"></div>
+        <div class="p-col-2">
+            <button *ngIf="!lessonStarted && webSocketService.isInSession" type="button" pButton pRipple
+                    label="START LESSON"
+                    class="ngFlexyBlackButton"
+                    (click)="startLesson()"
+                    icon="pi pi-plus"></button>
+
+            <button *ngIf="lessonStarted && webSocketService.isInSession" type="button" pButton pRipple
+                    label="FINISH LESSON"
+                    class="ngFlexyBlackButton"
+                    (click)="showConfirm()"
+                    icon="pi pi-plus"></button>
+        </div>
 
         <div class="p-col-1">
             <p-overlayPanel #op [style]="{width: '400px'}"
@@ -145,11 +158,11 @@
 
 
                     <div class="p-grid"
-                         style="background: white; border-top: 5px solid #f4f4f4;">
+                         style="background: #263238; border-top: 5px solid #f4f4f4;">
                         <div class="p-col-4">
                             <button *ngIf="this.selectedsection.numeroOrder !== 1"
                                     (click)="PreviousSection(selectedsection)"
-                                    class="ngFlexyBlackButton" icon="pi pi-caret-left" id="previous"
+                                    class="ngFlexyOrangeButton" icon="pi pi-caret-left" id="previous"
                                     [label]="previousSection(selectedsection)" pButton pRipple
                                     type="button"></button>
                         </div>
@@ -160,7 +173,7 @@
                         <div *ngIf="webSocketService.isInSession" class="p-col-4" style="text-align: center">
                             <button
                                     (click)="showSummaryFct()"
-                                    [style]="{'width': '100%'}"
+                                    [style]="{'width': '100%','border': '2px solid #ff725e !important'}"
                                     *ngIf="!showFlowMeButton && (selectedsection?.id === sectionStandard[sectionStandard.length - 1]?.id ||
                                             selectedsection?.categorieSection?.superCategorieSection?.libelle === 'Additional')"
                                     class="ngFlexyBlackButton" icon="pi pi-check" label="SUMMARY" pButton pRipple
@@ -168,9 +181,8 @@
 
                             <button *ngIf="showFlowMeButton" pButton pRipple type="button"
                                     (click)="goToSection(selectedsection, 'FLOW_ME')"
-                                    [style]="{'width': '100%',    'background': 'white', 'border': '2px solid', 'font-weight': '800', 'color': '#f2a142'}"
-                                    label="Flow me" class="p-button-outlined p-button-warning">
-                                <img id="flowMeImg" src="./assets/icons/icons-roller.gif" width="25px">
+                                    [style]="{'width': '100%',    'background': '#263238', 'border': '2px solid', 'font-weight': '800', 'color': '#ff725e'}"
+                                    label="FOLLOW ME" class="p-button-outlined p-button-warning">
                             </button>
 
                         </div>
@@ -179,7 +191,7 @@
                         <div class="p-col-4" style="text-align: end">
                             <button *ngIf="selectedsection?.id !== itemssection2[itemssection2.length - 1]?.id"
                                     (click)="NextSection(selectedsection)"
-                                    class="ngFlexyBlackButton" icon="pi pi-caret-right" id="next"
+                                    class="ngFlexyOrangeButton" icon="pi pi-caret-right" id="next"
                                     [label]="nextSection(selectedsection)"
                                     pButton pRipple
                                     iconPos="right"
@@ -252,10 +264,13 @@
 
                 <div class="p-col-3 product-grid-item">
                     <div class="skipeContainer">
-                        <img *ngIf="webSocketService.isInSession" src="./assets/icons/icon-book.png" alt="">
+                        <img *ngIf="webSocketService.isInSession" src="./assets/icons/icon-book.png"
+                             alt="">
                         <img *ngIf="!webSocketService.isInSession" width="70px"
                              src="./assets/icons/icons-yeux-cartoon.png" alt="">
-                        <h4 *ngIf="webSocketService.isInSession" id="startText">Let's Start</h4>
+                        <h4 *ngIf="webSocketService.isInSession && !lessonStarted" id="startText">Let's Start</h4>
+                        <h4 *ngIf="webSocketService.isInSession && lessonStarted" id="startText">Lesson started</h4>
+                        <h4 *ngIf="webSocketService.isInSession && lessonStarted" id="startText">0h: 59m: 00s</h4>
                         <h4 *ngIf="!webSocketService.isInSession" id="startText">Teacher's preview mode</h4>
                     </div>
 

@@ -223,37 +223,37 @@ div.p-grid {
 
 
 .ngFlexyBlackButton {
-  width: 100%;
-  background: #263238;
-  color: #ff725e;
-  border: none;
-  height: 40px;
+  width: 100%!important;
+  background: #263238!important;
+  color: #ff725e!important;
+  border: none!important;
+  height: 40px!important;
 
 
 }
 
 .ngFlexyBlackButton:hover {
-  width: 100%;
-  background: #ff725e;
-  border: 1px solid #263238;
-  color: #263238;
-  font-weight: bold;
-  height: 40px;
+  width: 100%!important;
+  background: #ff725e!important;
+  border: 1px solid #263238!important;
+  color: #263238!important;
+  font-weight: bold!important;
+  height: 40px!important;
 }
 
 .ngFlexyBlackButton:active {
-  width: 100%;
-  background: #263238;
-  border: 2px solid #263238;
-  color: #ff725e;
-  font-weight: bold;
-  height: 40px;
+  width: 100%!important;
+  background: #263238!important;
+  border: 2px solid #263238!important;
+  color: #ff725e!important;
+  font-weight: bold!important;
+  height: 40px!important;
 }
 
 .ngFlexyBlackButton:focus {
-  outline: 0 none;
-  outline-offset: 0;
-  box-shadow: 0 0 0 0.2rem #ff9e90;
+  outline: 0 none!important;
+  outline-offset: 0!important;
+  box-shadow: 0 0 0 0.2rem #ff9e90!important;
 }
 
 /*************************************************/
@@ -278,7 +278,7 @@ div.p-grid {
 .ngFlexyOrangeButton:hover {
   width: 100%;
   background: #263238!important;
-  border: 1px solid #ff725e!important;
+  border: 1px solid #757f8a !important;
   color:  #ff725e!important;
   font-weight: bold!important;
   height: 40px!important;

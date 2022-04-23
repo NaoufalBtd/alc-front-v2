@@ -190,7 +190,12 @@ export class HomeComponent implements OnInit {
         this.parcoursService.selectedsection = value;
     }
 
+    set selectedSession(value: ScheduleProf) {
+        this.webSocketService.selectedSession = value;
+    }
+
     startSession(nextLesson: ScheduleProf) {
+        this.selectedSession = nextLesson;
         this.showTpBar = false;
         console.log(nextLesson.groupeEtudiant.id);
         this.webSocketService.sessionHasStarted = true;

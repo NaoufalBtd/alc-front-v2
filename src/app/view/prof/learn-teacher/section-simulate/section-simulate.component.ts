@@ -48,6 +48,7 @@ export class SafePipe1 implements PipeTransform {
     styleUrls: ['./section-simulate.component.scss']
 })
 export class SectionSimulateComponent implements OnInit, OnDestroy {
+    lessonDurationEnSecond = 0;
     rows = 5;
     first = 0;
     sessionCour: SessionCours = new SessionCours();
@@ -324,6 +325,7 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
     showLesson = true;
     showSummary = false;
     showFinishLesson = true;
+    lessonStarted: boolean;
 
 
     public Review() {
@@ -355,6 +357,7 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.selectedsection = this.itemssection2[0];
         this.showAppMenu = false;
+        this.lessonDurationEnSecond = (this.selectedSession.endTime.getHours() - this.selectedSession.startTime.getHours()) * 3600;
     }
 
 
@@ -770,5 +773,48 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
         if (this.activeIndexForTabView === 2) { // chat
             this.badgeNrMsg = 0;
         }
+    }
+
+    startLesson() {
+        this.lessonStarted = true;
+        setInterval(() => {
+            this.getRestOfTime();
+        }, 1000);
+    }
+
+    get selectedSession(): ScheduleProf {
+        return this.webSocketService.selectedSession;
+    }
+
+    getRestOfTime(): string {
+        let myMinute = 0;
+        let myHour = 0;
+        let mySecond = 0;
+
+
+        const numberOfRstHour = this.lessonDurationEnSecond / 3600;
+        const numberOfRstHourStr = String(numberOfRstHour);
+
+        if (numberOfRstHourStr.indexOf('.') !== -1) {
+            myHour = Number(numberOfRstHourStr.substring(0, numberOfRstHourStr.indexOf('.'))); // *
+            const stringRestHours = String(0 + numberOfRstHourStr.toString().substring(numberOfRstHourStr.indexOf('.')));
+            const numberOfRstHours = Number(stringRestHours);
+
+            // -----------------------Minutes-----------------------------
+
+            const firstValueOfMinute = String(numberOfRstHours * (60));
+            if (firstValueOfMinute.indexOf('.') !== -1) {
+                myMinute = Number(firstValueOfMinute.substring(0, firstValueOfMinute.indexOf('.')));
+                const stringRestMinute = String(0 + firstValueOfMinute.toString().substring(firstValueOfMinute.indexOf('.')));
+                const numberOfRstMinute = Number(stringRestMinute);
+
+                // -----------------------Seconds-----------------------------
+                const firstValueOfSecond = String(numberOfRstMinute * (60));
+                mySecond = Number(firstValueOfSecond.substring(0, firstValueOfSecond.indexOf('.')));
+                const stringRestSecond = String(0 + firstValueOfSecond.toString().substring(firstValueOfSecond.indexOf('.')));
+            }
+        }
+        this.lessonDurationEnSecond--;
+        return (String(myHour) + 'h : ' + String(myMinute) + 'm : ' + String(mySecond) + 's');
     }
 }
