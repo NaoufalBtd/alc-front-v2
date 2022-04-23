@@ -664,7 +664,7 @@ export class LearnService {
                     document.getElementById(key.toString()).style.border = '2px solid green';
                 } else {
                     document.getElementById(key.toString()).style.border = '2px solid red';
-                    document.getElementById('toolTipT13' + key.toString()).style.visibility = 'visible';
+                    document.getElementById('toolTipT13' + key?.toString()).style.visibility = 'visible';
                     this.answerSelected.etatReponse = 'false';
                 }
                 if (this.answerSelected.lib === undefined) {

@@ -73,21 +73,6 @@ user: User = new User();
         );
     }
 
-    // public findEtudiant() {
-    //
-    //     this.service.findProf(this.login, this.password).subscribe(
-    //         data => {
-    //             this.prof = data;
-    //             this.admin = null;
-    //             this.etudiant = null;
-    //             this.correct = true;
-    //             console.log(this.prof);
-    //
-    //         }, error => {
-    //             document.getElementById('log-pass').style.visibility = 'visible';
-    //             this.correct = false;
-    //         });
-    // }
 
 
     ngOnInit(): void {

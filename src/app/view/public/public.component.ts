@@ -247,12 +247,12 @@ export class PublicComponent implements OnInit {
 
     ngOnInit(): void {
         this.user = this.authenticationService.getUserFromLocalCache();
-        if (this.user.role === Role.ADMIN) {
+        if (this.user?.role === Role?.ADMIN) {
             this.router.navigate(['/admin/parcours']);
-        } else if (this.user.role === Role.PROF) {
+        } else if (this.user?.role === Role?.PROF) {
             this.router.navigate(['/prof/home']);
 
-        } else if (this.user.role === Role.STUDENT) {
+        } else if (this.user?.role === Role?.STUDENT) {
             this.router.navigate(['/etudiant/dashboard']);
         }
     }

@@ -664,7 +664,7 @@ export class QuizService {
         if (event.target.checked) {
             p.style.visibility = 'visible';
         } else {
-            p && p.style.visibility == 'hidden';
+            p && p.style.visibility === 'hidden';
         }
     }
 
