@@ -681,6 +681,7 @@ export function createTranslateLoader(http: HttpClient) {
     providers: [
         {provide: LocationStrategy, useClass: HashLocationStrategy},
         MenuService, MessageService, ConfirmationService,
+        AppComponent,
         HomeWorkEtudiantComponent,
         WeekService, MonthService, DayService, WeekService, WorkWeekService, MonthService,
         AgendaService, MonthAgendaService, TimelineViewsService,
