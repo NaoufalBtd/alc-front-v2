@@ -11,8 +11,8 @@ import {Role} from '../../../enum/role.enum';
 import {Subscription} from 'rxjs';
 import {ProfService} from '../../../controller/service/prof.service';
 import {EtudiantService} from '../../../controller/service/etudiant.service';
-import {Menu} from "primeng/menu";
-import {backgroundColor} from "html2canvas/dist/types/css/property-descriptors/background-color";
+import {Menu} from 'primeng/menu';
+import {backgroundColor} from 'html2canvas/dist/types/css/property-descriptors/background-color';
 import {TranslateService} from '@ngx-translate/core';
 
 @Component({
