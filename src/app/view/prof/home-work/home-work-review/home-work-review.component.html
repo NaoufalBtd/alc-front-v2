@@ -3,7 +3,7 @@
         <h6>Students</h6>
         <p-dropdown [options]="studentList" [(ngModel)]="selectedStudent"
                     (ngModelChange)="getResult(selectedStudent, homeWorkEtudiantList)"
-                    [style]="{'width': '100%'}"
+                    [style]="{width: '100%'}"
                     optionLabel="prenom" [filter]="true" filterBy="prenom" [showClear]="true"
                     placeholder="Select a student">
         </p-dropdown>
@@ -27,7 +27,7 @@
             <div class="p-col-6">
                 <h6>notes</h6>
                 <textarea [disabled]="loginService.getConnecteUser().role === ROLE.STUDENT" required
-                          [style]="{'width':'100%', 'padding': '10px'}" rows="2"
+                          [style]="{width:'100%', padding: '10px'}" rows="2"
                           [(ngModel)]="reponse.profNote"
                           pInputTextarea
                           (input)="syncWithStudent()"

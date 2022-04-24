@@ -49,13 +49,13 @@
             <div class="p-grid">
                 <div class=" p-col-4 ">
                     <p-inputNumber [(ngModel)]="question.numero" id="firstname6"
-                                   [style]="{'width': '100%'}"
+                                   [style]="{width: '100%'}"
                                    placeholder="Question number"></p-inputNumber>
                 </div>
                 <div class=" p-col-4 ">
                     <p-dropdown [(ngModel)]="question.typeDeQuestion" [options]="types" inputId="type"
                                 optionLabel="lib" placeholder="Type of Question"
-                                [style]="{'width': '100%'}"
+                                [style]="{width: '100%'}"
                                 (click)="chooseType()"></p-dropdown>
                 </div>
                 <div *ngIf="question.typeDeQuestion.ref !== 't12' && question.typeDeQuestion.ref !== 't13'"
@@ -139,7 +139,7 @@
 
                         <div class="p-col-2">
                             <h6>Number</h6>
-                            <input [style]="{'width': '100%'}" [(ngModel)]="reponse.numero"
+                            <input [style]="{width: '100%'}" [(ngModel)]="reponse.numero"
                                    pInputText
                                    type="number"
                                    placeholder="Answer number">
@@ -147,27 +147,27 @@
 
                         <div class="p-col-4">
                             <h6>Word</h6>
-                            <input [style]="{'width': '100%'}" type="text" pInputText
+                            <input [style]="{width: '100%'}" type="text" pInputText
 
                                    [(ngModel)]="libelle">
                         </div>
                         <div class="p-col-6">
                             <h6>Answers</h6>
-                            <input [style]="{'width': '100%'}" type="text" pInputText
+                            <input [style]="{width: '100%'}" type="text" pInputText
                                    [(ngModel)]="reponse.lib">
                         </div>
 
 
                         <div class="p-col-3">
                             <h6>Correct answer</h6>
-                            <input [style]="{'width': '100%'}" [(ngModel)]="question.pointReponseJuste"
+                            <input [style]="{width: '100%'}" [(ngModel)]="question.pointReponseJuste"
                                    pInputText
                                    type="number"
                                    placeholder="True point">
                         </div>
                         <div class="p-col-3">
                             <h6>Incorrect answer</h6>
-                            <input [style]="{'width': '100%'}" [(ngModel)]="question.pointReponsefausse"
+                            <input [style]="{width: '100%'}" [(ngModel)]="question.pointReponsefausse"
                                    type="number"
                                    pInputText
                                    placeholder="false point">
@@ -193,7 +193,7 @@
                             <p-accordion>
                                 <p-accordionTab *ngFor="let item of mapTranslate | keyvalue" [header]="item.key">
                                     <div class="answerContainer" *ngFor="let value of item.value">
-                                        <input [style]="{'width': '65%'}" [(ngModel)]="value.lib"
+                                        <input [style]="{width: '65%'}" [(ngModel)]="value.lib"
                                                type="text"
                                                class="editInput"
                                                pInputText
@@ -224,24 +224,24 @@
                     <div class="p-grid">
                         <div class="p-col-4">
                             <h6>Image Url</h6>
-                            <input [style]="{'width': '100%'}" type="text" pInputText [(ngModel)]="question.urlImg">
+                            <input [style]="{width: '100%'}" type="text" pInputText [(ngModel)]="question.urlImg">
                         </div>
 
                         <div class="p-col-4">
                             <h6>Video Url</h6>
-                            <input [style]="{'width': '100%'}" type="text" pInputText [(ngModel)]="question.urlVideo">
+                            <input [style]="{width: '100%'}" type="text" pInputText [(ngModel)]="question.urlVideo">
                         </div>
 
                         <div class="p-col-4">
                             <h6>Title</h6>
-                            <input [style]="{'width': '100%'}" type="text" pInputText [(ngModel)]="question.ref">
+                            <input [style]="{width: '100%'}" type="text" pInputText [(ngModel)]="question.ref">
                         </div>
 
 
                         <div class="p-col-12 ">
                             <h6>Content</h6>
                             <textarea required="required"
-                                      [style]="{'width':'100%', 'padding': '10px'}" rows="2"
+                                      [style]="{width:'100%', padding: '10px'}" rows="2"
                                       [(ngModel)]="question.libelle"
                                       pInputTextarea
                                       placeholder=" Example:

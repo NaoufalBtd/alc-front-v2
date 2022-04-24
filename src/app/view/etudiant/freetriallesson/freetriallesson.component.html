@@ -48,7 +48,7 @@
 
             <div class="p-col-3"></div>
             <div class="p-col-6">
-                <p-calendar [style]="{'width': '100%', 'background': '#263238'}"
+                <p-calendar [style]="{width: '100%', background: '#263238'}"
                             [(ngModel)]="loginService.getConnectedStudent().dateNaissance"
                             [showWeek]="true"
                             [yearNavigator]="true"
@@ -79,7 +79,7 @@
 
             <div class="p-col-6">
                 <p>Status Social</p>
-                <p-dropdown [options]="statutSocials" [style]="{'width': '90%', 'background': '#263238'}"
+                <p-dropdown [options]="statutSocials" [style]="{width: '90%', background: '#263238'}"
                             optionLabel="libelle"
                             [(ngModel)]="freetrialService.freeTrialFormule.inscription.statutSocial"
                 >
@@ -90,7 +90,7 @@
             </div>
             <div class="p-col-6">
                 <p>Area of work</p>
-                <p-dropdown [options]="fonctions" [style]="{'width': '90%', 'background': '#263238'}"
+                <p-dropdown [options]="fonctions" [style]="{width: '90%', background: '#263238'}"
                             placeholder="List of areas of work"
                             optionLabel="libelle"
                             [(ngModel)]="freetrialService.freeTrialFormule.inscription.fonction"
@@ -102,14 +102,14 @@
 
             <div class="p-col-6">
                 <p class="status">Study Level</p>
-                <p-dropdown [options]="niveauEtudes" [style]="{'width': '90%', 'background': '#263238'}"
+                <p-dropdown [options]="niveauEtudes" [style]="{width: '90%', background: '#263238'}"
                             optionLabel="libelle"
                             [(ngModel)]="freetrialService.freeTrialFormule.inscription.niveauEtude"
                 ></p-dropdown>
             </div>
             <div class="p-col-6">
                 <p> Main goal with learning English</p>
-                <p-dropdown [options]="interetEtudiants" [style]="{'width': '90%', 'background': '#263238'}"
+                <p-dropdown [options]="interetEtudiants" [style]="{width: '90%', background: '#263238'}"
                             optionLabel="libelle"
                             [(ngModel)]="freetrialService.freeTrialFormule.inscription.interetEtudiant"
                 >
@@ -122,7 +122,7 @@
 
             <div class="p-col-6">
                 <p> Skill</p>
-                <p-dropdown [options]="skills" [style]="{'width': '90%', 'background': '#263238'}"
+                <p-dropdown [options]="skills" [style]="{width: '90%', background: '#263238'}"
                             optionLabel="libelle"
                             [(ngModel)]="freetrialService.freeTrialFormule.inscription.skill"
                 >

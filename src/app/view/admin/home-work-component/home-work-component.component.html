@@ -38,7 +38,7 @@
                     <h5>Type Of Home Work</h5>
 
                     <p-dropdown [options]="typeHomeWorkList" [(ngModel)]="typeHomeWork"
-                                [style]="{'width': '100%'}"
+                                [style]="{width: '100%'}"
                                 (ngModelChange)="filterTypeOfQsts()"
                                 optionLabel="lib" [filter]="true" filterBy="lib" [showClear]="true"
                                 placeholder="Select a type of Home Work">
@@ -52,25 +52,25 @@
             <div *ngIf="typeHomeWork?.lib === TypeHomeWorkEnum.READING || typeHomeWork?.lib === TypeHomeWorkEnum.WRITE_IT_UP" class="p-grid">
                 <div class="p-col-4">
                     <h6>Image Url</h6>
-                    <input required [style]="{'width': '100%'}" type="text" pInputText [(ngModel)]="homeWork.urlImage">
+                    <input required [style]="{width: '100%'}" type="text" pInputText [(ngModel)]="homeWork.urlImage">
                 </div>
 
 
                 <div class="p-col-4">
                     <h6>Title</h6>
-                    <input [style]="{'width': '100%'}" type="text" pInputText [(ngModel)]="homeworkQST.ref">
+                    <input [style]="{width: '100%'}" type="text" pInputText [(ngModel)]="homeworkQST.ref">
                 </div>
 
 
                 <div class="p-col-4">
                     <h6>Part</h6>
-                    <input [style]="{'width': '100%'}" type="number" pInputText [(ngModel)]="part">
+                    <input [style]="{width: '100%'}" type="number" pInputText [(ngModel)]="part">
                 </div>
 
 
                 <div class="p-col-12 ">
                     <h6>Content</h6>
-                    <textarea required [style]="{'width':'100%', 'padding': '10px'}" rows="5"
+                    <textarea required [style]="{width:'100%', padding: '10px'}" rows="5"
                               [(ngModel)]="homeworkQST.libelle"
                               pInputTextarea
                               autoResize="autoResize"></textarea>
@@ -78,7 +78,7 @@
 
                 <div class="p-col-4"></div>
                 <div class="p-col-4">
-                    <p-button *ngIf="!isButtonDisabled()" [style]="{'width': '100%'}" icon="pi pi-check"
+                    <p-button *ngIf="!isButtonDisabled()" [style]="{width: '100%'}" icon="pi pi-check"
                               (click)="save()" label="save Homework"
                               styleClass="p-button-success"></p-button>
                 </div>
@@ -90,26 +90,26 @@
 
                 <div class="p-col-3">
                     <h6>Number</h6>
-                    <input [style]="{'width': '100%'}" type="number" pInputText [(ngModel)]="numero">
+                    <input [style]="{width: '100%'}" type="number" pInputText [(ngModel)]="numero">
                 </div>
 
                 <div class="p-col-4">
                     <h6>true</h6>
-                    <input [style]="{'width': '100%'}" type="number" pInputText
+                    <input [style]="{width: '100%'}" type="number" pInputText
                            [(ngModel)]="homeworkQST.pointReponseJuste">
                 </div>
 
 
                 <div class="p-col-4">
                     <h6>false</h6>
-                    <input [style]="{'width': '100%'}" type="number" pInputText
+                    <input [style]="{width: '100%'}" type="number" pInputText
                            [(ngModel)]="homeworkQST.pointReponsefausse">
                 </div>
 
 
                 <div class="p-col-5 ">
                     <h6>Questions</h6>
-                    <textarea required [style]="{'width':'100%', 'padding': '10px'}" rows="1"
+                    <textarea required [style]="{width:'100%', padding: '10px'}" rows="1"
                               [(ngModel)]="homeworkQST.libelle"
                               pInputTextarea
                               autoResize="autoResize"></textarea>
@@ -118,14 +118,14 @@
 
                 <div class="p-col-5 ">
                     <h6>Answers</h6>
-                    <textarea required [style]="{'width':'100%', 'padding': '10px'}" rows="1"
+                    <textarea required [style]="{width:'100%', padding: '10px'}" rows="1"
                               [(ngModel)]="homeworkReponse.lib"
                               pInputTextarea
                               autoResize="autoResize"></textarea>
                 </div>
 
                 <div style="padding-top: 45px;" class="p-col-2">
-                    <p-button *ngIf="!isButtonDisabled()" [style]="{'width': '100%'}" icon="pi pi-check"
+                    <p-button *ngIf="!isButtonDisabled()" [style]="{width: '100%'}" icon="pi pi-check"
                               (click)="savePhraseBook()" label="Add"
                               styleClass="p-button-success"></p-button>
                 </div>
@@ -165,7 +165,7 @@
             <div *ngIf="typeHomeWork?.lib === TypeHomeWorkEnum.WATCH_IT" class="p-grid">
                 <div class="p-col-8 ">
                     <h6>Url video</h6>
-                    <textarea required [style]="{'width':'100%', 'padding': '10px'}" rows="1"
+                    <textarea required [style]="{width:'100%', padding: '10px'}" rows="1"
                               [(ngModel)]="homeWork.urlVideo"
                               pInputTextarea
                               autoResize="autoResize"></textarea>
@@ -173,7 +173,7 @@
 
                 <div style="margin-top: 30px;" class="p-col-2">
                     <p-button *ngIf="homeWork.urlVideo !== undefined && homeWork?.urlVideo.length > 5 "
-                              [style]="{'width': '100%'}"
+                              [style]="{width: '100%'}"
                               icon="pi pi-check"
                               (click)="saveHomeWork()" label="save Home Work"
                               styleClass="p-button-success"></p-button>
@@ -192,7 +192,7 @@
                 </div>
                 <div class="p-col-4">
                     <h6>Type of question</h6>
-                    <p-dropdown [style]="{'width':'100%'}" [(ngModel)]="homeworkQST.typeDeQuestion"
+                    <p-dropdown [style]="{width:'100%'}" [(ngModel)]="homeworkQST.typeDeQuestion"
                                 [options]="typeOfQuestions"
                                 inputId="type"
                                 optionLabel="lib" placeholder="Type of Question"
@@ -291,30 +291,30 @@
                         <div class="p-grid">
                             <div class="p-col-6">
                                 <h6>Title</h6>
-                                <input [style]="{'width': '100%'}" type="text" pInputText [(ngModel)]="homeworkQST.ref">
+                                <input [style]="{width: '100%'}" type="text" pInputText [(ngModel)]="homeworkQST.ref">
                             </div>
 
                             <div class="p-col-6">
                                 <h6>Part</h6>
-                                <input [style]="{'width': '100%'}" type="text" pInputText [(ngModel)]="part">
+                                <input [style]="{width: '100%'}" type="text" pInputText [(ngModel)]="part">
                             </div>
 
                             <div class="p-col-6">
                                 <h6>Image Url</h6>
-                                <input [style]="{'width': '100%'}" type="text" pInputText
+                                <input [style]="{width: '100%'}" type="text" pInputText
                                        [(ngModel)]="homeWork.urlImage">
                             </div>
 
                             <div class="p-col-6">
                                 <h6>Video Url</h6>
-                                <input [style]="{'width': '100%'}" type="text" pInputText
+                                <input [style]="{width: '100%'}" type="text" pInputText
                                        [(ngModel)]="homeWork.urlVideo">
                             </div>
 
 
                             <div class="p-col-12 ">
                                 <h6>Content</h6>
-                                <textarea required="required" [style]="{'width':'100%', 'padding': '10px'}" rows="2"
+                                <textarea required="required" [style]="{width:'100%', padding: '10px'}" rows="2"
                                           [(ngModel)]="homeworkQST.libelle"
                                           pInputTextarea
                                           placeholder="Example:
@@ -326,7 +326,7 @@
                                           autoResize="autoResize"></textarea>
                             </div>
                             <!--                            <div style="padding-top: 45px;" class="p-col-2">-->
-                            <!--                                <p-button [style]="{'width': '100%'}" icon="pi pi-check"-->
+                            <!--                                <p-button [style]="{width: '100%'}" icon="pi pi-check"-->
                             <!--                                          (click)="saveDrapAndDropHomeWork()" label="Add"-->
                             <!--                                          styleClass="p-button-success"></p-button>-->
                             <!--                            </div>-->
@@ -337,7 +337,7 @@
 
                             <div class="p-col-2">
                                 <h6>Number</h6>
-                                <input [style]="{'width': '100%'}" [(ngModel)]="homeworkReponse.numero"
+                                <input [style]="{width: '100%'}" [(ngModel)]="homeworkReponse.numero"
                                        pInputText
                                        type="number"
                                        placeholder="Answer number">
@@ -345,27 +345,27 @@
 
                             <div class="p-col-4">
                                 <h6>Word</h6>
-                                <input [style]="{'width': '100%'}" type="text" pInputText
+                                <input [style]="{width: '100%'}" type="text" pInputText
 
                                        [(ngModel)]="libelle">
                             </div>
                             <div class="p-col-6">
                                 <h6>Answers</h6>
-                                <input [style]="{'width': '100%'}" type="text" pInputText
+                                <input [style]="{width: '100%'}" type="text" pInputText
                                        [(ngModel)]="homeworkReponse.lib">
                             </div>
 
 
                             <div class="p-col-3">
                                 <h6>Correct answer</h6>
-                                <input [style]="{'width': '100%'}" [(ngModel)]="homeworkQST.pointReponseJuste"
+                                <input [style]="{width: '100%'}" [(ngModel)]="homeworkQST.pointReponseJuste"
                                        pInputText
                                        type="number"
                                        placeholder="True point">
                             </div>
                             <div class="p-col-3">
                                 <h6>Incorrect answer</h6>
-                                <input [style]="{'width': '100%'}" [(ngModel)]="homeworkQST.pointReponsefausse"
+                                <input [style]="{width: '100%'}" [(ngModel)]="homeworkQST.pointReponsefausse"
                                        type="number"
                                        pInputText
                                        placeholder="false point">
@@ -448,23 +448,23 @@
             <div *ngIf="typeHomeWork.lib === TypeHomeWorkEnum.DRAG_AND_DROP" class="p-grid">
                 <div class="p-col-4">
                     <h6>Image Url</h6>
-                    <input [style]="{'width': '100%'}" type="text" pInputText [(ngModel)]="homeWork.urlImage">
+                    <input [style]="{width: '100%'}" type="text" pInputText [(ngModel)]="homeWork.urlImage">
                 </div>
 
                 <div class="p-col-4">
                     <h6>Video Url</h6>
-                    <input [style]="{'width': '100%'}" type="text" pInputText [(ngModel)]="homeWork.urlVideo">
+                    <input [style]="{width: '100%'}" type="text" pInputText [(ngModel)]="homeWork.urlVideo">
                 </div>
 
                 <div class="p-col-4">
                     <h6>Title</h6>
-                    <input [style]="{'width': '100%'}" type="text" pInputText [(ngModel)]="homeworkQST.ref">
+                    <input [style]="{width: '100%'}" type="text" pInputText [(ngModel)]="homeworkQST.ref">
                 </div>
 
 
                 <div class="p-col-12 ">
                     <h6>Content</h6>
-                    <textarea required="required" [style]="{'width':'100%', 'padding': '10px'}" rows="2"
+                    <textarea required="required" [style]="{width:'100%', padding: '10px'}" rows="2"
                               [(ngModel)]="homeworkQST.libelle"
                               pInputTextarea
                               placeholder=" Example:Lucas goes to @school@ every day of the week. He has many subjects to @go@ to each school day: English, art, science, mathematics, gym, and history.
@@ -478,7 +478,7 @@ His @mother@ packs a big backpack full of @books@ and lunch for Lucas."
 
                 <div class="p-col-4">
                     <p-button [disabled]="homeworkQST.libelle === undefined || homeworkQST.libelle.length < 5 "
-                              [style]="{'width': '100%'}"
+                              [style]="{width: '100%'}"
                               icon="pi pi-check"
                               (click)="save()" label="save Home Work"
                               styleClass="p-button-success"></p-button>
@@ -543,7 +543,7 @@ His @mother@ packs a big backpack full of @books@ and lunch for Lucas."
     <div class="p-grid">
         <div class="p-col-6">
             <h6>Answers</h6>
-            <input [style]="{'width': '100%'}" type="text" pInputText
+            <input [style]="{width: '100%'}" type="text" pInputText
                    [(ngModel)]="selectedRps.lib">
         </div>
 

@@ -17,7 +17,7 @@
                         </div>
                     </div>
 
-                    <p-progressBar [style]="{'height': '2px'}" [showValue]="false"
+                    <p-progressBar [style]="{height: '2px'}" [showValue]="false"
                                    [value]="progressBarValue"></p-progressBar>
 
 
@@ -374,8 +374,8 @@
                                                     (ngModelChange)="showCheckButton=true; showDontKnowButton=false"
                                                     offLabel="False" onIcon="pi pi-check"
                                                     offIcon="pi pi-times"
-                                                    [style]="{'width': '7em',
-                                 'height': '23px'
+                                                    [style]="{width: '7em',
+                                 height: '23px'
                                  }">
                                     </p-toggleButton>
                                 </div>
@@ -489,7 +489,8 @@
 
     </div>
 </div>
-<p-dialog styleClass="dialogDict" [(visible)]="displayDictionaryDialog" position="right" [style]="{width: '27vw'}">
+<p-dialog styleClass="dialogDict" [(visible)]="displayDictionaryDialog" position="right"
+          [style]="{width: '27vw'}">
     <ng-template pTemplate="header">
         <h4 style="text-align: center">Dictionary</h4>
     </ng-template>
@@ -499,18 +500,18 @@
             <p-tabPanel header="Add new words">
                 <h6>Text</h6>
                 <textarea
-                        [style]="{'width': '100%',  'font-size': 'medium', 'border': '1px solid rgb(156, 39, 176)'}"
+                        [style]="{width: '100%',  fontSize: 'medium', border: '1px solid rgb(156, 39, 176)'}"
                         rows="2" [(ngModel)]="textSeleted"
                         pInputTextarea
                         autoResize="autoResize"></textarea>
                 <h6>Translation</h6>
                 <textarea
-                        [style]="{'width': '100%',  'font-size': 'medium', 'border': '1px solid rgb(156, 39, 176)'}"
+                        [style]="{width: '100%',  fontSize: 'medium', border: '1px solid rgb(156, 39, 176)'}"
                         rows="2" [(ngModel)]="synonymes"
                         pInputTextarea
                         autoResize="autoResize"></textarea>
 
-                <button [disabled]="textSeleted?.length < 3" [style]="{'width': '100%','margin-top': '35px'}"
+                <button [disabled]="textSeleted?.length < 3" [style]="{width: '100%',marginTop: '35px'}"
                         pButton
                         pRipple type="button"
                         label="Add to my dictionary" (click)="addToDictionary()"

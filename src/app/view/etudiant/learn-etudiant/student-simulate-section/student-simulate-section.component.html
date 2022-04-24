@@ -64,7 +64,7 @@
                 <ng-template pTemplate>
                     <p-listbox [options]="getLanguages()" (onChange)="getSelectedLanguage()"
                                [(ngModel)]="selectedLanguage" optionLabel="name"
-                               [style]="{'border':'none', 'width': '10rem'}"></p-listbox>
+                               [style]="{border:'none', width: '10rem'}"></p-listbox>
 
                 </ng-template>
             </p-overlayPanel>
@@ -228,7 +228,7 @@
 
                         <div class="p-col-6">
                             <p-chart type="doughnut" [options]="options" [data]="data"
-                                     [style]="{'width': '100%'}"></p-chart>
+                                     [style]="{width: '100%'}"></p-chart>
                         </div>
                     </div>
                 </div>
@@ -423,7 +423,7 @@
 </div>
 
 <p-dialog [(visible)]="showRatingLessonTemplate" [showHeader]="false"
-          [style]="{width: '70vw', 'border-radius': '5px'}">
+          [style]="{width: '70vw', borderRadius: '5px'}">
 
 
     <div class="p-grid" style="margin: 0!important;">

@@ -10,18 +10,18 @@
             <p-tabPanel header="Add new words">
                 <h6>Text</h6>
                 <textarea
-                        [style]="{'width': '100%',  'font-size': 'medium', 'border': '1px solid rgb(156, 39, 176)'}"
+                        [style]="{width: '100%',  fontSize: 'medium', border: '1px solid rgb(156, 39, 176)'}"
                         rows="2" [(ngModel)]="selectedNow.word"
                         pInputTextarea
                         autoResize="autoResize"></textarea>
                 <h6>Translation</h6>
                 <textarea
-                        [style]="{'width': '100%',  'font-size': 'medium', 'border': '1px solid rgb(156, 39, 176)'}"
+                        [style]="{width: '100%',  fontSize: 'medium', border: '1px solid rgb(156, 39, 176)'}"
                         rows="2" [(ngModel)]="selectedNow.definition"
                         pInputTextarea
                         autoResize="autoResize"></textarea>
 
-                <button [disabled]="selectedNow.word?.length < 3" [style]="{'width': '100%','margin-top': '35px'}"
+                <button [disabled]="selectedNow.word?.length < 3" [style]="{width: '100%',marginTop: '35px'}"
                         pButton
                         pRipple type="button"
                         label="Add to my dictionary" (click)="save()"

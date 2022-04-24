@@ -77,7 +77,7 @@
                 <ng-template pTemplate>
                     <p-listbox [options]="getLanguages()" (onChange)="getSelectedLanguage()"
                                [(ngModel)]="selectedLanguage" optionLabel="name"
-                               [style]="{'border':'none', 'width': '10rem'}"></p-listbox>
+                               [style]="{border:'none', width: '10rem'}"></p-listbox>
 
                 </ng-template>
             </p-overlayPanel>
@@ -111,310 +111,312 @@
                                 <!--                                        <div class="product-name"-->
                                 <!--                                             style="margin-bottom: 15px; background-color: orange; color: white">-->
                                 <!--                                            <h1>{{this.selectedsection.libelle}}</h1>-->
-                                <!--                                        </div>-->
-                                <!-- <iframe *ngIf=" this.selectedsection.libelle != 'Watch the video' && this.selectedsection.urlImage != null"
-                                           [src]='photoURL() | safe' loading="lazy" width="400" height="200" ></iframe> -->
-                                <div style="width: 100%;margin: 0 auto">
-                                    <img *ngIf=" this.selectedsection?.urlImage && !this.selectedsection.urlVideo"
-                                         src="{{photoURL()}}"
-                                         style="width: 100%">
-                                    <iframe *ngIf="this.selectedsection?.urlVideo && !this.selectedsection?.urlImage"
-                                            [src]='URLVideo() | safe'
-                                            allowfullscreen loading="lazy"
-                                            style="width: 100% ;height: 500px;"></iframe>
-                                    <div *ngIf="this.selectedsection?.urlVideo && this.selectedsection?.urlImage"
-                                         style="width: 100%;">
-                                        <img src="{{photoURL()}}" style="width: 100%">
-                                        <div>
-                                            <iframe [src]='URLVideo() | safe' allowfullscreen
-                                                    loading="lazy" style="width: 100%;"></iframe>
-                                        </div>
-
+                                <! --
+                            </div>
+                            -->
+                            <!-- <iframe *ngIf=" this.selectedsection.libelle != 'Watch the video' && this.selectedsection.urlImage != null"
+                                       [src]='photoURL() | safe' loading="lazy" width="400" height="200" ></iframe> -->
+                            <div style="width: 100%;margin: 0 auto">
+                                <img *ngIf=" this.selectedsection?.urlImage && !this.selectedsection.urlVideo"
+                                     src="{{photoURL()}}"
+                                     style="width: 100%">
+                                <iframe *ngIf="this.selectedsection?.urlVideo && !this.selectedsection?.urlImage"
+                                        [src]='URLVideo() | safe'
+                                        allowfullscreen loading="lazy"
+                                        style="width: 100% ;height: 500px;"></iframe>
+                                <div *ngIf="this.selectedsection?.urlVideo && this.selectedsection?.urlImage"
+                                     style="width: 100%;">
+                                    <img src="{{photoURL()}}" style="width: 100%">
+                                    <div>
+                                        <iframe [src]='URLVideo() | safe' allowfullscreen
+                                                loading="lazy" style="width: 100%;"></iframe>
                                     </div>
-                                    <img *ngIf="!this.selectedsection?.urlImage && !this.selectedsection?.urlVideo"
-                                         src="../../../../../assets/notfound.jpg" style="width: 100%">
+
+                                </div>
+                                <img *ngIf="!this.selectedsection?.urlImage && !this.selectedsection?.urlVideo"
+                                     src="../../../../../assets/notfound.jpg" style="width: 100%">
 
 
-                                    <div *ngIf=" this.selectedsection?.contenu != null && this.selectedsection?.urlVideo == null">
-                                        <h3 (mouseup)="dict()"
-                                            style=" background-color: white;white-space: pre-wrap; font-family: Great Vibes, cursive; font-size: 200%;line-height: 60px; text-align: left ;margin-left: 50px ;">{{this.selectedsection?.contenu}}</h3>
-                                    </div>
+                                <div *ngIf=" this.selectedsection?.contenu != null && this.selectedsection?.urlVideo == null">
+                                    <h3 (mouseup)="dict()"
+                                        style=" background-color: white;white-space: pre-wrap; font-family: Great Vibes, cursive; font-size: 200%;line-height: 60px; text-align: left ;margin-left: 50px ;">{{this.selectedsection?.contenu}}</h3>
                                 </div>
                             </div>
-                            <div *ngIf="showVocabulary===true" class="p-col">
-                                <app-vocabulary-section-prof (someEvent)="return($event)"></app-vocabulary-section-prof>
-                            </div>
+                        </div>
+                        <div *ngIf="showVocabulary===true" class="p-col">
+                            <app-vocabulary-section-prof (someEvent)="return($event)"></app-vocabulary-section-prof>
                         </div>
                     </div>
+                </div>
 
-                    <div *ngIf="quizExist && selectedsection?.categorieSection?.numeroOrder !== 2 " class="p-col quiz">
-                        <app-quiz-preview-prof *ngIf="this.selectedQuiz?.section?.id === this.selectedsection?.id">
-                        </app-quiz-preview-prof>
+                <div *ngIf="quizExist && selectedsection?.categorieSection?.numeroOrder !== 2 " class="p-col quiz">
+                    <app-quiz-preview-prof *ngIf="this.selectedQuiz?.section?.id === this.selectedsection?.id">
+                    </app-quiz-preview-prof>
+                </div>
+
+                <div *ngIf="selectedsection?.categorieSection?.numeroOrder === 2" class="p-col">
+                    <app-home-work-review></app-home-work-review>
+                </div>
+
+
+                <div class="p-grid"
+                     style="background: #263238; border-top: 5px solid #f4f4f4;">
+                    <div class="p-col-4">
+                        <button *ngIf="this.selectedsection.numeroOrder !== 1"
+                                (click)="PreviousSection(selectedsection)"
+                                class="ngFlexyOrangeButton" icon="pi pi-caret-left" id="previous"
+                                [label]="previousSection(selectedsection)" pButton pRipple
+                                type="button"></button>
                     </div>
 
-                    <div *ngIf="selectedsection?.categorieSection?.numeroOrder === 2" class="p-col">
-                        <app-home-work-review></app-home-work-review>
+
+                    <div *ngIf="!webSocketService.isInSession" class="p-col-4" style="text-align: center">
                     </div>
-
-
-                    <div class="p-grid"
-                         style="background: #263238; border-top: 5px solid #f4f4f4;">
-                        <div class="p-col-4">
-                            <button *ngIf="this.selectedsection.numeroOrder !== 1"
-                                    (click)="PreviousSection(selectedsection)"
-                                    class="ngFlexyOrangeButton" icon="pi pi-caret-left" id="previous"
-                                    [label]="previousSection(selectedsection)" pButton pRipple
-                                    type="button"></button>
-                        </div>
-
-
-                        <div *ngIf="!webSocketService.isInSession" class="p-col-4" style="text-align: center">
-                        </div>
-                        <div *ngIf="webSocketService.isInSession" class="p-col-4" style="text-align: center">
-                            <button
-                                    (click)="showSummaryFct()"
-                                    [style]="{'width': '100%','border': '2px solid #ff725e !important'}"
-                                    *ngIf="!showFlowMeButton && (selectedsection?.id === sectionStandard[sectionStandard.length - 1]?.id ||
+                    <div *ngIf="webSocketService.isInSession" class="p-col-4" style="text-align: center">
+                        <button
+                                (click)="showSummaryFct()"
+                                [style]="{width: '100%',border: '2px solid #ff725e !important'}"
+                                *ngIf="!showFlowMeButton && (selectedsection?.id === sectionStandard[sectionStandard.length - 1]?.id ||
                                             selectedsection?.categorieSection?.superCategorieSection?.libelle === 'Additional')"
-                                    class="ngFlexyBlackButton" icon="pi pi-check" label="SUMMARY" pButton pRipple
-                                    type="button"></button>
+                                class="ngFlexyBlackButton" icon="pi pi-check" label="SUMMARY" pButton pRipple
+                                type="button"></button>
 
-                            <button *ngIf="showFlowMeButton" pButton pRipple type="button"
-                                    (click)="goToSection(selectedsection, 'FLOW_ME')"
-                                    [style]="{'width': '100%',    'background': '#263238', 'border': '2px solid', 'font-weight': '800', 'color': '#ff725e'}"
-                                    label="FOLLOW ME" class="p-button-outlined p-button-warning">
-                            </button>
+                        <button *ngIf="showFlowMeButton" pButton pRipple type="button"
+                                (click)="goToSection(selectedsection, 'FLOW_ME')"
+                                [style]="{width: '100%',    background: '#263238', border: '2px solid', fontWight: '800', color: '#ff725e'}"
+                                label="FOLLOW ME" class="p-button-outlined p-button-warning">
+                        </button>
 
-                        </div>
-
-
-                        <div class="p-col-4" style="text-align: end">
-                            <button *ngIf="selectedsection?.id !== itemssection2[itemssection2.length - 1]?.id"
-                                    (click)="NextSection(selectedsection)"
-                                    class="ngFlexyOrangeButton" icon="pi pi-caret-right" id="next"
-                                    [label]="nextSection(selectedsection)"
-                                    pButton pRipple
-                                    iconPos="right"
-                                    type="button"></button>
-                        </div>
                     </div>
 
 
+                    <div class="p-col-4" style="text-align: end">
+                        <button *ngIf="selectedsection?.id !== itemssection2[itemssection2.length - 1]?.id"
+                                (click)="NextSection(selectedsection)"
+                                class="ngFlexyOrangeButton" icon="pi pi-caret-right" id="next"
+                                [label]="nextSection(selectedsection)"
+                                pButton pRipple
+                                iconPos="right"
+                                type="button"></button>
+                    </div>
                 </div>
 
 
-                <div *ngIf="showSummary" class="p-col-9">
-                    <div class="p-grid" style="background-color: white!important;">
-                        <div style="text-align: center" class="p-col-12"><h5 class="LessonSummary">Lesson summary</h5>
-                        </div>
+            </div>
 
-                        <div class="p-col-6">
-                            <div class="p-grid keys">
-                                <div class="p-col-8"><i style="background: #ff6384;  width: 20px; height: 20px;
+
+            <div *ngIf="showSummary" class="p-col-9">
+                <div class="p-grid" style="background-color: white!important;">
+                    <div style="text-align: center" class="p-col-12"><h5 class="LessonSummary">Lesson summary</h5>
+                    </div>
+
+                    <div class="p-col-6">
+                        <div class="p-grid keys">
+                            <div class="p-col-8"><i style="background: #ff6384;  width: 20px; height: 20px;
                                  margin: 1px 0 -5px 0; border-radius: 36px;" class="pi pi-circle-fill"></i>
-                                    Key sections
-                                </div>
-                                <div class="p-col-4 keysValue">
-                                    {{finishedSection }}
-                                    of {{ sectionStandard?.length}}
-                                </div>
+                                Key sections
                             </div>
-                            <div class="p-grid keys">
-                                <div class="p-col-8"><i style="background: #FFCE56;  width: 20px;margin: 1px 0 -5px 0;
+                            <div class="p-col-4 keysValue">
+                                {{finishedSection }}
+                                of {{ sectionStandard?.length}}
+                            </div>
+                        </div>
+                        <div class="p-grid keys">
+                            <div class="p-col-8"><i style="background: #FFCE56;  width: 20px;margin: 1px 0 -5px 0;
                                  height: 20px; border-radius: 36px;" class="pi pi-circle-fill"></i>
-                                    Additional sections
-                                </div>
-                                <div class="p-col-4 keysValue">
-                                    <i class="pi pi-circle-fill"></i>   {{finishedAdditionalSection }}
-                                    of {{ sectionAdditional?.length}}
-                                </div>
+                                Additional sections
                             </div>
-                            <div class="p-grid keys">
-                                <div class="p-col-8">Exercise completed</div>
-                                <div class="p-col-4 keysValue">8</div>
-                            </div>
-                            <div class="p-grid keys">
-                                <div class="p-col-8">Words added</div>
-                                <div class="p-col-4 keysValue">
-                                    {{itemsDict?.length}}
-                                </div>
+                            <div class="p-col-4 keysValue">
+                                <i class="pi pi-circle-fill"></i>   {{finishedAdditionalSection }}
+                                of {{ sectionAdditional?.length}}
                             </div>
                         </div>
-
-
-                        <div class="p-col-6">
-                            <p-chart type="doughnut" [options]="options" [data]="data"
-                                     [style]="{'width': '100%'}"></p-chart>
+                        <div class="p-grid keys">
+                            <div class="p-col-8">Exercise completed</div>
+                            <div class="p-col-4 keysValue">8</div>
                         </div>
-
-                        <div class="p-col-4"></div>
-                        <div style="margin-top: 30px " class="p-col-4">
-                            <button *ngIf="showFinishLesson && webSocketService.isInSession"
-                                    [style]="{'width': '100%','color': '#dd933c','font-size': 'medium', 'font-weight': 'bold'}"
-                                    pButton pRipple
-                                    (click)="showConfirm()"
-                                    type="button" label="FINISH LESSON"
-                                    class="p-button-outlined p-button-warning"></button>
-
+                        <div class="p-grid keys">
+                            <div class="p-col-8">Words added</div>
+                            <div class="p-col-4 keysValue">
+                                {{itemsDict?.length}}
+                            </div>
                         </div>
-                        <div class="p-col-4"></div>
                     </div>
+
+
+                    <div class="p-col-6">
+                        <p-chart type="doughnut" [options]="options" [data]="data"
+                                 [style]="{width: '100%'}"></p-chart>
+                    </div>
+
+                    <div class="p-col-4"></div>
+                    <div style="margin-top: 30px " class="p-col-4">
+                        <button *ngIf="showFinishLesson && webSocketService.isInSession"
+                                [style]="{width: '100%',color: '#dd933c',fontSize: 'medium', fontWeight: 'bold'}"
+                                pButton pRipple
+                                (click)="showConfirm()"
+                                type="button" label="FINISH LESSON"
+                                class="p-button-outlined p-button-warning"></button>
+
+                    </div>
+                    <div class="p-col-4"></div>
+                </div>
+            </div>
+
+
+            <div class="p-col-3 product-grid-item">
+                <div class="skipeContainer">
+                    <img *ngIf="webSocketService.isInSession" src="./assets/icons/icon-book.png"
+                         alt="">
+                    <img *ngIf="!webSocketService.isInSession" width="70px"
+                         src="./assets/icons/icons-yeux-cartoon.png" alt="">
+                    <h4 *ngIf="webSocketService.isInSession && !lessonStarted" id="startText">Let's Start</h4>
+                    <h4 *ngIf="webSocketService.isInSession && lessonStarted" id="startText">Lesson started</h4>
+                    <h4 *ngIf="webSocketService.isInSession && lessonStarted" id="startText">0h: 59m: 00s</h4>
+                    <h4 *ngIf="!webSocketService.isInSession" id="startText">Teacher's preview mode</h4>
                 </div>
 
+                <div class="p-inputgroup" style="margin-bottom: 10px;">
+                    <input type="search" pInputText
+                           [(ngModel)]="searchInput"
+                           placeholder="Enter a word">
+                    <button type="button" pButton pRipple
+                            class="btndark"
+                            (click)="findAllSynonimes(searchInput); opdict.toggle($event)"
+                            icon="pi pi-plus"></button>
+                </div>
 
-                <div class="p-col-3 product-grid-item">
-                    <div class="skipeContainer">
-                        <img *ngIf="webSocketService.isInSession" src="./assets/icons/icon-book.png"
-                             alt="">
-                        <img *ngIf="!webSocketService.isInSession" width="70px"
-                             src="./assets/icons/icons-yeux-cartoon.png" alt="">
-                        <h4 *ngIf="webSocketService.isInSession && !lessonStarted" id="startText">Let's Start</h4>
-                        <h4 *ngIf="webSocketService.isInSession && lessonStarted" id="startText">Lesson started</h4>
-                        <h4 *ngIf="webSocketService.isInSession && lessonStarted" id="startText">0h: 59m: 00s</h4>
-                        <h4 *ngIf="!webSocketService.isInSession" id="startText">Teacher's preview mode</h4>
-                    </div>
+                <p-overlayPanel #opdict [showCloseIcon]="false" [style]="{width: '340px'}">
+                    <ng-template pTemplate>
+                        <div style="cursor: pointer" (click)="addToDictionary('SEARCH'); opdict.hide()">
+                            <div class="dict">{{searchInput}}</div>
+                            <div class="dict">:</div>
+                            <div class="dict">{{synonymes}}</div>
+                        </div>
 
-                    <div class="p-inputgroup" style="margin-bottom: 10px;">
-                        <input type="search" pInputText
-                               [(ngModel)]="searchInput"
-                               placeholder="Enter a word">
-                        <button type="button" pButton pRipple
-                                class="btndark"
-                                (click)="findAllSynonimes(searchInput); opdict.toggle($event)"
-                                icon="pi pi-plus"></button>
-                    </div>
-
-                    <p-overlayPanel #opdict [showCloseIcon]="false" [style]="{width: '340px'}">
-                        <ng-template pTemplate>
-                            <div style="cursor: pointer" (click)="addToDictionary('SEARCH'); opdict.hide()">
-                                <div class="dict">{{searchInput}}</div>
-                                <div class="dict">:</div>
-                                <div class="dict">{{synonymes}}</div>
-                            </div>
-
-                        </ng-template>
-                    </p-overlayPanel>
-                    <div class="product-grid-item-content" style="background-color: white;">
-                        <div class="card">
-                            <p-tabView [(activeIndex)]="activeIndexForTabView" (onChange)="tabViewChange()"
-                                       styleClass="tabview-custom">
-                                <p-tabPanel>
-                                    <ng-template pTemplate="header">
-                                        <img src="./assets/icons/icons-lesson.png"
-                                             pTooltip="Lessons" tooltipPosition="top"
-                                             class="homeWorkIcon">
-                                    </ng-template>
-                                    <div id="categoriess" style="margin-top: -10px">
-                                        <div *ngFor="let section of sectionStandard"
-                                             [style.border-left]="(section?.id === sectionStandard[0]?.id)? 'none': '2px solid #757f8a'"
-                                             class="list-group">
-                                            <i *ngIf="sectionIsFinished(section)"
-                                               [style.color]="(section?.categorieSection?.libelle) == (this.selectedsection?.categorieSection?.libelle)? '#ff725e' :'#757f8a' "
-                                               id="check-icon" class="pi pi-check-circle"></i>
+                    </ng-template>
+                </p-overlayPanel>
+                <div class="product-grid-item-content" style="background-color: white;">
+                    <div class="card">
+                        <p-tabView [(activeIndex)]="activeIndexForTabView" (onChange)="tabViewChange()"
+                                   styleClass="tabview-custom">
+                            <p-tabPanel>
+                                <ng-template pTemplate="header">
+                                    <img src="./assets/icons/icons-lesson.png"
+                                         pTooltip="Lessons" tooltipPosition="top"
+                                         class="homeWorkIcon">
+                                </ng-template>
+                                <div id="categoriess" style="margin-top: -10px">
+                                    <div *ngFor="let section of sectionStandard"
+                                         [style.border-left]="(section?.id === sectionStandard[0]?.id)? 'none': '2px solid #757f8a'"
+                                         class="list-group">
+                                        <i *ngIf="sectionIsFinished(section)"
+                                           [style.color]="(section?.categorieSection?.libelle) == (this.selectedsection?.categorieSection?.libelle)? '#ff725e' :'#757f8a' "
+                                           id="check-icon" class="pi pi-check-circle"></i>
 
 
-                                            <i *ngIf="!sectionIsFinished(section)"
-                                               [style.background]="(section?.categorieSection?.libelle) == (this.selectedsection?.categorieSection?.libelle)? '#ff725e' :'#757f8a' "
-                                               [style.color]="(section?.categorieSection?.libelle) == (this.selectedsection?.categorieSection?.libelle)? '#ff725e' :'#757f8a' "
-                                               id="check-icon" class="pi pi-times-circle"></i>
+                                        <i *ngIf="!sectionIsFinished(section)"
+                                           [style.background]="(section?.categorieSection?.libelle) == (this.selectedsection?.categorieSection?.libelle)? '#ff725e' :'#757f8a' "
+                                           [style.color]="(section?.categorieSection?.libelle) == (this.selectedsection?.categorieSection?.libelle)? '#ff725e' :'#757f8a' "
+                                           id="check-icon" class="pi pi-times-circle"></i>
 
 
-                                            <a (click)="allerVerSection(section)"
-                                               [style.color]="(section?.categorieSection?.libelle) == (this.selectedsection?.categorieSection?.libelle)? '#ff725e' :'#757f8a' "
-                                               class="list-item">
-                                                {{section?.categorieSection?.libelle}}
-                                            </a>
-                                        </div>
-
-
-                                        <div style="background-color: #e9ecef;margin-top: 33px; margin-bottom: -13px;">
-                                            <h6 style="color: black ">ADDITIONAL</h6>
-                                        </div>
-
-
-                                        <div *ngFor="let section of sectionAdditional"
-                                             [style.border-left]="(section?.id === sectionAdditional[0]?.id)? 'none': '2px solid #757f8a'"
-                                             class="list-group">
-                                            <i *ngIf="!sectionIsFinished(section)" id="check-icon"
-                                               [style.color]="(section?.categorieSection?.libelle) == (this.selectedsection?.categorieSection?.libelle)? '#ff725e' :'#757f8a' "
-                                               [style.background]="(section?.categorieSection?.libelle) == (this.selectedsection?.categorieSection?.libelle)? '#ff725e' :'#757f8a' "
-                                               class="pi pi-times-circle"></i>
-
-
-                                            <i *ngIf="sectionIsFinished(section)" id="check-icon"
-                                               [style.color]="(section?.categorieSection?.libelle) == (this.selectedsection?.categorieSection?.libelle)? '#ff725e' :'#757f8a' "
-                                               class="pi pi-check-circle"></i>
-
-
-                                            <a (click)="allerVerSection(section)"
-                                               [style.color]="(section?.categorieSection?.libelle) == (this.selectedsection?.categorieSection?.libelle)? '#ff725e' :'#757f8a' "
-                                               class="list-item">
-                                                {{section?.categorieSection?.libelle}}
-                                            </a>
-                                        </div>
-
-
+                                        <a (click)="allerVerSection(section)"
+                                           [style.color]="(section?.categorieSection?.libelle) == (this.selectedsection?.categorieSection?.libelle)? '#ff725e' :'#757f8a' "
+                                           class="list-item">
+                                            {{section?.categorieSection?.libelle}}
+                                        </a>
                                     </div>
 
 
-                                </p-tabPanel>
+                                    <div style="background-color: #e9ecef;margin-top: 33px; margin-bottom: -13px;">
+                                        <h6 style="color: black ">ADDITIONAL</h6>
+                                    </div>
 
-                                <p-tabPanel header="Header III">
-                                    <ng-template pTemplate="header">
-                                        <img src="./assets/icons/icon-dictionnaire.png"
-                                             pTooltip="Dictionary" tooltipPosition="top"
-                                             class="homeWorkIcon">
+
+                                    <div *ngFor="let section of sectionAdditional"
+                                         [style.border-left]="(section?.id === sectionAdditional[0]?.id)? 'none': '2px solid #757f8a'"
+                                         class="list-group">
+                                        <i *ngIf="!sectionIsFinished(section)" id="check-icon"
+                                           [style.color]="(section?.categorieSection?.libelle) == (this.selectedsection?.categorieSection?.libelle)? '#ff725e' :'#757f8a' "
+                                           [style.background]="(section?.categorieSection?.libelle) == (this.selectedsection?.categorieSection?.libelle)? '#ff725e' :'#757f8a' "
+                                           class="pi pi-times-circle"></i>
+
+
+                                        <i *ngIf="sectionIsFinished(section)" id="check-icon"
+                                           [style.color]="(section?.categorieSection?.libelle) == (this.selectedsection?.categorieSection?.libelle)? '#ff725e' :'#757f8a' "
+                                           class="pi pi-check-circle"></i>
+
+
+                                        <a (click)="allerVerSection(section)"
+                                           [style.color]="(section?.categorieSection?.libelle) == (this.selectedsection?.categorieSection?.libelle)? '#ff725e' :'#757f8a' "
+                                           class="list-item">
+                                            {{section?.categorieSection?.libelle}}
+                                        </a>
+                                    </div>
+
+
+                                </div>
+
+
+                            </p-tabPanel>
+
+                            <p-tabPanel header="Header III">
+                                <ng-template pTemplate="header">
+                                    <img src="./assets/icons/icon-dictionnaire.png"
+                                         pTooltip="Dictionary" tooltipPosition="top"
+                                         class="homeWorkIcon">
+                                </ng-template>
+
+                                <p-table [paginator]="true" [rowHover]="true" [rows]="5" [value]="itemsDict"
+                                         dataKey="id"
+                                         id="wrd">
+
+                                    <ng-template let-dict pTemplate="body">
+                                        <tr>
+
+                                            <td (click)="dictEdit(dict)"
+                                                style=" text-align: center; cursor: pointer"><b
+                                                    style=" color: black;">{{dict.word}}</b> : <b
+                                                    style=" color: orange;">{{dict.definition}}</b>
+                                            </td>
+                                        </tr>
                                     </ng-template>
 
-                                    <p-table [paginator]="true" [rowHover]="true" [rows]="5" [value]="itemsDict"
-                                             dataKey="id"
-                                             id="wrd">
-
-                                        <ng-template let-dict pTemplate="body">
-                                            <tr>
-
-                                                <td (click)="dictEdit(dict)"
-                                                    style=" text-align: center; cursor: pointer"><b
-                                                        style=" color: black;">{{dict.word}}</b> : <b
-                                                        style=" color: orange;">{{dict.definition}}</b>
-                                                </td>
-                                            </tr>
-                                        </ng-template>
-
-                                    </p-table>
+                                </p-table>
 
 
-                                </p-tabPanel>
+                            </p-tabPanel>
 
-                                <p-tabPanel header="Header III">
-                                    <ng-template pTemplate="header">
-                                        <img src="./assets/icons/icon-chat.png"
-                                             pTooltip="Chat" tooltipPosition="top"
-                                             class="homeWorkIcon">
-                                        <p-badge *ngIf="badgeNrMsg !== 0" [value]="badgeNrMsg.toString()"
-                                                 severity="warning"
-                                                 styleClass="mr-1"></p-badge>
+                            <p-tabPanel header="Header III">
+                                <ng-template pTemplate="header">
+                                    <img src="./assets/icons/icon-chat.png"
+                                         pTooltip="Chat" tooltipPosition="top"
+                                         class="homeWorkIcon">
+                                    <p-badge *ngIf="badgeNrMsg !== 0" [value]="badgeNrMsg.toString()"
+                                             severity="warning"
+                                             styleClass="mr-1"></p-badge>
 
-                                    </ng-template>
+                                </ng-template>
 
-                                    <app-chat id="chat"></app-chat>
+                                <app-chat id="chat"></app-chat>
 
-                                </p-tabPanel>
-                            </p-tabView>
-                        </div>
-
-
+                            </p-tabPanel>
+                        </p-tabView>
                     </div>
+
+
                 </div>
             </div>
         </div>
-
     </div>
 
+</div>
 
-    <app-etudiant-review-view></app-etudiant-review-view>
-    <app-dictionary-edit></app-dictionary-edit>
-    <app-translate></app-translate>
+
+<app-etudiant-review-view></app-etudiant-review-view>
+<app-dictionary-edit></app-dictionary-edit>
+<app-translate></app-translate>
 </div>
 
 <p-toast position="bottom-center" key="c" (onClose)="onReject()" [baseZIndex]="5000">
@@ -448,18 +450,18 @@
             <p-tabPanel header="Add new words">
                 <h6>Text</h6>
                 <textarea
-                        [style]="{'width': '100%',  'font-size': 'medium', 'border': '1px solid rgb(156, 39, 176)'}"
+                        [style]="{width: '100%',  fontSize: 'medium', border: '1px solid rgb(156, 39, 176)'}"
                         rows="2" [(ngModel)]="selectedNow.word"
                         pInputTextarea
                         autoResize="autoResize"></textarea>
                 <h6>Translation</h6>
                 <textarea
-                        [style]="{'width': '100%',  'font-size': 'medium', 'border': '1px solid rgb(156, 39, 176)'}"
+                        [style]="{width: '100%',  fontSize: 'medium', border: '1px solid rgb(156, 39, 176)'}"
                         rows="2" [(ngModel)]="selectedNow.definition"
                         pInputTextarea
                         autoResize="autoResize"></textarea>
 
-                <button [disabled]="selectedNow.word?.length < 3" [style]="{'width': '100%','margin-top': '35px'}"
+                <button [disabled]="selectedNow.word?.length < 3" [style]="{width: '100%',marginTop: '35px'}"
                         pButton
                         pRipple type="button"
                         label="Add to my dictionary" (click)="addToDictionary('SELECT')"

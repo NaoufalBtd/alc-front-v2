@@ -456,7 +456,6 @@ export class ScheduleLocalComponent implements OnInit {
         this.parcoursService.afficheOneSectionByProf(this.selectedSchedule.cours).subscribe(
             dataSection => {
                 this.webSocketService.saveCurrentSection(this.prof.id, dataSection);
-
             }
         );
         console.log(this.selectedsection);

@@ -32,18 +32,18 @@
     <ng-template pTemplate="content">
         <h6>Text</h6>
         <textarea
-                [style]="{'width': '100%',  'font-size': 'medium', 'border': '1px solid rgb(156, 39, 176)'}"
+                [style]="{width: '100%',  fontSize: 'medium', border: '1px solid rgb(156, 39, 176)'}"
                 rows="2" [(ngModel)]="textSeleted"
                 pInputTextarea
                 autoResize="autoResize"></textarea>
         <h6>Translation</h6>
         <textarea
-                [style]="{'width': '100%',  'font-size': 'medium', 'border': '1px solid rgb(156, 39, 176)'}"
+                [style]="{width: '100%',  fontSize: 'medium', border: '1px solid rgb(156, 39, 176)'}"
                 rows="2" [(ngModel)]="synonymes"
                 pInputTextarea
                 autoResize="autoResize"></textarea>
 
-        <button [disabled]="textSeleted?.length < 3" [style]="{'width': '100%','margin-top': '35px'}"
+        <button [disabled]="textSeleted?.length < 3" [style]="{width: '100%',marginTop: '35px'}"
                 pButton
                 pRipple type="button"
                 label="get translation" (click)="getTranslation()"

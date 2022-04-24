@@ -3,7 +3,7 @@
         <h5>Levels</h5>
         <p-dropdown [options]="parcours" [(ngModel)]="selectedparcours"
                     (ngModelChange)="getCours()"
-                    [style]="{'width': '100%'}"
+                    [style]="{width: '100%'}"
                     optionLabel="libelle" [filter]="true" filterBy="libelle" [showClear]="true"
                     placeholder="Select a Level">
         </p-dropdown>
@@ -13,7 +13,7 @@
     <div class="p-col-3 ">
         <h5>Courses</h5>
         <p-dropdown [options]="cours" [(ngModel)]="selectedcours"
-                    [style]="{'width': '100%'}"
+                    [style]="{width: '100%'}"
                     optionLabel="libelle" [filter]="true" filterBy="libelle" [showClear]="true"
                     placeholder="Select a Course">
         </p-dropdown>
@@ -254,7 +254,7 @@
         <div class="p-col-12">
             <h6 *ngIf="selectedHomeWork.libelle !== 'READING'">Question</h6>
             <h6 *ngIf="selectedHomeWork.libelle === 'READING'">Content</h6>
-            <textarea [style]="{'width':'100%', 'padding': '10px'}" rows="5" [(ngModel)]="qstWriteItUp.libelle"
+            <textarea [style]="{width:'100%', padding: '10px'}" rows="5" [(ngModel)]="qstWriteItUp.libelle"
                       pInputTextarea
                       autoResize="autoResize"></textarea>
         </div>

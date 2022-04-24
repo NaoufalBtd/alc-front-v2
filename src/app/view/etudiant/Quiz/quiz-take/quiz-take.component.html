@@ -13,7 +13,7 @@
 
     <div style="background-color: #dee2e6" class="p-grid">
         <div style="  background-color: transparent!important;" class="p-col-12">
-            <p-progressBar [style]="{'height': '6px'}" [showValue]="false"
+            <p-progressBar [style]="{height: '6px'}" [showValue]="false"
                            [value]="valueOf(question.numero)"></p-progressBar>
         </div>
     </div>
@@ -254,8 +254,8 @@
                                     (ngModelChange)="showCheckButton=true; showDontKnowButton=false"
                                     offLabel="False" onIcon="pi pi-check"
                                     offIcon="pi pi-times"
-                                    [style]="{'width': '7em',
-                                 'height': '23px'
+                                    [style]="{width: '7em',
+                                 height: '23px'
                                  }">
                     </p-toggleButton>
                 </div>
