@@ -22,7 +22,9 @@ export const environment = {
   profUrl: 'http://54.37.9.19:8036/prof/',
   etudiantUrl: 'http://54.37.9.19:8036/etudiant/',
   publicUrl: 'http://54.37.9.19:8036/public/',
-  socketUrl: 'wss://54.37.9.19:8036/chat',
+  socketUrl: 'ws://54.37.9.19:8036/chat',
+  // socketUrl: 'wss://alc-back-v1.herokuapp.com/chat',
+
 
 };
 
