@@ -16,14 +16,11 @@ export class ResetPasswordComponent implements OnInit {
     }
 
     public resetPassword() {
-        console.log(this.username);
         this.userService.resetPassword(this.username).subscribe(
             data => {
-                if (data === 0) {
-                    alert('please check your email to get the new password.');
-                } else {
-                    alert('Your email is not valid, please try again or contact administrator for more information.');
-                }
+
+                alert(data);
+
             }, error => {
                 console.log(error);
             }
