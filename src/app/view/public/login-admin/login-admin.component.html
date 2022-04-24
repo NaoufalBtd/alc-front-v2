@@ -22,7 +22,7 @@
                     <div class="login-input">
                         <input #prt [(ngModel)]="admin.password" autofocus id="password" pInputText required type="password"/>
                         <small *ngIf="!admin.password" class="p-invalid">Password is required.</small>
-                        <p-message id="log-pass" severity="error" style="visibility: hidden"
+                        <p-message id="log-pass" severity="error"
                                    text="Login or Password invalid"></p-message>
                     </div>
                     <!-- </h:panelGroup> -->
