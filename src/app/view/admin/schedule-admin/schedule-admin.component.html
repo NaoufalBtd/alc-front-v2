@@ -56,57 +56,39 @@
 
         <ejs-schedule #scheduleObj width='100%' [selectedDate]="selectedDate" [readonly]="false"
                       [showQuickInfo]="true"
-                      (actionComplete)="onActionComplete()"
+                      (actionComplete)="onActionComplete($event)"
                       [eventSettings]="eventSettings"
+                      [timeScale]="timeScale"
                       (popupOpen)="onPopupOpen($event)">
-            <e-views>
-                <e-view option="Day" [timeScale]='timeScale'></e-view>
-                <e-view option="Week" [timeScale]='timeScale'></e-view>
-                <e-view option="WorkWeek" [timeScale]='timeScale'></e-view>
-                <e-view option="Month" [timeScale]='timeScale' [showWeekend]="showWeekend"></e-view>
-            </e-views>
-
-
-            <!--     Header template -->
-            <ng-template #quickInfoTemplatesHeader>
-                <div>
-                    <div class="e-popup-header">
-                        <div class="e-header-icon-wrapper">
-                            <button class="e-edit e-control e-btn e-lib e-flat e-round e-small e-icon-btn" title="Edit"
-                                    (click)="onEditClick()">
-                            </button>
-                            <button class=" e-control e-btn e-lib e-flat e-round delete-btn e-small e-icon-btn"
-                                    title="Delete"
-                                    (click)="showDialog()">
-                                <span class="e-btn-icon e-icons e-delete-icon"></span>
-                            </button>
-                            <button class="e-close e-control e-btn e-lib e-flat e-round e-small e-icon-btn"
-                                    title="Close"
-                                    (click)="onCloseClick()">
-                            </button>
+            <e-resources>
+                <e-resource field='profsId' title='prenom' name='profs' [dataSource]='groupeStudent'
+                            [allowMultiple]='true' groupIDField="prenom" textField='prenom' idField='id'
+                            colorField='#ff8800'>
+                </e-resource>
+            </e-resources>
+            <ng-template #resourceHeaderTemplate let-data>
+                <div class="template-wrap">
+                    <div class="employee-category">
+                        <div>
+                            <img [src]="data.resourceData.image" class="employee-image"/>
+                            {{data.nom}}
                         </div>
+                        <div class="employee-name">{{data.resourceData.nom }} {{ data.resourceData.prenom}}</div>
                     </div>
                 </div>
-<!--                <div *ngIf="scheduleProf.id !== 0 || scheduleProf.id !== undefined" class="quick-info-content">-->
-<!--                    <div class="event-content">-->
-<!--                        <div class="meeting-type-wrap">-->
-<!--                            <span>{{scheduleProf?.subject}}</span>-->
-<!--                        </div>-->
-
-<!--                        <div style="border-top: 2px solid #3f51b5;" class="e-resource-details e-text-ellipsis"><i-->
-<!--                                style="margin-right: 4%;color: #757575;"-->
-<!--                                class="pi pi-user"></i>-->
-<!--                            {{scheduleProf?.prof?.prenom }} {{ scheduleProf?.prof?.nom }}</div>-->
-
-<!--                        <div style="margin-top: 17px;" class="e-resource-details e-text-ellipsis"><i-->
-<!--                                style="margin-right: 4%;color: #757575;"-->
-<!--                                class="pi pi-users"></i>-->
-<!--                            {{scheduleProf?.grpName}}</div>-->
-
-<!--                    </div>-->
-<!--                </div>-->
-
             </ng-template>
+            <!--                <ng-template #eventSettingsTemplate let-data>-->
+            <!--                    <div class='template-wrap'>-->
+            <!--                        <div class="subject">{{data.Subject}}</div>-->
+            <!--                    </div>-->
+            <!--                </ng-template>-->
+            <e-views>
+                <e-view option="Day"></e-view>
+                <e-view option="Week"></e-view>
+                <e-view option="Month"></e-view>
+                <e-view option="WorkWeek"></e-view>
+            </e-views>
+            <!--     Header template -->
 
 
             <ng-template #quickInfoTemplatesFooter let-data>
@@ -120,109 +102,142 @@
                 </div>
             </ng-template>
 
+            <ng-template #editorTemplate>
+                <table class="custom-event-editor" width="100%" cellpadding="5">
+                    <tbody>
+                    <tr>
+                        <td class="e-textlabel">Start time</td>
+                        <td colspan="4">
+                            <p-calendar [style]="{width: '100%',marginBottom: '4%'}" id="start"
+                                        [(ngModel)]="scheduleProf.startTime" [showTime]="true" name="StartTime"
+                                        class="e-field"
+                                        data-name="startTime"
+                                        [showIcon]="true"
+                                        inputId="start"></p-calendar>
+                        </td>
+                    </tr>
 
-            <ng-template #editorTemplate pTemplate="content editorTemplate">
+                    <tr>
+                        <td class="e-textlabel">End time</td>
+                        <td colspan="4">
+                            <p-calendar [style]="{width: '100%',marginBottom: '4%'}" id="end"
+                                        [(ngModel)]="scheduleProf.endTime" [showTime]="true" name="StartTime"
+                                        class="e-field"
+                                        data-name="endTime"
+                                        [showIcon]="true"
+                                        inputId="end"></p-calendar>
+                        </td>
+                    </tr>
 
-                <div class="p-field">
-                    <label for="start">Debut Date</label>
-                    <p-calendar id="start" [(ngModel)]="scheduleProf.startTime" [showTime]="true" name="StartTime"
-                                class="e-field"
-                                data-name="startTime"
-                                [showIcon]="true"
-                                inputId="start"></p-calendar>
-                    <small *ngIf="submitted && !scheduleProf.startTime" class="p-invalid">start date is
-                        required.</small>
-                </div>
-                <div class="p-field">
-                    <label for="end">Finish Date </label>
-                    <p-calendar id="end" [(ngModel)]="scheduleProf.endTime" [showTime]="true" name="endTime"
-                                class="e-field"
-                                data-name="EndTime"
-                                [showIcon]="true"
-                                inputId="basic"></p-calendar>
-                    <small *ngIf="submitted && !scheduleProf.endTime" class="p-invalid">end date is required.</small>
-                </div>
-
-
-                <div class="p-field">
-                    <label> Group name </label>
-                    <p-dropdown [(ngModel)]="scheduleProf.groupeEtudiant" [options]="groupeStudent"
-                                optionLabel="libelle" (onChange)="setProf(scheduleProf.groupeEtudiant.prof)"
-                                class="e-field"
-                                data-name="groupeEtudiant" (ngModelChange)="getCourses(scheduleProf.groupeEtudiant)"
-                                placeholder="Name of group"></p-dropdown>
-                </div>
-
-
-                <div class="p-field">
-                    <label>Teacher Name </label>
-                    <p id="teacher">{{scheduleProf?.prof?.nom}} {{scheduleProf?.prof?.prenom}}</p>
-                </div>
-
-
-                <div class="p-field">
-                    <label> Subject </label>
-                    <p-dropdown [(ngModel)]="scheduleProf.cours" [options]="courses" optionLabel="libelle"
-                                class="e-field"
-                                data-name="cours"
-                                placeholder="subject"></p-dropdown>
-                </div>
+                    <tr>
+                        <td class="e-textlabel">Group</td>
+                        <td colspan="4">
+                            <p-dropdown [style]="{width: '100%',marginBottom: '4%'}"
+                                        [(ngModel)]="scheduleProf.groupeEtudiant" [options]="groupeStudent"
+                                        optionLabel="libelle"
+                                        class="e-field"
+                                        data-name="groupeEtudiant" (ngModelChange)="getCourses(scheduleProf.groupeEtudiant)"
+                                        placeholder="Name of group"></p-dropdown>
+                        </td>
+                    </tr>
 
 
-                <div class="p-field">
-                    <label for="ref">Reference</label>
-                    <input [(ngModel)]="scheduleProf.ref" autofocus id="ref" pInputText required type="text"
-                           class="e-field"
-                           data-name="ref"/>
-                    <small *ngIf="submitted && !scheduleProf.ref" class="p-invalid">ref is required.</small>
-                </div>
+                    <tr>
+                        <td class="e-textlabel">Teacher</td>
+                        <td colspan="4">
+                            <p-dropdown [style]="{width: '100%',marginBottom: '4%'}" [(ngModel)]="scheduleProf.prof"
+                                        [options]="professors"
+                                        optionLabel="nom"
+                                        class="e-field"
+                                        data-name="prof"
+                                        placeholder="Name of Teacher"></p-dropdown>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="e-textlabel">Subject</td>
+                        <td colspan="4">
+                            <p-dropdown [style]="{width: '100%',marginBottom: '4%'}" [(ngModel)]="scheduleProf.cours"
+                                        [options]="courses" optionLabel="libelle"
+                                        class="e-field"
+                                        data-name="cours"
+                                        placeholder="subject"></p-dropdown>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="e-textlabel">Reference</td>
+                        <td colspan="4">
+                            <input [style]="{width: '100%',marginBottom: '4%'}" [(ngModel)]="scheduleProf.ref" autofocus
+                                   id="ref" pInputText required type="text"
+                                   class="e-field"
+                                   data-name="ref"/>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="e-textlabel">Repeat</td>
+                        <td colspan="4">
+                            <p-dropdown [style]="{width: '100%',marginBottom: '4%'}" [(ngModel)]="optionSelected"
+                                        [options]="repeats" optionLabel="option" class="e-field"
+                                        data-name="optionSelected"
+                                        placeholder="Repeat"></p-dropdown>
+                        </td>
+                    </tr>
 
 
-                <div class="p-field">
-                    <label> Repeat </label>
-                    <p-dropdown [(ngModel)]="optionSelected" [options]="repeats" optionLabel="option" class="e-field"
-                                data-name="option" (ngModelChange)="repeatOption($event)"
-                                placeholder="Repeat"></p-dropdown>
-                </div>
-
-                <div class="p-grid ">
-                    <div *ngIf="optionSelected.option === 'Daily' " class="p-col-7">
-                        <label for="minmax">Repeat every</label>
-                        <p-inputNumber [(ngModel)]="repeatNumber" [showButtons]="true" id="minmax" inputId="minmax"
-                                       mode="decimal" [min]="1" [max]="100">
-                        </p-inputNumber>
-                        Days
-                    </div>
-                    <div *ngIf="optionSelected.option === 'Daily'" class="p-col-5">
-                        <label for="icon">Until</label>
-                        <p-calendar [(ngModel)]="endDate" [showIcon]="true" id="icon" inputId="icon"></p-calendar>
-                    </div>
-                </div>
-
-                <div class="p-grid ">
-                    <div class="p-col-12"></div>
-                    <div *ngIf=" optionSelected.option === 'Weekly'" class="p-col-12">
-                        <label for="selectButton">Repeat every</label>
-                        <p-selectButton id='selectButton' [options]="daysOptions" [(ngModel)]="selectedDays"
-                                        multiple="multiple"
-                                        (ngModelChange)="getDaysSelected($event)"
-                                        optionLabel="name" optionValue="value"></p-selectButton>
-                    </div>
-                    <div *ngIf="optionSelected.option === 'Weekly'" class="p-col-12">
-                        <label for="iconDay">Until</label>
-                        <p-calendar [(ngModel)]="endDate" [showIcon]="true" id="iconDay" inputId="icon"></p-calendar>
-                    </div>
-                </div>
+                    <tr>
+                        <div class="p-grid " style="width: 150%">
 
 
-                <div class="p-field">
-                    <button class="e-event-create e-text-ellipsis e-control e-btn e-lib e-flat e-primary" title="Save"
-                            (click)="onCloseClick() ; save()">
-                        Save
-                    </button>
-                </div>
+                            <div *ngIf="optionSelected.option === 'Daily' " class="p-col-7">
+                                <label for="minmax">Repeat every</label>
+                                <p-inputNumber [(ngModel)]="repeatNumber" [showButtons]="true" id="minmax" inputId="minmax"
+                                               mode="decimal" [min]="1" [max]="100">
+                                </p-inputNumber>
+                                Days
+                            </div>
 
+
+                            <div *ngIf="optionSelected.option === 'Daily'" class="p-col-5">
+                                <label for="icon">Until</label>
+                                <p-calendar [(ngModel)]="endDate" [showIcon]="true" id="icon" inputId="icon"></p-calendar>
+                            </div>
+
+
+                            <div *ngIf=" optionSelected.option === 'Weekly'" class="p-col-12">
+                                <label for="selectButton">Repeat every</label>
+                                <p-selectButton id='selectButton' [options]="daysOptions" [(ngModel)]="selectedDays"
+                                                multiple="multiple"
+                                                optionLabel="name" optionValue="value"></p-selectButton>
+                            </div>
+
+
+                            <div *ngIf="optionSelected.option === 'Weekly'" class="p-col-12">
+                                <label for="iconDay">Until</label>
+                                <p-calendar [(ngModel)]="endDate" [showIcon]="true" id="iconDay"
+                                            inputId="icon"></p-calendar>
+                            </div>
+
+
+                            <div class="p-col-12" style="text-align: center;">
+                                <button
+                                        class="e-event-create e-text-ellipsis e-control e-btn e-lib e-flat e-primary"
+                                        title="Save"
+                                        (click)="onCloseClick() ; save()">
+                                    Save
+                                </button>
+                            </div>
+
+
+                        </div>
+                    </tr>
+
+
+                    </tbody>
+                </table>
             </ng-template>
+
         </ejs-schedule>
     </div>
 </div>
@@ -239,19 +254,5 @@
         </div>
 
     </div>
-
-
-    <div class="e-footer-content" style="margin:8% 0 0 22px ">
-        <button type="button" class="e-control e-btn e-lib e-quick-alertok e-flat e-primary e-quick-dialog-delete"
-                style="margin-right: 5em"
-                aria-label="Delete" (click)="onDeleteClick()"
-        >Delete
-        </button>
-        <button type="button" class="e-control e-btn e-lib e-quick-alertcancel e-flat e-quick-dialog-cancel"
-                (click)="hideDialog()"
-                aria-label="Cancel">Cancel
-        </button>
-    </div>
-
 </p-dialog>
 

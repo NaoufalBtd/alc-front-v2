@@ -349,22 +349,31 @@ export class ScheduleAdminComponent implements OnInit {
 
 
     public onPopupOpen(args: PopupOpenEventArgs): void {
+        console.log(args);
         this.scheduleProf = new ScheduleProf();
-        this.data.subject = args.data?.subject;
-        this.data.startTime = args.data?.startTime;
-        this.data.endTime = args.data?.endTime;
-        this.scheduleProf.startTime = args.data?.startTime;
-        this.scheduleProf.endTime = args.data?.endTime;
-        this.scheduleProf.grpName = args.data?.groupeEtudiant?.libelle;
-        this.scheduleProf.subject = args.data?.subject;
-        this.scheduleProf.prof = args.data.prof;
-        this.scheduleProf.profName = this.scheduleProf?.prof?.nom;
-        this.scheduleProf.id = args.data.id;
-        console.log(this.scheduleProf.id);
-        this.scheduleProf.groupeEtudiant = args.data?.groupeEtudiant;
-        this.grpEtudiant = this.scheduleProf?.groupeEtudiant;
-        this.selectionTarget = null;
-        this.selectionTarget = args.target;
+        console.log(args.data);
+        if (args.data?.id !== undefined) {
+            this.data.subject = args.data?.subject;
+            this.data.startTime = args.data?.startTime;
+            this.data.endTime = args.data?.endTime;
+            this.scheduleProf.startTime = args.data?.startTime;
+            this.scheduleProf.endTime = args.data?.endTime;
+            this.scheduleProf.grpName = args.data?.groupeEtudiant?.libelle;
+            this.scheduleProf.profName = args.data?.prof.nom;
+            this.scheduleProf.subject = args.data?.subject;
+            this.scheduleProf.cours = args.data?.cours;
+            this.scheduleProf.ref = args.data?.ref;
+            this.scheduleProf.prof = args.data.prof;
+            this.scheduleProf.id = args.data.id;
+            console.log(this.scheduleProf.id);
+            this.scheduleProf.groupeEtudiant = args.data?.groupeEtudiant;
+            this.grpEtudiant = this.scheduleProf?.groupeEtudiant;
+            this.selectionTarget = null;
+            this.selectionTarget = args.target;
+            this.getCourses(this.scheduleProf.groupeEtudiant);
+        } else if (args.type === 'DeleteAlert') {
+            console.log(args);
+        }
     }
 
     public onDetailsClick(event: any): void {
@@ -383,10 +392,10 @@ export class ScheduleAdminComponent implements OnInit {
     }
 
 
-    public onDeleteClick(): void {
+    public onDeleteClick(data: any): void {
         const scheduleObj = this.scheduleObj;
         this.scheduleObj.eventSettings.dataSource = null;
-        const scheduleProf = this.scheduleObj.getEventDetails(this.selectionTarget) as ScheduleProf;
+        const scheduleProf = data[0];
         console.log(scheduleProf);
         if (this.deleteOption === false) {
             this.scheduleService.deleteScheduleProfById(scheduleProf).subscribe(
@@ -458,7 +467,11 @@ export class ScheduleAdminComponent implements OnInit {
     }
 
 
-    onActionComplete() {
+    onActionComplete(event: any) {
+        console.log(event);
+        if (event.requestType === 'eventRemoved' && event.cancel === false) {
+            this.onDeleteClick(event.data);
+        }
         this.scheduleObj.workHours.start = '00:00';
         this.scheduleObj.workHours.end = '23:59';
         this.scheduleObj.workHours.highlight = true;
