@@ -58,13 +58,23 @@
                       [showQuickInfo]="true"
                       (actionComplete)="onActionComplete($event)"
                       [eventSettings]="eventSettings"
+                      startHour="06:00 AM"
                       [timeScale]="timeScale"
                       (popupOpen)="onPopupOpen($event)">
             <e-resources>
-                <e-resource field='profsId' title='prenom' name='profs' [dataSource]='groupeStudent'
-                            [allowMultiple]='true' groupIDField="prenom" textField='prenom' idField='id'
-                            colorField='#ff8800'>
+
+
+                <e-resource field="id" title="profName" name="ScheduleProf"
+                            [dataSource]="scheduleProfs" [allowMultiple]="true"
+                            textField="profName" idField="id" >
                 </e-resource>
+
+                <e-resource field="id" title="grpName" name="ScheduleProf"
+                            [dataSource]="scheduleProfs" [allowMultiple]="true"
+                            textField="grpName" idField="id" >
+                </e-resource>
+
+
             </e-resources>
             <ng-template #resourceHeaderTemplate let-data>
                 <div class="template-wrap">
@@ -220,14 +230,14 @@
                             </div>
 
 
-                            <div class="p-col-12" style="text-align: center;">
-                                <button
-                                        class="e-event-create e-text-ellipsis e-control e-btn e-lib e-flat e-primary"
-                                        title="Save"
-                                        (click)="onCloseClick() ; save()">
-                                    Save
-                                </button>
-                            </div>
+<!--                            <div class="p-col-12" style="text-align: center;">-->
+<!--                                <button-->
+<!--                                        class="e-event-create e-text-ellipsis e-control e-btn e-lib e-flat e-primary"-->
+<!--                                        title="Save"-->
+<!--                                        (click)="onCloseClick() ; save()">-->
+<!--                                    Save-->
+<!--                                </button>-->
+<!--                            </div>-->
 
 
                         </div>
@@ -243,16 +253,5 @@
 </div>
 
 
-<p-dialog header="Delete event" [(visible)]="display">
 
-    <div class="e-dlg-content" id="QuickDialog_dialog-content">
-
-        <p> Are you sure you want to delete this event?</p>
-        <div class="p-field-checkbox">
-            <p-checkbox [(ngModel)]="deleteOption" binary="true" id="binary"></p-checkbox>
-            <label for="binary"> Remove all event similar</label>
-        </div>
-
-    </div>
-</p-dialog>
 

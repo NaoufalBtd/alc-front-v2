@@ -108,7 +108,6 @@ export class AppMenuComponent implements OnInit {
                     {label: 'Home', icon: 'pi pi-fw pi-home', routerLink: ['/prof/home']},
                     {label: 'Recommend A teacher', icon: 'pi pi-fw pi-comment', routerLink: ['/prof/recommendation-teacher']},
                     {label: 'Salary', icon: 'pi pi-fw pi-money-bill', routerLink: ['/prof/salary']},
-                    {label: 'Levels', icon: 'pi pi-fw pi-list', routerLink: ['/prof/courses']},
                     {label: 'Classes', icon: 'pi pi-fw pi-table', routerLink: ['/prof/classes']},
                     {label: 'Session-Synthese', icon: 'pi pi-fw pi-briefcase', routerLink: ['/prof/synthese']},
                     {label: 'Students Review', icon: 'pi pi-fw pi-comment', routerLink: ['/prof/etudiantReviewcomment']},
@@ -121,15 +120,12 @@ export class AppMenuComponent implements OnInit {
             } else {
                 this.model = [
                     {label: 'Dashboard ', icon: 'pi pi-fw pi-home', routerLink: ['/etudiant/dashboard']},
-                    {label: 'Courses ', icon: 'pi pi-fw pi-briefcase', routerLink: ['/etudiant/etudiant-cours']},
                     {label: 'FAQ ', icon: 'pi pi-fw pi-question-circle', routerLink: ['/etudiant/faq-student']},
                     {label: 'News ', icon: 'pi pi-fw pi-clock', routerLink: ['/etudiant/news-student']},
                     {label: 'Schedule', icon: 'pi pi-fw pi-calendar-times', routerLink: ['/etudiant/schedule-student']},
                     {label: 'Reclamation', icon: 'pi pi-fw pi-exclamation-triangle', routerLink: ['/etudiant/reclamation-etudiant']},
                     {label: 'Invited Student', icon: 'pi pi-fw pi-share-alt', routerLink: ['/etudiant/inviteStudent']},
                     {label: 'My Promotion', icon: 'pi pi-th-large', routerLink: ['/etudiant/myPromotionList']},
-
-
                 ];
             }
         }

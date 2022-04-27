@@ -22,16 +22,7 @@ import {TimePickerComponent} from '@syncfusion/ej2-angular-calendars';
 import {DropDownListComponent} from '@syncfusion/ej2-angular-dropdowns';
 import timezones from 'timezones-list';
 
-L10n.load({
-    'en-US': {
-        schedule: {
-            saveButton: '',
-            cancelButton: 'Close',
-            deleteButton: 'Delete',
-            newEvent: 'Add event',
-        },
-    }
-});
+
 
 @Component({
     selector: 'app-schedule-admin',
@@ -373,6 +364,9 @@ export class ScheduleAdminComponent implements OnInit {
             this.getCourses(this.scheduleProf.groupeEtudiant);
         } else if (args.type === 'DeleteAlert') {
             console.log(args);
+        } else if (args.type === 'Editor') {
+            this.scheduleProf.startTime = args.data?.startTime;
+            this.scheduleProf.endTime = args.data?.endTime;
         }
     }
 

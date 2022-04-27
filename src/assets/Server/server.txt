@@ -1,0 +1,98 @@
+
+				==================================================================================================================================
+															SERVER MYSQL LUNIX
+															
+															IP: 54.37.9.19
+																login:  debian
+																	pass:  jWKwbjacAYcx
+				==================================================================================================================================
+		
+		I- RESCUES MODE:
+	0- apt-get insrall sudo
+	1- apt update
+	2- apt install ufw
+	3- ufw allow OpenSSH
+	4- sudo passwd <user>
+		
+		II- CONNECT TO USER AND ADD PROLECT:
+	
+	1- install jdk 11 => (Source)  https://www.digitalocean.com/community/tutorials/how-to-install-java-with-apt-on-debian-10 {
+	
+				# sudo apt update
+				# java -version
+					-> if not exist
+				# sudo apt install default-jre then => java -version
+				#sudo apt install default-jdk install jdk then => javac -version
+		
+	}
+	
+	
+	2- install maven { => (Source) https://linuxize.com/post/how-to-install-apache-maven-on-debian-10/
+		#sudo apt update
+		#sudo apt install maven
+	b- download Apache Maven
+		# wget https://www-us.apache.org/dist/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz -P /tmp
+		# sudo tar xf /tmp/apache-maven-*.tar.gz -C /opt
+		# sudo ln -s /opt/apache-maven-3.6.3 /opt/maven
+		# sudo nano /etc/profile.d/maven.sh
+	c- Paste the following lines 
+		export JAVA_HOME=/usr/lib/jvm/default-java
+		export M2_HOME=/opt/maven
+		export MAVEN_HOME=/opt/maven
+		export PATH=${M2_HOME}/bin:${PATH}
+		#sudo chmod +x /etc/profile.d/maven.sh
+	}
+	
+	
+	3- mysql => (Source) https://serverspace.io/support/help/how-to-install-mysql-on-debian-10/
+	{
+		# apt update
+		# apt install gnupg
+		# wget https://dev.mysql.com/get/mysql-apt-config_0.8.13-1_all.deb
+		# sudo dpkg -i mysql-apt-config_0.8.13-1_all.deb
+		# apt-get update
+		# sudo apt-get install mysql-community-server
+		# systemctl status mysql.service (If you see "active", it means that the server is running without errors. Press Q or Ctrl + C to exit.)
+		# mysql_secure_installation
+	
+	} => mot de pass root => zouani@12345
+
+
+
+
+	4- nodejs | npm | git =>  (Source) https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-debian-10 || https://linuxize.com/post/how-to-install-node-js-on-debian-10/
+	{ 
+	  a- nodejs and npm
+		# sudo apt install curl
+		# curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+		# sudo apt install nodejs npm
+		# node -v
+	  b- git => (Source) https://www.digitalocean.com/community/tutorials/how-to-install-git-on-debian-10
+		
+		# sudo apt update
+		# sudo apt install git
+		# git --version
+	}
+	
+	
+	5- angular/cli 
+	{
+		npm install -g @angular/cli@6     #Angular 6
+		npm install -g @angular/cli@7     #Angular 7
+		npm install -g @angular/cli@8     #Angular 8
+		npm install -g @angular/cli@9     #Angular 9
+	}
+	
+	
+	5 clone front \ back {
+			6- nohup ng serve --host=0.0.0.0 --disable-host-check ==> to disable check host
+			7 nohup java -jar "/home/debian/alc-prod/v2/alc-back-v2/target/demo-0.0.1-SNAPSHOT.jar"
+			+++ cd "/home/debian/alc-prod/v2/alc-front-v2/alc-front-v2/"
+			kill to port ==> fuser -k 8036/tcp
+	
+			+++ sudo git pull https://github.com/younes-uca/alc-front-v2
+			+++ sudo git pull https://github.com/younes-uca/alc-back-v2
+	}
+
+
+	
