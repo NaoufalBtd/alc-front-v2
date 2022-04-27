@@ -84,15 +84,34 @@
 	}
 	
 	
-	5 clone front \ back {
-			6- nohup ng serve --host=0.0.0.0 --disable-host-check ==> to disable check host
-			7 nohup java -jar "/home/debian/alc-prod/v2/alc-back-v2/target/demo-0.0.1-SNAPSHOT.jar"
-			+++ cd "/home/debian/alc-prod/v2/alc-front-v2/alc-front-v2/"
-			kill to port ==> fuser -k 8036/tcp
-	
-			+++ sudo git pull https://github.com/younes-uca/alc-front-v2
-			+++ sudo git pull https://github.com/younes-uca/alc-back-v2
-	}
+		5 clone front \ back
+    	{
+    		-------------------------------- Khalid AND Kamal (instriction to run project STRAT ---------------------------------------
+    		1- oPEN Mobaxterm
+    		2- login via ssh (IP: 54.37.9.19   ||  userName: debian   || pass:  jWKwbjacAYcx )
+    		Next open 2 tabs then
+    		FIRST TAB {
+    					1- cd "/home/debian/alc-prod/v2/alc-front-v2/alc-front-v2/" in first tab
+    					2- ng serve --host=0.0.0.0 --disable-host-check
+    		}
+    		SECOND TAB {
+    					1- java -jar "/home/debian/alc-prod/v2/alc-back-v2/target/demo-0.0.1-SNAPSHOT.jar"
+    		}
+
+
+    		4- open http://54.37.9.19:4200/#/
+    		
+    		--------------------------------------------------------- FINISH -------------------------------------------------------------------
+
+
+    			6- nohup  ==> to disable check host
+    			7 nohup
+    			+++
+    			kill to port ==> fuser -k 8036/tcp
+
+    			+++ sudo git pull https://github.com/younes-uca/alc-front-v2
+    			+++ sudo git pull https://github.com/younes-uca/alc-back-v2
+    	}
 
 
 	
