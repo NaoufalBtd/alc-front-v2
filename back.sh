@@ -1,0 +1,1 @@
+java -jar "/home/debian/alc-prod/v2/alc-back-v2/target/demo-0.0.1-SNAPSHOT.jar"
