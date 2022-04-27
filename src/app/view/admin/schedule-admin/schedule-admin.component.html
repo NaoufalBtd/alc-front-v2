@@ -66,12 +66,12 @@
 
                 <e-resource field="id" title="profName" name="ScheduleProf"
                             [dataSource]="scheduleProfs" [allowMultiple]="true"
-                            textField="profName" idField="id" >
+                            textField="profName" idField="id">
                 </e-resource>
 
                 <e-resource field="id" title="grpName" name="ScheduleProf"
                             [dataSource]="scheduleProfs" [allowMultiple]="true"
-                            textField="grpName" idField="id" >
+                            textField="grpName" idField="id">
                 </e-resource>
 
 
@@ -146,7 +146,8 @@
                                         [(ngModel)]="scheduleProf.groupeEtudiant" [options]="groupeStudent"
                                         optionLabel="libelle"
                                         class="e-field"
-                                        data-name="groupeEtudiant" (ngModelChange)="getCourses(scheduleProf.groupeEtudiant)"
+                                        data-name="groupeEtudiant"
+                                        (ngModelChange)="getCourses(scheduleProf.groupeEtudiant)"
                                         placeholder="Name of group"></p-dropdown>
                         </td>
                     </tr>
@@ -202,7 +203,8 @@
 
                             <div *ngIf="optionSelected.option === 'Daily' " class="p-col-7">
                                 <label for="minmax">Repeat every</label>
-                                <p-inputNumber [(ngModel)]="repeatNumber" [showButtons]="true" id="minmax" inputId="minmax"
+                                <p-inputNumber [(ngModel)]="repeatNumber" [showButtons]="true" id="minmax"
+                                               inputId="minmax"
                                                mode="decimal" [min]="1" [max]="100">
                                 </p-inputNumber>
                                 Days
@@ -211,7 +213,8 @@
 
                             <div *ngIf="optionSelected.option === 'Daily'" class="p-col-5">
                                 <label for="icon">Until</label>
-                                <p-calendar [(ngModel)]="endDate" [showIcon]="true" id="icon" inputId="icon"></p-calendar>
+                                <p-calendar [(ngModel)]="endDate" [showIcon]="true" id="icon"
+                                            inputId="icon"></p-calendar>
                             </div>
 
 
@@ -230,14 +233,14 @@
                             </div>
 
 
-<!--                            <div class="p-col-12" style="text-align: center;">-->
-<!--                                <button-->
-<!--                                        class="e-event-create e-text-ellipsis e-control e-btn e-lib e-flat e-primary"-->
-<!--                                        title="Save"-->
-<!--                                        (click)="onCloseClick() ; save()">-->
-<!--                                    Save-->
-<!--                                </button>-->
-<!--                            </div>-->
+                            <div class="p-col-12" style="text-align: center;">
+                                <button
+                                        class="e-event-create e-text-ellipsis e-control e-btn e-lib e-flat e-primary"
+                                        title="Save"
+                                        (click)="onCloseClick() ; save()">
+                                    Save
+                                </button>
+                            </div>
 
 
                         </div>
