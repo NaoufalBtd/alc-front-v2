@@ -91,7 +91,7 @@
     		2- login via ssh (IP: 54.37.9.19   ||  userName: debian   || pass:  jWKwbjacAYcx )
     		Next open 2 tabs then
     		FIRST TAB {
-    					1- cd "/home/debian/alc-prod/v2/alc-front-v2/alc-front-v2/" in first tab
+    					1- cd "/home/debian/alc-prod/v2/alc-front-v2/alc-front-v2/"
     					2- ng serve --host=0.0.0.0 --disable-host-check
     		}
     		SECOND TAB {
@@ -100,7 +100,7 @@
 
 
     		4- open http://54.37.9.19:4200/#/
-    		
+
     		--------------------------------------------------------- FINISH -------------------------------------------------------------------
 
 
