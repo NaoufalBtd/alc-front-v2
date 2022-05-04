@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AdminService} from '../../../controller/service/admin.service';
 import {ConfirmationService, MessageService} from 'primeng/api';
+import {environment} from '../../../../environments/environment';
 
 @Component({
     selector: 'app-drive-api',
@@ -38,7 +39,7 @@ export class DriveApiComponent implements OnInit {
 
 
     openSite() {
-        window.open('http://localhost:8036/admin/admin/googlesignin', '_blank');
+        window.open(environment.signWithGoogleApi, '_blank');
     }
 
 

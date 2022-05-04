@@ -23,6 +23,8 @@ export const environment = {
   etudiantUrl: 'http://162.19.25.141:8036/etudiant/',
   publicUrl: 'http://162.19.25.141:8036/public/',
   socketUrl: 'ws://162.19.25.141:8036/chat',
+  // signWithGoogleApi: 'http://localhost:8036/admin/admin/googlesignin',
+  signWithGoogleApi: 'http://162.19.25.141:8036/admin/admin/googlesignin',
   // socketUrl: 'wss://alc-back-v1.herokuapp.com/chat',
 
 
