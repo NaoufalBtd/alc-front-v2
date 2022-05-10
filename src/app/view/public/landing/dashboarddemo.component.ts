@@ -22,14 +22,9 @@ import {VonPrimengFormModule} from '@von-development-studio/primeng-form-validat
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
+    selector: 'app-dashboard',
     templateUrl: './dashboard.component.html',
     styleUrls: ['./tabledemo.scss']
-})
-@NgModule({
-    imports: [
-
-        VonPrimengFormModule,
-    ]
 })
 export class DashboardDemoComponent implements OnInit {
 

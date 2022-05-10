@@ -90,6 +90,5 @@ export class AppTopBarComponent implements OnInit, OnDestroy {
     selectedLangage(event: any) {
         console.log(event.target.value);
         this.translate.use(event.target.value);
-
     }
 }

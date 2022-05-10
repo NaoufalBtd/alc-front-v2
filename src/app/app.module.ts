@@ -343,6 +343,7 @@ import { MyPromotionListComponent } from './view/etudiant/my-promotion-list/my-p
 import {HomeStudentComponent} from './view/etudiant/home-student/home-student.component';
 import { HomeFreeTrialComponent } from './view/etudiant/home-student/home-free-trial/home-free-trial.component';
 import { QuizPreviewStudentTeacherComponent } from './view/prof/home-work/home-work-review/quiz-preview-student-teacher/quiz-preview-student-teacher.component';
+import {VonPrimengFormModule} from '@von-development-studio/primeng-form-validation';
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -445,6 +446,7 @@ export function createTranslateLoader(http: HttpClient) {
         DateTimePickerModule,
         FocusTrapModule,
         AppRoutingModule,
+        VonPrimengFormModule,
         TranslateModule.forRoot({
             defaultLanguage: 'en',
             loader: {
