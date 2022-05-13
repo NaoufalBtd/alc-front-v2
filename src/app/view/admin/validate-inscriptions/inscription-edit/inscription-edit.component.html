@@ -18,12 +18,7 @@
                             optionLabel="libelle" [itemSize]="3"></p-dropdown>
 
             </div>
-            <div class="p-col-12 p-md-6 p-lg-4">
-                <label for="dateformat1">Teacher</label>
-                <p-dropdown [options]="profList" editable="true" [(ngModel)]="selected.prof"
-                            optionLabel="nom" [itemSize]="3"></p-dropdown>
 
-            </div>
             <div class="p-col-12 p-md-6 p-lg-4">
                 <p-dropdown (click)="findTypeOfPack()" [options]="allgroupes" placeholder="Select groupe" [(ngModel)]="selected.groupeEtude"
                             optionLabel="libelle"></p-dropdown>

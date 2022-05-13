@@ -13,7 +13,7 @@ import {LearnService} from './learn.service';
 
 import {HomeWorkEtudiantServiceService} from './home-work-etudiant-service.service';
 import {ParcoursService} from './parcours.service';
-import {GroupeEtudiant} from "../model/groupe-etudiant.model";
+import {GroupeEtudiant} from '../model/groupe-etudiant.model';
 
 @Injectable({
     providedIn: 'root'
@@ -30,7 +30,6 @@ export class HomeworkService {
     private _section: Section;
     private _homeWorkList: Array<HomeWork>;
     private _groupStudent: GroupeEtudiant = new GroupeEtudiant();
-
 
 
     constructor(private http: HttpClient,
@@ -170,5 +169,9 @@ export class HomeworkService {
         }, error => {
             console.log(error);
         });
+    }
+
+    deleteHomeWorkById(id: number): Observable<any> {
+        return this.http.delete(this.adminUrl + 'homeWork/id/' + id);
     }
 }

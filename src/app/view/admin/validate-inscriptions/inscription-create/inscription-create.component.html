@@ -3,11 +3,8 @@
     <ng-template pTemplate="content">
 
 
-        <div class="p-field">
-            <label for="prof">Teacher</label>
-            <input [(ngModel)]="selected.prof.numero" autofocus id="prof" pInputText required type="text"/>
-            <small *ngIf="submitted && !selected.prof.numero" class="p-invalid">Teacher is required.</small>
-        </div>
+
+
         <div class="p-field">
             <label for="etat">Registration status</label>
             <input [(ngModel)]="selected.etatInscription.ref" autofocus id="etat" pInputText required type="text"/>

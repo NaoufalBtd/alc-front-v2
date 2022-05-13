@@ -11,6 +11,7 @@ export enum TypeQuestionEnum {
     PUT_WORDS_TO_GAP = 't10',
     PUT_IN_ORDER = 't11',
     WORD_BY_WORD = 't12',
+    DRAG_AND_DROP = 't13',
 }
 
 export enum TypeHomeWorkEnum {

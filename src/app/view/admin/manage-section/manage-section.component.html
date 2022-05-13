@@ -1,4 +1,3 @@
-
 <div class="p-grid topBar">
     <div class="p-col-3 ">
         <h5>Levels</h5>
@@ -61,18 +60,26 @@
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-section>
-                <tr>
+                <tr *ngIf="section?.categorieSection?.libelle !== CategoriesSectionItemEnum.HOME_WORK_REVIEW">
                     <td>{{section?.id}}</td>
                     <td>{{section?.libelle}}</td>
                     <td>{{section?.categorieSection?.libelle}}</td>
                     <td><img [src]="section?.urlImage" width="90%" (click)="showImage(section.urlImage)"
                              class="shadow-4"/></td>
-                    <td *ngIf="isValidated(section)"><span  class="badge">VALIDATED</span></td>
+                    <td *ngIf="isValidated(section)"><span class="badge">VALIDATED</span></td>
                     <td *ngIf="!isValidated(section)"><span class="badge-pending">PENDING</span></td>
                     <td>
-                        <button pButton pRipple type="button" icon="pi pi-question-circle" (click)="showQuiz(section)"
+                        <button *ngIf="section?.categorieSection?.libelle !== CategoriesSectionItemEnum.VOCABULARY" pButton pRipple type="button" icon="pi pi-question-circle" (click)="showQuiz(section)"
                                 pTooltip="Quiz" tooltipPosition="top"
                                 label="Create quiz"
+                                iconPos="left"
+                                class="p-button-rounded p-button-help "></button>
+
+                        <button *ngIf="section?.categorieSection?.libelle === CategoriesSectionItemEnum.VOCABULARY" pButton
+                                pRipple type="button" icon="pi pi-question-circle"
+                                (click)="createVocab(section)"
+                                pTooltip="Vocabulary" tooltipPosition="top"
+                                label="Vocabulary"
                                 iconPos="left"
                                 class="p-button-rounded p-button-help "></button>
                     </td>
@@ -83,7 +90,6 @@
                                 pTooltip="Edit" tooltipPosition="top"
                                 class="p-button-rounded localButton "></button>
                     </td>
-
                 </tr>
             </ng-template>
             <ng-template pTemplate="summary">
@@ -148,9 +154,6 @@
             <h6>Indication of Teacher's</h6>
             <input type="text" pInputText [(ngModel)]="localSectionSelected.indicationProf">
         </div>
-
-
-
 
 
         <div class="p-col-3 ">

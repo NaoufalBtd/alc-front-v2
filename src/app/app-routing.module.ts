@@ -187,7 +187,7 @@ import {HomeStudentComponent} from './view/etudiant/home-student/home-student.co
                     {path: 'schedule-student', component: ScheduleStudentComponent},
                     {path: 'etudiant-simulate-sections', component: StudentSimulateSectionComponent},
                     {path: 'faq-student-contact-list', component: FaqStudentContactListeComponent},
-                    {path: 'etudiant-cours', component: EtudiantCoursesComponent},
+                    {path: 'etudiant-cours', component: HomeStudentComponent},
                     {path: 'quiz-view', component: QuizEtudiantViewComponent},
                     {path: 'quiz-take', component: QuizTakeComponent},
                     {path: 'etudiant-simulate-sections/quiz-review', component: QuizEtudiantViewComponent},

@@ -428,8 +428,12 @@ export class HomeWorkComponentComponent implements OnInit {
     filterTypeOfQsts() {
         console.log(this.typeHomeWork.lib);
         if (this.typeHomeWork.lib === TypeHomeWorkEnum.LET_S_PRACTICE) {
-            this.typeOfQuestions = this.typeOfQuestions.filter(t => (t.ref !== 't10' &&
-                t.ref !== 't8' && t.ref !== 't9' && t.ref !== 't7' && t.ref !== 't2'));
+            this.typeOfQuestions = this.typeOfQuestions.filter(t => (t.ref !== TypeQuestionEnum.PUT_WORDS_TO_GAP &&
+                t.ref !== TypeQuestionEnum.READ_AND_ADD_NEW_WORDS
+                && t.ref !== TypeQuestionEnum.WATCH_AND_ADD_NEW_WORDS
+                && t.ref !== TypeQuestionEnum.DESCRIBE_WHAT_YOU_SEE
+                && t.ref !== TypeQuestionEnum.DRAG_AND_DROP
+                && t.ref !== TypeQuestionEnum.WRITE_IT_UP));
         }
         this.homeWork = new HomeWork();
         this.homeworkQST = new HomeWorkQST();
@@ -520,5 +524,20 @@ export class HomeWorkComponentComponent implements OnInit {
 
     edit() {
         this.reponses[this.indexForEdit] = this.selectedRps;
+    }
+
+    getPlaceHolder(question: HomeWorkQST): string {
+        if (question.typeDeQuestion.ref === TypeQuestionEnum.CHOOSE_THE_CORRECT_ALTERNATIVE) {
+            return 'Example: We must ... the train at the next stop. ' +
+                ' (Use at last 3 points)';
+        } else if (question.typeDeQuestion.ref === TypeQuestionEnum.CORRECT_THE_MISTAKE) {
+            return 'Example: We must @get on@  the train at the next stop. ' +
+                ' (Put the mistake between two "@")';
+        } else if (question.typeDeQuestion.ref === TypeQuestionEnum.WRITE_THE_CORRECT_FORM) {
+            return 'Example: He @to want@ all of them. ' +
+                ' (Put the verb between two "@")';
+        } else {
+            return ' ';
+        }
     }
 }

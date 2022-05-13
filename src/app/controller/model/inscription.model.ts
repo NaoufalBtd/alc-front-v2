@@ -19,7 +19,6 @@ export class Inscription {
     public numeroInscription: string;
     public datedebutinscription: Date;
     public datefininscription: Date;
-    public prof = new Prof();
     public etatInscription = new EtatInscription();
     public groupeEtude: GroupeEtude = new GroupeEtude();
     public packStudent: PackStudent;

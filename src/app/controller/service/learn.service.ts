@@ -41,7 +41,7 @@ export class LearnService {
     private _myAnswer: Reponse = new Reponse();
     private _answerSelected: Reponse = new Reponse();
     private _inputAnswer: string;
-    private _trueOrFalse = true;
+    private _trueOrFalse = null;
     private _disableToggleButton = false;
     private _answersList: Map<Question, Reponse> = new Map<Question, Reponse>(); // Reponse of student
     private _correctAnswersList: Map<number, Array<Reponse>> = new Map<number, Array<Reponse>>();
@@ -749,7 +749,7 @@ export class LearnService {
         this.disableToggleButton = false;
         this.index += 1;
         this.inputAnswer = String();
-        this.trueOrFalse = true;
+        this.trueOrFalse = null;
         this.answerSelected = new Reponse();
         this.myAnswer = new Reponse();
         for (let i = 0; i < (this.questionList.length); i++) {
@@ -794,7 +794,7 @@ export class LearnService {
         this.disableToggleButton = false;
         this.index -= 1;
         this.inputAnswer = String();
-        this.trueOrFalse = true;
+        this.trueOrFalse = null;
         this.answerSelected = new Reponse();
         this.myAnswer = new Reponse();
         for (let i = 0; i < (this.questionList.length); i++) {
@@ -858,7 +858,7 @@ export class LearnService {
         this.showTakeQuiz = true;
         this.showQuizReview = false;
         this.inputAnswer = String();
-        this.trueOrFalse = true;
+        this.trueOrFalse = null;
         this.disableToggleButton = false;
         this.numberOfQuestion = 0;
         this.value = 10;
@@ -887,7 +887,7 @@ export class LearnService {
         this.myAnswer = new Reponse();
         this.answerSelected = new Reponse();
         this.inputAnswer = String();
-        this.trueOrFalse = true;
+        this.trueOrFalse = null;
         this.disableToggleButton = false;
         this.answersList = new Map<Question, Reponse>();
         this.correctAnswersList = new Map<number, Array<Reponse>>();

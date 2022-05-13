@@ -10,6 +10,8 @@ import {QuizEtudiantService} from '../../../controller/service/quiz-etudiant.ser
 import {Quiz} from '../../../controller/model/quiz.model';
 import {Router} from '@angular/router';
 import {LearnService} from '../../../controller/service/learn.service';
+import {CategoriesSectionItemEnum} from '../../../enum/CategoriesSectionItemEnum';
+import {SectionItemService} from '../../../controller/service/section-item.service';
 
 @Component({
     selector: 'app-manage-section',
@@ -17,6 +19,7 @@ import {LearnService} from '../../../controller/service/learn.service';
     styleUrls: ['./manage-section.component.scss']
 })
 export class ManageSectionComponent implements OnInit {
+    public CategoriesSectionItemEnum = CategoriesSectionItemEnum;
     public parcours: Array<Parcours> = new Array<Parcours>();
     public cours: Array<Cours> = new Array<Cours>();
     public sections: Array<Section> = new Array<Section>();
@@ -34,9 +37,12 @@ export class ManageSectionComponent implements OnInit {
                 private quizEtudiantService: QuizEtudiantService,
                 private quizService: QuizService,
                 private learnService: LearnService,
+                private sectionItemService: SectionItemService,
                 private router: Router,
                 private messageService: MessageService) {
     }
+
+
 
     get selectedparcours(): Parcours {
         return this.parcoursService.selectedparcours;
@@ -195,5 +201,15 @@ export class ManageSectionComponent implements OnInit {
                 // tslint:disable-next-line:no-unused-expression
                 this.selectedQuiz == null;
             });
+    }
+
+    createVocab(section: Section) {
+        this.sectionItemService.sectionSelected = section;
+
+        this.sectionItemService.getSectionItems().subscribe(data => {
+            this.sectionItemService.sectionSelected.sectionItems = data;
+            console.log(data);
+            this.router.navigate(['admin/create-section-items']);
+        });
     }
 }

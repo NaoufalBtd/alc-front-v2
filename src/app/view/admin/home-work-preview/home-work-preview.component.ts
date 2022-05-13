@@ -11,7 +11,7 @@ import {HomeWorkQST} from '../../../controller/model/home-work-qst.model';
 import {HomeWorkReponse} from '../../../controller/model/home-work-reponse.model';
 import {Router} from '@angular/router';
 import {LearnService} from '../../../controller/service/learn.service';
-import {MessageService} from 'primeng/api';
+import {ConfirmationService, MessageService} from 'primeng/api';
 import {TypeHomeWorkEnum} from '../../../enum/type-question.enum';
 
 @Component({
@@ -45,6 +45,7 @@ export class HomeWorkPreviewComponent implements OnInit {
                 private homeWorkService: HomeworkService,
                 private router: Router,
                 private messageService: MessageService,
+                private confirmationService: ConfirmationService,
                 private learnService: LearnService,
                 private homeWorkEtudiantService: HomeWorkEtudiantServiceService) {
     }
@@ -154,6 +155,28 @@ export class HomeWorkPreviewComponent implements OnInit {
     }
 
     delete(homework: HomeWork) {
+        this.confirmationService.confirm({
+            message: 'Are you sure you want to delete ' + homework.libelle + '?',
+            header: 'Confirm',
+            icon: 'pi pi-exclamation-triangle',
+            accept: () => {
+                this.homeWorkService.deleteHomeWorkById(homework.id).subscribe(
+                    data => {
+                        for (let i = 0; i < this.homeWorks.length; i++) {
+                            if (homework.id === this.homeWorks[i].id) {
+                                this.homeWorks.splice(i, 1);
+                            }
+                        }
+                        this.messageService.add({
+                            severity: 'info',
+                            summary: 'Successful',
+                            detail: 'Home Work has been deleted successfully',
+                            life: 3000
+                        });
+                    }
+                );
+            }
+        });
 
     }
 

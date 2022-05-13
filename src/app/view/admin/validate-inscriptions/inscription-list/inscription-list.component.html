@@ -266,14 +266,6 @@
         </div>
 
 
-        <div class="p-col-4">
-            <span class="p-float-label "  style="margin-top: 10px;">
-                 <p-dropdown   class="form-control"  [options]="teachers" [(ngModel)]="inscription.prof" editable="true" formControlName="nom" optionLabel="nom"></p-dropdown><i style="color: red">*</i>
-                 <label>Teacher</label>
-            </span>
-            <small style="font-weight: bold" *ngIf="exform.get('nom').invalid && exform.get('nom').touched"
-                   class="text-danger">Teacher  is Required</small>
-        </div>
 
         <!--        <div class="p-col-4">-->
         <!--            <span class="p-float-label">-->
@@ -395,7 +387,7 @@
 </form>
     <ng-template pTemplate="footer">
         <button pButton pRipple type="button" icon="pi pi-save" label="save changes"
-                (click)="updateInsc(inscription) "[disabled]="exform.invalid"
+                (click)="updateInsc(inscription) "
                 class="p-button-raised-primary"></button>
     </ng-template>
 </p-dialog>
