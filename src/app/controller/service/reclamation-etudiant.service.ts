@@ -4,6 +4,7 @@ import {environment} from '../../../environments/environment';
 import {ReclamationEtudiant} from '../model/reclamation-etudiant.model';
 import {MessageService} from 'primeng/api';
 import {Admin} from '../model/admin.model';
+import {Observable} from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -144,6 +145,10 @@ export class ReclamationEtudiantService {
             }
         );
     }
+    // methode
+    public getAll(): Observable<ReclamationEtudiant[]> {
+        return this.http.get<Array<ReclamationEtudiant>>(this.adminReclamationEtudiant + '/');
+    }
 
     public findReclamationEtudiantById(id: number, idprof: number) {
         this.http.get<ReclamationEtudiant>(this.etudiantReclamationEtudianturl + '/' + id + '/' + idprof).subscribe(
@@ -182,6 +187,9 @@ export class ReclamationEtudiantService {
             }
         );
     }
+    public findReclamationByEtudiantId(id: number): Observable<ReclamationEtudiant[]> {
+        return this.http.get<Array<ReclamationEtudiant>>(this.etudiantReclamationEtudianturl + '/' + id);
+    }
 
     public findAllByCriteria() {
 
@@ -215,6 +223,10 @@ export class ReclamationEtudiantService {
                 }
             }
         );
+    }
+
+    public send(reclamation: ReclamationEtudiant): Observable<ReclamationEtudiant> {
+        return this.http.post<ReclamationEtudiant>(this.etudiantReclamationEtudianturl + '/', reclamation);
     }
 
     public reponseReclamationEtudiant(admin: Admin, dateTraitementforEtudiant: Date) {

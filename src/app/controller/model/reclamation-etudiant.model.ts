@@ -11,7 +11,7 @@ export class ReclamationEtudiant {
     admin = new Admin();
     traite: boolean;
     postView: string;
-
+    setFrom: string;
     dateTraitement: string;
     dateReponse: string;
     commentaireTraiteur: string;

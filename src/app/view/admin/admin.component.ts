@@ -1,12 +1,15 @@
 import {Component, Injectable, OnInit} from '@angular/core';
 import {MenuService} from '../shared/slide-bar/app.menu.service';
-import {PrimeNGConfig} from 'primeng/api';
+import {MenuItem, MessageService, PrimeNGConfig} from 'primeng/api';
 import {AppComponent} from '../../app.component';
 import {Router} from '@angular/router';
 import {AuthenticationService} from '../../controller/service/authentication.service';
 import {User} from '../../controller/model/user.model';
 import {Role} from '../../enum/role.enum';
 import {QuizEtudiantService} from '../../controller/service/quiz-etudiant.service';
+import {ReclamationEtudiant} from '../../controller/model/reclamation-etudiant.model';
+import {ReclamationEtudiantService} from '../../controller/service/reclamation-etudiant.service';
+import {DatePipe} from '@angular/common';
 
 @Component({
     selector: 'app-admin',
@@ -62,6 +65,9 @@ export class AdminComponent implements OnInit {
     constructor(private menuService: MenuService, private primengConfig: PrimeNGConfig,
                 private router: Router,
                 private quizEtudiantService: QuizEtudiantService,
+                private reclamationService: ReclamationEtudiantService,
+                private datePipe: DatePipe,
+                private messageService: MessageService,
                 private authenticationService: AuthenticationService,
                 public app: AppComponent) {
     }
@@ -239,8 +245,38 @@ export class AdminComponent implements OnInit {
         }
     }
 
+    items: MenuItem[];
 
     ngOnInit(): void {
+        this.items = [
+            {
+                icon: 'pi pi-pencil',
+                command: () => {
+                    this.messageService.add({ severity: 'info', summary: 'Add', detail: 'Data Added' });
+                }
+            },
+            {
+                icon: 'pi pi-refresh',
+                command: () => {
+                    this.messageService.add({ severity: 'success', summary: 'Update', detail: 'Data Updated' });
+                }
+            },
+            {
+                icon: 'pi pi-trash',
+                command: () => {
+                    this.messageService.add({ severity: 'error', summary: 'Delete', detail: 'Data Deleted' });
+                }
+            },
+            {
+                icon: 'pi pi-upload',
+                routerLink: ['/fileupload']
+            },
+            {
+                icon: 'pi pi-external-link',
+                url: 'http://angular.io'
+
+            }
+        ];
         this.user = this.authenticationService.getUserFromLocalCache();
         if (this.user === null) {
             this.router.navigate(['#/']);
@@ -250,6 +286,13 @@ export class AdminComponent implements OnInit {
                 || this.user.authorities.length === 0) {
                 this.router.navigate([' ']);
             }
+            this.reclamationService.getAll().subscribe(
+                data => {
+                    if (data != null) {
+                        this.reclamationList = data;
+                    }
+                }
+            );
         }
 
     }
@@ -258,6 +301,28 @@ export class AdminComponent implements OnInit {
         this.quizEtudiantService.translate(this.textSeleted).subscribe(data => {
             console.log(data);
             this.synonymes = data;
+        });
+    }
+
+    // Reclamation
+    displayChatDialog: boolean;
+    reclamation: ReclamationEtudiant = new ReclamationEtudiant();
+    reclamationList: Array<ReclamationEtudiant> = new Array<ReclamationEtudiant>();
+    public role = Role;
+
+    sendReclamation() {
+        this.reclamation.etudiant = this.authenticationService.getConnectedStudent();
+        this.reclamation.setFrom = this.authenticationService.getConnectedStudent().role;
+        this.reclamation.dateReclamation = this.datePipe.transform(new Date(), 'yyyy-MM-dd hh:mm:ss');
+        this.reclamation.traite = false;
+        this.reclamation.typeReclamationEtudiant = null;
+        this.reclamationService.send(this.reclamation).subscribe(data => {
+            console.log(data);
+            this.reclamationList.push({...data});
+            this.reclamation = new ReclamationEtudiant();
+        }, error => {
+            this.messageService.add({severity: 'error', life: 3000, detail: error?.error?.message});
+
         });
     }
 }

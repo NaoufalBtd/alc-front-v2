@@ -4,7 +4,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {CommonModule, HashLocationStrategy, LocationStrategy} from '@angular/common';
+import {CommonModule, DatePipe, HashLocationStrategy, LocationStrategy} from '@angular/common';
 import {AccordionModule} from 'primeng/accordion';
 import {AutoCompleteModule} from 'primeng/autocomplete';
 import {AvatarModule} from 'primeng/avatar';
@@ -315,8 +315,8 @@ import {ReclamationEtudiantViewComponent} from './view/etudiant/reclamation-etud
 import {ReclamationProfViewComponent} from './view/prof/reclamation-prof/reclamation-prof-view/reclamation-prof-view.component';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
-import { HomePageEtudiantComponent } from './view/etudiant/home-page-etudiant/home-page-etudiant.component';
-import { EtudiantpurchasepackComponent } from './view/etudiant/etudiantpurchasepack/etudiantpurchasepack.component';
+import {HomePageEtudiantComponent} from './view/etudiant/home-page-etudiant/home-page-etudiant.component';
+import {EtudiantpurchasepackComponent} from './view/etudiant/etudiantpurchasepack/etudiantpurchasepack.component';
 import {DragHomeWorkComponent} from './view/etudiant/homeWork/drag-home-work/drag-home-work.component';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {InvitedStudentComponent} from './view/etudiant/invited-student/invited-student.component';
@@ -324,26 +324,27 @@ import {InvitedStudentCreateComponent} from './view/etudiant/invited-student/inv
 import {
     InvitedStudentListStudentComponent
 } from './view/etudiant/invited-student/invited-student-list-student/invited-student-list-student.component';
-import { HomeWorkReviewComponent } from './view/prof/home-work/home-work-review/home-work-review.component';
-import { FreetriallessonComponent } from './view/etudiant/freetriallesson/freetriallesson.component';
-import { MoreInformationComponent } from './view/admin/more-information/more-information.component';
-import { InfoEtudiantComponent } from './view/admin/info-etudiant/info-etudiant.component';
-import { StatutSocialComponent } from './view/admin/statut-social/statut-social.component';
-import { FonctionComponent } from './view/admin/fonction/fonction.component';
-import { NiveauEtudeComponent } from './view/admin/niveau-etude/niveau-etude.component';
-import { SkillComponent } from './view/admin/skill/skill.component';
-import { InteretEtudiantComponent } from './view/admin/interet-etudiant/interet-etudiant.component';
-import { ConnectAsInvitedComponent } from './view/etudiant/connect-as-invited/connect-as-invited.component';
-import { ContinueInfoComponent } from './view/etudiant/connect-as-invited/continue-info/continue-info.component';
-import { InvitedListeComponent } from './view/admin/invited-liste/invited-liste.component';
-import { PromotionComponent } from './view/admin/promotion/promotion.component';
+import {HomeWorkReviewComponent} from './view/prof/home-work/home-work-review/home-work-review.component';
+import {FreetriallessonComponent} from './view/etudiant/freetriallesson/freetriallesson.component';
+import {MoreInformationComponent} from './view/admin/more-information/more-information.component';
+import {InfoEtudiantComponent} from './view/admin/info-etudiant/info-etudiant.component';
+import {StatutSocialComponent} from './view/admin/statut-social/statut-social.component';
+import {FonctionComponent} from './view/admin/fonction/fonction.component';
+import {NiveauEtudeComponent} from './view/admin/niveau-etude/niveau-etude.component';
+import {SkillComponent} from './view/admin/skill/skill.component';
+import {InteretEtudiantComponent} from './view/admin/interet-etudiant/interet-etudiant.component';
+import {ConnectAsInvitedComponent} from './view/etudiant/connect-as-invited/connect-as-invited.component';
+import {ContinueInfoComponent} from './view/etudiant/connect-as-invited/continue-info/continue-info.component';
+import {InvitedListeComponent} from './view/admin/invited-liste/invited-liste.component';
+import {PromotionComponent} from './view/admin/promotion/promotion.component';
 import {PromotionCreateComponent} from './view/admin/promotion/promotion-create/promotion-create.component';
 import {PromotionListComponent} from './view/admin/promotion/promotion-list/promotion-list.component';
-import { MyPromotionListComponent } from './view/etudiant/my-promotion-list/my-promotion-list.component';
+import {MyPromotionListComponent} from './view/etudiant/my-promotion-list/my-promotion-list.component';
 import {HomeStudentComponent} from './view/etudiant/home-student/home-student.component';
-import { HomeFreeTrialComponent } from './view/etudiant/home-student/home-free-trial/home-free-trial.component';
-import { QuizPreviewStudentTeacherComponent } from './view/prof/home-work/home-work-review/quiz-preview-student-teacher/quiz-preview-student-teacher.component';
+import {HomeFreeTrialComponent} from './view/etudiant/home-student/home-free-trial/home-free-trial.component';
+import {QuizPreviewStudentTeacherComponent} from './view/prof/home-work/home-work-review/quiz-preview-student-teacher/quiz-preview-student-teacher.component';
 import {VonPrimengFormModule} from '@von-development-studio/primeng-form-validation';
+import {SpeedDialModule} from 'primeng/speeddial';
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -455,7 +456,8 @@ export function createTranslateLoader(http: HttpClient) {
                 deps: [HttpClient]
             }
         }),
-        DragDropModule
+        DragDropModule,
+        SpeedDialModule
     ],
     declarations: [
         AppComponent,
@@ -683,7 +685,7 @@ export function createTranslateLoader(http: HttpClient) {
     providers: [
         {provide: LocationStrategy, useClass: HashLocationStrategy},
         MenuService, MessageService, ConfirmationService,
-        AppComponent,
+        AppComponent, DatePipe,
         HomeWorkEtudiantComponent,
         WeekService, MonthService, DayService, WeekService, WorkWeekService, MonthService,
         AgendaService, MonthAgendaService, TimelineViewsService,

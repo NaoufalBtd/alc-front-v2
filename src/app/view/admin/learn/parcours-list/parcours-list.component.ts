@@ -217,7 +217,7 @@ export class ParcoursListComponent implements OnInit {
                         this.messageService.add({
                             severity: 'success',
                             summary: 'Successful',
-                            detail: 'Parcours Deleted',
+                            detail: 'Level Deleted',
                             life: 3000
                         });
                     });

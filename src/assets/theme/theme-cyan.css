@@ -4065,6 +4065,12 @@ p-togglebutton.ng-dirty.ng-invalid > .p-togglebutton.p-button {
     border-top-right-radius: 3px;
     border-top-left-radius: 3px;
 }
+.p-dialog .p-dialog-header1 {
+    border-bottom: 0 none;
+    padding: 1.5rem;
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
+}
 
 .p-dialog .p-dialog-header .p-dialog-title {
     font-weight: 600;
@@ -4101,7 +4107,7 @@ p-togglebutton.ng-dirty.ng-invalid > .p-togglebutton.p-button {
 .p-dialog .p-dialog-content {
     background: #ffffff;
     color: #495057;
-    padding: 0 1.5rem 2rem 1.5rem;
+    /*padding: 0 1.5rem 2rem 1.5rem;*/
     height: 100%
 }
 

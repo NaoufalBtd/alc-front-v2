@@ -20,8 +20,71 @@
     </div>
     <div *ngIf="showAppMenu" class="layout-main">
         <div class="layout-content">
+            <img class="floatButton"
+                 (click)="displayChatDialog = true"
+                 src="/assets/icons/iconschat-64.png">
             <router-outlet></router-outlet>
         </div>
         <app-footer></app-footer>
     </div>
 </div>
+<!--<div class="dialog"></div>-->
+<!--<div *ngIf="displayChatDialog" class="p-dialog">-->
+<!--    <div class="p-dialog-header1">-->
+<!--        <p>chat</p>-->
+<!--    </div>-->
+<!--    <div class="p-dialog-content"></div>-->
+<!--    <div class="p-dialog-footer"></div>-->
+<!--</div>-->
+
+<p-dialog [showHeader]="false" position="right" [(visible)]="displayChatDialog"
+          [style]="{width: '27vw', height: '75%'}">
+    <div class="p-dialog-header1">
+        <div class="p-grid">
+            <div class="p-col-2">
+                <i (click)="displayChatDialog = false" class="pi pi-angle-left"
+                   style="font-size: 2rem; cursor: pointer; color: white;"></i>
+            </div>
+            <div style="color: white;" class="p-col-8">
+                <h4>engFlexy</h4>
+                <p class="helpText"></p>
+                Ask us anything, or share your feedback.
+            </div>
+        </div>
+    </div>
+
+    <div class="p-grid " style="padding: 5px 0;!important;">
+        <div class="speech-wrapper" *ngFor="let message of reclamationList">
+            <div *ngIf="message.setFrom === role.STUDENT" class="bubble alt">
+                <div class="txt">
+                    <p class="message">{{message?.message}}</p>
+                    <span class="timestamp">{{message?.dateReclamation | date:'HH:mm'}}</span>
+                </div>
+                <div class="bubble-arrow alt"></div>
+            </div>
+            <div *ngIf="message.setFrom === role.ADMIN" class="bubbleTeacher alt">
+                <div class="txt">
+                    <p class="message">{{message?.message}}</p>
+                    <span class="timestamp">{{message?.dateReclamation | date:'HH:mm'}}</span>
+                </div>
+                <div class="bubble-arrow-teacher alt"></div>
+            </div>
+            <div class="speech-divider"></div>
+        </div>
+    </div>
+
+    <ng-template pTemplate="footer">
+        <div style="    border: 1px solid #9191a442;border-radius: 5px;" class="p-grid">
+            <div class="p-col-7">
+                <input class="sentMessage" [style]="{border: 'none', width: '100%'}"
+                       [(ngModel)]="reclamation.message"
+                       (keydown.enter)="sendReclamation()"
+                       type="text" placeholder="Send a message...">
+            </div>
+            <div class="p-col-5">
+                <i class=" sentIcons pi pi-info-circle"></i>
+                <i class=" sentIcons pi pi-link"></i>
+            </div>
+        </div>
+    </ng-template>
+</p-dialog>

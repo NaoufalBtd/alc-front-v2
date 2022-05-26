@@ -14,9 +14,14 @@
     <app-menu></app-menu>
     <div class="layout-main">
         <div class="layout-content">
-            <img class="dictButton"
-                 (click)="displayDictionaryDialogAdmin = true"
-                 src="/assets/icons/icons8-livre.png">
+            <!--            <img class="dictButton"-->
+            <!--                 (click)="displayDictionaryDialogAdmin = true"-->
+            <!--                 src="/assets/icons/icons8-livre.png">-->
+            <!--            <p-splitButton label="Primary" [model]="this.items" class="dictButton" styleClass="p-button-rounded mr-2 mb-2"></p-splitButton>-->
+
+            <p-speedDial [model]="items" radius="120" direction="down-right" type="quarter-circle"
+                         buttonClassName="p-button-success"></p-speedDial>
+
 
             <router-outlet></router-outlet>
         </div>
@@ -30,25 +35,77 @@
     </ng-template>
 
     <ng-template pTemplate="content">
-        <h6>Text</h6>
-        <textarea
-                [style]="{width: '100%',  fontSize: 'medium', border: '1px solid rgb(156, 39, 176)'}"
-                 [(ngModel)]="textSeleted"
-                pInputTextarea
-                autoResize="autoResize"></textarea>
-        <h6>Translation</h6>
-        <textarea
-                [style]="{width: '100%',  fontSize: 'medium', border: '1px solid rgb(156, 39, 176)'}"
-                 [(ngModel)]="synonymes"
-                pInputTextarea
-                autoResize="autoResize"></textarea>
+        <div style="padding: 10px">
+            <h6>Text</h6>
+            <textarea
+                    [style]="{width: '100%',  fontSize: 'medium', border: '1px solid rgb(156, 39, 176)'}"
+                    [(ngModel)]="textSeleted"
+                    pInputTextarea
+                    autoResize="autoResize"></textarea>
+            <h6>Translation</h6>
+            <textarea
+                    [style]="{width: '100%',  fontSize: 'medium', border: '1px solid rgb(156, 39, 176)'}"
+                    [(ngModel)]="synonymes"
+                    pInputTextarea
+                    autoResize="autoResize"></textarea>
 
-        <button [disabled]="textSeleted?.length < 3" [style]="{width: '100%',marginTop: '35px'}"
-                pButton
-                pRipple type="button"
-                label="get translation" (click)="getTranslation()"
-                class="p-button-raised p-button-help"></button>
+            <button [disabled]="textSeleted?.length < 3" [style]="{width: '100%',marginTop: '35px'}"
+                    pButton
+                    pRipple type="button"
+                    label="get translation" (click)="getTranslation()"
+                    class="p-button-raised p-button-help"></button>
+        </div>
 
+    </ng-template>
+</p-dialog>
+<p-dialog [showHeader]="false" position="right" [(visible)]="displayChatDialog"
+          [style]="{width: '27vw', height: '75%'}">
+    <div class="p-dialog-header1">
+        <div class="p-grid">
+            <div class="p-col-2">
+                <i (click)="displayChatDialog = false" class="pi pi-angle-left"
+                   style="font-size: 2rem; cursor: pointer; color: white;"></i>
+            </div>
+            <div style="color: white;" class="p-col-8">
+                <h4>engFlexy</h4>
+                <p class="helpText"></p>
+                Ask us anything, or share your feedback.
+            </div>
+        </div>
+    </div>
 
+    <div class="p-grid " style="padding: 5px 0;!important;">
+        <div class="speech-wrapper" *ngFor="let message of reclamationList">
+            <div *ngIf="message.setFrom === role.STUDENT" class="bubble alt">
+                <div class="txt">
+                    <p class="message">{{message?.message}}</p>
+                    <span class="timestamp">{{message?.dateReclamation | date:'HH:mm'}}</span>
+                </div>
+                <div class="bubble-arrow alt"></div>
+            </div>
+            <div *ngIf="message.setFrom === role.ADMIN" class="bubbleTeacher alt">
+                <div class="txt">
+                    <p class="message">{{message?.message}}</p>
+                    <span class="timestamp">{{message?.dateReclamation | date:'HH:mm'}}</span>
+                </div>
+                <div class="bubble-arrow-teacher alt"></div>
+            </div>
+            <div class="speech-divider"></div>
+        </div>
+    </div>
+
+    <ng-template pTemplate="footer">
+        <div style="    border: 1px solid #9191a442;border-radius: 5px;" class="p-grid">
+            <div class="p-col-7">
+                <input class="sentMessage" [style]="{border: 'none', width: '100%'}"
+                       [(ngModel)]="reclamation.message"
+                       (keydown.enter)="sendReclamation()"
+                       type="text" placeholder="Send a message...">
+            </div>
+            <div class="p-col-5">
+                <i class=" sentIcons pi pi-info-circle"></i>
+                <i class=" sentIcons pi pi-link"></i>
+            </div>
+        </div>
     </ng-template>
 </p-dialog>
