@@ -1,3 +1,4 @@
+<script src="admin.component.ts"></script>
 <div (click)="onLayoutClick()" [class]="app.topbarColor" [ngClass]="{'layout-horizontal': app.layoutMode === 'horizontal',
     'layout-overlay': app.layoutMode === 'overlay',
     'layout-static': app.layoutMode === 'static',
@@ -17,12 +18,53 @@
             <!--            <img class="dictButton"-->
             <!--                 (click)="displayDictionaryDialogAdmin = true"-->
             <!--                 src="/assets/icons/icons8-livre.png">-->
-            <!--            <p-splitButton label="Primary" [model]="this.items" class="dictButton" styleClass="p-button-rounded mr-2 mb-2"></p-splitButton>-->
 
-            <p-speedDial [model]="items" radius="120" direction="down-right" type="quarter-circle"
-                         buttonClassName="p-button-success"></p-speedDial>
+            <!--            <button pButton pRipple type="button" icon="pi pi-search"-->
+            <!--                    class="p-button-rounded floatButton p-button-success"></button>-->
+            <!--            <button pButton pRipple type="button" icon="pi pi-user"-->
+            <!--                    class="p-button-rounded floatButton p-button-info"></button>-->
+            <!--            <button pButton pRipple type="button" icon="pi pi-bell"-->
+            <!--                    class="p-button-rounded floatButton p-button-warning"></button>-->
+            <!--            <button pButton pRipple type="button" icon="pi pi-heart"-->
+            <!--                    class="p-button-rounded floatButton p-button-help"></button>-->
+            <!--            <button pButton pRipple type="button" icon="pi pi-times"-->
+            <!--                    class="p-button-rounded floatButton p-button-danger"></button>-->
+            <div class="floatButton">
+
+                <ul *ngIf="showButtons" style="list-style: none; padding: 7px;" role="menu" class="p-speeddial-list">
+
+                    <li pTooltip="" class="p-element p-speeddial-item ng-star-inserted"
+                        style="transition-delay: 120ms;">
+                        <a role="menuitem" pRipple=""
+                           (click)="showChatDialog()"
+                           class="p-ripple p-element p-speeddial-action ng-star-inserted"
+                           target="undefined" tabindex="0">
+                            <span class="p-speeddial-action-icon pi pi-comment ng-star-inserted"></span>
+                        </a>
+                    </li>
+                    <li pTooltip="" class="p-element p-speeddial-item ng-star-inserted"
+                        style="transition-delay: 120ms;">
+                        <a role="menuitem" pRipple=""
+                           (click)="displayDictionaryDialogAdmin = true"
+                           class="p-ripple p-element p-speeddial-action ng-star-inserted"
+                           target="undefined" tabindex="0">
+                            <span class="p-speeddial-action-icon pi pi-book ng-star-inserted"></span>
+                        </a>
+                    </li>
 
 
+                </ul>
+                <button (click)="showOrHideButtons()" [style]="{height: '55px!important', width: '55px!important'}"
+                        pRipple="" pButton=""
+                        class="p-ripple  p-button p-component p-button-icon-only p-speeddial-button p-button-rounded p-speeddial-rotate undefined">
+                    <span class="p-ink" style=" top: -1.24998px; left: -1.59998px;"></span>
+                    <span style="font-size: 20px; font-weight: bold;" *ngIf="!showButtons"
+                          class="p-button-icon pi pi-plus" aria-hidden="true"></span>
+                    <span style="font-size: 20px; font-weight: bold;" *ngIf="showButtons"
+                          class="p-button-icon pi pi-angle-down" aria-hidden="true"></span>
+                    <span aria-hidden="true" class="p-button-label">&nbsp;</span>
+                </button>
+            </div>
             <router-outlet></router-outlet>
         </div>
         <app-footer></app-footer>
@@ -59,7 +101,7 @@
     </ng-template>
 </p-dialog>
 <p-dialog [showHeader]="false" position="right" [(visible)]="displayChatDialog"
-          [style]="{width: '27vw', height: '75%'}">
+          [style]="{width: '35vw', height: '75%', zIndex: '400000'}">
     <div class="p-dialog-header1">
         <div class="p-grid">
             <div class="p-col-2">
@@ -75,23 +117,47 @@
     </div>
 
     <div class="p-grid " style="padding: 5px 0;!important;">
-        <div class="speech-wrapper" *ngFor="let message of reclamationList">
-            <div *ngIf="message.setFrom === role.STUDENT" class="bubble alt">
-                <div class="txt">
-                    <p class="message">{{message?.message}}</p>
-                    <span class="timestamp">{{message?.dateReclamation | date:'HH:mm'}}</span>
+        <div class="p-col-10">
+            <div class="speech-wrapper " *ngFor="let message of reclamationList">
+                <div *ngIf="message.setFrom === role.STUDENT" class="bubble alt">
+                    <div class="txt">
+                        <p class="message">{{message?.message}}</p>
+                        <span class="timestamp">{{message?.dateReclamation | date:'MMM d, y, h:mm a'}}</span>
+                    </div>
+                    <div *ngIf="message?.img !== null" class="txt">
+                        <img style="  cursor: pointer;  width: 100%; margin: -20px 0 28px 0;   border-radius: 5px;"
+                             (click)="showImage(message.img )"
+                             class="product-image" [src]="message?.img"/>
+                    </div>
+                    <div class="bubble-arrow alt"></div>
                 </div>
-                <div class="bubble-arrow alt"></div>
-            </div>
-            <div *ngIf="message.setFrom === role.ADMIN" class="bubbleTeacher alt">
-                <div class="txt">
-                    <p class="message">{{message?.message}}</p>
-                    <span class="timestamp">{{message?.dateReclamation | date:'HH:mm'}}</span>
+                <div *ngIf="message.setFrom === role.ADMIN" class="bubbleTeacher alt">
+                    <div class="txt">
+                        <p class="message">{{message?.message}}</p>
+                        <span class="timestamp">{{message?.dateReclamation | date:'MMM d, y, h:mm a'}}</span>
+                    </div>
+                    <div *ngIf="message?.img !== null" class="txt">
+                        <img style="  cursor: pointer;   width: 100%; margin: -20px 0 28px 0;  border-radius: 5px;"
+                             (click)="showImage(message.img )"
+                             class="product-image" [src]="message?.img"/>
+                    </div>
+                    <div class="bubble-arrow-teacher alt"></div>
                 </div>
-                <div class="bubble-arrow-teacher alt"></div>
+                <div class="speech-divider"></div>
             </div>
-            <div class="speech-divider"></div>
         </div>
+
+        <div style=" border-left: 1px solid #d05040;  background: #f76c5833;" class="p-col-2">
+            <p-avatar *ngFor="let value of map | keyvalue"
+                      [image]="value?.value[0]?.etudiant?.image"
+                      (click)="showData(value)"
+                      pBadge
+                      [value]="getValueOfBadge(value.key)"
+                      [pTooltip]="value?.value[0]?.etudiant?.prenom" severity="danger"
+                      styleClass="p-mr-2" shape="circle" size="large"></p-avatar>
+        </div>
+
+
     </div>
 
     <ng-template pTemplate="footer">
@@ -103,9 +169,44 @@
                        type="text" placeholder="Send a message...">
             </div>
             <div class="p-col-5">
-                <i class=" sentIcons pi pi-info-circle"></i>
-                <i class=" sentIcons pi pi-link"></i>
+                <p-fileUpload mode="basic"  styleClass="sentIcons" chooseIcon="pi pi-link" name="demo[]"
+                              url="./upload.php" accept="image/*"
+                              maxFileSize="100000000" (onSelect)="onBasicUpload($event)"></p-fileUpload>
+
             </div>
         </div>
     </ng-template>
 </p-dialog>
+
+
+<p-dialog [showHeader]="false" [(visible)]="displayImgDialog" [position]="position" [modal]="true"
+          [style]="{width: '35vw'}" [baseZIndex]="100000"
+          [draggable]="true" [resizable]="false" >
+    <div style="background: #263238; color: white!important; border-right: 5px;" class="p-grid">
+        <p-button icon="pi pi-times" (click)="cancel()"  styleClass="p-button-text"></p-button>
+
+        <div style="padding: 1%" class="p-col-12">
+            <img style="width: 90%; margin-left: 4%; border-radius: 5px;" src="{{reader?.result}}" alt="not found">
+        </div>
+        <div class="p-col-12">
+            <input class="sentMessage" [style]="{border: 'none', width: '100%', height: '40px', borderRadius: '5px'}"
+                   [(ngModel)]="reclamation.message"
+                   (keydown.enter)="sendReclamation()"
+                   type="text" placeholder="Add a comment...">
+        </div>
+    </div>
+</p-dialog>
+
+
+
+<div *ngIf="showOverLayImg" id="myNav" class="overlay">
+
+    <!-- Button to close the overlay navigation -->
+    <a style="cursor: pointer" (click)="showOverLayImg  = false" class="closebtn" >&times;</a>
+
+    <!-- Overlay content -->
+    <div class="overlay-content">
+        <img style="width: 75%" [src]="selectedImgUrl" alt="Image not found!">
+    </div>
+
+</div>

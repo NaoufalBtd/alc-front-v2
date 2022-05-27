@@ -21,7 +21,9 @@
     <div *ngIf="showAppMenu" class="layout-main">
         <div class="layout-content">
             <img class="floatButton"
-                 (click)="displayChatDialog = true"
+                 (click)="getData()"
+                 pBadge
+                 [value]="getValueOfBadge()"
                  src="/assets/icons/iconschat-64.png">
             <router-outlet></router-outlet>
         </div>
@@ -38,7 +40,7 @@
 <!--</div>-->
 
 <p-dialog [showHeader]="false" position="right" [(visible)]="displayChatDialog"
-          [style]="{width: '27vw', height: '75%'}">
+          [style]="{width: '35vw', height: '75%'}">
     <div class="p-dialog-header1">
         <div class="p-grid">
             <div class="p-col-2">
@@ -58,14 +60,24 @@
             <div *ngIf="message.setFrom === role.STUDENT" class="bubble alt">
                 <div class="txt">
                     <p class="message">{{message?.message}}</p>
-                    <span class="timestamp">{{message?.dateReclamation | date:'HH:mm'}}</span>
+                    <span class="timestamp">{{message?.dateReclamation | date:'MMM d, y, h:mm a'}}</span>
+                </div>
+                <div *ngIf="message?.img !== null" class="txt">
+                    <img style="  cursor: pointer;   width: 100%; margin: -20px 0 28px 0;  border-radius: 5px;"
+                         (click)="showImage(message.img )"
+                         class="product-image" [src]="message?.img"/>
                 </div>
                 <div class="bubble-arrow alt"></div>
             </div>
             <div *ngIf="message.setFrom === role.ADMIN" class="bubbleTeacher alt">
                 <div class="txt">
                     <p class="message">{{message?.message}}</p>
-                    <span class="timestamp">{{message?.dateReclamation | date:'HH:mm'}}</span>
+                    <span class="timestamp">{{message?.dateReclamation | date:'MMM d, y, h:mm a'}}</span>
+                </div>
+                <div *ngIf="message?.img !== null" class="txt">
+                    <img style="cursor: pointer;    width: 100%; margin: -20px 0 28px 0;  border-radius: 5px;"
+                         (click)="showImage(message.img )"
+                         class="product-image" [src]="message?.img"/>
                 </div>
                 <div class="bubble-arrow-teacher alt"></div>
             </div>
@@ -82,9 +94,41 @@
                        type="text" placeholder="Send a message...">
             </div>
             <div class="p-col-5">
-                <i class=" sentIcons pi pi-info-circle"></i>
-                <i class=" sentIcons pi pi-link"></i>
+                <p-fileUpload mode="basic"  styleClass="sentIcons" chooseIcon="pi pi-link" name="demo[]"
+                              url="./upload.php" accept="image/*"
+                              maxFileSize="100000000" (onSelect)="onBasicUpload($event)"></p-fileUpload>
+
             </div>
         </div>
     </ng-template>
 </p-dialog>
+
+
+<p-dialog [showHeader]="false" [(visible)]="displayImgDialog" [position]="position" [modal]="true"
+          [style]="{width: '35vw'}" [baseZIndex]="100000"
+          [draggable]="true" [resizable]="false" >
+    <div style="background: #263238; color: white!important; border-right: 5px;" class="p-grid">
+        <p-button icon="pi pi-times" (click)="cancel()"  styleClass="p-button-text"></p-button>
+
+        <div style="padding: 1%" class="p-col-12">
+            <img style="width: 90%; margin-left: 4%; border-radius: 5px;" src="{{reader?.result}}" alt="not found">
+        </div>
+        <div class="p-col-12">
+            <input class="sentMessage" [style]="{border: 'none', width: '100%', height: '40px', borderRadius: '5px'}"
+                   [(ngModel)]="reclamation.message"
+                   (keydown.enter)="sendReclamation()"
+                   type="text" placeholder="Add a comment...">
+        </div>
+    </div>
+</p-dialog>
+<div *ngIf="showOverLayImg" id="myNav" class="overlay">
+
+    <!-- Button to close the overlay navigation -->
+    <a style="cursor: pointer" (click)="showOverLayImg  = false" class="closebtn" >&times;</a>
+
+    <!-- Overlay content -->
+    <div class="overlay-content">
+        <img style="width: 75%" [src]="selectedImgUrl" alt="Image not found!">
+    </div>
+
+</div>

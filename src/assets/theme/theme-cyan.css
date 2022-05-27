@@ -5811,9 +5811,12 @@ p-togglebutton.ng-dirty.ng-invalid > .p-togglebutton.p-button {
 }
 
 .p-avatar.p-avatar-lg {
-    width: 3rem;
-    height: 3rem;
-    font-size: 1.5rem;
+    width: 4rem;
+    height: 4rem;
+    font-size: 9.5rem;
+    background-color: #ffffff!important;
+    padding: 3px!important;
+    cursor: pointer;
 }
 
 .p-avatar.p-avatar-lg .p-avatar-icon {

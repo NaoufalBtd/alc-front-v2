@@ -9,7 +9,7 @@ import {Role} from '../../enum/role.enum';
 import {QuizEtudiantService} from '../../controller/service/quiz-etudiant.service';
 import {ReclamationEtudiant} from '../../controller/model/reclamation-etudiant.model';
 import {ReclamationEtudiantService} from '../../controller/service/reclamation-etudiant.service';
-import {DatePipe} from '@angular/common';
+import {DatePipe, KeyValue} from '@angular/common';
 
 @Component({
     selector: 'app-admin',
@@ -252,19 +252,19 @@ export class AdminComponent implements OnInit {
             {
                 icon: 'pi pi-pencil',
                 command: () => {
-                    this.messageService.add({ severity: 'info', summary: 'Add', detail: 'Data Added' });
+                    this.messageService.add({severity: 'info', summary: 'Add', detail: 'Data Added'});
                 }
             },
             {
                 icon: 'pi pi-refresh',
                 command: () => {
-                    this.messageService.add({ severity: 'success', summary: 'Update', detail: 'Data Updated' });
+                    this.messageService.add({severity: 'success', summary: 'Update', detail: 'Data Updated'});
                 }
             },
             {
                 icon: 'pi pi-trash',
                 command: () => {
-                    this.messageService.add({ severity: 'error', summary: 'Delete', detail: 'Data Deleted' });
+                    this.messageService.add({severity: 'error', summary: 'Delete', detail: 'Data Deleted'});
                 }
             },
             {
@@ -286,15 +286,26 @@ export class AdminComponent implements OnInit {
                 || this.user.authorities.length === 0) {
                 this.router.navigate([' ']);
             }
-            this.reclamationService.getAll().subscribe(
-                data => {
-                    if (data != null) {
-                        this.reclamationList = data;
-                    }
-                }
-            );
+            this.getAllReclamation();
         }
 
+    }
+
+    private getAllReclamation() {
+        this.map.clear();
+        this.reclamationService.getAll().subscribe(
+            data => {
+                this.allReclamation = data;
+                if (data != null) {
+                    for (const item of data) {
+                        let user = item.etudiant;
+                        if (this.map.has(user.id) === false) {
+                            this.map.set(user.id, data.filter(r => r.etudiant.id === user.id));
+                        }
+                    }
+                }
+            }
+        );
     }
 
     getTranslation() {
@@ -308,22 +319,101 @@ export class AdminComponent implements OnInit {
     displayChatDialog: boolean;
     reclamation: ReclamationEtudiant = new ReclamationEtudiant();
     reclamationList: Array<ReclamationEtudiant> = new Array<ReclamationEtudiant>();
+    allReclamation: Array<ReclamationEtudiant> = new Array<ReclamationEtudiant>();
     public role = Role;
+    showButtons: boolean;
+    selectedUser: User = new User();
+    map: Map<number, ReclamationEtudiant[]> = new Map<number, ReclamationEtudiant[]>();
+    public img: null | File;
+    displayImgDialog: boolean;
+    position: string;
+    reader = new FileReader();
+    selectedImgUrl: string;
+    showOverLayImg: boolean;
 
     sendReclamation() {
+        this.displayImgDialog = false;
         this.reclamation.etudiant = this.authenticationService.getConnectedStudent();
         this.reclamation.setFrom = this.authenticationService.getConnectedStudent().role;
         this.reclamation.dateReclamation = this.datePipe.transform(new Date(), 'yyyy-MM-dd hh:mm:ss');
-        this.reclamation.traite = false;
+        this.reclamation.traite = true;
+        this.reclamation.etudiant = this.selectedUser;
+        this.reclamation.file = this.img;
         this.reclamation.typeReclamationEtudiant = null;
         this.reclamationService.send(this.reclamation).subscribe(data => {
-            console.log(data);
-            this.reclamationList.push({...data});
+            if (this.img !== null) {
+                const formData = new FormData();
+                formData.append('id', data.id.toString());
+                formData.append('img', this.img);
+                this.reclamationService.updateImg(formData).subscribe(
+                    dataFinal => {
+                        console.log(dataFinal);
+                        this.reclamationList.push({...dataFinal});
+                    }
+                );
+            } else {
+                this.reclamationList.push({...data});
+            }
             this.reclamation = new ReclamationEtudiant();
         }, error => {
             this.messageService.add({severity: 'error', life: 3000, detail: error?.error?.message});
-
+            console.log(error);
         });
+    }
+
+    showOrHideButtons() {
+        this.showButtons = !this.showButtons;
+    }
+
+    showData(value: KeyValue<number, ReclamationEtudiant[]>) {
+        this.selectedUser = value.value[0].etudiant;
+        const index = value.value.filter(f => f.traite === false).length;
+        if (index === 0) {
+            this.reclamationList = value.value;
+        } else {
+            this.reclamationService.update(value.value).subscribe(
+                data => {
+                    this.reclamationList = data;
+                }, error => {
+                    console.log(error);
+                }
+            );
+        }
+
+    }
+
+    getValueOfBadge(key: number): number {
+        return this.map.get(key)?.filter(r => r.traite !== true).length;
+    }
+
+    showChatDialog() {
+        this.displayChatDialog = true;
+        this.getAllReclamation();
+    }
+
+    onBasicUpload(event: any) {
+        this.img = (event.files as FileList)[0];
+        this.reader.readAsDataURL(this.img);
+        this.showPositionDialog('bottom-right');
+    }
+
+    showPositionDialog(position: string) {
+        this.position = position;
+        this.displayImgDialog = true;
+    }
+
+    cancel() {
+        this.displayImgDialog = false;
+        this.img = null;
+    }
+
+    onSend(event: any) {
+        console.log(event);
+    }
+
+    showImage(img: string) {
+        this.selectedImgUrl = img;
+        this.showOverLayImg = true;
     }
 }
 

@@ -344,7 +344,6 @@ import {HomeStudentComponent} from './view/etudiant/home-student/home-student.co
 import {HomeFreeTrialComponent} from './view/etudiant/home-student/home-free-trial/home-free-trial.component';
 import {QuizPreviewStudentTeacherComponent} from './view/prof/home-work/home-work-review/quiz-preview-student-teacher/quiz-preview-student-teacher.component';
 import {VonPrimengFormModule} from '@von-development-studio/primeng-form-validation';
-import {SpeedDialModule} from 'primeng/speeddial';
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -457,7 +456,6 @@ export function createTranslateLoader(http: HttpClient) {
             }
         }),
         DragDropModule,
-        SpeedDialModule
     ],
     declarations: [
         AppComponent,

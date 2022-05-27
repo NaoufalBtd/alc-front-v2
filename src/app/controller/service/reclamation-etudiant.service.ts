@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
 import {ReclamationEtudiant} from '../model/reclamation-etudiant.model';
 import {MessageService} from 'primeng/api';
@@ -145,6 +145,7 @@ export class ReclamationEtudiantService {
             }
         );
     }
+
     // methode
     public getAll(): Observable<ReclamationEtudiant[]> {
         return this.http.get<Array<ReclamationEtudiant>>(this.adminReclamationEtudiant + '/');
@@ -187,6 +188,7 @@ export class ReclamationEtudiantService {
             }
         );
     }
+
     public findReclamationByEtudiantId(id: number): Observable<ReclamationEtudiant[]> {
         return this.http.get<Array<ReclamationEtudiant>>(this.etudiantReclamationEtudianturl + '/' + id);
     }
@@ -225,9 +227,6 @@ export class ReclamationEtudiantService {
         );
     }
 
-    public send(reclamation: ReclamationEtudiant): Observable<ReclamationEtudiant> {
-        return this.http.post<ReclamationEtudiant>(this.etudiantReclamationEtudianturl + '/', reclamation);
-    }
 
     public reponseReclamationEtudiant(admin: Admin, dateTraitementforEtudiant: Date) {
         this.reclamationEtudiantEdit.admin = admin;
@@ -258,5 +257,18 @@ export class ReclamationEtudiantService {
 
 // constructor
     constructor(private http: HttpClient, private messageService: MessageService) {
+    }
+
+    update(value: ReclamationEtudiant[]): Observable<ReclamationEtudiant[]> {
+        return this.http.put<ReclamationEtudiant[]>(this.adminReclamationEtudiant + '/update/all', value);
+    }
+
+    public send(reclamation: ReclamationEtudiant): Observable<ReclamationEtudiant> {
+        return this.http.post<ReclamationEtudiant>(this.etudiantReclamationEtudianturl + '/', reclamation);
+    }
+
+
+    updateImg(formData: FormData): Observable<ReclamationEtudiant> {
+        return this.http.post<ReclamationEtudiant>(this.etudiantReclamationEtudianturl + '/updateImg', formData);
     }
 }

@@ -158,20 +158,31 @@ export class EtudiantComponent implements OnInit {
                 || this.user.authorities.length === 0) {
                 this.router.navigate([' ']);
             }
-            this.reclamationService.findReclamationByEtudiantId(this.user.id).subscribe(
-                data => {
-                    if (data != null) {
-                        this.reclamationList = data;
-                    }
-                }
-            );
+            this.findReclamation();
         }
     }
 
-    // Reclamation
+    private findReclamation() {
+        this.reclamationService.findReclamationByEtudiantId(this.user.id).subscribe(
+            data => {
+                if (data != null) {
+                    this.reclamationList = data;
+                }
+            }
+        );
+    }
+
+// Reclamation
     reclamation: ReclamationEtudiant = new ReclamationEtudiant();
     reclamationList: Array<ReclamationEtudiant> = new Array<ReclamationEtudiant>();
     public role = Role;
+    public img: null | File;
+    displayImgDialog: boolean;
+    position: string;
+    reader = new FileReader();
+    selectedImgUrl: string;
+    showOverLayImg: boolean;
+
 
     sendReclamation() {
         this.reclamation.etudiant = this.authenticationService.getConnectedStudent();
@@ -179,14 +190,61 @@ export class EtudiantComponent implements OnInit {
         this.reclamation.dateReclamation = this.datePipe.transform(new Date(), 'yyyy-MM-dd hh:mm:ss');
         this.reclamation.traite = false;
         this.reclamation.typeReclamationEtudiant = null;
+        this.displayImgDialog = false;
+        this.reclamation.file = this.img;
         this.reclamationService.send(this.reclamation).subscribe(data => {
-            console.log(data);
-            this.reclamationList.push({...data});
-            this.reclamation = new ReclamationEtudiant();
+            if (this.img !== null) {
+                const formData = new FormData();
+                formData.append('id', data.id.toString());
+                formData.append('img', this.img);
+                this.reclamationService.updateImg(formData).subscribe(
+                    dataFinal => {
+                        console.log(dataFinal);
+                        this.reclamationList.push({...dataFinal});
+                    }
+                );
+            } else {
+                this.reclamationList.push({...data});
+            }
         }, error => {
             this.messageService.add({severity: 'error', life: 3000, detail: error?.error?.message});
 
         });
+    }
+
+    getData() {
+        this.displayChatDialog = true;
+        this.findReclamation();
+    }
+
+    getValueOfBadge(): number {
+        return this.reclamationList.filter(r => r.setFrom === Role.ADMIN).length;
+    }
+
+    showChatDialog() {
+        this.displayChatDialog = true;
+        this.findReclamation();
+    }
+
+    onBasicUpload(event: any) {
+        this.img = (event.files as FileList)[0];
+        this.reader.readAsDataURL(this.img);
+        this.showPositionDialog('bottom-right');
+    }
+
+    showPositionDialog(position: string) {
+        this.position = position;
+        this.displayImgDialog = true;
+    }
+
+
+    cancel() {
+        this.displayImgDialog = false;
+        this.img = null;
+    }
+    showImage(img: string) {
+        this.selectedImgUrl = img;
+        this.showOverLayImg = true;
     }
 }
 
