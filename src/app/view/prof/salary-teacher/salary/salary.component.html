@@ -142,7 +142,7 @@
                     <tr>
                         <td>{{sessions.prof.categorieProf.lessonRate}}</td>
                         <td>{{sessions.groupeEtudiant.libelle}}</td>
-                        <td>{{sessions.dateFin}}</td>
+                        <td>{{sessions.dateFin | date: 'MMM d, y'}}</td>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="footer">

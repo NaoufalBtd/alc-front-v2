@@ -501,10 +501,6 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
         const grp = this.participants.get(this.prof.id);
     }
 
-    public saveSessionCoursForGroupEtudiant(idprof: number, idcours: number) {
-        this.sessionservice.saveSessionCoursForGroupEtudiant(idprof, idcours);
-    }
-
     getLanguages(): Array<any> {
         return this.app.languages;
     }
@@ -737,12 +733,19 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
         this.sessionCour.salary = null;
         this.sessionCour.reference = this.selectedSchedule.startTime.toString() + this.groupeEtudiant.libelle;
         this.sessionCour.totalheure = this.selectedSchedule.endTime.getHours() - this.selectedSchedule.startTime.getHours();
-        this.sessionservice.saveSessionCours(this.sessionCour);
+        // this.sessionservice.saveSessionCours(this.sessionCour);
+        this.saveSessionCoursForGroupEtudiant(this.sessionCour.prof.id, this.sessionCour.cours.id, this.sessionCour.groupeEtudiant.id);
         let chatMessage: ChatMessageDto = new ChatMessageDto('FINISHLESSON', 'FINISHLESSON', false);
         chatMessage.prof = this.loginService.getConnectedProf();
         chatMessage.type = 'SECTION';
         this.webSocketService.sendMessage(chatMessage, 'PROF');
     }
+
+
+    public saveSessionCoursForGroupEtudiant(idprof: number, idcours: number, idGroup: number) {
+        this.sessionservice.saveSessionCoursForGroupEtudiant(idprof, idcours, idGroup);
+    }
+
 
     onConfirm() {
         this.messageService.clear('c');

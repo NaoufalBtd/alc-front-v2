@@ -249,14 +249,22 @@ export class SessionCoursService {
     }
 
     public findSessionByProfId(idprof: number): Observable<Array<SessionCours>> {
-       return  this.http.get<Array<SessionCours>>(this.profUrlSession + 'prof/id/' + idprof);
+        return this.http.get<Array<SessionCours>>(this.profUrlSession + 'prof/id/' + idprof);
     }
 
     // this._idgroup + '/' + idprof + '/' + idcours
-    public saveSessionCoursForGroupEtudiant(idprof: number, idcours: number) {
-        this.http.get(this.profUrlSession + idprof + '/' + this._idgroup + '/' + idcours).subscribe(
+    public saveSessionCoursForGroupEtudiant(idprof: number, idcours: number, idgroup: number) {
+        this.http.get(this.profUrlSession + idprof + '/' + idgroup + '/' + idcours).subscribe(
             data => {
+                this.messageService.add({severity: 'success', summary: ' ', life: 5000, detail: 'Lesson is over', sticky: true});
 
+            }, error => {
+                this.messageService.add({
+                    severity: 'error',
+                    summary: ' ',
+                    detail: 'We got same problems, please contact administration !',
+                    sticky: true
+                });
             }
         );
     }

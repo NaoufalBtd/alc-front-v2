@@ -32,7 +32,7 @@ export class SalaryComponent implements OnInit {
     displayDetails: boolean = false;
 
     constructor(private messageService: MessageService, private confirmationService: ConfirmationService,
-                private service: ClassRoomService, private serviceUser: LoginService, private salaryservice: SalaryService, private sessionCoursService: SessionCoursService) {
+                private service: ClassRoomService, public serviceUser: LoginService, private salaryservice: SalaryService, private sessionCoursService: SessionCoursService) {
         this.etatPay = [];
         // @ts-ignore
         this.etatPay.push({label: 'True', value: 1});

@@ -148,7 +148,7 @@
                     <tr>
                         <td>{{sessionCours.groupeEtudiant.libelle}}</td>
                         <td>{{sessionCours.cours.libelle}}</td>
-                        <td>{{sessionCours.dateFin}}</td>
+                        <td>{{sessionCours.dateFin | date: 'MMM d, y'}}</td>
                         <td>
                             <strong style="color: red" *ngIf="!sessionCours.payer">
                                 <i class="pi pi-times"></i>  {{sessionCours.payer}}

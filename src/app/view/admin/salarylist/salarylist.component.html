@@ -55,7 +55,7 @@
                         <td>{{salary.code}}</td>
                         <td>{{salary.mois}}/{{salary.annee}}</td>
                         <td>{{salary.nbrSessionMensuel}}</td>
-                        <td>{{salary.totalBonusWorkload+salary.totalPayment+ salary.totalBonusClassAverage}}</td>
+                        <td>{{salary.totalBonusWorkload + salary.totalPayment + salary.totalBonusClassAverage}}</td>
                         <td>
                             <button pButton pRipple icon="pi pi-list" class="p-button-rounded p-button-info p-mr-2"
                                     (click)="showDetails(salary.mois,salary.annee,salary.prof.id)"
@@ -94,7 +94,7 @@
                     <tr>
                         <td>{{payment.prof.categorieProf.lessonRate}}</td>
                         <td>{{payment.groupeEtudiant.libelle}}</td>
-                        <td>{{payment.datePaiement}}</td>
+                        <td>{{payment.datePaiement | date: 'MMM d, y'}}</td>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="footer">
