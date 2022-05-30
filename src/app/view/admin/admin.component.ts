@@ -324,7 +324,7 @@ export class AdminComponent implements OnInit {
     showButtons: boolean;
     selectedUser: User = new User();
     map: Map<number, ReclamationEtudiant[]> = new Map<number, ReclamationEtudiant[]>();
-    public img: null | File;
+    img: null | File;
     displayImgDialog: boolean;
     position: string;
     reader = new FileReader();
@@ -341,7 +341,10 @@ export class AdminComponent implements OnInit {
         this.reclamation.file = this.img;
         this.reclamation.typeReclamationEtudiant = null;
         this.reclamationService.send(this.reclamation).subscribe(data => {
-            if (this.img !== null) {
+            console.log(this.img);
+            if (this.img === undefined || this.img === null) {
+                this.reclamationList.push({...data});
+            } else {
                 const formData = new FormData();
                 formData.append('id', data.id.toString());
                 formData.append('img', this.img);
@@ -351,8 +354,6 @@ export class AdminComponent implements OnInit {
                         this.reclamationList.push({...dataFinal});
                     }
                 );
-            } else {
-                this.reclamationList.push({...data});
             }
             this.reclamation = new ReclamationEtudiant();
         }, error => {
@@ -404,7 +405,7 @@ export class AdminComponent implements OnInit {
 
     cancel() {
         this.displayImgDialog = false;
-        this.img = null;
+        this.img = undefined;
     }
 
     onSend(event: any) {

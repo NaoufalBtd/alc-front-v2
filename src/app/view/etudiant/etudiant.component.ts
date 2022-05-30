@@ -193,7 +193,9 @@ export class EtudiantComponent implements OnInit {
         this.displayImgDialog = false;
         this.reclamation.file = this.img;
         this.reclamationService.send(this.reclamation).subscribe(data => {
-            if (this.img !== null) {
+            if (this.img === undefined || this.img === null) {
+                this.reclamationList.push({...data});
+            } else {
                 const formData = new FormData();
                 formData.append('id', data.id.toString());
                 formData.append('img', this.img);
@@ -203,9 +205,8 @@ export class EtudiantComponent implements OnInit {
                         this.reclamationList.push({...dataFinal});
                     }
                 );
-            } else {
-                this.reclamationList.push({...data});
             }
+            this.reclamation = new ReclamationEtudiant();
         }, error => {
             this.messageService.add({severity: 'error', life: 3000, detail: error?.error?.message});
 
@@ -242,6 +243,7 @@ export class EtudiantComponent implements OnInit {
         this.displayImgDialog = false;
         this.img = null;
     }
+
     showImage(img: string) {
         this.selectedImgUrl = img;
         this.showOverLayImg = true;
