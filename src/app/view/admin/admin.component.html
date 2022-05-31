@@ -119,7 +119,7 @@
     <div class="p-grid " style="padding: 5px 0;!important;">
         <div class="p-col-10">
             <div class="speech-wrapper " *ngFor="let message of reclamationList">
-                <div *ngIf="message.setFrom === role.STUDENT" class="bubble alt">
+                <div *ngIf="message.setFrom !== role.ADMIN" class="bubble alt">
                     <div class="txt">
                         <p class="message">{{message?.message}}</p>
                         <span class="timestamp">{{message?.dateReclamation | date:'MMM d, y, h:mm a'}}</span>
@@ -149,11 +149,11 @@
 
         <div style=" border-left: 1px solid #d05040;  background: #f76c5833;" class="p-col-2">
             <p-avatar *ngFor="let value of map | keyvalue"
-                      [image]="value?.value[0]?.etudiant?.image"
+                      [image]="value?.value[0]?.user?.image"
                       (click)="showData(value)"
                       pBadge
                       [value]="getValueOfBadge(value.key)"
-                      [pTooltip]="value?.value[0]?.etudiant?.prenom" severity="danger"
+                      [pTooltip]="value?.value[0]?.user?.prenom" severity="danger"
                       styleClass="p-mr-2" shape="circle" size="large"></p-avatar>
         </div>
 

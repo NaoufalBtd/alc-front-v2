@@ -45,7 +45,7 @@ export class ReclamationEtudiantCreateComponent implements OnInit {
     }
 
     public saveReclamationEtudiant() {
-        this.reclamationEtudiant.etudiant = this.serviceLogin.getConnectedStudent();
+        this.reclamationEtudiant.user = this.serviceLogin.getConnectedStudent();
         this.reclamationEtudiantService.saveReclamationEtudiant();
     }
 

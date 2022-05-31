@@ -298,9 +298,9 @@ export class AdminComponent implements OnInit {
                 this.allReclamation = data;
                 if (data != null) {
                     for (const item of data) {
-                        let user = item.etudiant;
+                        let user = item.user;
                         if (this.map.has(user.id) === false) {
-                            this.map.set(user.id, data.filter(r => r.etudiant.id === user.id));
+                            this.map.set(user.id, data.filter(r => r.user.id === user.id));
                         }
                     }
                 }
@@ -333,11 +333,11 @@ export class AdminComponent implements OnInit {
 
     sendReclamation() {
         this.displayImgDialog = false;
-        this.reclamation.etudiant = this.authenticationService.getConnectedStudent();
+        this.reclamation.user = this.authenticationService.getConnectedStudent();
         this.reclamation.setFrom = this.authenticationService.getConnectedStudent().role;
         this.reclamation.dateReclamation = this.datePipe.transform(new Date(), 'yyyy-MM-dd hh:mm:ss');
         this.reclamation.traite = true;
-        this.reclamation.etudiant = this.selectedUser;
+        this.reclamation.user = this.selectedUser;
         this.reclamation.file = this.img;
         this.reclamation.typeReclamationEtudiant = null;
         this.reclamationService.send(this.reclamation).subscribe(data => {
@@ -367,7 +367,7 @@ export class AdminComponent implements OnInit {
     }
 
     showData(value: KeyValue<number, ReclamationEtudiant[]>) {
-        this.selectedUser = value.value[0].etudiant;
+        this.selectedUser = value.value[0].user;
         const index = value.value.filter(f => f.traite === false).length;
         if (index === 0) {
             this.reclamationList = value.value;

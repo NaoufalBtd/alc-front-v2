@@ -18,6 +18,6 @@ export class ReclamationEtudiant {
     dateTraitement: string;
     dateReponse: string;
     commentaireTraiteur: string;
-    etudiant: User = new Etudiant();
+    user: User = new Etudiant();
     typeReclamationEtudiant = new TypeReclamationEtudiant();
 }

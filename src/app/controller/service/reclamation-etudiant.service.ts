@@ -212,7 +212,7 @@ export class ReclamationEtudiantService {
         this.http.post(this.etudiantReclamationEtudianturl + '/', this.reclamationEtudiant).subscribe(
             data => {
                 if (data > 0) {
-                    this.findAllReclamationByEtudiantId(this.reclamationEtudiant.etudiant.id);
+                    this.findAllReclamationByEtudiantId(this.reclamationEtudiant.user.id);
                     console.log('salam');
                     console.log(this.reclamationEtudiant.id);
                     this.reclamationEtudiant = null;

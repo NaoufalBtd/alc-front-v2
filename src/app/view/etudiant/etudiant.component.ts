@@ -185,7 +185,7 @@ export class EtudiantComponent implements OnInit {
 
 
     sendReclamation() {
-        this.reclamation.etudiant = this.authenticationService.getConnectedStudent();
+        this.reclamation.user = this.authenticationService.getConnectedStudent();
         this.reclamation.setFrom = this.authenticationService.getConnectedStudent().role;
         this.reclamation.dateReclamation = this.datePipe.transform(new Date(), 'yyyy-MM-dd hh:mm:ss');
         this.reclamation.traite = false;

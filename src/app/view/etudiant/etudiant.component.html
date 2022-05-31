@@ -57,7 +57,7 @@
 
     <div class="p-grid " style="padding: 5px 0;!important;">
         <div class="speech-wrapper" *ngFor="let message of reclamationList">
-            <div *ngIf="message.setFrom === role.STUDENT" class="bubble alt">
+            <div *ngIf="message.setFrom !== role.ADMIN" class="bubble alt">
                 <div class="txt">
                     <p class="message">{{message?.message}}</p>
                     <span class="timestamp">{{message?.dateReclamation | date:'MMM d, y, h:mm a'}}</span>
