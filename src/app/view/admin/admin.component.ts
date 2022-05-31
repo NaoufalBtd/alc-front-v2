@@ -346,7 +346,7 @@ export class AdminComponent implements OnInit {
                 this.reclamationList.push({...data});
             } else {
                 const formData = new FormData();
-                formData.append('id', data.id.toString());
+                formData.append('id', data?.id?.toString());
                 formData.append('img', this.img);
                 this.reclamationService.updateImg(formData).subscribe(
                     dataFinal => {
