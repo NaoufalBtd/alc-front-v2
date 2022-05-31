@@ -148,13 +148,13 @@
         </div>
 
         <div style=" border-left: 1px solid #d05040;  background: #f76c5833;" class="p-col-2">
-            <p-avatar *ngFor="let value of map | keyvalue"
+            <p-avatar [style]="{marginBottom: '15px'}" *ngFor="let value of map | keyvalue"
                       [image]="value?.value[0]?.user?.image"
                       (click)="showData(value)"
                       pBadge
                       [value]="getValueOfBadge(value.key)"
                       [pTooltip]="value?.value[0]?.user?.prenom" severity="danger"
-                      styleClass="p-mr-2" shape="circle" size="large"></p-avatar>
+                      styleClass="p-mr-2" shape="square" size="large"></p-avatar>
         </div>
 
 
