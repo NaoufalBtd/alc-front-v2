@@ -279,7 +279,7 @@ export class AdminComponent implements OnInit {
         ];
         this.user = this.authenticationService.getUserFromLocalCache();
         if (this.user === null) {
-            this.router.navigate(['#/']);
+            this.router.navigate(['/']);
         } else {
             // @ts-ignore
             if (this.user.role === Role.PROF || this.user.role === Role.STUDENT

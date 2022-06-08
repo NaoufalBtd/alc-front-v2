@@ -171,157 +171,225 @@
 
 -->
 
-<p-dialog [(visible)]="editDialog" [modal]="true" [style]="{width: '70vw'}" header="Professor Edit"
+<p-dialog [(visible)]="editDialog" [modal]="true" [style]="{width: '75vw'}" header="Professor Edit"
           styleClass="p-fluid">
-    <div class="row m-l-0 m-r-0">
+    <div style="margin: 15px" class="row m-l-0 m-r-0">
         <div class="col-sm-4 bg-c-lite-green user-profile">
             <div class="card-block text-center text-white">
-                <div class="m-b-25"> <img [src]="selected?.image"class="img-radius"
-                                          alt="User-Profile-Image"> </div>
+                <div class="m-b-25"><img [src]="selected?.image" class="img-radius"
+                                         alt="User-Profile-Image"></div>
                 <h6 class="f-w-600">{{selected?.nom}} {{ selected?.prenom}}</h6>
-                <p>{{selected?.username}} </p> <i class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
+                <p>{{selected?.username}} </p> <i
+                    class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
             </div>
         </div>
-                        <div class="col-sm-8">
-                            <div class="card-block">
-                                <p-tabView (onChange)="showTranche()">
-                                    <p-tabPanel header="Professor information">
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <p class="m-b-10 f-w-600">Furst name</p>
-                                        <input [(ngModel)]="selected.prenom" autofocus id="firstName" pInputText required type="text"/>
-                                        <small *ngIf="submitted && !selected.prenom" class="p-invalid">First Name is required.</small>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <p class="m-b-10 f-w-600">Last name</p>
-                                        <input [(ngModel)]="selected.nom" autofocus id="lastName" pInputText required type="text"/>
-                                        <small *ngIf="submitted && !selected.nom" class="p-invalid">Last Name is required.</small>
-                                    </div>
-                                    <div class="col-sm-6 " style="margin-top: 15px;">
-                                        <p class="m-b-10 f-w-600">Phone number</p>
-                                        <input [(ngModel)]="selected.numero" autofocus id="phoneNumber" pInputText required type="text"/>
-                                        <small *ngIf="submitted && !selected.numero" class="p-invalid">Phone Number is required.</small>
-                                    </div>
-                                    <div class="col-sm-6 " style="margin-top: 15px;">
-                                        <p class="m-b-10 f-w-600">Skype</p>
-                                        <input [(ngModel)]="selected.skype"  id="phoneNumber" pInputText  type="text"/>
-                                    </div>
-                                    <div class="col-sm-6"  style="margin-top: 15px;">
-                                        <p class="m-b-10 f-w-600">Level max</p>
-                                        <p-dropdown [options]="parcoursList" [(ngModel)]="selected.levelMax"
-                                                    optionLabel="libelle"></p-dropdown>
-                                    </div>
-                                    <div class="col-sm-6"  style="margin-top: 15px;">
-                                        <p class="m-b-10 f-w-600">Level min</p>
-                                        <p-dropdown [options]="parcoursList" [(ngModel)]="selected.levelMin"
-                                                    optionLabel="libelle"></p-dropdown>
-                                    </div>
-                                    <div class="col-sm-6"  style="margin-top: 15px;">
-                                        <p class="m-b-10 f-w-600">Type teacher</p>
-                                        <p-dropdown id="float-input" [options]="typeTeachers"  editable="true" [(ngModel)]="selected.typeTeacher"
-                                                    optionLabel="libelle" ></p-dropdown>
-                                    </div>
-                                </div>
-                                    </p-tabPanel>
-                                    <p-tabPanel *ngIf="!showAddTranche" header="Work hours">
-                                        <div class="card">
-                                            <p-table [value]="trancheHoraireProfs">
-                                                <ng-template pTemplate="header">
-                                                    <tr>
-                                                        <th pSortableColumn="day">Day
-                                                            <p-sortIcon field="day"></p-sortIcon>
-                                                        </th>
-                                                        <th pSortableColumn="startHour">Start hour
-                                                            <p-sortIcon field="startHour"></p-sortIcon>
-                                                        </th>
-                                                        <th pSortableColumn="endHour">End hour
-                                                            <p-sortIcon field="endHour"></p-sortIcon>
-                                                        </th>
-                                                        <th>
-                                                            <button (click)="addNewTranche()"
-                                                                    class="p-button-rounded   p-button-outlined p-button-sm p-button-success"
-                                                                    label="New schedule"
-                                                                    pButton pRipple></button>
-                                                        </th>
-                                                    </tr>
-                                                </ng-template>
-                                                <ng-template pTemplate="body" let-tranche>
-                                                    <tr>
-                                                        <td>{{getDay(tranche.day)}}</td>
-                                                        <td>{{tranche.startHour}}</td>
-                                                        <td>{{tranche.endHour}}</td>
-                                                        <td>
-                                                            <button (click)="editTranche(tranche)"
-                                                                    class="p-button-rounded p-button-success p-mr-2" icon="pi pi-pencil" pButton
-                                                                    pRipple></button>
-                                                            <button (click)="deleteTranche(tranche)"
-                                                                    class="p-button-rounded p-button-danger p-mr-2" icon="pi pi-trash" pButton
-                                                                    pRipple></button>
-                                                        </td>
+        <div class="col-sm-8">
+            <div class="card-block">
+                <p-tabView (onChange)="showTranche()">
+                    <p-tabPanel header="Professor information">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <p class="m-b-10 f-w-600">Furst name</p>
+                                <input [(ngModel)]="selected.prenom" autofocus id="firstName" pInputText required
+                                       type="text"/>
+                                <small *ngIf="submitted && !selected.prenom" class="p-invalid">First Name is
+                                    required.</small>
+                            </div>
 
-                                                    </tr>
-                                                </ng-template>
-                                            </p-table>
-                                        </div>
-                                    </p-tabPanel>
-
-                                    <p-tabPanel *ngIf="showAddTranche" header="Work hours">
-                                        <div class="p-grid">
-                                            <div class="p-col-12">
-                                                <p-dropdown [options]="daysOptions" [(ngModel)]="selectedDay" optionLabel="name"></p-dropdown>
-                                            </div>
-                                            <div class="p-col-6">
-                                                <label for="startHour">Start hour</label>
-                                                <p-calendar [(ngModel)]="dateDebut" [timeOnly]="true" [hourFormat]="24"
-                                                            id="startHour"></p-calendar>
-                                            </div>
-
-                                            <div class="p-col-6">
-                                                <label for="endHour">End hour</label>
-                                                <p-calendar [(ngModel)]="dateFin" [timeOnly]="true" [hourFormat]="24"
-                                                            id="endHour"></p-calendar>
-                                            </div>
-                                        </div>
+                            <div class="col-sm-6">
+                                <p class="m-b-10 f-w-600">Last name</p>
+                                <input [(ngModel)]="selected.nom" autofocus id="lastName" pInputText required
+                                       type="text"/>
+                                <small *ngIf="submitted && !selected.nom" class="p-invalid">Last Name is
+                                    required.</small>
+                            </div>
+                            <div class="col-sm-6 " style="margin-top: 15px;">
+                                <p class="m-b-10 f-w-600">Phone number</p>
+                                <input [(ngModel)]="selected.numero" autofocus id="phoneNumber" pInputText required
+                                       type="text"/>
+                                <small *ngIf="submitted && !selected.numero" class="p-invalid">Phone Number is
+                                    required.</small>
+                            </div>
+                            <div class="col-sm-6 " style="margin-top: 15px;">
+                                <p class="m-b-10 f-w-600">Skype</p>
+                                <input [(ngModel)]="selected.skype" id="phoneNumber" pInputText type="text"/>
+                            </div>
+                            <div class="col-sm-6" style="margin-top: 15px;">
+                                <p class="m-b-10 f-w-600">Level max</p>
+                                <p-dropdown [options]="parcoursList" [(ngModel)]="selected.levelMax"
+                                            optionLabel="libelle"></p-dropdown>
+                            </div>
+                            <div class="col-sm-6" style="margin-top: 15px;">
+                                <p class="m-b-10 f-w-600">Level min</p>
+                                <p-dropdown [options]="parcoursList" [(ngModel)]="selected.levelMin"
+                                            optionLabel="libelle"></p-dropdown>
+                            </div>
 
 
-                                        <button [disabled]="(dateFin === undefined )|| (dateFin === undefined)"
-                                                (click)="addHoraire()" class="p-button-text table1" icon="pi pi-plus" label="Add Horaire"
-                                                pButton pRipple></button>
+                            <div class="col-sm-6" style="margin-top: 15px;">
+                                <p class="m-b-10 f-w-600">Type teacher</p>
+                                <p-dropdown id="float-input" [options]="typeTeachers" editable="true"
+                                            [(ngModel)]="selected.typeTeacher"
+                                            optionLabel="libelle"></p-dropdown>
+                            </div>
+
+                            <div class="col-sm-6" style="margin-top: 15px;">
+                                <p class="m-b-10 f-w-600">Level</p>
+                                <p-dropdown id="float-input" [options]="categories" editable="true"
+                                            [(ngModel)]="selected.categorieProf"
+                                            optionLabel="level"></p-dropdown>
+                            </div>
 
 
-                                        <p-table [value]="trancheHoraireProfList">
-                                            <ng-template pTemplate="header">
-                                                <tr>
-                                                    <th>Day</th>
-                                                    <th pSortableColumn="datee"> Start hour</th>
-                                                    <th pSortableColumn="datee"> End hour</th>
-                                                </tr>
-                                            </ng-template>
-                                            <ng-template let-e pTemplate="body">
-                                                <tr>
-                                                    <td>{{getDay(e?.day)}}</td>
-                                                    <td>{{e?.startHour}}</td>
-                                                    <td>{{e?.endHour}}</td>
-                                                    <td>
-                                                        <button (click)="delete(e)" class="p-button-rounded p-button-danger" icon="pi pi-trash"
-                                                                pButton
-                                                                pRipple></button>
-                                                    </td>
-                                                </tr>
-                                            </ng-template>
-                                        </p-table>
-                                    </p-tabPanel>
-                                </p-tabView>
+                        </div>
+                    </p-tabPanel>
+                    <p-tabPanel *ngIf="!showAddTranche" header="Work hours">
+                        <div class="card">
+                            <p-table [value]="trancheHoraireProfs">
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th pSortableColumn="day">Day
+                                            <p-sortIcon field="day"></p-sortIcon>
+                                        </th>
+                                        <th pSortableColumn="startHour">Start hour
+                                            <p-sortIcon field="startHour"></p-sortIcon>
+                                        </th>
+                                        <th pSortableColumn="endHour">End hour
+                                            <p-sortIcon field="endHour"></p-sortIcon>
+                                        </th>
+                                        <th>
+                                            <button (click)="addNewTranche()"
+                                                    class="p-button-rounded   p-button-outlined p-button-sm p-button-success"
+                                                    label="New schedule"
+                                                    pButton pRipple></button>
+                                        </th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-tranche>
+                                    <tr>
+                                        <td>{{getDay(tranche.day)}}</td>
+                                        <td>{{tranche.startHour}}</td>
+                                        <td>{{tranche.endHour}}</td>
+                                        <td>
+                                            <button (click)="editTranche(tranche)"
+                                                    class="p-button-rounded p-button-success p-mr-2" icon="pi pi-pencil"
+                                                    pButton
+                                                    pRipple></button>
+                                            <button (click)="deleteTranche(tranche)"
+                                                    class="p-button-rounded p-button-danger p-mr-2" icon="pi pi-trash"
+                                                    pButton
+                                                    pRipple></button>
+                                        </td>
+
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </p-tabPanel>
+                    <p-tabPanel *ngIf="showAddTranche" header="Work hours">
+                        <div class="p-grid">
+                            <div class="p-col-12">
+                                <p-dropdown [options]="daysOptions" [(ngModel)]="selectedDay"
+                                            optionLabel="name"></p-dropdown>
+                            </div>
+                            <div class="p-col-6">
+                                <label for="startHour">Start hour</label>
+                                <p-calendar [(ngModel)]="dateDebut" [timeOnly]="true" [hourFormat]="24"
+                                            id="startHour"></p-calendar>
+                            </div>
+
+                            <div class="p-col-6">
+                                <label for="endHour">End hour</label>
+                                <p-calendar [(ngModel)]="dateFin" [timeOnly]="true" [hourFormat]="24"
+                                            id="endHour"></p-calendar>
                             </div>
                         </div>
+
+
+                        <button [disabled]="(dateFin === undefined )|| (dateFin === undefined)"
+                                (click)="addHoraire()" class="p-button-text table1" icon="pi pi-plus"
+                                label="Add Horaire"
+                                pButton pRipple></button>
+
+
+                        <p-table [value]="trancheHoraireProfList">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th>Day</th>
+                                    <th pSortableColumn="datee"> Start hour</th>
+                                    <th pSortableColumn="datee"> End hour</th>
+                                </tr>
+                            </ng-template>
+                            <ng-template let-e pTemplate="body">
+                                <tr>
+                                    <td>{{getDay(e?.day)}}</td>
+                                    <td>{{e?.startHour}}</td>
+                                    <td>{{e?.endHour}}</td>
+                                    <td>
+                                        <button (click)="delete(e)" class="p-button-rounded p-button-danger"
+                                                icon="pi pi-trash"
+                                                pButton
+                                                pRipple></button>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </p-tabPanel>
+
+
+                    <p-tabPanel header="Levels">
+                        <p-table [value]="categories">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th pSortableColumn="code">Code
+                                        <p-sortIcon field="code"></p-sortIcon>
+                                    </th>
+                                    <th pSortableColumn="level">Level
+                                        <p-sortIcon field="level"></p-sortIcon>
+                                    </th>
+                                    <th pSortableColumn="lessonRate">Lesson Rate
+                                        <p-sortIcon field="lessonRate"></p-sortIcon>
+                                    </th>
+                                    <th>
+                                        <button (click)="addNewLevel()"
+                                                class="p-button-rounded   p-button-outlined p-button-sm p-button-success"
+                                                label="New Level"
+                                                pButton pRipple></button>
+                                    </th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-level>
+                                <tr>
+                                    <td>{{level?.code}}</td>
+                                    <td>{{level?.level}}</td>
+                                    <td>{{level?.lessonRate}}</td>
+                                    <td>
+                                        <button (click)="editLevel(level)"
+                                                class="p-button-rounded p-button-success p-mr-2" icon="pi pi-pencil"
+                                                pButton
+                                                pRipple></button>
+                                        <button (click)="deleteLevel(level)"
+                                                class="p-button-rounded p-button-danger p-mr-2" icon="pi pi-trash"
+                                                pButton
+                                                pRipple></button>
+                                    </td>
+
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </p-tabPanel>
+                </p-tabView>
+            </div>
+        </div>
     </div>
-        <ng-template pTemplate="footer">
+    <ng-template pTemplate="footer">
         <button (click)="hideEditDialog()" class="p-button-text" icon="pi pi-times" label="Cancel" pButton
-                style="color: #ee5a6f"pRipple></button>
-        <button (click)="edit()" class="p-button-text " icon="pi pi-check" label="Edit" pButton pRipple style="color: #ee5a6f"></button>
+                style="color: #ee5a6f" pRipple></button>
+        <button (click)="edit()" class="p-button-text " icon="pi pi-check" label="Edit" pButton pRipple
+                style="color: #ee5a6f"></button>
 
 
-</ng-template>
+    </ng-template>
 </p-dialog>
 <p-dialog header="Edit" [(visible)]="displayModal" [modal]="true" [style]="{width: '25vw'}"
           [draggable]="false" [resizable]="false">
@@ -355,10 +423,43 @@
     </ng-template>
 </p-dialog>
 
-<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel="stylesheet" />
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
       crossorigin="anonymous">
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 
+<p-dialog header="Level" [(visible)]="showAddCategoryDialog" [style]="{width: '50vw'}" [baseZIndex]="10000">
+
+    <div class="p-field">
+        <div class="p-grid">
+            <div class="p-col-6">
+                <p class="m-b-10 f-w-600">Code</p>
+                <input [style]="{width: '100%'}" [(ngModel)]="selectedCategory.code" name="code" autofocus id="code" pInputText
+                       type="text"/>
+
+            </div>
+            <div class="p-col-6">
+                <p class="m-b-10 f-w-600">Level</p>
+                <input [style]="{width: '100%'}" [(ngModel)]="selectedCategory.level" name="level" autofocus id="levee" pInputText
+                       type="text"/>
+
+            </div>
+            <div class="p-col-6">
+                <p class="m-b-10 f-w-600">Lesson rate</p>
+                <input  [style]="{width: '100%'}" [(ngModel)]="selectedCategory.lessonRate" name="lessonRate" autofocus id="lessonRate" pInputText
+                       type="text"/>
+
+            </div>
+        </div>
+    </div>
+
+
+
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-check" (click)="saveCategory()" label="Save" styleClass="p-button-text"></p-button>
+    </ng-template>
+</p-dialog>

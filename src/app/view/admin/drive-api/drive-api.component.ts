@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {AdminService} from '../../../controller/service/admin.service';
 import {ConfirmationService, MessageService} from 'primeng/api';
 import {environment} from '../../../../environments/environment';
+import {ActivatedRoute} from '@angular/router';
+import {HttpClient} from '@angular/common/http';
 
 @Component({
     selector: 'app-drive-api',
@@ -12,10 +14,35 @@ export class DriveApiComponent implements OnInit {
     displayLoadDialog: boolean;
 
     constructor(private adminService: AdminService,
+                private route: ActivatedRoute,
+                private http: HttpClient,
                 private messageService: MessageService) {
     }
 
     ngOnInit(): void {
+        const formData = new FormData();
+
+        console.log(this.route.snapshot.queryParams);
+        const code = this.route.snapshot.queryParams.code;
+        console.log(code);
+        formData.append('code', code);
+        if (code !== null && code !== undefined) {
+            this.http.post(environment.adminUrl + 'admin/oauth', formData,
+                {
+                    reportProgress: true,
+                    observe: 'events'
+                }).subscribe(
+                data => {
+                    this.messageService.add({
+                        severity: 'success',
+                        summary: 'Successful',
+                        detail: 'Connection to google successful'
+                    });
+                }, error => {
+                    console.log(error);
+                }
+            );
+        }
     }
 
     public saveData() {

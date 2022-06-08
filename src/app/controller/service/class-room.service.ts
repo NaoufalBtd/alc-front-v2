@@ -44,10 +44,7 @@ export class ClassRoomService {
         return this.http.get<Array<QuizClassRoom>>(this.adminUrl + 'quiz-classRoom/id/' + this.selectedclassRoom.id);
     }
 
-    public findAllCategorieProf(): Observable<Array<CategorieProf>> {
-        return this.http.get<Array<CategorieProf>>(this.adminUrl + 'categorieprof/');
 
-    }
 
     public findSalary(): Observable<SalaryVo> {
         return this.http.get<SalaryVo>(this.adminUrl + 'salary/prof/id/' + this.selectedsalaryVo.prof.id);
@@ -334,5 +331,18 @@ export class ClassRoomService {
 
     set viewDialogCategorie(value: boolean) {
         this._viewDialogCategorie = value;
+    }
+
+    public findAllCategorieProf(): Observable<Array<CategorieProf>> {
+        return this.http.get<Array<CategorieProf>>(this.adminUrl + 'categorieprof/');
+
+    }
+
+    deleteCategory(level: CategorieProf): Observable<number> {
+        return this.http.delete<number>(this.adminUrl + 'categorieprof/' + level.id);
+    }
+
+    saveCategory(level: CategorieProf): Observable<CategorieProf> {
+        return this.http.post<CategorieProf>(this.adminUrl + 'categorieprof/' , level);
     }
 }

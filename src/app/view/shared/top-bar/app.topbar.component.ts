@@ -53,7 +53,7 @@ export class AppTopBarComponent implements OnInit, OnDestroy {
             this.profService.removeConnectedStudent(this.user.id);
         }
         this.authenticationService.logOut();
-        this.router.navigate(['/']);
+        this.router.navigate([' ']);
     }
 
     public isAdmin(): boolean {

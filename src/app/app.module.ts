@@ -4,7 +4,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {CommonModule, DatePipe, HashLocationStrategy, LocationStrategy} from '@angular/common';
+import {CommonModule, DatePipe, HashLocationStrategy, LocationStrategy, PathLocationStrategy} from '@angular/common';
 import {AccordionModule} from 'primeng/accordion';
 import {AutoCompleteModule} from 'primeng/autocomplete';
 import {AvatarModule} from 'primeng/avatar';
@@ -344,6 +344,7 @@ import {HomeStudentComponent} from './view/etudiant/home-student/home-student.co
 import {HomeFreeTrialComponent} from './view/etudiant/home-student/home-free-trial/home-free-trial.component';
 import {QuizPreviewStudentTeacherComponent} from './view/prof/home-work/home-work-review/quiz-preview-student-teacher/quiz-preview-student-teacher.component';
 import {VonPrimengFormModule} from '@von-development-studio/primeng-form-validation';
+import { SaveGoogleTokenComponent } from './view/admin/drive-api/save-google-token/save-google-token.component';
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -677,17 +678,18 @@ export function createTranslateLoader(http: HttpClient) {
         HomeStudentComponent,
         HomeFreeTrialComponent,
         ProfileComponent,
-        QuizPreviewStudentTeacherComponent
+        QuizPreviewStudentTeacherComponent,
+        SaveGoogleTokenComponent
 
     ],
     providers: [
-        {provide: LocationStrategy, useClass: HashLocationStrategy},
+        {provide: LocationStrategy, useClass: PathLocationStrategy},
         MenuService, MessageService, ConfirmationService,
         AppComponent, DatePipe,
         HomeWorkEtudiantComponent,
         WeekService, MonthService, DayService, WeekService, WorkWeekService, MonthService,
         AgendaService, MonthAgendaService, TimelineViewsService,
-        TimelineMonthService
+        TimelineMonthService,
     ],
     bootstrap: [AppComponent]
 })

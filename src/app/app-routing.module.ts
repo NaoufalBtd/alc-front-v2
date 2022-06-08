@@ -101,6 +101,8 @@ import {InvitedListeComponent} from './view/admin/invited-liste/invited-liste.co
 import {PromotionComponent} from './view/admin/promotion/promotion.component';
 import {MyPromotionListComponent} from './view/etudiant/my-promotion-list/my-promotion-list.component';
 import {HomeStudentComponent} from './view/etudiant/home-student/home-student.component';
+import {SaveGoogleTokenComponent} from './view/admin/drive-api/save-google-token/save-google-token.component';
+import {LocationStrategy, PathLocationStrategy} from '@angular/common';
 
 
 @NgModule({
@@ -136,6 +138,7 @@ import {HomeStudentComponent} from './view/etudiant/home-student/home-student.co
                     {path: 'homeWork', component: HomeWorkComponentComponent},
                     {path: 'bonus', component: BonusProfComponent},
                     {path: 'driveApi', component: DriveApiComponent},
+                    {path: 'driveApi/token', component: SaveGoogleTokenComponent},
                     {path: 'salarylist', component: SalarylistComponent},
                     {path: 'manage-section', component: ManageSectionComponent},
                     {path: 'home-work-review', component: HomeWorkPreviewComponent},
@@ -228,9 +231,12 @@ import {HomeStudentComponent} from './view/etudiant/home-student/home-student.co
                 ]
             },
             {path: '**', component: PageNotFoundComponent},
-        ], {scrollPositionRestoration: 'enabled'})
+        ], {scrollPositionRestoration: 'disabled'})
     ],
-    exports: [RouterModule]
+    exports: [RouterModule],
+    providers: [
+        {provide: LocationStrategy, useClass: PathLocationStrategy}
+    ],
 })
 export class AppRoutingModule {
 }
