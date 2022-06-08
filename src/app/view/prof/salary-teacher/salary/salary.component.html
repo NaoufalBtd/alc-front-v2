@@ -26,97 +26,144 @@
                     ></button>
                 </ng-template>
             </p-toolbar>
-<!--
-            <p-toolbar styleClass="p-mb-4">
-                <ng-template pTemplate="left">
-                    <h5>Number of Sessions Paid <span
-                            style="cursor: pointer;color: green">{{sessioncourslistProf.length}} </span>
-                        <br>
-                        Number of Sessions Not Paid: <span
-                                style="cursor: pointer;color: red">{{sessioncourslistProf.length}} </span>
-                    </h5>
-                    <br>
-
-
-                </ng-template>
-                <ng-template pTemplate="right">
-
-                    <h5>Total Salaries: <span style="cursor: pointer;color: #0c799f">{{this.monatantGlobale}} $</span>
-                    </h5>
-
-                </ng-template>
-            </p-toolbar>
--->
-            <p-table #dt [rows]="4" [paginator]="true" [value]="salaryList"
-                     [globalFilterFields]="['reference','total','totalPaye']"
-                     [rowHover]="true" dataKey="id" styleClass="p-datatable-customers"
-                     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-                     [showCurrentPageReport]="true">
-                <ng-template pTemplate="caption">
-                    <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
-                        <h5 class="p-m-0">List of Salary</h5>
-
+            <p-tabView>
+                <p-tabPanel header="Salary">
+                    <div class="p-grid">
+                        <div class="p-col-5">
+                            <p class="currentPay">Current pay</p>
+                            <div class="payement">
+                                <span class="pay">{{salaryMonth.totalPayment + salaryMonth.totalBonusClassAverage + salaryMonth.totalBonusWorkload}}</span>
+                                <span class="currency">DH</span>
+                            </div>
+                            <p class="recommendedPayText"><i style="    font-size: 19px;font-weight: bold;" class="pi pi-info-circle"></i> Recommended Pay</p>
+                            <div class="recommendedPay">
+                                <span class="recommendedPayPay">{{getTotalOfAll()}}</span>
+                                <span class="recommendedPayCurrency">DH</span>
+                            </div>
+                        </div>
+                        <div class="p-col-2"></div>
+                        <div class="p-col-5">
+                            <p-chart type="doughnut" [data]="data"></p-chart>
+                        </div>
                     </div>
-                </ng-template>
-                <ng-template pTemplate="header">
-                    <tr>
 
-                        <th pSortableColumn="code">Code</th>
-                        <th pSortableColumn="annee">Date</th>
-                        <th pSortableColumn="nbrSessionMensuel">Number of Monthly Sessions</th>
-                        <th pSortableColumn="Total Payment">Total Sessions</th>
-                        <th pSortableColumn="Total Bonus">Total Bonus</th>
-                        <th pSortableColumn="Number Of Sessions">Monthly Amount</th>
-                        <th pSortableColumn="Number Of Sessions">Payment Status</th>
-                        <th>Details</th>
-                    </tr>
-                </ng-template>
-                <ng-template pTemplate="body" let-salary>
-                    <tr>
+                    <div class="p-grid detailsSalary">
+                        <div class="p-col-4 payDetails">
+                            <div style="margin: -10px 0 20px;" class="payement">
+                                <span style="color: #ff725e" class="pay">{{salaryMonth?.totalPayment}}</span>
+                                <span style="color: #ff725e" class="currency">DH</span>
+                            </div>
 
-                        <td>{{salary.code}}</td>
-                        <td>{{salary.mois}}/{{salary.annee}}</td>
-                        <td>{{salary.nbrSessionMensuel}}</td>
-                        <td>
-                            <strong style="color: #2D1E81"> {{salary.totalPayment}} $</strong>
+                            <div class="sectionSalaryName">
+                                Lessons Profit
+                            </div>
+                        </div>
 
-                        </td>
-                        <td>
-                            <strong style="color: #2D1E81"> {{salary.totalBonusClassAverage + salary.totalBonusWorkload}}
-                                $</strong>
+                        <div class="p-col-4 payDetails">
+                            <div style="margin: -10px 0 20px;" class="payement">
+                                <span style="color: #ff725e" class="pay">{{salaryMonth?.totalBonusClassAverage}}</span>
+                                <span style="color: #ff725e" class="currency">DH</span>
+                            </div>
 
-                        </td>
-                        <td>
-                            <strong style="color: red"
-                                    *ngIf="!salary.payer">{{salary.totalPayment + salary.totalBonusClassAverage + salary.totalBonusWorkload}}
-                                $</strong>
-                            <strong style="color: green"
-                                    *ngIf="salary.payer">{{salary.totalPayment + salary.totalBonusClassAverage + salary.totalBonusWorkload}}
-                                $</strong>
+                            <div class="sectionSalaryName">
+                                Class Average Bonus
+                            </div>
+                        </div>
 
-                        </td>
-                        <td>
-                            <strong style="color: red" *ngIf="!salary.payer">
-                                <i class="pi pi-times-circle"></i>  {{salary.payer}}
-                            </strong>
-                            <strong style="color: green" *ngIf="salary.payer">
-                                <i
-                                        class="pi pi-check-circle"></i> {{salary.payer}}
-                            </strong>
 
-                        </td>
-                        <td>
-                            <button pButton pRipple icon="pi pi-list" class="p-button-rounded p-button-info p-mr-2"
-                                    (click)="showDetails(this.serviceUser.getConnectedProf().id,salary.id)"
+                        <div class="p-col-4 payDetails">
+                            <div style="margin: -10px 0 20px" class="payement">
+                                <span style="color: #ff725e" class="pay">{{salaryMonth?.totalBonusWorkload}}</span>
+                                <span style="color: #ff725e" class="currency">DH</span>
+                            </div>
 
-                            ></button>
-                        </td>
-                    </tr>
-                </ng-template>
-                <ng-template pTemplate="summary">
+                            <div class="sectionSalaryName">
+                                Workload Bonus
+                            </div>
+                        </div>
+                    </div>
+                </p-tabPanel>
 
-                </ng-template>
-            </p-table>
+
+
+
+                <p-tabPanel header="Details">
+                    <p-table #dt [rows]="4" [paginator]="true" [value]="salaryList"
+                             [globalFilterFields]="['reference','total','totalPaye']"
+                             [rowHover]="true" dataKey="id" styleClass="p-datatable-customers"
+                             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                             [showCurrentPageReport]="true">
+                        <ng-template pTemplate="caption">
+                            <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
+                                <h5 class="p-m-0">List of Salary</h5>
+
+                            </div>
+                        </ng-template>
+                        <ng-template pTemplate="header">
+                            <tr>
+
+                                <th pSortableColumn="code">Code</th>
+                                <th pSortableColumn="annee">Date</th>
+                                <th pSortableColumn="nbrSessionMensuel">Number of Monthly Sessions</th>
+                                <th pSortableColumn="Total Payment">Total Sessions</th>
+                                <th pSortableColumn="Total Bonus">Total Bonus</th>
+                                <th pSortableColumn="Number Of Sessions">Monthly Amount</th>
+                                <th pSortableColumn="Number Of Sessions">Payment Status</th>
+                                <th>Details</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-salary>
+                            <tr>
+
+                                <td>{{salary.code}}</td>
+                                <td>{{salary.mois}}/{{salary.annee}}</td>
+                                <td>{{salary.nbrSessionMensuel}}</td>
+                                <td>
+                                    <strong style="color: #2D1E81"> {{salary.totalPayment}} $</strong>
+
+                                </td>
+                                <td>
+                                    <strong style="color: #2D1E81"> {{salary.totalBonusClassAverage + salary.totalBonusWorkload}}
+                                        $</strong>
+
+                                </td>
+                                <td>
+                                    <strong style="color: red"
+                                            *ngIf="!salary.payer">{{salary.totalPayment + salary.totalBonusClassAverage + salary.totalBonusWorkload}}
+                                        $</strong>
+                                    <strong style="color: green"
+                                            *ngIf="salary.payer">{{salary.totalPayment + salary.totalBonusClassAverage + salary.totalBonusWorkload}}
+                                        $</strong>
+
+                                </td>
+                                <td>
+                                    <strong style="color: red" *ngIf="!salary.payer">
+                                        <i class="pi pi-times-circle"></i>  {{salary.payer}}
+                                    </strong>
+                                    <strong style="color: green" *ngIf="salary.payer">
+                                        <i
+                                                class="pi pi-check-circle"></i> {{salary.payer}}
+                                    </strong>
+
+                                </td>
+                                <td>
+                                    <button pButton pRipple icon="pi pi-list" class="p-button-rounded p-button-info p-mr-2"
+                                            (click)="showDetails(this.serviceUser.getConnectedProf().id,salary.id)"
+
+                                    ></button>
+                                </td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="summary">
+
+                        </ng-template>
+                    </p-table>
+                </p-tabPanel>
+
+            </p-tabView>
+
+
+
         </div>
     </div>
     <app-categorie-prof-view></app-categorie-prof-view>

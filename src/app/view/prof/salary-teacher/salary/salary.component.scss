@@ -2,3 +2,61 @@
 :host ::ng-deep .p-dropdown {
   width: 14rem;
 }
+
+.currentPay {
+  font-size: 20px;
+  font-weight: 500;
+  font-family: revert;
+}
+
+.payement {
+  font-size: 16px;
+  font-weight: 500;
+  font-family: revert;
+  margin: -10px 0 40px;
+
+}
+
+.pay {
+  font-size: 40px;
+  font-weight: bold;
+  color: black;
+}
+
+.recommendedPayText {
+  font-size: 20px;
+  font-weight: 500;
+  font-family: revert;
+  color: rgba(26, 26, 26, 0.26);
+}
+
+.recommendedPay {
+  font-size: 16px;
+  font-weight: 500;
+  font-family: revert;
+  color: rgba(26, 26, 26, 0.26);
+
+}
+.recommendedPayPay{
+  font-size: 33px;
+  color: #0000007a;
+  font-weight: bold;
+}
+
+
+
+.detailsSalary{
+  background: #263238;
+  border-radius: 5px;
+  padding: 10px;
+  text-align: center;
+  color: white;
+  margin-top: 40px!important;
+}
+
+.sectionSalaryName{
+  font-size: 19px;
+  font-weight: 500;
+  font-family: system-ui;
+  letter-spacing: 1px;
+}

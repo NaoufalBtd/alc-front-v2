@@ -7,7 +7,6 @@ import {SalaryService} from '../../../../controller/service/salary.service';
 import {Salary} from '../../../../controller/model/salary.model';
 import {SessionCours} from '../../../../controller/model/session-cours.model';
 import {SessionCoursService} from '../../../../controller/service/session-cours.service';
-import {DateTimePicker} from '@syncfusion/ej2-angular-calendars';
 import {Paiement} from '../../../../controller/model/paiement.model';
 import {ClassAverageBonusProf} from '../../../../controller/model/class-average-bonus-prof.model';
 import {WorkloadBonusProf} from '../../../../controller/model/workload-bonus-prof.model';
@@ -56,24 +55,6 @@ export class SalaryComponent implements OnInit {
                 this.itemsMOIS.push({label: 12, value: 12});*/
 
 
-        this.data = {
-
-            labels: ['Lesson profit', 'bonus', 'Plan shortage'],
-            datasets: [
-                {
-                    data: [300, 50, 100],
-                    backgroundColor: [
-                        '#FF8C69',
-                        '#43CD60',
-                        '#3A5FCD'
-                    ],
-                    hoverBackgroundColor: [
-                        '#FF8C69',
-                        '#43CD60',
-                        '#3A5FCD'
-                    ]
-                }]
-        };
     }
 
     get profClassAverageBonusProf(): ClassAverageBonusProf {
@@ -151,8 +132,9 @@ export class SalaryComponent implements OnInit {
 
 
     ngOnInit() {
+        const date: Date = new Date();
+        this.findSalaryByMoisAndAnneeAndProfId(date.getMonth() + 1, date.getFullYear(), this.serviceUser.getConnectedProf().id);
         this.salaryservice.findAllSalaryProfID(this.serviceUser.getConnectedProf().id);
-        console.log('salaaaaaaaaaaaaaaaaaaaaaaaaaaaaam');
         console.log(this.salaryList);
         this.salaryservice.findCurrentSalaryByMoisAndAnneeAndProfId(this.serviceUser.getConnectedProf().id);
         this.sessionCoursService.findByProfId(this.serviceUser.getConnectedProf().id);
@@ -179,6 +161,10 @@ export class SalaryComponent implements OnInit {
         return this.salaryservice.salaryMonth;
     }
 
+    set salaryMonth(value: Salary) {
+        this.salaryservice.salaryMonth = value;
+    }
+
 
     get salaryList(): Array<Salary> {
         return this.salaryservice.salaryList;
@@ -189,7 +175,6 @@ export class SalaryComponent implements OnInit {
     }
 
     public findSalaryByProf(mois: number, annee: number, idprof: number) {
-        this.salaryservice.findSalaryByMoisAndAnneeAndProfId(mois, annee, idprof);
         this.salaryservice.findMontantByAnneeProfId(annee, idprof);
         console.log('wah wah');
 
@@ -229,12 +214,41 @@ export class SalaryComponent implements OnInit {
     set sessions(value: Array<SessionCours>) {
         this.salaryservice.sessions = value;
     }
+
     openSalary() {
         this.displaySalary = true;
     }
 
     public findSalaryByMoisAndAnneeAndProfId(mois: number, annee: number, profid: number) {
-        this.salaryservice.findSalaryByMoisAndAnneeAndProfId(mois, annee, profid);
+        this.salaryservice.findSalaryByMoisAndAnneeAndProfId(mois, annee, profid).subscribe(
+            data => {
+                if (data != null) {
+                    this.salaryMonth = data;
+                    console.log(data);
+                    this.data = {
+                        labels: ['Lesson profit', 'Workload Bonus', 'Class Average Bonus'],
+                        datasets: [
+                            {
+                                data: [data.totalPayment,
+                                    data?.totalBonusWorkload,
+                                    data?.totalBonusClassAverage],
+                                backgroundColor: [
+                                    '#FF6384',
+                                    '#36A2EB',
+                                    '#FFCE56'
+                                ],
+                                hoverBackgroundColor: [
+                                    '#FF6384',
+                                    '#36A2EB',
+                                    '#FFCE56'
+                                ]
+                            }]
+                    };
+                } else {
+                    this.salaryMonth.montantMensuel = 0;
+                }
+            }
+        );
     }
 
     public findAllWorkloadBonusProfByMoisAndAnneeAndProfId(mois: number, annee: number, profid: number) {
@@ -294,9 +308,21 @@ export class SalaryComponent implements OnInit {
         this.salaryservice.findClassAverageBonusProfByProfIdAndSalaryId(idprof, idsalary);
 
     }
+
     public findSessionCoursByProfIdAndSalaryId(idprof: number, idsalary: number) {
         this.salaryservice.findSessionCoursByProfIdAndSalaryId(idprof, idsalary);
     }
 
 
+    getTotalOfAll(): number {
+        let total = 0;
+        if (this.salaryList.length !== 0) {
+            for (const salary of this.salaryList) {
+                total += salary.totalPayment + salary.totalBonusClassAverage + salary.totalBonusWorkload;
+            }
+            return total;
+        } else {
+            return 0;
+        }
+    }
 }

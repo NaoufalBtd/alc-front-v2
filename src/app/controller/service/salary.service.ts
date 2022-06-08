@@ -10,6 +10,7 @@ import {WorkloadBonusProf} from '../model/workload-bonus-prof.model';
 import {Prof} from '../model/prof.model';
 import {ProfService} from './prof.service';
 import {MessageService} from 'primeng/api';
+import {Observable} from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -434,16 +435,8 @@ export class SalaryService {
         );
     }
 
-    public findSalaryByMoisAndAnneeAndProfId(mois: number, annee: number, profid: number) {
-        return this.http.get<Salary>(this.profUrlSalary + '/' + mois + '/' + annee + '/' + profid).subscribe(
-            data => {
-                if (data != null) {
-                    this.salaryMonth = data;
-                } else {
-                    this.salaryMonth.montantMensuel = 0;
-                }
-            }
-        );
+    public findSalaryByMoisAndAnneeAndProfId(mois: number, annee: number, profid: number): Observable<Salary> {
+        return this.http.get<Salary>(this.profUrlSalary + '/' + mois + '/' + annee + '/' + profid);
     }
 
     public findCurrentSalaryByMoisAndAnneeAndProfId(profid: number) {
