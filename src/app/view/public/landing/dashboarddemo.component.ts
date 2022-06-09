@@ -1,5 +1,5 @@
-import {Component, NgModule, OnInit} from '@angular/core';
-import {MenuItem, MessageService} from 'primeng/api';
+import {Component, OnInit} from '@angular/core';
+import {MessageService} from 'primeng/api';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
@@ -11,15 +11,13 @@ import {Prof} from '../../../controller/model/prof.model';
 import {ParcoursService} from '../../../controller/service/parcours.service';
 import {Cours} from '../../../controller/model/cours.model';
 import {PackStudentService} from '../../../controller/service/pack-student.service';
-import {Router, RouterModule} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {User} from '../../../controller/model/user.model';
-import {HttpErrorResponse, HttpResponse} from '@angular/common/http';
-import {HeaderType} from '../../../enum/header-type.enum';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {AuthenticationService} from '../../../controller/service/authentication.service';
 import {Subscription} from 'rxjs';
-
-import {VonPrimengFormModule} from '@von-development-studio/primeng-form-validation';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {environment} from '../../../../environments/environment';
 
 @Component({
     selector: 'app-dashboard',
@@ -63,6 +61,8 @@ export class DashboardDemoComponent implements OnInit {
     constructor(private login: LoginService, public profservice: ProfService, public studentservice: EtudiantService, public parcoursService: ParcoursService,
                 public packStudentService: PackStudentService,
                 public etudiantService: EtudiantService,
+                private route: ActivatedRoute,
+                private http: HttpClient,
                 public messageService: MessageService,
                 public profService: ProfService, public router: Router, public authenticationService: AuthenticationService) {
     }
@@ -159,16 +159,39 @@ export class DashboardDemoComponent implements OnInit {
         this.parcoursService.listcours = value;
     }
 
+    public connectToGoogle() {
+        const formData = new FormData();
+
+        console.log(this.route.snapshot.queryParams);
+        const code = this.route.snapshot.queryParams.code;
+        console.log(code);
+        formData.append('code', code);
+        if (code !== null && code !== undefined) {
+            this.http.post(environment.adminUrl + 'admin/oauth', formData,
+                {
+                    reportProgress: true,
+                    observe: 'events'
+                }).subscribe(
+                data => {
+                    this.messageService.add({
+                        severity: 'success',
+                        summary: 'Successful',
+                        detail: 'Connection to google successful'
+                    });
+                }, error => {
+                    console.log(error);
+                }
+            );
+        }
+    }
+
     ngOnInit() {
         this.exform = new FormGroup({
             'fullName': new FormControl(null, Validators.required),
 
             'email': new FormControl(null, Validators.required)
         });
-
-
-        console.log('nbr of student');
-        console.log(this.studentservice.items);
+        this.connectToGoogle();
         if (this.login.getConnecteUser() != null) {
             if (this.login.getConnecteUser().role === 'STUDENT') {
                 this.router.navigate(['etudiant/etudiant-cours']);
