@@ -361,10 +361,15 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
     }
 
 
-    URLVideo() {
-        this.service.video = '';
-        this.service.video = this.selectedsection.urlVideo;
-        return this.service.video;
+
+    URLVideo(urlVideo: string): string {
+        let video = urlVideo.replace('watch?v=', 'embed/');
+        const index = video.indexOf('&t=');
+        const startTime: number = Number(video.substring(index + '&t='.length, (video.length - 1)));
+        if (index !== -1) {
+            video = video.substring(0, index) + '?start=' + startTime;
+        }
+        return video;
     }
 
     photoURL() {

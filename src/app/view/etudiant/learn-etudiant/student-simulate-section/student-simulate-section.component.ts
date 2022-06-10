@@ -754,20 +754,14 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
         //   return this.sanitizer.bypassSecurityTrustResourceUrl(this.service.image);
     }
 
-    URLVideo() {
-        this.service.video = '';
-        // tslint:disable-next-line:prefer-for-of
-        // for (let m = 0; m < 24 ; m++)
-        // {
-        this.service.video = this.selectedsection.urlVideo;
-        // }
-        //   for (let m = 32; m < 43 ; m++)
-        //   {
-        //  }
-        //   console.log(this.service.video);
-        // return this.sanitizer.bypassSecurityTrustResourceUrl(this.service.video);
-        return this.service.video;
-
+    URLVideo(urlVideo: string): string {
+        let video = urlVideo.replace('watch?v=', 'embed/');
+        const index = video.indexOf('&t=');
+        const startTime: number = Number(video.substring(index + '&t='.length, (video.length - 1)));
+        if (index !== -1) {
+            video = video.substring(0, index) + '?start=' + startTime;
+        }
+        return video;
     }
 
     public NextSection() {
