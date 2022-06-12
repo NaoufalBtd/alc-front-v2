@@ -3,7 +3,6 @@ import {AppComponent} from '../../../app.component';
 import {MenuItem} from 'primeng/api';
 import {LoginService} from '../../../controller/service/login.service';
 import {PublicComponent} from '../../public/public.component';
-import {AdminComponent} from '../../admin/admin.component';
 import {AuthenticationService} from '../../../controller/service/authentication.service';
 import {User} from '../../../controller/model/user.model';
 import {Router} from '@angular/router';
@@ -11,8 +10,6 @@ import {Role} from '../../../enum/role.enum';
 import {Subscription} from 'rxjs';
 import {ProfService} from '../../../controller/service/prof.service';
 import {EtudiantService} from '../../../controller/service/etudiant.service';
-import {Menu} from 'primeng/menu';
-import {backgroundColor} from 'html2canvas/dist/types/css/property-descriptors/background-color';
 import {TranslateService} from '@ngx-translate/core';
 
 @Component({
@@ -26,7 +23,7 @@ export class AppTopBarComponent implements OnInit, OnDestroy {
     items: MenuItem[];
     user: User = new User();
     hidePopUp = true;
-    itemstopBar: String[];
+    itemstopBar: string[];
 
 
     constructor(public app: AppComponent, public appMain: PublicComponent,
@@ -53,14 +50,14 @@ export class AppTopBarComponent implements OnInit, OnDestroy {
             this.profService.removeConnectedStudent(this.user.id);
         }
         this.authenticationService.logOut();
-        this.router.navigate([' ']);
+        this.router.navigate(['']);
     }
 
     public isAdmin(): boolean {
         if (this.authenticationService.getUserFromLocalCache() == null) {
             return false;
         } else {
-            return this.authenticationService.getUserFromLocalCache().role === 'ADMIN';
+            return this.authenticationService.getUserFromLocalCache().role === Role.ADMIN;
 
         }
     }
@@ -69,7 +66,7 @@ export class AppTopBarComponent implements OnInit, OnDestroy {
         if (this.authenticationService.getUserFromLocalCache() == null) {
             return false;
         } else {
-            return this.authenticationService.getUserFromLocalCache().role === 'TEACHER';
+            return this.authenticationService.getUserFromLocalCache().role === Role.PROF;
 
         }
     }
@@ -78,7 +75,7 @@ export class AppTopBarComponent implements OnInit, OnDestroy {
         if (this.authenticationService.getUserFromLocalCache() == null) {
             return false;
         } else {
-            return this.authenticationService.getUserFromLocalCache().role === 'STUDENT';
+            return this.authenticationService.getUserFromLocalCache().role === Role.STUDENT;
 
         }
     }
@@ -90,5 +87,19 @@ export class AppTopBarComponent implements OnInit, OnDestroy {
     selectedLangage(event: any) {
         console.log(event.target.value);
         this.translate.use(event.target.value);
+    }
+
+    goToProfile() {
+        if (this.authenticationService.getUserFromLocalCache() == null) {
+            return;
+        } else {
+            if (this.authenticationService.getUserFromLocalCache().role === Role.STUDENT) {
+                this.router.navigate(['etudiant/profile']);
+            } else if (this.authenticationService.getUserFromLocalCache().role === Role.PROF) {
+                this.router.navigate(['prof/profile']);
+            } else {
+                this.router.navigate(['admin/profile']);
+            }
+        }
     }
 }

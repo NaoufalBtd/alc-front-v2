@@ -21,7 +21,7 @@
             <ul *ngIf="hidePopUp === false" class="fadeInDown">
 
                 <li class="user-profile-drop-dawn">
-                    <a style="height: 52px" (click)="appMain?.onTopbarUserMenuButtonClick($event); "class="user-profile-drop-dawn-text">
+                    <a style="height: 52px; cursor: pointer" (click)="appMain?.onTopbarUserMenuButtonClick($event); goToProfile()" class="user-profile-drop-dawn-text">
                         <i class="pi pi-fw pi-user" style="margin-right:4px"></i>
                         <span>Your profile</span>
                     </a>

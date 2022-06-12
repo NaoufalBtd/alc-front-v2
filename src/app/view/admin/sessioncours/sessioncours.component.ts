@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {SessionCoursService} from '../../../controller/service/session-cours.service';
 import {SessionCours} from '../../../controller/model/session-cours.model';
 import {PaiementService} from '../../../controller/service/paiement.service';
-import {MenuItem, MessageService} from 'primeng/api';
+import {ConfirmationService, MenuItem, MessageService} from 'primeng/api';
 import {GroupeEtudiantDetail} from '../../../controller/model/groupe-etudiant-detail.model';
 import {WorkloadBonusProf} from '../../../controller/model/workload-bonus-prof.model';
 import {ClassAverageBonusProf} from '../../../controller/model/class-average-bonus-prof.model';
@@ -26,7 +26,10 @@ export class SessioncoursComponent implements OnInit {
 
     constructor(private sessionCoursService: SessionCoursService,
                 private paiementService: PaiementService,
-                private messageService: MessageService, private salaryService: SalaryService, private profService: ProfService) {
+                private messageService: MessageService,
+                private salaryService: SalaryService,
+                private confirmationService: ConfirmationService,
+                private profService: ProfService) {
         this.etatPay = [];
         // @ts-ignore
         this.etatPay.push({label: 'True', value: 1});
@@ -169,7 +172,15 @@ export class SessioncoursComponent implements OnInit {
     }
 
     public savePaiement(idSalary: number) {
-        this.salaryService.savePaiement(idSalary);
+
+        this.confirmationService.confirm({
+            message: 'Are you sure you want to pay this month ?',
+            header: 'Confirm',
+            icon: 'pi pi-exclamation-triangle',
+            accept: () => {
+                this.salaryService.savePaiement(idSalary);
+            }
+        });
     }
 
     public showDetails(idSalary: number) {

@@ -258,11 +258,12 @@ export class HomeWorkPreviewComponent implements OnInit {
     }
 
     isValidated(homework: HomeWork): boolean {
-        if (homework.typeHomeWork.lib === TypeHomeWorkEnum.WATCH_IT) {
+        console.log(homework);
+        if (homework?.typeHomeWork?.lib === TypeHomeWorkEnum.WATCH_IT) {
             return (homework.urlVideo?.length >= 5 || homework.urlImage == null || undefined);
-        } else if (homework.typeHomeWork.lib === TypeHomeWorkEnum.READING) {
+        } else if (homework?.typeHomeWork?.lib === TypeHomeWorkEnum.READING) {
             return !(homework.urlImage?.length < 5);
-        } else if (homework.typeHomeWork.lib === TypeHomeWorkEnum.WRITE_IT_UP) {
+        } else if (homework?.typeHomeWork?.lib === TypeHomeWorkEnum.WRITE_IT_UP) {
             return !(homework.urlImage === null || homework.urlImage?.length < 5);
         } else {
             return true;

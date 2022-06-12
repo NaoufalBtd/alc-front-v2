@@ -51,9 +51,9 @@
                 <ng-template pTemplate="caption">
                     <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
                         <h5 class="p-m-0">List of Sessions</h5>
-                        <button pButton type="button" icon="pi pi-paypal" label="Pay"
+<!--                        <button pButton type="button" icon="pi pi-paypal" label="Pay"-->
 
-                                class="p-button-warning p-mr-2"></button>
+<!--                                class="p-button-warning p-mr-2"></button>-->
                     </div>
                 </ng-template>
                 <ng-template pTemplate="header">
@@ -137,7 +137,7 @@
                 <ng-template pTemplate="header">
                     <tr>
                         <th>Student Group</th>
-                        <th>Cours</th>
+                        <th>Course</th>
                         <th>Date</th>
                         <th>Payment Status</th>
 
@@ -165,8 +165,6 @@
 
 
 
-
-
         <p-tabPanel header="ClassAverage Bonus">
 
             <strong style="font-size: 20px;color: #0d0d0d">Amount: </strong><strong style="font-size: 20px;color: #0c799f">{{classAverageBonusProf.classAverageBonus.prix}}</strong>
@@ -174,6 +172,9 @@
             <strong style="font-size: 20px;color: #0d0d0d">Class Average Bonus Code: </strong><strong style="font-size: 20px;color: #0c799f">{{classAverageBonusProf.classAverageBonus.code}}</strong>
 
         </p-tabPanel>
+
+
+
         <p-tabPanel header="Workload Bonus">
             <strong style="font-size: 20px;color: #0d0d0d">Amount: </strong><strong style="font-size: 20px;color: #0c799f">{{workloadBonusProf.workloadBonus.prix}}</strong>
             <br>
@@ -181,5 +182,4 @@
 
         </p-tabPanel>
     </p-tabView>
-
 </p-dialog>
