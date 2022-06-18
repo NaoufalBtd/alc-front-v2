@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {User} from '../../../controller/model/user.model';
 import {FileUploadStatus} from '../../../controller/model/FileUploadStatus';
-import {Observable, Subscription} from 'rxjs';
+import {Subscription} from 'rxjs';
 import {MenuService} from '../../shared/slide-bar/app.menu.service';
 import {AuthenticationService} from '../../../controller/service/authentication.service';
 import {UserService} from '../../../controller/service/user.service';
@@ -9,7 +9,6 @@ import {HttpErrorResponse, HttpEvent, HttpEventType} from '@angular/common/http'
 import {GroupeEtude} from '../../../controller/model/groupe-etude.model';
 import {EtudiantService} from '../../../controller/service/etudiant.service';
 import {Parcours} from '../../../controller/model/parcours.model';
-import {ParcoursService} from '../../../controller/service/parcours.service';
 import {InscriptionService} from '../../../controller/service/inscription.service';
 import {Etudiant} from '../../../controller/model/etudiant.model';
 import {PackStudent} from '../../../controller/model/pack-student.model';
@@ -21,7 +20,6 @@ import {InteretEtudiant} from '../../../controller/model/interet-etudiant.model'
 import {Fonction} from '../../../controller/model/fonction.model';
 import {StatutSocial} from '../../../controller/model/statut-social.model';
 import {NiveauEtude} from '../../../controller/model/niveau-etude.model';
-import {LoginComponent} from '../../public/login/login.component';
 import {LoginService} from '../../../controller/service/login.service';
 import {Router} from '@angular/router';
 import {Skill} from '../../../controller/model/skill.model';
@@ -55,6 +53,14 @@ export class EtudiantProfileComponent implements OnInit {
     changePass = false;
     newPassword = '';
     newPasswordRepated = '';
+    selectedElement = 'PROFILE' || 'SET' || 'PASS' || 'INSCRIPTION';
+    languages = [
+        {code: 'ar', libelle: 'Arabic'},
+        {code: 'fr', libelle: 'French'},
+        {code: 'en', libelle: 'English'}
+    ];
+    selectedLanguage: any;
+
 
     constructor(private menuService: MenuService,
                 private authenticationService: AuthenticationService,
@@ -63,6 +69,14 @@ export class EtudiantProfileComponent implements OnInit {
                 private service: InscriptionService,
                 public packStudentService: PackStudentService, private messageService: MessageService,
                 public groupeEtudeService: GroupeEtudeService, public router: Router) {
+    }
+
+    get selectedPack(): PackStudent {
+        return this.etudiantService.selectedPack;
+    }
+
+    set selectedPack(value: PackStudent) {
+        this.etudiantService.selectedPack = value;
     }
 
     get selected(): Etudiant {
@@ -81,10 +95,16 @@ export class EtudiantProfileComponent implements OnInit {
 
         });
     }
+    get packs(): Array<PackStudent> {
+        return this.packStudentService.packs;
+    }
+
+    set packs(value: Array<PackStudent>) {
+        this.packStudentService.packs = value;
+    }
 
     ngOnInit(): void {
-        console.log(this.authenticationService.getUserFromLocalCache());
-        this.etudiantService.findAllEtudiant().subscribe(data => {
+        this.etudiantService.findAllEtudiant().subscribe((data) => {
             this.etudiant = data;
             this.getValue();
         });
@@ -92,6 +112,7 @@ export class EtudiantProfileComponent implements OnInit {
         this.etudiantService.findAllParcours().subscribe(
             data => {
                 this.parcoursList = data;
+                console.log(data);
             }
         );
         this.service.findByEtudiantId(this.user.id).subscribe(
@@ -105,8 +126,9 @@ export class EtudiantProfileComponent implements OnInit {
                 this.groupeEtudeList = data;
             }
         );
-        this.packStudentService.findPackIndividualOrgroupe(true);
-        this.packStudentService.findPackIndividualOrgroupe(false);
+        // this.packStudentService.findPackIndividualOrgroupe(true);
+        // this.packStudentService.findPackIndividualOrgroupe(false);
+        this.packStudentService.findAllPacks();
         this.userService.findAllStatutSocial().subscribe(
             data => {
                 this.statutSocials = data;
@@ -183,8 +205,6 @@ export class EtudiantProfileComponent implements OnInit {
                 data => {
                     this.user = data;
                     this.authenticationService.addUserToLocalCache(this.user);
-                    console.log(data);
-                    console.log('ha skype:' + this.user.skype);
                     this.messageService.add({
                         severity: 'success',
                         summary: 'Successful',
@@ -343,11 +363,9 @@ export class EtudiantProfileComponent implements OnInit {
         this.showpackInput = true;
     }
 
-    selectedPack(pack: PackStudent) {
-        this.etudiantService.packCode = pack.code;
-        this.packChossen = pack;
-        this.showdialog = false;
-        console.log(this.etudiantService.packCode);
+    selectedPackFct(pack: PackStudent) {
+        this.selectedPack = pack;
+        this.router.navigate(['/etudiant/pack']);
     }
 
     updateInscriptionByStudent() {
@@ -382,10 +400,10 @@ export class EtudiantProfileComponent implements OnInit {
     }
 
     getValue() {
-        if (this.etudiant.statutSocial.libelle == 'Student') {
+        if (this.etudiant?.statutSocial?.libelle == 'Student') {
             this.Student = true;
             this.Employed = false;
-        } else if (this.etudiant.statutSocial.libelle == 'Employed') {
+        } else if (this.etudiant?.statutSocial?.libelle == 'Employed') {
             this.Student = false;
             this.Employed = true;
         } else {
@@ -436,4 +454,25 @@ export class EtudiantProfileComponent implements OnInit {
             }
         );
     }
+
+    showMenuElemnt(elemnent: string) {
+        this.selectedElement = elemnent;
+    }
+
+    showPass(newPass: HTMLInputElement) {
+        if (newPass.type === 'password') {
+            newPass.type = 'text';
+        } else {
+            newPass.type = 'password';
+        }
+    }
+
+    isForGroupOrindev(forGroupe: boolean): string {
+        if (forGroupe){
+            return 'Group';
+        } else {
+            return 'Individual';
+        }
+    }
 }
+

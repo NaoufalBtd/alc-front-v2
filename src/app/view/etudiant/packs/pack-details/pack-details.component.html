@@ -1,0 +1,41 @@
+<div class="p-grid" style="padding: 10px">
+    <div *ngIf="inscription?.packStudent === null" (click)="backTollPacks()" class="p-col-12 allPacks">
+        <a class="allPacks"><i class="pi pi-angle-left allPacks"></i> All packs</a>
+    </div>
+    <div class="p-col-5">
+        <p-card [header]="selectedPack?.libelle" [subheader]="isForGroupOrindev(selectedPack.forGroupe)"
+                [style]="{width: '100%', borderRadius: '10px', cursor: 'pointer',   background: '#263238' , color: 'white'}"
+                styleClass="p-card-shadow">
+            <ng-template pTemplate="header">
+                <img *ngIf="selectedPack?.imgUrl !== null" alt="Card" [src]="selectedPack?.imgUrl">
+                <img *ngIf="selectedPack?.imgUrl === null" alt="Card" src="assets/demo/images/product/bamboo-watch.jpg">
+            </ng-template>
+            <p>{{selectedPack?.description}}</p>
+            <ng-template  pTemplate="footer">
+                <ng-container *ngIf="inscription?.packStudent === null">
+                    <h2><i style="font-weight: bold;" class="pi pi-angle-right"></i> {{selectedPack?.prix}} $</h2>
+                    <button pButton pRipple type="button" icon="pi pi-arrow-right" label="Buy now" iconPos="right"
+                            (click)="startPack()"
+                            class="Startnow"></button>
+                </ng-container>
+
+            </ng-template>
+        </p-card>
+    </div>
+
+    <div class="p-col-1"></div>
+    <div class="p-col-6">
+        <h4 style="color: #ff725e;">Overview</h4>
+        <strong>Why take this course?</strong>
+        <p>{{selectedPack?.whyTakeThisCourse}}</p>
+        <strong>Experience Level</strong>
+        <p>{{selectedPack?.level?.libelle}}</p>
+        <strong>Course Length</strong>
+        <p>{{selectedPack?.nombreCours}}</p>
+        <strong>Pre-requisites</strong>
+        <p>{{selectedPack?.preRequisites}}</p>
+
+        <h4 style="color: #ff725e;">Syllabus</h4>
+        <p *ngFor="let course of courses.slice(0, selectedPack.nombreCours)">{{course?.libelle}}</p>
+    </div>
+</div>

@@ -1,0 +1,44 @@
+.allPacks{
+  font-size: 15px;
+  font-weight: bold;
+  color: #ff725e;
+  cursor: pointer;
+}
+
+//******************* Startnow **********************/
+
+.Startnow {
+  width: 100%;
+  background: #ff725e;
+  color: #263238;
+  border: none;
+  height: 40px;
+
+
+}
+
+.Startnow:hover {
+  width: 100%!important;
+  background: #263238!important;
+  border: 1px solid #ff725e !important;
+  color: #ff725e!important;
+  font-weight: bold!important;
+  height: 40px!important;
+}
+
+.Startnow:active {
+  width: 100%;
+  background: #ff725e!important;
+  border: 2px solid #ff725e!important;
+  color: #263238!important;
+  font-weight: bold!important;
+  height: 40px!important;
+}
+
+.Startnow:focus {
+  outline: 0 none!important;
+  outline-offset: 0!important;
+  box-shadow: 0 0 0 0.2rem #707070!important;
+}
+
+/*************************************************/

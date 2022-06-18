@@ -103,6 +103,7 @@ import {MyPromotionListComponent} from './view/etudiant/my-promotion-list/my-pro
 import {HomeStudentComponent} from './view/etudiant/home-student/home-student.component';
 import {SaveGoogleTokenComponent} from './view/admin/drive-api/save-google-token/save-google-token.component';
 import {LocationStrategy, PathLocationStrategy} from '@angular/common';
+import {PackDetailsComponent} from './view/etudiant/packs/pack-details/pack-details.component';
 
 
 @NgModule({
@@ -183,7 +184,6 @@ import {LocationStrategy, PathLocationStrategy} from '@angular/common';
                 children: [
                     {path: 'etudiantTrialLesson', component: FreetriallessonComponent},
                     {path: 'etudianthomepage', component: HomePageEtudiantComponent},
-
                     {path: 'dashboard', component: HomeStudentComponent},
                     {path: 'faq-student', component: FaqStudentListComponent},
                     {path: 'news-student', component: NewsEtudiantListComponent},
@@ -204,6 +204,7 @@ import {LocationStrategy, PathLocationStrategy} from '@angular/common';
                     {path: 'inviteStudent', component: InvitedStudentComponent},
                     {path: 'myPromotionList', component: MyPromotionListComponent},
                     {path: 'inviteStudent', component: InvitedStudentComponent},
+                    {path: 'pack', component: PackDetailsComponent},
                     {path: '*', component: HomeStudentComponent}
 
                 ]

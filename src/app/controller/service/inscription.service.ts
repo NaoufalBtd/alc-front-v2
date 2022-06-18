@@ -119,6 +119,10 @@ export class InscriptionService {
         return this.http.post<Inscription>(this.adminUrl + 'inscription/', insc);
     }
 
+    public updateInsc(insc: Inscription): Observable<Inscription> {
+        return this.http.put<Inscription>(environment.etudiantUrl + 'inscription/update', insc);
+    }
+
     public deleteByNumeroInscription(): Observable<number> {
         return this.http.delete<number>(this.adminUrl + 'inscription/id/' + this.selected.id);
     }

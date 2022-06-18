@@ -345,7 +345,7 @@ import {HomeFreeTrialComponent} from './view/etudiant/home-student/home-free-tri
 import {QuizPreviewStudentTeacherComponent} from './view/prof/home-work/home-work-review/quiz-preview-student-teacher/quiz-preview-student-teacher.component';
 import {VonPrimengFormModule} from '@von-development-studio/primeng-form-validation';
 import { SaveGoogleTokenComponent } from './view/admin/drive-api/save-google-token/save-google-token.component';
-
+import { PackDetailsComponent } from './view/etudiant/packs/pack-details/pack-details.component';
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
@@ -679,7 +679,8 @@ export function createTranslateLoader(http: HttpClient) {
         HomeFreeTrialComponent,
         ProfileComponent,
         QuizPreviewStudentTeacherComponent,
-        SaveGoogleTokenComponent
+        SaveGoogleTokenComponent,
+        PackDetailsComponent
 
     ],
     providers: [

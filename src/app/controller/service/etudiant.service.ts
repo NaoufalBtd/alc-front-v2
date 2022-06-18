@@ -20,6 +20,7 @@ import {StatutSocial} from '../model/statut-social.model';
 import {NiveauEtude} from '../model/niveau-etude.model';
 import {Inscription} from '../model/inscription.model';
 import {Skill} from '../model/skill.model';
+import {PackStudent} from '../model/pack-student.model';
 
 @Injectable({
     providedIn: 'root'
@@ -29,6 +30,7 @@ export class EtudiantService {
     }
 
     private adminUrl = environment.adminUrl;
+    private _selectedPack: PackStudent = new PackStudent();
 
     private etudiantUrl = environment.etudiantUrl;
     private url = environment.baseUrl + 'etudiant/';
@@ -63,6 +65,15 @@ export class EtudiantService {
     private _skill: Skill;
     private _skills: Array<Skill>;
     private _studentList: Array<Etudiant>;
+
+
+    get selectedPack(): PackStudent {
+        return this._selectedPack;
+    }
+
+    set selectedPack(value: PackStudent) {
+        this._selectedPack = value;
+    }
 
     get studentList(): Array<Etudiant> {
         if (this._studentList == null) {

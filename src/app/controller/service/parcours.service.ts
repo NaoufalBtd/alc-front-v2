@@ -856,10 +856,15 @@ export class ParcoursService {
     public afficheCours(): Observable<Array<Cours>> {
         return this.http.get<Array<Cours>>(this.adminUrl + 'cours/order/id/' + this.selectedparcours.id);
     }
+    public findCoursesByLevelIdOrderByNumero(selectedparcours: Parcours): Observable<Array<Cours>> {
+        return this.http.get<Array<Cours>>(this.adminUrl + 'cours/order/id/' + selectedparcours.id);
+    }
 
     affichelistSection(): Observable<Array<Section>> {
         return this.http.get<Array<Section>>(this.adminUrl + 'section/order/id/' + this.selectedcours.id);
     }
+
+
 
     afficheOneSection2(): Observable<Section> {
         this.selectedsection.numeroOrder = this.selectedsection.numeroOrder++;
