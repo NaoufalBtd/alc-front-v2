@@ -368,16 +368,43 @@
                                 <div class="p-col-9">
                                     {{  homeWorkQuestion?.libelle}}
                                 </div>
+
                                 <div style="padding-top: 2%;" class="p-col-3">
-                                    <p-toggleButton [(ngModel)]="trueOrFalse" onLabel="True"
-                                                    [disabled]="disableToggleButton"
-                                                    (ngModelChange)="showCheckButton=true; showDontKnowButton=false"
-                                                    offLabel="False" onIcon="pi pi-check"
-                                                    offIcon="pi pi-times"
-                                                    [style]="{width: '7em',
-                                 height: '23px'
-                                 }">
-                                    </p-toggleButton>
+
+                                    <button [style]="{width: '7em',
+                                 height: '23px',
+                                 display: 'inline-block',
+                                  marginRight: '0',
+                                  padding: '0',
+                                   borderRight: '1px solid grey',
+                                   borderRadius: '0'
+                                 }"
+
+                                            [style.background]="trueOrFalse == true? '#5e8f32' :'white' "
+                                            [style.color]="trueOrFalse == true?  'white' : '#5e8f32' "
+                                            (click)="trueOrFalse = true; showCheckButton=true; showDontKnowButton=false"
+                                            [disabled]="trueOrFalse === true"
+                                            pButton pRipple type="button" label="True"
+                                            icon="pi pi-check"
+                                            class="p-button-success p-button-outlined"></button>
+
+
+                                    <button [style]="{width: '7em',
+                                 height: '23px',
+                                 display: 'inline-block',
+                                  padding: '0',
+                                   borderLeft: 'none',
+                                   borderRadius: '0'
+                                 }"
+
+                                            [style.background]="trueOrFalse == false?  '#D32F2F':'white' "
+                                            [style.color]="trueOrFalse == false? 'white' :'#D32F2F'  "
+                                            [disabled]="trueOrFalse === false"
+                                            pButton pRipple type="button" label="False"
+                                            icon="pi pi-times"
+                                            (click)="trueOrFalse = false ; showCheckButton=true; showDontKnowButton=false"
+                                            class="p-button-danger p-button-outlined"></button>
+
                                 </div>
                             </div>
                         </div>

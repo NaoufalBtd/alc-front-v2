@@ -306,7 +306,7 @@
         </div>
         <div class="p-col-4">
             <span class="p-float-label" style="margin-top: 15px;">
-                 <p-dropdown editable="true" class="form-control" formControlName="packOption" (click)="findTypeOfPack(inscription)" [options]="packStudents" [(ngModel)]="inscription.packStudent" optionLabel="libelle"></p-dropdown><i style="color: red">*</i>
+                 <p-dropdown editable="true" class="form-control" optionLabel="libelle" formControlName="packOption"  [options]="packs" [(ngModel)]="inscription.packStudent"></p-dropdown><i style="color: red">*</i>
                 <label>Pack option</label>
             </span>
             <small style="font-weight: bold" *ngIf="exform.get('packOption').invalid && exform.get('packOption').touched"

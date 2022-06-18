@@ -43,10 +43,11 @@ export class InscriptionListComponent implements OnInit {
     teachers: Array<Prof> = new Array<Prof>();
     groupEtudes: Array<GroupeEtude> = new Array<GroupeEtude>();
     packStudents = new Array<PackStudent>();
-     isRequired22= false;
+    isRequired22 = false;
     errorMessage = '';
     isSuccessful = false;
     isSignUpFailed = false;
+
     constructor(private messageService: MessageService,
                 private profService: ProfService,
                 private parcourService: ParcoursService,
@@ -55,6 +56,11 @@ export class InscriptionListComponent implements OnInit {
                 private service: InscriptionService,
                 private packStudentService: PackStudentService) {
     }
+
+    get packs(): Array<PackStudent> {
+        return this.packStudentService.packs;
+    }
+
 
     get valideDialog(): boolean {
         return this.service.valideDialog;
@@ -139,12 +145,15 @@ export class InscriptionListComponent implements OnInit {
     get etudiantVo(): EtudiantVo {
         return this.service.etudiantVo;
     }
+
     get niveauEtudes(): Array<NiveauEtude> {
         return this.service.niveauEtudes;
     }
+
     set niveauEtudes(value: Array<NiveauEtude>) {
         this.service.niveauEtudes = value;
     }
+
     get niveauEtude(): NiveauEtude {
         return this.service.niveauEtude;
     }
@@ -152,6 +161,7 @@ export class InscriptionListComponent implements OnInit {
     set niveauEtude(value: NiveauEtude) {
         this.service.niveauEtude = value;
     }
+
     get interetEtudiant(): InteretEtudiant {
         return this.service.interetEtudiant;
     }
@@ -167,46 +177,55 @@ export class InscriptionListComponent implements OnInit {
     set interetEtudiants(value: Array<InteretEtudiant>) {
         this.service.interetEtudiants = value;
     }
+
     get fonctions(): Array<Fonction> {
         return this.service.fonctions;
     }
+
     set fonctions(value: Array<Fonction>) {
         this.service.fonctions = value;
     }
+
     get fonction(): Fonction {
         return this.service.fonction;
     }
+
     set fonction(value: Fonction) {
         this.service.fonction = value;
     }
+
     get statutSocial(): StatutSocial {
         return this.service.statutSocial;
     }
+
     set statutSocial(value: StatutSocial) {
         this.service.statutSocial = value;
     }
+
     get statutSocials(): Array<StatutSocial> {
         return this.service.statutSocials;
     }
+
     set statutSocials(value: Array<StatutSocial>) {
         this.service.statutSocials = value;
     }
+
     exform: FormGroup;
+
     ngOnInit(): void {
 
 
         this.exform = new FormGroup({
-           fullName: new FormControl(null, Validators.required),
+            fullName: new FormControl(null, Validators.required),
             level: new FormControl(null, Validators.required),
             nom: new FormControl(null, Validators.required),
             state: new FormControl(null, Validators.required),
             groupeEtude: new FormControl(null, Validators.required),
             packOption: new FormControl(null, Validators.required)
-             });
+        });
 
 
-        this.packStudentService.findPackIndividualOrgroupe(true);
-        this.packStudentService.findPackIndividualOrgroupe(false);
+        this.packStudentService.findAllPacks();
         console.log(this.packStudentService.packstudentIndividialList);
         console.log(this.packStudentService.packstudentgroupeList);
         this.initCol();
@@ -399,12 +418,18 @@ export class InscriptionListComponent implements OnInit {
     }
 
     updateInsc(inscription: Inscription) {
-            this.service.edit(inscription).subscribe(data => console.log(data));
+        this.service.edit(inscription).subscribe(data => {
+            console.log(data);
+            this.messageService.add({severity: 'success', summary: ' ', detail: 'Inscription updated', life: 5000, sticky: true});
+        }, error => {
+            this.messageService.add({severity: 'success', summary: ' ', detail: error?.error?.message, life: 3000, sticky: true});
 
-            this.editInscDialog = false;
+        });
+
+        this.editInscDialog = false;
 
         console.log(inscription);
-       // this.service.edit(inscription).subscribe(data => console.log(data));
+        // this.service.edit(inscription).subscribe(data => console.log(data));
     }
 
     showEditDialog(inscription: Inscription) {
@@ -425,19 +450,21 @@ export class InscriptionListComponent implements OnInit {
 
     }
 
-    public findTypeOfPack(inscription: Inscription){
-        if (inscription.groupeEtude.nombreEtudiant > 1){
+    public findTypeOfPack(inscription: Inscription) {
+        if (inscription.groupeEtude.nombreEtudiant > 1) {
             this.packStudents = this.packStudentService.packstudentgroupeList;
-        }else {
+        } else {
             this.packStudents = this.packStudentService.packstudentIndividialList;
         }
         console.log(this.packStudents);
 
     }
+
     get skills(): Array<Skill> {
 
         return this.service.skills;
     }
+
     set skill(value: Skill) {
         this.service.skill = value;
     }
@@ -445,6 +472,7 @@ export class InscriptionListComponent implements OnInit {
     set skills(value: Array<Skill>) {
         this.service.skills = value;
     }
+
     get skill(): Skill {
         return this.service.skill;
     }

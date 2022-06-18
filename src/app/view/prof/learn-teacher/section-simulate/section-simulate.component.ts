@@ -30,10 +30,13 @@ import {SessionCours} from '../../../../controller/model/session-cours.model';
 import {User} from '../../../../controller/model/user.model';
 import {ScheduleProf} from '../../../../controller/model/calendrier-prof.model';
 import {QuizReponse} from '../../../../controller/model/quiz-reponse';
+import {CategoriesSectionItemEnum} from '../../../../enum/CategoriesSectionItemEnum';
+import {TypeHomeWorkEnum} from '../../../../enum/type-question.enum';
 
 @Pipe({name: 'safe'})
 export class SafePipe1 implements PipeTransform {
-
+    public CategoriesSectionItemEnum = CategoriesSectionItemEnum;
+    public TypeHomeWorkEnum = TypeHomeWorkEnum;
     constructor(private sanitizer: DomSanitizer) {
     }
 
@@ -48,6 +51,7 @@ export class SafePipe1 implements PipeTransform {
     styleUrls: ['./section-simulate.component.scss']
 })
 export class SectionSimulateComponent implements OnInit, OnDestroy {
+    public CategoriesSectionItemEnum = CategoriesSectionItemEnum;
     lessonDurationEnSecond = 0;
     rows = 5;
     first = 0;

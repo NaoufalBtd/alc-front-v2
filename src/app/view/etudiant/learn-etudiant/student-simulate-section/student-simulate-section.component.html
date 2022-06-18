@@ -91,7 +91,8 @@
                     </div>
 
 
-                    <div *ngIf="selectedsection?.categorieSection?.numeroOrder !== 2" class="p-col" style="background-color: white" (mouseup)="dict()">
+                    <div *ngIf="selectedsection?.categorieSection?.numeroOrder !== 2" class="p-col"
+                         style="background-color: white" (mouseup)="dict()">
                         <div class="product-grid-item ">
                             <div *ngIf="showVocabulary===false" class="product-grid-item-content">
                                 <!--                                        <div class="product-name"-->
@@ -117,7 +118,9 @@
                                         </div>
 
                                     </div>
-                                    <img *ngIf="!this.selectedsection.urlImage && !this.selectedsection.urlVideo"
+                                    <img *ngIf="!this.selectedsection.urlImage && !this.selectedsection.urlVideo
+           && this.selectedsection?.categorieSection?.libelle !== CategoriesSectionItemEnum.LETS_PRACTICE
+            && this.selectedsection?.categorieSection?.libelle !== CategoriesSectionItemEnum.WARM_UP "
                                          src="../../../../../assets/notfound.jpg" style="width: 100%">
 
 

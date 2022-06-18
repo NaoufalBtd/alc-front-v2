@@ -40,6 +40,7 @@ import {ChatMessageDto} from '../../../../controller/model/chatMessageDto';
 import {User} from '../../../../controller/model/user.model';
 import {HomeWorkEtudiantComponent} from '../../homeWork/home-work-etudiant/home-work-etudiant.component';
 import {HomeWorkSimulateService} from '../../../../controller/service/home-work-simulate.service';
+import {CategoriesSectionItemEnum} from '../../../../enum/CategoriesSectionItemEnum';
 
 @Pipe({name: 'safe'})
 export class SafePipe implements PipeTransform {
@@ -70,6 +71,8 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
             position: 'bottom'
         },
     };
+    public CategoriesSectionItemEnum = CategoriesSectionItemEnum;
+
 
     // tslint:disable-next-line:max-line-lengthg max-line-length
     constructor(private messageService: MessageService,

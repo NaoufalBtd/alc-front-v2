@@ -43,6 +43,11 @@
                         <button pButton pRipple type="button" (click)="findSection()"
                                 icon="pi pi-search" class="p-button-rounded localButton p-button-text"></button>
                     </div>
+                    <div class="p-col-1"></div>
+                    <div class="p-col-2">
+                        <button pButton pRipple type="button" (click)="showEditDialogFct(section)"
+                                icon="pi pi-plus" label="Add section" class="ngFlexyBlackButton"></button>
+                    </div>
                 </div>
 
             </ng-template>
@@ -132,20 +137,21 @@
 
         <div class="p-col-3 ">
             <h6>Category</h6>
-            <p-dropdown [options]="categorieSections" [(ngModel)]="localSectionSelected.categorieSection.libelle"
-                        optionLabel="libelle" [filter]="true" filterBy="libelle"
+            <p-dropdown [options]="categorieSections" [(ngModel)]="localSectionSelected.categorieSection"
+                        (onChange)="categoryChange()"
+                        optionLabel="libelle" [filter]="true" filterBy="libelle" placeholder="Category"
                         [style]="{'width': '100%'}"
-                        [showClear]="false">
+                        [showClear]="true">
             </p-dropdown>
         </div>
 
 
         <div class="p-col-3 ">
             <h6>Course</h6>
-            <p-dropdown [options]="cours" [(ngModel)]="localSectionSelected.cours.libelle"
+            <p-dropdown [options]="cours" [(ngModel)]="localSectionSelected.cours"
                         optionLabel="libelle" [filter]="true" filterBy="libelle"
-                        [style]="{'width': '100%'}"
-                        [showClear]="false">
+                        [style]="{'width': '100%'}" placeholder="Course"
+                        [showClear]="true">
             </p-dropdown>
         </div>
 

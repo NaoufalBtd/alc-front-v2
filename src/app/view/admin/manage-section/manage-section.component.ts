@@ -43,7 +43,6 @@ export class ManageSectionComponent implements OnInit {
     }
 
 
-
     get selectedparcours(): Parcours {
         return this.parcoursService.selectedparcours;
     }
@@ -140,23 +139,48 @@ export class ManageSectionComponent implements OnInit {
 
     save() {
         this.showEditDialog = false;
-        this.parcoursService.updateSection(this.localSectionSelected).subscribe(data => {
-            this.messageService.add({
-                severity: 'info',
-                summary: 'Successful',
-                detail: 'Section Updated',
-                life: 3000
+        if (this.localSectionSelected.id !== 0) {
+            this.parcoursService.updateSection(this.localSectionSelected).subscribe(data => {
+                this.messageService.add({
+                    severity: 'info',
+                    summary: 'Successful',
+                    detail: 'Section Updated',
+                    life: 3000
+                });
+                for (let i = 0; i < this.sections.length; i++) {
+                    if (this.sections[i].id === data.id) {
+                        this.sections[i] = data;
+                    }
+                }
+            }, error => {
+                console.log(error);
+                this.messageService.add({
+                    severity: 'error',
+                    summary: 'Error!',
+                    detail: error?.error?.message,
+                    life: 3000
+                });
             });
-        }, error => {
-            console.log(error);
-            this.messageService.add({
-                severity: 'error',
-                summary: 'Error!',
-                detail: 'Error to update section please try again !',
-                life: 3000
-            });
+        } else {
+            this.parcoursService.addSection(this.localSectionSelected).subscribe(data => {
+                this.messageService.add({
+                    severity: 'success',
+                    summary: 'Successful',
+                    detail: 'Section created',
+                    life: 3000
+                });
+                this.sections.push({...data});
 
-        });
+            }, error => {
+                console.log(error);
+                this.messageService.add({
+                    severity: 'error',
+                    summary: 'Error!',
+                    detail: error?.error?.message,
+                    life: 3000
+                });
+            });
+        }
 
     }
 
@@ -211,5 +235,11 @@ export class ManageSectionComponent implements OnInit {
             console.log(data);
             this.router.navigate(['admin/create-section-items']);
         });
+    }
+
+    categoryChange() {
+        console.log(this.localSectionSelected.categorieSection);
+        this.localSectionSelected.numeroOrder = this.localSectionSelected.categorieSection.numeroOrder;
+        this.localSectionSelected.libelle = this.localSectionSelected.categorieSection.libelle;
     }
 }

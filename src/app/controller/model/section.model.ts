@@ -4,7 +4,7 @@ import {SectionItemModel} from './section-item.model';
 import {SessionCours} from './session-cours.model';
 
 export class Section {
-    public id: number;
+    public id = 0;
     public url: number;
     public content: number;
     public numeroOrder: number;
