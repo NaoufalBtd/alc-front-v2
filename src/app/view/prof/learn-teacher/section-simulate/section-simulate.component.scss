@@ -1,6 +1,17 @@
 .p-grid {
   margin-top: -12px !important;;
 }
+.section-content{
+  background-color: white;
+  white-space: pre-wrap;
+  line-height: 30px;
+  text-align: left;
+  font-size: 15px;
+  font-weight: 500;
+  margin-left: 50px;
+  font-family: system-ui;
+  letter-spacing: 1px;
+}
 
 :host ::ng-deep {
 

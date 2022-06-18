@@ -36,6 +36,7 @@
         <p>{{selectedPack?.preRequisites}}</p>
 
         <h4 style="color: #ff725e;">Syllabus</h4>
-        <p *ngFor="let course of courses.slice(0, selectedPack.nombreCours)">{{course?.libelle}}</p>
+        <p *ngFor="let course of courses.slice(0, nombreCours)">{{course?.libelle}}</p>
+        <p *ngIf="nombreCours !== selectedPack?.nombreCours" class="more-details" (click)="nombreCours = selectedPack.nombreCours">... see more</p>
     </div>
 </div>

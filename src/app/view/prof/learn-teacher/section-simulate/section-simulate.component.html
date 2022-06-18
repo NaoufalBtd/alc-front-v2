@@ -134,12 +134,11 @@
                                     <img *ngIf="!this.selectedsection?.urlImage && !this.selectedsection?.urlVideo
            && this.selectedsection?.categorieSection?.libelle !== CategoriesSectionItemEnum.LETS_PRACTICE
             && this.selectedsection?.categorieSection?.libelle !== CategoriesSectionItemEnum.WARM_UP "
-                                         src="../../../../../assets/notfound.jpg" style="width: 100%">
+                                         src="../../../../../assets/notfound.jpg" style="width: 40%">
 
 
                                     <div *ngIf=" this.selectedsection?.contenu != null && this.selectedsection?.urlVideo == null">
-                                        <h3 (mouseup)="dict()"
-                                            style=" background-color: white;white-space: pre-wrap; font-family: Great Vibes, cursive; font-size: 200%;line-height: 60px; text-align: left ;margin-left: 50px ;">{{this.selectedsection?.contenu}}</h3>
+                                        <p (mouseup)="dict()" class="section-content">{{this.selectedsection?.contenu}}</p>
                                     </div>
                                 </div>
                             </div>

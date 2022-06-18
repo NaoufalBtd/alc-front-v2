@@ -17,6 +17,7 @@ import {MessageService} from 'primeng/api';
 export class PackDetailsComponent implements OnInit {
     courses: Array<Cours> = new Array<Cours>();
     inscription: Inscription = new Inscription();
+    nombreCours = 5;
 
     constructor(private etudiantService: EtudiantService,
                 private inscriptionService: InscriptionService,
