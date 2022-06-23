@@ -346,12 +346,14 @@ import {QuizPreviewStudentTeacherComponent} from './view/prof/home-work/home-wor
 import {VonPrimengFormModule} from '@von-development-studio/primeng-form-validation';
 import { SaveGoogleTokenComponent } from './view/admin/drive-api/save-google-token/save-google-token.component';
 import { PackDetailsComponent } from './view/etudiant/packs/pack-details/pack-details.component';
+import {EducalModule} from './view/public/home-principale/home.module';
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
 @NgModule({
     imports: [
+        EducalModule,
         ReactiveFormsModule,
         BrowserModule,
         CommonModule,
@@ -691,6 +693,9 @@ export function createTranslateLoader(http: HttpClient) {
         WeekService, MonthService, DayService, WeekService, WorkWeekService, MonthService,
         AgendaService, MonthAgendaService, TimelineViewsService,
         TimelineMonthService,
+    ],
+    exports: [
+        AppFooterComponent
     ],
     bootstrap: [AppComponent]
 })

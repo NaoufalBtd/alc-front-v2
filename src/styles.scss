@@ -18,6 +18,10 @@ $gutter: 1rem; //for primeflex grid system
 @import '../node_modules/@syncfusion/ej2-popups/styles/material.css';
 @import '../node_modules/@syncfusion/ej2-navigations/styles/material.css';
 @import '../node_modules/@syncfusion/ej2-angular-schedule/styles/material.css';
+@import '../src/assets/css/fontAwesome5Pro.css';
+@import '../src/assets/css/elegantFont.css';
+@import "~bootstrap/dist/css/bootstrap.css";
+@import '../src/assets/scss/main.scss';
 :host ::ng-deep {
   .p-paginator {
     .p-paginator-current {

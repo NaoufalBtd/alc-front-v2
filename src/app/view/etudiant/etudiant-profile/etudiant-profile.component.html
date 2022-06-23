@@ -1,100 +1,3 @@
-<!--<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel="stylesheet" />-->
-<!--<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">-->
-
-<!--<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"-->
-<!--      crossorigin="anonymous">-->
-<!--<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">-->
-<!--    <div class="container bootstrap snippets bootdey">-->
-<!--        <div class="row">-->
-<!--            <div class="profile-nav col-md-3">-->
-<!--                <div class="panel">-->
-<!--                    <div class="user-heading round">-->
-<!--                        <a>-->
-<!--                            <img [src]="user?.image" alt="Image" width="250">-->
-<!--                        </a>-->
-<!--                        <div style="margin-top: 5px;">-->
-<!--                            <button pButton pRipple type="button" icon="pi pi-image " class="p-button-rounded p-button-secondary"-->
-<!--                                    (click)="updateProfileImage()"-->
-<!--                            ></button>-->
-<!--                            <form enctype="multipart/form-data" style="display:none;">-->
-<!--                                <input type="file"-->
-<!--                                       (change)="onProfileImageChange($event); onUpdateProfileImage()"-->
-<!--                                       name="profile-image-input" id="profile-image-input" placeholder="file" accept="image/*"/>-->
-<!--                            </form>-->
-<!--                        </div>-->
-<!--                        <h1>{{user.prenom}} {{user.nom}}</h1>-->
-<!--                        <p style="font-weight: bold">{{user.username}}</p><br>-->
-<!--                        <p-button (click)="this.changePass = true" style="font-weight: bold">Change Password</p-button><br>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div class="profile-info col-md-9">-->
-<!--                <div class="panel">-->
-<!--                  <div class="bio-graph-heading "  style="font-weight: bold">-->
-<!--                        In this page you can find all your informations you can update them.Your coordinates need to be correct-->
-<!--                    </div>-->
-<!--                    <div class="panel-body bio-graph-info " style="margin: 10px;">-->
-<!--                        <h1 style="  color: #f29263; font-weight: bold">Bio Graph</h1>-->
-
-<!--                        <div class="row">-->
-<!--                            <div class="bio-row">-->
-<!--                                <label for="float-input">Full name</label>-->
-<!--                                <input id="float-input" type="text" style="margin-left: 5px;" pInputText [(ngModel)]="user.prenom">-->
-<!--                            </div>-->
-<!--                            <div class="bio-row">-->
-<!--                                <label for="float-input">Age</label>-->
-<!--                                <input id="float-input" type="number" style="margin-left: 40px;" pInputText [(ngModel)]="user.age">-->
-<!--                            </div>-->
-<!--                            <div class="bio-row">-->
-<!--                                <label for="float-input">City</label>-->
-<!--                                <input id="float-input"  style="margin-left: 38px;" type="text" pInputText [(ngModel)]="user.ville">-->
-<!--                            </div>-->
-<!--                            <div class="bio-row">-->
-<!--                                <label for="float-input">Address</label>-->
-<!--                                <input id="float-input" style="margin-left: 17px; "type="text" pInputText [(ngModel)]="user.addresse">-->
-<!--                            </div>-->
-<!--                            <div class="bio-row">-->
-<!--                                <label for="float-input">Phone</label>-->
-<!--                                <input id="float-input" style="margin-left: 24px;" type="text" pInputText [(ngModel)]="user.numero">-->
-<!--                            </div>-->
-<!--                            <div  style="margin-left: 0px" class="bio-row">-->
-<!--                                <label for="float-input">Skype</label>-->
-<!--                                <input id="float-input" style="margin-left: 26px;" type="text" pInputText [(ngModel)]="user.skype" >-->
-<!--                            </div>-->
-<!--                            <div  style="margin-left: 0px" class="bio-row">-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    <div class="panel-body bio-graph-info margin" style="margin-left: 10px;">-->
-<!--                        <h1  style="  color: #f29263; font-weight: bold">Further information</h1>-->
-<!--                        <div class="row">-->
-
-
-<!--                        </div>-->
-
-<!--                    </div>-->
-<!--                </div>-->
-
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div>-->
-<!--            <button  pButton pRipple type="button " icon="pi pi-save " label="Save changes" style="margin-left: 1000px; margin-top: 30px;"-->
-<!--                     (click)="updateUser(user) ; edit()" class="p-button-warning"></button>-->
-<!--        </div>-->
-
-<!--        <div class="row">-->
-<!--        <div class="col-md-3"></div>-->
-<!--     <div class="profile-info col-md-9">-->
-<!--     <div class="panel-body bio-graph-info margin" style="margin-left: 10px;">-->
-<!--        <div >-->
-
-<!--        </div>-->
-
-<!--    </div>-->
-<!--    </div>-->
-<!--    </div>-->
-
-<!--    </div>-->
 
 <p-dialog header="packs and prices" [(visible)]="this.showdialog">
     <div class="row" *ngIf="this.etudiantService.groupeEtude.nombreEtudiant == 1">
@@ -144,6 +47,9 @@
             (click)="changePassword()" class="p-button-danger"></button>
 
 </p-dialog>
+
+
+
 <div class="p-grid profileCon">
     <div class="p-col-2 p-shadow-6 rightMenu">
         <div class=" p-grid imgContainer">

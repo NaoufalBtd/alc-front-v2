@@ -104,6 +104,7 @@ import {HomeStudentComponent} from './view/etudiant/home-student/home-student.co
 import {SaveGoogleTokenComponent} from './view/admin/drive-api/save-google-token/save-google-token.component';
 import {LocationStrategy, PathLocationStrategy} from '@angular/common';
 import {PackDetailsComponent} from './view/etudiant/packs/pack-details/pack-details.component';
+import {HomeThreeComponent} from './view/public/home-principale/home-three-main/home-three.component';
 
 
 @NgModule({
@@ -212,7 +213,7 @@ import {PackDetailsComponent} from './view/etudiant/packs/pack-details/pack-deta
             {
                 path: '', component: PublicComponent,
                 children: [
-                    {path: '', component: DashboardDemoComponent},
+                    {path: '', component: HomeThreeComponent},
                     {path: 'public/etudianthomepage', component: HomePageEtudiantComponent},
                     {path: 'public/etudiantTrialLesson', component: FreetriallessonComponent},
                     {path: 'public/etudiantchoosepack', component: EtudiantpurchasepackComponent},
