@@ -9,6 +9,9 @@ import {HomeThreeCoursesComponent} from './home-three-courses/home-three-courses
 import {HeroSliderComponent} from './hero-slider/hero-slider.component';
 import {HeaderThreeComponent} from './header-three/header-three.component';
 import {AppModule} from '../../../app.module';
+import {FooterComponent} from './footer/footer.component';
+import {BrandAreaComponent} from './brand-area/brand-area.component';
+import {AboutAreaComponent} from './about-area/about-area.component';
 
 
 
@@ -20,7 +23,10 @@ import {AppModule} from '../../../app.module';
     HomeThreeCtaComponent,
     HomeThreeCoursesComponent,
     HeroSliderComponent,
-    HeaderThreeComponent
+    HeaderThreeComponent,
+    FooterComponent,
+    BrandAreaComponent,
+    AboutAreaComponent
   ],
   imports: [
     CommonModule,
