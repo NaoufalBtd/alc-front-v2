@@ -105,6 +105,8 @@ import {SaveGoogleTokenComponent} from './view/admin/drive-api/save-google-token
 import {LocationStrategy, PathLocationStrategy} from '@angular/common';
 import {PackDetailsComponent} from './view/etudiant/packs/pack-details/pack-details.component';
 import {HomeThreeComponent} from './view/public/home-principale/home-three-main/home-three.component';
+import {SignInMainComponent} from './view/public/home-principale/sign-in/sign-in-main/sign-in-main.component';
+import {BecomeTeacherComponent} from './view/public/home-principale/become-teacher/become-teacher.component';
 
 
 @NgModule({
@@ -217,9 +219,7 @@ import {HomeThreeComponent} from './view/public/home-principale/home-three-main/
                     {path: 'public/etudianthomepage', component: HomePageEtudiantComponent},
                     {path: 'public/etudiantTrialLesson', component: FreetriallessonComponent},
                     {path: 'public/etudiantchoosepack', component: EtudiantpurchasepackComponent},
-                    {path: 'public/login-admin', component: LoginAdminComponent},
-                    {path: 'public/login-prof', component: LoginProfComponent},
-                    {path: 'public/login-etudiant', component: LoginEtudiantComponent},
+                    {path: 'public/login', component: SignInMainComponent},
                     {path: 'public/inscriptionAdmin', component: InscriptionAdminComponent},
                     {path: 'public/inscriptionTeacher', component: InscriptionProfComponent},
                     {path: 'public/etudiantinscriptionComponent', component: EtudiantinscriptionComponent},
@@ -229,6 +229,7 @@ import {HomeThreeComponent} from './view/public/home-principale/home-three-main/
                     {path: 'public/continueInfo', component: ContinueInfoComponent},
                     {path: 'resetPassword', component: ResetPasswordComponent},
                     {path: 'login', component: LoginComponent},
+                    {path: 'public/teacher', component: BecomeTeacherComponent},
 
                 ]
             },

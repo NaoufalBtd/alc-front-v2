@@ -1,4 +1,4 @@
-import {Component, HostListener, OnInit} from '@angular/core';
+import {Component, HostListener, Input, OnInit} from '@angular/core';
 
 @Component({
     selector: 'app-header-three',
@@ -6,7 +6,6 @@ import {Component, HostListener, OnInit} from '@angular/core';
     styleUrls: ['./header-three.component.scss']
 })
 export class HeaderThreeComponent implements OnInit {
-
     headerSticky: boolean = false;
     searchBar: boolean = false;
     showSidebar: boolean = false;

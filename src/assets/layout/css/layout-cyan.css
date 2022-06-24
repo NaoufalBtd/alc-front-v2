@@ -1568,7 +1568,7 @@ a {
   color: #1BA7AF;
 }
 .layout-wrapper .layout-main {
-  padding-top: 70px;
+  /*padding-top: 70px;*/
   display: flex;
   flex-direction: column;
   justify-content: space-between;

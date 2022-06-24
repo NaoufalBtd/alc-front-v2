@@ -30,13 +30,7 @@ user: User = new User();
     }
 
 
-    get model(): any[] {
-        return this.service.model;
-    }
 
-    set model(value: any[]) {
-        this.service.model = value;
-    }
 
 
     public onLogin(user: User): void {
@@ -47,21 +41,7 @@ user: User = new User();
                     const token = response.headers.get(HeaderType.JWT_TOKEN);
                     this.authenticationService.saveToken(token);
                     this.authenticationService.addUserToLocalCache(response.body);
-                    this.model = [
-                        {label: 'HomeTeacher', icon: 'pi pi-fw pi-home', routerLink: ['/prof/home']},
-                        {label: 'Recommend A teacher', icon: 'pi pi-fw pi-comment', routerLink: ['/prof/recommendation-teacher']},
-                        {label: 'Salary', icon: 'pi pi-fw pi-money-bill', routerLink: ['/prof/salary']},
-                        {label: 'Parcours', icon: 'pi pi-fw pi-list', routerLink: ['/prof/courses']},
-                        {label: 'Classes', icon: 'pi pi-fw pi-table', routerLink: ['/prof/classes']},
-                        {label: 'Synthese-Session-Cours', icon: 'pi pi-fw pi-briefcase', routerLink: ['/prof/synthese']},
-                        {label: 'Schedule', icon: 'pi pi-fw pi-calendar-times', routerLink: ['/prof/schedule']},
-                        {label: 'News', icon: 'pi pi-fw pi-clock', routerLink: ['/prof/news-teacher']},
-                        {label: 'Student Review', icon: 'pi pi-fw pi-comments', routerLink: ['/prof/comment-review']},
-                        {label: 'FAQ', icon: 'pi pi-fw pi-question-circle', routerLink: ['/prof/faq-teacher']},
-                        {label: 'LogOut ', icon: 'pi pi-fw pi-sign-out', routerLink: ['']},
-                    ];
                     this.service.hasloged = true;
-
                     this.router.navigate(['prof/home']);
                     this.showLoading = false;
                 },
@@ -76,24 +56,7 @@ user: User = new User();
 
 
     ngOnInit(): void {
-        if (this.authenticationService.isUserLoggedIn()) {
-            this.model = [
-                {label: 'HomeTeacher', icon: 'pi pi-fw pi-home', routerLink: ['/prof/home']},
-                {label: 'Recommend A teacher', icon: 'pi pi-fw pi-comment', routerLink: ['/prof/recommendation-teacher']},
-                {label: 'Salary', icon: 'pi pi-fw pi-money-bill', routerLink: ['/prof/salary']},
-                {label: 'Parcours', icon: 'pi pi-fw pi-list', routerLink: ['/prof/courses']},
-                {label: 'Classes', icon: 'pi pi-fw pi-table', routerLink: ['/prof/classes']},
-                {label: 'Synthese-Session-Cours', icon: 'pi pi-fw pi-briefcase', routerLink: ['/prof/synthese']},
-                {label: 'Schedule', icon: 'pi pi-fw pi-calendar-times', routerLink: ['/prof/schedule']},
-                {label: 'News', icon: 'pi pi-fw pi-clock', routerLink: ['/prof/news-teacher']},
-                {label: 'Student Review', icon: 'pi pi-fw pi-comments', routerLink: ['/prof/comment-review']},
-                {label: 'FAQ', icon: 'pi pi-fw pi-question-circle', routerLink: ['/prof/faq-teacher']},
-                {label: 'LogOut ', icon: 'pi pi-fw pi-sign-out', routerLink: ['']},
-            ];
-            this.router.navigate(['prof/home']);
-        } else {
-            this.router.navigateByUrl('public/login-prof');
-        }
+
     }
 
 }

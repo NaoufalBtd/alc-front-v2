@@ -1,0 +1,122 @@
+<div>
+    <div class="navbar-transparent" id="navbar-base">
+        <nav id="cambly-yellow-navbar" class="navbar navbar-top navbar-transparent" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                            aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <span class="">
+<a href="/" class="dashboard-toggle">
+<img alt="Cambly - English Tutors Online, Speak English with Someone" class="navbar-brand"
+     src="/static/images/english-tutors-online.png">
+</a>
+</span>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav-transparent nav-underline navbar-nav navbar-left">
+                    </ul>
+                    <div class="navbar-right" style="position:relative;">
+                        <div id="contact-list"></div>
+                    </div>
+                    <ul class="nav-transparent nav-underline navbar-nav navbar-right">
+                        <li id="tutor-login-button"><a id="login-link" href="/tutor/login"
+                                                       style="text-decoration: none;"><span style="padding: 3px 12px;">Log In</span></a>
+                        </li>
+                        <li id="tutor-signup-button"><a id="login-link" href="/tutor/signup"
+                                                        style="text-decoration: none;"><span
+                                style="background-color: rgb(34, 136, 145); padding: 5px 12px; border-radius: 5px; color: rgb(255, 255, 255);">Sign Up</span></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div style="height: 640px;">
+            <div style="height: 100%; display: flex; justify-content: center; align-items: flex-end;">
+                <div style="padding: 30px; background: #ffffffcc; margin-bottom: 20px;">
+                    <div>
+                        <h1 style="margin-bottom: 10px; text-align: center; font-size: 40px;">TUTOR WITH CAMBLY</h1>
+                        <h4 style="color: #353535; text-align: center; font-size: 20px;">Get paid to chat with people
+                            from around the world.</h4>
+                    </div>
+                    <div id="getstarted1-button" style="margin: 30px;"><a id="login-link" href="/tutor/signup"
+                                                                          style="text-decoration: none;"><span
+                            style="color: rgb(255, 255, 255);"><button
+                            class="btn btn-block btn-lg btn-tertiary btn-flat">Get Started</button></span></a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bg-white">
+        <div class="container text-center">
+            <div class="row">
+                <div class="col-xs-12 top-heading-1">
+                    <h2>Tutoring English with Cambly is fun &amp; rewarding</h2>
+                    <h3 style="font-weight: 400;">No teaching certificate, bachelor’s degree or prior teaching
+                        experience needed.</h3>
+                </div>
+            </div>
+            <div class="row" style="padding-top:
+    44.0px;">
+                <div class="col-3-sm-1-xs">
+                    <div class="card card-content bg-white">
+                        <p class="section-image"><img src="/static/images/calendar.png" style="width: 70px;"></p>
+                        <p class="section-title"><strong>Get Paid Weekly</strong><br></p>
+                        <p class="section-text">Earn for every minute you spend chatting! You make $0.17/min
+                            ($10.20/hour) on Cambly and $0.20/min ($12.00/hour) on Cambly Kids. Get paid via Paypal
+                            every Monday.</p>
+                    </div>
+                </div>
+                <div class="col-3-sm-1-xs">
+                    <div class="card card-content bg-white">
+                        <p class="section-image"><img src="/static/images/clock.png" style="width: 70px;"></p>
+                        <p class="section-title">
+                            <strong>Tutor anytime, anywhere</strong><br>
+                        </p>
+                        <p class="section-text">
+                            With our students spread across the globe, you can start tutoring at any time of the day
+                            based on your schedule. Work as little or as much as you want. No minimum hours, ever!
+                        </p>
+                    </div>
+                </div>
+                <div class="col-3-sm-1-xs">
+                    <div class="card card-content bg-white">
+                        <p class="section-image"><img src="/static/images/world_tutors.png" style="width: 70px;"></p>
+                        <p class="section-title">
+                            <strong>Make a Global Impact</strong><br>
+                        </p>
+                        <p class="section-text">
+                            On Cambly, you help people around the world build their English language skills in 1-on-1
+                            lessons. You might chat with a university student from Brazil, a marketing professional from
+                            Japan, and an English enthusiast from Turkey all in one day. You’ll be amazed by how much
+                            you learn about other cultures and places too!
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-8 col-xs-offset-2 col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">
+                <div id="getstarted2-button" style="margin: 30px;"><a id="login-link" href="/tutor/signup"
+                                                                      style="text-decoration: none;"><span
+                        style="color: rgb(255, 255, 255);"><button class="btn btn-block btn-lg btn-tertiary btn-flat">Get Started</button></span></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="promo-code-banner"></div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const formsCollection = document.getElementsByClassName("append-csrf")
+            for (let i = 0; i < formsCollection.length; i++) {
+                const input = document.createElement("input");
+                input.setAttribute("type", "hidden");
+                input.setAttribute("name", "csrf_form_token");
+                input.setAttribute("value", document.cookie.match('(^|;)\\s*' + "csrfToken" + '\\s*=\\s*([^;]+)').pop());
+                formsCollection[i].appendChild(input);
+            }
+        })
+    </script>
+</div>

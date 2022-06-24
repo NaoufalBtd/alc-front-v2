@@ -1,5 +1,6 @@
 <header>
-    <div id="header-sticky" [ngClass]="headerSticky ? 'header__area header__transparent header__padding-2 sticky' : 'header__area header__transparent header__padding-2' ">
+    <div id="header-sticky"
+         [ngClass]="headerSticky ? 'header__area header__transparent header__padding-2 sticky' : 'header__area header__transparent header__padding-2' ">
        <div class="container">
           <div class="row align-items-center">
              <div class="col-xxl-2 col-xl-2 col-lg-6 col-md-6 col-sm-6 col-6">
@@ -16,44 +17,17 @@
                 <div class="main-menu main-menu-3">
                    <nav id="mobile-menu">
                       <ul>
-                         <li class="has-dropdown">
+                         <li >
                           <a [routerLink]="['/']">Home</a>
-                          <ul class="submenu">
-                             <li><a [routerLink]="['/home']">Home Style 1</a></li>
-                             <li><a [routerLink]="['/home-two']"  >Home Style 2</a></li>
-                             <li><a [routerLink]="['/home-three']">Home Style 3</a></li>
-                          </ul>
                          </li>
-                         <li class="has-dropdown">
+                         <li >
                           <a [routerLink]="['/courses']">Courses</a>
-                          <ul class="submenu">
-                             <li><a [routerLink]="['/courses']">Courses</a></li>
-                             <li><a [routerLink]="['/courses-list']">Course List</a></li>
-                             <li><a [routerLink]="['/courses-sidebar']">Course sidebar</a></li>
-                             <li><a [routerLink]="['/course-details']">Course Details</a></li>
-                          </ul>
                          </li>
-                         <li class="has-dropdown">
+                         <li >
                           <a [routerLink]="['/blog']">Blog</a>
-                          <ul class="submenu">
-                             <li><a [routerLink]="['/blog']">Blog</a></li>
-                             <li><a [routerLink]="['/blog-details']">Blog Details</a></li>
-                          </ul>
                          </li>
-                         <li class="has-dropdown">
+                         <li >
                           <a [routerLink]="['/courses']">Pages</a>
-                          <ul class="submenu">
-                             <li><a [routerLink]="['/about']">About</a></li>
-                             <li><a [routerLink]="['/instructor']">Instructor</a></li>
-                             <li><a [routerLink]="['/instructor-details']">Instructor Details</a></li>
-                             <li><a [routerLink]="['/event-details']">Event Details</a></li>
-                             <li><a [routerLink]="['/cart']">My Cart</a></li>
-                             <li><a [routerLink]="['/wishlist']">My Wishlist</a></li>
-                             <li><a [routerLink]="['/checkout']">checkout</a></li>
-                             <li><a [routerLink]="['/sign-in']">Sign In</a></li>
-                             <li><a [routerLink]="['/sign-up']">Sign Up</a></li>
-                             <li><a [routerLink]="['/error']">Error</a></li>
-                          </ul>
                        </li>
                        <li><a [routerLink]="['/contact']">Contact</a></li>
                       </ul>
@@ -73,7 +47,7 @@
                       </svg>
                    </div>
                    <div class="header__btn header__btn-2 ml-30 d-none d-sm-block">
-                      <a [routerLink]="['/sign-up']" class="e-btn">Sign up</a>
+                      <a [routerLink]="['/public/login']" class="e-btn">Sign in</a>
                    </div>
                    <div class="sidebar__menu d-xl-none">
                       <div (click)="handleSidebar()" class="sidebar-toggle-btn sidebar-toggle-btn-white ml-30" id="sidebar-toggle">
@@ -138,7 +112,7 @@
     <div class="sidebar__content">
         <div class="logo mb-40">
           <a [routerLink]="['/']">
-            <img src="./assets/img/logo/logo.png" alt="logo">
+            <img src="../../assets/img/logo/logo.png" alt="logo">
           </a>
         </div>
 

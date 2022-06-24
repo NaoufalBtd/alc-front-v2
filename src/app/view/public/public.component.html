@@ -12,7 +12,7 @@
     'p-ripple-disabled': !app.ripple}" class="layout-wrapper">
 <!--    <app-topbar></app-topbar>-->
     <app-menu [hidden]="user == null"></app-menu>
-    <div class="layout-main">
+    <div style="padding: 0;" [style]="{padding: '0'}" class="layout-main">
         <div class="layout-content">
             <router-outlet></router-outlet>
         </div>
