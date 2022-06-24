@@ -215,7 +215,8 @@ import {BecomeTeacherComponent} from './view/public/home-principale/become-teach
             {
                 path: '', component: PublicComponent,
                 children: [
-                    {path: '', component: HomeThreeComponent},
+                    {path: '', component: DashboardDemoComponent},
+                    {path: 'public/home', component: HomeThreeComponent},
                     {path: 'public/etudianthomepage', component: HomePageEtudiantComponent},
                     {path: 'public/etudiantTrialLesson', component: FreetriallessonComponent},
                     {path: 'public/etudiantchoosepack', component: EtudiantpurchasepackComponent},

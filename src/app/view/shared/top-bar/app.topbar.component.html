@@ -125,6 +125,7 @@
     <img [routerLink]="['']" style="width: 120px; height: auto"  src="assets/picture/icon/logo.png" alt="logo">
     <a style="margin-left: 35px; padding: 10px;cursor: pointer"  class="get-started" >{{'courses' | translate}}</a>
     <a  class="get-started" style="padding: 10px;cursor: pointer">{{'prices' | translate}}</a>
+    <a  class="get-started" [routerLink]="['public/home']" style="padding: 10px;cursor: pointer">{{'new home' | translate}}</a>
         <select (change)="selectedLangage($event)" style="margin-left: 15px; margin-top:15px; padding: 10px">
             <option value="en" style="padding: 10px">English</option>
             <option value="fr" style="padding: 10px">Français</option>
