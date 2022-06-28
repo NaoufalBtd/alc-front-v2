@@ -14,14 +14,14 @@ export class HeroSliderComponent implements OnInit {
         {
             id: 1,
             img: 'assets/img/slider/nav/slider-nav-4.jpg',
-            title: '1 on 1',
+            title: '1 on 1 or Group classes',
             subtitle: 'classes with a teacher',
             bgColor: 'orange-bg',
         },
         {
             id: 2,
             img: 'assets/img/slider/nav/slider-nav-1.jpg',
-            title: '50 minutes',
+            title: '60 minutes',
             subtitle: 'lesson duration',
             bgColor: 'blue-bg',
         },

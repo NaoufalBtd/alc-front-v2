@@ -1,6 +1,6 @@
 <section class="cta__area pb-150">
   <div class="container">
-     <div class="cta__inner-3 p-relative grey-bg-2 pt-75 pb-75 fix">
+     <div style="background: #ff725e!important;" class="cta__inner-3 p-relative shadow p-3 mb-5 bg-body rounded  pt-75 pb-75 fix">
         <div class="cta__shape-3">
            <img class="cta-2" src="assets/img/cta/cta-shape-1.png" alt="">
            <img class="cta-3" src="assets/img/cta/cta-shape-2.png" alt="">
@@ -8,26 +8,63 @@
         <div class="row">
            <div class="col-xxl-12">
               <div class="cta__content text-center p-relative">
-                 <span>Take a free trial lesson</span>
-                 <h3 class="cta__title-2">We will determine your level of English and show you a digital textbook</h3>
+                 <P class="fst-italic" style="color: black; font-weight: bold;font-family: system-ui;">Take a free trial lesson</P>
+                 <h3 class="cta__title-2">We will determine your level of English and show you  your interactive platform</h3>
               </div>
            </div>
         </div>
         <div class="row">
-           <div class="col-xxl-12">
+           <div class="col-md-4 col-sm-12">
+              <div class="cta__form-inner">
+                 <form action="#">
+                    <input [style]="{ width: '100%'}" type="text" placeholder="Your Name">
+                 </form>
+              </div>
+           </div>
+
+
+           <div class="col-md-4 col-sm-12">
               <div class="cta__form grey-bg-2">
                  <div class="cta__form-inner">
                     <form action="#">
-                       <input type="text" placeholder="Your Name">
-                       <input type="email" placeholder="Your Email">
-                       <button type="submit" class="e-btn e-btn-6">Take A Free trial lesson</button>
+                       <input [style]="{ width: '100%'}" type="email" placeholder="Your Email">
                     </form>
-                 </div>
-                 <div class="cta__agree d-flex align-items-center">
-                    <label class="e-check-label">By signing up you agree to our <a href="#"> Terms & Conditions</a></label>
                  </div>
               </div>
            </div>
+
+
+           <div class="col-md-4 col-sm-12">
+              <div class="cta__form grey-bg-2">
+                 <div class="cta__form-inner">
+                    <form action="#">
+                       <input [style]="{ width: '100%'}" type="email" placeholder="Your Phone">
+                    </form>
+                 </div>
+              </div>
+           </div>
+
+
+           <div class="col-md-4 col-sm-12"></div>
+           <div class="col-md-4 col-sm-12">
+              <button style="height: 50px!important;" pButton pRipple type="button"  label="START LEARNING"
+                      class="ngFlexyBlackButton">
+                 <i class="fa fa-solid fa-arrow-right-to-arc"></i>
+              </button>
+           </div>
+
+        <div class="col-md-4 col-sm-12"></div>
+
+           <!--           <div class="col-md-6 col-sm-12"></div>-->
+<!--           <div class="col-xxl-12">-->
+<!--              <div class="cta__form grey-bg-2">-->
+<!--                 <div class="cta__form-inner">-->
+<!--                    -->
+<!--                    <form action="#">-->
+<!--                    </form>-->
+<!--                 </div>-->
+<!--              </div>-->
+<!--           </div>-->
         </div>
      </div>
   </div>

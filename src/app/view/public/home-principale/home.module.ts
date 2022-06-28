@@ -19,6 +19,10 @@ import {SignInAreaComponent} from './sign-in/sign-in-area/sign-in-area.component
 import {HeaderTwoComponent} from './header-two/header-two.component';
 import {FormsModule} from '@angular/forms';
 import { BecomeTeacherComponent } from './become-teacher/become-teacher.component';
+import {FormLayoutDemoComponent} from '../Inscription-student/formlayoutdemo.component';
+import {RippleModule} from 'primeng/ripple';
+import {ButtonModule} from 'primeng/button';
+import {InscriptionStudentMainComponent} from '../inscription-student-main/inscription-student-main.component';
 
 
 @NgModule({
@@ -38,13 +42,17 @@ import { BecomeTeacherComponent } from './become-teacher/become-teacher.componen
         SignInAreaComponent,
         BrandAreaComponent,
         AboutAreaComponent,
-        BecomeTeacherComponent
+        BecomeTeacherComponent,
+        InscriptionStudentMainComponent,
+        FormLayoutDemoComponent
     ],
     imports: [
         CommonModule,
         RouterModule,
         SwiperModule,
         FormsModule,
+        RippleModule,
+        ButtonModule,
 
     ],
     exports: [

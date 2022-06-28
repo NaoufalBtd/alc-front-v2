@@ -107,6 +107,7 @@ import {PackDetailsComponent} from './view/etudiant/packs/pack-details/pack-deta
 import {HomeThreeComponent} from './view/public/home-principale/home-three-main/home-three.component';
 import {SignInMainComponent} from './view/public/home-principale/sign-in/sign-in-main/sign-in-main.component';
 import {BecomeTeacherComponent} from './view/public/home-principale/become-teacher/become-teacher.component';
+import {InscriptionStudentMainComponent} from './view/public/inscription-student-main/inscription-student-main.component';
 
 
 @NgModule({
@@ -226,6 +227,8 @@ import {BecomeTeacherComponent} from './view/public/home-principale/become-teach
                     {path: 'public/etudiantinscriptionComponent', component: EtudiantinscriptionComponent},
                     {path: 'public/profinscriptionComponent', component: ProfinscriptionComponent},
                     {path: 'public/inscriptionEtudiant', component: FormLayoutDemoComponent},
+                    {path: 'free-trial', component: InscriptionStudentMainComponent},
+
                     {path: 'public/connectAsInvited', component: ConnectAsInvitedComponent},
                     {path: 'public/continueInfo', component: ContinueInfoComponent},
                     {path: 'resetPassword', component: ResetPasswordComponent},

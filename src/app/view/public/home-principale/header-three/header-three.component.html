@@ -17,19 +17,27 @@
                 <div class="main-menu main-menu-3">
                    <nav id="mobile-menu">
                       <ul>
-                         <li >
-                          <a [routerLink]="['/']">Home</a>
-                         </li>
+
                          <li >
                           <a [routerLink]="['/courses']">Courses</a>
                          </li>
+                          <li >
+                              <a [routerLink]="['/']">Prices</a>
+                          </li>
+
                          <li >
                           <a [routerLink]="['/blog']">Blog</a>
                          </li>
-                         <li >
-                          <a [routerLink]="['/courses']">Pages</a>
-                       </li>
+
                        <li><a [routerLink]="['/contact']">Contact</a></li>
+
+                          <li class="has-dropdown">
+                              <a >English</a>
+                              <ul class="submenu">
+                                  <li value="en">English</li>
+                                  <li value="ar">Arabic</li>
+                              </ul>
+                          </li>
                       </ul>
                    </nav>
                 </div>
@@ -46,9 +54,15 @@
                          </g>
                       </svg>
                    </div>
+
                    <div class="header__btn header__btn-2 ml-30 d-none d-sm-block">
                       <a [routerLink]="['/public/login']" class="e-btn">Sign in</a>
                    </div>
+
+                   <div class="header__btn header__btn-2 ml-30 d-none d-sm-block">
+                      <a [routerLink]="['/free-trial']" class="e-btn">Free Trial Lesson</a>
+                   </div>
+
                    <div class="sidebar__menu d-xl-none">
                       <div (click)="handleSidebar()" class="sidebar-toggle-btn sidebar-toggle-btn-white ml-30" id="sidebar-toggle">
                           <span class="line"></span>

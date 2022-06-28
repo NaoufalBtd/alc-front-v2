@@ -4,7 +4,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {CommonModule, DatePipe, HashLocationStrategy, LocationStrategy, PathLocationStrategy} from '@angular/common';
+import {CommonModule, DatePipe, LocationStrategy, PathLocationStrategy} from '@angular/common';
 import {AccordionModule} from 'primeng/accordion';
 import {AutoCompleteModule} from 'primeng/autocomplete';
 import {AvatarModule} from 'primeng/avatar';
@@ -91,7 +91,6 @@ import {AppMenuComponent} from './view/shared/slide-bar/app.menu.component';
 import {AppMenuitemComponent} from './view/shared/slide-bar/app.menuitem.component';
 import {AppTopBarComponent} from './view/shared/top-bar/app.topbar.component';
 import {AppFooterComponent} from './view/shared/footer/app.footer.component';
-import {FormLayoutDemoComponent} from './view/public/Inscription-student/formlayoutdemo.component';
 
 import {MenuService} from './view/shared/slide-bar/app.menu.service';
 
@@ -138,10 +137,7 @@ import {FaqContactComponent} from './view/prof/faq/faq-contact/faq-contact.compo
 import {LoginEtudiantComponent} from './view/public/login-etudiant/login-etudiant.component';
 import {LoginProfComponent} from './view/public/login-prof/login-prof.component';
 import {LoginAdminComponent} from './view/public/login-admin/login-admin.component';
-import {
-    SafePipe1,
-    SectionSimulateComponent
-} from './view/prof/learn-teacher/section-simulate/section-simulate.component';
+import {SafePipe1, SectionSimulateComponent} from './view/prof/learn-teacher/section-simulate/section-simulate.component';
 import {ChooseViewComponent} from './view/prof/learn-teacher/choose-view/choose-view.component';
 import {InscriptionAdminComponent} from './view/public/inscription-admin/inscription-admin.component';
 import {ParcoursCreateComponent} from './view/admin/learn/parcours-create/parcours-create.component';
@@ -159,12 +155,8 @@ import {RecommendListComponent} from './view/prof/recommend/recommend-list/recom
 import {RecommendViewComponent} from './view/prof/recommend/recommend-view/recommend-view.component';
 import {QuizCreateComponent} from './view/admin/quiz/quiz-create/quiz-create.component';
 import {QuizEtudiantViewComponent} from './view/etudiant/Quiz/quiz-etudiant-view/quiz-etudiant-view.component';
-import {
-    SyntheseSessionCoursListComponent
-} from './view/prof/synthese-session/synthese-session-cours-list/synthese-session-cours-list.component';
-import {
-    SyntheseSessionCoursEditComponent
-} from './view/prof/synthese-session/synthese-session-cours-edit/synthese-session-cours-edit.component';
+import {SyntheseSessionCoursListComponent} from './view/prof/synthese-session/synthese-session-cours-list/synthese-session-cours-list.component';
+import {SyntheseSessionCoursEditComponent} from './view/prof/synthese-session/synthese-session-cours-edit/synthese-session-cours-edit.component';
 import {ProfesseurListComponent} from './view/admin/professeur/professeur-list/professeur-list.component';
 import {ProfesseurCreateComponent} from './view/admin/professeur/professeur-create/professeur-create.component';
 import {ProfesseurEditComponent} from './view/admin/professeur/professeur-edit/professeur-edit.component';
@@ -204,9 +196,7 @@ import {EtudiantReviewViewComponent} from './view/etudiant/learn-etudiant/etudia
 import {SyntheseSessionHistoryComponent} from './view/prof/synthese-session/synthese-session-history/synthese-session-history.component';
 import {RecommendationTeacherComponent} from './view/prof/recommendation-teacher/recommendation-teacher.component';
 import {VocabularySectionComponent} from './view/etudiant/learn-etudiant/vocabulary-section/vocabulary-section.component';
-import {
-    VocabularySectionItemComponent
-} from './view/etudiant/learn-etudiant/vocabulary-section/vocabulary-section-item/vocabulary-section-item.component';
+import {VocabularySectionItemComponent} from './view/etudiant/learn-etudiant/vocabulary-section/vocabulary-section-item/vocabulary-section-item.component';
 import {ScrollingModule} from '@angular/cdk/scrolling';
 import {DashboardDemoComponent} from './view/public/landing/dashboarddemo.component';
 import {AdminComponent} from './view/admin/admin.component';
@@ -214,28 +204,22 @@ import {EtudiantComponent} from './view/etudiant/etudiant.component';
 import {ProfComponent} from './view/prof/prof.component';
 import {PublicComponent} from './view/public/public.component';
 import {VocabularySectionProfComponent} from './view/prof/learn-teacher/vocabulary-section-prof/vocabulary-section-prof.component';
-import {
-    VocabularySectionItemProfComponent
-} from './view/prof/learn-teacher/vocabulary-section-prof/vocabulary-section-item-prof/vocabulary-section-item-prof.component';
+import {VocabularySectionItemProfComponent} from './view/prof/learn-teacher/vocabulary-section-prof/vocabulary-section-item-prof/vocabulary-section-item-prof.component';
 import {SyntheseSessionComponent} from './view/prof/synthese-session/synthese-session.component';
-import {
-    SyntheseSessionCoursCreateComponent
-} from './view/prof/synthese-session/synthese-session-cours-create/synthese-session-cours-create.component';
+import {SyntheseSessionCoursCreateComponent} from './view/prof/synthese-session/synthese-session-cours-create/synthese-session-cours-create.component';
 import {ProfReviewViewComponent} from './view/prof/learn-teacher/prof-review-view/prof-review-view.component';
 import {QuizPreviewProfComponent} from './view/prof/quiz-preview-prof/quiz-preview.component';
-import {
-    MonthService,
-    RecurrenceEditorAllModule, RecurrenceEditorModule,
-    ScheduleAllModule,
-    WeekService
-} from '@syncfusion/ej2-angular-schedule';
-
 import {
     AgendaService,
     DayService,
     MonthAgendaService,
+    MonthService,
+    RecurrenceEditorAllModule,
+    RecurrenceEditorModule,
+    ScheduleAllModule,
     TimelineMonthService,
     TimelineViewsService,
+    WeekService,
     WorkWeekService
 } from '@syncfusion/ej2-angular-schedule';
 import {DropDownListModule} from '@syncfusion/ej2-angular-dropdowns';
@@ -248,9 +232,7 @@ import {GroupeEtudiantComponent} from './view/admin/groupe-etudiant/groupe-etudi
 import {GroupeEtudiantListComponent} from './view/admin/groupe-etudiant/groupe-etudiant-list/groupe-etudiant-list.component';
 import {GroupeEtudiantCreateComponent} from './view/admin/groupe-etudiant/groupe-etudiant-create/groupe-etudiant-create.component';
 
-import {
-    GroupeEtudiantDetailListComponent
-} from './view/admin/groupe-etudiant/groupe-etudiant-detail-list/groupe-etudiant-detail-list.component';
+import {GroupeEtudiantDetailListComponent} from './view/admin/groupe-etudiant/groupe-etudiant-detail-list/groupe-etudiant-detail-list.component';
 
 
 import {HomeWorkComponentComponent} from './view/admin/home-work-component/home-work-component.component';
@@ -269,7 +251,6 @@ import {ResetPasswordComponent} from './view/public/reset-password/reset-passwor
 import {LoginComponent} from './view/public/login/login.component';
 import {GroupeEtudiantEditComponent} from './view/admin/groupe-etudiant/groupe-etudiant-edit/groupe-etudiant-edit.component';
 import {ConnectedStudentComponent} from './view/prof/connected-student/connected-student.component';
-import {SyntheseSessionCours} from './controller/model/synthese-session-cours.model';
 import {ProfinscriptionComponent} from './view/public/profinscription/profinscription.component';
 import {EtudiantinscriptionComponent} from './view/public/etudiantinscription/etudiantinscription.component';
 import {PackStudentComponent} from './view/admin/pack-student/pack-student.component';
@@ -277,7 +258,6 @@ import {BonusProfComponent} from './view/admin/bonus-prof/bonus-prof.component';
 import {ViewProfilEtudiantComponent} from './view/prof/synthese-session/view-profil-etudiant/view-profil-etudiant.component';
 import {SalarylistComponent} from './view/admin/salarylist/salarylist.component';
 import {ScheduleProfComponent} from './view/admin/professeur/schedule-prof/schedule-prof.component';
-import {RouterModule} from '@angular/router';
 import {AppRoutingModule} from './app-routing.module';
 import {DriveApiComponent} from './view/admin/drive-api/drive-api.component';
 import {ManageSectionComponent} from './view/admin/manage-section/manage-section.component';
@@ -289,28 +269,18 @@ import {TypeReclamationProfComponent} from './view/admin/type-reclamation/type-r
 import {ReclamationProfComponent} from './view/prof/reclamation-prof/reclamation-prof.component';
 
 import {ReclamationProfCreateComponent} from './view/prof/reclamation-prof/reclamation-prof-create/reclamation-prof-create.component';
-import {
-    ComplaintViewEtudiantComponent
-} from './view/admin/complaint/complaint-view/complaint-view-etudiant/complaint-view-etudiant.component';
+import {ComplaintViewEtudiantComponent} from './view/admin/complaint/complaint-view/complaint-view-etudiant/complaint-view-etudiant.component';
 import {ComplaintViewProfComponent} from './view/admin/complaint/complaint-view/complaint-view-prof/complaint-view-prof.component';
 import {ProfileComponent} from './view/etudiant/profile/profile.component';
 import {WatchItComponent} from './view/etudiant/homeWork/watch-it/watch-it.component';
-import {
-    ComplaintEditEtudiantComponent
-} from './view/admin/complaint/complaintEdit/complaint-edit-etudiant/complaint-edit-etudiant.component';
+import {ComplaintEditEtudiantComponent} from './view/admin/complaint/complaintEdit/complaint-edit-etudiant/complaint-edit-etudiant.component';
 import {ComplaintEditProfComponent} from './view/admin/complaint/complaintEdit/complaint-edit-prof/complaint-edit-prof.component';
 import {ReclamationEtudiantComponent} from './view/etudiant/reclamation-etudiant/reclamation-etudiant.component';
-import {
-    TypeReclamationEtudiantListComponent
-} from './view/admin/type-reclamation/type-reclamation-etudiant-list/type-reclamation-etudiant-list.component';
-import {
-    TypeReclamationProfListComponent
-} from './view/admin/type-reclamation/type-reclamation-prof-list/type-reclamation-prof-list.component';
+import {TypeReclamationEtudiantListComponent} from './view/admin/type-reclamation/type-reclamation-etudiant-list/type-reclamation-etudiant-list.component';
+import {TypeReclamationProfListComponent} from './view/admin/type-reclamation/type-reclamation-prof-list/type-reclamation-prof-list.component';
 import {TypeReclamationComponent} from './view/admin/type-reclamation/type-reclamation.component';
 
-import {
-    ReclamationEtudiantCreateComponent
-} from './view/etudiant/reclamation-etudiant/reclamation-etudiant-create/reclamation-etudiant-create.component';
+import {ReclamationEtudiantCreateComponent} from './view/etudiant/reclamation-etudiant/reclamation-etudiant-create/reclamation-etudiant-create.component';
 import {ReclamationEtudiantViewComponent} from './view/etudiant/reclamation-etudiant/reclamation-etudiant-view/reclamation-etudiant-view.component';
 import {ReclamationProfViewComponent} from './view/prof/reclamation-prof/reclamation-prof-view/reclamation-prof-view.component';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
@@ -321,9 +291,7 @@ import {DragHomeWorkComponent} from './view/etudiant/homeWork/drag-home-work/dra
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {InvitedStudentComponent} from './view/etudiant/invited-student/invited-student.component';
 import {InvitedStudentCreateComponent} from './view/etudiant/invited-student/invited-student-create/invited-student-create.component';
-import {
-    InvitedStudentListStudentComponent
-} from './view/etudiant/invited-student/invited-student-list-student/invited-student-list-student.component';
+import {InvitedStudentListStudentComponent} from './view/etudiant/invited-student/invited-student-list-student/invited-student-list-student.component';
 import {HomeWorkReviewComponent} from './view/prof/home-work/home-work-review/home-work-review.component';
 import {FreetriallessonComponent} from './view/etudiant/freetriallesson/freetriallesson.component';
 import {MoreInformationComponent} from './view/admin/more-information/more-information.component';
@@ -344,9 +312,11 @@ import {HomeStudentComponent} from './view/etudiant/home-student/home-student.co
 import {HomeFreeTrialComponent} from './view/etudiant/home-student/home-free-trial/home-free-trial.component';
 import {QuizPreviewStudentTeacherComponent} from './view/prof/home-work/home-work-review/quiz-preview-student-teacher/quiz-preview-student-teacher.component';
 import {VonPrimengFormModule} from '@von-development-studio/primeng-form-validation';
-import { SaveGoogleTokenComponent } from './view/admin/drive-api/save-google-token/save-google-token.component';
-import { PackDetailsComponent } from './view/etudiant/packs/pack-details/pack-details.component';
+import {SaveGoogleTokenComponent} from './view/admin/drive-api/save-google-token/save-google-token.component';
+import {PackDetailsComponent} from './view/etudiant/packs/pack-details/pack-details.component';
 import {EducalModule} from './view/public/home-principale/home.module';
+import { InscriptionStudentMainComponent } from './view/public/inscription-student-main/inscription-student-main.component';
+
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
@@ -446,7 +416,6 @@ export function createTranslateLoader(http: HttpClient) {
         DropDownListModule,
         DateTimePickerModule,
         DropdownModule,
-        DateTimePickerModule,
         FocusTrapModule,
         AppRoutingModule,
         VonPrimengFormModule,
@@ -460,231 +429,232 @@ export function createTranslateLoader(http: HttpClient) {
         }),
         DragDropModule,
     ],
-    declarations: [
-        AppComponent,
-        DashboardDemoComponent,
-        AppMenuComponent,
-        AppMenuitemComponent,
-        AppTopBarComponent,
-        AppFooterComponent,
-        FormLayoutDemoComponent,
-        LearnComponent,
-        ParcoursListComponent,
-        ParcoursEditComponent,
-        CoursListComponent,
-        CoursEditComponent,
-        SectionListComponent,
-        SectionViewComponent,
-        SectionEditComponent,
-        ClassRoomListComponent,
-        EtudiantssViewComponent,
-        HomeComponent,
-        QuizViewComponent,
-        EtudiantCreateComponent,
-        EtudiantEditComponent,
-        EtudiantListComponent,
-        InscriptionCreateComponent,
-        InscriptionListComponent,
-        InscriptionViewComponent,
-        CategorieProfViewComponent,
-        SectionsComponent,
-        CoursesComponent,
-        EdCoursesComponent,
-        SalaryComponent,
-        InscriptionEditComponent,
-        EtudiantttViewComponent,
-        EtudiantsComponent,
-        EtudiantssViewComponent,
-        EtudiantCreateComponent,
-        EtudiantListComponent,
-        EtudiantEditComponent,
-        InscriptionsComponent,
-        ProfclassesComponent,
-        QuizPreviewComponent,
-        QuizConfigComponent,
-        ScheduleLocalComponent,
-        FaqAnswerComponent,
-        NewsAdminListComponent,
-        NewsAdminViewComponent,
-        NewsAdminCreateComponent,
-        NewsTeacherListComponent,
-        NewsTeacherViewComponent,
-        FaqListComponent,
-        FaqContactComponent,
-        LoginEtudiantComponent,
-        LoginProfComponent,
-        LoginAdminComponent,
-        ChooseViewComponent,
-        SectionSimulateComponent,
-        ParcoursCreateComponent,
-        CoursCreateComponent,
-        InscriptionAdminComponent,
-        HomeTeacherComponent,
-        TeacherRubComponent,
-        ProfNewsComponent,
-        NearestComponent,
-        AjoutEtudiantComponent,
-        RecommendComponent,
-        RecommendationComponent,
-        RecommendEditComponent,
-        RecommendListComponent,
-        RecommendViewComponent,
-        QuizCreateComponent,
-        InscriptionProfComponent,
-        QuizEtudiantViewComponent,
-        SyntheseSessionComponent,
-        SyntheseSessionCoursCreateComponent,
-        SyntheseSessionCoursEditComponent,
-        SyntheseSessionCoursListComponent,
-        // ProfesseurComponent,
-        ProfesseurListComponent,
-        ProfesseurCreateComponent,
-        ProfesseurEditComponent,
-        EtudiantParcoursComponent,
-        EtudiantCoursesComponent,
-        ProfesseurViewComponent,
-        StudentSimulateSectionComponent,
-        SyntheseSessionHistoryComponent,
-        RecommendAdminComponent,
-        FaqCreateComponent,
-        FaqStudentListComponent,
-        FaqAdminListComponent,
-        FaqContactListComponent,
-        FaqStudentContactComponent,
-        FaqStudentContactListeComponent,
-        DictionaryCreateComponent,
-        NewsEtudiantListComponent,
-        NewsEtudiantViewComponent,
-        NewsAdminEditComponent,
-        NewsAdminDeleteComponent,
-        ScheduleAdminComponent,
-        ScheduleStudentComponent,
-        QuizUpdateComponent,
-        SectionCreateComponent,
-        SafePipe,
-        SafePipe1,
-        SafePipe2,
-        ChatComponent,
-        Chat1Component,
-        SectionCreateComponent,
-        QuizTakeComponent,
-        SectionItemPreviewComponent,
-        ImageItemComponent,
-        SectionItemComponent,
-        DictionaryEditComponent,
-        ViewQuizEtudiantComponent,
-        TranslateComponent,
-        SyntheseSessionCoursListComponent,
-        EtudiantReviewViewComponent,
-        RecommendationTeacherComponent,
-        VocabularySectionComponent,
-        VocabularySectionItemComponent,
-        AdminComponent,
-        EtudiantComponent,
-        ProfComponent,
-        PublicComponent,
-        VocabularySectionProfComponent,
-        VocabularySectionItemProfComponent,
-        ProfReviewViewComponent,
-        QuizPreviewProfComponent,
-        GroupeEtudeComponent,
-        GroupeEtudeCreateComponent,
-        GroupeEtudeListeComponent,
-        GroupeEtudeListeComponent,
-        HomeWorkComponentComponent,
-        HomeWorkEtudiantComponent,
-        PageNotFoundComponent,
-        UserProfileComponent,
-        ProfProfileComponent,
-        EtudiantProfileComponent,
-        SessioncoursComponent,
-        PaiementlistComponent,
-        EtudiantcommentreviewComponent,
-        HomeWorkResultComponent,
-        GroupeEtudeEditComponent,
-        GroupeEtudiantComponent,
-        GroupeEtudeListeComponent,
-        GroupeEtudiantListComponent,
-        GroupeEtudiantCreateComponent,
-        GroupeEtudiantDetailListComponent,
-        ResetPasswordComponent,
-        GroupeEtudiantEditComponent,
-        StudentsHomeworkComponent,
-        ResetPasswordComponent,
-        ResetPasswordComponent,
-        ConnectedStudentComponent,
-        SyntheseSessionCoursEditComponent,
-        SyntheseSessionCoursCreateComponent,
-        SyntheseSessionCoursEditComponent,
-        SyntheseSessionCoursListComponent,
-        ProfesseurListComponent,
-        ResetPasswordComponent,
-        LoginComponent,
-        ProfinscriptionComponent,
-        EtudiantinscriptionComponent,
-        PackStudentComponent,
-        BonusProfComponent,
-        EtudiantinscriptionComponent,
-        ViewProfilEtudiantComponent,
-        EtudiantinscriptionComponent,
-        SalarylistComponent,
-        ScheduleProfComponent,
-        DriveApiComponent,
-        ManageSectionComponent,
-        HomeWorkPreviewComponent,
-        ComplaintComponent,
-        ComplaintListComponent,
-        TypeReclamationEtudiantComponent,
-        TypeReclamationProfComponent,
-        ReclamationProfComponent,
+    declarations:
+        [
+            AppComponent,
+            DashboardDemoComponent,
+            AppMenuComponent,
+            AppMenuitemComponent,
+            AppTopBarComponent,
+            AppFooterComponent,
+            LearnComponent,
+            ParcoursListComponent,
+            ParcoursEditComponent,
+            CoursListComponent,
+            CoursEditComponent,
+            SectionListComponent,
+            SectionViewComponent,
+            SectionEditComponent,
+            ClassRoomListComponent,
+            EtudiantssViewComponent,
+            HomeComponent,
+            QuizViewComponent,
+            EtudiantCreateComponent,
+            EtudiantEditComponent,
+            EtudiantListComponent,
+            InscriptionCreateComponent,
+            InscriptionListComponent,
+            InscriptionViewComponent,
+            CategorieProfViewComponent,
+            SectionsComponent,
+            CoursesComponent,
+            EdCoursesComponent,
+            SalaryComponent,
+            InscriptionEditComponent,
+            EtudiantttViewComponent,
+            EtudiantsComponent,
+            EtudiantssViewComponent,
+            EtudiantCreateComponent,
+            EtudiantListComponent,
+            EtudiantEditComponent,
+            InscriptionsComponent,
+            ProfclassesComponent,
+            QuizPreviewComponent,
+            QuizConfigComponent,
+            ScheduleLocalComponent,
+            FaqAnswerComponent,
+            NewsAdminListComponent,
+            NewsAdminViewComponent,
+            NewsAdminCreateComponent,
+            NewsTeacherListComponent,
+            NewsTeacherViewComponent,
+            FaqListComponent,
+            FaqContactComponent,
+            LoginEtudiantComponent,
+            LoginProfComponent,
+            LoginAdminComponent,
+            ChooseViewComponent,
+            SectionSimulateComponent,
+            ParcoursCreateComponent,
+            CoursCreateComponent,
+            InscriptionAdminComponent,
+            HomeTeacherComponent,
+            TeacherRubComponent,
+            ProfNewsComponent,
+            NearestComponent,
+            AjoutEtudiantComponent,
+            RecommendComponent,
+            RecommendationComponent,
+            RecommendEditComponent,
+            RecommendListComponent,
+            RecommendViewComponent,
+            QuizCreateComponent,
+            InscriptionProfComponent,
+            QuizEtudiantViewComponent,
+            SyntheseSessionComponent,
+            SyntheseSessionCoursCreateComponent,
+            SyntheseSessionCoursEditComponent,
+            SyntheseSessionCoursListComponent,
+            // ProfesseurComponent,
+            ProfesseurListComponent,
+            ProfesseurCreateComponent,
+            ProfesseurEditComponent,
+            EtudiantParcoursComponent,
+            EtudiantCoursesComponent,
+            ProfesseurViewComponent,
+            StudentSimulateSectionComponent,
+            SyntheseSessionHistoryComponent,
+            RecommendAdminComponent,
+            FaqCreateComponent,
+            FaqStudentListComponent,
+            FaqAdminListComponent,
+            FaqContactListComponent,
+            FaqStudentContactComponent,
+            FaqStudentContactListeComponent,
+            DictionaryCreateComponent,
+            NewsEtudiantListComponent,
+            NewsEtudiantViewComponent,
+            NewsAdminEditComponent,
+            NewsAdminDeleteComponent,
+            ScheduleAdminComponent,
+            ScheduleStudentComponent,
+            QuizUpdateComponent,
+            SectionCreateComponent,
+            SafePipe,
+            SafePipe1,
+            SafePipe2,
+            ChatComponent,
+            Chat1Component,
+            SectionCreateComponent,
+            QuizTakeComponent,
+            SectionItemPreviewComponent,
+            ImageItemComponent,
+            SectionItemComponent,
+            DictionaryEditComponent,
+            ViewQuizEtudiantComponent,
+            TranslateComponent,
+            SyntheseSessionCoursListComponent,
+            EtudiantReviewViewComponent,
+            RecommendationTeacherComponent,
+            VocabularySectionComponent,
+            VocabularySectionItemComponent,
+            AdminComponent,
+            EtudiantComponent,
+            ProfComponent,
+            PublicComponent,
+            VocabularySectionProfComponent,
+            VocabularySectionItemProfComponent,
+            ProfReviewViewComponent,
+            QuizPreviewProfComponent,
+            GroupeEtudeComponent,
+            GroupeEtudeCreateComponent,
+            GroupeEtudeListeComponent,
+            GroupeEtudeListeComponent,
+            HomeWorkComponentComponent,
+            HomeWorkEtudiantComponent,
+            PageNotFoundComponent,
+            UserProfileComponent,
+            ProfProfileComponent,
+            EtudiantProfileComponent,
+            SessioncoursComponent,
+            PaiementlistComponent,
+            EtudiantcommentreviewComponent,
+            HomeWorkResultComponent,
+            GroupeEtudeEditComponent,
+            GroupeEtudiantComponent,
+            GroupeEtudeListeComponent,
+            GroupeEtudiantListComponent,
+            GroupeEtudiantCreateComponent,
+            GroupeEtudiantDetailListComponent,
+            ResetPasswordComponent,
+            GroupeEtudiantEditComponent,
+            StudentsHomeworkComponent,
+            ResetPasswordComponent,
+            ResetPasswordComponent,
+            ConnectedStudentComponent,
+            SyntheseSessionCoursEditComponent,
+            SyntheseSessionCoursCreateComponent,
+            SyntheseSessionCoursEditComponent,
+            SyntheseSessionCoursListComponent,
+            ProfesseurListComponent,
+            ResetPasswordComponent,
+            LoginComponent,
+            ProfinscriptionComponent,
+            EtudiantinscriptionComponent,
+            PackStudentComponent,
+            BonusProfComponent,
+            EtudiantinscriptionComponent,
+            ViewProfilEtudiantComponent,
+            EtudiantinscriptionComponent,
+            SalarylistComponent,
+            ScheduleProfComponent,
+            DriveApiComponent,
+            ManageSectionComponent,
+            HomeWorkPreviewComponent,
+            ComplaintComponent,
+            ComplaintListComponent,
+            TypeReclamationEtudiantComponent,
+            TypeReclamationProfComponent,
+            ReclamationProfComponent,
 
-        ReclamationProfCreateComponent,
-        ComplaintViewEtudiantComponent,
-        ComplaintViewProfComponent,
-        WatchItComponent,
-        ComplaintViewProfComponent,
-        ComplaintEditEtudiantComponent,
-        ComplaintEditProfComponent,
-        ReclamationEtudiantComponent,
-        ReclamationEtudiantCreateComponent,
-        TypeReclamationComponent,
-        TypeReclamationProfListComponent,
-        TypeReclamationEtudiantListComponent,
-        ReclamationEtudiantViewComponent,
-        ReclamationProfViewComponent,
-        DragHomeWorkComponent,
-        InvitedStudentComponent,
-        InvitedStudentCreateComponent,
-        InvitedStudentListStudentComponent,
-        DragHomeWorkComponent,
-        HomeWorkReviewComponent,
-        ReclamationProfViewComponent,
-        HomePageEtudiantComponent,
-        EtudiantpurchasepackComponent,
-        FreetriallessonComponent,
-        MoreInformationComponent,
-        InfoEtudiantComponent,
-        StatutSocialComponent,
-        FonctionComponent,
-        NiveauEtudeComponent,
-        SkillComponent,
-        InteretEtudiantComponent,
-        ConnectAsInvitedComponent,
-        ContinueInfoComponent,
-        InvitedListeComponent,
-        PromotionComponent,
-        PromotionCreateComponent,
-        PromotionListComponent,
-        MyPromotionListComponent,
-        ContinueInfoComponent,
-        HomeStudentComponent,
-        HomeFreeTrialComponent,
-        ProfileComponent,
-        QuizPreviewStudentTeacherComponent,
-        SaveGoogleTokenComponent,
-        PackDetailsComponent
+            ReclamationProfCreateComponent,
+            ComplaintViewEtudiantComponent,
+            ComplaintViewProfComponent,
+            WatchItComponent,
+            ComplaintViewProfComponent,
+            ComplaintEditEtudiantComponent,
+            ComplaintEditProfComponent,
+            ReclamationEtudiantComponent,
+            ReclamationEtudiantCreateComponent,
+            TypeReclamationComponent,
+            TypeReclamationProfListComponent,
+            TypeReclamationEtudiantListComponent,
+            ReclamationEtudiantViewComponent,
+            ReclamationProfViewComponent,
+            DragHomeWorkComponent,
+            InvitedStudentComponent,
+            InvitedStudentCreateComponent,
+            InvitedStudentListStudentComponent,
+            DragHomeWorkComponent,
+            HomeWorkReviewComponent,
+            ReclamationProfViewComponent,
+            HomePageEtudiantComponent,
+            EtudiantpurchasepackComponent,
+            FreetriallessonComponent,
+            MoreInformationComponent,
+            InfoEtudiantComponent,
+            StatutSocialComponent,
+            FonctionComponent,
+            NiveauEtudeComponent,
+            SkillComponent,
+            InteretEtudiantComponent,
+            ConnectAsInvitedComponent,
+            ContinueInfoComponent,
+            InvitedListeComponent,
+            PromotionComponent,
+            PromotionCreateComponent,
+            PromotionListComponent,
+            MyPromotionListComponent,
+            ContinueInfoComponent,
+            HomeStudentComponent,
+            HomeFreeTrialComponent,
+            ProfileComponent,
+            QuizPreviewStudentTeacherComponent,
+            SaveGoogleTokenComponent,
+            PackDetailsComponent,
+            InscriptionsComponent
 
-    ],
+        ],
     providers: [
         {provide: LocationStrategy, useClass: PathLocationStrategy},
         MenuService, MessageService, ConfirmationService,
@@ -695,7 +665,7 @@ export function createTranslateLoader(http: HttpClient) {
         TimelineMonthService,
     ],
     exports: [
-        AppFooterComponent
+        AppFooterComponent,
     ],
     bootstrap: [AppComponent]
 })
