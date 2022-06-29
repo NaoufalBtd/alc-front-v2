@@ -23,6 +23,9 @@ import {FormLayoutDemoComponent} from '../Inscription-student/formlayoutdemo.com
 import {RippleModule} from 'primeng/ripple';
 import {ButtonModule} from 'primeng/button';
 import {InscriptionStudentMainComponent} from '../inscription-student-main/inscription-student-main.component';
+import {BreadcrumbComponent} from './breadcrumb/breadcrumb.component';
+import {ContactAreaComponent} from './contact-area/contact-area.component';
+import {HeaderOneComponent} from './header-one/header-one.component';
 
 
 @NgModule({
@@ -44,7 +47,10 @@ import {InscriptionStudentMainComponent} from '../inscription-student-main/inscr
         AboutAreaComponent,
         BecomeTeacherComponent,
         InscriptionStudentMainComponent,
-        FormLayoutDemoComponent
+        FormLayoutDemoComponent,
+        BreadcrumbComponent,
+        ContactAreaComponent,
+        HeaderOneComponent
     ],
     imports: [
         CommonModule,

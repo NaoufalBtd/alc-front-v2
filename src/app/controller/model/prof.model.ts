@@ -10,6 +10,7 @@ import {TypeTeacher} from './type-teacher.model';
 
 export class Prof extends User {
     public ref: string;
+    public about: string;
     public classRoomList = new Array<ClassRoom>();
     public categorieProf = new CategorieProf();
     public recommendList = new Array<RecommendTeacher>();
