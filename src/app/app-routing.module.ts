@@ -206,7 +206,7 @@ import {BlogDetailsMainComponent} from './view/public/blog-details/blog-details-
             {
                 path: '', component: PublicComponent,
                 children: [
-                    {path: '', component: DashboardDemoComponent},
+                    {path: '', component: HomeThreeComponent},
                     {path: 'public/home', component: HomeThreeComponent},
                     {path: 'public/etudianthomepage', component: HomePageEtudiantComponent},
                     {path: 'public/etudiantTrialLesson', component: FreetriallessonComponent},
