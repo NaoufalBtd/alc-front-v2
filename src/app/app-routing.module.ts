@@ -15,17 +15,12 @@ import {FaqAnswerComponent} from './view/admin/faq-admin/faq-answer/faq-answer.c
 import {NewsAdminListComponent} from './view/admin/news-admin/news-admin-list/news-admin-list.component';
 import {NewsTeacherListComponent} from './view/prof/news/news-teacher-list/news-teacher-list.component';
 import {FaqListComponent} from './view/prof/faq/faq-list/faq-list.component';
-import {LoginAdminComponent} from './view/public/login-admin/login-admin.component';
-import {LoginProfComponent} from './view/public/login-prof/login-prof.component';
-import {LoginEtudiantComponent} from './view/public/login-etudiant/login-etudiant.component';
 import {SectionSimulateComponent} from './view/prof/learn-teacher/section-simulate/section-simulate.component';
 import {InscriptionAdminComponent} from './view/public/inscription-admin/inscription-admin.component';
 import {InscriptionProfComponent} from './view/public/inscription-prof/inscription-prof.component';
 import {QuizCreateComponent} from './view/admin/quiz/quiz-create/quiz-create.component';
 import {QuizEtudiantViewComponent} from './view/etudiant/Quiz/quiz-etudiant-view/quiz-etudiant-view.component';
 import {ProfesseurListComponent} from './view/admin/professeur/professeur-list/professeur-list.component';
-import {EtudiantParcoursComponent} from './view/etudiant/learn-etudiant/etudiant-parcours/etudiant-parcours.component';
-import {EtudiantCoursesComponent} from './view/etudiant/learn-etudiant/etudiant-courses/etudiant-courses.component';
 import {StudentSimulateSectionComponent} from './view/etudiant/learn-etudiant/student-simulate-section/student-simulate-section.component';
 import {RecommendAdminComponent} from './view/admin/recommend-admin/recommend-admin.component';
 import {FaqCreateComponent} from './view/admin/faq-admin/faq-create/faq-create.component';
@@ -49,16 +44,11 @@ import {ProfComponent} from './view/prof/prof.component';
 import {EtudiantComponent} from './view/etudiant/etudiant.component';
 import {SyntheseSessionComponent} from './view/prof/synthese-session/synthese-session.component';
 import {QuizPreviewProfComponent} from './view/prof/quiz-preview-prof/quiz-preview.component';
-import {GroupeEtude} from './controller/model/groupe-etude.model';
 import {GroupeEtudeComponent} from './view/admin/groupe-etude/groupe-etude.component';
-import {GroupeEtudeCreateComponent} from './view/admin/groupe-etude/groupe-etude-create/groupe-etude-create.component';
 import {GroupeEtudiantComponent} from './view/admin/groupe-etudiant/groupe-etudiant.component';
 import {EtudiantsComponent} from './view/admin/etudiants/etudiants.component';
 import {HomeWorkComponentComponent} from './view/admin/home-work-component/home-work-component.component';
-import {HomeWOrkEtudiant} from './controller/model/home-work-etudiant.model';
 import {HomeWorkEtudiantComponent} from './view/etudiant/homeWork/home-work-etudiant/home-work-etudiant.component';
-import {ScheduleComponent} from '@syncfusion/ej2-angular-schedule';
-import {AppComponent} from './app.component';
 import {PageNotFoundComponent} from './view/public/page-not-found/page-not-found.component';
 import {UserProfileComponent} from './view/admin/user-profile/user-profile.component';
 import {ProfProfileComponent} from './view/prof/prof-profile/prof-profile.component';
@@ -81,9 +71,7 @@ import {DriveApiComponent} from './view/admin/drive-api/drive-api.component';
 import {ManageSectionComponent} from './view/admin/manage-section/manage-section.component';
 import {HomeWorkPreviewComponent} from './view/admin/home-work-preview/home-work-preview.component';
 import {ComplaintComponent} from './view/admin/complaint/complaint.component';
-import {ReclamationProf} from './controller/model/reclamation-prof.model';
 import {ReclamationProfComponent} from './view/prof/reclamation-prof/reclamation-prof.component';
-import {ReclamationEtudiant} from './controller/model/reclamation-etudiant.model';
 import {ReclamationEtudiantComponent} from './view/etudiant/reclamation-etudiant/reclamation-etudiant.component';
 import {TypeReclamationComponent} from './view/admin/type-reclamation/type-reclamation.component';
 import {ProfileComponent} from './view/etudiant/profile/profile.component';
@@ -92,7 +80,6 @@ import {InvitedStudentComponent} from './view/etudiant/invited-student/invited-s
 import {HomePageEtudiantComponent} from './view/etudiant/home-page-etudiant/home-page-etudiant.component';
 import {EtudiantpurchasepackComponent} from './view/etudiant/etudiantpurchasepack/etudiantpurchasepack.component';
 import {FreetriallessonComponent} from './view/etudiant/freetriallesson/freetriallesson.component';
-import {TypeTeacher} from './controller/model/type-teacher.model';
 import {MoreInformationComponent} from './view/admin/more-information/more-information.component';
 import {InfoEtudiantComponent} from './view/admin/info-etudiant/info-etudiant.component';
 import {ConnectAsInvitedComponent} from './view/etudiant/connect-as-invited/connect-as-invited.component';
@@ -109,6 +96,8 @@ import {SignInMainComponent} from './view/public/home-principale/sign-in/sign-in
 import {BecomeTeacherComponent} from './view/public/home-principale/become-teacher/become-teacher.component';
 import {InscriptionStudentMainComponent} from './view/public/inscription-student-main/inscription-student-main.component';
 import {CoursesPageComponent} from './view/public/home-principale/courses/courses-page/courses-page.component';
+import {BlogComponent} from './view/public/blog/blog-main/blog.component';
+import {BlogDetailsMainComponent} from './view/public/blog-details/blog-details-main/blog-details-main.component';
 
 
 @NgModule({
@@ -150,7 +139,7 @@ import {CoursesPageComponent} from './view/public/home-principale/courses/course
                     {path: 'home-work-review', component: HomeWorkPreviewComponent},
                     {path: 'complaint', component: ComplaintComponent},
                     {path: 'typeofcomplaint', component: TypeReclamationComponent},
-                    {path: 'moreInformation', component: MoreInformationComponent} ,
+                    {path: 'moreInformation', component: MoreInformationComponent},
                     {path: 'infoEtudiant', component: InfoEtudiantComponent},
                     {path: 'invitedList', component: InvitedListeComponent},
                     {path: 'promotion', component: PromotionComponent}
@@ -229,7 +218,14 @@ import {CoursesPageComponent} from './view/public/home-principale/courses/course
                     {path: 'public/profinscriptionComponent', component: ProfinscriptionComponent},
                     {path: 'public/inscriptionEtudiant', component: FormLayoutDemoComponent},
                     {path: 'free-trial', component: InscriptionStudentMainComponent},
-
+                    {
+                        path: 'blog',
+                        component: BlogComponent
+                    },
+                    {
+                        path: 'blog-details',
+                        component: BlogDetailsMainComponent
+                    },
                     {path: 'public/connectAsInvited', component: ConnectAsInvitedComponent},
                     {path: 'public/continueInfo', component: ContinueInfoComponent},
                     {path: 'resetPassword', component: ResetPasswordComponent},

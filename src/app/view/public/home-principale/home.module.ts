@@ -32,6 +32,12 @@ import {CtaComponent} from './cta/cta.component';
 import {CourseGridComponent} from './courses/course-grid/course-grid.component';
 import {CourseListComponent} from './courses/course-list/course-list.component';
 import {PaginationComponent} from './courses/pagination/pagination.component';
+import {BlogComponent} from '../blog/blog-main/blog.component';
+import {BlogAreaComponent} from '../blog/blog-area/blog-area.component';
+import {BlogDetailsAreaComponent} from '../blog-details/blog-details-area/blog-details-area.component';
+import {BlogDetailsTitleComponent} from '../blog-details/blog-details-title/blog-details-title.component';
+import {BlogDetailsMainComponent} from '../blog-details/blog-details-main/blog-details-main.component';
+import {BlogSidebarComponent} from '../blog/blog-sidebar/blog-sidebar.component';
 
 
 @NgModule({
@@ -47,6 +53,12 @@ import {PaginationComponent} from './courses/pagination/pagination.component';
         HeaderThreeComponent,
         FooterComponent,
         SignInMainComponent,
+        BlogComponent,
+        BlogAreaComponent,
+        BlogDetailsAreaComponent,
+        BlogDetailsTitleComponent,
+        BlogDetailsMainComponent,
+        BlogSidebarComponent,
         HeaderTwoComponent,
         SignInAreaComponent,
         BrandAreaComponent,
