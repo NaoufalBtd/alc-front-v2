@@ -108,6 +108,7 @@ import {HomeThreeComponent} from './view/public/home-principale/home-three-main/
 import {SignInMainComponent} from './view/public/home-principale/sign-in/sign-in-main/sign-in-main.component';
 import {BecomeTeacherComponent} from './view/public/home-principale/become-teacher/become-teacher.component';
 import {InscriptionStudentMainComponent} from './view/public/inscription-student-main/inscription-student-main.component';
+import {CoursesPageComponent} from './view/public/home-principale/courses/courses-page/courses-page.component';
 
 
 @NgModule({
@@ -234,6 +235,7 @@ import {InscriptionStudentMainComponent} from './view/public/inscription-student
                     {path: 'resetPassword', component: ResetPasswordComponent},
                     {path: 'login', component: LoginComponent},
                     {path: 'public/teacher', component: BecomeTeacherComponent},
+                    {path: 'courses', component: CoursesPageComponent},
 
                 ]
             },

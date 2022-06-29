@@ -15,4 +15,6 @@ export class PackStudent {
     public whyTakeThisCourse: string;
     public expectations: string;
     public level: Parcours = new Parcours();
+    public rating: string;
+    oldPrice: string;
 }

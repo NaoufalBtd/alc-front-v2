@@ -26,6 +26,12 @@ import {InscriptionStudentMainComponent} from '../inscription-student-main/inscr
 import {BreadcrumbComponent} from './breadcrumb/breadcrumb.component';
 import {ContactAreaComponent} from './contact-area/contact-area.component';
 import {HeaderOneComponent} from './header-one/header-one.component';
+import {CoursesPageComponent} from './courses/courses-page/courses-page.component';
+import {CoursesPageCoursesAreaComponent} from './courses/courses-page-courses-area/courses-page-courses-area.component';
+import {CtaComponent} from './cta/cta.component';
+import {CourseGridComponent} from './courses/course-grid/course-grid.component';
+import {CourseListComponent} from './courses/course-list/course-list.component';
+import {PaginationComponent} from './courses/pagination/pagination.component';
 
 
 @NgModule({
@@ -49,8 +55,14 @@ import {HeaderOneComponent} from './header-one/header-one.component';
         InscriptionStudentMainComponent,
         FormLayoutDemoComponent,
         BreadcrumbComponent,
+        CoursesPageComponent,
+        CoursesPageCoursesAreaComponent,
+        CourseGridComponent,
+        CourseListComponent,
+        PaginationComponent,
         ContactAreaComponent,
-        HeaderOneComponent
+        HeaderOneComponent,
+        CtaComponent
     ],
     imports: [
         CommonModule,
