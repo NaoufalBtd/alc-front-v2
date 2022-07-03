@@ -22,12 +22,17 @@
                    <div class="main-menu" [class.main-menu-3]="header__white">
                       <nav id="mobile-menu">
                          <ul>
-
                              <li ><a [routerLink]="['/courses']">Courses</a></li>
                              <li ><a [routerLink]="['/']">Prices</a></li>
                              <li ><a [routerLink]="['/blog']">Blog</a></li>
                              <li><a [routerLink]="['/contact']">Contact</a></li>
-
+                             <li class="has-dropdown">
+                                 <a style="cursor:pointer;" >English</a>
+                                 <ul class="submenu">
+                                     <li style="cursor:pointer;" value="en">English</li>
+                                     <li style="cursor:pointer;"   value="ar">Arabic</li>
+                                 </ul>
+                             </li>
                          </ul>
                       </nav>
                    </div>
@@ -35,6 +40,11 @@
                    <div class="header__btn ml-20 d-none d-sm-block">
                        <a [routerLink]="['/public/login']" class="e-btn">Sign in</a>
                    </div>
+
+                    <div class="header__btn header__btn-2 ml-30 d-none d-sm-block">
+                        <a [routerLink]="['/free-trial']" class="e-btn">Free Trial Lesson</a>
+                    </div>
+
                    <div class="sidebar__menu d-xl-none">
                       <div (click)="handleSidebar()" class="sidebar-toggle-btn ml-30" id="sidebar-toggle">
                           <span class="line"></span>

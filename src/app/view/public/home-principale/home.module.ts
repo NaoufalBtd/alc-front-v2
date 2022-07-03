@@ -40,6 +40,7 @@ import {BlogDetailsMainComponent} from '../blog-details/blog-details-main/blog-d
 import {BlogSidebarComponent} from '../blog/blog-sidebar/blog-sidebar.component';
 import {CourseDetailsAreaComponent} from '../course-details/course-details-area/course-details-area.component';
 import {CourseDetailsComponent} from '../course-details/course-details-main/course-details.component';
+import {DialogModule} from 'primeng/dialog';
 
 
 @NgModule({
@@ -87,6 +88,7 @@ import {CourseDetailsComponent} from '../course-details/course-details-main/cour
         FormsModule,
         RippleModule,
         ButtonModule,
+        DialogModule,
 
     ],
     exports: [

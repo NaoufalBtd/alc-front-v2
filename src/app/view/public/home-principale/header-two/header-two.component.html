@@ -31,11 +31,12 @@
 
                              <li><a [routerLink]="['/contact']">Contact</a></li>
 
+
                              <li class="has-dropdown">
-                                 <a >English</a>
+                                 <a style="cursor:pointer;" >English</a>
                                  <ul class="submenu">
-                                     <li value="en">English</li>
-                                     <li value="ar">Arabic</li>
+                                     <li style="cursor:pointer;" value="en">English</li>
+                                     <li style="cursor:pointer;" value="ar">Arabic</li>
                                  </ul>
                              </li>
                          </ul>
@@ -44,6 +45,9 @@
                    <div class="header__btn header__btn-2 ml-50 d-none d-sm-block">
                       <a [routerLink]="['/sign-up']" class="e-btn">Sign up</a>
                    </div>
+                    <div class="header__btn header__btn-2 ml-30 d-none d-sm-block">
+                        <a [routerLink]="['/free-trial']" class="e-btn">Free Trial Lesson</a>
+                    </div>
                    <div class="sidebar__menu d-xl-none">
                       <div (click)="handleSidebar()" class="sidebar-toggle-btn ml-30" id="sidebar-toggle">
                           <span class="line"></span>
