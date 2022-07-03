@@ -13,6 +13,7 @@ export class PackStudentService {
     private _packstudentlist: Array<PackStudent>;
     private _packstudentVo: PackStudent;
     private _packstudentgroupe: PackStudent;
+    private _selectedCourse: PackStudent = new PackStudent();
     private _packstudentIndividialList: Array<PackStudent>;
     private _packstudentgroupeList: Array<PackStudent>;
     private adminUrl = environment.adminUrl;
@@ -21,6 +22,14 @@ export class PackStudentService {
     constructor(private http: HttpClient, private messageService: MessageService) {
     }
 
+
+    get selectedCourse(): PackStudent {
+        return this._selectedCourse;
+    }
+
+    set selectedCourse(value: PackStudent) {
+        this._selectedCourse = value;
+    }
 
     get packs(): Array<PackStudent> {
         return this._packs;

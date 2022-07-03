@@ -2,7 +2,7 @@
   <div *ngFor="let course of packs" class="col-xxl-4 col-xl-4 col-lg-4 col-md-6">
     <div class="course__item white-bg mb-30 fix">
        <div class="course__thumb w-img p-relative fix">
-          <a [routerLink]="['/course-details']">
+          <a (click)="courseDetail(course)">
              <img src="{{course?.imgUrl}}" alt="">
           </a>
           <div class="course__tag">
@@ -20,19 +20,19 @@
                 <span><i class="icon_star"></i>{{course?.rating}} (44)</span>
              </div>
           </div>
-          <h3 class="course__title"><a [routerLink]="['/course-details']">
+          <h3 class="course__title"><a (click)="courseDetail(course)">
               {{course?.libelle}}</a></h3>
            <div class="course__teacher d-flex align-items-center">
-               <h6><a [routerLink]="['/instructor-details']">{{course?.level?.libelle}}</a></h6>
+               <h6><a>{{course?.level?.libelle}}</a></h6>
            </div>
        </div>
        <div class="course__more d-flex justify-content-between align-items-center">
         <div class="course__status d-flex align-items-center">
             <span>${{course.prix}}</span>
-            <span class="old-price">$40</span>
+            <span class="old-price">${{course?.oldPrice}}</span>
          </div>
           <div class="course__btn">
-             <a [routerLink]="['/course-details']" class="link-btn">
+             <a (click)="courseDetail(course)" class="link-btn">
                 Know Details
                 <i class="far fa-arrow-right"></i>
                 <i class="far fa-arrow-right"></i>

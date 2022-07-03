@@ -98,6 +98,7 @@ import {InscriptionStudentMainComponent} from './view/public/inscription-student
 import {CoursesPageComponent} from './view/public/home-principale/courses/courses-page/courses-page.component';
 import {BlogComponent} from './view/public/blog/blog-main/blog.component';
 import {BlogDetailsMainComponent} from './view/public/blog-details/blog-details-main/blog-details-main.component';
+import {CourseDetailsComponent} from './view/public/course-details/course-details-main/course-details.component';
 
 
 @NgModule({
@@ -232,6 +233,7 @@ import {BlogDetailsMainComponent} from './view/public/blog-details/blog-details-
                     {path: 'login', component: LoginComponent},
                     {path: 'public/teacher', component: BecomeTeacherComponent},
                     {path: 'courses', component: CoursesPageComponent},
+                    {path: 'course-details', component: CourseDetailsComponent},
 
                 ]
             },

@@ -38,6 +38,8 @@ import {BlogDetailsAreaComponent} from '../blog-details/blog-details-area/blog-d
 import {BlogDetailsTitleComponent} from '../blog-details/blog-details-title/blog-details-title.component';
 import {BlogDetailsMainComponent} from '../blog-details/blog-details-main/blog-details-main.component';
 import {BlogSidebarComponent} from '../blog/blog-sidebar/blog-sidebar.component';
+import {CourseDetailsAreaComponent} from '../course-details/course-details-area/course-details-area.component';
+import {CourseDetailsComponent} from '../course-details/course-details-main/course-details.component';
 
 
 @NgModule({
@@ -49,6 +51,8 @@ import {BlogSidebarComponent} from '../blog/blog-sidebar/blog-sidebar.component'
         HomeThreeComponent,
         HomeThreeCtaComponent,
         HomeThreeCoursesComponent,
+        CourseDetailsAreaComponent,
+        CourseDetailsComponent,
         HeroSliderComponent,
         HeaderThreeComponent,
         FooterComponent,
