@@ -7,7 +7,7 @@
                  <div class="blog__wrapper">
                     <div class="blog__item white-bg mb-30 transition-3 fix">
                        <div class="blog__thumb w-img fix">
-                          <a [routerLink]="['/blog-details']">
+                          <a (click)="toggleBlogDetails(blog)">
                              <img src="{{blog.blogImg}}" alt="">
                           </a>
                        </div>
@@ -16,7 +16,7 @@
                              <a href="#" [class]="blog.color">{{blog.category}}</a>
                           </div>
                           <h3 class="blog__title">
-                            <a [routerLink]="['/blog-details']">{{blog.title}}</a>
+                            <a (click)="toggleBlogDetails(blog)">{{blog.title}}</a>
                           </h3>
 
                           <div class="blog__meta d-flex align-items-center justify-content-between">

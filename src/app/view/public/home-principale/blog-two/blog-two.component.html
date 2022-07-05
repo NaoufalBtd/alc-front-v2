@@ -4,16 +4,15 @@
         <div class="col-xxl-6 offset-xxl-3">
            <div class="section__title-wrapper text-center mb-60">
               <h2 class="section__title">We share <br>
-                 Our <span class="yellow-bg yellow-bg-big">thoughts <img src="assets/img/shape/yellow-bg.png" alt=""></span>on design</h2>
-              <p>You don't have to struggle alone, you've got our assistance and help.</p>
+                 Our <span class="yellow-bg yellow-bg-big">Blog news <img src="assets/img/shape/yellow-bg.png" alt=""></span></h2>
            </div>
         </div>
      </div>
      <div class="row">
-        <div *ngFor="let blog of blogItems" class="col-xxl-4 col-xl-4 col-lg-4 col-md-6">
+        <div *ngFor="let blog of blogItems" class="col-xxl-4 col-xl-4 col-lg-4  col-md-6">
            <div class="blog__item white-bg mb-30 transition-3 fix">
               <div class="blog__thumb w-img fix">
-                <a [routerLink]="['/blog-details']">
+                <a  (click)="toggleBlogDetails(blog)">
                   <img src="{{blog.blogImg}}" alt="">
                </a>
               </div>
@@ -22,7 +21,7 @@
                   <a href="#" [class]="blog.color">{{blog.category}}</a>
                  </div>
                  <h3 class="blog__title">
-                  <a [routerLink]="['/blog-details']">{{blog.title}}</a>
+                  <a (click)="toggleBlogDetails(blog)">{{blog.title}}</a>
                   </h3>
 
                  <div class="blog__meta d-flex align-items-center justify-content-between">
@@ -36,7 +35,7 @@
                     </div>
                     <div class="blog__date d-flex align-items-center">
                        <i class="fal fa-clock"></i>
-                       <span>{{blog.date}}</span>
+                       <span>{{blog.date | date: 'MMMM dd, yyyy'}}</span>
                     </div>
                  </div>
               </div>
