@@ -106,35 +106,37 @@ export class EtudiantCoursesComponent implements OnInit {
                 this.quizService.findQuizBySectionId(this.selectedsection).subscribe(
                     data => {
                         this.selectedQuiz = data;
-                        // document.getElementById('dict1').style.visibility = 'hidden';
-                        // document.getElementById('quiz').style.visibility = 'visible';
-                        console.log('teeeeeeeeest');
-                        this.quizService.findQuizEtudanitByEtudiantIdAndQuizId(this.loginService.getConnectedStudent(), this.selectedQuiz).subscribe(
-                            data => {
-                                this.quizEtudiantList = data;
-                                console.log(this.quizEtudiantList);
-                                this.quizService.findAllQuestions(this.selectedQuiz.ref).subscribe(
-                                    dataQuestions => {
-                                        if (data === null) {
-                                            this.passerQuiz = 'Continue Quiz';
-                                            this.quizView = false;
-                                        } else {
-                                            if (data.questionCurrent > dataQuestions.length) {
-                                                this.passerQuiz = 'View Quiz';
-                                                this.quizView = true;
-                                            } else {
+                        if (data !== null){
+                            this.quizService.findQuizEtudanitByEtudiantIdAndQuizId(this.loginService.getConnectedStudent(), this.selectedQuiz).subscribe(
+                                data => {
+                                    this.quizEtudiantList = data;
+                                    console.log(this.quizEtudiantList);
+                                    this.quizService.findAllQuestions(this.selectedQuiz.ref).subscribe(
+                                        dataQuestions => {
+                                            if (data === null) {
                                                 this.passerQuiz = 'Continue Quiz';
                                                 this.quizView = false;
+                                            } else {
+                                                if (data.questionCurrent > dataQuestions.length) {
+                                                    this.passerQuiz = 'View Quiz';
+                                                    this.quizView = true;
+                                                } else {
+                                                    this.passerQuiz = 'Continue Quiz';
+                                                    this.quizView = false;
+                                                }
                                             }
-                                        }
 
-                                    }
-                                );
-                            }, error => {
-                                this.passerQuiz = 'Take Quiz';
-                                this.quizView = false;
-                            }
-                        );
+                                        }
+                                    );
+                                }, error => {
+                                    this.passerQuiz = 'Take Quiz';
+                                    this.quizView = false;
+                                }
+                            );
+                        } else {
+                            this.quizView = false;
+                        }
+
                     }, error => document.getElementById('quiz').style.visibility = 'hidden'
                 );
             });

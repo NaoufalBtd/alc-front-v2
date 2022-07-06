@@ -18,7 +18,7 @@ import {TranslateService} from '@ngx-translate/core';
     styleUrls: ['./app-topbar.component.css'],
 })
 export class AppTopBarComponent implements OnInit, OnDestroy {
-    private subscriptions: Subscription[] = [];
+     subscriptions: Subscription[] = [];
     role: Role;
     items: MenuItem[];
     user: User = new User();

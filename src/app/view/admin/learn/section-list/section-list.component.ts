@@ -213,13 +213,18 @@ export class SectionListComponent implements OnInit {
         this.quizService.findQuizBySectionId(section).subscribe(
             data => {
                 this.selectedQuiz = data;
-                if (this.selectedQuiz.section.id == null) {
+                if (data === null || data === undefined || data?.id === undefined){
                     this.router.navigate(['admin/quiz-create']);
                 } else {
-                    this.serviceQuiz.refQuiz = this.selectedQuiz.ref;
-                    console.log(this.serviceQuiz.refQuiz);
-                    this.router.navigate(['admin/quiz-preview-prof']);
+                    if (this.selectedQuiz.section.id == null) {
+                        this.router.navigate(['admin/quiz-create']);
+                    } else {
+                        this.serviceQuiz.refQuiz = this.selectedQuiz.ref;
+                        console.log(this.serviceQuiz.refQuiz);
+                        this.router.navigate(['admin/quiz-preview-prof']);
+                    }
                 }
+
             }, error => {
                 // tslint:disable-next-line:no-unused-expression
                 this.selectedQuiz == null;

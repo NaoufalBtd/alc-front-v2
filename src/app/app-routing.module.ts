@@ -16,8 +16,6 @@ import {NewsAdminListComponent} from './view/admin/news-admin/news-admin-list/ne
 import {NewsTeacherListComponent} from './view/prof/news/news-teacher-list/news-teacher-list.component';
 import {FaqListComponent} from './view/prof/faq/faq-list/faq-list.component';
 import {SectionSimulateComponent} from './view/prof/learn-teacher/section-simulate/section-simulate.component';
-import {InscriptionAdminComponent} from './view/public/inscription-admin/inscription-admin.component';
-import {InscriptionProfComponent} from './view/public/inscription-prof/inscription-prof.component';
 import {QuizCreateComponent} from './view/admin/quiz/quiz-create/quiz-create.component';
 import {QuizEtudiantViewComponent} from './view/etudiant/Quiz/quiz-etudiant-view/quiz-etudiant-view.component';
 import {ProfesseurListComponent} from './view/admin/professeur/professeur-list/professeur-list.component';
@@ -37,7 +35,6 @@ import {SectionItemComponent} from './view/admin/learn/section-item/section-item
 import {ViewQuizEtudiantComponent} from './view/admin/view-quiz-etudiant/view-quiz-etudiant.component';
 import {SectionItemPreviewComponent} from './view/admin/learn/section-item-preview/section-item-preview.component';
 import {RecommendationTeacherComponent} from './view/prof/recommendation-teacher/recommendation-teacher.component';
-import {DashboardDemoComponent} from './view/public/landing/dashboarddemo.component';
 import {AdminComponent} from './view/admin/admin.component';
 import {PublicComponent} from './view/public/public.component';
 import {ProfComponent} from './view/prof/prof.component';
@@ -59,10 +56,7 @@ import {EtudiantcommentreviewComponent} from './view/prof/etudiantcommentreview/
 import {PaiementlistComponent} from './view/prof/paiementlist/paiementlist.component';
 import {StudentsHomeworkComponent} from './view/prof/students-homework/students-homework.component';
 import {ResetPasswordComponent} from './view/public/reset-password/reset-password.component';
-import {LoginComponent} from './view/public/login/login.component';
 import {ConnectedStudentComponent} from './view/prof/connected-student/connected-student.component';
-import {EtudiantinscriptionComponent} from './view/public/etudiantinscription/etudiantinscription.component';
-import {ProfinscriptionComponent} from './view/public/profinscription/profinscription.component';
 import {BonusProfComponent} from './view/admin/bonus-prof/bonus-prof.component';
 import {SalarylistComponent} from './view/admin/salarylist/salarylist.component';
 import {ScheduleProfComponent} from './view/admin/professeur/schedule-prof/schedule-prof.component';
@@ -213,10 +207,6 @@ import {CourseDetailsComponent} from './view/public/course-details/course-detail
                     {path: 'public/etudiantTrialLesson', component: FreetriallessonComponent},
                     {path: 'public/etudiantchoosepack', component: EtudiantpurchasepackComponent},
                     {path: 'public/login', component: SignInMainComponent},
-                    {path: 'public/inscriptionAdmin', component: InscriptionAdminComponent},
-                    {path: 'public/inscriptionTeacher', component: InscriptionProfComponent},
-                    {path: 'public/etudiantinscriptionComponent', component: EtudiantinscriptionComponent},
-                    {path: 'public/profinscriptionComponent', component: ProfinscriptionComponent},
                     {path: 'public/inscriptionEtudiant', component: FormLayoutDemoComponent},
                     {path: 'free-trial', component: InscriptionStudentMainComponent},
                     {
@@ -230,14 +220,13 @@ import {CourseDetailsComponent} from './view/public/course-details/course-detail
                     {path: 'public/connectAsInvited', component: ConnectAsInvitedComponent},
                     {path: 'public/continueInfo', component: ContinueInfoComponent},
                     {path: 'resetPassword', component: ResetPasswordComponent},
-                    {path: 'login', component: LoginComponent},
                     {path: 'public/teacher', component: BecomeTeacherComponent},
                     {path: 'courses', component: CoursesPageComponent},
                     {path: 'course-details', component: CourseDetailsComponent},
 
                 ]
             },
-            {path: '**', component: PageNotFoundComponent},
+            {path: '*', component: PageNotFoundComponent},
         ], {scrollPositionRestoration: 'disabled'})
     ],
     exports: [RouterModule],

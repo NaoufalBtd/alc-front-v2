@@ -90,7 +90,6 @@ import {AppComponent} from './app.component';
 import {AppMenuComponent} from './view/shared/slide-bar/app.menu.component';
 import {AppMenuitemComponent} from './view/shared/slide-bar/app.menuitem.component';
 import {AppTopBarComponent} from './view/shared/top-bar/app.topbar.component';
-import {AppFooterComponent} from './view/shared/footer/app.footer.component';
 
 import {MenuService} from './view/shared/slide-bar/app.menu.service';
 
@@ -134,15 +133,10 @@ import {NewsTeacherListComponent} from './view/prof/news/news-teacher-list/news-
 import {NewsTeacherViewComponent} from './view/prof/news/news-teacher-view/news-teacher-view.component';
 import {FaqListComponent} from './view/prof/faq/faq-list/faq-list.component';
 import {FaqContactComponent} from './view/prof/faq/faq-contact/faq-contact.component';
-import {LoginEtudiantComponent} from './view/public/login-etudiant/login-etudiant.component';
-import {LoginProfComponent} from './view/public/login-prof/login-prof.component';
-import {LoginAdminComponent} from './view/public/login-admin/login-admin.component';
 import {SafePipe1, SectionSimulateComponent} from './view/prof/learn-teacher/section-simulate/section-simulate.component';
 import {ChooseViewComponent} from './view/prof/learn-teacher/choose-view/choose-view.component';
-import {InscriptionAdminComponent} from './view/public/inscription-admin/inscription-admin.component';
 import {ParcoursCreateComponent} from './view/admin/learn/parcours-create/parcours-create.component';
 import {CoursCreateComponent} from './view/admin/learn/cours-create/cours-create.component';
-import {InscriptionProfComponent} from './view/public/inscription-prof/inscription-prof.component';
 import {HomeTeacherComponent} from './view/prof/home-teacher/home-teacher.component';
 import {TeacherRubComponent} from './view/prof/home-teacher/teacher-rub/teacher-rub.component';
 import {ProfNewsComponent} from './view/prof/home-teacher/prof-news/prof-news.component';
@@ -198,7 +192,6 @@ import {RecommendationTeacherComponent} from './view/prof/recommendation-teacher
 import {VocabularySectionComponent} from './view/etudiant/learn-etudiant/vocabulary-section/vocabulary-section.component';
 import {VocabularySectionItemComponent} from './view/etudiant/learn-etudiant/vocabulary-section/vocabulary-section-item/vocabulary-section-item.component';
 import {ScrollingModule} from '@angular/cdk/scrolling';
-import {DashboardDemoComponent} from './view/public/landing/dashboarddemo.component';
 import {AdminComponent} from './view/admin/admin.component';
 import {EtudiantComponent} from './view/etudiant/etudiant.component';
 import {ProfComponent} from './view/prof/prof.component';
@@ -248,11 +241,8 @@ import {ProfProfileComponent} from './view/prof/prof-profile/prof-profile.compon
 import {EtudiantProfileComponent} from './view/etudiant/etudiant-profile/etudiant-profile.component';
 import {StudentsHomeworkComponent} from './view/prof/students-homework/students-homework.component';
 import {ResetPasswordComponent} from './view/public/reset-password/reset-password.component';
-import {LoginComponent} from './view/public/login/login.component';
 import {GroupeEtudiantEditComponent} from './view/admin/groupe-etudiant/groupe-etudiant-edit/groupe-etudiant-edit.component';
 import {ConnectedStudentComponent} from './view/prof/connected-student/connected-student.component';
-import {ProfinscriptionComponent} from './view/public/profinscription/profinscription.component';
-import {EtudiantinscriptionComponent} from './view/public/etudiantinscription/etudiantinscription.component';
 import {PackStudentComponent} from './view/admin/pack-student/pack-student.component';
 import {BonusProfComponent} from './view/admin/bonus-prof/bonus-prof.component';
 import {ViewProfilEtudiantComponent} from './view/prof/synthese-session/view-profil-etudiant/view-profil-etudiant.component';
@@ -432,11 +422,9 @@ export function createTranslateLoader(http: HttpClient) {
     declarations:
         [
             AppComponent,
-            DashboardDemoComponent,
             AppMenuComponent,
             AppMenuitemComponent,
             AppTopBarComponent,
-            AppFooterComponent,
             LearnComponent,
             ParcoursListComponent,
             ParcoursEditComponent,
@@ -480,14 +468,10 @@ export function createTranslateLoader(http: HttpClient) {
             NewsTeacherViewComponent,
             FaqListComponent,
             FaqContactComponent,
-            LoginEtudiantComponent,
-            LoginProfComponent,
-            LoginAdminComponent,
             ChooseViewComponent,
             SectionSimulateComponent,
             ParcoursCreateComponent,
             CoursCreateComponent,
-            InscriptionAdminComponent,
             HomeTeacherComponent,
             TeacherRubComponent,
             ProfNewsComponent,
@@ -499,7 +483,6 @@ export function createTranslateLoader(http: HttpClient) {
             RecommendListComponent,
             RecommendViewComponent,
             QuizCreateComponent,
-            InscriptionProfComponent,
             QuizEtudiantViewComponent,
             SyntheseSessionComponent,
             SyntheseSessionCoursCreateComponent,
@@ -588,14 +571,9 @@ export function createTranslateLoader(http: HttpClient) {
             SyntheseSessionCoursListComponent,
             ProfesseurListComponent,
             ResetPasswordComponent,
-            LoginComponent,
-            ProfinscriptionComponent,
-            EtudiantinscriptionComponent,
             PackStudentComponent,
             BonusProfComponent,
-            EtudiantinscriptionComponent,
             ViewProfilEtudiantComponent,
-            EtudiantinscriptionComponent,
             SalarylistComponent,
             ScheduleProfComponent,
             DriveApiComponent,
@@ -665,7 +643,6 @@ export function createTranslateLoader(http: HttpClient) {
         TimelineMonthService,
     ],
     exports: [
-        AppFooterComponent,
     ],
     bootstrap: [AppComponent]
 })

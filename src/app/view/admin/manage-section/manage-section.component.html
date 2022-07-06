@@ -74,7 +74,8 @@
                     <td *ngIf="isValidated(section)"><span class="badge">VALIDATED</span></td>
                     <td *ngIf="!isValidated(section)"><span class="badge-pending">PENDING</span></td>
                     <td>
-                        <button *ngIf="section?.categorieSection?.libelle !== CategoriesSectionItemEnum.VOCABULARY" pButton pRipple type="button" icon="pi pi-question-circle" (click)="showQuiz(section)"
+                        <button *ngIf="section?.categorieSection?.libelle !== CategoriesSectionItemEnum.VOCABULARY" pButton
+                                pRipple type="button" icon="pi pi-question-circle" (click)="showQuiz(section)"
                                 pTooltip="Quiz" tooltipPosition="top"
                                 label="Create quiz"
                                 iconPos="left"

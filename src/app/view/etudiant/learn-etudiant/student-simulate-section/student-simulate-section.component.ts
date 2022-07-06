@@ -535,36 +535,41 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
                     data => {
                         this.selectedQuiz = data;
 
-                        this.quizService.findQuizEtudanitByEtudiantIdAndQuizId(this.loginService.etudiant, this.selectedQuiz).subscribe(
-                            data => {
-                                this.quizEtudiantList = data;
-                                console.log(this.quizEtudiantList);
-                                this.quizService.findAllQuestions(this.selectedQuiz.ref).subscribe(
-                                    dataQuestions => {
-                                        if (data === null) {
-                                            this.showTakeQuiz = true;
-                                            this.showViewQuiz = false;
-                                        } else {
-                                            console.log(dataQuestions);
-                                            if (data.questionCurrent > dataQuestions.length) {
-                                                this.showViewQuiz = true;
-                                                this.showTakeQuiz = false;
-                                                // this.passerQuiz = 'View Quiz';
-                                                // this.quizView = true;
-                                            } else {
+                        if (data !== null){
+                            this.quizService.findQuizEtudanitByEtudiantIdAndQuizId(this.loginService.etudiant, this.selectedQuiz).subscribe(
+                                (data) => {
+                                    this.quizEtudiantList = data;
+                                    console.log(this.quizEtudiantList);
+                                    this.quizService.findAllQuestions(this.selectedQuiz.ref).subscribe(
+                                        dataQuestions => {
+                                            if (data === null || data?.id === undefined || data?.id === null) {
                                                 this.showTakeQuiz = true;
                                                 this.showViewQuiz = false;
-                                                // this.quizView = false;
+                                            } else {
+                                                console.log(dataQuestions);
+                                                if (data.questionCurrent > dataQuestions.length) {
+                                                    this.showViewQuiz = true;
+                                                    this.showTakeQuiz = false;
+                                                    // this.passerQuiz = 'View Quiz';
+                                                    // this.quizView = true;
+                                                } else {
+                                                    this.showTakeQuiz = true;
+                                                    this.showViewQuiz = false;
+                                                    // this.quizView = false;
+                                                }
                                             }
-                                        }
 
-                                    }
-                                );
-                            }, error => {
-                                this.passerQuiz = 'Take Quiz';
-                                this.quizView = false;
-                            }
-                        );
+                                        }
+                                    );
+                                }, error => {
+                                    this.passerQuiz = 'Take Quiz';
+                                    this.quizView = false;
+                                }
+                            );
+                        } else {
+                            this.passerQuiz = 'Take Quiz';
+                            this.quizView = false;
+                        }
                     },
                 );
             }, error => console.log('erreeeeeeeeeeeeeeeeur'));
@@ -619,34 +624,38 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
         this.quizService.findQuizBySectionId(this.selectedsection).subscribe(
             data => {
                 this.selectedQuiz = data;
-
-                this.quizService.findQuizEtudanitByEtudiantIdAndQuizId(this.loginService.etudiant, this.selectedQuiz).subscribe(
-                    data => {
-                        this.quizEtudiantList = data;
-                        console.log(this.quizEtudiantList);
-                        this.quizService.findAllQuestions(this.selectedQuiz.ref).subscribe(
-                            dataQuestions => {
-                                if (data === null) {
-                                    this.showTakeQuiz = true;
-                                    this.showViewQuiz = false;
-                                } else {
-                                    if (data.questionCurrent === dataQuestions.length) {
-                                        // this.passerQuiz = 'View Quiz';
-                                        // this.quizView = true;
-                                        this.showTakeQuiz = false;
-                                        this.showViewQuiz = true;
-                                    } else {
+                if (data !== null){
+                    this.quizService.findQuizEtudanitByEtudiantIdAndQuizId(this.loginService.etudiant, this.selectedQuiz).subscribe(
+                        data => {
+                            this.quizEtudiantList = data;
+                            console.log(this.quizEtudiantList);
+                            this.quizService.findAllQuestions(this.selectedQuiz.ref).subscribe(
+                                dataQuestions => {
+                                    if (data === null || data?.id === undefined || data?.id === null) {
                                         this.showTakeQuiz = true;
                                         this.showViewQuiz = false;
+                                    } else {
+                                        if (data.questionCurrent === dataQuestions.length) {
+                                            // this.passerQuiz = 'View Quiz';
+                                            // this.quizView = true;
+                                            this.showTakeQuiz = false;
+                                            this.showViewQuiz = true;
+                                        } else {
+                                            this.showTakeQuiz = true;
+                                            this.showViewQuiz = false;
+                                        }
                                     }
                                 }
-                            }
-                        );
-                    }, error => {
-                        this.passerQuiz = 'Take Quiz';
-                        this.quizView = false;
-                    }
-                );
+                            );
+                        }, error => {
+                            this.passerQuiz = 'Take Quiz';
+                            this.quizView = false;
+                        }
+                    );
+                } else {
+                    this.passerQuiz = 'Take Quiz';
+                    this.quizView = false;
+                }
             });
         this.vocab.findAllVocabSection().subscribe(data => {
             this.vocab.nombreVocab = data.length;

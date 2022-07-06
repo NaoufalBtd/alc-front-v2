@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import {WebSocketService} from './web-socket.service';
 import {ConfirmationService, MenuItem, MessageService, TreeNode} from 'primeng/api';
 import {Router} from '@angular/router';
 import {DictionaryService} from './dictionary.service';
@@ -23,7 +22,6 @@ import {Cours} from '../model/cours.model';
 import {HomeWork} from '../model/home-work.model';
 import {Section} from '../model/section.model';
 import {environment} from '../../../environments/environment';
-import {Observable} from 'rxjs';
 import {LearnService} from './learn.service';
 import {SessionCours} from '../model/session-cours.model';
 
@@ -513,10 +511,11 @@ export class SimulateSectionService {
                             data1 => {
                                 this.quizEtudiantList = data1;
                                 console.log(this.quizEtudiantList);
-                                if (this.quizEtudiantList.id !== 0) {
-                                    this.quizView = true;
-                                } else {
+                                if (this.quizEtudiantList?.id === 0 || this.quizEtudiantList === null
+                                    || this.quizEtudiantList?.id === undefined) {
                                     this.quizView = false;
+                                } else {
+                                    this.quizView = true;
                                 }
                             }, error => {
                                 this.passerQuiz = 'Take Quiz';
@@ -674,21 +673,26 @@ export class SimulateSectionService {
                 this.quizService.findQuizBySectionId(this.selectedsection).subscribe(
                     data => {
                         this.selectedQuiz = data;
-                        this.quizService.findQuizEtudanitByEtudiantIdAndQuizId(this.loginService.etudiant, this.selectedQuiz).subscribe(
-                            data1 => {
-                                this.quizEtudiantList = data1;
-                                console.log(this.quizEtudiantList);
-                                if (this.quizEtudiantList.id !== 0) {
-                                    this.quizView = true;
-                                } else {
+                        if (data !== null) {
+                            this.quizService.findQuizEtudanitByEtudiantIdAndQuizId(this.loginService.etudiant, this.selectedQuiz).subscribe(
+                                data1 => {
+                                    this.quizEtudiantList = data1;
+                                    console.log(this.quizEtudiantList);
+                                    if (this.quizEtudiantList?.id === 0 || this.quizEtudiantList === null
+                                        || this.quizEtudiantList?.id === undefined) {
+                                        this.quizView = false;
+                                    } else {
+                                        this.quizView = true;
+                                    }
+                                }, error => {
+                                    this.passerQuiz = 'Take Quiz';
+                                    console.log(error);
                                     this.quizView = false;
                                 }
-                            }, error => {
-                                this.passerQuiz = 'Take Quiz';
-                                console.log(error);
-                                this.quizView = false;
-                            }
-                        );
+                            );
+                        } else {
+                            this.quizView = false;
+                        }
                     },
                 );
             }, error => console.log('erreeeeeeeeeeeeeeeeur'));
@@ -704,22 +708,26 @@ export class SimulateSectionService {
                 this.selectedsection = data[0];
                 this.quizService.findQuizBySectionId(this.selectedsection).subscribe(data12 => {
                     this.quizExist = true;
-                    this.selectedQuiz = data12;
-                    this.quizService.findQuizEtudanitByEtudiantIdAndQuizId(this.loginService.etudiant, this.selectedQuiz).subscribe(
-                        data1 => {
-                            this.quizEtudiantList = data1;
-                            console.log(this.quizEtudiantList);
-                            if (this.quizEtudiantList.id !== 0) {
-                                this.quizView = true;
-                            } else {
+                    if (data12 !== null) {
+                        this.quizService.findQuizEtudanitByEtudiantIdAndQuizId(this.loginService.etudiant, this.selectedQuiz).subscribe(
+                            data1 => {
+                                this.quizEtudiantList = data1;
+                                console.log(this.quizEtudiantList);
+                                if (this.quizEtudiantList?.id === 0 || this.quizEtudiantList === null
+                                    || this.quizEtudiantList?.id === undefined) {
+                                    this.quizView = false;
+                                } else {
+                                    this.quizView = true;
+                                }
+                            }, error => {
+                                this.passerQuiz = 'Take Quiz';
+                                console.log(error);
                                 this.quizView = false;
                             }
-                        }, error => {
-                            this.passerQuiz = 'Take Quiz';
-                            console.log(error);
-                            this.quizView = false;
-                        }
-                    );
+                        );
+                    } else {
+                        this.quizView = false;
+                    }
                 }, error => {
                     this.quizExist = false;
                 });

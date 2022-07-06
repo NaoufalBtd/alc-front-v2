@@ -209,21 +209,31 @@ export class ManageSectionComponent implements OnInit {
     }
 
     showQuiz(section: Section) {
+        console.log('button clicked');
         this.sectionSelected = section;
         this.sectionCurrent = section;
         this.quizEtudiantService.findQuizBySectionId(section).subscribe(
             data => {
+                console.log(data);
                 this.selectedQuiz = data;
-                if (this.selectedQuiz.section.id == null) {
+                if (data === null || data === undefined || data?.id === undefined){
                     this.router.navigate(['admin/quiz-create']);
-                } else {
-                    this.quizService.refQuiz = this.selectedQuiz.ref;
-                    console.log(this.quizService.refQuiz);
-                    this.router.navigate(['admin/quiz-preview-prof']);
+                }
+                else {
+                    if (this.selectedQuiz?.section?.id == null) {
+                        this.router.navigate(['admin/quiz-create']);
+                    } else {
+                        this.quizService.refQuiz = this.selectedQuiz.ref;
+                        console.log(this.quizService.refQuiz);
+                        this.router.navigate(['admin/quiz-preview-prof']);
+                    }
                 }
             }, error => {
+                console.log(error);
                 // tslint:disable-next-line:no-unused-expression
                 this.selectedQuiz == null;
+                this.router.navigate(['admin/quiz-create']);
+
             });
     }
 
