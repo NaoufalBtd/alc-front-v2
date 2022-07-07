@@ -49,6 +49,7 @@ export class FormLayoutDemoComponent implements OnInit {
 
 
     createEtudiant() {
+        console.log('clicked');
         this.etudiantService.create().subscribe(
             data => {
                 if (data != null) {

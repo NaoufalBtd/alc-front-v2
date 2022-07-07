@@ -3,14 +3,12 @@ import {Injectable} from '@angular/core';
 import {environment} from '../../../environments/environment';
 import {Prof} from '../model/prof.model';
 import {CategorieProf} from '../model/categorie-prof.model';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpResponse} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Etudiant} from '../model/etudiant.model';
 import {User} from '../model/user.model';
 import {LoginService} from './login.service';
 import {Parcours} from '../model/parcours.model';
-import {GroupeEtudiantDetail} from '../model/groupe-etudiant-detail.model';
-import {SessionCours} from '../model/session-cours.model';
 
 @Injectable({
     providedIn: 'root'
@@ -62,8 +60,8 @@ export class ProfService {
         return this.http.get<Array<Parcours>>(this.urlBase + this.urlParcours);
     }
 
-    public save(): Observable<number> {
-        return this.http.post<number>(this.adminUrl + 'prof/', this.selectedProf);
+    public save(): Observable<Prof> {
+        return this.http.post<Prof>(this.adminUrl + 'prof/', this.selectedProf);
     }
 
     public savechatmsgs(prof: Prof): Observable<number> {

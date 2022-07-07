@@ -461,7 +461,6 @@ export class WebSocketService {
             }
         );
         this.idprof = idprof;
-        this.loginservice.prof.students = this.students;
         return this.students;
     }
 

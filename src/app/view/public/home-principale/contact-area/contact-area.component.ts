@@ -3,6 +3,8 @@ import {Prof} from '../../../../controller/model/prof.model';
 import {ConfirmationService, MessageService} from 'primeng/api';
 import {ProfService} from '../../../../controller/service/prof.service';
 import {Router} from '@angular/router';
+import {AuthenticationService} from '../../../../controller/service/authentication.service';
+import {LoginService} from '../../../../controller/service/login.service';
 
 @Component({
     selector: 'app-contact-area',
@@ -14,6 +16,8 @@ export class ContactAreaComponent implements OnInit {
 
     constructor(private messageService: MessageService,
                 private confirmationService: ConfirmationService,
+                private authService: AuthenticationService,
+                private loginService: LoginService,
                 private service: ProfService, private router: Router) {
     }
 
@@ -58,10 +62,13 @@ export class ContactAreaComponent implements OnInit {
             return;
         }
         this.selectedProf.categorieProf.id = 1;
+        this.selectedProf.levelMax = null;
+        this.selectedProf.typeTeacher = null;
+        this.selectedProf.levelMin = null;
         this.submitted = true;
         console.log(this.selectedProf);
         this.service.save().subscribe(
-            (data) => {
+            (response) => {
                 this.selectedProf = new Prof();
                 this.messageService.add({
                     severity: 'success',
@@ -69,15 +76,18 @@ export class ContactAreaComponent implements OnInit {
                     detail: 'Registration added, please check your email to get your password.',
                     life: 3000
                 });
-                this.router.navigate(['/public/login']);
+                console.log(response);
+                this.authService.saveToken(response.token);
+                this.authService.addUserToLocalCache(response);
+                this.loginService.hasloged = true;
+                this.router.navigate(['prof/home']);
             }, error => {
                 this.messageService.add({
                     severity: 'error',
                     summary: 'Warning',
-                    detail: 'Registration canceled',
+                    detail: error?.error?.message,
                     life: 3000
                 });
-                console.log(error);
             });
         this.selectedProf = new Prof();
     }

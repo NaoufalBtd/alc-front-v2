@@ -11,13 +11,13 @@ import {TypeTeacher} from './type-teacher.model';
 export class Prof extends User {
     public ref: string;
     public about: string;
+    public token: string;
     public classRoomList = new Array<ClassRoom>();
     public categorieProf = new CategorieProf();
     public recommendList = new Array<RecommendTeacher>();
     public chatMessageDto = new Array<ChatMessageDto>();
-    public levelMin = new Parcours();
-    public levelMax = new Parcours();
+    public levelMin: Parcours = new Parcours();
+    public levelMax: Parcours = new Parcours();
     public trancheHoraireProfList = new Array<TrancheHoraireProf>();
-    public students = new Array<Etudiant>();
-public typeTeacher = new TypeTeacher();
+    public typeTeacher = new TypeTeacher();
 }
