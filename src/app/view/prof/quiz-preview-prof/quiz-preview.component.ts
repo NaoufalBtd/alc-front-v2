@@ -635,6 +635,7 @@ export class QuizPreviewProfComponent implements OnInit, OnDestroy {
         chatMessage.quizReponse.question = this.question;
         chatMessage.quizReponse.type = 'T13';
         chatMessage.quizReponse.lib = data;
+        chatMessage.quizReponse.sender = 'PROF';
         if (this.webSocketService.isInSession) {
             this.webSocketService.sendMessage(chatMessage, 'PROF');
         } else {

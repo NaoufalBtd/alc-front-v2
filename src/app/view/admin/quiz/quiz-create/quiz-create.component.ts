@@ -227,7 +227,8 @@ export class QuizCreateComponent implements OnInit {
             data => {
                 console.log(data);
                 this.service.types = data.filter(t => (t.ref !== 't10' &&
-                    t.ref !== 't8' && t.ref !== 't9' && t.ref !== 't7' && t.ref !== 't2'));
+                    t.ref !== 't8' && t.ref !== 't9' && t.ref !== 't7' && t.ref !== 't2'
+                    && t.ref !== 't11'));
             }, error1 => {
                 console.log('can\'t bring data from database');
             }

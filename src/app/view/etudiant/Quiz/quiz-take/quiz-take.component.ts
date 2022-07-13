@@ -5,7 +5,7 @@ import {Reponse} from '../../../../controller/model/reponse.model';
 import {Etudiant} from '../../../../controller/model/etudiant.model';
 import {Quiz} from '../../../../controller/model/quiz.model';
 import {Question} from '../../../../controller/model/question.model';
-import {ConfirmationService, MenuItem, MessageService, TreeNode} from 'primeng/api';
+import {ConfirmationService, MessageService} from 'primeng/api';
 import {Router} from '@angular/router';
 import {DictionaryService} from '../../../../controller/service/dictionary.service';
 import {DomSanitizer} from '@angular/platform-browser';
@@ -566,12 +566,18 @@ export class QuizTakeComponent implements OnInit, OnDestroy {
         chatMessage.prof = this.prof;
         chatMessage.type = 'QUIZ';
         chatMessage.ev = ev.target.id;
+        chatMessage.student = this.login.getConnectedStudent();
         chatMessage.quizReponse.question = this.question;
         chatMessage.quizReponse.type = 'T13';
         chatMessage.quizReponse.lib = data;
         if (this.webSocketService.isInSession) {
+            console.log('WEB');
             this.webSocketService.sendMessage(chatMessage, 'STUDENT');
+            if (this.groupeEtudiant?.groupeEtude?.nombreEtudiant > 1) {
+                this.learnService.dropSynch(ev.target.id);
+            }
         } else {
+            console.log('SANS WEB');
             this.learnService.dropSynch(ev.target.id);
         }
     }

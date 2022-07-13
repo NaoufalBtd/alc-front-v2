@@ -233,7 +233,9 @@ export class WebSocketService {
         this.webSocket.onerror = (event) => {
         };
         this.webSocket.onmessage = (event) => {
+
             const data: ChatMessageDto = JSON.parse(event.data);
+            console.log(data);
             if (data.type === 'message') {
                 for (const etudiant of this.participants.get(data.prof.id)) {
                     if (etudiant.id === this.loginservice.getConnectedStudent().id) {
@@ -287,8 +289,7 @@ export class WebSocketService {
                 }
             } else if (data.type === 'QUIZ') {
                 if (this.groupeEtudiant?.groupeEtude?.nombreEtudiant === 1 ||
-                    data.quizReponse.sender === 'PROF') {
-
+                    data.quizReponse.sender === 'PROF' || data.isStudent === false) {
                     this.reponseQuiz = data.quizReponse;
                     console.log(this.reponseQuiz);
                     if (this.reponseQuiz?.question?.typeDeQuestion?.ref === 't5') {
@@ -308,15 +309,18 @@ export class WebSocketService {
                             this.learnService.checkT12Answer(reponse.question);
                         }
                     } else if (this.reponseQuiz?.question?.typeDeQuestion?.ref === 't13' && data.user === 'T13') {
+                        console.log('T13QST');
                         this.dragAndDropData = data.quizReponse.lib;
                         this.learnService.dropSynch(Number(data.ev));
                     }
-                    if (this.reponseQuiz.sender === 'PROF') {
-                        this.learnService.saveAnswers(this.question, 'TEACHER_ANSWER');
-                    } else if (this.reponseQuiz.sender === 'STUDENT') {
-                        this.learnService.saveAnswers(this.question, 'STUDENT_ANSWER');
-                    } else if (this.reponseQuiz.sender === 'STUDENT_DONT_KNOW') {
-                        this.learnService.saveAnswers(this.question, 'STUDENT_DONT_KNOW');
+                    if (data?.message !== 'QUESTION_T13') {
+                        if (this.reponseQuiz.sender === 'PROF') {
+                            this.learnService.saveAnswers(this.question, 'TEACHER_ANSWER');
+                        } else if (this.reponseQuiz.sender === 'STUDENT') {
+                            this.learnService.saveAnswers(this.question, 'STUDENT_ANSWER');
+                        } else if (this.reponseQuiz.sender === 'STUDENT_DONT_KNOW') {
+                            this.learnService.saveAnswers(this.question, 'STUDENT_DONT_KNOW');
+                        }
                     }
                 } else {
                     if (data.message === 'STUDENT_CHOICE_T12') {
@@ -344,9 +348,9 @@ export class WebSocketService {
                         }
                     } else {
                         const rpsQuiz = data.quizReponse;
-                        this.grpStudentAnswers.set(rpsQuiz.student, rpsQuiz);
+                        // @ts-ignore
+                        this.grpStudentAnswers.set(data.student, rpsQuiz);
                     }
-
                 }
             } else if (data.user === 'FINISH_QUIZ' && data.type === 'FINISH_QUIZ') {
                 if (data.prof.id === this.prof.id) {
@@ -362,7 +366,7 @@ export class WebSocketService {
                             this.messageService.add({
                                 severity: 'success',
                                 life: 3000,
-                                detail: data?.student?.nom   + ' join the classroom'
+                                detail: data?.student?.nom + ' join the classroom'
                             });
                         }
                     }
@@ -373,7 +377,7 @@ export class WebSocketService {
                     this.messageService.add({
                         severity: 'warn',
                         life: 4000,
-                        detail: data?.student?.nom  + ' is out of the classroom'
+                        detail: data?.student?.nom + ' is out of the classroom'
                     });
                 }
             } else if (data.type === 'VOC') {
