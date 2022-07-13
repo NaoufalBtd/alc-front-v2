@@ -234,7 +234,7 @@ export class GroupeEtudiantListComponent implements OnInit {
                 }
             );
         }
-        else if (this.groupStudentDetail.etudiant.nom !== undefined || this.groupStudentDetail.etudiant.prenom !== undefined ){
+        else if (this.groupStudentDetail.etudiant.nom !== undefined){
             this.groupeEtudiantService.searchGroupStudentDetail(this.groupStudentDetail).subscribe(
                 data => {
                     for (const item of data) {

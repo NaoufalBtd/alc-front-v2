@@ -15,7 +15,6 @@ export class User {
     public authorities: [];
     public  role = 'Role';
     public  nom: string;
-    public  prenom: string;
     public  numero: string;
     public  skype: string;
     public  addresse: string;

@@ -178,7 +178,7 @@
             <div class="card-block text-center text-white">
                 <div class="m-b-25"><img [src]="selected?.image" class="img-radius"
                                          alt="User-Profile-Image"></div>
-                <h6 class="f-w-600">{{selected?.nom}} {{ selected?.prenom}}</h6>
+                <h6 class="f-w-600">{{selected?.nom}}</h6>
                 <p>{{selected?.username}} </p> <i
                     class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
             </div>
@@ -188,16 +188,9 @@
                 <p-tabView (onChange)="showTranche()">
                     <p-tabPanel header="Professor information">
                         <div class="row">
-                            <div class="col-sm-6">
-                                <p class="m-b-10 f-w-600">Furst name</p>
-                                <input [(ngModel)]="selected.prenom" autofocus id="firstName" pInputText required
-                                       type="text"/>
-                                <small *ngIf="submitted && !selected.prenom" class="p-invalid">First Name is
-                                    required.</small>
-                            </div>
 
                             <div class="col-sm-6">
-                                <p class="m-b-10 f-w-600">Last name</p>
+                                <p class="m-b-10 f-w-600">Full name</p>
                                 <input [(ngModel)]="selected.nom" autofocus id="lastName" pInputText required
                                        type="text"/>
                                 <small *ngIf="submitted && !selected.nom" class="p-invalid">Last Name is

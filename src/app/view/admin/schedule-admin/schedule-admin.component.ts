@@ -232,7 +232,7 @@ export class ScheduleAdminComponent implements OnInit {
             scheduleObj.eventSettings.dataSource = null;
             this.scheduleProf.subject = this.scheduleProf.cours.libelle;
             this.scheduleProf.grpName = this.scheduleProf.groupeEtudiant.libelle;
-            this.scheduleProf.profName = this.scheduleProf.prof.nom + ' ' + this.scheduleProf.prof.prenom;
+            this.scheduleProf.profName = this.scheduleProf.prof.nom ;
             console.log(this.scheduleProf);
             if (this.optionSelected.option === 'Daily') {
                 while (this.scheduleProf.startTime < this.endDate) {

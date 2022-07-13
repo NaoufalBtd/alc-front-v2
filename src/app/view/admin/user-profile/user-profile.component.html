@@ -5,7 +5,7 @@
         <img [src]="user?.image" alt="Image" width="250">
     </div>
     <div class="p-col-6">
-        <h3>{{ user?.nom}} {{ user?.prenom}}</h3>         <!---- pi-user -->
+        <h3>{{ user?.nom}}</h3>         <!---- pi-user -->
         <h5>Admin</h5>
         <button pButton pRipple type="button" icon="pi pi-image " class="p-button-rounded p-button-secondary"
                 (click)="updateProfileImage()"
@@ -24,15 +24,10 @@
     <div class="p-col-12">
         <div class="p-grid">
 
-            <div class="p-col-4">
-            <span class="p-float-label">
-                 <input  type="text" pInputText [(ngModel)]="user.prenom"><label >First name</label>
-            </span>
-            </div>
 
             <div class="p-col-4">
             <span class="p-float-label">
-                 <input  type="text" pInputText [(ngModel)]="user.nom"><label >Last name</label>
+                 <input  type="text" pInputText [(ngModel)]="user.nom"><label >Full name</label>
             </span>
             </div>
 
@@ -182,13 +177,7 @@
 
         <div class="p-col-4">
             <span class="p-float-label">
-                 <input  type="text" pInputText [(ngModel)]="userInfo.prenom"><label >First name</label>
-            </span>
-        </div>
-
-        <div class="p-col-4">
-            <span class="p-float-label">
-                 <input  type="text" pInputText [(ngModel)]="userInfo.nom"><label >Last name</label>
+                 <input  type="text" pInputText [(ngModel)]="userInfo.nom"><label >Full name</label>
             </span>
         </div>
 
@@ -259,15 +248,10 @@
     <div content class=" p-dialog-content">
         <div class="p-grid">
 
-            <div class="p-col-4">
-            <span class="p-float-label">
-                 <input  type="text" pInputText [(ngModel)]="newUser.prenom"><label >First name</label>
-            </span>
-            </div>
 
             <div class="p-col-4">
             <span class="p-float-label">
-                 <input  type="text" pInputText [(ngModel)]="newUser.nom"><label >Last name</label>
+                 <input  type="text" pInputText [(ngModel)]="newUser.nom"><label >Full name</label>
             </span>
             </div>
 

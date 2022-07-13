@@ -2,16 +2,11 @@
           styleClass="p-fluid">
     <ng-template pTemplate="content">
 <form>
-        <div class="p-field">
-            <label for="firstName">First Name</label>
-            <input [(ngModel)]="selected.prenom" autofocus id="firstName" pInputText required type="text"/>
-            <small *ngIf="submitted && !selected.prenom" class="p-invalid">total is required.</small>
-        </div>
 
         <div class="p-field">
-            <label for="firstName">Last Name</label>
+            <label for="lastName">Full Name</label>
             <input [(ngModel)]="selected.nom" autofocus id="lastName" pInputText required type="text"/>
-            <small *ngIf="submitted && !selected.nom" class="p-invalid">total is required.</small>
+            <small *ngIf="submitted && !selected.nom" class="p-invalid">full name is required.</small>
         </div>
         <div class="p-field">
             <label for="login">Username</label>

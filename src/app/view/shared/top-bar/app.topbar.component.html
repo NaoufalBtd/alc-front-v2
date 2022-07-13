@@ -14,7 +14,7 @@
                *ngIf="!app?.inlineUser">
                 <img class="img" [src]="this.authenticationService.getUserFromLocalCache().image">
                 <div class="layout-profile-userinfo">
-                    <span class="layout-profile-name profile-label">{{this.authenticationService?.getUserFromLocalCache()?.nom}} {{ this.authenticationService.getUserFromLocalCache()?.prenom}}</span>
+                    <span class="layout-profile-name profile-label">{{this.authenticationService?.getUserFromLocalCache()?.nom}} </span>
                     <span *ngIf="isAdmin() == true" class="layout-profile-role">Admin</span>
                     <span *ngIf="isProf() == true" class="layout-profile-role">Teacher</span>
                     <span *ngIf="isStudent() == true" class="layout-profile-role">Student</span>

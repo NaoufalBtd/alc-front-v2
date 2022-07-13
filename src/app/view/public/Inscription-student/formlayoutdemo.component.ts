@@ -7,6 +7,7 @@ import {EtudiantService} from '../../../controller/service/etudiant.service';
 import {PackStudentService} from '../../../controller/service/pack-student.service';
 import {VonPrimengFormModule} from '@von-development-studio/primeng-form-validation';
 import {AuthenticationService} from '../../../controller/service/authentication.service';
+import {AnimationService} from '../../../controller/service/animation.service';
 
 @Component({
     selector: 'app-formlayoutdemo',
@@ -29,12 +30,19 @@ export class FormLayoutDemoComponent implements OnInit {
 
     constructor(private messageService: MessageService,
                 public etudiantService: EtudiantService,
+                private animation: AnimationService,
                 private confirmationService: ConfirmationService,
                 public authenticationService: AuthenticationService,
                 public packStudentService: PackStudentService,
                 private service: InscriptionService, private router: Router) {
     }
+    get showAnimation(): boolean {
+        return this.animation.showAnimation;
+    }
 
+    set showAnimation(value: boolean) {
+        this.animation.showAnimation = value;
+    }
     get selected(): Etudiant {
         return this.etudiantService.selected;
     }
@@ -50,11 +58,11 @@ export class FormLayoutDemoComponent implements OnInit {
 
     createEtudiant() {
         console.log('clicked');
+        this.showAnimation = true;
         this.etudiantService.create().subscribe(
             data => {
                 if (data != null) {
-                    console.log(data);
-                    // this.onLogin(data);
+                    this.showAnimation = false;
                     this.authenticationService.addUserToLocalCache(data);
                     this.showdialog = true;
                     this.messageService.add({
@@ -66,13 +74,14 @@ export class FormLayoutDemoComponent implements OnInit {
                     this.router.navigate(['public/etudianthomepage']);
                 }
             }, error => {
-                this.showdialog = true;
+                this.showAnimation = false;
                 this.messageService.add({
                     severity: 'error',
                     summary: 'Error',
                     detail: 'Registration Canceled',
                     life: 4000
                 });
+
             }
         );
     }

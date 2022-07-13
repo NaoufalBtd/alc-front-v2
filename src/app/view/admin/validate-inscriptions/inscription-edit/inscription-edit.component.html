@@ -4,7 +4,7 @@
           styleClass="p-fluid">
     <ng-template pTemplate="content">
         <div class="p-grid user-info">
-            <div class="p-col-12 p-md-6 p-lg-4"><label class="label" >{{selected?.etudiant?.nom }} {{ selected?.etudiant?.prenom}}</label></div>
+            <div class="p-col-12 p-md-6 p-lg-4"><label class="label" >{{selected?.etudiant?.nom }}</label></div>
             <div class="p-col-12 p-md-6 p-lg-4"><label class="label">Teacher locality:</label>  {{ selected?.etudiant?.teacherLocality}}</div>
             <div class="p-col-12 p-md-6 p-lg-4"><label  class="label">Group option:</label>  {{ selected?.etudiant?.groupOption}}</div>
             <div *ngIf="selected.packStudent!= null" class="p-col-12 p-md-6 p-lg-4"><label  class="label">Pack choosen:</label>  {{ selected.packStudent.libelle}} : {{selected.packStudent.nombreCours}}h | {{selected.packStudent.prix}}$</div>

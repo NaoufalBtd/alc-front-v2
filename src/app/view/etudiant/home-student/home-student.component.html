@@ -102,7 +102,7 @@
         <div *ngIf="scheduleProfs?.length > 0"
              style="background: #cac3ff57; border-left: 2px solid #b5a2ed;  border-radius: 0;"
              class="p-col-2 Nextlesson">
-            <p class="lessonDate">Welcome back {{student?.prenom}}, ready for your next lesson ?
+            <p class="lessonDate">Welcome back {{student?.nom}}, ready for your next lesson ?
                 <img style="    width: 15px; margin: 4px 0 -2px 0;"
                      src="/assets/icons/icon-fire.png" alt=""></p>
             <div class="p-grid lessonActuel">
@@ -137,7 +137,7 @@
 
             <div class="p-grid profGroup">
                 <div class="p-col-12 "><img class="profImg" [src]="nextLesson?.prof?.image" alt=""></div>
-                <div class="p-col-12 profName">{{nextLesson?.prof?.nom }} {{ nextLesson?.prof?.prenom}}</div>
+                <div class="p-col-12 profName">{{nextLesson?.prof?.nom }}</div>
                 <div class="p-col-12 profSkype">
                     <img src="/assets/icons/icon-skype-64.png" class="skypeIcon" width="25px" alt="">
                     <a style="display: inline-block;width: 43px; margin: 5px;"
@@ -165,7 +165,7 @@
                                 borderRadius: '1px',
                                 borderTop: '1px solid rgb(223 214 254)'
                             }"
-                            [label]="std?.prenom" [image]="std?.image" styleClass="mr-2"></p-chip>
+                            [label]="std?.nom" [image]="std?.image" styleClass="mr-2"></p-chip>
 
 
                 </div>

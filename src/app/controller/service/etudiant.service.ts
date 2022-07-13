@@ -65,7 +65,16 @@ export class EtudiantService {
     private _skill: Skill;
     private _skills: Array<Skill>;
     private _studentList: Array<Etudiant>;
+    private _numberOfTime = 0;
 
+
+    get numberOfTime(): number {
+        return this._numberOfTime;
+    }
+
+    set numberOfTime(value: number) {
+        this._numberOfTime = value;
+    }
 
     get selectedPack(): PackStudent {
         return this._selectedPack;

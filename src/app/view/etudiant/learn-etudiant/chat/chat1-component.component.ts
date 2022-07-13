@@ -27,7 +27,7 @@ export class Chat1Component implements OnInit, OnDestroy {
     }
 
     sendMessage(sendForm: NgForm) {
-        let chatMessageDto = new ChatMessageDto(this.servicelogin.etudiant.nom + ' ' + this.servicelogin.etudiant.prenom,
+        let chatMessageDto = new ChatMessageDto(this.servicelogin.etudiant.nom,
             sendForm.value.message, true);
         console.log('___________________________ GRP ET PROF _____________________________');
         console.log(this.groupeEtudiant);

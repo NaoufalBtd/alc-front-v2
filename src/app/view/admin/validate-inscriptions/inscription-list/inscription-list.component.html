@@ -28,7 +28,7 @@
                 <p-tabView (onChange)="handleChange($event)">
                     <p-tabPanel header="All inscription">
                         <p-table #dt [(selection)]="selectes" [columns]="cols"
-                                 [globalFilterFields]="['numeroInscription','datedebutinscription','datefininscription' , 'nom', 'prenom' , 'prof' , 'etatInscription']"
+                                 [globalFilterFields]="['numeroInscription','datedebutinscription','datefininscription' , 'nom' , 'prof' , 'etatInscription']"
                                  [paginator]="true"
                                  [rowHover]="true"
                                  [rows]="6" [showCurrentPageReport]="true" [value]="this.items"
@@ -40,11 +40,7 @@
                                     <div class="p-col"><br>
                                         <span>
                                      <input [(ngModel)]="student.nom" pInputText
-                                            placeholder="Search by LastName"
-                                            style="margin-right: 10px;width: 200px"
-                                            type="text"/>
-                                     <input [(ngModel)]="student.prenom  " pInputText
-                                            placeholder="Search by FirstName"
+                                            placeholder="Search by FullName"
                                             style="margin-right: 10px;width: 200px"
                                             type="text"/>
                                     <input [(ngModel)]="student.username " pInputText
@@ -80,8 +76,8 @@
                                         <p-sortIcon field="mail"></p-sortIcon>
                                     </th>
                                     <th>Status</th>
-<!--                                    <th>View Details</th>-->
-<!--                                    <th>Delete Registration</th>-->
+                                    <!--                                    <th>View Details</th>-->
+                                    <!--                                    <th>Delete Registration</th>-->
                                     <th> Action</th>
 
                                 </tr>
@@ -97,8 +93,10 @@
                                     <td></td>
                                     <td> {{inscription.dateRegistration}} </td>
                                     <td>
-                                        <span *ngIf="inscription.etatInscription.libelle == 'Validated'" class="badge-v">VALIDATED</span>
-                                        <span *ngIf="inscription.etatInscription.libelle !== 'Validated'" class="badge-nv">Pending</span>
+                                        <span *ngIf="inscription.etatInscription.libelle == 'Validated'"
+                                              class="badge-v">VALIDATED</span>
+                                        <span *ngIf="inscription.etatInscription.libelle !== 'Validated'"
+                                              class="badge-nv">Pending</span>
                                     </td>
 
                                     <td>
@@ -106,22 +104,23 @@
                                                 class="p-button-rounded p-button-info p-mr-2" icon="pi pi-list" pButton
                                                 pRipple></button>
                                         <button (click)="showEditDialog(inscription)"
-                                                class="p-button-rounded p-button-success p-mr-2" icon="pi pi-pencil" pButton
+                                                class="p-button-rounded p-button-success p-mr-2" icon="pi pi-pencil"
+                                                pButton
                                                 pRipple></button>
 
-                                        <button  (click)="delete(inscription)" class="p-button-rounded p-button-danger"
-                                                 icon="pi pi-trash" pButton
-                                                 pRipple></button>
+                                        <button (click)="delete(inscription)" class="p-button-rounded p-button-danger"
+                                                icon="pi pi-trash" pButton
+                                                pRipple></button>
                                     </td>
 
-<!--                                    <td>-->
-<!--                                        <button  class="p-button-info " label="details" pButton-->
-<!--                                                pRipple></button>-->
-<!--                                    </td>-->
-<!--                                    <td>-->
-<!--                                        <button class="p-button-danger" label="delete" pButton-->
-<!--                                                pRipple></button>-->
-<!--                                    </td>-->
+                                    <!--                                    <td>-->
+                                    <!--                                        <button  class="p-button-info " label="details" pButton-->
+                                    <!--                                                pRipple></button>-->
+                                    <!--                                    </td>-->
+                                    <!--                                    <td>-->
+                                    <!--                                        <button class="p-button-danger" label="delete" pButton-->
+                                    <!--                                                pRipple></button>-->
+                                    <!--                                    </td>-->
 
 
                                 </tr>
@@ -136,7 +135,7 @@
                     </p-tabPanel>
                     <p-tabPanel header="Pending inscription">
                         <p-table #dt [(selection)]="selectes" [columns]="cols"
-                                 [globalFilterFields]="['numeroInscription','datedebutinscription','datefininscription' , 'nom', 'prenom' , 'prof' , 'etatInscription']"
+                                 [globalFilterFields]="['numeroInscription','datedebutinscription','datefininscription' , 'nom' , 'prof' , 'etatInscription']"
                                  [paginator]="true"
                                  [rowHover]="true"
                                  [rows]="6" [showCurrentPageReport]="true" [value]="this.items"
@@ -148,13 +147,10 @@
                                     <div class="p-col"><br>
                                         <span>
                                      <input [(ngModel)]="student.nom" pInputText
-                                            placeholder="Search by LastName"
+                                            placeholder="Search by Full Name"
                                             style="margin-right: 10px;width: 200px"
                                             type="text"/>
-                                     <input [(ngModel)]="student.prenom  " pInputText
-                                            placeholder="Search by FirstName"
-                                            style="margin-right: 10px;width: 200px"
-                                            type="text"/>
+
                                     <input [(ngModel)]="student.username " pInputText
                                            placeholder="Search by UserName"
                                            style="margin-right: 10px;width: 200px"
@@ -204,15 +200,19 @@
                                     <td></td>
                                     <td> {{inscription.dateRegistration}} </td>
                                     <td>
-                                        <span *ngIf="inscription.etatInscription.libelle == 'Validated'" class="badge-v">VALIDATED</span>
-                                        <span *ngIf="inscription.etatInscription.libelle !== 'Validated'" class="badge-nv">Pending</span>
+                                        <span *ngIf="inscription.etatInscription.libelle == 'Validated'"
+                                              class="badge-v">VALIDATED</span>
+                                        <span *ngIf="inscription.etatInscription.libelle !== 'Validated'"
+                                              class="badge-nv">Pending</span>
                                     </td>
                                     <td>
-                                        <button (click)="view(inscription)" class="p-button-info " label="details" pButton
+                                        <button (click)="view(inscription)" class="p-button-info " label="details"
+                                                pButton
                                                 pRipple></button>
                                     </td>
                                     <td>
-                                        <button (click)="delete(inscription)" class="p-button-danger" label="delete" pButton
+                                        <button (click)="delete(inscription)" class="p-button-danger" label="delete"
+                                                pButton
                                                 pRipple></button>
                                     </td>
 
@@ -246,144 +246,152 @@
 <!------------------------ edit inscription Dialog -------------------------------------------------->
 
 
-
-<p-dialog header="Registration Details" [(visible)]="editInscDialog" [style]="{width: '70vw'}">
+<p-dialog header="Registration Details" [(visible)]="editInscDialog" [style]="{width: '80vw'}">
     <div style="margin-bottom: 10px;">
         <i style="color: red ; font-weight: bold">*</i> Required fields
     </div>
-<form  [formGroup]="exform" >
-    <div class="p-grid">
+        <div class="p-grid">
 
 
-        <div class="p-col-4">
-            <span class="p-float-label" style="margin-top: 10px;">
-                 <input  formControlName="fullName" type="text" pInputText [(ngModel)]="inscription.etudiant.prenom" ><i style="color: red">*</i>
-                <label >Full name</label>
-            </span>
-            <small style="font-weight: bold" *ngIf="exform.get('fullName').invalid && exform.get('fullName').touched"
-                   class="text-danger">Full name is Required</small>
-        </div>
+            <div class="p-col-4">
+                 <input [style]="{width: '100%'}" name="fullName" type="text" pInputText
+                        [(ngModel)]="inscription.etudiant.nom">
+            </div>
 
 
-
-        <!--        <div class="p-col-4">-->
-        <!--            <span class="p-float-label">-->
-        <!--                 <input  disabled type="text" pInputText [(ngModel)]="inscription.prof"><label-->
-        <!--            >Teacher</label>-->
-        <!--            </span>-->
-        <!--        </div>-->
-
-
-        <div class="p-col-4">
-            <span class="p-float-label" style="margin-top: 10px;">
-                 <p-dropdown editable="true"   class="form-control"  [options]="parcours" [(ngModel)]="inscription.parcours"   formControlName="level" optionLabel="libelle"></p-dropdown>
+            <div class="p-col-4">
+                 <p-dropdown [style]="{width: '100%'}" [options]="parcours" [(ngModel)]="inscription.parcours"
+                             placeholder="Level"
+                             name="level"
+                             optionLabel="libelle"></p-dropdown>
                 <i style="color: red">*</i>
-                 <label>Level</label>
-            </span>
-            <small style="font-weight: bold" *ngIf="exform.get('level').invalid && exform.get('level').touched"
-                   class="text-danger">Level is Required</small>
-        </div>
+                <small style="font-weight: bold; margin-left: 5px" *ngIf="inscription?.parcours === null"
+                       class="text-danger">Level is Required</small>
+
+            </div>
 
 
-        <div class="p-col-4">
-            <span class="p-float-label" style="margin-top: 15px;">
-                 <p-dropdown  editable="true"  class="form-control" formControlName="state" [options]="etatInsc" [(ngModel)]="inscription.etatInscription"  optionLabel="libelle"></p-dropdown>
+            <div class="p-col-4">
+
+                <p-dropdown [style]="{width: '100%'}" name="state" [options]="etatInsc"
+                            placeholder="State"
+                            [(ngModel)]="inscription.etatInscription"
+                            optionLabel="libelle"></p-dropdown>
                 <i style="color: red">*</i>
-                 <label>State</label>
-            </span>
-            <small style="font-weight: bold" *ngIf="exform.get('state').invalid && exform.get('state').touched"
-                   class="text-danger">State is required</small>
+                <small style="font-weight: bold; margin-left: 5px"
+                       class="text-danger">State is required</small>
+            </div>
+
+            <div class="p-col-4">
+
+                <p-dropdown [style]="{width: '100%'}" name="groupeEtude" [options]="groupEtudes"
+                            placeholder="Group option"
+                            [(ngModel)]="inscription.groupeEtude" optionLabel="libelle"></p-dropdown>
+                <i
+                        style="color: red">*</i>
+                <small style="font-weight: bold; margin-left: 5px"
+                       *ngIf="inscription?.groupeEtude === null"
+                       class="text-danger">Group option is Required</small>
+            </div>
+            <div class="p-col-4">
+
+                <p-dropdown [style]="{width: '100%'}" optionLabel="libelle" name="packOption"
+                            [options]="packs"
+                            placeholder="Pack option"
+                            [(ngModel)]="inscription.packStudent"></p-dropdown>
+                <i style="color: red">*</i>
+                <small style="font-weight: bold; margin-left: 5px"
+                       *ngIf="inscription?.packStudent === null"
+                       class="text-danger">Pack is Required</small>
+            </div>
+
+
+            <div class="p-col-4">
+
+                <p-calendar [style]="{width: '100%'}" id="start" [(ngModel)]="inscription.datedebutinscription"
+                            [showTime]="true" name="StartTime"
+                            class="e-field"
+                            data-name="startTime"
+                            [showIcon]="true"
+                            inputId="start"></p-calendar>
+                <label> Start date</label>
+            </div>
+
+            <div class="p-col-4">
+
+                <p-calendar [style]="{width: '100%'}" id="finish" [(ngModel)]="inscription.datefininscription"
+                            [showTime]="true" name="finishDate"
+                            class="e-field"
+                            data-name="startTime"
+                            [showIcon]="true"
+                            inputId="start"></p-calendar>
+                <label> Finish date</label>
+
+            </div>
+
+
+
+
+
+            <div class="p-col-12 p-md-6 p-lg-4">
+
+                <select   class="form-select" [(ngModel)]="inscription.statutSocial" aria-label="Status Social">
+                    <option [value]="null" selected>Status Social</option>
+                    <option *ngFor="let item of statutSocials" [ngValue]="item">{{item?.libelle}}</option>
+                </select>
+
+            </div>
+
+
+
+            <div class="p-col-12 p-md-6 p-lg-4">
+
+                <select   class="form-select" [(ngModel)]="inscription.fonction" aria-label="Area of work">
+                    <option [value]="null" selected >Area of work</option>
+                    <option *ngFor="let item of fonctions" [ngValue]="item">{{item?.libelle}}</option>
+                </select>
+
+            </div>
+
+
+
+
+
+
+            <div class="p-col-12 p-md-6 p-lg-4">
+
+                <select   class="form-select" [(ngModel)]="inscription.niveauEtude" aria-label="Study Level">
+                    <option [value]="null" selected>Study Level</option>
+                    <option *ngFor="let item of niveauEtudes" [ngValue]="item">{{item?.libelle}}</option>
+                </select>
+
+            </div>
+
+
+
+
+
+            <div class="p-col-12 p-md-6 p-lg-4">
+
+                <select  class="form-select"  [(ngModel)]="inscription.skill" aria-label="Skill">
+                    <option [value]="null" selected>Skill</option>
+                    <option *ngFor="let item of skills" [ngValue]="item">{{item?.libelle}}</option>
+                </select>
+            </div>
+
+
+
+
+            <div class="p-col-12 p-md-6 p-lg-4">
+
+                <select  class="form-select"  [(ngModel)]="inscription.interetEtudiant" aria-label="Main goal with learning english">
+                    <option [value]="null" selected>Main goal with learning english</option>
+                    <option  *ngFor="let item of interetEtudiants" [ngValue]="item">{{item?.libelle}}</option>
+                </select>
+            </div>
+
+
         </div>
-
-        <div class="p-col-4">
-            <span class="p-float-label" style="margin-top: 15px;">
-                 <p-dropdown editable="true" formControlName="groupeEtude" [options]="groupEtudes"
-                             [(ngModel)]="inscription.groupeEtude"  class="form-control" optionLabel="libelle"></p-dropdown><i style="color: red">*</i>
-                 <label>Group option</label>
-            </span>
-            <small style="font-weight: bold" *ngIf="exform.get('groupeEtude').invalid && exform.get('groupeEtude').touched"
-                   class="text-danger">Group option is Required</small>
-        </div>
-        <div class="p-col-4">
-            <span class="p-float-label" style="margin-top: 15px;">
-                 <p-dropdown editable="true" class="form-control" optionLabel="libelle" formControlName="packOption"  [options]="packs" [(ngModel)]="inscription.packStudent"></p-dropdown><i style="color: red">*</i>
-                <label>Pack option</label>
-            </span>
-            <small style="font-weight: bold" *ngIf="exform.get('packOption').invalid && exform.get('packOption').touched"
-                   class="text-danger">Pack is Required</small>
-        </div>
-
-
-
-
-        <div class="p-col-4">
-            <span class="p-float-label" style="margin-top: 15px;">
-          <p-calendar [ngModelOptions]="{standalone: true}" id="start" [(ngModel)]="inscription.datedebutinscription"
-                      [showTime]="true" name="StartTime"
-                       class="e-field"
-                       data-name="startTime"
-                       [showIcon]="true"
-                       inputId="start"></p-calendar> <label> Start date</label>
-            </span>
-        </div>
-
-        <div class="p-col-4">
-            <span class="p-float-label"style="margin-top: 15px;">
-          <p-calendar id="finish" [ngModelOptions]="{standalone: true}" [(ngModel)]="inscription.datefininscription" [showTime]="true" name="finishDate"
-                      class="e-field"
-                      data-name="startTime"
-                      [showIcon]="true"
-                      inputId="start"></p-calendar> <label> Finish date</label>
-            </span>
-
-        </div>
-
-
-        <div class="p-col-12 p-md-6 p-lg-4">
-             <span class="p-float-label" style="margin-top: 15px;">
-            <p-dropdown editable="true"  [ngModelOptions]="{standalone: true}" [options]="statutSocials" [(ngModel)]="inscription.statutSocial"
-                        optionLabel="libelle" [itemSize]="3"></p-dropdown><label>  Status Social</label>
-             </span>
-
-        </div>
-
-        <div class="p-col-12 p-md-6 p-lg-4">
-                         <span class="p-float-label" style="margin-top: 15px;">
-
-            <p-dropdown [options]="fonctions"  [(ngModel)]="inscription.fonction"
-                        editable="true"   [ngModelOptions]="{standalone: true}"  optionLabel="libelle" [itemSize]="3"></p-dropdown>
-                             <label> Area of work</label>
-                         </span>
-
-        </div>
-
-        <div class="p-col-12 p-md-6 p-lg-4">
-                        <span class="p-float-label" style="margin-top: 15px;">
-
-            <p-dropdown editable="true"  [options]="niveauEtudes" [(ngModel)]="inscription.niveauEtude"
-                        [ngModelOptions]="{standalone: true}"  optionLabel="libelle" [itemSize]="3"></p-dropdown>
-                            <label >Study Level</label>
-                        </span>
-
-        </div>
-        <div class="p-col-12 p-md-6 p-lg-4">
-                        <span class="p-float-label" style="margin-top: 15px;">
-            <p-dropdown editable="true"  formControlName="interet"  [options]="interetEtudiants" [(ngModel)]="inscription.interetEtudiant"
-                        optionLabel="libelle" [itemSize]="3"></p-dropdown>
-                            <label>Main goal with learning english</label>
-                        </span>
-
-        </div>
-        <div class="p-col-12 p-md-6 p-lg-4">
-   <span class="p-float-label"  style="margin-top: 15px;">
-            <p-dropdown   [ngModelOptions]="{standalone: true}"editable="true" [options]="skills" [(ngModel)]="inscription.skill"
-                        optionLabel="libelle" [itemSize]="3" ></p-dropdown>
-   <label>Skill</label>
-
-   </span>
-        </div>
-    </div>
-</form>
     <ng-template pTemplate="footer">
         <button pButton pRipple type="button" icon="pi pi-save" label="save changes"
                 (click)="updateInsc(inscription) "

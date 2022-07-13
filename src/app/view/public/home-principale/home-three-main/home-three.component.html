@@ -12,8 +12,43 @@
     <app-home-three-cta></app-home-three-cta>
     <app-home-footer footerPadd="footer__top pt-90 pb-40"></app-home-footer>
 
-    <p-dialog [showHeader]="true"  [closable]="true" [(visible)]="displayModal" [modal]="true" [style]="{width: 'auto'}"
+    <p-dialog [showHeader]="false"  [closable]="true" [(visible)]="displayModal" [modal]="true"
+              [style]="{width: '65vw'}"
               [draggable]="true" [resizable]="true">
-        <app-formlayoutdemo></app-formlayoutdemo>
+        <div class="row shadow p-3 mb-5 bg-body rounded">
+            <div style="text-align: end" class="col-md-offset-3 col-sm-12 col-md-12">
+                <i style="cursor:pointer" (click)="displayModal=false" class="pi pi-times"></i>
+            </div>
+            <div style="text-align: center" class="col-md-offset-3 col-sm-12 col-md-12">
+                <h2>Book your free trial session</h2>
+                <h4><i class="fa fa-solid fa-gift"></i> we give up to 3 free lessons for new students</h4>
+            </div>
+            <div class="col-md-offset-3 col-sm-12 col-md-6">
+                <div class="textInfo"> <i style="color: blue; font-size: 25px;" class="fa fa-solid fa-hand-pointer"></i> We'll demonstrate our platform</div>
+                <div class="textInfo"><i style="color: yellow; font-size: 25px;"  class="fa fa-solid fa-star-shooting"></i> We will assess your English level and also give you an opportunity to practice your English</div>
+                <div class="textInfo"><i style="color: red; font-size: 25px;" class="fa fa-solid fa-heart"></i>Recommend a study plan</div>
+            </div>
+            <div class="col-md-offset-3 col-md-6 col-sm-12">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <input type="text" [(ngModel)]="selected.nom" class="form-control" id="name" placeholder="Your name">
+                        <i class="fa fa-user"></i>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" [(ngModel)]="selected.username" class="form-control" id="inputEmail3" placeholder="Email">
+                        <i class="fa fa-solid fa-envelope"></i>
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" [(ngModel)]="selected.numero" class="form-control" id="Phone" placeholder="Phone">
+                        <i class=" fa fa-solid fa-phone"></i>
+                    </div>
+                    <div class="form-group">
+                        <button [disabled]="isDisabled()"
+                                (click)="createEtudiant()"
+                                style=" width: 100%;" type="submit" class="btn btn-default">TRY FOR FREE NOW</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </p-dialog>
 </main>

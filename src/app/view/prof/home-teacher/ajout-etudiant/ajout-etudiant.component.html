@@ -2,15 +2,13 @@
           header="Etudiant Details" styleClass="p-fluid">
     <ng-template pTemplate="content">
         <div class="p-field">
-            <label for="nom">LastName</label>
+            <label for="nom">FullName</label>
             <input [(ngModel)]="selected.nom" autofocus id="nom" pInputText required type="text"/>
-            <small class="p-invalid">nom is required.</small>
+            <small class="p-invalid">Full name is required.</small>
         </div>
-        <div class="p-field">
-            <label for="prenom">FirsName</label>
-            <input [(ngModel)]="selected.prenom" autofocus id="prenom" pInputText required type="text"/>
-            <small class="p-invalid">prenom is required.</small>
-        </div>
+
+
+
         <div class="p-field">
             <label for="login">Username</label>
             <input [(ngModel)]="selected.username" autofocus id="login" pInputText required type="text"/>

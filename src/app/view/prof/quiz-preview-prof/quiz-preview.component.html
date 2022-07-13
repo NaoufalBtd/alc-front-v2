@@ -429,7 +429,7 @@
     </p-table>
 </div>
 
-<p-dialog [header]="listAnswers[0]?.quizEtudiant?.etudiant?.nom + ' ' + listAnswers[0]?.quizEtudiant?.etudiant?.prenom"
+<p-dialog [header]="listAnswers[0]?.quizEtudiant?.etudiant?.nom"
           [(visible)]="display" [style]="{width: '80vw'}">
     <p-table [value]="listAnswers" styleClass="p-datatable-striped">
         <ng-template pTemplate="header">

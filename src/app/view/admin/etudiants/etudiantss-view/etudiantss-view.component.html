@@ -2,13 +2,10 @@
           styleClass="p-fluid">
     <ng-template pTemplate="content">
         <div class="p-field">
-            <label for="nom">LastName</label>
+            <label for="nom">Full Name</label>
             <input [(ngModel)]="selected.nom" disabled id="nom" pInputText type="text"/>
         </div>
-        <div class="p-field">
-            <label for="prenom">FirstName</label>
-            <input [(ngModel)]="selected.prenom" disabled id="prenom" pInputText type="text"/>
-        </div>
+
         <div class="p-field">
             <label for="login">Username</label>
             <input [(ngModel)]="selected.username" disabled id="login" pInputText type="text"/>

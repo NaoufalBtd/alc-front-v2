@@ -306,6 +306,7 @@ import {SaveGoogleTokenComponent} from './view/admin/drive-api/save-google-token
 import {PackDetailsComponent} from './view/etudiant/packs/pack-details/pack-details.component';
 import {EducalModule} from './view/public/home-principale/home.module';
 import { InscriptionStudentMainComponent } from './view/public/inscription-student-main/inscription-student-main.component';
+import { LoadingAnimationComponent } from './view/shared/loading-animation/loading-animation.component';
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -630,7 +631,8 @@ export function createTranslateLoader(http: HttpClient) {
             QuizPreviewStudentTeacherComponent,
             SaveGoogleTokenComponent,
             PackDetailsComponent,
-            InscriptionsComponent
+            InscriptionsComponent,
+            LoadingAnimationComponent
 
         ],
     providers: [

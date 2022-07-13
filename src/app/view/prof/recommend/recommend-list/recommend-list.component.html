@@ -6,7 +6,7 @@
         <div class="card" style="background-color: gainsboro">
 
 
-            <p-table #dt [(selection)]="selectes" [columns]="cols" [globalFilterFields]="['nom','prenom','number phone','login','commentaire']" [paginator]="true"
+            <p-table #dt [(selection)]="selectes" [columns]="cols" [globalFilterFields]="['nom','number phone','login','commentaire']" [paginator]="true"
                      [rowHover]="true"
                      [rows]="89" [showCurrentPageReport]="true" [value]="items"
                      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"

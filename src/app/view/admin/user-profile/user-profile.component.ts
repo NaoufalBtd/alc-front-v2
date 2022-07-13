@@ -255,7 +255,6 @@ export class UserProfileComponent implements OnInit {
         for (const user of this.users) {
             if (
                 user.nom.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1 ||
-                user.prenom.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1 ||
                 user.username.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1) {
                 results.push(user);
             }

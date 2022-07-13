@@ -1,5 +1,5 @@
 export const environment = {
-  production: true,
+  production: false,
   baseUrl: 'http://162.19.25.141:8036/learn/',
   baseApi: 'http://162.19.25.141:8036',
   sectionItemUrl: 'http://162.19.25.141:8036/learn/sectionItem/',

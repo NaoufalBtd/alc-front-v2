@@ -3,8 +3,7 @@
 <div class="p-grid p-shadow-5">
 
     <div class="p-col-10">
-            <input type="search" [(ngModel)]="etudiant.nom" class='searchInput' pInputText placeholder="Search by firstName.."/>
-            <input type="search" [(ngModel)]="etudiant.prenom"  class='searchInput' pInputText placeholder="Search by lastName.."/>
+            <input type="search" [(ngModel)]="etudiant.nom" class='searchInput' pInputText placeholder="Search by full Name.."/>
             <input type="search" [(ngModel)]="etudiant.prof.nom"  class='searchInput' pInputText placeholder="Search by teacher.."/>
             <button pButton pRipple type="button" icon="pi pi-search" (click)="searchUsers()"
                     style="margin-left: 25px"
@@ -92,7 +91,7 @@
                                 <div class="card-block text-center text-white">
                                     <div class="m-b-25"> <img [src]="userInfo?.image"class="img-radius"
                                                               alt="User-Profile-Image"> </div>
-                                    <h6 class="f-w-600">{{userInfo?.nom}} {{ userInfo?.prenom}}</h6>
+                                    <h6 class="f-w-600">{{userInfo?.nom}}</h6>
                                     <p>{{userInfo?.username}} </p> <i class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
                                 </div>
                             </div>
@@ -101,14 +100,14 @@
                                     <h6 class="m-b-20 p-b-5 b-b-default f-w-600" style="color: #f27463">Information</h6>
                                     <div class="row">
                                         <div class="col-sm-6">
-                                            <p class="m-b-10 f-w-600">First name</p>
+                                            <p class="m-b-10 f-w-600">Full name</p>
 
                                             <input type="text" pInputText [(ngModel)]="userInfo.nom">
                                         </div>
-                                        <div class="col-sm-6">
-                                            <p class="m-b-10 f-w-600">Last name</p>
-                                            <input type="text" pInputText [(ngModel)]="userInfo.prenom">
-                                        </div>
+
+
+
+
                                         <div class="col-sm-6" style="margin-top: 9px">
                                             <p class="m-b-10 f-w-600">Email</p>
                                             <input type="text" pInputText [(ngModel)]="userInfo.username">

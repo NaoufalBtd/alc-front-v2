@@ -53,20 +53,7 @@
                         <div class="p-grid">
                             <div class="p-col-4">
                                 <strong>
-                                    <label for="firstname" style="margin-right: 12px">First Name</label>
-
-                                </strong>
-                            </div>
-                            <div class="p-col-8">
-
-                                <input type="text" id="firstname" pInputText [(ngModel)]="this.etudiant.prenom"/>
-                            </div>
-
-                        </div>
-                        <div class="p-grid">
-                            <div class="p-col-4">
-                                <strong>
-                                    <label for="lastname" style="margin-right: 12px">Last Name</label>
+                                    <label for="lastname" style="margin-right: 12px">Full Name</label>
 
                                 </strong>
                             </div>
@@ -256,10 +243,7 @@
             </ng-template>
             <ng-template pTemplate="content">
                 <div class="p-fluid formgrid p-field">
-                    <label>First Name : <strong>{{this.etudiant.prenom}}</strong></label>
-                </div>
-                <div class="p-fluid formgrid p-field">
-                    <label>Last Name : <strong>{{this.etudiant.nom}}</strong></label>
+                    <label>Full Name : <strong>{{this.etudiant.nom}}</strong></label>
                 </div>
                 <div class="p-fluid formgrid p-field">
                     <label>Age : <strong></strong>{{this.etudiant.age}}</label>

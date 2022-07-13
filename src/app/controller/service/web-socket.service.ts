@@ -362,7 +362,7 @@ export class WebSocketService {
                             this.messageService.add({
                                 severity: 'success',
                                 life: 3000,
-                                detail: data?.student?.nom + ' ' + data?.student?.prenom + ' join the classroom'
+                                detail: data?.student?.nom   + ' join the classroom'
                             });
                         }
                     }
@@ -373,7 +373,7 @@ export class WebSocketService {
                     this.messageService.add({
                         severity: 'warn',
                         life: 4000,
-                        detail: data?.student?.nom + ' ' + data?.student?.prenom + ' is out of the classroom'
+                        detail: data?.student?.nom  + ' is out of the classroom'
                     });
                 }
             } else if (data.type === 'VOC') {

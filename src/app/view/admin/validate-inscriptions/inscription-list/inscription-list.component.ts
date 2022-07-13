@@ -210,19 +210,9 @@ export class InscriptionListComponent implements OnInit {
         this.service.statutSocials = value;
     }
 
-    exform: FormGroup;
 
     ngOnInit(): void {
 
-
-        this.exform = new FormGroup({
-            fullName: new FormControl(null, Validators.required),
-            level: new FormControl(null, Validators.required),
-            nom: new FormControl(null, Validators.required),
-            state: new FormControl(null, Validators.required),
-            groupeEtude: new FormControl(null, Validators.required),
-            packOption: new FormControl(null, Validators.required)
-        });
 
 
         this.packStudentService.findAllPacks();
@@ -370,15 +360,6 @@ export class InscriptionListComponent implements OnInit {
 
     public view(inscription: Inscription) {
 
-        this.exform = new FormGroup({
-            fullName: new FormControl(),
-            level: new FormControl(),
-            nom: new FormControl(),
-            state: new FormControl(),
-            groupeEtude: new FormControl(),
-            packOption: new FormControl()
-        });
-
         this.selected = {...inscription};
         this.viewDialog = true;
 
@@ -396,7 +377,6 @@ export class InscriptionListComponent implements OnInit {
             {field: 'datedebutinscription', header: 'Datedebutinscription'},
             {field: 'datefininscription', header: 'Datefininscription'},
             {field: 'nom', header: 'Nom'},
-            {field: 'prenom', header: 'Prenom'},
             {field: 'prof', header: 'Prof'},
             {field: 'etatInscription', header: 'EtatInscription'}
         ];
@@ -418,18 +398,16 @@ export class InscriptionListComponent implements OnInit {
     }
 
     updateInsc(inscription: Inscription) {
+        console.log(inscription);
         this.service.edit(inscription).subscribe(data => {
             console.log(data);
-            this.messageService.add({severity: 'success', summary: ' ', detail: 'Inscription updated', life: 5000, sticky: true});
+            this.messageService.add({severity: 'success', summary: 'success ', detail: 'Inscription updated', life: 3000, sticky: true});
         }, error => {
-            this.messageService.add({severity: 'success', summary: ' ', detail: error?.error?.message, life: 3000, sticky: true});
-
+            console.log(error);
+            this.messageService.add({severity: 'error', summary: ' ', detail: error?.error?.message, life: 3000, sticky: true});
         });
 
         this.editInscDialog = false;
-
-        console.log(inscription);
-        // this.service.edit(inscription).subscribe(data => console.log(data));
     }
 
     showEditDialog(inscription: Inscription) {
@@ -438,20 +416,10 @@ export class InscriptionListComponent implements OnInit {
         this.inscription = inscription;
         this.findTypeOfPack(this.inscription);
         console.log(inscription);
-
-        this.exform = new FormGroup({
-            fullName: new FormControl(),
-            level: new FormControl(),
-            nom: new FormControl(),
-            state: new FormControl(),
-            groupeEtude: new FormControl(),
-            packOption: new FormControl()
-        });
-
     }
 
     public findTypeOfPack(inscription: Inscription) {
-        if (inscription.groupeEtude.nombreEtudiant > 1) {
+        if (inscription?.groupeEtude?.nombreEtudiant > 1) {
             this.packStudents = this.packStudentService.packstudentgroupeList;
         } else {
             this.packStudents = this.packStudentService.packstudentIndividialList;

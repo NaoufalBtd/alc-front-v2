@@ -56,7 +56,7 @@
             <div style="margin-left: 17%" class="p-col-10">
                 <img [src]="user?.image" class="profileImg" alt="Profile">
             </div>
-            <div class="p-col-12 userName">{{user?.prenom}}</div>
+            <div class="p-col-12 userName">{{user?.nom}}</div>
         </div>
         <div [style.background]="(selectedElement === 'PROFILE')? '#d2d8fd': 'white'"
              [style.borderLeft]="(selectedElement === 'PROFILE')? '5px solid #ff725e': 'none'"
@@ -101,7 +101,7 @@
                         <h5 style="color: #ff725e">Full name</h5>
                         <div class="p-inputgroup">
                             <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
-                            <input class="user-input-group" [(ngModel)]="user.prenom" name="prenom" type="text"
+                            <input class="user-input-group" [(ngModel)]="user.nom" name="prenom" type="text"
                                    pInputText placeholder="full name">
                         </div>
                     </div>
