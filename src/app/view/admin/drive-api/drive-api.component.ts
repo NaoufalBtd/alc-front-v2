@@ -20,10 +20,10 @@ export class DriveApiComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        // this.connectToGoogle();
+        this.connectToGoogle();
     }
 
-    private connectToGoogle() {
+     connectToGoogle() {
         const formData = new FormData();
 
         console.log(this.route.snapshot.queryParams);

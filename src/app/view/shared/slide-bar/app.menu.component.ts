@@ -82,7 +82,7 @@ export class AppMenuComponent implements OnInit {
                     {label: 'Manage Section', icon: 'pi pi-briefcase', routerLink: ['/admin/manage-section']},
                     {label: 'Inscriptions List', icon: 'pi pi-fw pi-check-square', routerLink: ['/admin/inscription']},
                     {label: 'Students List', icon: 'pi pi-fw pi-list', routerLink: ['/admin/students-List']},
-                    {label: 'Groups List', icon: 'pi pi-fw pi-list', routerLink: ['/admin/groups-List']},
+                    {label: 'Groups Option', icon: 'pi pi-fw pi-user-edit', routerLink: ['/admin/groups-List']},
                     {label: 'Students Group List', icon: 'pi pi-fw pi-list', routerLink: ['/admin/groups-students']},
                     {label: 'Professors', icon: 'pi pi-fw pi-user', routerLink: ['/admin/teacher-lists']},
                     {label: 'Recommendation', icon: 'pi pi-fw pi-user-plus', routerLink: ['/admin/recommend-admin']},

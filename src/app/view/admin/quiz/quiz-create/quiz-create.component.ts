@@ -208,7 +208,7 @@ export class QuizCreateComponent implements OnInit {
     navigateItems = [
         {label: this.parcourCurrent.libelle, routerLink: '/admin/parcours'},
         {label: this.courseCurrent.libelle, routerLink: '/admin/parcours'},
-        {label: this.sectionCurrent.libelle, routerLink: '/admin/parcours'},
+        {label: this.sectionCurrent?.categorieSection?.libelle, routerLink: '/admin/parcours'},
     ];
 
     mapTranslate: Map<string, Array<Reponse>> = new Map<string, Array<Reponse>>();
@@ -433,6 +433,13 @@ export class QuizCreateComponent implements OnInit {
                         life: 3000
                     });
                     this.router.navigate(['/admin/manage-section']);
+                }, error => {
+                    this.messageService.add({
+                        severity: 'error',
+                        summary: 'Error',
+                        detail: 'Quiz not created, please try again.',
+                        life: 3000
+                    });
                 });
         }
 
@@ -470,17 +477,7 @@ export class QuizCreateComponent implements OnInit {
     }
 
 
-    shuffle(reponses: Array<Reponse>) {
-        return this.service.shuffle(reponses);
-    }
 
-    public itemChecked(event: any) {
-        return this.service.itemChecked(event);
-    }
-
-    validateForm() {
-        return this.service.validateForm();
-    }
 
     openPreview() {
         this.router.navigate(['admin/quiz-preview-prof']);
@@ -510,7 +507,7 @@ export class QuizCreateComponent implements OnInit {
     submitOnOff() {
         this.reponses.length = 0;
         this.reponse.lib = 'true';
-        if (this.onOff_true == true) {
+        if (this.onOff_true === true) {
             this.reponse.etatReponse = 'true';
         } else {
             this.reponse.etatReponse = 'false';
@@ -518,7 +515,7 @@ export class QuizCreateComponent implements OnInit {
         this.reponse.numero = 1;
         this.addReponse();
         this.reponse.lib = 'false';
-        if (this.onOff_false == true) {
+        if (this.onOff_false === true) {
             this.reponse.etatReponse = 'true';
         } else {
             this.reponse.etatReponse = 'false';
@@ -529,7 +526,7 @@ export class QuizCreateComponent implements OnInit {
     }
 
     onOffTrue() {
-        if (this.onOff_true == true) {
+        if (this.onOff_true === true) {
             this.onOff_false = false;
         } else {
             this.onOff_false = true;
@@ -537,7 +534,7 @@ export class QuizCreateComponent implements OnInit {
     }
 
     onOffFalse() {
-        if (this.onOff_false == true) {
+        if (this.onOff_false === true) {
             this.onOff_true = false;
         } else {
             this.onOff_true = true;
