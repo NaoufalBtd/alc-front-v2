@@ -21,9 +21,7 @@
                              <li >
                                  <a [routerLink]="['/courses']">Courses</a>
                              </li>
-                             <li >
-                                 <a [routerLink]="['/']">Prices</a>
-                             </li>
+
 
                              <li >
                                  <a [routerLink]="['/blog']">Blog</a>
@@ -33,10 +31,14 @@
 
 
                              <li class="has-dropdown">
-                                 <a style="cursor:pointer;" >English</a>
+                                 <a *ngIf="this.translate.currentLang === 'en'" style="cursor:pointer;" >English</a>
+                                 <a *ngIf="this.translate.currentLang === 'ar'" style="cursor:pointer;" >العربية</a>
+                                 <a *ngIf="this.translate.currentLang === 'fr'" style="cursor:pointer;" >Français</a>
+
                                  <ul class="submenu">
-                                     <li style="cursor:pointer;" value="en">English</li>
-                                     <li style="cursor:pointer;" value="ar">Arabic</li>
+                                     <li (click)="selectedLangage('en')" style="cursor:pointer;" value="en"><a>English</a></li>
+                                     <li (click)="selectedLangage('ar')" style="cursor:pointer;" value="ar"><a>العربية</a></li>
+                                     <li (click)="selectedLangage('fr')" style="cursor:pointer;" value="fr"><a>Français</a></li>
                                  </ul>
                              </li>
                          </ul>

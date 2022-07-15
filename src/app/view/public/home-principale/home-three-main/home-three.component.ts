@@ -6,6 +6,7 @@ import {PackStudentService} from '../../../../controller/service/pack-student.se
 import {InscriptionService} from '../../../../controller/service/inscription.service';
 import {Router} from '@angular/router';
 import {Etudiant} from '../../../../controller/model/etudiant.model';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-home-three',
@@ -27,6 +28,7 @@ export class HomeThreeComponent implements OnInit {
               private confirmationService: ConfirmationService,
               public authenticationService: AuthenticationService,
               public packStudentService: PackStudentService,
+              public translate: TranslateService,
               private service: InscriptionService, private router: Router) {
   }
   get numberOfTime(): number {
@@ -39,6 +41,7 @@ export class HomeThreeComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.translate.use('ar');
     setInterval(() => {
       if (this.numberOfTime === 0){
         this.displayModal = true;

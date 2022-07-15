@@ -89,7 +89,7 @@
 							& li{
 								& a{
 									&::before{
-										background: $e-blue;
+										background: #ff725e;
 									}
 								}
 							}
@@ -128,7 +128,7 @@
 			}
 			& .sidebar-toggle-btn{
 				& .line{
-					background-color: $e-blue;
+					background-color: #ff725e;
 				}
 			}
         }
@@ -336,7 +336,7 @@
 				text-align: center;
 				font-size: 14px;
 				color: $white;
-				background: $e-blue;
+				background: #ff725e;
 				@include border-radius(50%);
 				font-weight: 500;
 				@include box-shadow(0px 10px 20px 0px rgba(4, 23, 118, 0.3));
@@ -596,7 +596,7 @@
                             right: 0;
                             width: 0;
                             height: 100%;
-                            background: $e-blue;
+                            background: #ff725e;
                             z-index: -1;
                             
                         }
@@ -649,7 +649,7 @@
                 height: 20px;
                 line-height: 20px;
                 padding: 0 7px;
-                background: $e-blue;
+                background: #ff725e;
                 color: $white;
                 @include border-radius(4px);
                 font-size: 12px;
@@ -730,7 +730,7 @@
     & .line{
         width: 30px;
         height: 3px;
-        background-color: $e-blue;
+        background-color: #ff725e;
         display: block;
         margin: 6px auto;
         -webkit-transition: all 0.3s ease-in-out;
@@ -920,7 +920,7 @@
 				text-align: center;
 				font-size: 14px;
 				color: $white;
-				background: $e-blue;
+				background: #ff725e;
 				@include border-radius(50%);
 				font-weight: 500;
 				@include box-shadow(0px 10px 20px 0px rgba(4, 23, 118, 0.3));

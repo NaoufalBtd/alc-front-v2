@@ -1,4 +1,5 @@
 import {Component, HostListener, Input, OnInit} from '@angular/core';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
     selector: 'app-header-two',
@@ -53,10 +54,13 @@ export class HeaderTwoComponent implements OnInit {
         this.showPagesDropdown = !this.showPagesDropdown;
     }
 
-    constructor() {
+    constructor(public translate: TranslateService) {
     }
 
     ngOnInit(): void {
     }
-
+    selectedLangage(value: any) {
+        console.log(value);
+        this.translate.use(value);
+    }
 }

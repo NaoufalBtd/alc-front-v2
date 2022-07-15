@@ -227,7 +227,7 @@ import {CourseDetailsComponent} from './view/public/course-details/course-detail
                 ]
             },
             {path: '*', component: PageNotFoundComponent},
-        ], {scrollPositionRestoration: 'disabled'})
+        ], {scrollPositionRestoration: 'enabled'})
     ],
     exports: [RouterModule],
     providers: [

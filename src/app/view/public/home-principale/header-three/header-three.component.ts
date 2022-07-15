@@ -1,4 +1,5 @@
 import {Component, HostListener, Input, OnInit} from '@angular/core';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
     selector: 'app-header-three',
@@ -64,10 +65,13 @@ export class HeaderThreeComponent implements OnInit {
     }
 
 
-    constructor() {
+    constructor(public translate: TranslateService) {
     }
 
     ngOnInit(): void {
     }
-
+    selectedLangage(value: any) {
+        this.translate.use(value);
+        console.log(this.translate.currentLang);
+    }
 }

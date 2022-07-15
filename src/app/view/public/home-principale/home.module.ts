@@ -41,6 +41,7 @@ import {BlogSidebarComponent} from '../blog/blog-sidebar/blog-sidebar.component'
 import {CourseDetailsAreaComponent} from '../course-details/course-details-area/course-details-area.component';
 import {CourseDetailsComponent} from '../course-details/course-details-main/course-details.component';
 import {DialogModule} from 'primeng/dialog';
+import {TranslateModule} from '@ngx-translate/core';
 
 
 @NgModule({
@@ -89,6 +90,7 @@ import {DialogModule} from 'primeng/dialog';
         RippleModule,
         ButtonModule,
         DialogModule,
+        TranslateModule,
 
     ],
     exports: [
