@@ -3,14 +3,16 @@ import {UserService} from '../../../controller/service/user.service';
 import {User} from '../../../controller/model/user.model';
 import {AuthenticationService} from '../../../controller/service/authentication.service';
 import {MenuService} from '../../shared/slide-bar/app.menu.service';
-import {PrimeNGConfig} from 'primeng/api';
+import {MessageService, PrimeNGConfig} from 'primeng/api';
 import {AppComponent} from '../../../app.component';
-import {HttpErrorResponse, HttpEvent, HttpEventType} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse, HttpEvent, HttpEventType} from '@angular/common/http';
 import {Subscription} from 'rxjs';
 import {FileUploadStatus} from '../../../controller/model/FileUploadStatus';
 import {Role} from '../../../enum/role.enum';
 import {AdminService} from '../../../controller/service/admin.service';
 import {Admin} from '../../../controller/model/admin.model';
+import {environment} from '../../../../environments/environment';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
     selector: 'app-user-profile',
@@ -47,6 +49,9 @@ export class UserProfileComponent implements OnInit {
     constructor(private menuService: MenuService,
                 private authenticationService: AuthenticationService,
                 private userService: UserService,
+                private route: ActivatedRoute,
+                private http: HttpClient,
+                private messageService: MessageService,
                 private adminService: AdminService,
                 private primengConfig: PrimeNGConfig, public app: AppComponent) {
     }
@@ -55,6 +60,7 @@ export class UserProfileComponent implements OnInit {
     ngOnInit(): void {
         this.user = this.authenticationService.getUserFromLocalCache();
         this.findAll();
+        this.connectToGoogle();
     }
 
     findAll() {
@@ -266,6 +272,36 @@ export class UserProfileComponent implements OnInit {
             for (const item of results) {
                 this.users.push(item);
             }
+        }
+    }
+
+
+    openSite() {
+        window.open(environment.signWithGmailApi, '_blank');
+    }
+
+    connectToGoogle() {
+        const formData = new FormData();
+        console.log(this.route.snapshot.queryParams);
+        const code = this.route.snapshot.queryParams.code;
+        console.log(code);
+        formData.append('code', code);
+        if (code !== null && code !== undefined) {
+            this.http.post(environment.adminUrl + 'gmail/oauth', formData,
+                {
+                    reportProgress: true,
+                    observe: 'events'
+                }).subscribe(
+                data => {
+                    this.messageService.add({
+                        severity: 'success',
+                        summary: 'Successful',
+                        detail: 'Connection to google successful'
+                    });
+                }, error => {
+                    console.log(error);
+                }
+            );
         }
     }
 }

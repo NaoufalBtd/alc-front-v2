@@ -39,12 +39,22 @@ export class ResetPasswordComponent implements OnInit {
             }, error => {
                 this.showAnimation = false;
                 console.log(error);
-                this.messageService.add({
-                    severity: 'error',
-                    summary: ' ',
-                    detail: error?.error?.error,
-                    life: 3000
-                });
+                if (error?.status === 200){
+                    this.messageService.add({
+                        severity: 'success',
+                        summary: 'Successful',
+                        life: 3000,
+                        detail: 'The new password has been sent to your email'
+                    });
+                }
+                else {
+                    this.messageService.add({
+                        severity: 'error',
+                        summary: ' ',
+                        detail: error?.error?.error,
+                        life: 3000
+                    });
+                }
             }
         );
     }
