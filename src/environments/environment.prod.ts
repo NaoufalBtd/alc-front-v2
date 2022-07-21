@@ -10,7 +10,7 @@ export const environment = {
   publicUrl: 'http://162.19.25.141:8036/public/',
   socketUrl: 'ws://162.19.25.141:8036/chat',
   signWithGoogleApi: 'http://162.19.25.141:8036/admin/admin/googlesignin',
-  signWithGmailApi: 'https://162.19.25.141:8036/admin/gmail/googlesignin',
+  signWithGmailApi: 'http://162.19.25.141:8036/admin/gmail/googlesignin',
 
   // baseUrl: 'http://localhost:8036/learn/',
   // baseApi: 'http://localhost:8036',
