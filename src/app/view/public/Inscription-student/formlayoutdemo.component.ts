@@ -8,6 +8,7 @@ import {PackStudentService} from '../../../controller/service/pack-student.servi
 import {VonPrimengFormModule} from '@von-development-studio/primeng-form-validation';
 import {AuthenticationService} from '../../../controller/service/authentication.service';
 import {AnimationService} from '../../../controller/service/animation.service';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
     selector: 'app-formlayoutdemo',
@@ -31,6 +32,7 @@ export class FormLayoutDemoComponent implements OnInit {
     constructor(private messageService: MessageService,
                 public etudiantService: EtudiantService,
                 private animation: AnimationService,
+                private translate: TranslateService,
                 private confirmationService: ConfirmationService,
                 public authenticationService: AuthenticationService,
                 public packStudentService: PackStudentService,

@@ -36,6 +36,7 @@
   "challenge": "challenges beetween students\n",
   "groupeStudents": "Group of Students\n",
   "timesperweek": "2 to 3 times per week\n",
+  "becometeacher": "become a teacher\n",
   "joinAsStudents": "Join As Student\n",
   "links": "Links",
   "faq": "FAQ",
@@ -48,6 +49,16 @@
   "company": "Company",
   "officialblog": "Official Blog",
   "aboutus": "About Us",
-  "contactus": "Contact Us"
-
+  "contactus": "Contact Us",
+  "apply": "Apply now ",
+  "elementry": "Elementary ",
+  "base": "",
+  "course": " ",
+  "prelementry": "",
+  "base1": " ",
+  "see": " ",
+  "profs": "most opular teachers",
+  "base2":"You don't have to struggle alone, you've got our assistance and help. ",
+  "try": "Try for free now",
+  "book": " Ready to get started "
 }
