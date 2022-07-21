@@ -93,6 +93,8 @@ import {CoursesPageComponent} from './view/public/home-principale/courses/course
 import {BlogComponent} from './view/public/blog/blog-main/blog.component';
 import {BlogDetailsMainComponent} from './view/public/blog-details/blog-details-main/blog-details-main.component';
 import {CourseDetailsComponent} from './view/public/course-details/course-details-main/course-details.component';
+import {ContactUsComponent} from './view/public/home-principale/contact-us/contact-us.component';
+import {AboutUsComponent} from './view/public/home-principale/about-us/about-us.component';
 
 
 @NgModule({
@@ -209,6 +211,8 @@ import {CourseDetailsComponent} from './view/public/course-details/course-detail
                     {path: 'public/login', component: SignInMainComponent},
                     {path: 'public/inscriptionEtudiant', component: FormLayoutDemoComponent},
                     {path: 'free-trial', component: InscriptionStudentMainComponent},
+                    {path: 'contact', component: ContactUsComponent},
+                    {path: 'about-us', component: AboutUsComponent},
                     {
                         path: 'blog',
                         component: BlogComponent

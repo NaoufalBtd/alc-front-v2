@@ -42,6 +42,8 @@ import {CourseDetailsAreaComponent} from '../course-details/course-details-area/
 import {CourseDetailsComponent} from '../course-details/course-details-main/course-details.component';
 import {DialogModule} from 'primeng/dialog';
 import {TranslateModule} from '@ngx-translate/core';
+import { ContactUsComponent } from './contact-us/contact-us.component';
+import { AboutUsComponent } from './about-us/about-us.component';
 
 
 @NgModule({
@@ -80,7 +82,9 @@ import {TranslateModule} from '@ngx-translate/core';
         PaginationComponent,
         ContactAreaComponent,
         HeaderOneComponent,
-        CtaComponent
+        CtaComponent,
+        ContactUsComponent,
+        AboutUsComponent
     ],
     imports: [
         CommonModule,
