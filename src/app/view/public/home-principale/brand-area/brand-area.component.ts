@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import SwiperCore, { Autoplay } from 'swiper';
+import {TranslateService} from '@ngx-translate/core';
 
 SwiperCore.use([Autoplay]);
 
@@ -37,7 +38,7 @@ export class BrandAreaComponent implements OnInit {
     },
   ]
 
-  constructor() { }
+  constructor(public translate: TranslateService) { }
 
   ngOnInit(): void {
   }

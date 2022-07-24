@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
     selector: 'app-home-footer',
@@ -9,7 +10,7 @@ export class FooterComponent implements OnInit {
 
     @Input() footerPadd: string | undefined;
 
-    constructor() {
+    constructor(public translate: TranslateService) {
     }
 
     ngOnInit(): void {

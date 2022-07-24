@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {PackStudentService} from '../../../../controller/service/pack-student.service';
 import {PackStudent} from '../../../../controller/model/pack-student.model';
-
+import {TranslateService} from '@ngx-translate/core';
 @Component({
   selector: 'app-home-three-courses',
   templateUrl: './home-three-courses.component.html',
@@ -10,7 +10,7 @@ import {PackStudent} from '../../../../controller/model/pack-student.model';
 export class HomeThreeCoursesComponent implements OnInit {
 
 
-  constructor(private packService: PackStudentService) { }
+  constructor(private packService: PackStudentService, public translate: TranslateService) { }
 
   get packs(): Array<PackStudent> {
     return this.packService.packs;

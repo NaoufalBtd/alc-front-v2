@@ -5,6 +5,7 @@ import {ProfService} from '../../../../controller/service/prof.service';
 import {Router} from '@angular/router';
 import {AuthenticationService} from '../../../../controller/service/authentication.service';
 import {LoginService} from '../../../../controller/service/login.service';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
     selector: 'app-contact-area',
@@ -18,7 +19,8 @@ export class ContactAreaComponent implements OnInit {
                 private confirmationService: ConfirmationService,
                 private authService: AuthenticationService,
                 private loginService: LoginService,
-                private service: ProfService, private router: Router) {
+                private service: ProfService, private router: Router,
+                public translate: TranslateService) {
     }
 
     ngOnInit(): void {

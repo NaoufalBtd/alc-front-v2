@@ -1,4 +1,5 @@
 import { Component, OnInit,Input } from '@angular/core';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-breadcrumb',
@@ -10,7 +11,7 @@ export class BreadcrumbComponent implements OnInit {
   @Input () title : string | undefined;
   @Input () subtitle : string | undefined;
 
-  constructor() { }
+  constructor(public translate: TranslateService) { }
 
   ngOnInit(): void {
   }

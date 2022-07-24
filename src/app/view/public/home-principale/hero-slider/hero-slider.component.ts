@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import SwiperCore, {Autoplay, EffectFade} from 'swiper';
+import {TranslateService} from '@ngx-translate/core';
 
 SwiperCore.use([Autoplay, EffectFade]);
 
@@ -41,7 +42,7 @@ export class HeroSliderComponent implements OnInit {
         },
     ];
 
-    constructor() {
+    constructor(public translate: TranslateService) {
     }
 
     ngOnInit(): void {

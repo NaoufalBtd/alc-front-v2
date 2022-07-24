@@ -4,43 +4,41 @@
         <div class="col-xxl-7 col-xl-7 col-lg-6">
            <div class="contact__wrapper">
               <div class="section__title-wrapper mb-40">
-                 <h2 class="section__title">Start  <span class="yellow-bg yellow-bg-big">Tutoring<img src="assets/img/shape/yellow-bg.png" alt=""></span>
-                    on EngFlexy
-                 </h2>
+                 <h2 class="section__title">{{'start' | translate}}</h2>
               </div>
               <div class="contact__form">
                  <form >
                     <div class="row">
                        <div class="col-xxl-6 col-xl-6 col-md-6">
                           <div class="contact__form-input">
-                             <input type="text" [(ngModel)]="selectedProf.nom" [required]="true"  placeholder="Your Name *" name="name">
+                             <input type="text" [(ngModel)]="selectedProf.nom" [required]="true"  placeholder="{{'yournmae' | translate}}" name="name">
                           </div>
                        </div>
 
 
                        <div class="col-xxl-6 col-xl-6 col-md-6">
                           <div class="contact__form-input">
-                             <input type="tel" [(ngModel)]="selectedProf.numero" [required]="true"  placeholder="Your Phone *" name="phone">
+                             <input type="tel" [(ngModel)]="selectedProf.numero" [required]="true"  placeholder="{{'phone2' | translate}}" name="phone">
                           </div>
                        </div>
 
 
                        <div class="col-xxl-12">
                           <div class="contact__form-input">
-                             <input type="email" [(ngModel)]="selectedProf.username" [required]="true" placeholder="Your Email *" name="email">
+                             <input type="email" [(ngModel)]="selectedProf.username" [required]="true" placeholder="{{'name' | translate}}" name="email">
                           </div>
                        </div>
 
 
                        <div class="col-xxl-12">
                           <div class="contact__form-input">
-                             <textarea placeholder="About you" [(ngModel)]="selectedProf.about" name="message"></textarea>
+                             <textarea placeholder="{{'about' | translate}}" [(ngModel)]="selectedProf.about" name="message"></textarea>
                           </div>
                        </div>
 
                        <div class="col-xxl-12">
                           <div class="contact__btn">
-                             <button [disabled]="submitted" (click)="save()" type="submit" class="e-btn">Create account</button>
+                             <button [disabled]="submitted" (click)="save()" type="submit" class="e-btn"> {{'create' | translate}}</button>
                           </div>
                        </div>
                     </div>
@@ -66,7 +64,7 @@
                              </svg>
                           </div>
                           <div class="contact__info-text">
-                             <h4>Email us directly</h4>
+                             <h4>{{'emailus' | translate}}</h4>
                              <p><a href="mailto:support@educal.com">engflexy.contact@gmail.com</a></p>
                              <p><a href="mailto:info@educal.com"> info@engflexy.com</a></p>
                           </div>
@@ -80,7 +78,7 @@
                                 </svg>
                           </div>
                           <div class="contact__info-text">
-                             <h4>Phone</h4>
+                             <h4>{{'Phone' | translate}}</h4>
                              <p><a href="tel:+(212) 6 05 12 14">+(212) 6 05 12 14</a></p>
                              <p><a href="tel:+(212) 6 05 12 14">+(212) 6 05 12 14</a></p>
                           </div>
@@ -88,7 +86,7 @@
                     </li>
                  </ul>
                  <div class="contact__social pl-30">
-                    <h4>Follow Us</h4>
+                    <h4>{{'followus' | translate}}</h4>
                     <ul>
                        <li><a href="#" class="fb" ><i class="social_facebook"></i></a></li>
                        <li><a href="#" class="tw" ><i class="social_twitter"></i></a></li>
