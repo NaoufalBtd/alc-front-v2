@@ -1,177 +1,6 @@
-<!--
-<p-dialog [(visible)]="editDialog" [modal]="true" [style]="{width: '40vw'}" header="Professor Edit"
-          styleClass="p-fluid">
-    <ng-template pTemplate="content">
-        <p-tabView (onChange)="showTranche()">
-            <p-tabPanel header="Professor information">
-                <div class="p-field">
-                    <label for="firstName">First Name</label>
-                    <input [(ngModel)]="selected.prenom" autofocus id="firstName" pInputText required type="text"/>
-                    <small *ngIf="submitted && !selected.prenom" class="p-invalid">First Name is required.</small>
-                </div>
-                <div class="p-field">
-                    <label for="firstName">Last Name</label>
-                    <input [(ngModel)]="selected.nom" autofocus id="lastName" pInputText required type="text"/>
-                    <small *ngIf="submitted && !selected.nom" class="p-invalid">Last Name is required.</small>
-                </div>
-                <div class="p-field">
-                    <label for="phoneNumber">Phone Number</label>
-                    <input [(ngModel)]="selected.numero" autofocus id="phoneNumber" pInputText required type="text"/>
-                    <small *ngIf="submitted && !selected.numero" class="p-invalid">Phone Number is required.</small>
-                </div>
-                <div class="p-field">
-                    <label>Level Max</label><br>
-                    <p-dropdown [options]="parcoursList" [(ngModel)]="selected.levelMax"
-                                optionLabel="libelle"></p-dropdown>
-                </div>
-                <div class="p-field">
-                    <label>Level Min</label><br>
-                    <p-dropdown class="class1" [options]="parcoursList2" [(ngModel)]="selected.levelMin"
-                                optionLabel="libelle"></p-dropdown>
-
-                </div>
-                <div class="p-field">
-                <label>Type Teacher</label><br>
-                <p-dropdown id="float-input" style="margin-left: 5px;"[options]="typeTeachers"  editable="true" [(ngModel)]="selected.typeTeacher" optionLabel="libelle" ></p-dropdown>
-                </div>
-            </p-tabPanel>
 
 
-            <p-tabPanel *ngIf="!showAddTranche" header="Work hours">
-                <div class="card">
-                    <p-table [value]="trancheHoraireProfs">
-                        <ng-template pTemplate="header">
-                            <tr>
-                                <th pSortableColumn="day">Day
-                                    <p-sortIcon field="day"></p-sortIcon>
-                                </th>
-                                <th pSortableColumn="startHour">Start hour
-                                    <p-sortIcon field="startHour"></p-sortIcon>
-                                </th>
-                                <th pSortableColumn="endHour">End hour
-                                    <p-sortIcon field="endHour"></p-sortIcon>
-                                </th>
-                                <th>
-                                    <button (click)="addNewTranche()"
-                                            class="p-button-rounded   p-button-outlined p-button-sm p-button-success"
-                                            label="New schedule"
-                                            pButton pRipple></button>
-                                </th>
-                            </tr>
-                        </ng-template>
-                        <ng-template pTemplate="body" let-tranche>
-                            <tr>
-                                <td>{{getDay(tranche.day)}}</td>
-                                <td>{{tranche.startHour}}</td>
-                                <td>{{tranche.endHour}}</td>
-                                <td>
-                                    <button (click)="editTranche(tranche)"
-                                            class="p-button-rounded p-button-success p-mr-2" icon="pi pi-pencil" pButton
-                                            pRipple></button>
-                                    <button (click)="deleteTranche(tranche)"
-                                            class="p-button-rounded p-button-danger p-mr-2" icon="pi pi-trash" pButton
-                                            pRipple></button>
-                                </td>
-
-                            </tr>
-                        </ng-template>
-                    </p-table>
-                </div>
-            </p-tabPanel>
-
-            <p-tabPanel *ngIf="showAddTranche" header="Work hours">
-                <div class="p-grid">
-                    <div class="p-col-12">
-                        <p-dropdown [options]="daysOptions" [(ngModel)]="selectedDay" optionLabel="name"></p-dropdown>
-                    </div>
-                    <div class="p-col-6">
-                        <label for="startHour">Start hour</label>
-                        <p-calendar [(ngModel)]="dateDebut" [timeOnly]="true" [hourFormat]="24"
-                                    id="startHour"></p-calendar>
-                    </div>
-
-                    <div class="p-col-6">
-                        <label for="endHour">End hour</label>
-                        <p-calendar [(ngModel)]="dateFin" [timeOnly]="true" [hourFormat]="24"
-                                    id="endHour"></p-calendar>
-                    </div>
-                </div>
-
-
-                <button [disabled]="(dateFin === undefined )|| (dateFin === undefined)"
-                        (click)="addHoraire()" class="p-button-text table1" icon="pi pi-plus" label="Add Horaire"
-                        pButton pRipple></button>
-
-
-                <p-table [value]="trancheHoraireProfList">
-                    <ng-template pTemplate="header">
-                        <tr>
-                            <th>Day</th>
-                            <th pSortableColumn="datee"> Start hour</th>
-                            <th pSortableColumn="datee"> End hour</th>
-                        </tr>
-                    </ng-template>
-                    <ng-template let-e pTemplate="body">
-                        <tr>
-                            <td>{{getDay(e?.day)}}</td>
-                            <td>{{e?.startHour}}</td>
-                            <td>{{e?.endHour}}</td>
-                            <td>
-                                <button (click)="delete(e)" class="p-button-rounded p-button-danger" icon="pi pi-trash"
-                                        pButton
-                                        pRipple></button>
-                            </td>
-                        </tr>
-                    </ng-template>
-                </p-table>
-            </p-tabPanel>
-
-        </p-tabView>
-    </ng-template>
-
-    <ng-template pTemplate="footer">
-        <button (click)="hideEditDialog()" class="p-button-text" icon="pi pi-times" label="Cancel" pButton
-                pRipple></button>
-        <button (click)="edit()" class="p-button-text" icon="pi pi-check" label="Edit" pButton pRipple></button>
-    </ng-template>
-
-</p-dialog>
-
-<p-dialog header="Edit" [(visible)]="displayModal" [modal]="true" [style]="{width: '25vw'}"
-          [draggable]="false" [resizable]="false">
-    <ng-template pTemplate="content">
-
-        <div class="p-grid">
-            <div *ngIf="trancheEdit.id === 0" class="p-col-12">
-                <label for="startHour">Day</label>
-                <p-dropdown [style]="{width:'100%'}" [options]="daysOptions" [(ngModel)]="selectedDay"
-                            optionLabel="name"></p-dropdown>
-            </div>
-            <div class="p-col-12">
-                <label for="startHour2">Start hour</label><br>
-                <p-calendar [style]="{width: '100%'}" [(ngModel)]="dateDebut" [timeOnly]="true" [hourFormat]="24"
-                            id="startHour2"></p-calendar>
-            </div>
-
-            <div class="p-col-12">
-                <label for="endHour2">End hour</label><br>
-                <p-calendar [style]="{width: '100%'}" [(ngModel)]="dateFin" [timeOnly]="true" [hourFormat]="24"
-                            id="endHour2"></p-calendar>
-            </div>
-        </div>
-    </ng-template>
-
-    <ng-template pTemplate="footer">
-        <p-button icon="pi pi-times" (click)="hideDialog()" label="Cancel"
-                  styleClass="p-button-text p-button-warning"></p-button>
-        <p-button icon="pi pi-check" (click)="saveTranche(); displayModal=false" label="Save"
-                  styleClass="p-button-text"></p-button>
-    </ng-template>
-</p-dialog>
-
--->
-
-<p-dialog [(visible)]="editDialog" [modal]="true" [style]="{width: '75vw'}" header="Professor Edit"
+<p-dialog [(visible)]="editDialog" [modal]="true" [style]="{width: '100%', height: '100%'}" header="Professor Edit"
           styleClass="p-fluid">
     <div style="margin: 15px" class="row m-l-0 m-r-0">
         <div class="col-sm-4 bg-c-lite-green user-profile">
@@ -189,6 +18,8 @@
                     <p-tabPanel header="Professor information">
                         <div class="row">
 
+
+
                             <div class="col-sm-6">
                                 <p class="m-b-10 f-w-600">Full name</p>
                                 <input [(ngModel)]="selected.nom" autofocus id="lastName" pInputText required
@@ -196,6 +27,8 @@
                                 <small *ngIf="submitted && !selected.nom" class="p-invalid">Last Name is
                                     required.</small>
                             </div>
+
+
                             <div class="col-sm-6 " style="margin-top: 15px;">
                                 <p class="m-b-10 f-w-600">Phone number</p>
                                 <input [(ngModel)]="selected.numero" autofocus id="phoneNumber" pInputText required
@@ -203,15 +36,21 @@
                                 <small *ngIf="submitted && !selected.numero" class="p-invalid">Phone Number is
                                     required.</small>
                             </div>
+
+
                             <div class="col-sm-6 " style="margin-top: 15px;">
                                 <p class="m-b-10 f-w-600">Skype</p>
                                 <input [(ngModel)]="selected.skype" id="phoneNumber" pInputText type="text"/>
                             </div>
+
+
                             <div class="col-sm-6" style="margin-top: 15px;">
                                 <p class="m-b-10 f-w-600">Level max</p>
                                 <p-dropdown [options]="parcoursList" [(ngModel)]="selected.levelMax"
                                             optionLabel="libelle"></p-dropdown>
                             </div>
+
+
                             <div class="col-sm-6" style="margin-top: 15px;">
                                 <p class="m-b-10 f-w-600">Level min</p>
                                 <p-dropdown [options]="parcoursList" [(ngModel)]="selected.levelMin"
@@ -220,15 +59,8 @@
 
 
                             <div class="col-sm-6" style="margin-top: 15px;">
-                                <p class="m-b-10 f-w-600">Type teacher</p>
-                                <p-dropdown id="float-input" [options]="typeTeachers" editable="true"
-                                            [(ngModel)]="selected.typeTeacher"
-                                            optionLabel="libelle"></p-dropdown>
-                            </div>
-
-                            <div class="col-sm-6" style="margin-top: 15px;">
                                 <p class="m-b-10 f-w-600">Level</p>
-                                <p-dropdown id="float-input" [options]="categories" editable="true"
+                                <p-dropdown id="float-input" [options]="categories"
                                             [(ngModel)]="selected.categorieProf"
                                             optionLabel="level"></p-dropdown>
                             </div>
@@ -236,6 +68,8 @@
 
                         </div>
                     </p-tabPanel>
+
+
                     <p-tabPanel *ngIf="!showAddTranche" header="Work hours">
                         <div class="card">
                             <p-table [value]="trancheHoraireProfs">
@@ -279,6 +113,8 @@
                             </p-table>
                         </div>
                     </p-tabPanel>
+
+
                     <p-tabPanel *ngIf="showAddTranche" header="Work hours">
                         <div class="p-grid">
                             <div class="p-col-12">
@@ -299,10 +135,17 @@
                         </div>
 
 
-                        <button [disabled]="(dateFin === undefined )|| (dateFin === undefined)"
-                                (click)="addHoraire()" class="p-button-text table1" icon="pi pi-plus"
-                                label="Add Horaire"
-                                pButton pRipple></button>
+                        <div class="p-grid">
+                            <div class="p-col-4"></div>
+                            <div class="p-col-4">
+                                <button [disabled]="(dateFin === undefined )|| (dateFin === undefined)"
+                                        (click)="addHoraire()" class="p-button-rounded table1" icon="pi pi-plus"
+                                        label="Add schedule"
+                                        pButton pRipple></button>
+                            </div>
+                            <div class="p-col-4"></div>
+                        </div>
+
 
 
                         <p-table [value]="trancheHoraireProfList">

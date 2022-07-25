@@ -29,6 +29,7 @@ export class ProfesseurEditComponent implements OnInit {
 
     public parcoursList2: Array<Parcours> = new Array<Parcours>();
     daysOptions = [
+        {name: 'Select day', value: null},
         {name: 'Sun', value: 0},
         {name: 'Mon', value: 1},
         {name: 'Tue', value: 2},

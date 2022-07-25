@@ -246,7 +246,7 @@
 <!------------------------ edit inscription Dialog -------------------------------------------------->
 
 
-<p-dialog header="Registration Details" [(visible)]="editInscDialog" [style]="{width: '80vw'}">
+<p-dialog header="Registration Details" [(visible)]="editInscDialog" [style]="{width: '100%', height: '100%'}">
     <div style="margin-bottom: 10px;">
         <i style="color: red ; font-weight: bold">*</i> Required fields
     </div>
@@ -307,25 +307,17 @@
 
 
             <div class="p-col-4">
-
-                <p-calendar [style]="{width: '100%'}" id="start" [(ngModel)]="inscription.datedebutinscription"
-                            [showTime]="true" name="StartTime"
-                            class="e-field"
-                            data-name="startTime"
-                            [showIcon]="true"
-                            inputId="start"></p-calendar>
                 <label> Start date</label>
+
+                <input [style]="{width: '100%'}" placeholder="Start date" name="datedebutinscription" type="date" pInputText
+                       [(ngModel)]="inscription.datedebutinscription">
             </div>
 
             <div class="p-col-4">
-
-                <p-calendar [style]="{width: '100%'}" id="finish" [(ngModel)]="inscription.datefininscription"
-                            [showTime]="true" name="finishDate"
-                            class="e-field"
-                            data-name="startTime"
-                            [showIcon]="true"
-                            inputId="start"></p-calendar>
                 <label> Finish date</label>
+
+                <input [style]="{width: '100%'}" placeholder="Start date" name="datefininscription" type="date" pInputText
+                       [(ngModel)]="inscription.datefininscription">
 
             </div>
 
