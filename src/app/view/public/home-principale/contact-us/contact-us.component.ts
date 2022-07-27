@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ContactService} from '../../../../controller/service/contact.service';
 import {Contact} from '../../../../controller/model/contact.model';
 import {MessageService} from 'primeng/api';
+import {DatePipe} from '@angular/common';
 
 @Component({
     selector: 'app-contact-us',
@@ -11,7 +12,10 @@ import {MessageService} from 'primeng/api';
 export class ContactUsComponent implements OnInit {
     contact: Contact = new Contact();
 
-    constructor(private contactService: ContactService, private messageService: MessageService) {
+    constructor(private contactService: ContactService,
+                private datepipe: DatePipe,
+                private messageService: MessageService) {
+
     }
 
     ngOnInit(): void {
@@ -19,7 +23,8 @@ export class ContactUsComponent implements OnInit {
 
     save(): void {
         this.contact.setFrom = 'ANONYMOUS';
-        this.contact.date = new Date();
+        let  date = new Date();
+        this.contact.date = this.datepipe.transform(date, 'yyyy-MM-dd hh:mm:ss');
         this.contactService.save(this.contact).subscribe(
             data => {
                 this.messageService.add({

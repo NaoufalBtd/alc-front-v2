@@ -5,5 +5,5 @@ export class Contact {
     phone: string;
     message: string;
     setFrom: string;
-    date: Date;
+    date: string;
 }
