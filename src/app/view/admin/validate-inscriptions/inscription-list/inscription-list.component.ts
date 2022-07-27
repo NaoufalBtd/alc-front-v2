@@ -219,7 +219,7 @@ export class InscriptionListComponent implements OnInit {
         console.log(this.packStudentService.packstudentIndividialList);
         console.log(this.packStudentService.packstudentgroupeList);
         this.initCol();
-        this.findAll();
+        this.findPendingInscriptions();
         this.parcourService.FindAllParcours().subscribe(
             data => {
                 this.parcours = data;
@@ -385,16 +385,20 @@ export class InscriptionListComponent implements OnInit {
     handleChange(e) {
         const index = e.index;
         if (index === 0) {
-            this.findAll();
+            this.findPendingInscriptions();
         } else {
-            this.service.findByEtatInscription('Pending').subscribe(
-                data => {
-                    this.items = data;
-                }, error => {
-                    console.log(error);
-                }
-            );
+            this.findAll();
         }
+    }
+
+    private findPendingInscriptions() {
+        this.service.findByEtatInscription('Pending').subscribe(
+            data => {
+                this.items = data;
+            }, error => {
+                console.log(error);
+            }
+        );
     }
 
     updateInsc(inscription: Inscription) {

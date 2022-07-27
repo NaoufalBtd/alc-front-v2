@@ -26,6 +26,100 @@
             <div class="card">
                 <h5>Manage Inscriptions </h5>
                 <p-tabView (onChange)="handleChange($event)">
+                    <p-tabPanel header="Pending inscription">
+                        <p-table #dt [(selection)]="selectes" [columns]="cols"
+                                 [globalFilterFields]="['numeroInscription','datedebutinscription','datefininscription' , 'nom' , 'prof' , 'etatInscription']"
+                                 [paginator]="true"
+                                 [rowHover]="true"
+                                 [rows]="6" [showCurrentPageReport]="true" [value]="this.items"
+                                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                                 dataKey="id"
+                                 styleClass="p-datatable-customers">
+                            <ng-template pTemplate="caption">
+                                <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
+                                    <div class="p-col"><br>
+                                        <span>
+                                     <input [(ngModel)]="student.nom" pInputText
+                                            placeholder="Search by Full Name"
+                                            style="margin-right: 10px;width: 200px"
+                                            type="text"/>
+
+                                    <input [(ngModel)]="student.username " pInputText
+                                           placeholder="Search by UserName"
+                                           style="margin-right: 10px;width: 200px"
+                                           type="text"/>
+
+                           <button pButton pRipple type="button" icon="pi pi-search" (click)="findByCriteria()"
+                                   style="margin-left: 25px"
+                                   class="p-button-rounded p-button-success"></button>
+                            </span>
+                                    </div>
+                                </div>
+                            </ng-template>
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th style="width: 3rem">
+                                        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                                    </th>
+                                    <th pSortableColumn="id">Phone
+                                        <p-sortIcon field="id"></p-sortIcon>
+                                    </th>
+                                    <th pSortableColumn="nom">Full Name
+                                        <p-sortIcon field="nom"></p-sortIcon>
+                                    </th>
+
+                                    <th pSortableColumn="prenom">E-mail
+                                        <p-sortIcon field="prenom"></p-sortIcon>
+                                    </th>
+                                    <th></th>
+
+                                    <th pSortableColumn="mail">Date
+                                        <p-sortIcon field="mail"></p-sortIcon>
+                                    </th>
+                                    <th>Status</th>
+                                    <th>Edit</th>
+                                    <th>Delete Registration</th>
+
+                                </tr>
+                            </ng-template>
+                            <ng-template let-inscription pTemplate="body">
+                                <tr>
+                                    <td>
+                                        <p-tableCheckbox [value]="inscription"></p-tableCheckbox>
+                                    </td>
+                                    <td>{{inscription.etudiant.numero}}</td>
+                                    <td>{{inscription.etudiant.nom}} {{inscription.etudiant.prenom}}</td>
+                                    <td>{{inscription.etudiant.username}}</td>
+                                    <td></td>
+                                    <td> {{inscription.dateRegistration}} </td>
+                                    <td>
+                                        <span *ngIf="inscription.etatInscription.libelle == 'Validated'"
+                                              class="badge-v">VALIDATED</span>
+                                        <span *ngIf="inscription.etatInscription.libelle !== 'Validated'"
+                                              class="badge-nv">Pending</span>
+                                    </td>
+                                    <td>
+                                        <button (click)="showEditDialog(inscription)" class="p-button-success " label="Edit"
+                                                pButton
+                                                pRipple></button>
+                                    </td>
+                                    <td>
+                                        <button (click)="delete(inscription)" class="p-button-danger" label="delete"
+                                                pButton
+                                                pRipple></button>
+                                    </td>
+
+
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="summary">
+                                <div class="p-d-flex p-ai-center p-jc-between">
+                                    In total there are {{items ? items.length : 0 }} items.
+                                </div>
+                            </ng-template>
+                        </p-table>
+
+                    </p-tabPanel>
                     <p-tabPanel header="All inscription">
                         <p-table #dt [(selection)]="selectes" [columns]="cols"
                                  [globalFilterFields]="['numeroInscription','datedebutinscription','datefininscription' , 'nom' , 'prof' , 'etatInscription']"
@@ -133,100 +227,7 @@
                         </p-table>
 
                     </p-tabPanel>
-                    <p-tabPanel header="Pending inscription">
-                        <p-table #dt [(selection)]="selectes" [columns]="cols"
-                                 [globalFilterFields]="['numeroInscription','datedebutinscription','datefininscription' , 'nom' , 'prof' , 'etatInscription']"
-                                 [paginator]="true"
-                                 [rowHover]="true"
-                                 [rows]="6" [showCurrentPageReport]="true" [value]="this.items"
-                                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-                                 dataKey="id"
-                                 styleClass="p-datatable-customers">
-                            <ng-template pTemplate="caption">
-                                <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
-                                    <div class="p-col"><br>
-                                        <span>
-                                     <input [(ngModel)]="student.nom" pInputText
-                                            placeholder="Search by Full Name"
-                                            style="margin-right: 10px;width: 200px"
-                                            type="text"/>
 
-                                    <input [(ngModel)]="student.username " pInputText
-                                           placeholder="Search by UserName"
-                                           style="margin-right: 10px;width: 200px"
-                                           type="text"/>
-
-                           <button pButton pRipple type="button" icon="pi pi-search" (click)="findByCriteria()"
-                                   style="margin-left: 25px"
-                                   class="p-button-rounded p-button-success"></button>
-                            </span>
-                                    </div>
-                                </div>
-                            </ng-template>
-                            <ng-template pTemplate="header">
-                                <tr>
-                                    <th style="width: 3rem">
-                                        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-                                    </th>
-                                    <th pSortableColumn="id">Phone
-                                        <p-sortIcon field="id"></p-sortIcon>
-                                    </th>
-                                    <th pSortableColumn="nom">Full Name
-                                        <p-sortIcon field="nom"></p-sortIcon>
-                                    </th>
-
-                                    <th pSortableColumn="prenom">E-mail
-                                        <p-sortIcon field="prenom"></p-sortIcon>
-                                    </th>
-                                    <th></th>
-
-                                    <th pSortableColumn="mail">Date
-                                        <p-sortIcon field="mail"></p-sortIcon>
-                                    </th>
-                                    <th>Status</th>
-                                    <th>View Details</th>
-                                    <th>Delete Registration</th>
-
-                                </tr>
-                            </ng-template>
-                            <ng-template let-inscription pTemplate="body">
-                                <tr>
-                                    <td>
-                                        <p-tableCheckbox [value]="inscription"></p-tableCheckbox>
-                                    </td>
-                                    <td>{{inscription.etudiant.numero}}</td>
-                                    <td>{{inscription.etudiant.nom}} {{inscription.etudiant.prenom}}</td>
-                                    <td>{{inscription.etudiant.username}}</td>
-                                    <td></td>
-                                    <td> {{inscription.dateRegistration}} </td>
-                                    <td>
-                                        <span *ngIf="inscription.etatInscription.libelle == 'Validated'"
-                                              class="badge-v">VALIDATED</span>
-                                        <span *ngIf="inscription.etatInscription.libelle !== 'Validated'"
-                                              class="badge-nv">Pending</span>
-                                    </td>
-                                    <td>
-                                        <button (click)="view(inscription)" class="p-button-info " label="details"
-                                                pButton
-                                                pRipple></button>
-                                    </td>
-                                    <td>
-                                        <button (click)="delete(inscription)" class="p-button-danger" label="delete"
-                                                pButton
-                                                pRipple></button>
-                                    </td>
-
-
-                                </tr>
-                            </ng-template>
-                            <ng-template pTemplate="summary">
-                                <div class="p-d-flex p-ai-center p-jc-between">
-                                    In total there are {{items ? items.length : 0 }} items.
-                                </div>
-                            </ng-template>
-                        </p-table>
-
-                    </p-tabPanel>
                 </p-tabView>
             </div>
 
