@@ -33,7 +33,9 @@
 
                 <ul *ngIf="showButtons" style="list-style: none; padding: 7px;" role="menu" class="p-speeddial-list">
 
-                    <li pTooltip="" class="p-element p-speeddial-item ng-star-inserted"
+
+
+                    <li pTooltip="Reclamations" class="p-element p-speeddial-item ng-star-inserted"
                         style="transition-delay: 120ms;">
                         <a role="menuitem" pRipple=""
                            (click)="showChatDialog()"
@@ -42,7 +44,19 @@
                             <span class="p-speeddial-action-icon pi pi-comment ng-star-inserted"></span>
                         </a>
                     </li>
-                    <li pTooltip="" class="p-element p-speeddial-item ng-star-inserted"
+
+                    <li pTooltip="Contacts"  class="p-element p-speeddial-item ng-star-inserted"
+                        style="transition-delay: 120ms;">
+                        <a role="menuitem" pRipple=""
+                           (click)="displayContactMessage = true"
+                           class="p-ripple p-element p-speeddial-action ng-star-inserted"
+                           target="undefined" tabindex="0">
+                            <span class="p-speeddial-action-icon pi pi-comments ng-star-inserted"></span>
+                        </a>
+                    </li>
+
+
+                    <li pTooltip="Dictionary" class="p-element p-speeddial-item ng-star-inserted"
                         style="transition-delay: 120ms;">
                         <a role="menuitem" pRipple=""
                            (click)="displayDictionaryDialogAdmin = true"
@@ -70,6 +84,8 @@
     </div>
 
 </div>
+
+
 <p-dialog styleClass="dialogDict" [(visible)]="displayDictionaryDialogAdmin" position="right" [style]="{width: '27vw'}">
     <ng-template pTemplate="header">
         <h4 style="text-align: center">Dictionary</h4>
@@ -99,6 +115,10 @@
 
     </ng-template>
 </p-dialog>
+
+
+<app-contact-message *ngIf="displayContactMessage"></app-contact-message>
+
 <p-dialog [showHeader]="false" position="right" [(visible)]="displayChatDialog"
           [style]="{width: '35vw', height: '75%', zIndex: '400000'}">
     <div class="p-dialog-header1">
@@ -195,6 +215,10 @@
         </div>
     </div>
 </p-dialog>
+
+
+
+
 
 
 

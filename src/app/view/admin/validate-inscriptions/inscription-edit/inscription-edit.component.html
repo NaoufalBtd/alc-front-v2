@@ -1,5 +1,5 @@
 <p-dialog [(visible)]="editDialog" [modal]="true" [resizable]="true"
-          [style]="{width: '900px',height:'500px', color: 'red'}"
+          [style]="{width: '100%',height:'100%', color: 'red'}"
           header="Validate Registration"
           styleClass="p-fluid">
     <ng-template pTemplate="content">
@@ -39,13 +39,13 @@
 
             <div class=" p-col-12 p-md-6  p-lg-4">
                 <label for="dateformat">Started date</label>
-                <p-calendar [(ngModel)]="selected.datedebutinscription" dateFormat="mm-dd-yy" [showIcon]="true"
+                <p-calendar [(ngModel)]="selected.datedebutinscription" [showTime]="false"  dateFormat="MM-dd-yyyy" [showIcon]="true"
                             id="dateformat"></p-calendar>
             </div>
 
             <div class=" p-col-12 p-md-6  p-lg-4">
                 <label for="dateformat1">Finished date</label>
-                <p-calendar [(ngModel)]="selected.datefininscription" dateFormat="mm-dd-yy" [showIcon]="true"
+                <p-calendar [style]="{zIndex: '1111111'}" [(ngModel)]="selected.datefininscription" [showTime]="false" dateFormat="MM-dd-yyyy" [showIcon]="true"
                             id="dateformat1"></p-calendar>
             </div>
 

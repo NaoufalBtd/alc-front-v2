@@ -307,6 +307,7 @@ import {PackDetailsComponent} from './view/etudiant/packs/pack-details/pack-deta
 import {EducalModule} from './view/public/home-principale/home.module';
 import { InscriptionStudentMainComponent } from './view/public/inscription-student-main/inscription-student-main.component';
 import { LoadingAnimationComponent } from './view/shared/loading-animation/loading-animation.component';
+import { ContactMessageComponent } from './view/admin/contact-message/contact-message.component';
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -632,7 +633,8 @@ export function createTranslateLoader(http: HttpClient) {
             SaveGoogleTokenComponent,
             PackDetailsComponent,
             InscriptionsComponent,
-            LoadingAnimationComponent
+            LoadingAnimationComponent,
+            ContactMessageComponent
 
         ],
     providers: [

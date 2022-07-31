@@ -1,4 +1,4 @@
-<section class="signup__area po-rel-z1 pt-100 pb-145">
+<section class="signup__area po-rel-z1 pt-20 pb-145">
   <div class="sign__shape">
      <img class="man-1" src="assets/img/icon/sign/man-1.png" alt="">
      <img class="man-2" src="assets/img/icon/sign/man-2.png" alt="">
@@ -12,7 +12,7 @@
         <div class="col-xxl-8 offset-xxl-2 col-xl-8 offset-xl-2">
            <div class="section__title-wrapper text-center mb-55">
               <h2 class="section__title">Sign in to <br>  recharge direct.</h2>
-              <p>it you don't have an account you can <a href="#">Register here!</a></p>
+              <p>it you don't have an account you can <a style="color: blue!important;" [routerLink]="['/free-trial']">Register here!</a></p>
            </div>
         </div>
      </div>
@@ -48,7 +48,7 @@
                     </div>
                     <button class="e-btn  w-100" (click)="onLogin(user)"> <span></span> Sign In</button>
                     <div class="sign__new text-center mt-20">
-                       <p>New to EngFlexy? <a [routerLink]="['/sign-up']">Sign Up</a></p>
+                       <p>New to EngFlexy? <a [routerLink]="['/free-trial']">Sign Up</a></p>
                     </div>
                  </form>
               </div>

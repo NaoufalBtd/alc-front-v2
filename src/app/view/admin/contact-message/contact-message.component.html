@@ -1,0 +1,95 @@
+<p-dialog [showHeader]="false" position="right" [(visible)]="displayContactMessage"
+          [style]="{width: '35vw', height: '75%', zIndex: '400000'}">
+    <div class="p-dialog-header1">
+        <div class="p-grid">
+            <div class="p-col-2">
+                <i (click)="displayContactMessage = false" class="pi pi-angle-left"
+                   style="font-size: 2rem; cursor: pointer; color: white;"></i>
+            </div>
+            <div style="color: white;" class="p-col-8">
+                <h4>engFlexy</h4>
+                <p class="helpText"></p>
+                Ask us anything, or share your feedback.
+            </div>
+        </div>
+    </div>
+
+    <div class="p-grid " style="padding: 5px 0;!important;">
+        <div *ngIf="contacts?.length > 0" class="p-col-12">
+            <div class="p-grid ">
+                <div style="font-size: 25px;font-weight: 900;color: black;" class="p-col-12">About</div>
+
+                <div class="p-col-4 filedText">Name</div>
+                <div class="p-col-8 filedDetail"> {{contacts[0]?.name}}</div>
+                <div class="p-col-4 filedText">Email</div>
+                <div class="p-col-8 filedDetail"> {{contacts[0]?.email}}</div>
+                <div class="p-col-4 filedText">Phone</div>
+                <div class="p-col-8 filedDetail"> {{contacts[0]?.phone}}</div>
+
+            </div>
+        </div>
+        <div class="p-col-10">
+            <div class="speech-wrapper " *ngFor="let contact of contacts">
+                <div *ngIf="contact.setFrom !== role.ADMIN" class="bubble alt">
+                    <div class="txt">
+                        <p class="message">{{contact?.message}}</p>
+                        <span class="timestamp">{{contact?.date | date:'MMM d, y, h:mm a'}}</span>
+                    </div>
+
+                    <div class="bubble-arrow alt"></div>
+                </div>
+
+
+                <div *ngIf="contact.setFrom === role.ADMIN" class="bubbleTeacher alt">
+                    <div class="txt">
+                        <p class="message">{{contact?.message}}</p>
+                        <span class="timestamp">{{contact?.date | date:'MMM d, y, h:mm a'}}</span>
+                    </div>
+
+                    <div class="bubble-arrow-teacher alt"></div>
+                </div>
+
+                <div class="speech-divider"></div>
+            </div>
+        </div>
+
+        <div style=" border-left: 1px solid #d05040;  background: #f76c5833;" class="p-col-2">
+            <!--            <p-avatar [style]="{marginBottom: '15px'}" *ngFor="let value of map | keyvalue"-->
+            <!--                      [label]="value?.key.charAt(0)"-->
+            <!--                      (click)="showData(value)"-->
+            <!--                      pBadge-->
+            <!--                      [pTooltip]="value?.key" severity="danger"-->
+            <!--                      styleClass="p-mr-2" shape="square" size="large"></p-avatar>-->
+
+            <p-avatar *ngFor="let value of map | keyvalue" label="U" styleClass="p-mr-2"
+                      [label]="value?.key.charAt(0).toUpperCase()"
+                      (click)="showData(value)"
+                      [pTooltip]="value?.key"
+                      [style]="{
+                      backgroundColor: '#263238',
+                      marginBottom: '15px',
+                        marginBottom: '15px',
+                        color: 'rgb(255, 255, 255)',
+                        width: '50px',
+                        height: '50px',
+                        cursor: 'pointer',
+                       color: '#ffffff'}"
+                      shape="circle"></p-avatar>
+
+        </div>
+
+
+    </div>
+
+    <ng-template pTemplate="footer">
+        <div style="    border: 1px solid #9191a442;border-radius: 5px;" class="p-grid">
+            <div class="p-col-12">
+                <input class="sentMessage" [style]="{border: 'none', width: '100%'}"
+                       [(ngModel)]="contact.message"
+                       (keydown.enter)="send()"
+                       type="text" placeholder="Reply...">
+            </div>
+
+        </div>
+    </ng-template>
+</p-dialog>

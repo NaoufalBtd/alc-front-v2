@@ -10,6 +10,7 @@ import {QuizEtudiantService} from '../../controller/service/quiz-etudiant.servic
 import {ReclamationEtudiant} from '../../controller/model/reclamation-etudiant.model';
 import {ReclamationEtudiantService} from '../../controller/service/reclamation-etudiant.service';
 import {DatePipe, KeyValue} from '@angular/common';
+import {ContactService} from '../../controller/service/contact.service';
 
 @Component({
     selector: 'app-admin',
@@ -64,12 +65,22 @@ export class AdminComponent implements OnInit {
 
     constructor(private menuService: MenuService, private primengConfig: PrimeNGConfig,
                 private router: Router,
+                private contactService: ContactService,
                 private quizEtudiantService: QuizEtudiantService,
                 private reclamationService: ReclamationEtudiantService,
                 private datePipe: DatePipe,
                 private messageService: MessageService,
                 private authenticationService: AuthenticationService,
                 public app: AppComponent) {
+    }
+
+
+    get displayContactMessage(): boolean {
+        return this.contactService.displayContactMessage;
+    }
+
+    set displayContactMessage(value: boolean) {
+        this.contactService.displayContactMessage = value;
     }
 
     onLayoutClick() {
