@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {PackStudentService} from '../../../../../controller/service/pack-student.service';
 import {Router} from '@angular/router';
 import {PackStudent} from '../../../../../controller/model/pack-student.model';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
     selector: 'app-course-list',
@@ -12,7 +13,7 @@ export class CourseListComponent implements OnInit {
 
 
 
-    constructor(private packService: PackStudentService,
+    constructor(private packService: PackStudentService, private translate: TranslateService,
                 private router: Router) {
     }
 

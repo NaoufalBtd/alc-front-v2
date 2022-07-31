@@ -1,14 +1,14 @@
 <main>
     <app-header-one header__white="header__white"></app-header-one>
-    <app-breadcrumb title="Contact" subtitle="Contact us"></app-breadcrumb>
+    <app-breadcrumb title="{{'contact' | translate}}" subtitle="{{'contactus'| translate}}"></app-breadcrumb>
     <div style="margin: 50px" class="row">
         <div class="col-md-3 col-sm-12"></div>
 
         <div class="col-md-6 col-sm-12">
             <div class="form">
                 <div class="contact-info">
-                    <h3 class="title">Let's get in touch</h3>
-                    <p class="text"> Contact us with the following details. and fillup the form with the details. </p>
+                    <h3 class="title">{{'getintouch' | translate}}</h3>
+                    <p class="text">{{'Contactuswith' | translate}}</p>
                     <div class="info">
                         <div class="social-information"><i class="fa fa-solid fa-envelope"></i>
                             <p>engflexy.contact@gmail.com</p>
@@ -18,7 +18,7 @@
                         </div>
                     </div>
                     <div class="social-media">
-                        <p>Connect with us :</p>
+                        <p>{{'Connectwithus' | translate}}</p>
                         <div class="footer__social">
                             <ul>
                                 <li><a href="https://web.facebook.com/Learn.English.Interactively"><i class="social_facebook"></i></a></li>
@@ -34,23 +34,23 @@
                         <div class="social-input-containers">
                             <input type="text" name="name" class="input"
                                    [(ngModel)]="contact.name"
-                                placeholder="Name"/>
+                                placeholder="{{'name' | translate}}"/>
                         </div>
 
                         <div class="social-input-containers">
                             <input type="email" name="email" class="input"
-                                   [(ngModel)]="contact.email" placeholder="Email"/>
+                                   [(ngModel)]="contact.email" placeholder="{{'email' | translate}}"/>
                         </div>
 
                         <div class="social-input-containers">
                             <input type="tel" name="phone"
                                    [(ngModel)]="contact.phone"
-                                   class="input" placeholder="Phone"/>
+                                   class="input"  placeholder="{{'Phone' | translate}}"/>
                         </div>
                         <div class="social-input-containers textarea">
                             <textarea name="message" class="input"
                                       [(ngModel)]="contact.message"
-                                      placeholder="Message"></textarea>
+                                      placeholder="{{'Message' | translate}}"></textarea>
                         </div>
                         <input type="submit" (click)="save()" value="Send" class="btn"/>
                     </form>

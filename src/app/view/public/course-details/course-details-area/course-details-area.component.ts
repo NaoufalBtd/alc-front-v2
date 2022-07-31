@@ -5,6 +5,7 @@ import {PackStudent} from '../../../../controller/model/pack-student.model';
 import {PackStudentService} from '../../../../controller/service/pack-student.service';
 import {Cours} from '../../../../controller/model/cours.model';
 import {ParcoursService} from '../../../../controller/service/parcours.service';
+import {TranslateService} from '@ngx-translate/core';
 
 // install Swiper modules
 SwiperCore.use([Pagination, Autoplay]);
@@ -20,7 +21,7 @@ export class CourseDetailsAreaComponent implements OnInit {
 
     courseData: Array<PackStudent> = new Array<PackStudent>();
 
-    constructor(private packService: PackStudentService, private parcoursService: ParcoursService,
+    constructor(private packService: PackStudentService, private translate: TranslateService, private parcoursService: ParcoursService,
     ) {
     }
 

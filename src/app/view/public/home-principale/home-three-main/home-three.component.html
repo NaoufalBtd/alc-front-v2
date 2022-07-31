@@ -20,32 +20,33 @@
                 <i style="cursor:pointer" (click)="displayModal=false" class="pi pi-times"></i>
             </div>
             <div style="text-align: center" class="col-md-offset-3 col-sm-12 col-md-12">
-                <h2>Book your free trial session</h2>
-                <h4><i class="fa fa-solid fa-gift"></i> we give up to 3 free lessons for new students</h4>
+                <h2>{{'Book your free trial session' | translate}}</h2>
+                <h4><i class="fa fa-solid fa-gift"></i> {{'gift' | translate}}</h4>
             </div>
             <div class="col-md-offset-3 col-sm-12 col-md-6">
-                <div class="textInfo"> <i style="color: blue; font-size: 25px;" class="fa fa-solid fa-hand-pointer"></i> We'll demonstrate our platform</div>
-                <div class="textInfo"><i style="color: yellow; font-size: 25px;"  class="fa fa-solid fa-star-shooting"></i> We will assess your English level and also give you an opportunity to practice your English</div>
-                <div class="textInfo"><i style="color: red; font-size: 25px;" class="fa fa-solid fa-heart"></i>Recommend a study plan</div>
+                <div class="textInfo"> <i style="color: blue; font-size: 25px;" class="fa fa-solid fa-hand-pointer"></i> {{"We'll demonstrate our platform" | translate}}</div>
+                <div class="textInfo"><i style="color: yellow; font-size: 25px;"  class="fa fa-solid fa-star-shooting"></i>
+                    {{"We will assess your English level and also give you an opportunity to practice your English" | translate}}</div>
+                <div class="textInfo"><i style="color: red; font-size: 25px;" class="fa fa-solid fa-heart"></i>{{'Recommend a study plan' | translate}}</div>
             </div>
             <div class="col-md-offset-3 col-md-6 col-sm-12">
                 <form class="form-horizontal">
                     <div class="form-group">
-                        <input type="text" [(ngModel)]="selected.nom" name="nom" class="form-control" id="name" placeholder="Your name *">
+                        <input type="text" [(ngModel)]="selected.nom" name="nom" class="form-control" id="name" placeholder="{{'Your name * ' | translate}}">
                         <i class="fa fa-user"></i>
                     </div>
                     <div class="form-group">
-                        <input type="email" [(ngModel)]="selected.username" name="username"  class="form-control" id="inputEmail3" placeholder="Email *">
+                        <input type="email" [(ngModel)]="selected.username" name="username"  class="form-control" id="inputEmail3"  placeholder="{{'Email *' | translate}}">
                         <i class="fa fa-solid fa-envelope"></i>
                     </div>
                     <div class="form-group">
-                        <input type="tel" [(ngModel)]="selected.numero" name="numero"  class="form-control" id="Phone" placeholder="Phone *">
+                        <input type="tel" [(ngModel)]="selected.numero" name="numero"  class="form-control" id="Phone"  placeholder="{{'Phone *' | translate}}">
                         <i class=" fa fa-solid fa-phone"></i>
                     </div>
                     <div class="form-group">
                         <button [disabled]="isDisabled()"
                                 (click)="createEtudiant()"
-                                style=" width: 100%;" type="submit" class="btn btn-default">TRY FOR FREE NOW</button>
+                                style=" width: 100%;" type="submit" class="btn btn-default">{{'try' | translate}}</button>
                     </div>
                 </form>
             </div>

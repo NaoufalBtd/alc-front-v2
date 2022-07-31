@@ -12,7 +12,6 @@ import {FooterComponent} from './footer/footer.component';
 import {BrandAreaComponent} from './brand-area/brand-area.component';
 import {AboutAreaComponent} from './about-area/about-area.component';
 import {SwiperModule} from 'swiper/angular';
-import {WhyAreaComponent} from './why-area/why-area.component';
 import {BlogTwoComponent} from './blog-two/blog-two.component';
 import {SignInMainComponent} from './sign-in/sign-in-main/sign-in-main.component';
 import {SignInAreaComponent} from './sign-in/sign-in-area/sign-in-area.component';
@@ -50,7 +49,6 @@ import { AboutUsComponent } from './about-us/about-us.component';
     declarations: [
         PopularTeachersComponent,
         HomeThreeTestimonialComponent,
-        WhyAreaComponent,
         BlogTwoComponent,
         HomeThreeComponent,
         HomeThreeCtaComponent,

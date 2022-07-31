@@ -3,6 +3,7 @@ import {ContactService} from '../../../../controller/service/contact.service';
 import {Contact} from '../../../../controller/model/contact.model';
 import {MessageService} from 'primeng/api';
 import {DatePipe} from '@angular/common';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
     selector: 'app-contact-us',
@@ -13,7 +14,7 @@ export class ContactUsComponent implements OnInit {
     contact: Contact = new Contact();
 
     constructor(private contactService: ContactService,
-                private datepipe: DatePipe,
+                private datepipe: DatePipe, private translate: TranslateService,
                 private messageService: MessageService) {
 
     }

@@ -8,8 +8,8 @@
         <div class="row">
            <div class="col-xxl-12">
               <div class="cta__content text-center p-relative">
-                 <P class="fst-italic" style="color: black; font-weight: bold;font-family: system-ui;">Take a free trial lesson</P>
-                 <h3 class="cta__title-2">We will determine your level of English and show you  your interactive platform</h3>
+                 <P class="fst-italic" style="color: black; font-weight: bold;font-family: system-ui;">{{'Take a free trial lesson' | translate}}</P>
+                 <h3 class="cta__title-2">{{'determinate' | translate}}</h3>
               </div>
            </div>
         </div>
@@ -17,7 +17,8 @@
            <div class="col-md-4 col-sm-12">
               <div class="cta__form-inner">
                  <form action="#">
-                    <input [style]="{ width: '100%'}" name="nom" [(ngModel)]="selected.nom" type="text" placeholder="Your Name *">
+                    <input [style]="{ width: '100%'}" name="nom" [(ngModel)]="selected.nom" type="text"
+                           placeholder="{{'Your name * ' | translate}}">
                  </form>
               </div>
            </div>
@@ -27,7 +28,8 @@
               <div class="cta__form grey-bg-2">
                  <div class="cta__form-inner">
                     <form action="#">
-                       <input [style]="{ width: '100%'}" name="username"  [(ngModel)]="selected.username" type="email" placeholder="Your Email *">
+                       <input [style]="{ width: '100%'}" name="username"  [(ngModel)]="selected.username" type="email"
+                              placeholder="{{'Email *' | translate}}">
                     </form>
                  </div>
               </div>
@@ -38,7 +40,8 @@
               <div class="cta__form grey-bg-2">
                  <div class="cta__form-inner">
                     <form action="#">
-                       <input [style]="{ width: '100%'}" name="numero"  [(ngModel)]="selected.numero" type="tel" placeholder="Your Phone *">
+                       <input [style]="{ width: '100%'}" name="numero"  [(ngModel)]="selected.numero" type="tel"
+                              placeholder="{{'Phone *' | translate}}">
                     </form>
                  </div>
               </div>
@@ -49,7 +52,7 @@
            <div class="col-md-4 col-sm-12">
               <button [disabled]="isDisabled()" style="height: 50px!important;" pButton pRipple
                       (click)="createEtudiant()"
-                      type="button"  label="START LEARNING"
+                      type="button"  label="{{'START LEARNING' | translate}}"
                       class="ngFlexyBlackButton">
                  <i class="fa fa-solid fa-arrow-right-to-arc"></i>
               </button>

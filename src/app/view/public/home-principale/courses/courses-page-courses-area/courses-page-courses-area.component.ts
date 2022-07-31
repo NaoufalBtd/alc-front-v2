@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {PackStudentService} from '../../../../../controller/service/pack-student.service';
 import {PackStudent} from '../../../../../controller/model/pack-student.model';
 import {MessageService} from 'primeng/api';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
     selector: 'app-courses-page-courses-area',
@@ -12,7 +13,7 @@ export class CoursesPageCoursesAreaComponent implements OnInit {
     selectedOption: boolean = null;
     selectedLevel: string;
 
-    constructor(private packStudentService: PackStudentService,
+    constructor(private packStudentService: PackStudentService, private translate: TranslateService,
                 private messageService: MessageService) {
     }
 

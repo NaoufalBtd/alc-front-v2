@@ -24,9 +24,9 @@
                         <div class="page__title-breadcrumb">
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><a [routerLink]="['/']">Home</a></li>
+                                    <li class="breadcrumb-item"><a [routerLink]="['/']">{{'home' | translate}}</a></li>
                                     <li class="breadcrumb-item">
-                                        <a [routerLink]="['/courses']">Courses</a>
+                                        <a [routerLink]="['/courses']">{{'courses' | translate}}</a>
                                     </li>
                                     <li class="breadcrumb-item active" aria-current="page">
                                         {{selectedCourse?.libelle}}
@@ -34,8 +34,8 @@
                                 </ol>
                             </nav>
                         </div>
-                        <span *ngIf="!selectedCourse.forGroupe" class="page__title-pre">Individual</span>
-                        <span *ngIf="selectedCourse.forGroupe" class="page__title-pre">Group</span>
+                        <span *ngIf="!selectedCourse.forGroupe" class="page__title-pre">{{'Individual' | translate}}</span>
+                        <span *ngIf="selectedCourse.forGroupe" class="page__title-pre">{{'Group' | translate}}</span>
                         <h5 class="page__title-3">{{selectedCourse?.libelle}}</h5>
                         <div class="course__tag-2">
                             <i class="fal fa-tag"></i>
@@ -58,28 +58,28 @@
                                     aria-labelledby="description-tab"
                             >
                                 <div class="course__description">
-                                    <h3>Course Overview</h3>
+                                    <h3>{{'Course Overview' | translate}}</h3>
                                     <p>
                                         {{selectedCourse?.description}}
                                     </p>
-                                    <h3>Why take this course?</h3>
+                                    <h3>{{'Why take this course ?' | translate}}</h3>
                                     <p>{{selectedCourse?.whyTakeThisCourse}}</p>
-                                    <h3>Experience Level</h3>
+                                    <h3>{{'Experience Level' | translate}}</h3>
                                     <p>{{selectedCourse?.level?.libelle}}</p>
-                                    <h3>Course Length</h3>
+                                    <h3>{{'Course Length' | translate}}</h3>
                                     <p>{{selectedCourse?.nombreCours}}</p>
-                                    <h3>Pre-requisites</h3>
+                                    <h3>{{'Pre - requisites' | translate}}</h3>
                                     <p>{{selectedCourse?.preRequisites}}</p>
 
                                     <div class="course__description-list mb-45">
-                                        <h4>Syllabus</h4>
+                                        <h4>{{'Syllabus' | translate}}</h4>
                                         <ul>
                                             <li *ngFor="let course of courses.slice(0, nombreCours)">
                                                 <i class="icon_check"></i> {{course?.libelle}}</li>
 
 
                                             <li  *ngIf="nombreCours !== selectedCourse?.nombreCours" class="more-details" (click)="nombreCours = selectedCourse.nombreCours">
-                                                ...see more
+                                                {{'...see more' | translate}}
                                             </li>
 
                                         </ul>
@@ -87,8 +87,7 @@
                                 </div>
                             </div>
 
-                            <div
-                                    class="tab-pane fade"
+                            <div class="tab-pane fade"
                                     id="curriculum"
                                     role="tabpanel"
                                     aria-labelledby="curriculum-tab">
@@ -837,20 +836,7 @@
                                 </div>
                             </div>
 
-                            <!--                            <div class="course__share">-->
-                            <!--                                <h3>Share :</h3>-->
-                            <!--                                <ul>-->
-                            <!--                                    <li>-->
-                            <!--                                        <a href="#" class="fb"><i class="social_facebook"></i></a>-->
-                            <!--                                    </li>-->
-                            <!--                                    <li>-->
-                            <!--                                        <a href="#" class="tw"><i class="social_twitter"></i></a>-->
-                            <!--                                    </li>-->
-                            <!--                                    <li>-->
-                            <!--                                        <a href="#" class="pin"><i class="social_pinterest"></i></a>-->
-                            <!--                                    </li>-->
-                            <!--                                </ul>-->
-                            <!--                            </div>-->
+
                         </div>
                     </div>
 
@@ -859,14 +845,13 @@
                             <div class="col-xxl-12">
                                 <div class="section__title-wrapper mb-40">
                                     <h2 class="section__title">
-                                        Related
+                                        {{'Related' | translate}}
                                         <span class="yellow-bg yellow-bg-big"
-                                        >Course<img src="assets/img/shape/yellow-bg.png" alt=""
+                                        >{{'Course' | translate}}<img src="assets/img/shape/yellow-bg.png" alt=""
                                         /></span>
                                     </h2>
                                     <p>
-                                        You don't have to struggle alone, you've got our assistance
-                                        and help.
+                                        {{'base2' | translate}}
                                     </p>
                                 </div>
                             </div>
@@ -996,14 +981,14 @@
                                 </div>
                             </div>
                             <div class="course__payment mb-35">
-                                <h3>Payment:</h3>
+                                <h3>{{'Payment' | translate}}</h3>
                                 <a href="#">
                                     <img src="assets/img/course/payment/payment-1.png" alt=""/>
                                 </a>
                             </div>
                             <div class="course__enroll-btn">
                                 <a [routerLink]="['/free-trial']" class="e-btn e-btn-7 w-100"
-                                >Enroll <i class="far fa-arrow-right"></i
+                                >{{'Enroll' | translate}} <i class="far fa-arrow-right"></i
                                 ></a>
                             </div>
                         </div>

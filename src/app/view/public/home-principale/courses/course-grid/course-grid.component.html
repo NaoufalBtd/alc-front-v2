@@ -6,15 +6,15 @@
              <img src="{{course?.imgUrl}}" alt="">
           </a>
           <div class="course__tag">
-             <a *ngIf="!course.forGroupe" [style.background]="'#7b2cbf'" >Individual</a>
-             <a *ngIf="course.forGroupe" [style.background]="'#800f2f'" >Group</a>
+             <a *ngIf="!course.forGroupe" [style.background]="'#7b2cbf'" >{{'Individual' | translate}}</a>
+             <a *ngIf="course.forGroupe" [style.background]="'#800f2f'" >{{'Group'| translate}}</a>
           </div>
        </div>
        <div class="course__content">
           <div class="course__meta d-flex align-items-center justify-content-between">
              <div class="course__lesson">
                 <span><i class="far fa-book-alt"></i>
-                    {{course?.nombreCours}} Lesson</span>
+                    {{course?.nombreCours}} {{'Lesson'| translate}}</span>
              </div>
              <div class="course__rating">
                 <span><i class="icon_star"></i>{{course?.rating}}</span>
@@ -28,12 +28,12 @@
        </div>
        <div class="course__more d-flex justify-content-between align-items-center">
         <div class="course__status d-flex align-items-center">
-            <span> {{course.prix}} MAD </span>
+            <span> {{course.prix}} {{'MAD'| translate}} </span>
             <span class="old-price">{{course?.oldPrice}}</span>
          </div>
           <div class="course__btn">
              <a (click)="courseDetail(course)" class="link-btn">
-                Know Details
+                 {{'Knowdetails' | translate}}
                 <i class="far fa-arrow-right"></i>
                 <i class="far fa-arrow-right"></i>
              </a>

@@ -6,6 +6,7 @@ import {PackStudentService} from '../../../../controller/service/pack-student.se
 import {InscriptionService} from '../../../../controller/service/inscription.service';
 import {Router} from '@angular/router';
 import {Etudiant} from '../../../../controller/model/etudiant.model';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-home-three-cta',
@@ -25,7 +26,7 @@ export class HomeThreeCtaComponent implements OnInit {
               public etudiantService: EtudiantService,
               private confirmationService: ConfirmationService,
               public authenticationService: AuthenticationService,
-              public packStudentService: PackStudentService,
+              public packStudentService: PackStudentService, private translate: TranslateService,
               private service: InscriptionService, private router: Router) {
   }
 

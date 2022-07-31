@@ -4,6 +4,7 @@ import {PrimeNGConfig} from 'primeng/api';
 import {AppComponent} from '../../../app.component';
 import {AuthenticationService} from '../../../controller/service/authentication.service';
 import {User} from '../../../controller/model/user.model';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-page-not-found',
@@ -54,6 +55,7 @@ export class PageNotFoundComponent implements OnInit {
   inlineUserMenuActive = false;
 
   constructor(private menuService: MenuService,
+              private translate: TranslateService,
               private authenticationService: AuthenticationService,
               private primengConfig: PrimeNGConfig, public app: AppComponent) {
   }

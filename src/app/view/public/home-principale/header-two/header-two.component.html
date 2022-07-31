@@ -19,15 +19,15 @@
                       <nav id="mobile-menu">
                          <ul>
                              <li >
-                                 <a [routerLink]="['/courses']">Courses</a>
+                                 <a [routerLink]="['/courses']">{{'courses' | translate}}</a>
                              </li>
 
 
                              <li >
-                                 <a [routerLink]="['/blog']">Blog</a>
+                                 <a [routerLink]="['/blog']">{{'Blog' | translate}}</a>
                              </li>
 
-                             <li><a [routerLink]="['/contact']">Contact</a></li>
+                             <li><a [routerLink]="['/contact']">{{'contact' | translate}}</a></li>
 
 
                              <li class="has-dropdown">
@@ -45,10 +45,10 @@
                       </nav>
                    </div>
                    <div class="header__btn header__btn-2 ml-50 d-none d-sm-block">
-                      <a [routerLink]="['/public/login']" class="e-btn">Sign in</a>
+                      <a [routerLink]="['/public/login']" class="e-btn">{{'signin' | translate}}</a>
                    </div>
                     <div class="header__btn header__btn-2 ml-30 d-none d-sm-block">
-                        <a [routerLink]="['/free-trial']" class="e-btn">Free Trial Lesson</a>
+                        <a [routerLink]="['/free-trial']" class="e-btn">{{'treetrialLesson' | translate}}</a>
                     </div>
                    <div class="sidebar__menu d-xl-none">
                       <div (click)="handleSidebar()" class="sidebar-toggle-btn ml-30" id="sidebar-toggle">

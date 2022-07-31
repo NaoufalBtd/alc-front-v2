@@ -9,6 +9,7 @@ import {User} from '../../../../../controller/model/user.model';
 import {HttpErrorResponse, HttpResponse} from '@angular/common/http';
 import {HeaderType} from '../../../../../enum/header-type.enum';
 import {Role} from '../../../../../enum/role.enum';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
     selector: 'app-sign-in-area',
@@ -21,7 +22,7 @@ export class SignInAreaComponent implements OnInit {
     subscriptions: Subscription[] = [];
 
     constructor(private messageService: MessageService, private confirmationService: ConfirmationService,
-                private authenticationService: AuthenticationService,
+                private authenticationService: AuthenticationService,private translate: TranslateService,
                 private userService: UserService,
                 private service: LoginService, private router: Router) {
 

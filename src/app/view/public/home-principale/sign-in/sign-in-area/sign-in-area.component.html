@@ -11,8 +11,8 @@
      <div class="row">
         <div class="col-xxl-8 offset-xxl-2 col-xl-8 offset-xl-2">
            <div class="section__title-wrapper text-center mb-55">
-              <h2 class="section__title">Sign in to <br>  recharge direct.</h2>
-              <p>it you don't have an account you can <a style="color: blue!important;" [routerLink]="['/free-trial']">Register here!</a></p>
+              <h2 class="section__title">{{'signinto' | translate}}<br>  {{'Recharge Direct' | translate}} </h2>
+              <p>{{"it you don't have an account you can" | translate}} <a style="color: blue!important;" [routerLink]="['/free-trial']">{{"Register here!" | translate}}</a></p>
            </div>
         </div>
      </div>
@@ -25,30 +25,33 @@
                     <div class="sign__input-wrapper mb-25">
                        <h5>Work email</h5>
                        <div class="sign__input">
-                          <input type="email" [(ngModel)]="user.username" name="username" placeholder="e-mail address">
+                          <input type="email" [(ngModel)]="user.username" name="username"
+                                 placeholder="{{'e-mail address'| translate}}">
                           <i class="fal fa-envelope"></i>
                        </div>
                     </div>
                     <div class="sign__input-wrapper mb-10">
                        <h5>Password</h5>
                        <div class="sign__input">
-                          <input type="password" [(ngModel)]="user.password" name="password" placeholder="Password">
+                          <input type="password" [(ngModel)]="user.password" name="password"
+                                 placeholder="{{'Password'| translate}}"
+                          >
                           <i class="fal fa-lock"></i>
                        </div>
                     </div>
                     <div class="sign__action d-sm-flex justify-content-between mb-30">
                        <div class="sign__agree d-flex align-items-center">
                           <input class="m-check-input" type="checkbox" id="m-agree">
-                          <label class="m-check-label" for="m-agree">Keep me signed in
+                          <label class="m-check-label" for="m-agree">{{'Keepmesigned'| translate}}
                              </label>
                        </div>
                        <div class="sign__forgot">
-                          <a [routerLink]="['/resetPassword']">Forgot your password?</a>
+                          <a [routerLink]="['/resetPassword']">{{'forgetpassword'| translate}}</a>
                        </div>
                     </div>
-                    <button class="e-btn  w-100" (click)="onLogin(user)"> <span></span> Sign In</button>
+                    <button class="e-btn  w-100" (click)="onLogin(user)"> <span></span> {{'signin' | translate}}</button>
                     <div class="sign__new text-center mt-20">
-                       <p>New to EngFlexy? <a [routerLink]="['/free-trial']">Sign Up</a></p>
+                       <p>{{'new' | translate}} <a [routerLink]="['/free-trial']">{{'Sign Up'| translate}}</a></p>
                     </div>
                  </form>
               </div>

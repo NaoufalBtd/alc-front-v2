@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {PackStudentService} from '../../../../controller/service/pack-student.service';
 import {Router} from '@angular/router';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
     selector: 'app-blog-area',
@@ -44,7 +45,7 @@ export class BlogAreaComponent implements OnInit {
     ];
 
 
-    constructor(private blogService: PackStudentService, private router: Router) {
+    constructor(private blogService: PackStudentService, private translate: TranslateService, private router: Router) {
     }
     get selectedBlog(): any {
         return this.blogService.selectedBlog;
