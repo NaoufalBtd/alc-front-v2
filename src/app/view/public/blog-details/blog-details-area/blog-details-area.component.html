@@ -60,7 +60,7 @@
               <div class="latest-comments mb-95">
                  <h3>3 Comments</h3>
                  <ul>
-                    <li>
+                    <li *ngIf="selectedBlog.id === 1">
                        <div class="comments-box grey-bg">
                           <div class="comments-info d-flex">
                                 <div class="comments-avatar mr-20">
@@ -79,16 +79,16 @@
                           </div>
                        </div>
                     </li>
-                    <li class="children">
+                    <li *ngIf="selectedBlog.id === 2">
                        <div class="comments-box grey-bg">
                           <div class="comments-info d-flex">
-                                <div class="comments-avatar mr-20">
-                                      <img src="assets/img/blog/comments/comment-1.jpg" alt="">
-                                </div>
-                                <div class="avatar-name">
-                                   <h5>Ahmed Dahir</h5>
-                                   <span class="post-meta">April 16, 2022 </span>
-                                </div>
+                             <div class="comments-avatar mr-20">
+                                <img src="assets/img/blog/comments/comment-1.jpg" alt="">
+                             </div>
+                             <div class="avatar-name">
+                                <h5>Ahmed Dahir</h5>
+                                <span class="post-meta">April 16, 2022 </span>
+                             </div>
                           </div>
                           <div class="comments-text ml-65">
                              <p  style="direction: rtl">مازال حنا المغاربة لينا الدواء.خدامين معايا شي ناس من بولاند منين كيدويو بالإنجليزية كايحساب ليا بحالا باغيين يتخاصمو معايا😂😂</p>
@@ -97,28 +97,27 @@
                              </div>
                           </div>
                        </div>
-                       <ul>
-                          <li class="children-2">
-                             <div class="comments-box grey-bg">
-                                <div class="comments-info d-flex">
-                                      <div class="comments-avatar mr-20">
-                                            <img src="assets/img/blog/comments/comment-3.jpg" alt="">
-                                      </div>
-                                      <div class="avatar-name">
-                                         <h5>Kamal zouani</h5>
-                                         <span class="post-meta">April 18, 2022 </span>
-                                      </div>
-                                </div>
-                                <div class="comments-text ml-65">
-                                   <p style="direction: rtl">هذا هو المشكل ديال المغاربة 🇲🇦 كاملنا عندنا CV واحد،كانبدلو غير التصويرة</p>
-                                   <div class="comments-replay">
-                                      <a >Reply</a>
-                                   </div>
-                                </div>
-                             </div>
-                          </li>
-                       </ul>
                     </li>
+                    <li *ngIf="selectedBlog.id === 3">
+                       <div class="comments-box grey-bg">
+                          <div class="comments-info d-flex">
+                             <div class="comments-avatar mr-20">
+                                <img src="assets/img/blog/comments/comment-3.jpg" alt="">
+                             </div>
+                             <div class="avatar-name">
+                                <h5>Kamal zouani</h5>
+                                <span class="post-meta">April 18, 2022 </span>
+                             </div>
+                          </div>
+                          <div class="comments-text ml-65">
+                             <p style="direction: rtl">هذا هو المشكل ديال المغاربة 🇲🇦 كاملنا عندنا CV واحد،كانبدلو غير التصويرة</p>
+                             <div class="comments-replay">
+                                <a >Reply</a>
+                             </div>
+                          </div>
+                       </div>
+                    </li>
+
                  </ul>
               </div>
               <div class="blog__comment">

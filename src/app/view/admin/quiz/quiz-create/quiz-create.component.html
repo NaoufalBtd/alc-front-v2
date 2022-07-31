@@ -58,7 +58,7 @@
                                 [style]="{width: '100%'}"
                                 (click)="chooseType()"></p-dropdown>
                 </div>
-                <div *ngIf="question.typeDeQuestion.ref !== 't12' && question.typeDeQuestion.ref !== 't13'"
+                <div *ngIf="question.typeDeQuestion.ref !== 't12' && question.typeDeQuestion.ref !== 't13' && question.typeDeQuestion.ref !== 't11'"
                      class="p-col-8" id="formCard">
                     <div class="card" styleClass="p-card-shadow">
                         <div class="p-fluid p-formgrid p-grid">
@@ -219,8 +219,7 @@
                 </div>
 
 
-                <div *ngIf="question.typeDeQuestion.ref === 't13'"
-                     style="background: gainsboro;  border-radius: 5px; margin-bottom: 20px;" class="p-col-8">
+                <div *ngIf="question.typeDeQuestion.ref === 't13'" style="background: gainsboro;  border-radius: 5px; margin-bottom: 20px;" class="p-col-8">
                     <div class="p-grid">
                         <div class="p-col-4">
                             <h6>Image Url</h6>
@@ -253,6 +252,54 @@ His @mother@ packs a big backpack full of @books@ and lunch for Lucas."
 
                     </div>
                 </div>
+
+                <div *ngIf="question.typeDeQuestion.ref === 't11'" class="p-col-8">
+                    <div class="p-grid">
+                        <div class="p-col-6">
+                            <h6>Title</h6>
+                            <input [style]="{width: '100%'}" type="text" pInputText [(ngModel)]="question.ref">
+                        </div>
+
+                        <div class="p-col-6">
+                            <h6>Part</h6>
+                            <input [style]="{width: '100%'}" type="text" pInputText [(ngModel)]="part">
+                        </div>
+
+                        <div class="p-col-6">
+                            <h6>Image Url</h6>
+                            <input [style]="{width: '100%'}" type="text" pInputText
+                                   [(ngModel)]="question.urlImg">
+                        </div>
+
+                        <div class="p-col-6">
+                            <h6>Video Url</h6>
+                            <input [style]="{width: '100%'}" type="text" pInputText
+                                   [(ngModel)]="question.urlVideo">
+                        </div>
+
+
+                        <div class="p-col-12 ">
+                            <h6>Content</h6>
+                            <textarea required="required" [style]="{width:'100%', padding: '10px'}" rows="2"
+                                      [(ngModel)]="question.libelle"
+                                      pInputTextarea
+                                      placeholder="Example:
+1 sentence number 1.
+2 sentence number 2.
+3 sentence number 3.
+4 sentence number 4.
+5 sentence number 5."
+                                      autoResize="autoResize"></textarea>
+                        </div>
+                        <!--                            <div style="padding-top: 45px;" class="p-col-2">-->
+                        <!--                                <p-button [style]="{width: '100%'}" icon="pi pi-check"-->
+                        <!--                                          (click)="saveDrapAndDropHomeWork()" label="Add"-->
+                        <!--                                          styleClass="p-button-success"></p-button>-->
+                        <!--                            </div>-->
+                    </div>
+                </div>
+
+
                 <div class="p-col-4 ">
                     <p-tree [value]="nodes">
                         <ng-template let-node pTemplate="default">

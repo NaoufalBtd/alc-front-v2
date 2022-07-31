@@ -27,19 +27,18 @@
               </div>
            </div>
            <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6">
-<!--              <div class="course__sort d-flex justify-content-sm-end">-->
-<!--                 <div class="course__sort-inner">-->
-<!--                    <select>-->
-<!--                       <option>Default</option>-->
-<!--                       <option>Option 1</option>-->
-<!--                       <option>Option 2</option>-->
-<!--                       <option>Option 3</option>-->
-<!--                       <option>Option 4</option>-->
-<!--                       <option>Option 5</option>-->
-<!--                       <option>Option 6</option>-->
-<!--                    </select>-->
-<!--                 </div>-->
-<!--              </div>-->
+              <div class="course__sort d-flex justify-content-sm-end">
+                 <div class="course__sort-inner">
+                    <select [(ngModel)]="selectedLevel" (ngModelChange)="searchByLevel()">
+                       <option  [ngValue]="undefined">Default</option>
+                       <option [ngValue]="'elementary'">Elementary</option>
+                       <option [ngValue]="'pre intermediate'">Pre Intermediate</option>
+                       <option [ngValue]="'intermediate'">Intermediate</option>
+                       <option [ngValue]="'upper intermediate'">Upper Intermediate</option>
+                       <option [ngValue]="'advanced'">Advanced</option>
+                    </select>
+                 </div>
+              </div>
            </div>
         </div>
      </div>

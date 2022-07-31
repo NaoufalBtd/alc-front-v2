@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {PackStudent} from '../model/pack-student.model';
 import {environment} from '../../../environments/environment';
 import {MessageService} from 'primeng/api';
+import {Observable} from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -131,6 +132,10 @@ export class PackStudentService {
         );
     }
 
+    public findPackByLevel(isforgroupe: boolean): Observable<Array<PackStudent>> {
+        return this.http.get<Array<PackStudent>>(this.adminUrl + 'packStudent/packForgroupe/' + isforgroupe);
+    }
+
     public findbyCode(code: string) {
         this.http.get(this.adminUrl + 'packStudent/code/' + code).subscribe(
 
@@ -143,6 +148,10 @@ export class PackStudentService {
                 this.packs = data;
             }
         );
+    }
+
+    public findAllPacksByLevel(): Observable<Array<PackStudent>>  {
+        return this.http.get<PackStudent[]>(this.adminUrl + 'packStudent/');
     }
 
     savePack() {

@@ -51,7 +51,7 @@
                       <div class="footer__widget-body">
                          <div class="footer__link">
                             <ul>
-                               <li><a [routerLink]="['/blog']">{{'blog1' | translate}}</a></li>
+                               <li><a [routerLink]="['/blog']">{{'blog' | translate}}</a></li>
                                <li><a href="#">FAQs</a></li>
                             </ul>
                          </div>
@@ -67,8 +67,8 @@
                          <div class="footer__subscribe">
                             <form action="#">
                                <div class="footer__subscribe-input mb-15">
-                                  <input type="email" placeholder="{{'email' | translate}}">
-                                  <button type="submit">
+                                  <input type="email" [required]="true" [(ngModel)]="contact.email" name="email" placeholder="{{'email' | translate}}">
+                                  <button (click)="save()" type="submit">
                                      <i class="far fa-arrow-right"></i>
                                      <i class="far fa-arrow-right"></i>
                                   </button>

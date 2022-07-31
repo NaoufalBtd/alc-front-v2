@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {PackStudentService} from '../../../../controller/service/pack-student.service';
 
 @Component({
   selector: 'app-blog-details-area',
@@ -7,9 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BlogDetailsAreaComponent implements OnInit {
 
-  constructor() { }
+  constructor(private blogService: PackStudentService) { }
 
   ngOnInit(): void {
   }
-
+  get selectedBlog(): any {
+    return this.blogService.selectedBlog;
+  }
 }
