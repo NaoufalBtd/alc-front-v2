@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Parcours} from '../../../controller/model/parcours.model';
 import {Cours} from '../../../controller/model/cours.model';
-import {Section} from '../../../controller/model/section.model';
 import {CategorieSection} from '../../../controller/model/categorie-section.model';
 import {ParcoursService} from '../../../controller/service/parcours.service';
 import {HomeworkService} from '../../../controller/service/homework.service';
@@ -12,7 +11,8 @@ import {HomeWorkReponse} from '../../../controller/model/home-work-reponse.model
 import {Router} from '@angular/router';
 import {LearnService} from '../../../controller/service/learn.service';
 import {ConfirmationService, MessageService} from 'primeng/api';
-import {TypeHomeWorkEnum} from '../../../enum/type-question.enum';
+import {TypeHomeWorkEnum, TypeQuestionEnum} from '../../../enum/type-question.enum';
+import {TypeDeQuestion} from '../../../controller/model/type-de-question.model';
 
 @Component({
     selector: 'app-home-work-preview',
@@ -72,6 +72,16 @@ export class HomeWorkPreviewComponent implements OnInit {
         this.parcoursService.FindAllParcours().subscribe(
             data => {
                 this.parcours = data;
+            }
+        );
+        this.questionTypes();
+    }
+
+
+    questionTypes() {
+        this.homeWorkService.findType().subscribe(
+            data => {
+                this.typeOfQuestions = data;
             }
         );
     }
@@ -199,6 +209,13 @@ export class HomeWorkPreviewComponent implements OnInit {
         console.log(this.answers);
     }
 
+    get typeOfQuestions(): Array<TypeDeQuestion> {
+        return this.homeWorkService.types;
+    }
+
+    set typeOfQuestions(typeDeQuestions) {
+        this.homeWorkService.types = typeDeQuestions;
+    }
 
     get homeWorkSelected(): HomeWork {
         return this.homeWorkService.homeWork;
@@ -223,6 +240,16 @@ export class HomeWorkPreviewComponent implements OnInit {
     }
 
     updateHomeWork() {
+        if (this.qstWriteItUp?.typeDeQuestion?.id === undefined ||
+            this.qstWriteItUp?.typeDeQuestion?.id === 0 ||
+            this.qstWriteItUp?.typeDeQuestion?.id === null) {
+            if (this.homeWork.typeHomeWork.lib === TypeHomeWorkEnum.READING) {
+                this.qstWriteItUp.typeDeQuestion = this.typeOfQuestions.filter(t => t.ref === TypeQuestionEnum.READ_AND_ADD_NEW_WORDS)[0];
+
+            } else {
+                this.qstWriteItUp.typeDeQuestion = this.typeOfQuestions.filter(t => t.ref === TypeQuestionEnum.WRITE_IT_UP)[0];
+            }
+        }
         this.selectedHomeWork.questions = new Array<HomeWorkQST>();
         this.selectedHomeWork.questions.push({...this.qstWriteItUp});
         console.log(this.selectedHomeWork);

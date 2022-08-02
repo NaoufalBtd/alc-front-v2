@@ -127,17 +127,17 @@ export class HomeWorkComponentComponent implements OnInit {
             this.typeHomeWork = this.homeWork.typeHomeWork;
             this.homeWorkEtudiantService.findQuestions(this.homeWork).subscribe(data => {
                 this.homeWork.questions = data;
-                for (let i = 0; i < this.homeWork.questions.length; i++) {
-                    this.homeWorkEtudiantService.findReponsesByQuestionId(this.homeWork.questions[i].id).subscribe(
+                for (let i = 0; i < this.homeWork?.questions?.length; i++) {
+                    this.homeWorkEtudiantService.findReponsesByQuestionId(this.homeWork?.questions[i].id).subscribe(
                         rpsData => {
                             console.log(rpsData);
                             this.homeWork.questions[i].reponses = rpsData;
                             this.nodes = [];
-                            for (let i = 0; i < this.homeWork.questions.length; i++) {
+                            for (let i = 0; i < this.homeWork.questions?.length; i++) {
                                 const list = [];
-                                for (let j = 0; j < this.homeWork.questions[i].reponses.length; j++) {
+                                for (let j = 0; j < this.homeWork.questions[i]?.reponses?.length; j++) {
                                     const item = {
-                                        label: this.homeWork.questions[i].reponses[j].lib + '\t (' + this.homeWork.questions[i].reponses[j].etatReponse + ' )',
+                                        label: this.homeWork.questions[i]?.reponses[j]?.lib + '\t (' + this.homeWork.questions[i]?.reponses[j]?.etatReponse + ' )',
                                         type: 'url'
                                     };
                                     list.push(item);
@@ -146,7 +146,7 @@ export class HomeWorkComponentComponent implements OnInit {
                                 this.nodes.push(
                                     {
                                         key: i.toString(),
-                                        label: 'Question ' + this.homeWork.questions[i].numero + ' : ' + this.homeWork.questions[i].libelle + ' ( ' + this.homeWork.questions[i].typeDeQuestion.lib + ' ) ',
+                                        label: 'Question ' + this.homeWork?.questions[i]?.numero + ' : ' + this.homeWork?.questions[i]?.libelle + ' ( ' + this.homeWork?.questions[i]?.typeDeQuestion?.lib + ' ) ',
                                         children: list
                                     },
                                 );
@@ -167,19 +167,6 @@ export class HomeWorkComponentComponent implements OnInit {
         console.log(this.homeWork);
     }
 
-    public clonequestion(question: HomeWorkQST): HomeWorkQST {
-        const myclone = new HomeWorkQST();
-        myclone.id = question.id;
-        myclone.pointReponsefausse = question.pointReponsefausse;
-        myclone.pointReponseJuste = question.pointReponseJuste;
-        myclone.libelle = question.libelle;
-        myclone.typeDeQuestion = question.typeDeQuestion;
-        myclone.numero = question.numero;
-        myclone.reponses = question.reponses;
-        myclone.ref = question.ref;
-        myclone.homeWork = question.homeWork;
-        return myclone;
-    }
 
     public cloneReponse(reponse: HomeWorkReponse): HomeWorkReponse {
         const myclone = new HomeWorkReponse();
