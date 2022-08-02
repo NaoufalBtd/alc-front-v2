@@ -258,7 +258,6 @@ export class HomeWorkPreviewComponent implements OnInit {
     }
 
     isValidated(homework: HomeWork): boolean {
-        console.log(homework);
         if (homework?.typeHomeWork?.lib === TypeHomeWorkEnum.WATCH_IT) {
             return (homework.urlVideo?.length >= 5 || homework.urlImage == null || undefined);
         } else if (homework?.typeHomeWork?.lib === TypeHomeWorkEnum.READING) {

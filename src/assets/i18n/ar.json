@@ -1,6 +1,7 @@
 {
   "courses" : "الدورات",
   "Blog": "المنصة",
+  "blog": "المنصة",
   "contact": "اتصال",
   "signin" : "تسجيل الدخول",
   "treetrialLesson" : "درس تجريبي مجاني",
@@ -43,7 +44,7 @@
   "study": "ادرس اللغة الإنجليزية وقتما تشاء وأينما تريد!",
   "prices" : "الأسعار",
   "gift" : "نعطي ما يصل إلى 3 دروس مجانية للطلاب الجدد",
-  "sayhi" : "قل مرحباً لمدرس اللغة الإنجليزية عبر الإنترنت\uD83D\uDC4B",
+  "sayhi" : "قل مرحباً لمدرس اللغة الإنجليزية عبر الإنترنت",
   "sayhi2" : " \uD83D\uDC4B",
   "ready" : "على استعداد للبدء؟",
   "learn" : "تعلم وحقق",
@@ -118,6 +119,7 @@
   "phonenumber": "رقم الهاتف",
   "links": "الروابط",
   "faq": "التعليمات",
+  "FAQs": "التعليمات",
   "help": "مساعدة",
   "support": "الدعم",
   "legal": "قوانين",
@@ -152,7 +154,59 @@
   "try2": "حاول",
   "duration": "50 دقيقة مدة الدرس",
   "times": "2-3 مرات في الأسبوع\nيوصي بكثافة\n",
-  "wegive": "نقدم ما يصل إلى 3 دروس مجانية للطلاب الجدد"
+  "wegive": "نقدم ما يصل إلى 3 دروس مجانية للطلاب الجدد",
+
+
+
+
+
+  "Sign Up": "اشترك الان",
+  "Our Most": "أكثر",
+  "We'll demonstrate our platform": "سنعرض منصتنا",
+  "Recommend a study plan": "Recommandez un plan d'étude",
+  "Your name * ": "الاسم *",
+  "Email *": "البريد الالكتروني *",
+  "MAD": "درهم",
+  "Our": "Notre",
+  "Phone *": "الهاتف *",
+  "Recharge Direct": "Rechargez Direct",
+  "it you don't have an account you can": "ليس لديك حساب ! بامكانك ",
+  "Register here!": "التسجيل هنا!",
+  "e-mail address": "البريد الالكتروني",
+  "Teaching experience": "الخبرة التدريسية",
+  "Student": "التلميذ",
+  "We share": "نشارك",
+  "START LEARNING": "إبدا التعلم الان",
+  "Take a free trial lesson": "نقدم دروس تجربية بالمجان !",
+  "close": "اغلاق",
+  "DevelopersTitle": "المطورون",
+  "wheredidTitle": " « EngFlexy » من اين جاء اسم",
+  "Tutor": "المدرس",
+  "students": "التلاميذ",
+  "Goals": "الاهداف",
+  "Acquire practical grammar skills": "نساعدك على تطوير مهارتك في النحو.",
+  "Increase vocabulary knowledge": "طور من مهاراتك في النطق، وتعلم كل يوم مفردات جديدة مع قاموسك الخاص!",
+  "with EngFlexy": "EngFlexy مع",
+  "Achieve your": "حقق",
+  "About": "حول",
+  "Enroll": "اشترك الان",
+  "Payment": "اداء:",
+  "Related": "connexes",
+  "Course": "دورات",
+  "...see more": "...المزيد",
+  "Pre - requisites": "متطلبات الدورة",
+  "Course Length": "مدة الدورة",
+  "Experience Level": "المستوى",
+  "Why take this course?": "غاية من هذه الدورة",
+  "Course Overview": "نظرة عامة",
+  "Join over": "إنضم الينا",
+  "Become a tutor": "كيف اصبح استاذ ",
+  "Blog news": "المدونة و الاخبار",
+  "Community Feedback": "التعليقات",
+  "Book your free trial session": " أحجز درسك التجريبي بالمجان ",
+  "We will assess your English level and also give you an opportunity to practice your English": "سنعمل معا على تطوير مستواك في اللغة الانجليزية حتى الاحتراف."
+
+
 
 
 }
