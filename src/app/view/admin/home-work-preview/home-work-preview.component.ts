@@ -243,7 +243,7 @@ export class HomeWorkPreviewComponent implements OnInit {
         if (this.qstWriteItUp?.typeDeQuestion?.id === undefined ||
             this.qstWriteItUp?.typeDeQuestion?.id === 0 ||
             this.qstWriteItUp?.typeDeQuestion?.id === null) {
-            if (this.homeWork.typeHomeWork.lib === TypeHomeWorkEnum.READING) {
+            if (this.selectedHomeWork?.typeHomeWork?.lib === TypeHomeWorkEnum.READING) {
                 this.qstWriteItUp.typeDeQuestion = this.typeOfQuestions.filter(t => t.ref === TypeQuestionEnum.READ_AND_ADD_NEW_WORDS)[0];
 
             } else {
