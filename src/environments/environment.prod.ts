@@ -8,7 +8,7 @@ export const environment = {
   profUrl: 'http://162.19.25.141:8036/prof/',
   etudiantUrl: 'http://162.19.25.141:8036/etudiant/',
   publicUrl: 'http://162.19.25.141:8036/public/',
-  socketUrl: 'wss://162.19.25.141:8036/chat',
+  socketUrl: 'ws://162.19.25.141:8036/chat',
   signWithGoogleApi: 'http://162.19.25.141:8036/admin/admin/googlesignin',
   signWithGmailApi: 'http://162.19.25.141:8036/admin/gmail/googlesignin',
 
