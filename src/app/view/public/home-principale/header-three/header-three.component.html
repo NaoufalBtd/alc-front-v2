@@ -67,6 +67,49 @@
 
 
 
+
+<!-- sidebar area start -->
+<div class="sidebar__area" [class.sidebar-opened]="showSidebar">
+    <div class="sidebar__wrapper">
+        <div (click)="handleSidebarClose()" class="sidebar__close">
+            <button class="sidebar__close-btn" id="sidebar__close-btn">
+                <span><i class="fal fa-times"></i></span>
+                <span>{{'close' | translate}}</span>
+            </button>
+        </div>
+        <div class="sidebar__content">
+            <div class="logo mb-40">
+                <a [routerLink]="['/']">
+
+                    <ng-template>
+                        <img src="assets/img/logo/logo.png" alt="logo">
+                    </ng-template>
+                </a>
+            </div>
+
+            <div class="side-info-content sidebar-menu mm-menu">
+
+                <ul>
+                    <li><a [routerLink]="['/courses']"> {{'courses' | translate}}</a></li>
+                    <li><a [routerLink]="['/blog']"> {{'blog' | translate}}</a></li>
+                    <li><a [routerLink]="['/contact']"> {{'Contact' | translate}}</a></li>
+                    <li class="has-dropdown">
+                        <a *ngIf="this.translate.currentLang === 'en'" style="cursor:pointer;">English</a>
+                        <a *ngIf="this.translate.currentLang === 'ar'" style="cursor:pointer;">العربية</a>
+                        <a *ngIf="this.translate.currentLang === 'fr'" style="cursor:pointer;">Français</a>
+
+                        <ul class="submenu">
+                            <li (click)="selectedLangage('en')" style="cursor:pointer;" value="en"><a>English</a></li>
+                            <li (click)="selectedLangage('ar')" style="cursor:pointer;" value="ar"><a>العربية</a></li>
+                            <li (click)="selectedLangage('fr')" style="cursor:pointer;" value="fr"><a>Français</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</div>
+
 <div (click)="handleSidebarClose()" class="body-overlay"
-[class.opened]="showSidebar"></div>
-<!-- sidebar area end -->
+     [class.opened]="showSidebar"></div>

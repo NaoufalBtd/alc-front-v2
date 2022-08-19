@@ -43,6 +43,8 @@ import {DialogModule} from 'primeng/dialog';
 import {TranslateModule} from '@ngx-translate/core';
 import { ContactUsComponent } from './contact-us/contact-us.component';
 import { AboutUsComponent } from './about-us/about-us.component';
+import {MessagesModule} from 'primeng/messages';
+import {ToastModule} from 'primeng/toast';
 
 
 @NgModule({
@@ -93,6 +95,8 @@ import { AboutUsComponent } from './about-us/about-us.component';
         ButtonModule,
         DialogModule,
         TranslateModule,
+        MessagesModule,
+        ToastModule,
 
     ],
     exports: [

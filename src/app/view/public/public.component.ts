@@ -1,6 +1,6 @@
 import {Component, Injectable, OnInit} from '@angular/core';
 import {MenuService} from '../shared/slide-bar/app.menu.service';
-import {PrimeNGConfig} from 'primeng/api';
+import {MessageService, PrimeNGConfig} from 'primeng/api';
 import {AppComponent} from '../../app.component';
 import {User} from '../../controller/model/user.model';
 import {AuthenticationService} from '../../controller/service/authentication.service';
@@ -70,6 +70,7 @@ export class PublicComponent implements OnInit {
     constructor(private menuService: MenuService,
                 private service: LoginService,
                 private router: Router,
+                private messageService: MessageService,
                 private authenticationService: AuthenticationService,
                 private primengConfig: PrimeNGConfig, public app: AppComponent) {
     }
@@ -246,6 +247,13 @@ export class PublicComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        setInterval(() => {
+            this.updateRestOfTime();
+        }, 1000);
+        setInterval(() => {
+            this.showConfirm();
+        }, 5000);
+
         this.user = this.authenticationService.getUserFromLocalCache();
         if (this.user?.role === Role?.ADMIN) {
             this.router.navigate(['/admin/parcours']);
@@ -256,6 +264,64 @@ export class PublicComponent implements OnInit {
             this.router.navigate(['/etudiant/dashboard']);
         }
     }
+
+    showConfirm() {
+        this.messageService.clear('c');
+        this.messageService.add({
+            key: 'c',
+            sticky: true,
+            closable: false,
+            severity: 'info',
+            summary: 'Open soon',
+            detail: 'September 25 2022'
+        });
+    }
+
+    updateRestOfTime() {
+        const date = new Date(2022, 8, 15);
+        const dateNow = new Date();
+        const milliseconds = date.getTime() - dateNow.getTime();
+        // ----------------------- Days -----------------------------
+        const firstValueOfDay = String((milliseconds / (24 * 60 * 60 * 1000)));
+        const myDay = Number(firstValueOfDay.substring(0, firstValueOfDay.indexOf('.')));
+        const stringRestday = String(0 + firstValueOfDay.toString().substring(firstValueOfDay.indexOf('.')));
+        const numberOfRstDay = Number(stringRestday);
+        // -----------------------Hour-----------------------------
+        const firstValueOfHour = String(numberOfRstDay * (24));
+        const myHour = Number(firstValueOfHour.substring(0, firstValueOfHour.indexOf('.')));
+        const stringRestHour = String(0 + firstValueOfHour.toString().substring(firstValueOfHour.indexOf('.')));
+        const numberOfRstHour = Number(stringRestHour);
+        // -----------------------Minutes-----------------------------
+        const firstValueOfMinute = String(numberOfRstHour * (60));
+        const myMinute = Number(firstValueOfMinute.substring(0, firstValueOfMinute.indexOf('.')));
+        const stringRestMinute = String(0 + firstValueOfMinute.toString().substring(firstValueOfMinute.indexOf('.')));
+        const numberOfRstMinute = Number(stringRestMinute);
+        // -----------------------Seconds-----------------------------
+        const firstValueOfSecond = String(numberOfRstMinute * (60));
+        const mySecond = Number(firstValueOfSecond.substring(0, firstValueOfSecond.indexOf('.')));
+        const stringRestSecond = String(0 + firstValueOfSecond.toString().substring(firstValueOfSecond.indexOf('.')));
+        const numberOfRstSecond = Number(stringRestSecond);
+
+        if (milliseconds < 0) {
+            this.getRestOfDay = myDay;
+            this.getRestOfHour = 0 - myHour;
+            this.getRestOfMinutes = 0 - myMinute;
+            this.getRestOfSecond = 0 - mySecond;
+            this.getRestOfTime = (String(myDay) + 'd : -' + String(myHour) + 'h : -' + String(myMinute) + 'm : -' + String(mySecond) + 's');
+        } else {
+            this.getRestOfDay = myDay;
+            this.getRestOfHour = myHour;
+            this.getRestOfMinutes = myMinute;
+            this.getRestOfSecond = mySecond;
+            this.getRestOfTime = (String(myDay) + 'd : ' + String(myHour) + 'h : ' + String(myMinute) + 'm : ' + String(mySecond) + 's');
+        }
+    }
+
+    getRestOfTime: string;
+    getRestOfDay: number;
+    getRestOfHour: number;
+    getRestOfMinutes: number;
+    getRestOfSecond: number;
 }
 
 
