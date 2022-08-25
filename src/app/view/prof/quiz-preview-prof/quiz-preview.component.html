@@ -70,7 +70,8 @@
                    [(ngModel)]="answerSelected.lib"
                    class="p-inputtext-sm " pInputText/>
 
-            <input *ngIf="answerSelected.lib !== undefined && !answerIsCorrect(answerSelected, question)" disabled
+            <input *ngIf="answerSelected.lib !== undefined && !answerIsCorrect(answerSelected, question)"
+                   [pTooltip]="correctAnswersList.get(question.id)[0]?.lib" tooltipPosition="top"
                    id="inputFalseAnswer" inputId="inputDashedBorder" type="text"
                    [(ngModel)]="answerSelected.lib"
                    class="p-inputtext-sm " pInputText/>
@@ -117,7 +118,7 @@
                    id="input-answer-correct" type="text"
                    [(ngModel)]="answerSelected.lib" pInputText>
 
-            <input style="text-decoration: 2px line-through red;" disabled
+            <input style="text-decoration: 2px line-through red;"
                    *ngIf="answerSelected.lib !== undefined && !answerIsCorrect(answerSelected, question)"
                    [pTooltip]="correctAnswersList.get(question.id)[0]?.lib" tooltipPosition="top"
                    id="input-answer-incorrect" type="text"
@@ -164,7 +165,7 @@
                    [(ngModel)]="answerSelected.lib"
                    class="p-inputtext-sm " pInputText/>
 
-            <input *ngIf="answerSelected.lib !== undefined && !answerIsCorrect(answerSelected, question)" disabled
+            <input *ngIf="answerSelected.lib !== undefined && !answerIsCorrect(answerSelected, question)"
                    id="inputFalseAnswer" inputId="inputDashedBorder" type="text"
                    [pTooltip]="correctAnswersList.get(question.id)[0]?.lib" tooltipPosition="top"
                    [(ngModel)]="answerSelected.lib"
@@ -208,7 +209,8 @@
                    [(ngModel)]="answerSelected.lib"
                    class="p-inputtext-sm " pInputText/>
 
-            <input *ngIf="answerSelected.lib !== undefined && !answerIsCorrect(answerSelected, question)" disabled
+            <input *ngIf="answerSelected.lib !== undefined && !answerIsCorrect(answerSelected, question)"
+                   [pTooltip]="correctAnswersList.get(question.id)[0]?.lib" tooltipPosition="top"
                    id="inputFalseAnswer" inputId="inputDashedBorder" type="text"
                    [(ngModel)]="answerSelected.lib"
                    class="p-inputtext-sm " pInputText/>

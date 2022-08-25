@@ -266,13 +266,13 @@ export class PublicComponent implements OnInit {
     }
 
     showConfirm() {
-        this.messageService.clear('c');
+        this.messageService.clear('ccc');
         this.messageService.add({
-            key: 'c',
+            key: 'ccc',
             sticky: true,
             closable: false,
             severity: 'info',
-            summary: 'Open soon',
+            summary: 'Open soon / الموقع سيفتح قريبا',
             detail: 'September 25 2022'
         });
     }
