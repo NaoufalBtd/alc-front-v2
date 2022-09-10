@@ -12,7 +12,7 @@ export const environment = {
     profUrl: 'http://localhost:8036/prof/',
     etudiantUrl: 'http://localhost:8036/etudiant/',
     publicUrl: 'http://localhost:8036/public/',
-    socketUrl: 'wss://localhost:8036/chat',
+    socketUrl: 'ws://localhost:8036/chat',
     signWithGoogleApi: 'http://localhost:8036/admin/admin/googlesignin',
     signWithGmailApi: 'http://localhost:8036/admin/gmail/googlesignin',
 

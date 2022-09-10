@@ -1,7 +1,12 @@
 # LOGIN && Pass
-Prof: login ::: Prof && password::: Prof
-Etudiant: login ::: etudiant && password::: etudiant
-Admin: login ::: admin && password::: admin
+================ADMIN==============================
+PASS::::::: gZLHdp8kBW
+EMAIL:::::: alc.image.driver@gmail.com
+
+================TEACHER============================
+PASS::::::: fsNElKYWr0
+EMAIL:::::: engflexy.contact@gmail.com
+
 
 ## Development server
 
