@@ -1,20 +1,23 @@
 // This file can be replaced during build by using the `fileReplacements` array.
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
+const url = 'http://localhost:8036';
+// const url = 'http://162.19.25.141:8036';
+const socket = 'ws://localhost:8036/chat';
 
 export const environment = {
     production: false,
-    baseUrl: 'http://localhost:8036/learn/',
-    baseApi: 'http://localhost:8036',
-    sectionItemUrl: 'http://localhost:8036/learn/sectionItem/',
-    translationHost: 'http://localhost:8036/learn/TranslateEnAr/text/translationFeatures/',
-    adminUrl: 'http://localhost:8036/admin/',
-    profUrl: 'http://localhost:8036/prof/',
-    etudiantUrl: 'http://localhost:8036/etudiant/',
-    publicUrl: 'http://localhost:8036/public/',
-    socketUrl: 'ws://localhost:8036/chat',
-    signWithGoogleApi: 'http://localhost:8036/admin/admin/googlesignin',
-    signWithGmailApi: 'http://localhost:8036/admin/gmail/googlesignin',
+    baseUrl: url + '/learn/',
+    baseApi: url ,
+    sectionItemUrl: url +  '/learn/sectionItem/',
+    translationHost: url + '/learn/TranslateEnAr/text/translationFeatures/',
+    adminUrl: url + '/admin/',
+    profUrl: url + '/prof/',
+    etudiantUrl: url + '/etudiant/',
+    publicUrl: url + '/public/',
+    socketUrl: socket,
+    signWithGoogleApi: url +  '/admin/admin/googlesignin',
+    signWithGmailApi: url + '/admin/gmail/googlesignin',
 
     // baseUrl: 'http://162.19.25.141:8036/learn/',
     // baseApi: 'http://162.19.25.141:8036',
