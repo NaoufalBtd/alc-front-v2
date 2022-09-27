@@ -30,7 +30,7 @@
 
 .progressBarLesson {
   background: #263238 !important;
-  height: 13px;
+  height: 20px;
   border: 1px solid;
   border-radius: 1px;
 }
@@ -38,16 +38,15 @@
 .finishLessonProgressBar {
   background: white;
   width: 20%;
-  height: 12px;
+  height: 20px;
   text-align: center;
   color: #263238;
-  font-size: xx-small;
   font-weight: bold;
 }
 
 .progressBarHours {
   background: #ff725e !important;
-  height: 13px;
+  height: 20px;
   border: 1px solid;
   border-radius: 1px;
 }
@@ -55,7 +54,7 @@
 .finishHoursProgressBar {
   background: white;
   width: 30%;
-  height: 12px;
+  height: 20px;
   text-align: center;
   color: #ff725e;
   font-size: xx-small;

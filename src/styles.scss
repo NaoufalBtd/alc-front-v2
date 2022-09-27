@@ -21,6 +21,9 @@ $gutter: 1rem; //for primeflex grid system
 @import '../src/assets/scss/main.scss';
 @import 'swiper/swiper-bundle.css';
 
+h1{
+  color: black;
+}
 .e-btn{
   background: #ff725e;
 }

@@ -6,9 +6,10 @@
          id="imageDiv2">
     </div>
     <div id="divStudentResponse" style="width: auto;margin:0 auto;margin-top: 15px;text-align: center">
-        <i class="pi pi-volume-up p-mr-2 p-d-inline" style="font-size: 1.5rem; cursor: pointer;color: greenyellow"
+        <i  class="pi pi-volume-up p-mr-2 p-d-inline" style="font-size: 1.5rem; cursor: pointer;color: greenyellow"
            (click)="sound(current.response)"></i>
-        <h2 class="p-d-inline">{{current.response}}</h2>
+        <h2 *ngIf="fliped===false" class="p-d-inline">{{current?.transcription}}</h2>
+        <h2 *ngIf="fliped===true" class="p-d-inline">{{current?.response}}</h2>
         <h3 id="translateShow" style="margin-top: 10px;visibility: hidden">{{current.translation}}</h3>
     </div>
 
@@ -21,8 +22,9 @@
                 <h5>Example</h5>
                 <p>{{current.example}}</p>
                 <h5>Synonyms</h5>
-                <ul  *ngIf="current.synonyms!==null">
-                    <li style="    display: flex; width: 50%;margin: 15px 0;" *ngFor="let s of current.synonyms; let i = index">
+                <ul *ngIf="current.synonyms!==null">
+                    <li style="    display: flex; width: 50%;margin: 15px 0;"
+                        *ngFor="let s of current.synonyms; let i = index">
                         <i class="pi pi-volume-up p-mr-2 p-d-inline"
                            style="font-size: 1.5rem; cursor: pointer;color: #343a40"
                            (click)="sound(s)"><span style="margin-left: 3px">{{s}}</span></i>

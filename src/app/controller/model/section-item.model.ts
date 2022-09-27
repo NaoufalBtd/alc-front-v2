@@ -5,6 +5,7 @@ export class SectionItemModel {
     public imageUrl: string;
     public response?: string;
     public translation: string;
+    public transcription: string;
     public explanation: string;
     public example: string;
     public synonyms: string[];

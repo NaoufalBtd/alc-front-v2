@@ -1,9 +1,9 @@
-// This file can be replaced during build by using the `fileReplacements` array.
-// `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
-// The list of file replacements can be found in `angular.json`.
+
+
 const url = 'http://localhost:8036';
 // const url = 'http://162.19.25.141:8036';
 const socket = 'ws://localhost:8036/chat';
+// const socket = 'ws://162.19.25.141:8036/chat';
 
 export const environment = {
     production: false,

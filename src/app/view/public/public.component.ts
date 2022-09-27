@@ -278,7 +278,7 @@ export class PublicComponent implements OnInit {
     }
 
     updateRestOfTime() {
-        const date = new Date(2022, 8, 25);
+        const date = new Date(2022, 9, 10);
         const dateNow = new Date();
         const milliseconds = date.getTime() - dateNow.getTime();
         // ----------------------- Days -----------------------------

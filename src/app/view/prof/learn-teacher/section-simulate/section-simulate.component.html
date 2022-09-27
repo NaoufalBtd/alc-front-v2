@@ -138,7 +138,8 @@
 
 
                                     <div *ngIf=" this.selectedsection?.contenu != null && this.selectedsection?.urlVideo == null">
-                                        <p (mouseup)="dict()" class="section-content">{{this.selectedsection?.contenu}}</p>
+                                        <p (mouseup)="dict()"
+                                           class="section-content">{{this.selectedsection?.contenu}}</p>
                                     </div>
                                 </div>
                             </div>
@@ -306,53 +307,45 @@
                                              class="homeWorkIcon">
                                     </ng-template>
                                     <div id="categoriess" style="margin-top: -10px">
-                                        <div *ngFor="let section of sectionStandard"
-                                             [style.border-left]="(section?.id === sectionStandard[0]?.id)? 'none': '2px solid #757f8a'"
-                                             class="list-group">
-                                            <i *ngIf="sectionIsFinished(section)"
-                                               [style.color]="(section?.categorieSection?.libelle) == (this.selectedsection?.categorieSection?.libelle)? '#ff725e' :'#757f8a' "
-                                               id="check-icon" class="pi pi-check-circle"></i>
 
 
-                                            <i *ngIf="!sectionIsFinished(section)"
-                                               [style.background]="(section?.categorieSection?.libelle) == (this.selectedsection?.categorieSection?.libelle)? '#ff725e' :'#757f8a' "
-                                               [style.color]="(section?.categorieSection?.libelle) == (this.selectedsection?.categorieSection?.libelle)? '#ff725e' :'#757f8a' "
-                                               id="check-icon" class="pi pi-times-circle"></i>
+                                        <ul *ngFor="let section of sectionStandard"
+                                            [style.color]="(section?.categorieSection?.libelle) == (this.selectedsection?.categorieSection?.libelle)? '#ff725e' :'#757f8a' "
+                                            (click)="allerVerSection(section)"
+                                            class="list-unstyled list pl-5">
+                                            <li class="mb-3 d-flex align-items-center">
+                                                 <i *ngIf="!sectionIsFinished(section)" [style.color]="(section?.categorieSection?.libelle) == (this.selectedsection?.categorieSection?.libelle)? '#ff725e' :'#757f8a' "
+                                                    style="margin: 0 9px 0 0;font-size: 9px!important;" class="fa fa-circle mr-3"></i>
 
 
-                                            <a (click)="allerVerSection(section)"
-                                               [style.color]="(section?.categorieSection?.libelle) == (this.selectedsection?.categorieSection?.libelle)? '#ff725e' :'#757f8a' "
-                                               class="list-item">
-                                                {{section?.categorieSection?.libelle}}
-                                            </a>
-                                        </div>
+                                                <i *ngIf="sectionIsFinished(section)" [style.color]="(section?.categorieSection?.libelle) == (this.selectedsection?.categorieSection?.libelle)? '#ff725e' :'#757f8a' "
+                                                   style="margin: 0 9px 0 0;font-size: 9px!important;"
+                                                   class="fa fa-check-circle text-primary mr-3"></i>
+
+                                                {{section?.categorieSection?.libelle}}</li>
+                                        </ul>
 
 
-                                        <div style="background-color: #e9ecef;margin-top: 33px; margin-bottom: -13px;">
+                                        <div style="background-color: #e9ecef;">
                                             <h6 style="color: black ">ADDITIONAL</h6>
                                         </div>
 
-
-                                        <div *ngFor="let section of sectionAdditional"
-                                             [style.border-left]="(section?.id === sectionAdditional[0]?.id)? 'none': '2px solid #757f8a'"
-                                             class="list-group">
-                                            <i *ngIf="!sectionIsFinished(section)" id="check-icon"
-                                               [style.color]="(section?.categorieSection?.libelle) == (this.selectedsection?.categorieSection?.libelle)? '#ff725e' :'#757f8a' "
-                                               [style.background]="(section?.categorieSection?.libelle) == (this.selectedsection?.categorieSection?.libelle)? '#ff725e' :'#757f8a' "
-                                               class="pi pi-times-circle"></i>
-
-
-                                            <i *ngIf="sectionIsFinished(section)" id="check-icon"
-                                               [style.color]="(section?.categorieSection?.libelle) == (this.selectedsection?.categorieSection?.libelle)? '#ff725e' :'#757f8a' "
-                                               class="pi pi-check-circle"></i>
+                                        <ul *ngFor="let section of sectionAdditional"
+                                            [style.color]="(section?.categorieSection?.libelle) == (this.selectedsection?.categorieSection?.libelle)? '#ff725e' :'#757f8a' "
+                                            (click)="allerVerSection(section)"
+                                            class="list-unstyled list pl-5">
+                                            <li class="mb-3 d-flex align-items-center">
+                                                <i *ngIf="!sectionIsFinished(section)" [style.color]="(section?.categorieSection?.libelle) == (this.selectedsection?.categorieSection?.libelle)? '#ff725e' :'#757f8a' "
+                                                   style="margin: 0 9px 0 0;font-size: 9px!important;" class="fa fa-circle mr-3"></i>
 
 
-                                            <a (click)="allerVerSection(section)"
-                                               [style.color]="(section?.categorieSection?.libelle) == (this.selectedsection?.categorieSection?.libelle)? '#ff725e' :'#757f8a' "
-                                               class="list-item">
+                                                <i *ngIf="sectionIsFinished(section)" [style.color]="(section?.categorieSection?.libelle) == (this.selectedsection?.categorieSection?.libelle)? '#ff725e' :'#757f8a' "
+                                                   style="margin: 0 9px 0 0;font-size: 9px!important;"
+                                                   class="fa fa-check-circle text-primary mr-3"></i>
+
                                                 {{section?.categorieSection?.libelle}}
-                                            </a>
-                                        </div>
+                                            </li>
+                                        </ul>
 
 
                                     </div>
