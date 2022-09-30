@@ -91,6 +91,15 @@ export class HomeWorkEtudiantComponent implements OnInit {
         this.homeWorkService.showWatchItHomeWork = value;
     }
 
+    get showPhrasebook(): boolean {
+        return this.homeWorkService.showPhrasebook;
+    }
+
+    set showPhrasebook(value: boolean) {
+        this.homeWorkService.showPhrasebook = value;
+    }
+
+
     get listOftypeQuestions(): Array<TypeDeQuestion> {
         return this.homeWorkService.listOftypeQuestions;
     }
@@ -538,7 +547,7 @@ export class HomeWorkEtudiantComponent implements OnInit {
             this.son = this.questionSideLeft + ' ' + this.correctAnswersList?.get(qst.id)[0].lib + ' ' + this.questionSideRight;
             console.log(this.son);
         } else if (qst.typeDeQuestion.ref === 't3') {
-            this.son = this.correctAnswersList?.get(qst.id)[0].lib;
+            this.son = qst.libelle;
             console.log(this.son);
         } else if (qst.typeDeQuestion.ref === 't5') {
             this.son = qst.libelle;
@@ -548,7 +557,7 @@ export class HomeWorkEtudiantComponent implements OnInit {
             }
         }
         const text = encodeURIComponent(this.son);
-        const url = 'https://www.translatedict.com/speak.php?word=' + this.son + '&lang=ar';
+        const url = 'https://www.translatedict.com/speak.php?word=' + this.son + '&lang=en';
         const audio = new Audio(url);
         audio.play();
     }

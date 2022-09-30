@@ -12,7 +12,6 @@ import {HomeWOrkEtudiant} from '../model/home-work-etudiant.model';
 import {Observable} from 'rxjs';
 import {HomeWork} from '../model/home-work.model';
 import {HomeWorkQST} from '../model/home-work-qst.model';
-import {Parcours} from '../model/parcours.model';
 import {HomeworkService} from './homework.service';
 
 @Injectable({
@@ -59,6 +58,7 @@ export class HomeWorkSimulateService {
     private _wordDictionnary: string;
     private _son = '';
     private _showDragHomeWork: boolean;
+    private _showPhrasebook: boolean;
     private _correctAnswerT12: string;
 
 
@@ -70,6 +70,14 @@ export class HomeWorkSimulateService {
     ) {
     }
 
+
+    get showPhrasebook(): boolean {
+        return this._showPhrasebook;
+    }
+
+    set showPhrasebook(value: boolean) {
+        this._showPhrasebook = value;
+    }
 
     get showT12AnswerDiv(): boolean {
         return this._showT12AnswerDiv;
@@ -466,7 +474,7 @@ export class HomeWorkSimulateService {
 
 
     public findhomeworkbyCoursId(cours: Cours): Observable<Array<HomeWork>> {
-        console.log(cours);
+
         return this.http.get<Array<HomeWork>>(this.adminUrl + 'homeWork/cours/id/' + cours.id);
     }
 
@@ -478,6 +486,7 @@ export class HomeWorkSimulateService {
         this.showTypeOfQstBar = true;
         this.showWatchItHomeWork = false;
         this.showDragHomeWork = false;
+        this.showPhrasebook = false;
         if (homeWork.libelle === 'Watch it' || homeWork.libelle === 'Life Story') {
             this.selectedHomeWork = homeWork;
             this.homeWorkQuestion = new HomeWorkQST();
@@ -485,14 +494,23 @@ export class HomeWorkSimulateService {
                 this.homeWorkQuestion.typeDeQuestion = this.listOftypeQuestions.filter(t => t.ref === 't9')[0];
                 this.showDragHomeWork = false;
                 this.showWatchItHomeWork = true;
+                this.showPhrasebook = false;
             } else {
                 this.homeWorkQuestion.typeDeQuestion = this.listOftypeQuestions.filter(t => t.ref === 't10')[0];
                 this.showWatchItHomeWork = false;
                 this.showDragHomeWork = true;
+                this.showPhrasebook = false;
             }
+        } else if (homeWork?.libelle?.toLowerCase() === 'phrasebook') {
+            this.showPhrasebook = true;
+            this.showWatchItHomeWork = false;
+            this.showDragHomeWork = false;
+            this.selectedHomeWork = homeWork;
+            this.homeWorkQuestion = new HomeWorkQST();
         } else {
             this.showWatchItHomeWork = false;
             this.showDragHomeWork = false;
+            this.showPhrasebook = false;
             this.homeWorkReponse = new HomeWorkReponse();
             this.answersList = new Map<HomeWorkQST, HomeWorkReponse>();
             this.answersPointStudent = new Map<HomeWorkQST, string>();
@@ -503,27 +521,19 @@ export class HomeWorkSimulateService {
             this.selectedHomeWork = homeWork;
             this.homeWorkEtudiantService.findQuestions(homeWork).subscribe(qstData => {
                 this.homeWorkQuestionList = qstData;
-                console.log(this.homeWorkQuestionList);
                 this.numberOfQuestion = this.homeWorkQuestionList.length;
                 this.progressBarValue = 100 / this.numberOfQuestion;
-                console.log(this.homeWorkQuestionList);
                 for (let i = 0; i < this.homeWorkQuestionList.length; i++) {
                     this.homeWorkQuestion = this.homeWorkQuestionList[0];
                     this.homeWorkEtudiantService.findReponsesByQuestionId(this.homeWorkQuestionList[i].id).subscribe(
                         data1 => {
                             this.homeWorkQuestionList[i].reponses = data1;
                             this.correctAnswersList.set(this.homeWorkQuestionList[i].id, data1.filter(r => r.etatReponse === 'true'));
-                            console.log(this.correctAnswersList);
                             if (this.homeWorkQuestion.typeDeQuestion.ref === 't3') {
-                                console.log(this.correctAnswersList);
                             }
                         }, error => {
-                            console.log(error);
                         }
                     );
-                    console.log(this.homeWorkQuestion);
-                    console.log(this.questionSideLeft);
-                    console.log(this.questionSideRight);
                     if (this.homeWorkQuestion.typeDeQuestion.ref === 't1') {
                         this.questionSideLeft = this.homeWorkQuestion.libelle.substring(0, this.homeWorkQuestion.libelle.indexOf('...'));
                         this.questionSideRight = this.homeWorkQuestion.libelle.substring(this.homeWorkQuestion.libelle.lastIndexOf('...') + 3);
@@ -533,13 +543,10 @@ export class HomeWorkSimulateService {
                         this.inputAnswer = this.homeWorkQuestion.libelle.substring(this.homeWorkQuestion.libelle.indexOf('@') + 1,
                             this.homeWorkQuestion.libelle.lastIndexOf('@'));
                     } else if (this.homeWorkQuestion.typeDeQuestion.ref === 't8') {
-                        console.log(this.homeWorkQuestion.libelle);
                         if (this.homeWorkQuestion.ref !== '') {
                             const ref = this.homeWorkQuestion.ref.substring((this.homeWorkQuestion.ref.length - 10),
                                 this.homeWorkQuestion.ref.length);
                             const index = this.homeWorkQuestion.libelle.lastIndexOf(ref);
-                            console.log(index);
-                            console.log(ref);
                             if (index !== 0 && index !== -1) {
                                 this.homeWorkQuestion.libelle = this.homeWorkQuestion.libelle.substring(index + ref.length,
                                     this.homeWorkQuestion.libelle.length);
@@ -556,8 +563,6 @@ export class HomeWorkSimulateService {
                         this.extractedData(this.homeWorkQuestion.libelle, 't11');
                     } else if (this.homeWorkQuestion.typeDeQuestion.ref === 't12') {
                         this.extractedData(this.homeWorkQuestion.libelle, 't12');
-                        console.log('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
-                        console.log(this.answersT12List);
                         this.showT12Answers();
                     }
                 }
@@ -580,14 +585,11 @@ export class HomeWorkSimulateService {
 
     private showT12Answers() {
         this.homeWorkAnswersList = new Array<HomeWorkReponse>();
-        console.log(this.homeWorkAnswersList);
-        console.log(this.correctAnswersList);
         this.homeWorkEtudiantService.findReponsesByQuestionId(this.homeWorkQuestion.id).subscribe(
             data1 => {
                 this.homeWorkAnswersList = data1;
                 this.filterDatat12(this.homeWorkAnswersList, 1);
             }, error => {
-                console.log(error);
             }
         );
     }
@@ -624,19 +626,14 @@ export class HomeWorkSimulateService {
 
             this.dragList.push(sentence);
         }
-        console.log(this.dragAnswersList);
-        console.log(this.dragList);
         this.dragList = this.dragList.sort((a, b) => b.localeCompare(a));
-        console.log(text);
     }
 
     public onStartHomeWork(course: Cours) {
         this.homeWorkService.findhomeworkbyCoursId(course).subscribe(homeWorkData => {
-            console.log(homeWorkData);
             this.homeWorkList = homeWorkData;
             this.homeWorkSelectedFct(this.homeWorkList[0]);
         }, error => {
-            console.log(error);
         });
     }
 

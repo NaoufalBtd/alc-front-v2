@@ -8,8 +8,10 @@
     <div id="divStudentResponse" style="width: auto;margin:0 auto;margin-top: 15px;text-align: center">
         <i class="pi pi-volume-up p-mr-2 p-d-inline" style="font-size: 1.5rem; cursor: pointer;color: greenyellow"
            (click)="sound(current.response)"></i>
+        <h2 class="p-d-inline">{{current?.transcription}}</h2><br>
         <h2 class="p-d-inline">{{current?.response}}</h2>
-        <h3 id="translateShow" style="margin-top: 10px;visibility: hidden">{{current?.translation}}</h3>
+        <h3 id="translateShow"
+            style="margin-top: 10px;visibility: hidden">{{current?.translation}}</h3>
     </div>
 
     <div id="infoDiv" class="card"

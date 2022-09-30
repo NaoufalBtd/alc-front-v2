@@ -125,7 +125,8 @@
 
 
                                     <div *ngIf=" this.selectedsection.contenu != null && this.selectedsection.urlVideo == null">
-                                        <p (mouseup)="dict()" class="section-content">{{this.selectedsection.contenu}}</p>
+                                        <p (mouseup)="dict()"
+                                           class="section-content">{{this.selectedsection.contenu}}</p>
                                     </div>
                                 </div>
                             </div>
@@ -279,17 +280,19 @@
                                             (click)="showLessonFct(section)"
                                             class="list-unstyled list pl-5">
                                             <li class="mb-3 d-flex align-items-center">
-                                                <i *ngIf="!sectionIsFinished(section)" [style.color]="(section?.categorieSection?.libelle) == (this.selectedsection?.categorieSection?.libelle)? '#ff725e' :'#757f8a' "
-                                                   style="margin: 0 9px 0 0;font-size: 9px!important;" class="fa fa-circle mr-3"></i>
+                                                <i *ngIf="!sectionIsFinished(section)"
+                                                   [style.color]="(section?.categorieSection?.libelle) == (this.selectedsection?.categorieSection?.libelle)? '#ff725e' :'#757f8a' "
+                                                   style="margin: 0 9px 0 0;font-size: 9px!important;"
+                                                   class="fa fa-circle mr-3"></i>
 
 
-                                                <i *ngIf="sectionIsFinished(section)" [style.color]="(section?.categorieSection?.libelle) == (this.selectedsection?.categorieSection?.libelle)? '#ff725e' :'#757f8a' "
+                                                <i *ngIf="sectionIsFinished(section)"
+                                                   [style.color]="(section?.categorieSection?.libelle) == (this.selectedsection?.categorieSection?.libelle)? '#ff725e' :'#757f8a' "
                                                    style="margin: 0 9px 0 0;font-size: 9px!important;"
                                                    class="fa fa-check-circle text-primary mr-3"></i>
 
                                                 {{section?.categorieSection?.libelle}}</li>
                                         </ul>
-
 
 
                                         <div style="background-color: #e9ecef;">
@@ -301,11 +304,14 @@
                                             (click)="showLessonFct(section)"
                                             class="list-unstyled list pl-5">
                                             <li class="mb-3 d-flex align-items-center">
-                                                <i *ngIf="!sectionIsFinished(section)" [style.color]="(section?.categorieSection?.libelle) == (this.selectedsection?.categorieSection?.libelle)? '#ff725e' :'#757f8a' "
-                                                   style="margin: 0 9px 0 0;font-size: 9px!important;" class="fa fa-circle mr-3"></i>
+                                                <i *ngIf="!sectionIsFinished(section)"
+                                                   [style.color]="(section?.categorieSection?.libelle) == (this.selectedsection?.categorieSection?.libelle)? '#ff725e' :'#757f8a' "
+                                                   style="margin: 0 9px 0 0;font-size: 9px!important;"
+                                                   class="fa fa-circle mr-3"></i>
 
 
-                                                <i *ngIf="sectionIsFinished(section)" [style.color]="(section?.categorieSection?.libelle) == (this.selectedsection?.categorieSection?.libelle)? '#ff725e' :'#757f8a' "
+                                                <i *ngIf="sectionIsFinished(section)"
+                                                   [style.color]="(section?.categorieSection?.libelle) == (this.selectedsection?.categorieSection?.libelle)? '#ff725e' :'#757f8a' "
                                                    style="margin: 0 9px 0 0;font-size: 9px!important;"
                                                    class="fa fa-check-circle text-primary mr-3"></i>
 
@@ -326,27 +332,63 @@
                                     </ng-template>
                                     <div id="categoriess" style="margin-top: -10px">
 
-                                        <div *ngFor="let homeWork of homeWorkList"
-                                             [style.border-left]="(homeWork.id === homeWorkList[0]?.id)? 'none': '2px solid #757f8a'"
-                                             class="list-group">
-                                            <i id="check-icon"
-                                               [style.color]="(homeWork.id) === (this.selectedHomeWork?.id)? '#ff725e' :'#757f8a' "
-                                               [style.background]="(homeWork.id) === (this.selectedHomeWork?.id)? '#ff725e' :'#757f8a' "
 
-                                               class="pi pi-times-circle"></i>
+                                        <ul [style.color]="(vocabularySection.id) === (this.selectedsection?.id)? '#ff725e' :'#757f8a' "
+                                            class="list-unstyled list pl-5">
+                                            <li *ngIf="vocabularySection?.id"
+                                                (click)="showLessonFct(vocabularySection)"
+                                                class="mb-3 d-flex align-items-center">
+                                                <i [style.color]="(vocabularySection?.id) === (this.selectedsection?.id)? '#ff725e' :'#757f8a' "
+                                                   style="margin: 0 9px 0 0;font-size: 9px!important;"
+                                                   class="fa fa-circle mr-3"></i>
+                                                {{vocabularySection?.libelle}}
+                                            </li>
+                                        </ul>
+
+                                        <ul [style.color]="(getToKnowSection.id) === (this.selectedsection?.id)? '#ff725e' :'#757f8a' "
+                                            class="list-unstyled list pl-5">
+                                            <li *ngIf="getToKnowSection?.id"
+                                                (click)="showLessonFct(getToKnowSection)"
+                                                class="mb-3 d-flex align-items-center">
+                                                <i [style.color]="(getToKnowSection?.id) === (this.selectedsection?.id)? '#ff725e' :'#757f8a' "
+                                                   style="margin: 0 9px 0 0;font-size: 9px!important;"
+                                                   class="fa fa-circle mr-3"></i>
+                                                {{getToKnowSection?.libelle}}
+                                            </li>
+                                        </ul>
+
+                                        <ng-container *ngFor="let homeWork of homeWorkList">
+                                            <ul *ngIf="homeWork?.typeHomeWork?.code === 'OBLIGATORY'"
+                                                [style.color]="(homeWork.id) === (this.selectedHomeWork?.id)? '#ff725e' :'#757f8a' "
+                                                class="list-unstyled list pl-5">
+                                                <li (click)="homeWorkSelectedFct(homeWork)"
+                                                    class="mb-3 d-flex align-items-center">
+                                                    <i [style.color]="(homeWork.id) === (this.selectedHomeWork?.id)? '#ff725e' :'#757f8a' "
+                                                       style="margin: 0 9px 0 0;font-size: 9px!important;"
+                                                       class="fa fa-circle mr-3"></i>
+                                                    {{homeWork?.libelle}}
+                                                </li>
+                                            </ul>
+                                        </ng-container>
 
 
-                                            <a (click)="homeWorkSelectedFct(homeWork)"
-                                               [style.color]="(homeWork.id) === (this.selectedHomeWork?.id)? '#ff725e' :'#757f8a' "
-                                               class="list-item">
-                                                {{homeWork?.libelle}}
-                                            </a>
-                                        </div>
-
-
-                                        <div style="background-color: #e9ecef;margin-top: 33px; margin-bottom: -13px;">
+                                        <div style="background-color: #e9ecef;">
                                             <h6 style="color: black ">ADDITIONAL</h6>
                                         </div>
+
+                                        <ng-container *ngFor="let homeWork of homeWorkList">
+                                            <ul *ngIf="homeWork?.typeHomeWork?.code === 'ADDITIONAL'"
+                                                [style.color]="(homeWork.id) === (this.selectedHomeWork?.id)? '#ff725e' :'#757f8a' "
+                                                class="list-unstyled list pl-5">
+                                                <li (click)="homeWorkSelectedFct(homeWork)"
+                                                    class="mb-3 d-flex align-items-center">
+                                                    <i [style.color]="(homeWork.id) === (this.selectedHomeWork?.id)? '#ff725e' :'#757f8a' "
+                                                       style="margin: 0 9px 0 0;font-size: 9px!important;"
+                                                       class="fa fa-circle mr-3"></i>
+                                                    {{homeWork?.libelle}}
+                                                </li>
+                                            </ul>
+                                        </ng-container>
 
                                     </div>
 

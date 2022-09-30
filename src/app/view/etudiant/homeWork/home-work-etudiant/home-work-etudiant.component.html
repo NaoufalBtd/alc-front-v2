@@ -85,43 +85,43 @@
                     <!--------------------------------- TRANSLATE THE PHRASE -------------------------------------------------------->
 
 
-                    <div *ngIf="homeWorkQuestion.typeDeQuestion.ref === 't3'" class="p-grid">
+                    <div *ngIf="(homeWorkQuestion.typeDeQuestion.ref === 't3') && selectedHomeWork?.libelle !== 'Phrasebook'" class="p-grid">
                         <div class="p-col-12 question">
                             <h5 style="margin-top: -20px;"
                                 class="translateQuestion"> {{  homeWorkQuestion?.libelle}}  </h5>
 
                             <span style="margin: 0" class="p-float-label">
-            <button *ngIf="answerSelected.lib !== undefined"
-                    [disabled]="disableButtonSon" pButton pRipple type="button" (click)="sound(homeWorkQuestion)"
-                    icon="pi pi-volume-up" class="p-button-rounded sonButton ">
-            </button>
+                                        <button *ngIf="answerSelected.lib !== undefined"
+                                                [disabled]="disableButtonSon" pButton pRipple type="button" (click)="sound(homeWorkQuestion)"
+                                                icon="pi pi-volume-up" class="p-button-rounded sonButton ">
+                                        </button>
 
-            <input *ngIf="answerSelected.lib === undefined" id="input-answer" type="text"
-                   (focus)="showDontKnowButton = false ; showCheckButton=true"
-                   [(ngModel)]="homeWorkReponse.lib" pInputText>
+                                        <input *ngIf="answerSelected.lib === undefined" id="input-answer" type="text"
+                                               (focus)="showDontKnowButton = false ; showCheckButton=true"
+                                               [(ngModel)]="homeWorkReponse.lib" pInputText>
 
-            <input disabled
-                   *ngIf="answerSelected.lib !== undefined && answerIsCorrect(answerSelected, homeWorkQuestion)"
-                   id="input-answer-correct" type="text"
-                   [(ngModel)]="answerSelected.lib" pInputText>
+                                        <input disabled
+                                               *ngIf="answerSelected.lib !== undefined && answerIsCorrect(answerSelected, homeWorkQuestion)"
+                                               id="input-answer-correct" type="text"
+                                               [(ngModel)]="answerSelected.lib" pInputText>
 
-            <input style="text-decoration: 2px line-through red;" disabled
-                   *ngIf="answerSelected.lib !== undefined && !answerIsCorrect(answerSelected, homeWorkQuestion)"
-                   id="input-answer-incorrect" type="text"
-                   [(ngModel)]="answerSelected.lib" pInputText>
-            <label style="
-               margin-left: 150px;
-                font-size: medium;
-                 color: green;
-                 padding: 0;
-                width: auto;
-                 margin-top: 9px;
-                 font-weight: 800;"
-                   [hidden]="answerSelected.lib === undefined || answerIsCorrect(answerSelected, homeWorkQuestion)"
-                   class="" for="inputDashedBorder"
-                   *ngFor="let ans of correctAnswersList?.get(homeWorkQuestion.id)">{{ ans.lib}}
-            </label>
-        </span>
+                                        <input style="text-decoration: 2px line-through red;" disabled
+                                               *ngIf="answerSelected.lib !== undefined && !answerIsCorrect(answerSelected, homeWorkQuestion)"
+                                               id="input-answer-incorrect" type="text"
+                                               [(ngModel)]="answerSelected.lib" pInputText>
+                                        <label style="
+                                           margin-left: 150px;
+                                            font-size: medium;
+                                             color: green;
+                                             padding: 0;
+                                            width: auto;
+                                             margin-top: 9px;
+                                             font-weight: 800;"
+                                               [hidden]="answerSelected.lib === undefined || answerIsCorrect(answerSelected, homeWorkQuestion)"
+                                               class="" for="inputDashedBorder"
+                                               *ngFor="let ans of correctAnswersList?.get(homeWorkQuestion.id)">{{ ans.lib}}
+                                        </label>
+                             </span>
                         </div>
 
                         <div class="p-col-12 answers">
@@ -309,7 +309,18 @@
 
                     <!--------------------------------- Watch it -------------------------------------------------------->
                     <div style="background-color: white;" *ngIf="showWatchItHomeWork" class="p-grid">
-                        <app-watch-it></app-watch-it>
+                        <div class="p-col-12">
+                            <app-watch-it></app-watch-it>
+                        </div>
+                    </div>
+
+
+
+                    <!--------------------------------- PHRASEBOOK -------------------------------------------------------->
+                    <div style="background-color: white;" *ngIf="showPhrasebook" class="p-grid">
+                        <div class="p-col-12">
+                            <app-phrasebook></app-phrasebook>
+                        </div>
                     </div>
 
 

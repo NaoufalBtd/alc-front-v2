@@ -1,0 +1,9 @@
+<div  (mouseup)="dict()" class="p-grid" *ngFor="let qst of questions">
+    <div class="p-col-1">
+        <button pButton pRipple type="button"
+                (click)="sound(qst?.libelle)"
+                icon="pi pi-volume-up" class="p-button-rounded sonButton ">
+        </button>
+    </div>
+    <div class="p-col-11">{{qst?.libelle}}</div>
+</div>

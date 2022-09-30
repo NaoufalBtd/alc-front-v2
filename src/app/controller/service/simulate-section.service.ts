@@ -35,6 +35,8 @@ export class SimulateSectionService {
     private _finishedAdditionalSection = 0;
     private _finishedSection = 0;
     private _showRatingLessonTemplate = false;
+    private _vocabularySection: Section = new Section();
+    private _getToKnowSection: Section = new Section();
 
     constructor(private messageService: MessageService,
                 private router: Router,
@@ -54,6 +56,22 @@ export class SimulateSectionService {
                 private homeWorkEtudiantService: HomeWorkEtudiantServiceService) {
     }
 
+
+    get vocabularySection(): Section {
+        return this._vocabularySection;
+    }
+
+    set vocabularySection(value: Section) {
+        this._vocabularySection = value;
+    }
+
+    get getToKnowSection(): Section {
+        return this._getToKnowSection;
+    }
+
+    set getToKnowSection(value: Section) {
+        this._getToKnowSection = value;
+    }
 
     get showRatingLessonTemplate(): boolean {
         return this._showRatingLessonTemplate;
@@ -701,9 +719,6 @@ export class SimulateSectionService {
     findSectionOneByCoursId(cours: Cours) {
         return this.http.get<Array<Section>>(this.profUrl + 'section/cours/id/' + cours.id).subscribe(
             data => {
-                console.log('==========================================');
-                console.log(data);
-                console.log('==========================================');
                 this.itemssection2 = data;
                 this.selectedsection = data[0];
                 this.quizService.findQuizBySectionId(this.selectedsection).subscribe(data12 => {
@@ -749,6 +764,8 @@ export class SimulateSectionService {
                 console.log('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
                 console.log(this.sectionStandard);
                 console.log(this.sectionAdditional);
+                this.vocabularySection = this.sectionStandard.filter(s => s.categorieSection?.libelle === 'Vocabulary')[0];
+                this.getToKnowSection = this.sectionStandard.filter(s => s.categorieSection?.libelle === 'Get to know')[0];
                 console.log('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
 
             }

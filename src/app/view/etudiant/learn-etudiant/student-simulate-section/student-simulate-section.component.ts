@@ -17,23 +17,17 @@ import {Router} from '@angular/router';
 import {VocabularyService} from '../../../../controller/service/vocabulary.service';
 import {EtudiantCours} from '../../../../controller/model/etudiant-cours.model';
 import {SectionItemService} from '../../../../controller/service/section-item.service';
-import {Inscription} from '../../../../controller/model/inscription.model';
 import {EtudiantReview} from '../../../../controller/model/etudiant-review.model';
 import {EtudiantReviewService} from '../../../../controller/service/etudiant-review.service';
-import {SessionCours} from '../../../../controller/model/session-cours.model';
 import {SessionCoursService} from '../../../../controller/service/session-cours.service';
-import {logging} from 'protractor';
-import {HomeworkService} from '../../../../controller/service/homework.service';
 import {HomeWork} from '../../../../controller/model/home-work.model';
 import {HomeWorkEtudiantServiceService} from '../../../../controller/service/home-work-etudiant-service.service';
 import {WebSocketService} from '../../../../controller/service/web-socket.service';
 import {LearnService} from '../../../../controller/service/learn.service';
-import {QuizReponse} from '../../../../controller/model/quiz-reponse';
 import {Prof} from '../../../../controller/model/prof.model';
 import {GroupeEtudiant} from '../../../../controller/model/groupe-etudiant.model';
 import {GroupeEtudiantService} from '../../../../controller/service/groupe-etudiant-service';
 import {AppComponent} from '../../../../app.component';
-import {newArray} from '@angular/compiler/src/util';
 import {MenuService} from '../../../shared/slide-bar/app.menu.service';
 import {SimulateSectionService} from '../../../../controller/service/simulate-section.service';
 import {ChatMessageDto} from '../../../../controller/model/chatMessageDto';
@@ -98,6 +92,15 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
                 private simulateSectionService: SimulateSectionService,
                 private grpEtudiantService: GroupeEtudiantService,
     ) {
+    }
+
+    get vocabularySection(): Section {
+        return this.simulateSectionService.vocabularySection;
+    }
+
+
+    get getToKnowSection(): Section {
+        return this.simulateSectionService.getToKnowSection;
     }
 
     get badgeNrMsg(): number {
@@ -516,7 +519,9 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
                 document.getElementById('dictionnair').style.width = '90%';
                 document.getElementById('dictionnair').style.height = '100%';
                 this.word = '';
-            }, error => console.log('erreeeeeeeeeeeeeeeeur'));
+            }, error => {
+                console.log(error);
+            });
         document.getElementById('dictionnair').style.visibility = 'hidden';
         document.getElementById('dictionnair').style.width = '0px';
         document.getElementById('dictionnair').style.height = '0px';
@@ -535,18 +540,16 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
                     data => {
                         this.selectedQuiz = data;
 
-                        if (data !== null){
+                        if (data !== null) {
                             this.quizService.findQuizEtudanitByEtudiantIdAndQuizId(this.loginService.etudiant, this.selectedQuiz).subscribe(
                                 (data) => {
                                     this.quizEtudiantList = data;
-                                    console.log(this.quizEtudiantList);
                                     this.quizService.findAllQuestions(this.selectedQuiz.ref).subscribe(
                                         dataQuestions => {
                                             if (data === null || data?.id === undefined || data?.id === null) {
                                                 this.showTakeQuiz = true;
                                                 this.showViewQuiz = false;
                                             } else {
-                                                console.log(dataQuestions);
                                                 if (data.questionCurrent > dataQuestions.length) {
                                                     this.showViewQuiz = true;
                                                     this.showTakeQuiz = false;
@@ -572,7 +575,9 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
                         }
                     },
                 );
-            }, error => console.log('erreeeeeeeeeeeeeeeeur'));
+            }, error => {
+
+            });
     }
 
     public ReviewExist() {
@@ -624,11 +629,10 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
         this.quizService.findQuizBySectionId(this.selectedsection).subscribe(
             data => {
                 this.selectedQuiz = data;
-                if (data !== null){
+                if (data !== null) {
                     this.quizService.findQuizEtudanitByEtudiantIdAndQuizId(this.loginService.etudiant, this.selectedQuiz).subscribe(
                         data => {
                             this.quizEtudiantList = data;
-                            console.log(this.quizEtudiantList);
                             this.quizService.findAllQuestions(this.selectedQuiz.ref).subscribe(
                                 dataQuestions => {
                                     if (data === null || data?.id === undefined || data?.id === null) {
@@ -664,7 +668,6 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
         this.findhomeworkbycours(this.sectionItemService.coursofsection);
         if (this.webSocketService.isInSession) {
             this.webSocketService.findCurrentSectionForstudent(this.service.selectedcours, this.prof);
-            console.log(this.service.selectedsection);
         }
         this.learnService.onStartHomeWork(this.selectedcours);
         this.homeWorkService.onStartHomeWork(this.selectedcours);
@@ -683,13 +686,10 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
     }
 
     public findhomeworkbycours(cours: Cours) {
-        console.log(cours);
         this.homeWorkService.findhomeworkbyCoursId(cours).subscribe(
             data => {
-                console.log(data);
                 this.homeWorkService.homeWorkList = data;
             }, error => {
-                console.log('orsinakh');
             }
         );
 
@@ -714,18 +714,14 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
         this.selectedNow = new Dictionary();
         const selection = window.getSelection();
         this.selectedNow.word = selection.toString();
-        console.log(this.selectedNow.word.length);
         if (this.selectedNow.word.length > 3) {
-            console.log(this.selectedLanguage.code);
             if (this.selectedLanguage.code === 'ar') {
                 this.quizService.translate(this.selectedNow.word).subscribe(data => {
-                    console.log(data);
                     this.selectedNow.definition = data;
                 });
             } else if (this.selectedLanguage.code === 'fr') {
                 this.quizService.translateEnFr(this.selectedNow.word).subscribe(data => {
                     this.selectedNow.definition = data;
-                    console.log(data);
                 });
             }
             this.createDialogDict = true;
@@ -777,8 +773,6 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
     }
 
     public NextSection() {
-        console.log(this.itemssection2);
-        console.log(this.selectedsection);
         for (let i = 0; i < this.itemssection2.length; i++) {
             if (this.selectedsection.id === this.itemssection2[i].id) {
                 this.simulateSectionService.nextSection(this.itemssection2[i + 1].id, 'NEXT');
@@ -789,7 +783,6 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
 
 
     async showVocabularyComponent() {
-        console.log('hadi kaat3yeett: ' + this.selectedsection.categorieSection.libelle);
         if (this.selectedsection.categorieSection.libelle === 'Vocabulary') {
             this.Vocab(this.selectedsection);
             this.showVocabulary = true;
@@ -804,7 +797,7 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
 
         this.sectionItemService.getSectionItems().subscribe(data => {
             this.sectionItemService.sectionSelected.sectionItems = data;
-            console.log(data);
+
             this.showVocabulary = true;
         });
 
@@ -829,13 +822,10 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
         this.webSocketService.closeWebSocket(chatMessage);
         this.participants.delete(this.prof.id);
         this.connectedUsers.splice(0, this.connectedUsers.length);
-        console.log(this.participants);
     }
 
     getData() {
         const grp = this.participants.get(this.prof.id);
-        console.log(grp);
-        console.log(this.participants);
     }
 
     getLanguages(): Array<any> {
@@ -843,22 +833,18 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
     }
 
     getSelectedLanguage() {
-        console.log(this.selectedLanguage);
-
     }
 
     findAllSynonimes(word: string) {
-        console.log(word);
-        console.log(this.searchInput);
         if (this.selectedLanguage.code === 'ar') {
             this.quizService.translate(word).subscribe(data => {
-                console.log(data);
+
                 this.synonymes = data;
             });
         } else if (this.selectedLanguage.code === 'fr') {
             this.quizService.translateEnFr(word).subscribe(data => {
                 this.synonymes = data;
-                console.log(data);
+
             });
         }
     }
@@ -875,7 +861,6 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
             this.synonymes = String();
             this.messageService.add({severity: 'success', life: 3000, detail: 'Word added successfully'});
         }, error => {
-            console.log(error);
             this.messageService.add({severity: 'error', life: 3000, detail: 'Text is too long! try again with small text'});
 
         });
@@ -907,7 +892,12 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
     }
 
     showLessonFct(section: Section) {
+        this.selectedHomeWork = new HomeWork();
         this.showLesson = true;
+        if (!this.webSocketService.isInSession) {
+            this.selectedHomeWork = new HomeWork();
+            this.simulateSectionService.nextSection(section.id, 'NEXT');
+        }
     }
 
 // ---------------------------------------------------home Work--------------------------------------------/
@@ -920,6 +910,7 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
 
     homeWorkSelectedFct(homeWork: HomeWork) {
         this.showLesson = false;
+        this.selectedsection = new Section();
         this.homeWorkService.homeWorkSelectedFct(homeWork);
     }
 
