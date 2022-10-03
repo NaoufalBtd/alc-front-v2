@@ -420,7 +420,7 @@ export function createTranslateLoader(http: HttpClient) {
                 deps: [HttpClient]
             }
         }),
-        DragDropModule,
+        DragDropModule
     ],
     declarations:
         [

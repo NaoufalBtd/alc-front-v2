@@ -165,8 +165,11 @@ div.mycard {
 }
 
 .profSkype {
-  text-align: start;
-  margin-top: -24px;
+  padding: 13px 2px !important;
+
+  div.p-col-2, div.p-col-10 {
+    padding: 0 !important;
+  }
 }
 
 .studentSGroupImg {

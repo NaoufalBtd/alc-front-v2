@@ -10,6 +10,7 @@ import {ReclamationEtudiant} from '../../controller/model/reclamation-etudiant.m
 import {DatePipe} from '@angular/common';
 import {ReclamationEtudiantService} from '../../controller/service/reclamation-etudiant.service';
 import {MessageService} from 'primeng/api';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
     selector: 'app-etudiant',
@@ -67,7 +68,20 @@ export class EtudiantComponent implements OnInit {
                 private reclamationService: ReclamationEtudiantService,
                 private messageService: MessageService,
                 private learnService: LearnService,
+                public translate: TranslateService,
                 public app: AppComponent) {
+        translate.setDefaultLang('en');
+        const lang = window.navigator.language;
+        console.log('=====================');
+        console.log(lang);
+        console.log('=====================');
+        if (lang?.includes('ar')) {
+            translate.use('ar');
+        } else if (lang?.includes('fr')) {
+            translate.use('fr');
+        } else {
+            translate.use('en');
+        }
     }
 
     get showAppMenu(): boolean {

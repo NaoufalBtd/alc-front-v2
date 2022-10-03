@@ -5,9 +5,9 @@
         <div class="card">
             <p-toolbar styleClass="p-mb-4">
             <ng-template pTemplate="left">
-                    <input type="email" pInputText style="margin-right: 5px;width: 300px" placeholder="E-mail Student" [(ngModel)]="inviteStudentEtudiant.emailInvited" >
+                    <input type="email" pInputText style="margin-right: 5px;width: 300px" [placeholder]="'E-mail Student' | translate" [(ngModel)]="inviteStudentEtudiant.emailInvited" >
 
-             <button pButton pRipple type="button" label="Invite" class="p-button-raised p-button-info"
+             <button pButton pRipple type="button" [label]="'Invite' | translate" class="p-button-raised p-button-info"
                             style="margin-right: 5px;width: 100px"
                             (click)="sendInvitation(this.loginService.getConnectedStudent().id,inviteStudentEtudiant.emailInvited)"></button>
 
@@ -30,10 +30,10 @@
 
                 <ng-template pTemplate="header">
                     <tr>
-                        <th pSortableColumn="prof">Code</th>
-                        <th pSortableColumn="prof">E-mail Invited</th>
-                        <th pSortableColumn="Date">Date Sent Invitation</th>
-                        <th pSortableColumn="Number Of Sessions">Invitation Status</th>
+                        <th pSortableColumn="prof">{{'Code' | translate}}</th>
+                        <th pSortableColumn="prof"> {{'E-mail Invited' | translate}}</th>
+                        <th pSortableColumn="Date"> {{'Date Sent Invitation' | translate}}</th>
+                        <th pSortableColumn="Number Of Sessions"> {{'Invitation Status' | translate}}</th>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-inviteStudentEtudiant>

@@ -18,11 +18,11 @@
          style="width: 100%;margin:0 auto;margin-top: 7px;background: #F6F6F6;visibility: hidden">
         <p-accordion>
             <div class="p-text-left">
-                <h5>Explanation</h5>
+                <h5>{{'Explanation' | translate}}</h5>
                 <p>{{current?.explanation}}</p>
-                <h5>Example</h5>
+                <h5>{{'Example' | translate}}</h5>
                 <p>{{current?.example}}</p>
-                <h5>Synonyms</h5>
+                <h5>{{'Synonyms' | translate}}</h5>
                 <ul *ngIf="current?.synonyms!==null">
                     <li style="display: inline;margin-right: 10px" *ngFor="let s of current?.synonyms; let i = index">
                         <i class="pi pi-volume-up p-mr-2 p-d-inline"

@@ -23,7 +23,7 @@
               <div class="sign__form">
                  <form action="#">
                     <div class="sign__input-wrapper mb-25">
-                       <h5>Work email</h5>
+                       <h5>{{'e-mail address'| translate}}</h5>
                        <div class="sign__input">
                           <input type="email" [(ngModel)]="user.username" name="username"
                                  placeholder="{{'e-mail address'| translate}}">
@@ -31,7 +31,7 @@
                        </div>
                     </div>
                     <div class="sign__input-wrapper mb-10">
-                       <h5>Password</h5>
+                       <h5>{{'Password'| translate}}</h5>
                        <div class="sign__input">
                           <input type="password" [(ngModel)]="user.password" name="password"
                                  placeholder="{{'Password'| translate}}"

@@ -2,12 +2,12 @@
 <div class="p-grid justify-content-center">
     <div class="p-col-2"></div>
     <div class="p-col-8">
-        <button style="margin: 7px"  class="p-button" icon="pi pi-arrow-left" label="Back" pButton (click)="router.navigate(['public/etudianthomepage'])"
+        <button style="margin: 7px"  class="p-button" icon="pi pi-arrow-left" [label]="'Back' | translate" pButton (click)="router.navigate(['public/etudianthomepage'])"
                  pRipple></button>
     <div class="card">
         <p-toolbar styleClass="p-mb-4">
             <ng-template pTemplate="left">
-               <strong>Select your pack</strong>
+               <strong>{{'Select your pack' | translate}}</strong>
             </ng-template>
             <ng-template pTemplate="right">
                 <p-dropdown [options]="typePack" [(ngModel)]="valuechoosen" (click)="this.packservice.findPackIndividualOrgroupe(valuechoosen)">
@@ -22,8 +22,8 @@
             </div>
             <div class="card-body-1">
                 <p>
-                    <strong>{{p.totalStudents}} Students</strong><br>
-                    have bought this pack
+                    <strong>{{p.totalStudents}} {{'Students' | translate}}</strong><br>
+                    {{'have bought this pack' | translate}}
                 </p>
                 <a (click)="packIsChossen(p)" class="btn-1">{{p.nombreCours}}h  | {{p.prix}}$</a>
             </div>
@@ -38,7 +38,7 @@
           header="Please confirm your choice" styleClass="p-fluid">
     <ng-template pTemplate="content">
         <div class="card-body-1">
-            <h4>you have chose this pack</h4>
+            <h4> {{'you have chose this pack' | translate}}</h4>
         </div>
         <div class="card-header-1">
             <p style="font-size: 20px">
@@ -50,8 +50,8 @@
     </ng-template>
 
     <ng-template pTemplate="footer">
-        <button  class="p-button-text" icon="pi pi-times" label="Cancel" pButton (click)="hide()"
+        <button  class="p-button-text" icon="pi pi-times" [label]="'Cancel' | translate" pButton (click)="hide()"
                  pRipple></button>
-        <button class="p-button-text"  icon="pi pi-check" label="Purchase now"   (click)="getchoosenPack(packshossen.code)" pButton pRipple></button>
+        <button class="p-button-text"  icon="pi pi-check" [label]="'Purchase now' | translate"   (click)="getchoosenPack(packshossen.code)" pButton pRipple></button>
     </ng-template>
 </p-dialog>

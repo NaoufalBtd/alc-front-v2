@@ -2,9 +2,7 @@
 <div class="p-col">
 
     <p-dialog [(visible)]="displayBasic" [baseZIndex]="10000" [style]="{width: '30vw'}">
-        <p>This is the schedule of your part of teaching , the students how are in color green are the students that
-            they are just start the courses, the others how are in color orange are the students active in your
-            courses.</p>
+        <p> {{'This is the schedule of your part of teaching , the students how are in color green are the students that they are just start the courses, the others how are in color orange are the students active in your courses.' | translate}}</p>
         <ng-template pTemplate="footer">
             <p-button (click)="displayBasic=false" icon="pi pi-check" label="Ok" styleClass="p-button-text"></p-button>
         </ng-template>

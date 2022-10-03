@@ -42,9 +42,6 @@ export class HomeThreeComponent implements OnInit {
 
 
     ngOnInit(): void {
-
-        this.translate.use('en');
-
         setInterval(() => {
             if (this.numberOfTime === 0) {
                 this.displayModal = true;

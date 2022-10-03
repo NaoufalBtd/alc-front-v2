@@ -1,6 +1,6 @@
 <div class="p-grid" style="padding: 10px">
     <div *ngIf="inscription?.packStudent === null" (click)="backTollPacks()" class="p-col-12 allPacks">
-        <a class="allPacks"><i class="pi pi-angle-left allPacks"></i> All packs</a>
+        <a class="allPacks"><i class="pi pi-angle-left allPacks"></i> {{'All packs' | translate}}</a>
     </div>
     <div class="p-col-5">
         <p-card [header]="selectedPack?.libelle" [subheader]="isForGroupOrindev(selectedPack.forGroupe)"
@@ -25,17 +25,17 @@
 
     <div class="p-col-1"></div>
     <div class="p-col-6">
-        <h4 style="color: #ff725e;">Overview</h4>
-        <strong>Why take this course?</strong>
+        <h4 style="color: #ff725e;">{{'Overview' | translate}}</h4>
+        <strong> {{'Why take this course?' | translate}}</strong>
         <p>{{selectedPack?.whyTakeThisCourse}}</p>
-        <strong>Experience Level</strong>
+        <strong> {{'Experience Level' | translate}}</strong>
         <p>{{selectedPack?.level?.libelle}}</p>
-        <strong>Course Length</strong>
+        <strong> {{'Course Length' | translate}}</strong>
         <p>{{selectedPack?.nombreCours}}</p>
-        <strong>Pre-requisites</strong>
+        <strong> {{'Pre-requisites' | translate}}</strong>
         <p>{{selectedPack?.preRequisites}}</p>
 
-        <h4 style="color: #ff725e;">Syllabus</h4>
+        <h4 style="color: #ff725e;"> {{'Syllabus' | translate}}</h4>
         <p *ngFor="let course of courses.slice(0, nombreCours)">{{course?.libelle}}</p>
         <p *ngIf="nombreCours !== selectedPack?.nombreCours" class="more-details" (click)="nombreCours = selectedPack.nombreCours">... see more</p>
     </div>

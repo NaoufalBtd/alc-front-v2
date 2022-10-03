@@ -7,6 +7,7 @@ import {AuthenticationService} from '../../controller/service/authentication.ser
 import {Role} from '../../enum/role.enum';
 import {LoginService} from '../../controller/service/login.service';
 import {Router} from '@angular/router';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
     selector: 'app-public',
@@ -71,8 +72,21 @@ export class PublicComponent implements OnInit {
                 private service: LoginService,
                 private router: Router,
                 private messageService: MessageService,
+                private translate: TranslateService,
                 private authenticationService: AuthenticationService,
                 private primengConfig: PrimeNGConfig, public app: AppComponent) {
+        translate.setDefaultLang('en');
+        const lang = window.navigator.language;
+        console.log('=====================');
+        console.log(lang);
+        console.log('=====================');
+        if (lang?.includes('ar')) {
+            translate.use('ar');
+        } else if (lang?.includes('fr')) {
+            translate.use('fr');
+        } else {
+            translate.use('en');
+        }
     }
 
     onLayoutClick() {

@@ -1,7 +1,7 @@
 <div *ngIf="inscreption?.etatInscription?.libelle === 'Validated'" class="mycard">
     <div class="p-grid">
         <div class="p-col-6 Myclasses">
-            <h1 class="title">My classes</h1>
+            <h1 class="title">{{'My classes' | translate}}</h1>
 
 
             <div *ngFor="let schedule of scheduleProfs" class="p-grid lessonContainer">
@@ -18,7 +18,7 @@
                 <div class="p-col-3">
                     <button *ngIf="isLessonCompleted(schedule.cours) === 2" pButton pRipple type="button"
                             (click)="openSession(schedule.cours, 'LESSON')"
-                            label="REVIEW COURSE"
+                            [label]="'REVIEW COURSE' | translate"
                             class="p-button-success"></button>
 
                     <button disabled *ngIf="isLessonCompleted(schedule.cours) === 1 && schedule.id !== nextLesson.id"
@@ -38,13 +38,14 @@
                     <button *ngIf="showJoinNow && isLessonCompleted(schedule.cours) === 1 && schedule.id === nextLesson.id"
                             pButton pRipple type="button"
                             (click)="joinSession(schedule.cours)"
-                            label="Join now"
+                            [label]="'Join now' | translate"
                             class="p-button-success joinButton"></button>
 
 
                     <button *ngIf="isLessonCompleted(schedule.cours) === 3" pButton pRipple type="button"
                             (click)="openSession(schedule.cours, 'HOMWORK')"
-                            label="HOME WORK"
+                            [label]="'HOME WORK' | translate"
+
                             class="p-button-success"></button>
 
 
@@ -55,12 +56,13 @@
         </div>
 
         <div class="p-col-3 Statements">
-            <h4 style="text-align: start;margin: 0 0 4px 0;font-size: x-large;" class="title">Statements</h4>
+            <h4 style="text-align: start;margin: 0 0 4px 0;font-size: x-large;"
+                class="title">{{'Statements' | translate}}</h4>
             <div class="p-grid statementsGrid">
                 <div style="text-align: center" class="p-col-12">
                     <img src="/assets/icons/icon-cup.gif" width="100px" alt="">
                 </div>
-                <div class="p-col-12 goals">Goals</div>
+                <div class="p-col-12 goals">{{'Goals' | translate}}</div>
                 <div class="p-col-12">
                     <p-progressBar [showValue]="true"
                                    [value]="getProgressValue().toFixed(.2)"></p-progressBar>
@@ -74,7 +76,7 @@
                 </div>
                 <div class="p-col-6 statementsGrid-6">
                     <p class="NumberOfCourses">{{this.scheduleProfs?.length}}</p>
-                    <p class="lessonDate">Lessons</p>
+                    <p class="lessonDate"> {{'lessons' | translate}}</p>
                 </div>
 
 
@@ -83,7 +85,7 @@
                 </div>
                 <div class="p-col-6">
                     <p class="NumberOfCourses">{{lessonFinished?.length}}</p>
-                    <p class="lessonDate">Completed Lessons</p>
+                    <p class="lessonDate"> {{'Completed Lessons' | translate}}</p>
                 </div>
 
 
@@ -92,7 +94,7 @@
                 </div>
                 <div class="p-col-6">
                     <p class="NumberOfCourses">{{this.scheduleProfs?.length - lessonFinished?.length}}</p>
-                    <p class="lessonDate">Lessons cumming</p>
+                    <p class="lessonDate"> {{'Lessons cumming' | translate}}</p>
                 </div>
             </div>
 
@@ -102,7 +104,8 @@
         <div *ngIf="scheduleProfs?.length > 0"
              style="background: #cac3ff57; border-left: 2px solid #b5a2ed;  border-radius: 0;"
              class="p-col-2 Nextlesson">
-            <p class="lessonDate">Welcome back {{student?.nom}}, ready for your next lesson ?
+            <p class="lessonDate"> {{'Welcome back' | translate}} {{student?.nom}}
+                ,  {{'ready for your next lesson ?' | translate}}
                 <img style="    width: 15px; margin: 4px 0 -2px 0;"
                      src="/assets/icons/icon-fire.png" alt=""></p>
             <div class="p-grid lessonActuel">
@@ -115,7 +118,7 @@
                     {{nextLesson?.cours?.libelle}}
                 </div>
                 <div class="p-col-12">
-                    <button *ngIf="showJoinNow" pButton pRipple type="button" label="Join now"
+                    <button *ngIf="showJoinNow" pButton pRipple type="button" [label]="'Join now' | translate"
                             (click)="joinSession(nextLesson.cours)"
                             class="p-button-help joinButton"></button>
 
@@ -132,17 +135,22 @@
                class="lessonDate">
                 <img style="width:20px;margin: -10px 3px -4px 0;"
                      src="/assets/icons/icon-prof.png" alt="">
-                Teacher information
+                {{'Teacher information' | translate}}
             </p>
 
             <div class="p-grid profGroup">
                 <div class="p-col-12 "><img class="profImg" [src]="nextLesson?.prof?.image" alt=""></div>
                 <div class="p-col-12 profName">{{nextLesson?.prof?.nom }}</div>
-                <div class="p-col-12 profSkype">
-                    <img src="/assets/icons/icon-skype-64.png" class="skypeIcon" width="25px" alt="">
-                    <a style="display: inline-block;width: 43px; margin: 5px;"
-                       target="_blank"
-                       [href]="nextLesson?.prof?.skype">https://join.skype.com/..</a>
+                <div class="p-col-12 p-grid profSkype">
+                    <div class="p-col-2 "><img src="/assets/icons/icon-skype-64.png" width="25px"
+                                              alt="">
+                    </div>
+
+                    <div class="p-col-10">
+                        <a target="_blank" [href]="nextLesson?.prof?.skype">https://join.skype..</a>
+                    </div>
+
+
                 </div>
             </div>
 
@@ -150,7 +158,7 @@
                class="lessonDate">
                 <img style="width:20px;margin: -10px 3px -4px 0;"
                      src="/assets/icons/icon-groupe-d'utilisateurs.png" alt="">
-                Group members
+                {{'Group members' | translate}}
             </p>
 
             <div class="p-grid profGroup">

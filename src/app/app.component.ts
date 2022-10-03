@@ -8,11 +8,20 @@ import {TranslateService} from '@ngx-translate/core';
 })
 export class AppComponent implements OnInit {
 
-    constructor(private primengConfig: PrimeNGConfig, translate: TranslateService) {
+    constructor(private primengConfig: PrimeNGConfig,
+                public translate: TranslateService) {
         translate.setDefaultLang('en');
-
-        // the lang to use, if the lang isn't available, it will use the current loader to get them
-        translate.use('en');
+        const lang = window.navigator.language;
+        console.log('=====================');
+        console.log(lang);
+        console.log('=====================');
+        if (lang?.includes('ar')) {
+            translate.use('ar');
+        } else if (lang?.includes('fr')) {
+            translate.use('fr');
+        } else {
+            translate.use('en');
+        }
     }
 
     layoutMode = 'slim';
@@ -95,6 +104,7 @@ export class AppComponent implements OnInit {
 
     ngOnInit() {
         this.primengConfig.ripple = true;
+
     }
 
 }

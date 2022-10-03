@@ -207,12 +207,12 @@
                     style="float:left"
                     pButton pRipple
                     type="button" icon="pi pi-arrow-left" iconPos="left"
-                    label="Previous" (click)="previousQuestionFct()"
+                    [label]="'Previous'| translate" (click)="previousQuestionFct()"
                     class="p-button-rounded p-button-secondary"></button>
         </div>
 
         <div *ngIf="showFinishButton" class="p-col-6" style="text-align: center">
-            <h4 style="display:inline-block; margin-right: 7px">Note final: </h4>
+            <h4 style="display:inline-block; margin-right: 7px">{{'Note final:' | translate}} </h4>
             <h5 style="display:inline-block">{{ quizStudent?.resultat}}</h5>
 
         </div>
@@ -223,7 +223,7 @@
                     style="float:right"
                     pButton pRipple
                     type="button" icon="pi pi-arrow-right" iconPos="right"
-                    label="Next" (click)="nextQuestionFct()"
+                    [label]="'Next'| translate" (click)="nextQuestionFct()"
                     class="p-button-rounded p-button-secondary">
             </button>
             <!--            <button *ngIf="showFinishButton" style="float:right" pButton-->

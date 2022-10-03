@@ -7,8 +7,8 @@
             </div>
             <div class="card-body-1">
                 <p>
-                    <strong>{{p.totalStudents}} Students</strong><br>
-                    have bought this pack
+                    <strong>{{p.totalStudents}} {{'Students' | translate}}</strong><br>
+                     {{'have bought this pack' | translate}}
                 </p>
                 <a class="btn-1" (click)="selectedPack(p)">{{p.nombreCours}}h | {{p.prix}}$</a>
             </div>
@@ -21,8 +21,8 @@
             </div>
             <div class="card-body-1">
                 <p>
-                    <strong>{{p.totalStudents}} Students</strong><br>
-                    have bought this pack
+                    <strong>{{p.totalStudents}} {{'Students' | translate}}</strong><br>
+                     {{'have bought this pack' | translate}}
                 </p>
                 <a class="btn-1" (click)="selectedPack(p)">{{p.nombreCours}}h | {{p.prix}}$</a>
             </div>
@@ -32,18 +32,18 @@
 </p-dialog>
 
 <p-dialog header="Password Settings" [(visible)]="this.changePass">
-    <h1 style="color: #0c6439; font-size: 20px;  text-align: center">Change Password</h1><br>
-    <h6 style="color: darkred; font-size: 20px;  text-align: center">Password must have at least 8 caracters</h6><br>
+    <h1 style="color: #0c6439; font-size: 20px;  text-align: center"> {{'Change Password' | translate}}</h1><br>
+    <h6 style="color: darkred; font-size: 20px;  text-align: center"> {{'Password must have at least 8 characters' | translate}}</h6><br>
     <div class="bio-row">
-        <label for="float-input">New Password</label>
+        <label for="float-input"> {{'New Password' | translate}}</label>
         <input id="float-input" type="password" style="margin-left: 5px;" pInputText [(ngModel)]="newPassword">
     </div>
     <div class="bio-row">
-        <label for="float-input">Repeat Password</label>
+        <label for="float-input"> {{'Repeat password' | translate}}</label>
         <input id="float-input" type="password" style="margin-left: 5px;" pInputText [(ngModel)]="newPasswordRepated">
     </div>
     <button style="float: right" [disabled]="this.newPassword.length<8 || this.newPassword !== this.newPasswordRepated"
-            pButton pRipple type="button " icon="pi pi-save " label="Save changes"
+            pButton pRipple type="button " icon="pi pi-save " [label]="'Save changes' | translate"
             (click)="changePassword()" class="p-button-danger"></button>
 
 </p-dialog>
@@ -62,35 +62,35 @@
              [style.borderLeft]="(selectedElement === 'PROFILE')? '5px solid #ff725e': 'none'"
              [style.color]="(selectedElement === 'PROFILE')? 'black': '#666666'"
              (click)="showMenuElemnt('PROFILE')"
-             class=" menuElement p-grid">Profile
+             class=" menuElement p-grid"> {{'Profile' | translate}}
         </div>
         <div [style.background]="(selectedElement === 'SET')? '#d2d8fd': 'white'"
              [style.borderLeft]="(selectedElement === 'SET')? '5px solid #ff725e': 'none'"
              [style.color]="(selectedElement === 'SET')? 'black': '#666666'"
              (click)="showMenuElemnt('SET')"
-             class=" menuElement p-grid">Security
+             class=" menuElement p-grid"> {{'Security' | translate}}
         </div>
 
         <div [style.background]="(selectedElement === 'INSCRIPTION')? '#d2d8fd': 'white'"
              [style.borderLeft]="(selectedElement === 'INSCRIPTION')? '5px solid #ff725e': 'none'"
              [style.color]="(selectedElement === 'INSCRIPTION')? 'black': '#666666'"
              (click)="showMenuElemnt('INSCRIPTION')"
-             class=" menuElement p-grid">Registration details
+             class=" menuElement p-grid"> {{'Registration details' | translate}}
         </div>
 
         <div [style.background]="(selectedElement === 'PASS')? '#d2d8fd': 'white'"
              [style.borderLeft]="(selectedElement === 'PASS')? '5px solid #ff725e': 'none'"
              [style.color]="(selectedElement === 'PASS')? 'black': '#666666'"
              (click)="showMenuElemnt('PASS')"
-             class=" menuElement p-grid">More information
+             class=" menuElement p-grid"> {{'More information' | translate}}
         </div>
 
 
     </div>
     <div *ngIf="selectedElement === 'PROFILE'" class="p-col-10">
         <div class="p-grid">
-            <div class="p-col-10 grandTitle">Profile</div>
-            <div class="p-col-10 smallTitle">Manage your public profile and private information.</div>
+            <div class="p-col-10 grandTitle"> {{'Profile' | translate}}</div>
+            <div class="p-col-10 smallTitle"> {{'Manage your public profile and private information.' | translate}}</div>
 
 
             <div class="p-col-12">
@@ -98,74 +98,74 @@
 
 
                     <div class="p-col-6">
-                        <h5 style="color: #ff725e">Full name</h5>
+                        <h5 style="color: #ff725e"> {{'Full name' | translate}}</h5>
                         <div class="p-inputgroup">
                             <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
                             <input class="user-input-group" [(ngModel)]="user.nom" name="prenom" type="text"
-                                   pInputText placeholder="full name">
+                                   pInputText  [placeholder]="'Full name' | translate">
                         </div>
                     </div>
 
                     <div class="p-col-6">
-                        <h5 style="color: #ff725e">Email</h5>
+                        <h5 style="color: #ff725e"> {{'email' | translate}}</h5>
                         <div class="p-inputgroup">
                             <span class="p-inputgroup-addon"><i class="pi pi-envelope"></i></span>
                             <input class="user-input-group" [(ngModel)]="user.username" name="username" type="text"
-                                   pInputText placeholder="email">
+                                   pInputText [placeholder]="'email' | translate">
                         </div>
                     </div>
 
                     <div class="p-col-6">
-                        <h5 style="color: #ff725e">Country</h5>
+                        <h5 style="color: #ff725e"> {{'Country' | translate}}</h5>
                         <div class="p-inputgroup">
                             <span class="p-inputgroup-addon"><i class="pi pi-map-marker"></i></span>
                             <input class="user-input-group" [(ngModel)]="user.country" name="country" type="text"
-                                   pInputText placeholder="Country">
+                                   pInputText [placeholder]="'Country' | translate">
                         </div>
                     </div>
 
                     <div class="p-col-6">
-                        <h5 style="color: #ff725e">City</h5>
+                        <h5 style="color: #ff725e"> {{'City' | translate}}</h5>
                         <div class="p-inputgroup">
                             <span class="p-inputgroup-addon"><i class="pi pi-map-marker"></i></span>
                             <input class="user-input-group" [(ngModel)]="user.ville" name="ville" type="text" pInputText
-                                   placeholder="City">
+                                   [placeholder]="'City' | translate">
                         </div>
                     </div>
 
                     <div class="p-col-6">
-                        <h5 style="color: #ff725e">Address</h5>
+                        <h5 style="color: #ff725e"> {{'Address' | translate}}</h5>
                         <div class="p-inputgroup">
                             <span class="p-inputgroup-addon"><i class="pi pi-home"></i></span>
                             <input class="user-input-group" [(ngModel)]="user.addresse" name="addresse" type="text"
-                                   pInputText placeholder="Address">
+                                   pInputText [placeholder]="'Address' | translate">
                         </div>
                     </div>
 
                     <div class="p-col-6">
-                        <h5 style="color: #ff725e">Age</h5>
+                        <h5 style="color: #ff725e"> {{'Age' | translate}}</h5>
                         <div class="p-inputgroup">
                             <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
                             <input class="user-input-group" [(ngModel)]="user.age" name="age" type="number" pInputText
-                                   placeholder="Age">
+                                   [placeholder]="'Age' | translate">
                         </div>
                     </div>
 
                     <div class="p-col-6">
-                        <h5 style="color: #ff725e">Skype</h5>
+                        <h5 style="color: #ff725e"> {{'Skype' | translate}}</h5>
                         <div class="p-inputgroup">
                             <span class="p-inputgroup-addon"><i class="pi pi-video"></i></span>
                             <input class="user-input-group" [(ngModel)]="user.skype" name="skype" type="text" pInputText
-                                   placeholder="Skype">
+                                   [placeholder]="'Skype' | translate">
                         </div>
                     </div>
 
                     <div class="p-col-6">
-                        <h5 style="color: #ff725e">Phone</h5>
+                        <h5 style="color: #ff725e"> {{'Phone' | translate}}</h5>
                         <div class="p-inputgroup">
                             <span class="p-inputgroup-addon"><i class="pi pi-phone"></i></span>
                             <input class="user-input-group" [(ngModel)]="user.numero" name="numero" type="text"
-                                   pInputText placeholder="Phone">
+                                   pInputText [placeholder]="'Phone' | translate">
                         </div>
                     </div>
 
@@ -178,7 +178,7 @@
 
             <div class="p-col-4">
                 <button pButton pRipple (click)="updateUser(user)"
-                        label="Save changes" icon="pi pi-check" iconPos="left"
+                        [label]="'Save changes' | translate" icon="pi pi-check" iconPos="left"
                         class="Startnow"></button>
             </div>
 
@@ -192,15 +192,15 @@
 
     <div *ngIf="selectedElement === 'SET'" class="p-col-10">
         <div class="p-grid">
-            <div class="p-col-10 grandTitle">Security</div>
-            <div class="p-col-10 smallTitle">Manage your password and 2-step verification preferences</div>
+            <div class="p-col-10 grandTitle"> {{'Security' | translate}}</div>
+            <div class="p-col-10 smallTitle"> {{'Manage your password and 2-step verification preferences' | translate}}</div>
 
             <div class="p-col-7">
                 <div class="p-grid p-fluid">
 
 
                     <div class="p-col-12">
-                        <h5 style="color: #ff725e">New Password</h5>
+                        <h5 style="color: #ff725e"> {{'New Password' | translate}}</h5>
                         <div class="p-inputgroup">
                             <span style="cursor: pointer" *ngIf="newPass.type === 'password'"
                                   (click)="showPass(newPass)" class="p-inputgroup-addon"><i
@@ -211,12 +211,12 @@
                             <input #newPass class="user-input-group" [(ngModel)]="newPassword" name="newPassword"
                                    type="password"
                                    pPassword
-                                   placeholder="new password">
+                                   [placeholder]="'New Password' | translate">
                         </div>
                     </div>
 
                     <div class="p-col-12">
-                        <h5 style="color: #ff725e">Rep password</h5>
+                        <h5 style="color: #ff725e"> {{'Repeat password' | translate}}</h5>
                         <div class="p-inputgroup">
                             <span style="cursor: pointer" *ngIf="Rep.type === 'password'" (click)="showPass(Rep)"
                                   class="p-inputgroup-addon"><i class="pi pi-eye"></i></span>
@@ -226,13 +226,13 @@
                             <input #Rep class="user-input-group" [(ngModel)]="newPasswordRepated"
                                    name="newPasswordRepated" type="password"
                                    pPassword
-                                   placeholder="Repeat password">
+                                   [placeholder]="'Repeat password' | translate">
                         </div>
                     </div>
                     <div class="p-col-4"></div>
                     <div class="p-col-4">
                         <button pButton pRipple (click)="changePassword()"
-                                label="Change pasword" icon="pi pi-check" iconPos="left"
+                                [label]="'Change password' | translate" icon="pi pi-check" iconPos="left"
                                 class="Startnow"></button>
                     </div>
                     <div class="p-col-4"></div>
@@ -249,50 +249,50 @@
     <div *ngIf="selectedElement === 'INSCRIPTION'" class="p-col-10">
         <div class="p-grid">
             <div *ngIf="this.inscription.packStudent != null && this.inscription.parcours != null"
-                 class="p-col-10 grandTitle">Registration Details
+                 class="p-col-10 grandTitle"> {{'Registration Details' | translate}}
             </div>
             <div *ngIf="this.inscription.packStudent == null && this.inscription.parcours == null"
-                 class="p-col-10 grandTitle">Complete your registration
+                 class="p-col-10 grandTitle"> {{'Complete your registration' | translate}}
             </div>
             <div class="p-col-6">
-                <h5 style="color: #ff725e"> Group Option </h5>
+                <h5 style="color: #ff725e">  {{'Group Option' | translate}} </h5>
                 <p-dropdown [style]="{    height: '45px',
                                                 padding: '6px',
                                                  width: '100%',
                                                 border: 'none'}"
                             (onClick)="getgroupechosen(inscription.groupeEtude.id)"
                             [disabled]="this.inscription.packStudent != null && this.inscription.parcours != null"
-                            (click)="findAllGroupeEtude() ; " [options]="groupeEtudeList" placeholder="Select group"
+                            (click)="findAllGroupeEtude() ; " [options]="groupeEtudeList" [placeholder]="'Select group' | translate"
                             [(ngModel)]="etudiant.groupeEtude"
                             optionLabel="libelle"></p-dropdown>
             </div>
 
             <div class="p-col-6">
-                <h5 style="color: #ff725e"> English Level </h5>
+                <h5 style="color: #ff725e">  {{'English Level' | translate}} </h5>
                 <p-dropdown [style]="{    height: '45px',
                                                 width: '100%',
                                                 padding: '6px',
                                                 border: 'none'}"
                             [disabled]="this.inscription.packStudent != null && this.inscription.parcours != null"
-                            (click)="findAllParcoursList() ; " [options]="parcoursList" placeholder="Select Level"
+                            (click)="findAllParcoursList() ; " [options]="parcoursList" [placeholder]="'Select Level' | translate"
                             [(ngModel)]="etudiant.parcours"
                             optionLabel="libelle"></p-dropdown>
             </div>
 
             <div class="p-col-6">
-                <h5 style="color: #ff725e"> Teacher </h5>
+                <h5 style="color: #ff725e">  {{'Teacher' | translate}} </h5>
                 <select class="select"
                         [disabled]="this.inscription.packStudent != null && this.inscription.parcours != null" required
                         name="role" id="" [(ngModel)]="etudiant.teacherLocality">
-                    <option class="option" selected value=" ">Teacher</option>
-                    <option class="option" value="native">Native</option>
-                    <option class="option" value="non-native">Non-native</option>
+                    <option class="option" selected value=" "> {{'Teacher' | translate}}</option>
+                    <option class="option" value="native"> {{'Native' | translate}}</option>
+                    <option class="option" value="non-native"> {{'Non-native' | translate}}</option>
                 </select>
             </div>
             <div class="p-col-1"></div>
             <div style="padding-top: 50px;" class="p-col-4">
                 <button *ngIf="this.inscription.packStudent == null || this.inscription.parcours == null" pButton
-                        pRipple type="button" icon="pi pi-save" label="save changes"
+                        pRipple type="button" icon="pi pi-save" [label]="'Save changes' | translate"
                         (click)="updateInscriptionByStudent()"
                         class="Startnow"></button>
             </div>
@@ -304,7 +304,7 @@
 
             <ng-container *ngIf="inscription?.packStudent === null">
                 <div class="p-col-12">
-                    <h3>Explore our packs</h3>
+                    <h3> {{'Explore our packs' | translate}}</h3>
                 </div>
 
                 <div *ngFor="let pack of packs" class="p-col-4">
@@ -320,7 +320,7 @@
                         <p>{{pack?.description}}</p>
                         <ng-template pTemplate="footer">
                             <p><i style="font-weight: bold;" class="pi pi-angle-right"></i> {{pack?.nombreCours}}
-                                courses</p>
+                                 {{'courses' | translate}}</p>
                         </ng-template>
                     </p-card>
                 </div>
@@ -337,25 +337,25 @@
 
     <div *ngIf="selectedElement === 'PASS'" class="p-col-10">
         <div class="p-grid">
-            <div class="p-col-10 grandTitle">more about you</div>
+            <div class="p-col-10 grandTitle"> {{'more about you' | translate}}</div>
             <div class="p-col-12">
                 <div class="p-grid p-fluid">
 
 
                     <div class="p-col-6">
-                        <h5 style="color: #ff725e">language</h5>
+                        <h5 style="color: #ff725e"> {{'language' | translate}}</h5>
                         <p-dropdown
                                 [style]="{    height: '45px',
                                                 padding: '6px',
                                                 border: 'none'}"
                                 [options]="languages" [(ngModel)]="selectedLanguage"
-                                placeholder="Select your language" optionLabel="libelle"
+                                [placeholder]="'Select your language' | translate" optionLabel="libelle"
                                 [showClear]="true"></p-dropdown>
                     </div>
 
 
                     <div class="p-col-6">
-                        <h5 style="color: #ff725e">Status Social</h5>
+                        <h5 style="color: #ff725e"> {{'Status Social' | translate}}</h5>
                         <p-dropdown
                                 [style]="{    height: '45px',
                                                 padding: '6px',
@@ -366,17 +366,17 @@
                     </div>
 
                     <div class="p-col-6">
-                        <h5 style="color: #ff725e">Area of work</h5>
+                        <h5 style="color: #ff725e"> {{'Area of work' | translate}}</h5>
                         <p-dropdown [style]="{    height: '45px',
                                                 padding: '6px',
                                                 border: 'none'}"
-                                    [options]="fonctions" placeholder="List of areas of work"
+                                    [options]="fonctions"  [placeholder]="'List of areas of work' | translate"
                                     [(ngModel)]="etudiant.fonction"
                                     optionLabel="libelle"></p-dropdown>
                     </div>
 
                     <div class="p-col-6">
-                        <h5 style="color: #ff725e">Study Level</h5>
+                        <h5 style="color: #ff725e"> {{'Study Level' | translate}}</h5>
                         <p-dropdown [style]="{    height: '45px',
                                                 padding: '6px',
                                                 border: 'none'}"
@@ -385,16 +385,9 @@
                                     optionLabel="libelle"></p-dropdown>
                     </div>
 
-                    <!--                    <div class="p-col-6">-->
-                    <!--                        <h5 style="color: #ff725e">Level</h5>-->
-                    <!--                        <p-dropdown disabled [options]="parcoursList" [(ngModel)]="etudiant.parcours"-->
-                    <!--                                    placeholder="you dont have level yet" optionLabel="libelle"-->
-                    <!--                                    [showClear]="true"></p-dropdown>-->
-
-                    <!--                    </div>-->
 
                     <div class="p-col-6">
-                        <h5 style="color: #ff725e">Interests</h5>
+                        <h5 style="color: #ff725e"> {{'Interests' | translate}}</h5>
                         <p-dropdown [style]="{    height: '45px',
                                                 padding: '6px',
                                                 border: 'none'}"
@@ -403,7 +396,7 @@
                     </div>
 
                     <div class="p-col-6">
-                        <h5 style="color: #ff725e">Main goal with learning English</h5>
+                        <h5 style="color: #ff725e"> {{'Main goal with learning English' | translate}}</h5>
                         <p-dropdown [style]="{    height: '45px',
                                                 padding: '6px',
                                                 border: 'none'}"
@@ -413,7 +406,7 @@
                     </div>
 
                     <div class="p-col-6">
-                        <h5 style="color: #ff725e">Skill</h5>
+                        <h5 style="color: #ff725e"> {{'Skill' | translate}}</h5>
                         <p-dropdown [style]="{    height: '45px',
                                                 padding: '6px',
                                                 border: 'none'}"
