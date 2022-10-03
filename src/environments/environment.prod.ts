@@ -1,7 +1,7 @@
-// const url = 'http://153.92.222.43:8036';
-const url = 'http://162.19.25.141:8036';
-// const socket = 'http://153.92.222.43:8036/';
-const socket = 'ws://162.19.25.141:8036/chat';
+const url = 'http://153.92.222.43:8036';
+// const url = 'http://162.19.25.141:8036';
+const socket = 'ws://153.92.222.43:8036/chat';
+// const socket = 'ws://162.19.25.141:8036/chat';
 export const environment = {
     production: true,
     baseUrl: url + '/learn/',
