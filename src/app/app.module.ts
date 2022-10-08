@@ -310,6 +310,7 @@ import { LoadingAnimationComponent } from './view/shared/loading-animation/loadi
 import { ContactMessageComponent } from './view/admin/contact-message/contact-message.component';
 import { PhrasebookComponent } from './view/etudiant/homeWork/phrasebook/phrasebook.component';
 
+
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
@@ -636,7 +637,8 @@ export function createTranslateLoader(http: HttpClient) {
             InscriptionsComponent,
             LoadingAnimationComponent,
             ContactMessageComponent,
-            PhrasebookComponent
+            PhrasebookComponent,
+
 
         ],
     providers: [

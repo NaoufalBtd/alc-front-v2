@@ -95,6 +95,8 @@ import {BlogDetailsMainComponent} from './view/public/blog-details/blog-details-
 import {CourseDetailsComponent} from './view/public/course-details/course-details-main/course-details.component';
 import {ContactUsComponent} from './view/public/home-principale/contact-us/contact-us.component';
 import {AboutUsComponent} from './view/public/home-principale/about-us/about-us.component';
+import {PrivacyPolicyComponent} from './view/public/privacy-policy/privacy-policy.component';
+import {TermOfServiceComponent} from './view/public/term-of-service/term-of-service.component';
 
 
 @NgModule({
@@ -226,6 +228,8 @@ import {AboutUsComponent} from './view/public/home-principale/about-us/about-us.
                     {path: 'resetPassword', component: ResetPasswordComponent},
                     {path: 'public/teacher', component: BecomeTeacherComponent},
                     {path: 'courses', component: CoursesPageComponent},
+                    {path: 'Privacy', component: PrivacyPolicyComponent},
+                    {path: 'Terms-of-Service', component: TermOfServiceComponent},
                     {path: 'course-details', component: CourseDetailsComponent},
 
                 ]

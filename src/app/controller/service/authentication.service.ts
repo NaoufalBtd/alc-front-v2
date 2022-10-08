@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpResponse, HttpErrorResponse} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
 import {Observable} from 'rxjs';
 import {JwtHelperService} from '@auth0/angular-jwt';
@@ -22,7 +22,8 @@ export class AuthenticationService {
     }
 
     public login(user: User): Observable<HttpResponse<User>> {
-        return this.http.post<User>(`${this.host}/user/login`, user, {observe: 'response'});
+        const headers: HttpHeaders = this.initHeaders();
+        return this.http.post<User>(`${this.host}/user/login`, user, {observe: 'response', headers});
     }
 
     public register(user: User): Observable<User> {
@@ -85,6 +86,18 @@ export class AuthenticationService {
             this.logOut();
             return false;
         }
+    }
+
+    initHeaders(): HttpHeaders {
+        let headers = new HttpHeaders();
+        const token = localStorage.getItem('token');
+        if (token !== null) {
+            headers = new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            });
+        }
+        return headers;
     }
 
 }

@@ -146,7 +146,7 @@
   "get": "Get the latest news and updates right at your inbox",
   "free": "Book your free trial session",
   "demonstrate": "We'll demonstrate our platform\n",
-  "englishlevel":"\nWe will assess your English level and also give you an opportunity to practice your English\n",
+  "englishlevel": "\nWe will assess your English level and also give you an opportunity to practice your English\n",
   "studyplan": "Recommend a study plan",
   "classwithteacher": "Classes with a teacher",
   "try2": "try",
@@ -158,8 +158,6 @@
   "Classes with a teacher": "Classes with a teacher ",
   "popularteachers": "Popular teachers",
   "wegive": "we give up to 3 free lessons for new students",
-
-
   "Sign Up": "Sign Up",
   "Our Most": "Our Most",
   "We'll demonstrate our platform": "We'll demonstrate our platform",
@@ -206,9 +204,7 @@
   "Community Feedback": "Community Feedback",
   "Book your free trial session": "Book your free trial session",
   "We will assess your English level and also give you an opportunity to practice your English": "We will assess your English level and also give you an opportunity to practice your English",
-
-
-  "Ask us anything, or share your feedback." : "Ask us anything, or share your feedback.",
+  "Ask us anything, or share your feedback.": "Ask us anything, or share your feedback.",
   "Explanation": "Explanation",
   "Example": "Example",
   "Synonyms": "Synonyms",
@@ -323,7 +319,8 @@
   "Lessons cumming": "Lessons cumming",
   "Completed Lessons": "Completed Lessons",
   "Objet Message": "Objet Message",
-  "This is the schedule of your part of teaching , the students how are in color green are the students that they are just start the courses, the others how are in color orange are the students active in your courses.": "This is the schedule of your part of teaching , the students how are in color green are the students that they are just start the courses, the others how are in color orange are the students active in your courses."
-
-
+  "This is the schedule of your part of teaching , the students how are in color green are the students that they are just start the courses, the others how are in color orange are the students active in your courses.": "This is the schedule of your part of teaching , the students how are in color green are the students that they are just start the courses, the others how are in color orange are the students active in your courses.",
+  "LEGAL": "LEGAL",
+  "Terms of Service": "Terms of Service",
+  "Privacy Policy": "Privacy Policy"
 }

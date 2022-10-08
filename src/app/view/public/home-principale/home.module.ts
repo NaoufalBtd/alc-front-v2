@@ -45,6 +45,8 @@ import { ContactUsComponent } from './contact-us/contact-us.component';
 import { AboutUsComponent } from './about-us/about-us.component';
 import {MessagesModule} from 'primeng/messages';
 import {ToastModule} from 'primeng/toast';
+import {PrivacyPolicyComponent} from '../privacy-policy/privacy-policy.component';
+import {TermOfServiceComponent} from '../term-of-service/term-of-service.component';
 
 
 @NgModule({
@@ -84,7 +86,9 @@ import {ToastModule} from 'primeng/toast';
         HeaderOneComponent,
         CtaComponent,
         ContactUsComponent,
-        AboutUsComponent
+        AboutUsComponent,
+        PrivacyPolicyComponent,
+        TermOfServiceComponent
     ],
     imports: [
         CommonModule,
