@@ -21,12 +21,18 @@ $gutter: 1rem; //for primeflex grid system
 @import '../src/assets/scss/main.scss';
 @import 'swiper/swiper-bundle.css';
 
-h1{
+.logo-black, .logo-white {
+  width: 100px;
+}
+
+h1 {
   color: black;
 }
-.e-btn{
+
+.e-btn {
   background: #ff725e;
 }
+
 .e-btn:hover, .e-css.e-btn:hover {
   background-color: #263238;
   color: #ff725e;
@@ -238,43 +244,40 @@ div.p-grid {
 
 
 .ngFlexyBlackButton {
-  width: 100%!important;
-  background: #263238!important;
-  color: #ff725e!important;
-  border: none!important;
-  height: 40px!important;
+  width: 100% !important;
+  background: #263238 !important;
+  color: #ff725e !important;
+  border: none !important;
+  height: 40px !important;
 
 
 }
 
 .ngFlexyBlackButton:hover {
-  width: 100%!important;
-  background: #ff725e!important;
-  border: 1px solid #263238!important;
-  color: #263238!important;
-  font-weight: bold!important;
-  height: 40px!important;
+  width: 100% !important;
+  background: #ff725e !important;
+  border: 1px solid #263238 !important;
+  color: #263238 !important;
+  font-weight: bold !important;
+  height: 40px !important;
 }
 
 .ngFlexyBlackButton:active {
-  width: 100%!important;
-  background: #263238!important;
-  border: 2px solid #263238!important;
-  color: #ff725e!important;
-  font-weight: bold!important;
-  height: 40px!important;
+  width: 100% !important;
+  background: #263238 !important;
+  border: 2px solid #263238 !important;
+  color: #ff725e !important;
+  font-weight: bold !important;
+  height: 40px !important;
 }
 
 .ngFlexyBlackButton:focus {
-  outline: 0 none!important;
-  outline-offset: 0!important;
-  box-shadow: 0 0 0 0.2rem #ff9e90!important;
+  outline: 0 none !important;
+  outline-offset: 0 !important;
+  box-shadow: 0 0 0 0.2rem #ff9e90 !important;
 }
 
 /*************************************************/
-
-
-
 
 
 /******************* Orange => Black **********************/
@@ -282,39 +285,39 @@ div.p-grid {
 
 .ngFlexyOrangeButton {
   width: 100%;
-  background: #ff725e!important;
-  color: #263238!important;
-  border: none!important;
-  height: 40px!important;
+  background: #ff725e !important;
+  color: #263238 !important;
+  border: none !important;
+  height: 40px !important;
 
 
 }
 
 .ngFlexyOrangeButton:hover {
   width: 100%;
-  background: #263238!important;
+  background: #263238 !important;
   border: 1px solid #757f8a !important;
-  color:  #ff725e!important;
-  font-weight: bold!important;
-  height: 40px!important;
+  color: #ff725e !important;
+  font-weight: bold !important;
+  height: 40px !important;
 }
 
 .ngFlexyOrangeButton:active {
   width: 100%;
-  background:  #ff725e!important;
-  border: 2px solid  #ff725e!important;
-  color: #263238!important;
-  font-weight: bold!important;
-  height: 40px!important;
+  background: #ff725e !important;
+  border: 2px solid #ff725e !important;
+  color: #263238 !important;
+  font-weight: bold !important;
+  height: 40px !important;
 }
 
 .ngFlexyOrangeButton:focus {
-  outline: 0 none!important;
-  outline-offset: 0!important;
-  box-shadow: 0 0 0 0.2rem #ff9e90!important;
+  outline: 0 none !important;
+  outline-offset: 0 !important;
+  box-shadow: 0 0 0 0.2rem #ff9e90 !important;
 }
 
 /*************************************************/
-.old-price{
+.old-price {
 
 }

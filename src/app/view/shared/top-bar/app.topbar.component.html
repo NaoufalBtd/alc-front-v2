@@ -1,8 +1,6 @@
 <div class="layout-topbar" *ngIf="this.authenticationService?.getUserFromLocalCache() != null">
 
-    <img style="height: 60px!important;
-                 cursor: pointer!important;
-                 margin-left: -40px;"
+    <img style=" cursor: pointer!important;"
          [hidden]="this.authenticationService?.getUserFromLocalCache() == null"
          class="logo-white"
          src="assets/img/logo/logo-2.png" alt="logo">

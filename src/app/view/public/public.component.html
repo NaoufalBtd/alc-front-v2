@@ -14,17 +14,6 @@
     <app-menu [hidden]="user == null"></app-menu>
     <div style="padding: 0;" [style]="{padding: '0'}" class="layout-main">
         <div class="layout-content">
-            <p-toast [autoZIndex]="true" position="top-left" key="ccc"   [baseZIndex]="5000">
-                <ng-template let-message pTemplate="message">
-                    <div class="p-flex p-flex-column" style="flex: 1">
-                        <div class="p-text-center">
-                            <i class="pi pi-clock" style="font-size: 3rem"></i>
-                            <h4 style="color: #263238;">{{message.summary}}</h4>
-                            <p style="color: black;font-weight: 700;">{{getRestOfTime}}</p>
-                        </div>
-                    </div>
-                </ng-template>
-            </p-toast>
             <router-outlet></router-outlet>
         </div>
     </div>

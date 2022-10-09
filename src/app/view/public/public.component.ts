@@ -262,9 +262,6 @@ export class PublicComponent implements OnInit {
 
     ngOnInit(): void {
         setInterval(() => {
-            this.updateRestOfTime();
-        }, 1000);
-        setInterval(() => {
             this.showConfirm();
         }, 5000);
 
