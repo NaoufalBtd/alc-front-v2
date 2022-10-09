@@ -229,7 +229,6 @@ import {TermOfServiceComponent} from './view/public/term-of-service/term-of-serv
                     {path: 'public/teacher', component: BecomeTeacherComponent},
                     {path: 'courses', component: CoursesPageComponent},
                     {path: 'Privacy', component: PrivacyPolicyComponent},
-                    {path: 'Terms-of-Service', component: TermOfServiceComponent},
                     {path: 'course-details', component: CourseDetailsComponent},
 
                 ]
