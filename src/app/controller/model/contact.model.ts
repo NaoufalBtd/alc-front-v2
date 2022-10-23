@@ -6,4 +6,5 @@ export class Contact {
     message: string;
     setFrom: string;
     date: string;
+    replied: boolean = false;
 }

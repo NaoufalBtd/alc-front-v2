@@ -1,4 +1,4 @@
-import {Component, Injectable, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {MenuService} from '../shared/slide-bar/app.menu.service';
 import {MenuItem, MessageService, PrimeNGConfig} from 'primeng/api';
 import {AppComponent} from '../../app.component';
@@ -11,6 +11,7 @@ import {ReclamationEtudiant} from '../../controller/model/reclamation-etudiant.m
 import {ReclamationEtudiantService} from '../../controller/service/reclamation-etudiant.service';
 import {DatePipe, KeyValue} from '@angular/common';
 import {ContactService} from '../../controller/service/contact.service';
+import {Contact} from '../../controller/model/contact.model';
 
 @Component({
     selector: 'app-admin',
@@ -62,6 +63,9 @@ export class AdminComponent implements OnInit {
     displayDictionaryDialogAdmin: boolean;
     textSeleted: string;
     synonymes: string;
+    contactMessage: Array<Contact> = new Array<Contact>();
+    nreNonLueContact = 0;
+    nreNonLueReclamation = 0;
 
     constructor(private menuService: MenuService, private primengConfig: PrimeNGConfig,
                 private router: Router,
@@ -185,20 +189,6 @@ export class AdminComponent implements OnInit {
         event.preventDefault();
     }
 
-    onRightMenuClick(event) {
-        this.rightMenuClick = true;
-        this.rightPanelMenuActive = !this.rightPanelMenuActive;
-
-        this.hideOverlayMenu();
-
-        event.preventDefault();
-    }
-
-    onProfileClick(event) {
-        this.profileClick = true;
-        this.inlineUserMenuActive = !this.inlineUserMenuActive;
-    }
-
 
     isHorizontal() {
         return this.app.layoutMode === 'horizontal';
@@ -259,35 +249,6 @@ export class AdminComponent implements OnInit {
     items: MenuItem[];
 
     ngOnInit(): void {
-        this.items = [
-            {
-                icon: 'pi pi-pencil',
-                command: () => {
-                    this.messageService.add({severity: 'info', summary: 'Add', detail: 'Data Added'});
-                }
-            },
-            {
-                icon: 'pi pi-refresh',
-                command: () => {
-                    this.messageService.add({severity: 'success', summary: 'Update', detail: 'Data Updated'});
-                }
-            },
-            {
-                icon: 'pi pi-trash',
-                command: () => {
-                    this.messageService.add({severity: 'error', summary: 'Delete', detail: 'Data Deleted'});
-                }
-            },
-            {
-                icon: 'pi pi-upload',
-                routerLink: ['/fileupload']
-            },
-            {
-                icon: 'pi pi-external-link',
-                url: 'http://angular.io'
-
-            }
-        ];
         this.user = this.authenticationService.getUserFromLocalCache();
         if (this.user === null) {
             this.router.navigate(['/']);
@@ -298,18 +259,31 @@ export class AdminComponent implements OnInit {
                 this.router.navigate([' ']);
             }
             this.getAllReclamation();
+            this.getContactMessages();
         }
 
+    }
+
+    private getContactMessages() {
+        this.contactService.findAll().subscribe(
+            data => {
+                this.contactMessage = data;
+                this.nreNonLueContact = this.contactMessage.filter(c => c.replied === false).length;
+                console.log(data);
+            }
+        );
     }
 
     private getAllReclamation() {
         this.map.clear();
         this.reclamationService.getAll().subscribe(
             data => {
+                console.log(data);
                 this.allReclamation = data;
+                this.nreNonLueReclamation = this.allReclamation.filter(c => c.traite === false).length;
                 if (data != null) {
                     for (const item of data) {
-                        let user = item.user;
+                        const user = item.user;
                         if (this.map.has(user.id) === false) {
                             this.map.set(user.id, data.filter(r => r.user.id === user.id));
                         }
@@ -375,6 +349,8 @@ export class AdminComponent implements OnInit {
 
     showOrHideButtons() {
         this.showButtons = !this.showButtons;
+        this.getAllReclamation();
+        this.getContactMessages();
     }
 
     showData(value: KeyValue<number, ReclamationEtudiant[]>) {
@@ -391,7 +367,6 @@ export class AdminComponent implements OnInit {
                 }
             );
         }
-
     }
 
     getValueOfBadge(key: number): number {
@@ -426,6 +401,14 @@ export class AdminComponent implements OnInit {
     showImage(img: string) {
         this.selectedImgUrl = img;
         this.showOverLayImg = true;
+    }
+
+    notReadReclamation() {
+        if (this.allReclamation.filter(r => r.traite === false).length !== 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
 

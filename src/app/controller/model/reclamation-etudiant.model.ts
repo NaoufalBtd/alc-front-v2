@@ -13,7 +13,7 @@ export class ReclamationEtudiant {
     objetReclamationEtudiant: string;
     admin = new Admin();
     traite: boolean;
-    postView: string;
+    postView: boolean;
     setFrom: string;
     dateTraitement: string;
     dateReponse: string;

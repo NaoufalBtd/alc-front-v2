@@ -1,7 +1,7 @@
 // const url = 'http://localhost:8036';
-const url = 'https://back.engflexy.com';
+const url = 'https://engflexy.ma';
 // const socket = 'ws://localhost:8036/chat';
-const socket = 'wss://back.engflexy.com/chat';
+const socket = 'wss://engflexy.ma/chat';
 export const environment = {
     production: true,
     baseUrl: url + '/learn/',

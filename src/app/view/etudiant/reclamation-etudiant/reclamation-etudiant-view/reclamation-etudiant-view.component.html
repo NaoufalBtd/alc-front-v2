@@ -3,9 +3,9 @@
     <ng-template pTemplate="content">
 
         <div class="p-field">
-            <p-message *ngIf="reclamationEtudiantView.postView" severity="info" text="Message has been seen" ></p-message>
+            <p-message *ngIf="reclamationEtudiantView.traite" severity="info" text="Message has been seen" ></p-message>
 
-            <p-message *ngIf="!reclamationEtudiantView.postView" severity="error" text="The message has not been seen"></p-message>
+            <p-message *ngIf="!reclamationEtudiantView.traite" severity="error" text="The message has not been seen"></p-message>
         </div>
         <div class="p-field">
             <label for="reference">Code</label>

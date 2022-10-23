@@ -53,28 +53,40 @@
             </div>
         </div>
 
-        <div style=" border-left: 1px solid #d05040;  background: #f76c5833;" class="p-col-2">
-            <!--            <p-avatar [style]="{marginBottom: '15px'}" *ngFor="let value of map | keyvalue"-->
-            <!--                      [label]="value?.key.charAt(0)"-->
-            <!--                      (click)="showData(value)"-->
-            <!--                      pBadge-->
-            <!--                      [pTooltip]="value?.key" severity="danger"-->
-            <!--                      styleClass="p-mr-2" shape="square" size="large"></p-avatar>-->
-
-            <p-avatar *ngFor="let value of map | keyvalue" label="U" styleClass="p-mr-2"
-                      [label]="value?.key.charAt(0).toUpperCase()"
-                      (click)="showData(value)"
-                      [pTooltip]="value?.key"
-                      [style]="{
+        <div style=" border-left: 1px solid #d05040; padding: 0!important;" class="p-col-2">
+            <div *ngFor="let value of map | keyvalue" style="padding: 5px 22%;"
+                 [style.background]=" value?.key === selectedUser ? '#cccccc': 'white'" class="p-grid">
+                <p-avatar *ngIf="getBadgeValue(value.value) > 0" pBadge [value]="getBadgeValue(value.value)"
+                          label="U"
+                          styleClass="p-mr-2"
+                          [label]="value?.key.charAt(0).toUpperCase()"
+                          (click)="showData(value)"
+                          data-bs-toggle="tooltip" data-bs-placement="left" title="{{value?.key}}"
+                          [style]="{
                       backgroundColor: '#263238',
-                      marginBottom: '15px',
-                        marginBottom: '15px',
                         color: 'rgb(255, 255, 255)',
                         width: '50px',
                         height: '50px',
                         cursor: 'pointer',
+                        overflow: 'inherit',
                        color: '#ffffff'}"
-                      shape="circle"></p-avatar>
+                          shape="circle"></p-avatar>
+
+                <p-avatar *ngIf="getBadgeValue(value.value) === 0" label="U"
+                          styleClass="p-mr-2"
+                          [label]="value?.key.charAt(0).toUpperCase()"
+                          (click)="showData(value)"
+                          data-bs-toggle="tooltip" data-bs-placement="left" title="{{value?.key}}"
+                          [style]="{
+                      backgroundColor: '#263238',
+                        color: 'rgb(255, 255, 255)',
+                        width: '50px',
+                        height: '50px',
+                        cursor: 'pointer',
+                        overflow: 'inherit',
+                       color: '#ffffff'}"
+                          shape="circle"></p-avatar>
+            </div>
 
         </div>
 
@@ -84,10 +96,12 @@
     <ng-template pTemplate="footer">
         <div style="    border: 1px solid #9191a442;border-radius: 5px;" class="p-grid">
             <div class="p-col-12">
-                <input class="sentMessage" [style]="{border: 'none', width: '100%'}"
-                       [(ngModel)]="contact.message"
-                       (keydown.enter)="send()"
-                       type="text" placeholder="Reply...">
+                <textarea pInputTextarea autoResize="autoResize" class="sentMessage" cols="7"
+                          [style]="{border: 'none', width: '100%'}"
+                          [(ngModel)]="contact.message"
+                          (keydown.enter)="send()"
+                          type="text" placeholder="Reply...">
+                </textarea>
             </div>
 
         </div>

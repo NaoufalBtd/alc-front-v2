@@ -59,7 +59,7 @@
                 styleClass="p-card-shadow lessons">
             <i class="pi pi-wallet" style="font-size: 2rem; float: right; margin: -40px 0 0 0;"></i>
 
-            <h1 style="margin-right: 0!important;" class="LessonNumber">10000</h1>
+            <h1 style="margin-right: 0!important;" class="LessonNumber">{{salaryMonth.totalPayment + salaryMonth.totalBonusClassAverage + salaryMonth.totalBonusWorkload}}</h1>
             <div class="LessonNumberInMonth">Dhs</div>
             <div style="height: 13px">
             </div>
@@ -130,20 +130,14 @@
                 <li style=" background-color: white ">
 
                     <span style="color: #ff725e; background-color: white ">CURRENT PAY </span>
-                    <h4 style="  background-color: white;">100000
+                    <h4 style="  background-color: white;">{{salaryMonth.totalPayment + salaryMonth.totalBonusClassAverage + salaryMonth.totalBonusWorkload}}
                         $</h4>
 
                 </li>
                 <li>
                     <span style="color: #ff725e">Workload </span>
 
-                    <h4>50 lessons</h4>
-                </li>
-                <li>
-
-                    <span style="color: #ff725e">PREMIUM STUDENTS</span>
-                    <h4>10 STUDENTS</h4>
-
+                    <h4>{{lessonFinished?.length}} lessons</h4>
                 </li>
 
 

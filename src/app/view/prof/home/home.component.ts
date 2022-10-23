@@ -22,6 +22,8 @@ import {SimulateSectionService} from '../../../controller/service/simulate-secti
 import {Section} from '../../../controller/model/section.model';
 import {GroupeEtudiant} from "../../../controller/model/groupe-etudiant.model";
 import {HomeworkService} from "../../../controller/service/homework.service";
+import {Salary} from '../../../controller/model/salary.model';
+import {SalaryService} from '../../../controller/service/salary.service';
 
 @Component({
     selector: 'app-home',
@@ -40,12 +42,17 @@ export class HomeComponent implements OnInit {
                 private groupeEtudiantService: GroupeEtudiantService,
                 private webSocketService: WebSocketService,
                 private router: Router,
+                private salaryservice: SalaryService,
                 private homeworkService: HomeworkService,
                 private simulateSectionService: SimulateSectionService,
                 private parcoursService: ParcoursService,
                 private menuService: MenuService,
                 private sessionCourService: SessionCoursService
     ) {
+    }
+
+    get salaryMonth(): Salary {
+        return this.salaryservice.salaryMonth;
     }
 
     set groupStudent(value: GroupeEtudiant) {

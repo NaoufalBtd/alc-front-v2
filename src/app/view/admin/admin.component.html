@@ -34,20 +34,39 @@
                 <ul *ngIf="showButtons" style="list-style: none; padding: 7px;" role="menu" class="p-speeddial-list">
 
 
-
                     <li pTooltip="Reclamations" class="p-element p-speeddial-item ng-star-inserted"
                         style="transition-delay: 120ms;">
-                        <a role="menuitem" pRipple=""
+
+
+                        <a *ngIf="nreNonLueReclamation !== 0" role="menuitem" pRipple="" pBadge
+                           [value]="nreNonLueReclamation"
                            (click)="showChatDialog()"
                            class="p-ripple p-element p-speeddial-action ng-star-inserted"
                            target="undefined" tabindex="0">
                             <span class="p-speeddial-action-icon pi pi-comment ng-star-inserted"></span>
                         </a>
+
+                        <a *ngIf="nreNonLueReclamation === 0" role="menuitem" pRipple=""
+                           (click)="showChatDialog()"
+                           class="p-ripple p-element p-speeddial-action ng-star-inserted"
+                           target="undefined" tabindex="0">
+                            <span class="p-speeddial-action-icon pi pi-comment ng-star-inserted"></span>
+                        </a>
+
                     </li>
 
-                    <li pTooltip="Contacts"  class="p-element p-speeddial-item ng-star-inserted"
+                    <li pTooltip="Contacts" class="p-element p-speeddial-item ng-star-inserted"
                         style="transition-delay: 120ms;">
-                        <a role="menuitem" pRipple=""
+                        <a *ngIf="nreNonLueContact !== 0 && nreNonLueContact !== undefined" role="menuitem" pRipple=""
+                           pBadge
+                           [value]="nreNonLueContact"
+                           (click)="displayContactMessage = true"
+                           class="p-ripple p-element p-speeddial-action ng-star-inserted"
+                           target="undefined" tabindex="0">
+                            <span class="p-speeddial-action-icon pi pi-comments ng-star-inserted"></span>
+                        </a>
+
+                        <a *ngIf="nreNonLueContact === 0 || nreNonLueContact === undefined;" role="menuitem" pRipple=""
                            (click)="displayContactMessage = true"
                            class="p-ripple p-element p-speeddial-action ng-star-inserted"
                            target="undefined" tabindex="0">
@@ -71,12 +90,18 @@
                 <button (click)="showOrHideButtons()" [style]="{height: '55px!important', width: '55px!important'}"
                         pRipple="" pButton=""
                         class="p-ripple  p-button p-component p-button-icon-only p-speeddial-button p-button-rounded p-speeddial-rotate undefined">
-                    <span class="p-ink" style=" top: -1.24998px; left: -1.59998px;"></span>
-                    <span style="font-size: 20px; font-weight: bold;" *ngIf="!showButtons"
-                          class="p-button-icon pi pi-plus" aria-hidden="true"></span>
-                    <span style="font-size: 20px; font-weight: bold;" *ngIf="showButtons"
-                          class="p-button-icon pi pi-angle-down" aria-hidden="true"></span>
-                    <span aria-hidden="true" class="p-button-label">&nbsp;</span>
+                    <i *ngIf="nreNonLueReclamation !== 0 ||  nreNonLueContact !== 0"
+                       class="pi pi-bell p-mr-2 p-text-secondary" pBadge
+                       style="font-size: 2rem" [value]="nreNonLueReclamation + nreNonLueContact" severity="success"></i>
+
+                    <ng-container *ngIf="nreNonLueReclamation + nreNonLueContact === 0">
+                         <span style="font-size: 20px; font-weight: bold;" *ngIf="!showButtons"
+                               class="p-button-icon pi pi-plus" aria-hidden="true"></span>
+
+
+                        <span style="font-size: 20px; font-weight: bold;" *ngIf="showButtons"
+                              class="p-button-icon pi pi-angle-down" aria-hidden="true"></span>
+                    </ng-container>
                 </button>
             </div>
             <router-outlet></router-outlet>
@@ -166,14 +191,26 @@
             </div>
         </div>
 
-        <div style=" border-left: 1px solid #d05040;  background: #f76c5833;" class="p-col-2">
-            <p-avatar [style]="{marginBottom: '15px'}" *ngFor="let value of map | keyvalue"
-                      [image]="value?.value[0]?.user?.image"
-                      (click)="showData(value)"
-                      pBadge
-                      [value]="getValueOfBadge(value.key)"
-                      [pTooltip]="value?.value[0]?.user?.nom" severity="danger"
-                      styleClass="p-mr-2" shape="square" size="large"></p-avatar>
+        <div style=" border-left: 1px solid #d05040; padding: 0!important;" class="p-col-2">
+            <div *ngFor="let value of map | keyvalue" style="padding: 5px 22%;"
+                 [style.background]=" value?.key === selectedUser?.id ? '#cccccc': 'white'" class="p-grid">
+
+                <p-avatar *ngIf="getValueOfBadge(value.key) > 0"
+                          [image]="value?.value[0]?.user?.image"
+                          (click)="showData(value)"
+                          pBadge
+                          [value]="getValueOfBadge(value.key)"
+                          [pTooltip]="value?.value[0]?.user?.nom"
+                          severity="danger"
+                          styleClass="p-mr-2" shape="square" size="large"></p-avatar>
+
+                <p-avatar *ngIf="getValueOfBadge(value.key) === 0"
+                          [image]="value?.value[0]?.user?.image"
+                          (click)="showData(value)"
+                          [pTooltip]="value?.value[0]?.user?.nom"
+                          severity="danger"
+                          styleClass="p-mr-2" shape="square" size="large"></p-avatar>
+            </div>
         </div>
 
 
@@ -188,7 +225,7 @@
                        type="text" placeholder="Send a message...">
             </div>
             <div class="p-col-5">
-                <p-fileUpload mode="basic"  styleClass="sentIcons" chooseIcon="pi pi-link" name="demo[]"
+                <p-fileUpload mode="basic" styleClass="sentIcons" chooseIcon="pi pi-link" name="demo[]"
                               url="./upload.php" accept="image/*"
                               maxFileSize="100000000" (onSelect)="onBasicUpload($event)"></p-fileUpload>
 
@@ -200,9 +237,9 @@
 
 <p-dialog [showHeader]="false" [(visible)]="displayImgDialog" [position]="position" [modal]="true"
           [style]="{width: '35vw'}" [baseZIndex]="100000"
-          [draggable]="true" [resizable]="false" >
+          [draggable]="true" [resizable]="false">
     <div style="background: #263238; color: white!important; border-right: 5px;" class="p-grid">
-        <p-button icon="pi pi-times" (click)="cancel()"  styleClass="p-button-text"></p-button>
+        <p-button icon="pi pi-times" (click)="cancel()" styleClass="p-button-text"></p-button>
 
         <div style="padding: 1%" class="p-col-12">
             <img style="width: 90%; margin-left: 4%; border-radius: 5px;" src="{{reader?.result}}" alt="not found">
@@ -217,15 +254,10 @@
 </p-dialog>
 
 
-
-
-
-
-
 <div *ngIf="showOverLayImg" id="myNav" class="overlay">
 
     <!-- Button to close the overlay navigation -->
-    <a style="cursor: pointer" (click)="showOverLayImg  = false" class="closebtn" >&times;</a>
+    <a style="cursor: pointer" (click)="showOverLayImg  = false" class="closebtn">&times;</a>
 
     <!-- Overlay content -->
     <div class="overlay-content">

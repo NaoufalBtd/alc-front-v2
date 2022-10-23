@@ -38,4 +38,7 @@ export class ContactService {
         return this.http.post<Contact>(this.adminUrl + 'contact/', contact);
     }
 
+    reply(contact: Contact): Observable<Contact> {
+        return this.http.post<Contact>(this.adminUrl + 'contact/reply', contact);
+    }
 }
