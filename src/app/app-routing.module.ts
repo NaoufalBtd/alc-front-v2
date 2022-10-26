@@ -97,6 +97,7 @@ import {ContactUsComponent} from './view/public/home-principale/contact-us/conta
 import {AboutUsComponent} from './view/public/home-principale/about-us/about-us.component';
 import {PrivacyPolicyComponent} from './view/public/privacy-policy/privacy-policy.component';
 import {TermOfServiceComponent} from './view/public/term-of-service/term-of-service.component';
+import {TestLevelComponent} from './view/etudiant/test-level/test-level.component';
 
 
 @NgModule({
@@ -194,6 +195,7 @@ import {TermOfServiceComponent} from './view/public/term-of-service/term-of-serv
                     {path: 'reclamation-etudiant', component: ReclamationEtudiantComponent},
                     {path: 'profile', component: EtudiantProfileComponent},
                     {path: 'profileEdit', component: ProfileComponent},
+                    {path: 'test-level', component: TestLevelComponent},
                     {path: 'inviteStudent', component: InvitedStudentComponent},
                     {path: 'myPromotionList', component: MyPromotionListComponent},
                     {path: 'inviteStudent', component: InvitedStudentComponent},

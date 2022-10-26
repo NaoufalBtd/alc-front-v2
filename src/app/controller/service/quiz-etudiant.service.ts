@@ -419,9 +419,9 @@ export class QuizEtudiantService {
     return this.http.get<Etudiant>(this.adminUrl + 'etudiant/ref/e1');
   }
 
-  public findQuiz(): Observable<Quiz>
+  public findQuizByReference(ref: string): Observable<Quiz>
   {
-    return this.http.get<Quiz>(this.adminUrl + 'quiz/ref/quiz1');
+    return this.http.get<Quiz>(this.adminUrl + 'quiz/ref/' + ref);
   }
 
   public findFirstQuestion(): Observable<Question>

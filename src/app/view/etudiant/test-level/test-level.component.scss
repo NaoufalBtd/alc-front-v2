@@ -1,0 +1,399 @@
+.question {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-radius: 3px;
+  padding: 55px;
+
+}
+
+#triangle-down {
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 10px solid #68c671;
+  margin-left: 43%;
+  margin-top: -5px;
+}
+
+.answers {
+  background-color: #e9ecef;
+  border-radius: 3px;
+  padding-top: 30px;
+  text-align: center;
+}
+
+.textQuestion {
+  background-color: #FFFFFF;
+  height: 40px;
+  width: 50%;
+  padding-left: 10px;
+  border-radius: 3px;
+  margin-top: -10px;
+}
+
+.h5, span, span > input {
+  display: inline-block;
+  color: #6197ba;
+}
+
+input {
+  margin: 0 5px 0 5px !important;
+}
+
+.p-float-label {
+  margin: -1%;
+}
+
+#inputDashedBorder, #inputQstT4, #inputQstT6 {
+  border: dashed 1px #6197ba !important;
+  width: 75%;
+  font-weight: bold;
+  text-align: center;
+}
+
+#inputCorrectAnswer {
+  border: solid 2px green !important;
+  color: #05490b;
+  font-size: larger;
+  font-weight: bold;
+  width: 80%;
+  text-align: center;
+}
+
+#inputFalseAnswer {
+  border: solid 2px red !important;
+  color: #690c09;
+  font-size: larger;
+  font-weight: bold;
+  width: 80%;
+  text-align: center;
+}
+
+h5, .textQuestion {
+  font-weight: bold !important;
+}
+
+
+.correctAnswer {
+  background-color: #68c671;
+  height: 25px;
+  text-align: center;
+  width: auto;
+  border-radius: 6px;
+  color: black;
+  margin-top: -26px;
+  font-weight: bold;
+  margin-left: 23%;
+  padding: 5px;
+}
+
+.correctAnswer::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #68c671 transparent transparent transparent;
+}
+
+.check-button {
+  float: right;
+  background-color: #ffa500 !important;
+  border: none !important;
+}
+
+.dont-know-button, {
+  float: right;
+  background-color: transparent !important;
+  color: #ffa500;
+  border: 2px solid #ffa500 !important;
+}
+
+.dont-know-button:hover {
+  background-color: #ffa500 !important;
+  border: 2px solid #ffa500 !important;
+
+}
+
+
+.p-col-3 {
+  padding: 10px;
+}
+
+.sideBar {
+  margin-top: 2%;
+}
+
+#input-answer {
+  border: none;
+  border-bottom: 2px solid #ffa500;
+  border-radius: 0;
+  color: #67530b;
+  font-size: larger;
+  font-weight: bold;
+  width: 30em;
+  text-align: center;
+}
+
+#input-answer-correct {
+  border: none;
+  border-bottom: 2px solid #68c671;
+  color: #05490b;
+  font-size: larger;
+  font-weight: bold;
+  border-radius: 0;
+  width: 30em;
+  text-align: center;
+}
+
+#input-answer-incorrect {
+  border: none;
+  border-bottom: 2px solid red;
+  color: #690c09;;
+  border-radius: 0;
+  width: 30em;
+  text-align: center;
+  font-size: larger;
+  font-weight: bold;
+}
+
+#input-answer:focus {
+  border: none !important;
+  border-bottom: 2px solid #ffa500 !important;
+  text-align: center !important;
+  box-shadow: none !important;
+}
+
+#input-answer-correct:focus {
+  border: none !important;
+  border-bottom: 2px solid #68c671 !important;
+  text-align: center !important;
+  box-shadow: none !important;
+}
+
+#input-answer-incorrect:focus {
+  border: none !important;
+  border-bottom: 2px solid red !important;
+  text-align: center !important;
+  box-shadow: none !important;
+}
+
+h4 {
+  color: #2d6a4f;
+  margin-top: 20px;
+}
+
+.translateQuestion {
+  margin-bottom: 20px;
+  color: #6197ba;
+}
+
+.trueOrFalseQst {
+  border: 3px solid grey;
+}
+
+.trueQst {
+  border: 3px solid #52b788;
+}
+
+.falseQst {
+  border: 3px solid #f08080;
+}
+
+.pi-check-circle {
+  color: #52b788;
+}
+
+.pi-times-circle {
+  color: #fc1b1b;
+}
+
+
+.p-col-9 {
+  text-align: left;
+  font-weight: 500;
+  color: #6197ba;
+}
+
+.sonButton {
+  margin: 8px;
+  background-color: transparent !important;
+  color: #ffa500;
+  border: 2px solid #ffa500 !important;
+}
+
+
+.sonButton:hover {
+  background-color: #ffa500 !important;
+  border: 2px solid #ffa500 !important;
+}
+
+.caption {
+  text-align: center;
+
+}
+
+.noteFinal {
+  display: inline-block;
+  margin-right: 2%;
+  font-family: auto, fantasy;
+  color: #ffa500;
+}
+
+.p-inputtext:enabled:focus {
+  outline: 0 none;
+  outline-offset: 0;
+  font-weight: 700 !important;
+}
+
+.pi-exclamation-circle {
+  color: #ffa500;
+}
+
+.pi-users {
+  color: #ffa500;
+}
+
+@keyframes inCorrect {
+  from {
+    background-color: #f08080;
+  }
+  to {
+    background-color: #dcdcdc;
+  }
+}
+
+.correctAnswerT12 {
+  text-align: center;
+  font-size: large;
+  color: green;
+  background-color: #f4f4f4;
+  letter-spacing: 1px;
+  font-weight: 600;
+}
+
+.incorrectAnswerT12 {
+  text-align: center;
+  font-size: large;
+  color: #ff0800;
+  background-color: #f4f4f4;
+  letter-spacing: 1px;
+  font-weight: 600;
+}
+
+.answerT12 {
+  padding-right: 40%;
+  text-align: center;
+  border: 1px dashed #dadada;
+  border-radius: 5px;
+  font-size: large;
+  color: #536c81;
+  background-color: #f4f4f4;
+  letter-spacing: 1px;
+  font-weight: 600;
+}
+
+.libelleT12 {
+  display: inline-block !important;
+  margin-right: 8px !important;
+  border-bottom: 2px dashed;
+  color: #7b8895;
+}
+
+.answert12 {
+  display: inline-block !important;
+  background-color: #dcdcdc;
+  margin: 2%;
+  text-align: center;
+  font-size: medium;
+  cursor: pointer;
+  color: black;
+  border-radius: 10px;
+  font-weight: 500;
+}
+
+.p-tooltip-top {
+  display: flex;
+  font-size: medium !important;
+  //border: 1px solid gainsboro !important;
+  border-radius: 5px;
+  letter-spacing: 1px;
+  padding: 5px;
+  color: black;
+  background: #dde4eb;
+  visibility: hidden;
+}
+
+//drag and drop
+
+
+#div2 {
+  margin-left: 200px;
+}
+
+
+#p-col-2 {
+  background-color: #d9d9d9 !important;
+  border-radius: 25px !important;
+  border: none !important;
+  text-align: center !important;
+  color: black !important;
+  font-weight: bold !important;
+  cursor: move !important;
+  margin: 2% 5% 0 0 !important;
+  height: 36px !important;
+  padding: 0 !important;
+}
+
+#text {
+  display: inline-block !important;
+  width: auto !important;
+  font-weight: bold;
+  color: black !important;
+  margin: 1% !important;
+}
+
+#span {
+  margin: 10px 2px 2px 1px !important;
+  color: black !important;
+  display: initial;
+  line-height: 55px;
+}
+
+.topDiv {
+  border: 2px dashed #e8e8e8;
+  border-radius: 5px;
+  margin: 15px 0;
+}
+
+
+.tooltipT13 {
+  visibility: hidden;
+  position: absolute;
+  width: auto;
+  color: white;
+  text-align: center;
+  margin: -60px 0 0 50px;
+  padding: 0 6px;
+  border-radius: 6px;
+  z-index: 1000;
+  cursor: pointer;
+  opacity: 8;
+  transition: opacity 0.6s;
+  border: 1px solid #555;
+  background: #555;
+}
+
+.tooltipT13::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}

@@ -365,7 +365,7 @@ export class QuizPreviewProfComponent implements OnInit, OnDestroy {
                     }
                     console.log(this.reponseQuizList);
                     if (this.reponseQuizList.length === 0) {
-                        this.learnService.onStart();
+                        this.learnService.onStart(this.selectedQuiz);
                     } else {
                         this.showTakeQuiz = false;
                         this.showQuizReview = true;
@@ -378,7 +378,7 @@ export class QuizPreviewProfComponent implements OnInit, OnDestroy {
                     this.reponseQuizList = data;
                     console.log(this.reponseQuizList);
                     if (this.reponseQuizList.length === 0) {
-                        this.learnService.onStart();
+                        this.learnService.onStart(this.selectedQuiz);
                     } else {
                         this.showTakeQuiz = false;
                         this.showQuizReview = true;

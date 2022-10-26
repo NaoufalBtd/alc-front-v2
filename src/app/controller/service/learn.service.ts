@@ -872,7 +872,7 @@ export class LearnService {
         this.noteQuiz = 0;
     }
 
-    public onStart() {
+    public onStart(selectedQuiz: Quiz) {
         this.nextIndex = Number(1);
         this.t12AnswersList = new Array<Reponse>();
         this.studenta_answersT12 = new Map<number, string>();
@@ -905,7 +905,7 @@ export class LearnService {
         console.log(this.showDontKnowButton);
         console.log(this.showCheckButton);
         this.noteQuiz = 0;
-        this.service.findAllQuestions(this.selectedQuiz.ref).subscribe(
+        this.service.findAllQuestions(selectedQuiz.ref).subscribe(
             data => {
                 this.questionList = data;
                 this.numberOfQuestion = this.questionList.length;
