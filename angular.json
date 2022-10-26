@@ -51,7 +51,7 @@
                 }
 
               ],
-              "sourceMap": true,
+              "sourceMap": false,
               "optimization": true,
               "outputHashing": "all",
               "extractCss": true,

@@ -309,6 +309,7 @@ import { InscriptionStudentMainComponent } from './view/public/inscription-stude
 import { LoadingAnimationComponent } from './view/shared/loading-animation/loading-animation.component';
 import { ContactMessageComponent } from './view/admin/contact-message/contact-message.component';
 import { PhrasebookComponent } from './view/etudiant/homeWork/phrasebook/phrasebook.component';
+import { TestLevelComponent } from './view/etudiant/test-level/test-level.component';
 
 
 export function createTranslateLoader(http: HttpClient) {
@@ -638,6 +639,7 @@ export function createTranslateLoader(http: HttpClient) {
             LoadingAnimationComponent,
             ContactMessageComponent,
             PhrasebookComponent,
+            TestLevelComponent,
 
 
         ],
