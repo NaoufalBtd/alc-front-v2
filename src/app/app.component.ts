@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {PrimeNGConfig} from 'primeng/api';
 import {TranslateService} from '@ngx-translate/core';
-import {environment} from '../environments/environment';
+import {environment} from '../environments/environment.prod';
 
 @Component({
     selector: 'app-root',
