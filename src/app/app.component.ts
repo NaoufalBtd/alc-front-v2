@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {PrimeNGConfig} from 'primeng/api';
 import {TranslateService} from '@ngx-translate/core';
+import {environment} from '../environments/environment';
 
 @Component({
     selector: 'app-root',
@@ -12,9 +13,7 @@ export class AppComponent implements OnInit {
                 public translate: TranslateService) {
         translate.setDefaultLang('en');
         const lang = window.navigator.language;
-        console.log('=====================');
-        console.log(lang);
-        console.log('=====================');
+        console.log(environment.socketUrl);
         if (lang?.includes('ar')) {
             translate.use('ar');
         } else if (lang?.includes('fr')) {
