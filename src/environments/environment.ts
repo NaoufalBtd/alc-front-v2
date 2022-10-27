@@ -3,7 +3,7 @@
 // const url = 'http://localhost:8036';
 const url = 'https://engflexy.ma';
 // const socket = 'ws://localhost:8036/chat';
-const socket = 'wss://engflexy.ma/chat';
+const socket = 'ws://engflexy.ma/chat';
 
 export const environment = {
     production: false,
