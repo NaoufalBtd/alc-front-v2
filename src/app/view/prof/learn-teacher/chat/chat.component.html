@@ -44,29 +44,19 @@
 
             <div class="speech-divider"></div>
 
-<!--            <div class="bubble" *ngIf="chatMessage.isStudent">-->
-<!--                <div class="txt">-->
-<!--                    <p class="name">{{chatMessage.user}}</p>-->
-<!--                    <p class="message">{{chatMessage.message}}</p>-->
-<!--                    <span class="timestamp">{{today | date:'h:mm'}}</span>-->
-<!--                </div>-->
-<!--                <div class="bubble-arrow"></div>-->
-<!--                <div class="speech-divider"></div>-->
-<!--            </div>-->
         </div>
     </div>
 
 </div>
 <br>
-<form #sendForm="ngForm" (ngSubmit)="sendMessage(sendForm)">
-    <div class="chat-send row">
-        <div>
-                <textarea autoResize="true" autofocus class="form-control" id="input-message" name="message"
-                          cols="2" class="textMsg"
-                          ngModel pInputTextarea required type="text"></textarea>
+<form>
+    <div class="chat-send p-grid row">
+        <div class="p-col-12">
+            <div class="p-inputgroup">
+                <input [(ngModel)]="message" name="message" type="text" ngModel (keydown.enter)="sendMessage()" pInputText placeholder="Message">
+                <button type="button" (click)="sendMessage()" pButton pRipple icon="pi pi-send" styleClass="p-button-warn"></button>
+            </div>
         </div>
-        <div>
-            <p-button class="btn btn-primary"  type="submit">Send</p-button>
-        </div>
+
     </div>
 </form>

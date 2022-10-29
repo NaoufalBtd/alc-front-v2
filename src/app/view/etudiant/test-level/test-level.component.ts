@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {QuizEtudiantService} from '../../../controller/service/quiz-etudiant.service';
 import {LearnService} from '../../../controller/service/learn.service';
-import {ReponseEtudiantService} from '../../../controller/service/reponse-etudiant.service';
 import {LoginService} from '../../../controller/service/login.service';
 import {ConfirmationService, MessageService} from 'primeng/api';
 import {Router} from '@angular/router';
@@ -15,6 +14,8 @@ import {Quiz} from '../../../controller/model/quiz.model';
 import {QuizReponse} from '../../../controller/model/quiz-reponse';
 import {Prof} from '../../../controller/model/prof.model';
 import {Etudiant} from '../../../controller/model/etudiant.model';
+import {InscriptionService} from '../../../controller/service/inscription.service';
+import {Inscription} from '../../../controller/model/inscription.model';
 
 @Component({
     selector: 'app-test-level',
@@ -22,10 +23,11 @@ import {Etudiant} from '../../../controller/model/etudiant.model';
     styleUrls: ['./test-level.component.scss']
 })
 export class TestLevelComponent implements OnInit {
+    private inscription: Inscription = new Inscription();
 
     constructor(private quizEtudiantService: QuizEtudiantService,
                 private learnService: LearnService,
-                private reponseEtudiantService: ReponseEtudiantService,
+                private inscriptionService: InscriptionService,
                 private login: LoginService,
                 private messageService: MessageService,
                 private router: Router,
@@ -35,21 +37,6 @@ export class TestLevelComponent implements OnInit {
                 public webSocketService: WebSocketService) {
     }
 
-    get questionOptions(): ({ label: string; value: string } | { label: string; value: string })[] {
-        return this.learnService.questionOptions;
-    }
-
-    set questionOptions(value: ({ label: string; value: string } | { label: string; value: string })[]) {
-        this.learnService.questionOptions = value;
-    }
-
-    get selectedT12Reponse(): Reponse {
-        return this.learnService.selectedT12Reponse;
-    }
-
-    set selectedT12Reponse(value: Reponse) {
-        this.learnService.selectedT12Reponse = value;
-    }
 
     get dernierSelected(): Reponse {
         return this.learnService.dernierSelected;
@@ -92,22 +79,12 @@ export class TestLevelComponent implements OnInit {
         return this.learnService.dragAnswersList;
     }
 
-    get quizT12AnswersList(): Array<Reponse> {
-        return this.learnService.quizT12AnswersList;
-    }
-
-    set quizT12AnswersList(value: Array<Reponse>) {
-        this.learnService.quizT12AnswersList = value;
-    }
 
 
     get answersT12List(): Map<number, string> {
         return this.learnService.answersT12List;
     }
 
-    set answersT12List(value: Map<number, string>) {
-        this.learnService.answersT12List = value;
-    }
 
     get dragList(): Array<string> {
         return this.learnService.dragList;
@@ -125,21 +102,7 @@ export class TestLevelComponent implements OnInit {
         this.learnService.dragIndex = value;
     }
 
-    get dragData(): string {
-        return this.learnService.dragData;
-    }
 
-    set dragData(value: string) {
-        this.learnService.dragData = value;
-    }
-
-    get nextIndex(): number {
-        return this.learnService.nextIndex;
-    }
-
-    set nextIndex(value: number) {
-        this.learnService.nextIndex = value;
-    }
 
 
     get showTakeQuiz(): boolean {
@@ -338,9 +301,6 @@ export class TestLevelComponent implements OnInit {
         return this.learnService.participants;
     }
 
-    get grpStudentAnswers(): Map<Etudiant, QuizReponse> {
-        return this.webSocketService.grpStudentAnswers;
-    }
 
     set grpStudentAnswers(value: Map<Etudiant, QuizReponse>) {
         this.webSocketService.grpStudentAnswers = value;
@@ -348,11 +308,18 @@ export class TestLevelComponent implements OnInit {
 
 
     ngOnInit(): void {
-        console.log('-------------------------------------------------');
         this.quizEtudiantService.findQuizByReference('quiz-529').subscribe(
             data => {
                 this.selectedQuiz = data;
                 this.learnService.onStart(data);
+            }, error => {
+                console.log(error);
+            }
+        );
+        this.inscriptionService.findByEtudiantId(this.login.getConnectedStudent().id).subscribe(
+            data => {
+                this.inscription = data;
+                console.log(data);
             }, error => {
                 console.log(error);
             }

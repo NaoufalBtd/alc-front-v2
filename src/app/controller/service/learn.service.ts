@@ -639,8 +639,6 @@ export class LearnService {
             }
         } else if (question.typeDeQuestion.ref === 't5') {
             this.disableToggleButton = true;
-            console.log(this.trueOrFalse);
-            console.log(this.correctAnswersList.get(question.id)[0].lib);
             this.answerSelected.lib = String(this.trueOrFalse);
             if (String(this.correctAnswersList.get(question.id)[0].lib) === String(this.answerSelected.lib)) {
                 this.answerSelected = this.correctAnswersList.get(question.id)[0];
@@ -659,7 +657,6 @@ export class LearnService {
             this.answerSelected.etatReponse = this.reponseQuiz.etatReponse;
         } else if (question.typeDeQuestion.ref === 't13') {
             for (const key of this.dragAndDropCorrectAnswersList.keys()) {
-                console.log(key);
                 if (this.dragAndDropCorrectAnswersList.get(key) === this.dragAndDropStudentAnswersList.get(Number(key))) {
                     document.getElementById(key.toString()).style.border = '2px solid green';
                 } else {
@@ -677,8 +674,6 @@ export class LearnService {
         }
         this.answersList.set(question, this.answerSelected);
         this.answersPointStudent.set(question, type);
-        console.log(this.answersPointStudent);
-        console.log(this.answersList);
         this.showNextButton = true;
         this.showCheckButton = false;
         this.saveDone = true;
@@ -690,28 +685,23 @@ export class LearnService {
     public translate(qst: Question) {
         if (qst.typeDeQuestion.ref === 't1' || qst.typeDeQuestion.ref === 't6' || qst.typeDeQuestion.ref === 't4') {
             this.wordDictionnary = this.questionSideLeft + ' ' + this.correctAnswersList?.get(qst.id)[0].lib + ' ' + this.questionSideRight;
-            console.log(this.son);
         } else if (qst.typeDeQuestion.ref === 't3') {
             this.wordDictionnary = this.correctAnswersList?.get(qst.id)[0].lib;
-            console.log(this.son);
         } else if (qst.typeDeQuestion.ref === 't5') {
             this.wordDictionnary = qst.libelle;
         }
 
-        console.log(this.selectedLanguage);
 
         if (this.selectedLanguage.code === 'ar') {
             this.service.translate(this.wordDictionnary).subscribe(
                 data => {
                     this.translateWord = data;
-                    console.log(data);
                 }
             );
         } else if (this.selectedLanguage.code === 'fr') {
             this.service.translateEnFr(this.wordDictionnary).subscribe(
                 data => {
                     this.translateWord = data;
-                    console.log(data);
                 }
             );
         }
@@ -755,8 +745,6 @@ export class LearnService {
         for (let i = 0; i < (this.questionList.length); i++) {
             if (this.question.id === this.questionList[i].id) {
                 this.question = this.questionList[i + 1];
-                console.log('===========================  QUESTION  ACTUEL =================================');
-                console.log(this.question);
                 if (this.question.typeDeQuestion.ref === 't1') {
                     this.questionSideLeft = this.question.libelle.substring(0, this.question.libelle.indexOf('...'));
                     this.questionSideRight = this.question.libelle.substring(this.question.libelle.lastIndexOf('...') + 3);
@@ -769,7 +757,6 @@ export class LearnService {
                     this.placeHolderAnswer = this.correctAnswersList.get(this.question.id)[0]?.lib;
                 } else if (this.question.typeDeQuestion.ref === 't12') {
                     this.extractedData(this.question.libelle, 't12');
-                    console.log(this.answersT12List);
                     this.showT12Answers();
                 } else if (this.question.typeDeQuestion.ref === 't13') {
                     this.extractDataForDragAndDrop(this.question.libelle);
@@ -813,8 +800,6 @@ export class LearnService {
                     this.placeHolderAnswer = this.correctAnswersList.get(this.question.id)[0]?.lib;
                 } else if (this.question.typeDeQuestion.ref === 't12') {
                     this.extractedData(this.question.libelle, 't12');
-                    console.log('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
-                    console.log(this.answersT12List);
                     this.showT12Answers();
                 } else if (this.question.typeDeQuestion.ref === 't13') {
                     this.extractDataForDragAndDrop(this.question.libelle);
@@ -833,14 +818,12 @@ export class LearnService {
             document.getElementById('trueFalse').className = 'trueQst p-grid';
             this.trueOrFalse = this.correctAnswersList.get(question.id)[0].lib === 'true';
 
-            console.log(this.inputAnswer);
             this.disableToggleButton = true;
         }
         this.answerSelected = this.correctAnswersList.get(question.id)[0];
         this.answersList.set(question, this.answerSelected);
         this.answersPointStudent.set(question, 'STUDENT_DONT_KNOW');
 
-        console.log(this.answersList);
         this.myAnswer = new Reponse();
         this.showNextButton = true;
         this.showCheckButton = false;
@@ -902,8 +885,6 @@ export class LearnService {
         this.showNextButton = false;
         this.disableButtonSon = true;
         this.pourCentgage = 0;
-        console.log(this.showDontKnowButton);
-        console.log(this.showCheckButton);
         this.noteQuiz = 0;
         this.service.findAllQuestions(selectedQuiz.ref).subscribe(
             data => {
@@ -911,25 +892,19 @@ export class LearnService {
                 this.numberOfQuestion = this.questionList.length;
                 this.pourCentgage = 100 / this.numberOfQuestion;
                 this.value = this.pourCentgage;
-                console.log(this.questionList);
                 for (let i = 0; i < this.questionList.length; i++) {
                     this.question = this.questionList[0];
                     this.service.findReponses(this.questionList[i].id).subscribe(
                         data1 => {
                             this.questionList[i].reponses = data1;
                             this.correctAnswersList.set(this.questionList[i].id, data1.filter(r => r.etatReponse === 'true'));
-                            console.log(this.correctAnswersList);
                             if (this.question.typeDeQuestion.ref === 't3') {
-                                console.log(this.correctAnswersList);
                                 this.placeHolderAnswer = this.correctAnswersList.get(this.question.id)[0]?.lib;
                             }
                         }, error => {
                             console.log(error);
                         }
                     );
-                    console.log(this.question);
-                    console.log(this.questionSideLeft);
-                    console.log(this.questionSideRight);
                     if (this.question.typeDeQuestion.ref === 't1') {
                         this.questionSideLeft = this.question.libelle.substring(0, this.question.libelle.indexOf('...'));
                         this.questionSideRight = this.question.libelle.substring(this.question.libelle.lastIndexOf('...') + 3);
@@ -940,7 +915,6 @@ export class LearnService {
                             this.question.libelle.lastIndexOf('@'));
                     } else if (this.question.typeDeQuestion.ref === 't12') {
                         this.extractedData(this.question.libelle, 't12');
-                        console.log(this.answersT12List);
                         this.showT12Answers();
                     } else if (this.question.typeDeQuestion.ref === 't13') {
                         this.extractDataForDragAndDrop(this.question.libelle);
@@ -952,8 +926,6 @@ export class LearnService {
 
     private showT12Answers() {
         this.quizT12AnswersList = new Array<Reponse>();
-        console.log(this.quizT12AnswersList);
-        console.log(this.correctAnswersList);
         this.service.findReponses(this.question.id).subscribe(
             data1 => {
                 this.quizT12AnswersList = data1;
@@ -1007,7 +979,6 @@ export class LearnService {
         const quizStudent: QuizEtudiant = new QuizEtudiant();
         const threshold = this.answersList.size;
         this.noteQuiz = 0;
-        console.log(this.answersPointStudent);
         for (const value of this.answersList.entries()) {
             if (value[1].etatReponse === 'true') {
                 if (this.answersPointStudent.get(value[0]) === 'STUDENT_ANSWER') {
@@ -1026,14 +997,11 @@ export class LearnService {
         quizStudent.note = this.noteQuiz;
         quizStudent.questionCurrent = threshold;
         quizStudent.resultat = String(this.noteQuiz + ' / ' + threshold);
-        console.log(quizStudent);
         this.service.save(quizStudent).subscribe(
             quitEtudiant => {
-                console.log(quitEtudiant);
                 for (const entry of this.answersList.entries()) {
                     this.answer.question = entry[0];
                     this.answer.quizEtudiant = quitEtudiant;
-                    console.log(this.correctAnswersList);
                     if (entry[0].typeDeQuestion.ref === 't13') {
                         this.answer.reponse = entry[1];
                         this.answer.answer = entry[1].lib;
@@ -1054,10 +1022,8 @@ export class LearnService {
                     } else {
                         this.answer.note = entry[0].pointReponsefausse;
                     }
-                    console.log(this.answer);
                     this.reponseEtudiantService.save().subscribe(
                         reponse => {
-                            console.log(reponse);
                         }, error => {
                             console.log(error);
                         }
@@ -1067,7 +1033,6 @@ export class LearnService {
                 console.log(error);
             }
         );
-        console.log(this.noteQuiz + ' / ' + threshold);
         this.showTakeQuiz = false;
         this.showQuizReview = true;
     }
@@ -1075,10 +1040,8 @@ export class LearnService {
     public sound(qst: Question) {
         if (qst.typeDeQuestion.ref === 't1' || qst.typeDeQuestion.ref === 't6' || qst.typeDeQuestion.ref === 't4') {
             this.son = this.questionSideLeft + ' ' + this.correctAnswersList?.get(qst.id)[0].lib + ' ' + this.questionSideRight;
-            console.log(this.son);
         } else if (qst.typeDeQuestion.ref === 't3') {
             this.son = this.correctAnswersList?.get(qst.id)[0].lib;
-            console.log(this.son);
         } else if (qst.typeDeQuestion.ref === 't5') {
             this.son = qst.libelle;
         }
@@ -1090,9 +1053,6 @@ export class LearnService {
 
 
     onClickT12(answer: Reponse): boolean {
-        console.log('================================');
-        console.log(this.nextIndex);
-        console.log(this.answersT12List.size);
         this.studenta_answersT12.set(answer.numero, answer.lib);
         this.showT12AnswerDiv = true;
         this.nextIndex += 1;
@@ -1100,17 +1060,13 @@ export class LearnService {
             this.showCheckButton = false;
             this.showDontKnowButton = true;
             this.filterDatat12(this.quizT12AnswersList, this.nextIndex);
-            console.log('ANA F NOT  SHOW CHECK BUTTON');
-            console.log(this.showCheckButton);
             document.getElementById('showCheckButtonForT12').style.visibility = 'hidden';
             return false;
         } else {
-            console.log('ANA F ELSE SHOW CHECK BUTTON');
             this.disableButtonSon = false;
             this.showCheckButton = true;
             this.showDontKnowButton = false;
             this.t12AnswersList = new Array<Reponse>();
-            console.log(this.showCheckButton);
             document.getElementById('showCheckButtonForT12').style.visibility = 'visible';
             return true;
         }
@@ -1151,13 +1107,10 @@ export class LearnService {
 
 
     drop(ev): string {
-        console.log(ev.target.id);
         const id: number = Number(ev.target.id);
         this.dragAndDropStudentAnswersList.set(id, this.dragAndDropData);
         ev.target.value = this.dragAndDropData;
         this.listOfWords.splice(this.listOfWords.indexOf(this.dragAndDropData), 1);
-        console.log(this.dragAndDropStudentAnswersList);
-        console.log(this.dragAndDropCorrectAnswersList);
         if (this.listOfWords.length === 0) {
             this.showCheckButton = true;
         }
@@ -1165,13 +1118,10 @@ export class LearnService {
     }
 
     dropSynch(id: number): string {
-        console.log(id);
         this.dragAndDropStudentAnswersList.set(id, this.dragAndDropData);
         // @ts-ignore
         document.getElementById(String(id)).value = this.dragAndDropData;
         this.listOfWords.splice(this.listOfWords.indexOf(this.dragAndDropData), 1);
-        console.log(this.dragAndDropStudentAnswersList);
-        console.log(this.dragAndDropCorrectAnswersList);
         if (this.listOfWords.length === 0) {
             this.showCheckButton = true;
         }
@@ -1181,12 +1131,10 @@ export class LearnService {
     drag(ev) {
         this.dragAndDropData = String();
         this.dragAndDropData = ev.target.value;
-        console.log(this.dragAndDropData);
     }
 
     private extractDataForDragAndDrop(qstLibelle: string) {
         let libelle = qstLibelle;
-        console.log(libelle);
         let index = 1;
         let test = '@';
         while (test === '@') {
@@ -1196,10 +1144,7 @@ export class LearnService {
                 qstLibelle = qstLibelle.slice(firstIndex + 1, qstLibelle.length);
                 const word = qstLibelle.substring(0, qstLibelle.indexOf('@'));
                 this.dragAndDropCorrectAnswersList.set(index, word);
-                console.log(qstLibelle);
                 qstLibelle = qstLibelle.slice(word.length + 1, qstLibelle.length);
-                console.log('--------------------------------------------------------------');
-                console.log(qstLibelle);
                 libelle = libelle.replace(word, ' ');
                 index++;
                 test = '@';

@@ -5,9 +5,9 @@
         <img [src]="user?.image" alt="Image" width="250">
     </div>
     <div class="p-col-6">
-        <h3>{{ user?.nom}}}</h3>
+        <h3>{{ user?.nom}}</h3>
 
-        <h1>{{prof.typeTeacher.libelle}}</h1><!---- pi-user -->
+        <h1>{{prof?.typeTeacher?.libelle}}</h1><!---- pi-user -->
         <h5>Teacher</h5>
         <button pButton pRipple type="button" icon="pi pi-image " class="p-button-rounded p-button-secondary"
                 (click)="updateProfileImage()"

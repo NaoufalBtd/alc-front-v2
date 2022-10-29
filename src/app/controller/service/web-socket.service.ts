@@ -231,6 +231,7 @@ export class WebSocketService {
             }
         };
         this.webSocket.onerror = (event) => {
+            console.log(event);
         };
         this.webSocket.onmessage = (event) => {
 
@@ -433,6 +434,7 @@ export class WebSocketService {
                 this.webSocket.send(myData);
             }
             this.webSocket.onerror = (event) => {
+                console.log(event);
             };
         } else {
             if (chatMessageDto.type !== 'message') {
