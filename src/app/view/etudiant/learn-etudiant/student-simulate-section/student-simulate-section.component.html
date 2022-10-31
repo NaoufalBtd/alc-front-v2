@@ -333,7 +333,7 @@
                                     <div id="categoriess" style="margin-top: -10px">
 
 
-                                        <ul [style.color]="(vocabularySection.id) === (this.selectedsection?.id)? '#ff725e' :'#757f8a' "
+                                        <ul [style.color]="(vocabularySection?.id) === (this.selectedsection?.id)? '#ff725e' :'#757f8a' "
                                             class="list-unstyled list pl-5">
                                             <li *ngIf="vocabularySection?.id"
                                                 (click)="showLessonFct(vocabularySection)"
@@ -345,7 +345,7 @@
                                             </li>
                                         </ul>
 
-                                        <ul [style.color]="(getToKnowSection.id) === (this.selectedsection?.id)? '#ff725e' :'#757f8a' "
+                                        <ul [style.color]="(getToKnowSection?.id) === (this.selectedsection?.id)? '#ff725e' :'#757f8a' "
                                             class="list-unstyled list pl-5">
                                             <li *ngIf="getToKnowSection?.id"
                                                 (click)="showLessonFct(getToKnowSection)"
