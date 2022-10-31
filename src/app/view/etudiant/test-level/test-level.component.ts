@@ -3,7 +3,6 @@ import {QuizEtudiantService} from '../../../controller/service/quiz-etudiant.ser
 import {LearnService} from '../../../controller/service/learn.service';
 import {LoginService} from '../../../controller/service/login.service';
 import {ConfirmationService, MessageService} from 'primeng/api';
-import {Router} from '@angular/router';
 import {DictionaryService} from '../../../controller/service/dictionary.service';
 import {DomSanitizer} from '@angular/platform-browser';
 import {WebSocketService} from '../../../controller/service/web-socket.service';
@@ -16,6 +15,8 @@ import {Prof} from '../../../controller/model/prof.model';
 import {Etudiant} from '../../../controller/model/etudiant.model';
 import {InscriptionService} from '../../../controller/service/inscription.service';
 import {Inscription} from '../../../controller/model/inscription.model';
+import {LevelTestConfigurationService} from '../../../controller/service/level-test-configuration.service';
+import {LevelTestConfiguration} from '../../../controller/model/level-test-configuration.model';
 
 @Component({
     selector: 'app-test-level',
@@ -24,13 +25,14 @@ import {Inscription} from '../../../controller/model/inscription.model';
 })
 export class TestLevelComponent implements OnInit {
     private inscription: Inscription = new Inscription();
+    private testLevels: LevelTestConfiguration[];
 
     constructor(private quizEtudiantService: QuizEtudiantService,
                 private learnService: LearnService,
                 private inscriptionService: InscriptionService,
                 private login: LoginService,
                 private messageService: MessageService,
-                private router: Router,
+                private levelTestConfigurationService: LevelTestConfigurationService,
                 private dictionnaryService: DictionaryService,
                 private sanitizer: DomSanitizer,
                 private confirmationService: ConfirmationService,
@@ -80,7 +82,6 @@ export class TestLevelComponent implements OnInit {
     }
 
 
-
     get answersT12List(): Map<number, string> {
         return this.learnService.answersT12List;
     }
@@ -101,8 +102,6 @@ export class TestLevelComponent implements OnInit {
     set dragIndex(value: number) {
         this.learnService.dragIndex = value;
     }
-
-
 
 
     get showTakeQuiz(): boolean {
@@ -308,7 +307,14 @@ export class TestLevelComponent implements OnInit {
 
 
     ngOnInit(): void {
-        this.quizEtudiantService.findQuizByReference('quiz-529').subscribe(
+        this.quizEtudiantService.findQuizEtudanitByEtudiantIdAndQuizRef(this.login.getConnectedStudent(), 'quiz-374').subscribe(
+            data => {
+                console.log(data);
+            }, error => {
+                console.log(error);
+            }
+        );
+        this.quizEtudiantService.findQuizByReference('quiz-374').subscribe(
             data => {
                 this.selectedQuiz = data;
                 this.learnService.onStart(data);
@@ -316,10 +322,17 @@ export class TestLevelComponent implements OnInit {
                 console.log(error);
             }
         );
+
+        this.levelTestConfigurationService.findAll().subscribe(
+            data => {
+                this.testLevels = data;
+            }, error => {
+                console.log(error);
+            }
+        );
         this.inscriptionService.findByEtudiantId(this.login.getConnectedStudent().id).subscribe(
             data => {
                 this.inscription = data;
-                console.log(data);
             }, error => {
                 console.log(error);
             }
