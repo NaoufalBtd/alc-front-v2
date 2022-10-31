@@ -26,7 +26,6 @@ import {Reponse} from '../model/reponse.model';
 import {Role} from '../../enum/role.enum';
 import {VocabularyService} from './vocabulary.service';
 import {ReponseEtudiantHomeWork} from '../model/reponse-etudiant-home-work.model';
-import {WebSocketServer} from 'ws';
 
 @Injectable({
     providedIn: 'root'
@@ -193,9 +192,7 @@ export class WebSocketService {
     }
 
     public openWebSocket(user: User, prof: Prof, grpEtudiant: GroupeEtudiant, sender: string) {
-        const wss = new WebSocketServer('wss://engflexy.ma/chat', { port: 8036 });
         this.webSocket = new WebSocket('ws://179.61.219.179:8036/chat');
-        const webSocket = new WebSocket('ws://179.61.219.179:8036/chat');
         this.webSocket.onopen = (event) => {
             this.prof = prof;
             this.groupeEtudiant = grpEtudiant;
