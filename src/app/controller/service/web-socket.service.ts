@@ -26,7 +26,7 @@ import {Reponse} from '../model/reponse.model';
 import {Role} from '../../enum/role.enum';
 import {VocabularyService} from './vocabulary.service';
 import {ReponseEtudiantHomeWork} from '../model/reponse-etudiant-home-work.model';
-import WebSocket, {WebSocketServer} from 'ws';
+import {WebSocketServer} from 'ws';
 
 @Injectable({
     providedIn: 'root'
