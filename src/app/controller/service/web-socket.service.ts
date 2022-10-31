@@ -192,7 +192,7 @@ export class WebSocketService {
     }
 
     public openWebSocket(user: User, prof: Prof, grpEtudiant: GroupeEtudiant, sender: string) {
-        this.webSocket = new WebSocket('ws://179.61.219.179:8036/chat');
+        this.webSocket = new WebSocket(this.socketUrl);
         this.webSocket.onopen = (event) => {
             this.prof = prof;
             this.groupeEtudiant = grpEtudiant;

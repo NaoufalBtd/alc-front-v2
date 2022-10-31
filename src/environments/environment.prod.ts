@@ -1,8 +1,10 @@
 // const url = 'http://localhost:8036';
 const url = 'https://engflexy.ma';
 // const socket = 'ws://localhost:8036/chat';
-const socket = 'ws://179.61.219.179:8036/chat';
+// const socket = 'ws://179.61.219.179:8036/chat';
 // const socket = 'wss://engflexy.ma:8036/chat';
+const socket = 'wss://alc-back-v1.herokuapp.com/chat';
+
 export const environment = {
     production: true,
     baseUrl: url + '/learn/',
