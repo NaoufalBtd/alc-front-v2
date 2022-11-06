@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {QuizEtudiantService} from '../../../controller/service/quiz-etudiant.service';
 import {LearnService} from '../../../controller/service/learn.service';
 import {LoginService} from '../../../controller/service/login.service';
-import {ConfirmationService, MessageService} from 'primeng/api';
+import {MessageService} from 'primeng/api';
 import {DictionaryService} from '../../../controller/service/dictionary.service';
 import {DomSanitizer} from '@angular/platform-browser';
 import {WebSocketService} from '../../../controller/service/web-socket.service';
@@ -17,6 +17,11 @@ import {InscriptionService} from '../../../controller/service/inscription.servic
 import {Inscription} from '../../../controller/model/inscription.model';
 import {LevelTestConfigurationService} from '../../../controller/service/level-test-configuration.service';
 import {LevelTestConfiguration} from '../../../controller/model/level-test-configuration.model';
+import {QuizEtudiant} from '../../../controller/model/quiz-etudiant.model';
+import {PackStudent} from '../../../controller/model/pack-student.model';
+import {PackStudentService} from '../../../controller/service/pack-student.service';
+import {Router} from '@angular/router';
+import {EtudiantService} from '../../../controller/service/etudiant.service';
 
 @Component({
     selector: 'app-test-level',
@@ -24,8 +29,9 @@ import {LevelTestConfiguration} from '../../../controller/model/level-test-confi
     styleUrls: ['./test-level.component.scss']
 })
 export class TestLevelComponent implements OnInit {
-    private inscription: Inscription = new Inscription();
+    inscription: Inscription = new Inscription();
     private testLevels: LevelTestConfiguration[];
+    private quizEtudiant: QuizEtudiant = new QuizEtudiant();
 
     constructor(private quizEtudiantService: QuizEtudiantService,
                 private learnService: LearnService,
@@ -35,8 +41,18 @@ export class TestLevelComponent implements OnInit {
                 private levelTestConfigurationService: LevelTestConfigurationService,
                 private dictionnaryService: DictionaryService,
                 private sanitizer: DomSanitizer,
-                private confirmationService: ConfirmationService,
+                public router: Router,
+                public etudiantService: EtudiantService,
+                private packStudentService: PackStudentService,
                 public webSocketService: WebSocketService) {
+    }
+
+    get packs(): Array<PackStudent> {
+        return this.packStudentService.packs;
+    }
+
+    set packs(value: Array<PackStudent>) {
+        this.packStudentService.packs = value;
     }
 
 
@@ -307,14 +323,15 @@ export class TestLevelComponent implements OnInit {
 
 
     ngOnInit(): void {
-        this.quizEtudiantService.findQuizEtudanitByEtudiantIdAndQuizRef(this.login.getConnectedStudent(), 'quiz-374').subscribe(
+        this.quizEtudiantService.findQuizEtudanitByEtudiantIdAndQuizRef(this.login.getConnectedStudent(),
+            'quiz-353').subscribe(
             data => {
-                console.log(data);
+                this.quizEtudiant = data;
             }, error => {
                 console.log(error);
             }
         );
-        this.quizEtudiantService.findQuizByReference('quiz-374').subscribe(
+        this.quizEtudiantService.findQuizByReference('quiz-353').subscribe(
             data => {
                 this.selectedQuiz = data;
                 this.learnService.onStart(data);
@@ -333,12 +350,22 @@ export class TestLevelComponent implements OnInit {
         this.inscriptionService.findByEtudiantId(this.login.getConnectedStudent().id).subscribe(
             data => {
                 this.inscription = data;
+                if (this.inscription?.quizFinished === true) {
+                    this.showTakeQuiz = false;
+                    this.showQuizReview = true;
+                    this.packStudentService.findByLevel(data.parcours.id);
+
+                } else {
+                    this.showQuizReview = false;
+                    this.showTakeQuiz = true;
+                }
             }, error => {
                 console.log(error);
             }
         );
         this.trueOrFalse = null;
         this.grpStudentAnswers = new Map<Etudiant, QuizReponse>();
+
     }
 
 
@@ -407,7 +434,31 @@ export class TestLevelComponent implements OnInit {
     }
 
     finishQuiz() {
-        this.learnService.finishQuiz();
+        this.quizEtudiant = this.learnService.finishQuiz();
+        console.log(this.quizEtudiant);
+        for (const item of this.testLevels) {
+            if (this.quizEtudiant.note <= item.noteMax && this.quizEtudiant.note > item.noteMin) {
+                this.inscription.parcours = item.parcours;
+                this.inscription.noteQuizNiveau = this.quizEtudiant.note;
+                this.inscription.quizNiveau = this.selectedQuiz;
+                this.inscription.quizFinished = true;
+                this.inscriptionService.updateInsc(this.inscription).subscribe(
+                    data => {
+                        console.log(data);
+                        this.messageService.add({
+                            severity: 'success', summary: 'Successfully',
+                            detail: 'Test finished with successful.'
+                        });
+
+                        this.showTakeQuiz = false;
+                        this.showQuizReview = true;
+                    }, error => {
+                        this.messageService.add({severity: 'error', detail: 'something went wrong please try again.'});
+
+                    }
+                );
+            }
+        }
     }
 
 
@@ -487,5 +538,23 @@ export class TestLevelComponent implements OnInit {
     hideTooltipsT13(key: number) {
         document.getElementById('toolTipT13' + key.toString()).style.visibility = 'hidden';
     }
+
+    isForGroupOrindev(forGroupe: boolean): string {
+        if (forGroupe) {
+            return 'Group';
+        } else {
+            return 'Individual';
+        }
+    }
+
+    set selectedPack(value: PackStudent) {
+        this.etudiantService.selectedPack = value;
+    }
+
+    selectedPackFct(pack: PackStudent) {
+        this.selectedPack = pack;
+        this.router.navigate(['/etudiant/pack']);
+    }
+
 }
 

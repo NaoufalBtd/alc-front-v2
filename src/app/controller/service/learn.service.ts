@@ -15,9 +15,7 @@ import {Etudiant} from '../model/etudiant.model';
 import {HomeworkService} from './homework.service';
 import {HomeWorkEtudiantServiceService} from './home-work-etudiant-service.service';
 import {HomeWork} from '../model/home-work.model';
-import {AppComponent} from '../../app.component';
 import {Dictionary} from '../model/dictionary.model';
-import {HomeWorkReponse} from '../model/home-work-reponse.model';
 
 @Injectable({
     providedIn: 'root'
@@ -975,7 +973,7 @@ export class LearnService {
         this.dragList = this.dragList.sort((a, b) => b.localeCompare(a));
     }
 
-    finishQuiz() {
+    finishQuiz(): QuizEtudiant {
         const quizStudent: QuizEtudiant = new QuizEtudiant();
         const threshold = this.answersList.size;
         this.noteQuiz = 0;
@@ -1035,6 +1033,7 @@ export class LearnService {
         );
         this.showTakeQuiz = false;
         this.showQuizReview = true;
+        return quizStudent;
     }
 
     public sound(qst: Question) {

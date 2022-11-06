@@ -417,60 +417,38 @@
     </div>
 </div>
 
-<div *ngIf="showQuizReview" class="card">
-    <p-table [value]="answersList | keyvalue" styleClass="p-datatable-sm" responsiveLayout="scroll">
-        <ng-template pTemplate="caption">
-            <button style=" float: none ;position: relative;margin-left: 82%;"
-                    pButton pRipple type="button"
-                    icon="pi pi-question" iconPos="right"
-                    routerLink="quiz-review"
-                    label="Review" class="p-button-rounded dont-know-button ">
-            </button>
-        </ng-template>
-        <ng-template pTemplate="header">
-            <tr>
-                <th style="width: 20px;"></th>
-                <th> {{'Number' | translate}}</th>
-                <th> {{'Your answer' | translate}}</th>
-                <th> {{'Correct answer' | translate}}</th>
-                <th> {{'Note' | translate}}</th>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-value>
-            <tr>
-                <td *ngIf="value.value.etatReponse === 'true' && (answersPointStudent.get(value.key))?.toString() === 'STUDENT_ANSWER'">
-                    <i class="pi pi-check-circle" pTooltip="Correct answer" tooltipPosition="top"></i></td>
-                <td *ngIf="value.value.etatReponse === 'false'">
-                    <i pTooltip="Incorrect answer" tooltipPosition="top" class="pi pi-times-circle"></i></td>
+<div *ngIf="showQuizReview">
 
-                <td *ngIf="value.value.etatReponse === 'true' && answersPointStudent.get(value.key)?.toString() === 'TEACHER_ANSWER'">
-                    <i pTooltip="Professor is answered" tooltipPosition="top" class="pi pi-users"></i></td>
+    <div class="row">
+        <div style="text-align: center;margin-bottom: 15px;" class="col-md-12">
+            <h1 id="discoverText">Result</h1>
+        </div>
+        <div class="col-md-3"></div>
+        <div id="burst-8" class="col-md-6 shadow-lg p-3 mb-5 bg-body rounded">
+            <h1>{{inscription?.parcours?.libelle}}</h1>
+        </div>
 
-                <td *ngIf="value.value.etatReponse === 'true' && answersPointStudent.get(value.key)?.toString() === 'STUDENT_DONT_KNOW'">
-                    <i pTooltip="Student don't know" tooltipPosition="top" class="pi pi-exclamation-circle"></i></td>
+        <div class="col-md-12">
+            <h1  id="discoverText">Explore our packs for you</h1>
+        </div>
 
-
-                <td>{{value?.key?.numero}}</td>
-
-
-                <td *ngIf="(answersPointStudent.get(value.key))?.toString() === 'STUDENT_ANSWER'">{{value?.value?.lib}}</td>
-                <td *ngIf="(answersPointStudent.get(value.key))?.toString() !== 'STUDENT_ANSWER'"></td>
-
-
-                <td>{{correctAnswersList?.get(value.key.id)[0].lib}}</td>
-
-
-                <td *ngIf="value.value.etatReponse === 'true'  && (answersPointStudent.get(value.key))?.toString() === 'STUDENT_ANSWER'">{{value?.key?.pointReponseJuste}}</td>
-                <td *ngIf="value.value.etatReponse === 'true'  && (answersPointStudent.get(value.key))?.toString() === 'TEACHER_ANSWER'">{{(value?.key?.pointReponseJuste) / 2}}</td>
-                <td *ngIf="value.value.etatReponse === 'true'  && (answersPointStudent.get(value.key))?.toString() === 'STUDENT_DONT_KNOW'">
-                    0
-                </td>
-                <td *ngIf="value.value.etatReponse === 'false'">{{value?.key?.pointReponsefausse}}</td>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="footer">
-            <th colspan="5" style="padding: 3% 0 10px 9%;text-align: center;"><h4 class="noteFinal">{{'Note final:' | translate}}  </h4>  {{  noteQuiz}} / {{answersList.size}}</th>
-        </ng-template>
-    </p-table>
+        <div *ngFor="let pack of packs" class="col-md-4">
+            <p-card [header]="pack?.libelle" [subheader]="isForGroupOrindev(pack.forGroupe)"
+                    (click)="selectedPackFct(pack)"
+                    [style]="{width: '100%', borderRadius: '10px', cursor: 'pointer',   background: '#263238' , color: 'white'}"
+                    styleClass="p-card-shadow">
+                <ng-template pTemplate="header">
+                    <img *ngIf="pack?.imgUrl !== null" alt="Card" [src]="pack?.imgUrl">
+                    <img *ngIf="pack?.imgUrl === null" alt="Card"
+                         src="assets/demo/images/product/bamboo-watch.jpg">
+                </ng-template>
+                <p>{{pack?.description}}</p>
+                <ng-template pTemplate="footer">
+                    <p><i style="font-weight: bold;" class="pi pi-angle-right"></i> {{pack?.nombreCours}}
+                        {{'courses' | translate}}</p>
+                </ng-template>
+            </p-card>
+        </div>
+    </div>
 
 </div>

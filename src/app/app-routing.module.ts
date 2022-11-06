@@ -98,6 +98,7 @@ import {AboutUsComponent} from './view/public/home-principale/about-us/about-us.
 import {PrivacyPolicyComponent} from './view/public/privacy-policy/privacy-policy.component';
 import {TermOfServiceComponent} from './view/public/term-of-service/term-of-service.component';
 import {TestLevelComponent} from './view/etudiant/test-level/test-level.component';
+import {DiscoverLevelComponent} from './view/public/discover-level/discover-level.component';
 
 
 @NgModule({
@@ -216,6 +217,7 @@ import {TestLevelComponent} from './view/etudiant/test-level/test-level.componen
                     {path: 'public/inscriptionEtudiant', component: FormLayoutDemoComponent},
                     {path: 'free-trial', component: InscriptionStudentMainComponent},
                     {path: 'contact', component: ContactUsComponent},
+                    {path: 'online-english-level-test', component: DiscoverLevelComponent},
                     {path: 'about-us', component: AboutUsComponent},
                     {
                         path: 'blog',

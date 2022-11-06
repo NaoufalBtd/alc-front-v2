@@ -124,101 +124,14 @@
 
 
 </div>
-<div class="layout-topbar" style="background-color: #ffffff"
-     *ngIf="this.authenticationService.getUserFromLocalCache() == null">
-    <div class="mainnav">
-        <img [routerLink]="['']" style="width: 120px; height: auto" src="assets/picture/icon/logo.png" alt="logo">
-        <a style="margin-left: 35px; padding: 10px;cursor: pointer" class="get-started">{{'courses' | translate}}</a>
-        <a class="get-started" style="padding: 10px;cursor: pointer">{{'prices' | translate}}</a>
-        <a class="get-started" [routerLink]="['public/home']"
-           style="padding: 10px;cursor: pointer">{{'new home' | translate}}</a>
-        <select (change)="selectedLangage($event)" style="margin-left: 15px; margin-top:15px; padding: 10px">
-            <option value="en" style="padding: 10px">English</option>
-            <option value="fr" style="padding: 10px">Français</option>
-            <option value="ar" style="padding: 10px">العربية</option>
-        </select>
-    </div>
 
-    <ul *ngIf="this.authenticationService.getUserFromLocalCache() == null" class="topbar-menu">
+<app-header-three *ngIf="this.authenticationService.getUserFromLocalCache() == null"></app-header-three>
 
-        <li [ngClass]="{'active-topmenuitem fadeInDown': appMain.topbarUserMenuActive}" class="user-profile">
-
-            <a class="get-started"
-               style="border-radius: 5px; top: 0;cursor: pointer">{{'treetrialLesson' | translate}}</a>
-            <a class="get-started" style="border-radius: 5px; top: 0;cursor: pointer"
-               (click)="appMain.onTopbarUserMenuButtonClick($event); hidePopUp=false" *ngIf="!app.inlineUser">
-                {{'signin' | translate}}
-            </a>
-            <ul *ngIf="hidePopUp === false" class="fadeInDown">
-
-                <li class="user-profile-drop-dawn">
-                    <a [routerLink]="['public/login-admin']" style="height: 52px"
-                       (click)="appMain.onTopbarUserMenuButtonClick($event)" class="user-profile-drop-dawn-text">
-                        <span>Admin</span>
-                    </a>
-                </li>
-                <li class="user-profile-drop-dawn">
-                    <a [routerLink]="['public/login-prof']" style="height: 52px"
-                       (click)="appMain.onTopbarUserMenuButtonClick($event)" class="user-profile-drop-dawn-text">
-                        <span>Teacher</span>
-                    </a>
-                </li>
-                <li class="user-profile-drop-dawn">
-                    <a [routerLink]="['public/login-etudiant']" style="height: 52px"
-                       (click)="appMain.onTopbarUserMenuButtonClick($event)" class="user-profile-drop-dawn-text">
-                        <span>Student</span>
-                    </a>
-                </li>
-
-
-            </ul>
-
-        </li>
-    </ul>
-
-</div>
-<!--    <div class="p-grid">
-        <div class="p-col-8">
-            <div class="logo">
-            </div>
-        </div>
-        <div class="p-col-4">
-            <p-menubar  [model]="itemstopBar" >
-
-            </p-menubar>
-        </div>
-    </div>-->
 
 
 <script type="text/javascript" src="src/script.js"></script>
 <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
-<!--<div [hidden]="user != null">
-    <nav id="header" class="fixed w-full z-30 top-0 text-white" style="background:linear-gradient(90deg, #d53369 0%, #daae51 100%) ">
-        <div class="w-full container mx-auto flex flex-wrap items-center justify-between mt-0 py-2">
-            <div class="pl-4 flex items-center">
-                <a class="toggleColour text-white no-underline hover:no-underline font-bold text-2xl lg:text-4xl" href="#">
-                    &lt;!&ndash;Icon from: http://www.potlabicons.com/ &ndash;&gt;
-                    <svg class="h-8 fill-current inline" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512.005 512.005">
-                        <rect fill="#2a2a31" x="16.539" y="425.626" width="479.767" height="50.502" transform="matrix(1,0,0,1,0,0)" />
-                        <path
-                                class="plane-take-off"
-                                d=" M 510.7 189.151 C 505.271 168.95 484.565 156.956 464.365 162.385 L 330.156 198.367 L 155.924 35.878 L 107.19 49.008 L 211.729 230.183 L 86.232 263.767 L 36.614 224.754 L 0 234.603 L 45.957 314.27 L 65.274 347.727 L 105.802 336.869 L 240.011 300.886 L 349.726 271.469 L 483.935 235.486 C 504.134 230.057 516.129 209.352 510.7 189.151 Z "
-                        />
-                    </svg>
-                    English-Learning
-                </a>
-            </div>
-            <div >
-                <button id="nav-toggle" class="btn btn-danger">
-                    <a style="color: white; outline: none;  text-decoration:none; text-underline-style: none " href="#sign">Free Trial Lesson</a>
-                </button>
-            </div>
 
-        </div>
-        <hr class="border-b border-gray-100 opacity-25 my-0 py-0" />
-    </nav>
-
-</div>-->
 
 <script type="text/javascript" src="src/script.js"></script>
 <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
