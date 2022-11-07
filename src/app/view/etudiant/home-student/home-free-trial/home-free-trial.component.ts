@@ -6,6 +6,9 @@ import {WebSocketService} from '../../../../controller/service/web-socket.servic
 import {SimulateSectionService} from '../../../../controller/service/simulate-section.service';
 import {Router} from '@angular/router';
 import {MenuService} from '../../../shared/slide-bar/app.menu.service';
+import {Inscription} from '../../../../controller/model/inscription.model';
+import {InscriptionService} from '../../../../controller/service/inscription.service';
+import {AuthenticationService} from '../../../../controller/service/authentication.service';
 
 @Component({
     selector: 'app-home-free-trial',
@@ -16,24 +19,40 @@ export class HomeFreeTrialComponent implements OnInit {
     freeLevelsList: Array<Parcours> = new Array<Parcours>();
     freeCourseList: Array<Cours> = new Array<Cours>();
     displayCourses: boolean;
+    insecrption: Inscription = new Inscription();
 
     constructor(private parcoursService: ParcoursService,
                 private webSocketService: WebSocketService,
                 private simulateSectionService: SimulateSectionService,
                 private router: Router,
+                private login: AuthenticationService,
+                private insriptionService: InscriptionService,
                 private menuService: MenuService
     ) {
     }
 
     ngOnInit(): void {
-        this.parcoursService.findParcoursByCode('FREE').subscribe(dataParcours => {
-            this.freeLevelsList = dataParcours;
-        });
+
+        this.insriptionService.findByEtudiantId(this.login.getConnectedStudent().id).subscribe(
+            data => {
+                this.insecrption = data;
+                if (data?.quizFinished) {
+                    this.freeLevelsList.push({...data.parcours});
+                } else {
+                    this.parcoursService.FindAllParcours().subscribe(dataParcours => {
+                        this.freeLevelsList = dataParcours;
+                    });
+                }
+                console.log(data);
+            }, error => {
+                console.log(error);
+            }
+        );
     }
 
     showCoursesForLevel(level: Parcours) {
         this.parcoursService.findCousByParcoursIdOrderByNumeroOrder(level.id).subscribe(data => {
-            this.freeCourseList = data;
+            this.freeCourseList = data.slice(0, 3);
             this.displayCourses = true;
         });
     }
