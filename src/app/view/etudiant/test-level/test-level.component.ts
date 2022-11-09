@@ -324,14 +324,14 @@ export class TestLevelComponent implements OnInit {
 
     ngOnInit(): void {
         this.quizEtudiantService.findQuizEtudanitByEtudiantIdAndQuizRef(this.login.getConnectedStudent(),
-            'quiz-539').subscribe(
+            'quiz-833').subscribe(
             data => {
                 this.quizEtudiant = data;
             }, error => {
                 console.log(error);
             }
         );
-        this.quizEtudiantService.findQuizByReference('quiz-539').subscribe(
+        this.quizEtudiantService.findQuizByReference('quiz-833').subscribe(
             data => {
                 this.selectedQuiz = data;
                 this.learnService.onStart(data);
