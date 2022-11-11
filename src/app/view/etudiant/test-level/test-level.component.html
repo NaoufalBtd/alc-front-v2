@@ -100,7 +100,6 @@
 
         </span>
             <h5 class="h5"> {{  questionSideRight}}  </h5>
-            <h4 *ngIf="translateWord !== undefined">{{translateWord}}</h4>
 
         </div>
         <div class="p-col-12 answers">
@@ -149,8 +148,6 @@
 
         </span>
             <h5 class="h5"> {{  questionSideRight}}  </h5>
-            <h4 *ngIf="translateWord !== undefined">{{translateWord}}</h4>
-
         </div>
         <div class="p-col-12 answers">
 
@@ -160,11 +157,6 @@
                     (click)="saveAnswers(question)">
             </button>
 
-            <button *ngIf="showDontKnowButton" pButton pRipple type="button"
-                    icon="pi pi-question" iconPos="right"
-                    label="DON'T KNOW" class="p-button-rounded dont-know-button "
-                    (click)="showAnswers(question)">
-            </button>
         </div>
     </div>
 
