@@ -30,6 +30,8 @@ import {EtudiantService} from '../../../controller/service/etudiant.service';
 })
 export class TestLevelComponent implements OnInit {
     inscription: Inscription = new Inscription();
+    showInstructions: boolean = true;
+
     private testLevels: LevelTestConfiguration[];
     private quizEtudiant: QuizEtudiant = new QuizEtudiant();
 
@@ -324,14 +326,14 @@ export class TestLevelComponent implements OnInit {
 
     ngOnInit(): void {
         this.quizEtudiantService.findQuizEtudanitByEtudiantIdAndQuizRef(this.login.getConnectedStudent(),
-            'quiz-833').subscribe(
+            'quiz-4222').subscribe(
             data => {
                 this.quizEtudiant = data;
             }, error => {
                 console.log(error);
             }
         );
-        this.quizEtudiantService.findQuizByReference('quiz-833').subscribe(
+        this.quizEtudiantService.findQuizByReference('quiz-4222').subscribe(
             data => {
                 this.selectedQuiz = data;
                 this.learnService.onStart(data);
@@ -369,18 +371,6 @@ export class TestLevelComponent implements OnInit {
     }
 
 
-    hidePlaceHolder(type: string) {
-        if (type === 'HIDE') {
-            this.inputAnswer = '';
-            console.log(this.inputAnswer);
-        } else {
-            this.inputAnswer = this.question.libelle.substring(this.question.libelle.indexOf('@') + 1,
-                this.question.libelle.lastIndexOf('@'));
-            console.log(type + this.inputAnswer);
-        }
-    }
-
-
     ngOnDestroy(): void {
     }
 
@@ -403,15 +393,6 @@ export class TestLevelComponent implements OnInit {
         }
     }
 
-    showAnswers(question: Question) {
-        let reponse: Reponse;
-        if (question.typeDeQuestion.ref === 't12') {
-            this.dernierSelected = new Reponse();
-            reponse = this.t12AnswersList.filter(t => t.etatReponse === 'true')[0];
-        } else {
-            reponse = this.learnService.showAnswers(question);
-        }
-    }
 
     nextQuestionFct() {
         this.correctAnswerT12 = new Map<number, string>();
@@ -555,6 +536,20 @@ export class TestLevelComponent implements OnInit {
         this.selectedPack = pack;
         this.router.navigate(['/etudiant/pack']);
     }
+
+
+
+    hidePlaceHolder(type: string) {
+        if (type === 'HIDE') {
+            this.inputAnswer = '';
+            console.log(this.inputAnswer);
+        } else {
+            this.inputAnswer = this.question.libelle.substring(this.question.libelle.indexOf('@') + 1,
+                this.question.libelle.lastIndexOf('@'));
+            console.log(type + this.inputAnswer);
+        }
+    }
+
 
 }
 
