@@ -94,7 +94,10 @@
                     <td>
                         <button pButton pRipple type="button" icon="pi pi-pencil" (click)="showEditDialogFct(section)"
                                 pTooltip="Edit" tooltipPosition="top"
-                                class="p-button-rounded localButton "></button>
+                                class="p-button-rounded me-2 localButton "></button>
+
+                        <button (click)="delete(section)" class="p-button-rounded p-button-danger" icon="pi pi-trash" pButton
+                                pRipple></button>
                     </td>
                 </tr>
             </ng-template>

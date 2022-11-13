@@ -93,12 +93,12 @@ import {CoursesPageComponent} from './view/public/home-principale/courses/course
 import {BlogComponent} from './view/public/blog/blog-main/blog.component';
 import {BlogDetailsMainComponent} from './view/public/blog-details/blog-details-main/blog-details-main.component';
 import {CourseDetailsComponent} from './view/public/course-details/course-details-main/course-details.component';
-import {ContactUsComponent} from './view/public/home-principale/contact-us/contact-us.component';
 import {AboutUsComponent} from './view/public/home-principale/about-us/about-us.component';
 import {PrivacyPolicyComponent} from './view/public/privacy-policy/privacy-policy.component';
 import {TermOfServiceComponent} from './view/public/term-of-service/term-of-service.component';
 import {TestLevelComponent} from './view/etudiant/test-level/test-level.component';
 import {DiscoverLevelComponent} from './view/public/discover-level/discover-level.component';
+import {ContactUsMainComponent} from './view/public/home-principale/contact-us/contact-us-main/contact-us-main.component';
 
 
 @NgModule({
@@ -216,7 +216,7 @@ import {DiscoverLevelComponent} from './view/public/discover-level/discover-leve
                     {path: 'public/login', component: SignInMainComponent},
                     {path: 'public/inscriptionEtudiant', component: FormLayoutDemoComponent},
                     {path: 'free-trial', component: InscriptionStudentMainComponent},
-                    {path: 'contact', component: ContactUsComponent},
+                    {path: 'contact', component: ContactUsMainComponent},
                     {path: 'online-english-level-test', component: DiscoverLevelComponent},
                     {path: 'about-us', component: AboutUsComponent},
                     {

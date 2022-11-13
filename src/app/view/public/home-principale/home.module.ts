@@ -17,7 +17,7 @@ import {SignInMainComponent} from './sign-in/sign-in-main/sign-in-main.component
 import {SignInAreaComponent} from './sign-in/sign-in-area/sign-in-area.component';
 import {HeaderTwoComponent} from './header-two/header-two.component';
 import {FormsModule} from '@angular/forms';
-import { BecomeTeacherComponent } from './become-teacher/become-teacher.component';
+import {BecomeTeacherComponent} from './become-teacher/become-teacher.component';
 import {FormLayoutDemoComponent} from '../Inscription-student/formlayoutdemo.component';
 import {RippleModule} from 'primeng/ripple';
 import {ButtonModule} from 'primeng/button';
@@ -41,12 +41,13 @@ import {CourseDetailsAreaComponent} from '../course-details/course-details-area/
 import {CourseDetailsComponent} from '../course-details/course-details-main/course-details.component';
 import {DialogModule} from 'primeng/dialog';
 import {TranslateModule} from '@ngx-translate/core';
-import { ContactUsComponent } from './contact-us/contact-us.component';
-import { AboutUsComponent } from './about-us/about-us.component';
+import {ContactUsComponent} from './contact-us/contact-us.component';
+import {AboutUsComponent} from './about-us/about-us.component';
 import {MessagesModule} from 'primeng/messages';
 import {ToastModule} from 'primeng/toast';
 import {PrivacyPolicyComponent} from '../privacy-policy/privacy-policy.component';
 import {TermOfServiceComponent} from '../term-of-service/term-of-service.component';
+import {ContactUsMainComponent} from './contact-us/contact-us-main/contact-us-main.component';
 
 
 @NgModule({
@@ -88,7 +89,8 @@ import {TermOfServiceComponent} from '../term-of-service/term-of-service.compone
         ContactUsComponent,
         AboutUsComponent,
         PrivacyPolicyComponent,
-        TermOfServiceComponent
+        TermOfServiceComponent,
+        ContactUsMainComponent
     ],
     imports: [
         CommonModule,
@@ -106,7 +108,8 @@ import {TermOfServiceComponent} from '../term-of-service/term-of-service.compone
     exports: [
         HeaderThreeComponent,
         HeaderTwoComponent,
-        FooterComponent
+        FooterComponent,
+        ContactUsComponent
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

@@ -295,7 +295,21 @@ export class HomeWorkPreviewComponent implements OnInit {
             return true;
         }
     }
+
+    addHomeWork(cours: Cours) {
+        if (cours?.id === undefined || cours?.id === null ||
+            this.selectedparcours?.id === undefined || this.selectedparcours?.id === null) {
+            this.messageService.add({
+                severity: 'info',
+                summary: 'Info',
+                detail: 'Please select a level and course !',
+                life: 3000
+            });
+            return;
+        }
+        this.learnService.courseSelected = cours;
+        this.learnService.parcourCurrent = this.selectedparcours;
+        this.router.navigate(['admin/homeWork']);
+    }
+
 }
-
-// https://www.youtube.com/watch?v=tpN9CPwZ-oE&t=43s
-

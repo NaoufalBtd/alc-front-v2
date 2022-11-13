@@ -310,6 +310,7 @@ import {ContactMessageComponent} from './view/admin/contact-message/contact-mess
 import {PhrasebookComponent} from './view/etudiant/homeWork/phrasebook/phrasebook.component';
 import {TestLevelComponent} from './view/etudiant/test-level/test-level.component';
 import {DiscoverLevelComponent} from './view/public/discover-level/discover-level.component';
+import {AdvantagesEngflexyComponent} from './view/public/discover-level/advantages-engflexy/advantages-engflexy.component';
 
 
 export function createTranslateLoader(http: HttpClient) {
@@ -641,6 +642,7 @@ export function createTranslateLoader(http: HttpClient) {
             PhrasebookComponent,
             TestLevelComponent,
             DiscoverLevelComponent,
+            AdvantagesEngflexyComponent,
 
 
         ],

@@ -4,7 +4,7 @@ import {Parcours} from '../../../controller/model/parcours.model';
 import {Cours} from '../../../controller/model/cours.model';
 import {Section} from '../../../controller/model/section.model';
 import {CategorieSection} from '../../../controller/model/categorie-section.model';
-import {MessageService} from 'primeng/api';
+import {ConfirmationService, MessageService} from 'primeng/api';
 import {QuizService} from '../../../controller/service/quiz.service';
 import {QuizEtudiantService} from '../../../controller/service/quiz-etudiant.service';
 import {Quiz} from '../../../controller/model/quiz.model';
@@ -36,6 +36,7 @@ export class ManageSectionComponent implements OnInit {
     constructor(private parcoursService: ParcoursService,
                 private quizEtudiantService: QuizEtudiantService,
                 private quizService: QuizService,
+                private confirmationService: ConfirmationService,
                 private learnService: LearnService,
                 private sectionItemService: SectionItemService,
                 private router: Router,
@@ -216,10 +217,9 @@ export class ManageSectionComponent implements OnInit {
             data => {
                 console.log(data);
                 this.selectedQuiz = data;
-                if (data === null || data === undefined || data?.id === undefined){
+                if (data === null || data === undefined || data?.id === undefined) {
                     this.router.navigate(['admin/quiz-create']);
-                }
-                else {
+                } else {
                     if (this.selectedQuiz?.section?.id == null) {
                         this.router.navigate(['admin/quiz-create']);
                     } else {
@@ -251,5 +251,42 @@ export class ManageSectionComponent implements OnInit {
         console.log(this.localSectionSelected.categorieSection);
         this.localSectionSelected.numeroOrder = this.localSectionSelected.categorieSection.numeroOrder;
         this.localSectionSelected.libelle = this.localSectionSelected.categorieSection.libelle;
+    }
+
+    get selectedsection(): Section {
+        return this.parcoursService.selectedsection;
+    }
+
+    set selectedsection(value: Section) {
+        this.parcoursService.selectedsection = value;
+    }
+
+    public delete(section: Section) {
+        this.selectedsection = section;
+        this.confirmationService.confirm({
+            message: 'Are you sure you want to remove this section? This action cannot be undone!',
+            header: 'Confirm',
+            icon: 'pi pi-exclamation-triangle',
+            accept: () => {
+                this.parcoursService.deleteSection().subscribe(data => {
+                    this.sections = this.sections.filter(val => val.id !== this.selectedsection.id);
+                    this.selectedsection = new Section();
+                    this.messageService.add({
+                        severity: 'success',
+                        summary: 'Successful',
+                        detail: 'Section Deleted',
+                        life: 3000
+                    });
+                }, error => {
+                    this.messageService.add({
+                        severity: 'error',
+                        summary: 'Error',
+                        detail: error?.error?.message || 'Something went wrong, please try again.',
+                        life: 3000
+                    });
+                    console.log(error);
+                });
+            }
+        });
     }
 }
