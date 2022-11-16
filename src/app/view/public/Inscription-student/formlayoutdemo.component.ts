@@ -59,7 +59,6 @@ export class FormLayoutDemoComponent implements OnInit {
 
 
     createEtudiant() {
-        console.log('clicked');
         this.showAnimation = true;
         this.etudiantService.create().subscribe(
             data => {
@@ -83,7 +82,7 @@ export class FormLayoutDemoComponent implements OnInit {
                     detail: 'Registration Canceled',
                     life: 4000
                 });
-
+                console.log(error);
             }
         );
     }

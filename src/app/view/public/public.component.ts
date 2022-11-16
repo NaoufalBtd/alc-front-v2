@@ -77,9 +77,6 @@ export class PublicComponent implements OnInit {
                 private primengConfig: PrimeNGConfig, public app: AppComponent) {
         translate.setDefaultLang('en');
         const lang = window.navigator.language;
-        console.log('=====================');
-        console.log(lang);
-        console.log('=====================');
         if (lang?.includes('ar')) {
             translate.use('ar');
         } else if (lang?.includes('fr')) {
@@ -261,10 +258,6 @@ export class PublicComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        setInterval(() => {
-            this.showConfirm();
-        }, 5000);
-
         this.user = this.authenticationService.getUserFromLocalCache();
         if (this.user?.role === Role?.ADMIN) {
             this.router.navigate(['/admin/parcours']);
@@ -276,63 +269,6 @@ export class PublicComponent implements OnInit {
         }
     }
 
-    showConfirm() {
-        this.messageService.clear('ccc');
-        this.messageService.add({
-            key: 'ccc',
-            sticky: true,
-            closable: false,
-            severity: 'info',
-            summary: 'Open soon / الموقع سيفتح قريبا',
-            detail: 'September 25 2022'
-        });
-    }
-
-    updateRestOfTime() {
-        const date = new Date(2022, 9, 10);
-        const dateNow = new Date();
-        const milliseconds = date.getTime() - dateNow.getTime();
-        // ----------------------- Days -----------------------------
-        const firstValueOfDay = String((milliseconds / (24 * 60 * 60 * 1000)));
-        const myDay = Number(firstValueOfDay.substring(0, firstValueOfDay.indexOf('.')));
-        const stringRestday = String(0 + firstValueOfDay.toString().substring(firstValueOfDay.indexOf('.')));
-        const numberOfRstDay = Number(stringRestday);
-        // -----------------------Hour-----------------------------
-        const firstValueOfHour = String(numberOfRstDay * (24));
-        const myHour = Number(firstValueOfHour.substring(0, firstValueOfHour.indexOf('.')));
-        const stringRestHour = String(0 + firstValueOfHour.toString().substring(firstValueOfHour.indexOf('.')));
-        const numberOfRstHour = Number(stringRestHour);
-        // -----------------------Minutes-----------------------------
-        const firstValueOfMinute = String(numberOfRstHour * (60));
-        const myMinute = Number(firstValueOfMinute.substring(0, firstValueOfMinute.indexOf('.')));
-        const stringRestMinute = String(0 + firstValueOfMinute.toString().substring(firstValueOfMinute.indexOf('.')));
-        const numberOfRstMinute = Number(stringRestMinute);
-        // -----------------------Seconds-----------------------------
-        const firstValueOfSecond = String(numberOfRstMinute * (60));
-        const mySecond = Number(firstValueOfSecond.substring(0, firstValueOfSecond.indexOf('.')));
-        const stringRestSecond = String(0 + firstValueOfSecond.toString().substring(firstValueOfSecond.indexOf('.')));
-        const numberOfRstSecond = Number(stringRestSecond);
-
-        if (milliseconds < 0) {
-            this.getRestOfDay = myDay;
-            this.getRestOfHour = 0 - myHour;
-            this.getRestOfMinutes = 0 - myMinute;
-            this.getRestOfSecond = 0 - mySecond;
-            this.getRestOfTime = (String(myDay) + 'd : -' + String(myHour) + 'h : -' + String(myMinute) + 'm : -' + String(mySecond) + 's');
-        } else {
-            this.getRestOfDay = myDay;
-            this.getRestOfHour = myHour;
-            this.getRestOfMinutes = myMinute;
-            this.getRestOfSecond = mySecond;
-            this.getRestOfTime = (String(myDay) + 'd : ' + String(myHour) + 'h : ' + String(myMinute) + 'm : ' + String(mySecond) + 's');
-        }
-    }
-
-    getRestOfTime: string;
-    getRestOfDay: number;
-    getRestOfHour: number;
-    getRestOfMinutes: number;
-    getRestOfSecond: number;
 }
 
 

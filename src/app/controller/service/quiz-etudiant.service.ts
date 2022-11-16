@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {QuizEtudiant} from '../model/quiz-etudiant.model';
 import {Reponse} from '../model/reponse.model';
@@ -7,7 +7,6 @@ import {ReponseEtudiant} from '../model/reponse-etudiant.model';
 import {Question} from '../model/question.model';
 import {Quiz} from '../model/quiz.model';
 import {Etudiant} from '../model/etudiant.model';
-import {TypeDeQuestion} from '../model/type-de-question.model';
 import {EtudiantClassRoom} from '../model/etudiant-class-room.model';
 import {QuizClassRoom} from '../model/quiz-class-room.model';
 import {ClassRoom} from '../model/class-room.model';
@@ -536,6 +535,11 @@ export class QuizEtudiantService {
   public findQuizEtudanitByEtudiantIdAndQuizId(etudiant: Etudiant, quiz: Quiz): Observable<QuizEtudiant>
   {
     return this.http.get<QuizEtudiant>(this.adminUrl + 'quizEtudiant/etudiant/idEtudiant/' + etudiant.id + '/quiz/idQuiz/' + quiz.id);
+  }
+
+  public findQuizEtudanitByEtudiantIdAndQuizRef(etudiant: Etudiant, quizRef: string): Observable<QuizEtudiant>
+  {
+    return this.http.get<QuizEtudiant>(this.adminUrl + 'quizEtudiant/etudiant/idEtudiant/' + etudiant.id + '/quiz/ref/' + quizRef);
   }
 
   public findReponseEtudiant(quizEtudiant: QuizEtudiant): Observable<Array<ReponseEtudiant>>

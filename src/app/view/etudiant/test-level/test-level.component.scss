@@ -397,3 +397,21 @@ h4 {
   border-style: solid;
   border-color: #555 transparent transparent transparent;
 }
+
+.row{
+  padding: 20px;
+}
+
+#discoverText {
+  font-size: 38px;
+  text-align: start;
+  font-family: cursive;
+  color: #4c4c4c;
+}
+
+#burst-8 {
+  background-image: repeating-radial-gradient(circle at 0 0, transparent 0, #e5e5f7 10px), repeating-linear-gradient(#3740ff55, #3740ff);
+  text-align: center;
+  border-radius: 50px!important;
+}
+

@@ -40,6 +40,12 @@
                                (input)="dt.filterGlobal($event.target.value, 'contains')"
                                placeholder="Search by Title..."/>
                     </div>
+                    <div class="p-col-3"></div>
+                    <div class="p-col-3"></div>
+                    <div class="p-col-3">
+                        <button pButton pRipple type="button" (click)="addHomeWork(selectedcours)"
+                                icon="pi pi-plus" label="Add homework" class="ngFlexyBlackButton"></button>
+                    </div>
                 </div>
 
             </ng-template>
@@ -128,6 +134,8 @@
                     <div class="p-col-3">
                         <button pButton pRipple type="button" (click)="findHomeWork()"
                                 icon="pi pi-search" class="p-button-rounded searchButton p-button-text"></button>
+
+
                     </div>
                 </div>
 
@@ -155,6 +163,9 @@
                         <button (click)="showAnswers(qst)"
                                 class="p-button-rounded p-button-info p-mr-2" icon="pi pi-list" pButton
                                 pTooltip="Answers" tooltipPosition="top"
+                                pRipple></button>
+                        <button (click)="deleteQst(qst)" class="p-button-rounded p-button-danger"
+                                icon="pi pi-trash" pButton
                                 pRipple></button>
                     </td>
                 </tr>

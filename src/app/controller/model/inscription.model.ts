@@ -10,6 +10,7 @@ import {NiveauEtude} from './niveau-etude.model';
 import {Fonction} from './fonction.model';
 import {StatutSocial} from './statut-social.model';
 import {Skill} from './skill.model';
+import {Quiz} from './quiz.model';
 
 export class Inscription {
     public id: number;
@@ -28,4 +29,7 @@ export class Inscription {
     public statutSocial =  new StatutSocial();
     public skill =  new Skill();
     public dateRegistration: string;
+    public  quizNiveau: Quiz ;
+    public  noteQuizNiveau: number ;
+    public  quizFinished: boolean ;
 }

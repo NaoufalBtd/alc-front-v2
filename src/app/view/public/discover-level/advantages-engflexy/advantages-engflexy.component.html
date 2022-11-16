@@ -1,0 +1,117 @@
+<section style="direction: rtl" class="py-5 header">
+    <div class="container py-4">
+        <header class="text-center mb-5 pb-5 text-white">
+            <h1 id="discoverText">{{'Advantages of studying in EngFlexy' | translate}}</h1>
+        </header>
+
+
+        <div class="row">
+            <div class="col-md-3">
+                <!-- Tabs nav -->
+                <div class="nav flex-column nav-pills nav-pills-custom" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                    <a class="nav-link rtl mb-3 p-3 shadow"
+                       [class.active]="sectionIndex === 1"
+                       id="v-pills-home-tab" data-toggle="pill" (click)="showSection(1)" role="tab" aria-controls="v-pills-home" aria-selected="true">
+                        <i class="fa fa-check mx-2 mr-2"></i>
+                        <span  class="font-weight-bold small text-uppercase">طور مستواك في اللغة الإنجليزية</span></a>
+
+                    <a class="nav-link rtl mb-3 p-3 shadow"
+                       [class.active]="sectionIndex === 2"
+                       id="v-pills-profile-tab" data-toggle="pill" (click)="showSection(2)" role="tab" aria-controls="v-pills-profile" aria-selected="false">
+                        <i class="fa fa-check mx-2 mr-2"></i>
+                        <span  class="font-weight-bold small text-uppercase">كم هو أفضل أن تدرس وأنت مرتاح!</span></a>
+
+                    <a class="nav-link rtl mb-3 p-3 shadow" [class.active]="sectionIndex === 3"
+                       id="v-pills-messages-tab" data-toggle="pill" (click)="showSection(3)" role="tab" aria-controls="v-pills-messages" aria-selected="false">
+                        <i class="fa fa-check mx-2 mr-2"></i>
+                        <span  class="font-weight-bold small text-uppercase">تدفع مرة و تتعلم مرتين!</span></a>
+
+                    <a class="nav-link rtl mb-3 p-3 shadow" [class.active]="sectionIndex === 4"
+                       id="v-pills-settings-tab" data-toggle="pill" (click)="showSection(4)" role="tab" aria-controls="v-pills-settings" aria-selected="false">
+                        <i class="fa fa-check mx-2 mr-2"></i>
+                        <span  class="font-weight-bold small text-uppercase">اكتشف مستواك </span></a>
+
+
+                    <a class="nav-link rtl mb-3 p-3 shadow" [class.active]="sectionIndex === 5"
+                       id="v-pills-settings-tab" data-toggle="pill" (click)="showSection(5)" role="tab" aria-controls="v-pills-settings" aria-selected="false">
+                        <i class="fa fa-check mx-2 mr-2"></i>
+                        <span  class="font-weight-bold small text-uppercase">خاصية إسترجاع الرسوم</span></a>
+
+
+                    <a class="nav-link rtl mb-3 p-3 shadow" [class.active]="sectionIndex === 6"
+                       id="v-pills-settings-tab" data-toggle="pill" (click)="showSection(6)" role="tab" aria-controls="v-pills-settings" aria-selected="false">
+                        <i class="fa fa-check mx-2 mr-2"></i>
+                        <span  class="font-weight-bold small text-uppercase">شهادة إتمام اللغة الإنجليزية</span></a>
+                </div>
+            </div>
+
+
+            <div class="col-md-9">
+                <!-- Tabs content -->
+                <div class="tab-content" id="v-pills-tabContent">
+                    <div *ngIf="sectionIndex === 1" class="tab-pane fade shadow rounded bg-white   p-5"
+                         [class.active]="sectionIndex === 1"
+                         [class.show]="sectionIndex === 1"
+                         id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                        <h4  class="font-italic mb-4">هل ترغب أن تطور مستواك في اللغة الإنجليزية بطريقة فعالة وإحترافية؟</h4>
+                        <p  class="font-italic text-muted mb-2">
+                            إذن أكاديمية EngFlexy هي الحل فيهي تتيح لك الفرصة في التعلم مع أستاذ معترف به مباشرة و بشكل تفاعلي حيث يمكنك التحدث، تعلم القواعد، الإستماع، القراءة و كذلك الكتابة بالإضافة إلى التمارين حتى تتمرس بشكل مكثف مع أستاذك.
+                        </p>
+                    </div>
+
+                    <div  *ngIf="sectionIndex === 2"  class="tab-pane fade shadow rounded bg-white p-5"
+                          [class.active]="sectionIndex === 2"
+                          [class.show]="sectionIndex === 2"
+                          id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                        <h4 class="font-italic mb-4">كم هو أفضل أن تدرس وأنت مرتاح!</h4>
+                        <p class="font-italic text-muted mb-2">
+                            أكاديمية تمنحك الفرصة بأن تتعلم الإنجليزية من أي مكان. ما يلزمك فقط جهاز و أنترنيت. العامل النفسي يمكن أن يكون أكثر أهمية في رحلة التعلم. فبدلا من ضياع الوقت التي تقضيه ذهابا وإيابا من منزلك إلى مكان التعلم،يمكنك أن تستفيد من هذا الوقت لإنجاز التمارين أو مع أستاذك بشكل مباشر.
+                        </p>
+                    </div>
+
+                    <div  *ngIf="sectionIndex === 3"  class="tab-pane fade shadow rounded bg-white p-5"
+                          [class.active]="sectionIndex === 3"
+                          [class.show]="sectionIndex === 3"
+                          id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+                        <h4 class="font-italic mb-4">تدفع مرة و تتعلم مرتين!</h4>
+                        <p class="font-italic text-muted mb-2">
+                            تدفع فقط لساعة واحدة ثم لديك ساعة أخرى مجانية حيث تختبر مهاراتك في مكان للواجبات. ستجد التمارين المصاحبة للدرس حيث يمكنك حلها وإعادة الحل عدد المرات التي ترغب فيها حتى تتمكن تماما من الدرس. ستجد قسما للكتابة حيث بعد إنتهاءك يمكنك إرساله لأستاذك للتصحيح و مناقشة مكان القصور والأخطاء. كلها هذا مجانا
+                        </p>
+                    </div>
+
+                    <div  *ngIf="sectionIndex === 4"  class="tab-pane fade shadow rounded bg-white p-5"
+                          [class.active]="sectionIndex === 4"
+                          [class.show]="sectionIndex === 4"
+                          id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
+                        <h4 class="font-italic mb-4">هل ترغب في معرفة مستواك بالإنجليزية؟</h4>
+                        <p class="font-italic text-muted mb-2">
+                            أكاديمية EngFlexy تفتح لك المنصة لتختبر مدى تمكنك من الإنجليزية عبر إختبار مكون من مجموعة من الأسئلة. بعد الإجابة، ستحصل مباشرة على النتيجة و كذلك مستواك (مبتدئ، متوسط، متقدم...).
+                        </p>
+                    </div>
+
+
+                    <div  *ngIf="sectionIndex === 5"  class="tab-pane fade shadow rounded bg-white p-5"
+                          [class.active]="sectionIndex === 5"
+                          [class.show]="sectionIndex === 5"
+                          id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
+                        <h4 class="font-italic mb-4">خاصية إسترجاع الرسوم</h4>
+                        <p class="font-italic text-muted mb-2">
+                            هدفنا الأساسي هو تمكنك من اللغة الإنجليزية بإحتراف. لذلك خاصية إسترجاع المبلغ كاملا في حال عدم إستفادتك. جميع الجلسات المستقبلية في غضون 48 ساعة من طلب إسترداد الأموال قابلة للإسترداد
+                        </p>
+                    </div>
+
+                    <div  *ngIf="sectionIndex === 6"  class="tab-pane fade shadow rounded bg-white p-5"
+                          [class.active]="sectionIndex === 6"
+                          [class.show]="sectionIndex === 6"
+                          id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
+                        <h4 class="font-italic mb-4">شهادة إتمام اللغة الإنجليزية</h4>
+                        <p class="font-italic text-muted mb-2">
+                            في نهاية إتمامك أي مستوى من المستويات وإجتياز الإمتحان ستحصل على شهادة نجاح مقدمة من أكاديمية.                        </p>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

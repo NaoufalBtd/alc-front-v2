@@ -1,5 +1,4 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {NgForm} from '@angular/forms';
 import {WebSocketService} from '../../../../controller/service/web-socket.service';
 import {ChatMessageDto} from '../../../../controller/model/chatMessageDto';
 import {LoginService} from '../../../../controller/service/login.service';
@@ -15,7 +14,7 @@ import {LearnService} from '../../../../controller/service/learn.service';
 })
 export class ChatComponent implements OnInit, OnDestroy {
     today = Date.now();
-
+    message: string;
     constructor(public webSocketService: WebSocketService,
                 private learnService: LearnService,
                 public loginService: LoginService, public serviceprof: ProfService) {
@@ -43,20 +42,17 @@ export class ChatComponent implements OnInit, OnDestroy {
     }
 
 
-    sendMessage(sendForm: NgForm) {
+    sendMessage() {
         let chatMessageDto = new ChatMessageDto(this.loginService.prof.nom,
-            sendForm.value.message, false);
+            this.message, false);
         chatMessageDto.grpStudent = this.groupeEtudiant;
         chatMessageDto.student = null;
         chatMessageDto.quizReponse = null;
         chatMessageDto.isStudent = false;
-        console.log('___________________________ GRP ET PROF _____________________________');
-        console.log(this.groupeEtudiant);
         chatMessageDto.prof = this.loginService.prof;
         chatMessageDto.type = 'message';
         this.webSocketService.sendMessage(chatMessageDto, 'PROF');
-        console.log(chatMessageDto);
-        sendForm.controls.message.reset();
+        this.message = '';
     }
 
     get groupeEtudiant(): GroupeEtudiant {

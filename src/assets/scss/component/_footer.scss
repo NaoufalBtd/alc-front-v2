@@ -69,6 +69,26 @@
                             color: #d2173f;
                         }
                     }
+                    &.whtsp{
+                        background: #00a884;
+                        border-color: #00a884;
+                        fill: white;
+                        &:hover{
+                            background: transparent;
+                            color: #00a884;
+                            fill: #00a884!important;
+                        }
+                    }
+                    &.tik{
+                        background: rgb(22 24 35);
+                        fill: white;
+                        border-color: rgb(22 24 35);
+                        &:hover{
+                            background: transparent;
+                            color: rgb(22 24 35);
+                            fill: rgb(22 24 35)!important;
+                        }
+                    }
                 }
             }
         }

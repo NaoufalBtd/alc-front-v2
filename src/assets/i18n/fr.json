@@ -4,7 +4,7 @@
   "contact": "Contact",
   "signin": "S'identifier",
   "treetrialLesson": "Cours d'essai gratuit",
-  "title": "Centre Anglais",
+  "title": "EngFlexy Académie",
   "home": "Aceuil",
   "study": "Study English Whenever you want,Wherever you like!",
   "prices": "Nos prix",
@@ -231,7 +231,7 @@
   "ready for your next lesson ?": "prêt pour votre prochaine leçon ?",
   "Discover your current English level by taking our free online test": "Découvrez votre niveau d'anglais actuel en passant notre test en ligne gratuit",
   "Your Teacher will Determine your Level of English, and show you the INTERACTIVE DIGITAL PLATFORM": "Votre professeur déterminera votre niveau d'anglais et vous montrera la PLATEFORME NUMÉRIQUE INTERACTIVE",
-  "Choose your level to practise your reading": "Choisissez votre niveau pour pratiquer votre lecture",
+  "Choose your level to practise your reading": "Choisissez votre niveau pour commencer à apprendre.",
   "Your application has been successfully sent!": "Votre candidature a été envoyée avec succès !",
   "Already know about our school? Don't want to waste time on a trial lesson? Then pay immediately and get bonus lessons!": "Vous connaissez déjà notre école ? Vous ne voulez pas perdre de temps avec un cours d'essai ? Alors payez immédiatement et obtenez des cours bonus !",
   "Continue to purchase": "Continuer à acheter",
@@ -442,5 +442,8 @@
   "Miscellaneous": "24- Miscellaneous",
   "Miscellaneous-text": "EngFlexy se réserve le droit, à sa seule discrétion, d'amender, de changer, de modifier, d'ajouter ou de supprimer des parties de ces Conditions, y compris la Déclaration de confidentialité, à tout moment. Il est de votre responsabilité de vérifier périodiquement ces Conditions pour prendre connaissance de tout changement, car elles vous engagent. En poursuivant l'accès ou l'utilisation du site Web après la publication des modifications, vous acceptez et consentez à ces modifications.\nCes conditions et tous les droits accordés en vertu des présentes ne peuvent être transférés ou cédés par vous, en tout ou en partie.\nEngFlexy se réserve le droit de céder ses droits et obligations en vertu des présentes Conditions. \n",
   "Entire agreement": "25- Entire agreement",
-  "Entire agreement-text": "Les conditions, la déclaration de confidentialité et l'accord pour la fourniture de services de formation à distance\nconstituent le seul et unique accord entre vous et EngFlexy concernant le site Web et remplacent tous les accords, accords, représentations et garanties antérieurs et contemporains, écrits et oraux, concernant le site Web.\n"
+  "Entire agreement-text": "Les conditions, la déclaration de confidentialité et l'accord pour la fourniture de services de formation à distance\nconstituent le seul et unique accord entre vous et EngFlexy concernant le site Web et remplacent tous les accords, accords, représentations et garanties antérieurs et contemporains, écrits et oraux, concernant le site Web.\n",
+  "discover your level": "discover your level",
+  "Advantages of studying in EngFlexy": "Advantages of studying in EngFlexy"
+
 }

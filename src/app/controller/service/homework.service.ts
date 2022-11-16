@@ -9,7 +9,6 @@ import {TypeDeQuestion} from '../model/type-de-question.model';
 import {Section} from '../model/section.model';
 import {Cours} from '../model/cours.model';
 import {HomeWOrkEtudiant} from '../model/home-work-etudiant.model';
-import {LearnService} from './learn.service';
 
 import {HomeWorkEtudiantServiceService} from './home-work-etudiant-service.service';
 import {ParcoursService} from './parcours.service';
@@ -164,11 +163,8 @@ export class HomeworkService {
     }
 
 
-    deleteQst(rps: HomeWorkQST) {
-        this.http.delete(this.adminUrl + 'homeWorkQST/id/' + rps.id).subscribe(data => {
-        }, error => {
-            console.log(error);
-        });
+    deleteQst(rps: HomeWorkQST): Observable<any> {
+        return this.http.delete(this.adminUrl + 'homeWorkQST/id/' + rps.id);
     }
 
     deleteHomeWorkById(id: number): Observable<any> {

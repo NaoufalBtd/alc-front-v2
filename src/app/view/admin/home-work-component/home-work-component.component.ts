@@ -469,7 +469,7 @@ export class HomeWorkComponentComponent implements OnInit {
             if (this.homeWork.questions[i].numero === rps.numero) {
                 this.homeWork.questions.splice(i, 1);
                 if (rps.id !== undefined && rps.id !== null) {
-                    this.service.deleteQst(rps);
+                    this.service.deleteQst(rps).subscribe();
                 }
             }
         }

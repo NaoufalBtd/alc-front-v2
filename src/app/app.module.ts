@@ -305,11 +305,12 @@ import {VonPrimengFormModule} from '@von-development-studio/primeng-form-validat
 import {SaveGoogleTokenComponent} from './view/admin/drive-api/save-google-token/save-google-token.component';
 import {PackDetailsComponent} from './view/etudiant/packs/pack-details/pack-details.component';
 import {EducalModule} from './view/public/home-principale/home.module';
-import { InscriptionStudentMainComponent } from './view/public/inscription-student-main/inscription-student-main.component';
-import { LoadingAnimationComponent } from './view/shared/loading-animation/loading-animation.component';
-import { ContactMessageComponent } from './view/admin/contact-message/contact-message.component';
-import { PhrasebookComponent } from './view/etudiant/homeWork/phrasebook/phrasebook.component';
-import { TestLevelComponent } from './view/etudiant/test-level/test-level.component';
+import {LoadingAnimationComponent} from './view/shared/loading-animation/loading-animation.component';
+import {ContactMessageComponent} from './view/admin/contact-message/contact-message.component';
+import {PhrasebookComponent} from './view/etudiant/homeWork/phrasebook/phrasebook.component';
+import {TestLevelComponent} from './view/etudiant/test-level/test-level.component';
+import {DiscoverLevelComponent} from './view/public/discover-level/discover-level.component';
+import {AdvantagesEngflexyComponent} from './view/public/discover-level/advantages-engflexy/advantages-engflexy.component';
 
 
 export function createTranslateLoader(http: HttpClient) {
@@ -640,6 +641,8 @@ export function createTranslateLoader(http: HttpClient) {
             ContactMessageComponent,
             PhrasebookComponent,
             TestLevelComponent,
+            DiscoverLevelComponent,
+            AdvantagesEngflexyComponent,
 
 
         ],

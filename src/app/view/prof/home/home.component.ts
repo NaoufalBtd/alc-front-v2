@@ -1,14 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Cours} from '../../../controller/model/cours.model';
-import {RecommendTeacher} from '../../../controller/model/recommend-teacher.model';
 import {Prof} from '../../../controller/model/prof.model';
-import {RecommendTeacherService} from '../../../controller/service/recommend-teacher.service';
 import {ParcoursService} from '../../../controller/service/parcours.service';
-import {ConfirmationService, MessageService} from 'primeng/api';
 import {Etudiant} from '../../../controller/model/etudiant.model';
-import {ClassRoomService} from '../../../controller/service/class-room.service';
-import {SalaryVo} from '../../../controller/model/salary-vo.model';
-import {EtudiantService} from '../../../controller/service/etudiant.service';
 import {LoginService} from '../../../controller/service/login.service';
 import {ScheduleService} from '../../../controller/service/schedule.service';
 import {ScheduleProf} from '../../../controller/model/calendrier-prof.model';
@@ -20,8 +14,8 @@ import {Router} from '@angular/router';
 import {MenuService} from '../../shared/slide-bar/app.menu.service';
 import {SimulateSectionService} from '../../../controller/service/simulate-section.service';
 import {Section} from '../../../controller/model/section.model';
-import {GroupeEtudiant} from "../../../controller/model/groupe-etudiant.model";
-import {HomeworkService} from "../../../controller/service/homework.service";
+import {GroupeEtudiant} from '../../../controller/model/groupe-etudiant.model';
+import {HomeworkService} from '../../../controller/service/homework.service';
 import {Salary} from '../../../controller/model/salary.model';
 import {SalaryService} from '../../../controller/service/salary.service';
 
@@ -105,7 +99,9 @@ export class HomeComponent implements OnInit {
 
 
     getProgressValueForLesson(): number {
-        return (this.lessonFinished.length / this.allLesson.length) * 100;
+        const n = (this.lessonFinished.length / this.allLesson.length) * 100;
+        console.log(n);
+        return n;
     }
 
     getProgressValueForHoursFct(lessonFinished: Array<SessionCours>): number {

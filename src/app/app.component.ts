@@ -12,9 +12,6 @@ export class AppComponent implements OnInit {
                 public translate: TranslateService) {
         translate.setDefaultLang('en');
         const lang = window.navigator.language;
-        console.log('=====================');
-        console.log(lang);
-        console.log('=====================');
         if (lang?.includes('ar')) {
             translate.use('ar');
         } else if (lang?.includes('fr')) {

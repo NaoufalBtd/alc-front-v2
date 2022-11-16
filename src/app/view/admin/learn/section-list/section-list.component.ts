@@ -29,7 +29,8 @@ export class SectionListComponent implements OnInit {
                 private serviceQuiz: QuizService, private quizService: QuizEtudiantService,
                 private messageService: MessageService, private confirmationService: ConfirmationService,
                 private service: ParcoursService, private router: Router,
-                private VocabularyService: VocabularyService, private sectionItemService: SectionItemService) {
+                private vocabularyService: VocabularyService,
+                private sectionItemService: SectionItemService) {
     }
 
     set sectionCurrent(value: Section) {
@@ -54,11 +55,11 @@ export class SectionListComponent implements OnInit {
     }
 
     get idSection(): number {
-        return this.VocabularyService.idSection;
+        return this.vocabularyService.idSection;
     }
 
     set idSection(value: number) {
-        this.VocabularyService.idSection = value;
+        this.vocabularyService.idSection = value;
     }
 
     get itemssection(): Array<Section> {
@@ -164,9 +165,10 @@ export class SectionListComponent implements OnInit {
     }
 
     public delete(sections: Section) {
+        console.log(sections);
         this.selectedsection = sections;
         this.confirmationService.confirm({
-            message: 'Are you sure you want to delete ' + sections.libelle + '?',
+            message: 'Are you sure you want to remove this section? This action cannot be undone!',
             header: 'Confirm',
             icon: 'pi pi-exclamation-triangle',
             accept: () => {
@@ -179,6 +181,14 @@ export class SectionListComponent implements OnInit {
                         detail: 'Section Deleted',
                         life: 3000
                     });
+                }, error => {
+                    this.messageService.add({
+                        severity: 'error',
+                        summary: 'Error',
+                        detail: error?.error?.message || 'Something went wrong, please try again.',
+                        life: 3000
+                    });
+                    console.log(error);
                 });
             }
         });
@@ -213,7 +223,7 @@ export class SectionListComponent implements OnInit {
         this.quizService.findQuizBySectionId(section).subscribe(
             data => {
                 this.selectedQuiz = data;
-                if (data === null || data === undefined || data?.id === undefined){
+                if (data === null || data === undefined || data?.id === undefined) {
                     this.router.navigate(['admin/quiz-create']);
                 } else {
                     if (this.selectedQuiz.section.id == null) {

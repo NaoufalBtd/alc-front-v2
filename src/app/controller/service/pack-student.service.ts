@@ -150,7 +150,15 @@ export class PackStudentService {
         );
     }
 
-    public findAllPacksByLevel(): Observable<Array<PackStudent>>  {
+    public findByLevel(levelId: number) {
+        this.http.get<PackStudent[]>(this.adminUrl + 'packStudent/level/id/' + levelId).subscribe(
+            data => {
+                this.packs = data;
+            }
+        );
+    }
+
+    public findAllPacksByLevel(): Observable<Array<PackStudent>> {
         return this.http.get<PackStudent[]>(this.adminUrl + 'packStudent/');
     }
 
