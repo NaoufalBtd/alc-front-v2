@@ -312,4 +312,32 @@ export class HomeWorkPreviewComponent implements OnInit {
         this.router.navigate(['admin/homeWork']);
     }
 
+    deleteQst(qst: HomeWorkQST) {
+        this.confirmationService.confirm({
+            message: 'Are you sure you want to delete this question ?',
+            header: 'Confirm',
+            icon: 'pi pi-exclamation-triangle',
+            accept: () => {
+                this.homeWorkService.deleteQst(qst).subscribe(
+                    data => {
+                        this.qstList = this.qstList.filter(q => q.id !== qst.id);
+                        this.messageService.add({
+                            severity: 'success',
+                            summary: 'Successful',
+                            detail: 'Question has been deleted successfully.',
+                            life: 3000
+                        });
+                    }, error => {
+                        console.log(error);
+                        this.messageService.add({
+                            severity: 'error',
+                            summary: 'Error',
+                            detail: error?.error?.message || 'Something went wrong, please try again.',
+                            life: 3000
+                        });
+                    }
+                );
+            }
+        });
+    }
 }

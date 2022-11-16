@@ -6,16 +6,16 @@
 
 .page{
     &__title{
-        font-size: 70px;
+        font-size: 50px;
         color: $white;
         line-height: 62px;
         margin-bottom: 0;
 
         @media #{$xs}{
-            font-size: 50px;
+            font-size: 40px;
         }
         &-2{
-            font-size: 60px;
+            font-size: 50px;
             line-height: 1.17;
             color: $white;
             margin-bottom: 20px;
