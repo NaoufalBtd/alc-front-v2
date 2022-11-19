@@ -88,7 +88,6 @@ export class HomeComponent implements OnInit {
             data => {
                 this.allLesson = data;
                 this.getNumberOfHours(data);
-                console.log(data);
                 this.getNumberOfStudents(data);
 
             }, error => {
@@ -99,9 +98,7 @@ export class HomeComponent implements OnInit {
 
 
     getProgressValueForLesson(): number {
-        const n = (this.lessonFinished.length / this.allLesson.length) * 100;
-        console.log(n);
-        return n;
+        return (this.lessonFinished.length / this.allLesson.length) * 100;
     }
 
     getProgressValueForHoursFct(lessonFinished: Array<SessionCours>): number {
@@ -136,12 +133,10 @@ export class HomeComponent implements OnInit {
     getNumberOfStudents(scheduleProfs: Array<ScheduleProf>) {
         this.groupeEtudiantService.findAllByProfId(this.prof.id).subscribe(data => {
             this.groupList = data;
-            console.log(this.groupList);
             for (const item1 of data) {
                 this.groupeEtudiantService.findAllGroupeEtudiantDetail(item1.id).subscribe(dataGrpEtd => {
                     for (const value of dataGrpEtd) {
                         this.studentList.push({...value.etudiant});
-                        console.log(this.groupList);
                     }
                 });
             }
@@ -198,24 +193,7 @@ export class HomeComponent implements OnInit {
     }
 
     startSession(nextLesson: ScheduleProf) {
-        this.selectedSession = nextLesson;
-        this.showTpBar = false;
-        console.log(nextLesson.groupeEtudiant.id);
-        this.webSocketService.sessionHasStarted = true;
-        this.webSocketService.isInSession = true;
-        this.findAllGroupeEtudiantDetail(nextLesson.groupeEtudiant.id);
-        console.log(nextLesson);
-        this.selectedcours = nextLesson.cours;
-        this.simulateSectionService.findSectionOneByCoursId(nextLesson.cours);
-        this.parcoursService.afficheOneSectionByProf(nextLesson.cours).subscribe(
-            dataSection => {
-                this.webSocketService.saveCurrentSection(this.prof.id, dataSection);
-            }
-        );
-        console.log(this.selectedsection);
-        this.webSocketService.openWebSocket(this.prof, this.prof, nextLesson.groupeEtudiant, 'PROF');
-        this.sessionCourService._idgroup = nextLesson.groupeEtudiant.id;
-        this.router.navigate(['prof/sections-simulate']);
+        this.router.navigate(['prof/sections-simulate/' + nextLesson?.id]);
     }
 
     public findAllGroupeEtudiantDetail(id: number) {
@@ -224,7 +202,6 @@ export class HomeComponent implements OnInit {
                 for (let i = 0; i < data.length; i++) {
                     this.webSocketService.connectedUsers.push(data[i].etudiant);
                 }
-                console.log(this.webSocketService.connectedUsers);
             }
         );
     }
@@ -292,18 +269,7 @@ export class HomeComponent implements OnInit {
 
 
     viewLesson(nextLesson: ScheduleProf) {
-        this.showTpBar = false;
-        console.log(nextLesson.groupeEtudiant.id);
-        this.webSocketService.sessionHasStarted = false;
-        this.webSocketService.isInSession = false;
-        this.findAllGroupeEtudiantDetail(nextLesson.groupeEtudiant.id);
-        console.log(nextLesson);
-        this.selectedcours = nextLesson.cours;
-        this.simulateSectionService.findSectionOneByCoursId(nextLesson.cours);
-        console.log(this.selectedsection);
-        this.sessionCourService._idgroup = nextLesson.groupeEtudiant.id;
-        this.groupStudent = nextLesson.groupeEtudiant;
-        this.router.navigate(['prof/sections-simulate']);
+        this.router.navigate(['prof/sections-simulate/view-' + nextLesson?.id]);
     }
 
     private getNearestLessonForEveryGroup(groupeEtudiantList: Array<GroupeEtudiant>, scheduleProfs: Array<ScheduleProf>) {
@@ -317,7 +283,6 @@ export class HomeComponent implements OnInit {
                         for (const item of sessionList) {
                             if (courseList[i].cours.id === item.cours.id) {
                                 this.lessonFinished.push({...item});
-                                console.log(courseList[i + 1]);
                                 this.nearestLesson.set(group, courseList[i + 1]);
                             }
                         }
@@ -327,8 +292,6 @@ export class HomeComponent implements OnInit {
 
                     }
                 }
-                console.log(this.nearestLesson);
-                console.log(this.lessonFinished);
                 this.getProgressValueForHoursFct(this.lessonFinished);
                 setInterval(() => {
                     this.updateRestOfTime(this.nearestLesson);

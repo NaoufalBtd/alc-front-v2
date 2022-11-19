@@ -13,7 +13,7 @@ import {Etudiant} from '../../../../controller/model/etudiant.model';
 import {QuizEtudiant} from '../../../../controller/model/quiz-etudiant.model';
 import {DictionaryService} from '../../../../controller/service/dictionary.service';
 import {Dictionary} from '../../../../controller/model/dictionary.model';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {VocabularyService} from '../../../../controller/service/vocabulary.service';
 import {EtudiantCours} from '../../../../controller/model/etudiant-cours.model';
 import {SectionItemService} from '../../../../controller/service/section-item.service';
@@ -35,6 +35,8 @@ import {User} from '../../../../controller/model/user.model';
 import {HomeWorkEtudiantComponent} from '../../homeWork/home-work-etudiant/home-work-etudiant.component';
 import {HomeWorkSimulateService} from '../../../../controller/service/home-work-simulate.service';
 import {CategoriesSectionItemEnum} from '../../../../enum/CategoriesSectionItemEnum';
+import {ScheduleService} from '../../../../controller/service/schedule.service';
+import {AnimationService} from '../../../../controller/service/animation.service';
 
 @Pipe({name: 'safe'})
 export class SafePipe implements PipeTransform {
@@ -72,6 +74,8 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
     constructor(private messageService: MessageService,
                 private router: Router,
                 public webSocketService: WebSocketService,
+                public scheduleService: ScheduleService,
+                public animationService: AnimationService,
                 private dictionnaryService: DictionaryService,
                 private sanitizer: DomSanitizer,
                 private confirmationService: ConfirmationService,
@@ -89,9 +93,34 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
                 private homeWorkEtudiantService: HomeWorkEtudiantServiceService,
                 private learnService: LearnService,
                 private app: AppComponent,
+                private route: ActivatedRoute,
                 private simulateSectionService: SimulateSectionService,
                 private grpEtudiantService: GroupeEtudiantService,
     ) {
+    }
+
+    get minute(): number {
+        return this.webSocketService.minute;
+    }
+
+    set minute(value: number) {
+        this.webSocketService.minute = value;
+    }
+
+    get seconde(): number {
+        return this.webSocketService.seconde;
+    }
+
+    set seconde(value: number) {
+        this.webSocketService.seconde = value;
+    }
+
+    get lessonStarted(): boolean {
+        return this.webSocketService.lessonStarted;
+    }
+
+    set lessonStarted(value: boolean) {
+        this.webSocketService.lessonStarted = value;
     }
 
     get vocabularySection(): Section {
@@ -614,63 +643,20 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        this.selectedsection = this.itemssection2[0];
+        const idCurrentDoc: string = this.route.snapshot.params.id;
+        if (idCurrentDoc.includes('view')) {
+            const id = idCurrentDoc.substring('view-'.length);
+            this.startReview(Number(id));
+        } else {
+            this.startSession(Number(idCurrentDoc));
+        }
+
+
         if (this.loginService.getConnectedStudent().langue === 'fr') {
             this.selectedLanguage = {code: 'fr', name: 'French', nativeName: 'français'};
         }
         this.showAppMenu = false;
-        this.review.findReview(this.selectedcours.id).subscribe(
-            data => {
-                this.selectedReview = data;
-            });
         this.onTabViewChange();
-        this.quizService.section.id = this.selectedsection.id;
-        this.quizService.findQuizSection().subscribe(data => this.selectedQuiz = data);
-        this.quizService.findQuizBySectionId(this.selectedsection).subscribe(
-            data => {
-                this.selectedQuiz = data;
-                if (data !== null) {
-                    this.quizService.findQuizEtudanitByEtudiantIdAndQuizId(this.loginService.etudiant, this.selectedQuiz).subscribe(
-                        data => {
-                            this.quizEtudiantList = data;
-                            this.quizService.findAllQuestions(this.selectedQuiz.ref).subscribe(
-                                dataQuestions => {
-                                    if (data === null || data?.id === undefined || data?.id === null) {
-                                        this.showTakeQuiz = true;
-                                        this.showViewQuiz = false;
-                                    } else {
-                                        if (data.questionCurrent === dataQuestions.length) {
-                                            // this.passerQuiz = 'View Quiz';
-                                            // this.quizView = true;
-                                            this.showTakeQuiz = false;
-                                            this.showViewQuiz = true;
-                                        } else {
-                                            this.showTakeQuiz = true;
-                                            this.showViewQuiz = false;
-                                        }
-                                    }
-                                }
-                            );
-                        }, error => {
-                            this.passerQuiz = 'Take Quiz';
-                            this.quizView = false;
-                        }
-                    );
-                } else {
-                    this.passerQuiz = 'Take Quiz';
-                    this.quizView = false;
-                }
-            });
-        this.vocab.findAllVocabSection().subscribe(data => {
-            this.vocab.nombreVocab = data.length;
-        });
-
-        this.findhomeworkbycours(this.sectionItemService.coursofsection);
-        if (this.webSocketService.isInSession) {
-            this.webSocketService.findCurrentSectionForstudent(this.service.selectedcours, this.prof);
-        }
-        this.learnService.onStartHomeWork(this.selectedcours);
-        this.homeWorkService.onStartHomeWork(this.selectedcours);
     }
 
     onTabViewChange() {
@@ -909,9 +895,11 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
 
 
     homeWorkSelectedFct(homeWork: HomeWork) {
-        this.showLesson = false;
-        this.selectedsection = new Section();
-        this.homeWorkService.homeWorkSelectedFct(homeWork);
+        if (!this.webSocketService.isInSession) {
+            this.showLesson = false;
+            this.selectedsection = new Section();
+            this.homeWorkService.homeWorkSelectedFct(homeWork);
+        }
     }
 
     get selectedHomeWork(): HomeWork {
@@ -922,5 +910,46 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
         this.learnService.selectedHomeWork = value;
     }
 
+    private startSession(id: number) {
+        this.animationService.showAnimation = true;
+        this.scheduleService.findById(id).subscribe(
+            selectedMeeting => {
+                this.animationService.showAnimation = false;
+                this.showTpBar = false;
+                this.webSocketService.openWebSocket(this.etudiant, selectedMeeting.groupeEtudiant.prof, selectedMeeting.groupeEtudiant, 'STUDENT');
+                this.webSocketService.isInSession = true;
+                this.selectedcours = selectedMeeting.cours;
+                this.prof = selectedMeeting.prof;
+                this.simulateSectionService.findSectionOneByCoursId(selectedMeeting.cours);
+                this.findhomeworkbycours(this.selectedcours);
+                if (this.webSocketService.isInSession) {
+                    this.webSocketService.findCurrentSectionForstudent(this.service.selectedcours, selectedMeeting.prof);
+                }
+                this.learnService.onStartHomeWork(this.selectedcours);
+                this.homeWorkService.onStartHomeWork(this.selectedcours);
+                this.review.findReview(this.selectedcours.id).subscribe(
+                    data => {
+                        this.selectedReview = data;
+                    });
+            }, error => {
+                this.animationService.showAnimation = false;
+            }
+        );
+    }
 
+    private startReview(id: number) {
+        this.animationService.showAnimation = true;
+        this.scheduleService.findById(id).subscribe(
+            selectedMeeting => {
+                this.animationService.showAnimation = false;
+
+                this.showTpBar = false;
+                this.webSocketService.isInSession = false;
+                this.selectedcours = selectedMeeting.cours;
+                this.simulateSectionService.findSectionOneByCoursId(selectedMeeting.cours);
+            }, error => {
+                this.animationService.showAnimation = false;
+            }
+        );
+    }
 }

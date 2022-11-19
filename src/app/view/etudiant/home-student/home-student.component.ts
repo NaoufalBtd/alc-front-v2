@@ -3,7 +3,6 @@ import {LoginService} from '../../../controller/service/login.service';
 import {ScheduleService} from '../../../controller/service/schedule.service';
 import {GroupeEtudiantService} from '../../../controller/service/groupe-etudiant-service';
 import {Etudiant} from '../../../controller/model/etudiant.model';
-import {GroupeEtudeService} from '../../../controller/service/groupe-etude.service';
 import {ScheduleProf} from '../../../controller/model/calendrier-prof.model';
 import {SessionCoursService} from '../../../controller/service/session-cours.service';
 import {SessionCours} from '../../../controller/model/session-cours.model';
@@ -18,7 +17,6 @@ import {WebSocketService} from '../../../controller/service/web-socket.service';
 import {GroupeEtudiant} from '../../../controller/model/groupe-etudiant.model';
 import {InscriptionService} from '../../../controller/service/inscription.service';
 import {Inscription} from '../../../controller/model/inscription.model';
-import {Parcours} from '../../../controller/model/parcours.model';
 
 @Component({
     selector: 'app-home-student',
@@ -165,8 +163,7 @@ export class HomeStudentComponent implements OnInit {
 
     }
 
-    openSession(cours: Cours, type: string) {
-        this.webSocketService.isInSession = false;
+    openSession(meet: ScheduleProf, type: string) {
         if (type === 'HOMWORK') {
             this.tabViewActiveIndex = 1;
             this.showLesson = false;
@@ -174,11 +171,7 @@ export class HomeStudentComponent implements OnInit {
             this.tabViewActiveIndex = 0;
             this.showLesson = true;
         }
-        console.log(cours);
-        this.showTpBar = false;
-        this.selectedcours = cours;
-        this.simulateSectionService.findSectionOneByCoursId(cours);
-        this.router.navigate(['etudiant/etudiant-simulate-sections']);
+        this.router.navigate(['etudiant/simulate-sections/' + 'view-' + meet.id]);
     }
 
 
@@ -264,13 +257,8 @@ export class HomeStudentComponent implements OnInit {
         }
     }
 
-    joinSession(cours: Cours) {
-        this.showTpBar = false;
-        this.webSocketService.openWebSocket(this.student, this.nextLesson.groupeEtudiant.prof, this.nextLesson.groupeEtudiant, 'STUDENT');
-        this.webSocketService.isInSession = true;
-        this.selectedcours = cours;
-        this.simulateSectionService.findSectionOneByCoursId(cours);
-        this.router.navigate(['etudiant/etudiant-simulate-sections']);
+    joinSession(meet: ScheduleProf) {
+        this.router.navigate(['etudiant/simulate-sections/' + meet.id]);
     }
 
     private getStudentOfGroup(groupeEtudiant: GroupeEtudiant) {

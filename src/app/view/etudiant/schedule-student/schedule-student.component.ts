@@ -1,7 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {ScheduleService} from '../../../controller/service/schedule.service';
 import {ConfirmationService, MessageService} from 'primeng/api';
-import {LoginService} from '../../../controller/service/login.service';
 import {L10n} from '@syncfusion/ej2-base';
 import {EventSettingsModel, PopupOpenEventArgs, ScheduleComponent, TimeScaleModel} from '@syncfusion/ej2-angular-schedule';
 import {ScheduleProf} from '../../../controller/model/calendrier-prof.model';
@@ -163,19 +162,13 @@ export class ScheduleStudentComponent implements OnInit {
         this.scheduleObj.eventSettings.dataSource = null;
         this.findByGroupStudent();
     }
+
     set selectedcours(value: Cours) {
         this.parcoursService.selectedcours = value;
     }
 
     joinSession() {
-        this.showTpBar = false;
-        this.webSocketService.openWebSocket(this.etudiant, this.selectedMeeting.groupeEtudiant.prof, this.selectedMeeting.groupeEtudiant, 'STUDENT');
-        this.webSocketService.isInSession = true;
-        this.selectedcours = this.selectedMeeting.cours;
-        this.simulatesectionService.findSectionOneByCoursId(this.selectedMeeting.cours);
-        this.router.navigate(['etudiant/etudiant-simulate-sections']);
-
-        // this.webSocketService.findCurrentSectionForstudent(this.parcoursService.selectedcours, this.selectedMeeting.prof );
+        this.router.navigate(['etudiant/simulate-sections/' + this.selectedMeeting.id]);
     }
 
     onActionComplete() {

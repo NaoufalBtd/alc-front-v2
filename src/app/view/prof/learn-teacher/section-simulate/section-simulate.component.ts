@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit, Pipe, PipeTransform} from '@angular/core';
 import {Section} from '../../../../controller/model/section.model';
-import {ConfirmationService, MenuItem, MessageService, TreeNode} from 'primeng/api';
+import {ConfirmationService, MessageService, TreeNode} from 'primeng/api';
 import {ParcoursService} from '../../../../controller/service/parcours.service';
 import {Cours} from '../../../../controller/model/cours.model';
 import {DomSanitizer} from '@angular/platform-browser';
@@ -8,7 +8,7 @@ import {HttpClient} from '@angular/common/http';
 import {QuizEtudiantService} from '../../../../controller/service/quiz-etudiant.service';
 import {Quiz} from '../../../../controller/model/quiz.model';
 import {QuizService} from '../../../../controller/service/quiz.service';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Dictionary} from '../../../../controller/model/dictionary.model';
 import {DictionaryService} from '../../../../controller/service/dictionary.service';
 import {EtudiantReviewService} from '../../../../controller/service/etudiant-review.service';
@@ -32,11 +32,14 @@ import {ScheduleProf} from '../../../../controller/model/calendrier-prof.model';
 import {QuizReponse} from '../../../../controller/model/quiz-reponse';
 import {CategoriesSectionItemEnum} from '../../../../enum/CategoriesSectionItemEnum';
 import {TypeHomeWorkEnum} from '../../../../enum/type-question.enum';
+import {GroupeEtudiantService} from '../../../../controller/service/groupe-etudiant-service';
+import {ScheduleService} from '../../../../controller/service/schedule.service';
+import {AnimationService} from '../../../../controller/service/animation.service';
 
 @Pipe({name: 'safe'})
 export class SafePipe1 implements PipeTransform {
-    public CategoriesSectionItemEnum = CategoriesSectionItemEnum;
     public TypeHomeWorkEnum = TypeHomeWorkEnum;
+
     constructor(private sanitizer: DomSanitizer) {
     }
 
@@ -78,14 +81,26 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
                 private menuService: MenuService,
                 private simulateSectionService: SimulateSectionService,
                 private learnService: LearnService,
+                private parcoursService: ParcoursService,
                 private messageService: MessageService,
+                private groupeEtudiantService: GroupeEtudiantService,
                 private dictionnaryService: DictionaryService,
                 private router: Router,
+                private route: ActivatedRoute,
+                private scheduleService: ScheduleService,
+                private animation: AnimationService,
                 private app: AppComponent,
                 private homeWorkService: HomeworkService,
                 private serviceQuiz: QuizService, private sanitizer: DomSanitizer, private quizService: QuizEtudiantService,
                 private confirmationService: ConfirmationService,
                 private service: ParcoursService, private http: HttpClient, private review: EtudiantReviewService) {
+    }
+    get lessonStarted(): boolean {
+        return this.webSocketService.lessonStarted;
+    }
+
+    set lessonStarted(value: boolean) {
+        this.webSocketService.lessonStarted = value;
     }
 
     get badgeNrMsg(): number {
@@ -94,6 +109,10 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
 
     set badgeNrMsg(value: number) {
         this.learnService.badgeNrMsg = value;
+    }
+
+    set groupStudent(value: GroupeEtudiant) {
+        this.homeWorkService.groupStudent = value;
     }
 
 
@@ -109,9 +128,6 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
         return this.service.sectionStandard;
     }
 
-    set sectionStandard(value: Array<Section>) {
-        this.service.sectionStandard = value;
-    }
 
     get sectionAdditional(): Array<Section> {
         return this.service.sectionAdditional;
@@ -165,13 +181,6 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
         return this.dictionnaryService.itemsDict;
     }
 
-    set itemsDict(value: Array<Dictionary>) {
-        this.dictionnaryService.itemsDict = value;
-    }
-
-    get submittedDict(): boolean {
-        return this.dictionnaryService.submittedDict;
-    }
 
     set submittedDict(value: boolean) {
         this.dictionnaryService.submittedDict = value;
@@ -251,6 +260,11 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
         return this.webSocketService.prof;
     }
 
+    set prof(value: Prof) {
+        this.webSocketService.prof = value;
+    }
+
+
     get showVocabulary(): boolean {
         return this.sectionItemService.showVocabulary;
     }
@@ -329,8 +343,22 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
     showLesson = true;
     showSummary = false;
     showFinishLesson = true;
-    lessonStarted: boolean;
 
+    get minute(): number {
+        return this.webSocketService.minute;
+    }
+
+    set minute(value: number) {
+        this.webSocketService.minute = value;
+    }
+
+    get seconde(): number {
+        return this.webSocketService.seconde;
+    }
+
+    set seconde(value: number) {
+        this.webSocketService.seconde = value;
+    }
 
     public Review() {
         this.review.viewDialogProf = true;
@@ -359,11 +387,72 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        this.selectedsection = this.itemssection2[0];
+        const idCurrentDoc: string = this.route.snapshot.params.id;
+        if (idCurrentDoc.includes('view')) {
+            const id = idCurrentDoc.substring('view-'.length);
+            this.startReview(Number(id));
+        } else {
+            this.startSession(Number(idCurrentDoc));
+        }
         this.showAppMenu = false;
-        this.lessonDurationEnSecond = (this.selectedSession.endTime.getHours() - this.selectedSession.startTime.getHours()) * 3600;
     }
 
+
+    startReview(id: number) {
+        this.scheduleService.findById(id).subscribe(
+            nextLesson => {
+                this.showTpBar = false;
+                this.webSocketService.sessionHasStarted = false;
+                this.webSocketService.isInSession = false;
+                this.findAllGroupeEtudiantDetail(nextLesson.groupeEtudiant.id);
+                this.selectedcours = nextLesson.cours;
+                this.simulateSectionService.findSectionOneByCoursId(nextLesson.cours);
+                this.sessionservice._idgroup = nextLesson.groupeEtudiant.id;
+                this.groupStudent = nextLesson.groupeEtudiant;
+            }, error => {
+                console.log(error);
+            });
+    }
+
+    startSession(id: number) {
+        this.animation.showAnimation = true;
+        this.scheduleService.findById(id).subscribe(
+            data => {
+                this.animation.showAnimation = false;
+                this.selectedSchedule = data;
+                this.selectedSession = data;
+                this.prof = data?.prof;
+                this.webSocketService.isInSession = true;
+                this.showTpBar = false;
+                this.webSocketService.sessionHasStarted = true;
+                this.findAllGroupeEtudiantDetail(this.selectedSchedule.groupeEtudiant.id);
+                this.selectedcours = this.selectedSchedule.cours;
+                this.simulateSectionService.findSectionOneByCoursId(this.selectedSchedule.cours);
+                this.parcoursService.afficheOneSectionByProf(this.selectedSchedule.cours).subscribe(
+                    dataSection => {
+                        this.webSocketService.saveCurrentSection(this.prof.id, dataSection);
+                    }
+                );
+                this.webSocketService.openWebSocket(this.prof, this.prof, this.selectedSchedule.groupeEtudiant, 'PROF');
+                this.sessionservice._idgroup = this.selectedSchedule.groupeEtudiant.id;
+            }, error => {
+                this.animation.showAnimation = false;
+                console.log(error);
+            }
+        );
+
+    }
+
+
+    public findAllGroupeEtudiantDetail(id: number) {
+        this.groupeEtudiantService.findAllGroupeEtudiantDetail(id).subscribe(
+            data => {
+                for (let i = 0; i < this.data?.length; i++) {
+                    this.webSocketService.connectedUsers.push(this.data[i].etudiant);
+                }
+            }
+        );
+    }
 
 
     URLVideo(urlVideo: string): string {
@@ -430,6 +519,7 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
     }
 
     NextSection(section: Section) {
+        console.log(section);
         this.grpStudentAnswers = new Map<Etudiant, QuizReponse>();
         let index = 0;
         for (const item of this.sessionCour.sections) {
@@ -475,16 +565,6 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
         }
     }
 
-    Vocab(section: Section) {
-        this.sectionItemService.sectionSelected = section;
-
-        this.sectionItemService.getSectionItems().subscribe(data => {
-            this.sectionItemService.sectionSelected.sectionItems = data;
-            this.showVocabulary = true;
-        });
-
-    }
-
     return($event: string) {
         this.showVocabulary = false;
     }
@@ -496,7 +576,7 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
 
     closeSession() {
         this.showTpBar = true;
-        let chatMessage: ChatMessageDto = new ChatMessageDto(this.loginService.getConnectedProf().nom, 'Quit the session', false);
+        const chatMessage: ChatMessageDto = new ChatMessageDto(this.loginService.getConnectedProf().nom, 'Quit the session', false);
         chatMessage.type = 'DISCONNECT';
         chatMessage.prof = this.loginService.getConnectedProf();
         this.webSocketService.deleteWhenSessionIsfiniched(this.prof.id);
@@ -556,7 +636,7 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
             }
             this.messageService.add({severity: 'success', life: 3000, detail: 'Word added successfully'});
         } else {
-            let dict: Dictionary = new Dictionary();
+            const dict: Dictionary = new Dictionary();
             dict.word = this.searchInput;
             dict.definition = this.synonymes;
             for (const etudiant of this.participants.get(this.loginService.getConnectedProf().id)) {
@@ -655,7 +735,7 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
     }
 
     showSummaryFct() {
-        let chatMessage: ChatMessageDto = new ChatMessageDto('SUMMARY',
+        const chatMessage: ChatMessageDto = new ChatMessageDto('SUMMARY',
             'SUMMARY', false);
         chatMessage.prof = this.loginService.getConnectedProf();
         chatMessage.type = 'SECTION';
@@ -728,6 +808,10 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
         return this.webSocketService.selectedSchedule;
     }
 
+    set selectedSchedule(value: ScheduleProf) {
+        this.webSocketService.selectedSchedule = value;
+    }
+
     finishLesson() {
         this.showFinishLesson = false;
         this.sessionCour.prof = this.loginService.getConnectedProf();
@@ -744,7 +828,7 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
         this.sessionCour.totalheure = this.selectedSchedule.endTime.getHours() - this.selectedSchedule.startTime.getHours();
         // this.sessionservice.saveSessionCours(this.sessionCour);
         this.saveSessionCoursForGroupEtudiant(this.sessionCour.prof.id, this.sessionCour.cours.id, this.sessionCour.groupeEtudiant.id);
-        let chatMessage: ChatMessageDto = new ChatMessageDto('FINISHLESSON', 'FINISHLESSON', false);
+        const chatMessage: ChatMessageDto = new ChatMessageDto('FINISHLESSON', 'FINISHLESSON', false);
         chatMessage.prof = this.loginService.getConnectedProf();
         chatMessage.type = 'SECTION';
         this.webSocketService.sendMessage(chatMessage, 'PROF');
@@ -788,45 +872,18 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
     }
 
     startLesson() {
-        this.lessonStarted = true;
-        setInterval(() => {
-            this.getRestOfTime();
-        }, 1000);
+        const chatMessageDto = new ChatMessageDto('START_LESSON', 'START_LESSON', false);
+        chatMessageDto.grpStudent = this.groupeEtudiant;
+        chatMessageDto.prof = this.prof;
+        chatMessageDto.type = 'START_LESSON';
+        this.webSocketService.sendMessage(chatMessageDto, 'PROF');
     }
 
     get selectedSession(): ScheduleProf {
         return this.webSocketService.selectedSession;
     }
 
-    getRestOfTime(): string {
-        let myMinute = 0;
-        let myHour = 0;
-        let mySecond = 0;
-
-
-        const numberOfRstHour = this.lessonDurationEnSecond / 3600;
-        const numberOfRstHourStr = String(numberOfRstHour);
-
-        if (numberOfRstHourStr.indexOf('.') !== -1) {
-            myHour = Number(numberOfRstHourStr.substring(0, numberOfRstHourStr.indexOf('.'))); // *
-            const stringRestHours = String(0 + numberOfRstHourStr.toString().substring(numberOfRstHourStr.indexOf('.')));
-            const numberOfRstHours = Number(stringRestHours);
-
-            // -----------------------Minutes-----------------------------
-
-            const firstValueOfMinute = String(numberOfRstHours * (60));
-            if (firstValueOfMinute.indexOf('.') !== -1) {
-                myMinute = Number(firstValueOfMinute.substring(0, firstValueOfMinute.indexOf('.')));
-                const stringRestMinute = String(0 + firstValueOfMinute.toString().substring(firstValueOfMinute.indexOf('.')));
-                const numberOfRstMinute = Number(stringRestMinute);
-
-                // -----------------------Seconds-----------------------------
-                const firstValueOfSecond = String(numberOfRstMinute * (60));
-                mySecond = Number(firstValueOfSecond.substring(0, firstValueOfSecond.indexOf('.')));
-                const stringRestSecond = String(0 + firstValueOfSecond.toString().substring(firstValueOfSecond.indexOf('.')));
-            }
-        }
-        this.lessonDurationEnSecond--;
-        return (String(myHour) + 'h : ' + String(myMinute) + 'm : ' + String(mySecond) + 's');
+    set selectedSession(value: ScheduleProf) {
+        this.webSocketService.selectedSession = value;
     }
 }

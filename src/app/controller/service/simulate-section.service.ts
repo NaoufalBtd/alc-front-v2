@@ -37,6 +37,7 @@ export class SimulateSectionService {
     private _showRatingLessonTemplate = false;
     private _vocabularySection: Section = new Section();
     private _getToKnowSection: Section = new Section();
+    private _showViewQuiz = false;
 
     constructor(private messageService: MessageService,
                 private router: Router,
@@ -56,6 +57,14 @@ export class SimulateSectionService {
                 private homeWorkEtudiantService: HomeWorkEtudiantServiceService) {
     }
 
+
+    get showViewQuiz(): boolean {
+        return this._showViewQuiz;
+    }
+
+    set showViewQuiz(value: boolean) {
+        this._showViewQuiz = value;
+    }
 
     get vocabularySection(): Section {
         return this._vocabularySection;
@@ -515,7 +524,7 @@ export class SimulateSectionService {
             }
         }
         console.log(this.selectedsection);
-        if (this.selectedsection.categorieSection.libelle === 'Vocabulary') {
+        if (this.selectedsection.categorieSection?.libelle?.toUpperCase()?.includes('VOCABULARY')) {
             this.Vocab(this.selectedsection);
         } else {
             this.showVocabulary = false;
@@ -546,9 +555,6 @@ export class SimulateSectionService {
                 },
             );
         }
-        console.log('------------------------------------------------------');
-        console.log(this.i);
-        console.log('------------------------------------------------------');
     }
 
 
@@ -634,10 +640,6 @@ export class SimulateSectionService {
                         this.sectionAdditional.push({...data[_i]});
                     }
                 }
-                console.log('===========================Standra 1=========================');
-                console.log(this.sectionStandard);
-                console.log(this.sectionAdditional);
-                console.log('====================================================');
 
             });
         this.service.image = '';
@@ -720,6 +722,7 @@ export class SimulateSectionService {
         return this.http.get<Array<Section>>(this.profUrl + 'section/cours/id/' + cours.id).subscribe(
             data => {
                 this.itemssection2 = data;
+                this.selectedsection = this.itemssection2[0];
                 this.selectedsection = data[0];
                 this.quizService.findQuizBySectionId(this.selectedsection).subscribe(data12 => {
                     this.quizExist = true;
@@ -761,15 +764,58 @@ export class SimulateSectionService {
                         this.sectionAdditional.push({...data[_i]});
                     }
                 }
-                console.log('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
-                console.log(this.sectionStandard);
-                console.log(this.sectionAdditional);
                 this.vocabularySection = this.sectionStandard.filter(s => s.categorieSection?.libelle === 'Vocabulary')[0];
                 this.getToKnowSection = this.sectionStandard.filter(s => s.categorieSection?.libelle === 'Get to know')[0];
-                console.log('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
-
+                this.displayData(this.selectedsection);
             }
         );
+    }
+
+    private displayData(section: Section) {
+        console.log('------------------------SECTION -------------------------------');
+        console.log(section);
+        console.log('------------------------SECTION -------------------------------');
+        this.selectedsection = section;
+        this.quizService.section.id = this.selectedsection.id;
+        this.quizService.findQuizSection().subscribe(data => this.selectedQuiz = data);
+        this.quizService.findQuizBySectionId(this.selectedsection).subscribe(
+            data => {
+                this.selectedQuiz = data;
+                if (data !== null) {
+                    this.quizService.findQuizEtudanitByEtudiantIdAndQuizId(this.loginService.etudiant, this.selectedQuiz).subscribe(
+                        data1 => {
+                            this.quizEtudiantList = data1;
+                            this.quizService.findAllQuestions(this.selectedQuiz.ref).subscribe(
+                                dataQuestions => {
+                                    if (data1 === null || data1?.id === undefined || data1?.id === null) {
+                                        this.showTakeQuiz = true;
+                                        this._showViewQuiz = false;
+                                    } else {
+                                        if (data1.questionCurrent === dataQuestions.length) {
+                                            // this.passerQuiz = 'View Quiz';
+                                            // this.quizView = true;
+                                            this.showTakeQuiz = false;
+                                            this._showViewQuiz = true;
+                                        } else {
+                                            this.showTakeQuiz = true;
+                                            this._showViewQuiz = false;
+                                        }
+                                    }
+                                }
+                            );
+                        }, error => {
+                            this.passerQuiz = 'Take Quiz';
+                            this.quizView = false;
+                        }
+                    );
+                } else {
+                    this.passerQuiz = 'Take Quiz';
+                    this.quizView = false;
+                }
+            });
+        this.vocab.findAllVocabSection().subscribe(data => {
+            this.vocab.nombreVocab = data.length;
+        });
     }
 
     sectionIsFinished(section: Section): boolean {

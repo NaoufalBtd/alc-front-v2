@@ -56,7 +56,9 @@ export class WebSocketService {
     private numerOft12Qst = -1;
     private _activeIndexForTabView: number;
     private _reponseHomeWorkReviewComponent: ReponseEtudiantHomeWork = new ReponseEtudiantHomeWork(); // used in sync between teacher and student in HomeWorkReviewComponent
-
+    private _lessonStarted: boolean;
+    private _minute = 59;
+    private _seconde = 59;
 
     constructor(private serviceetudiant: EtudiantService,
                 private authService: AuthenticationService,
@@ -72,6 +74,30 @@ export class WebSocketService {
     ) {
     }
 
+
+    get minute(): number {
+        return this._minute;
+    }
+
+    set minute(value: number) {
+        this._minute = value;
+    }
+
+    get seconde(): number {
+        return this._seconde;
+    }
+
+    set seconde(value: number) {
+        this._seconde = value;
+    }
+
+    get lessonStarted(): boolean {
+        return this._lessonStarted;
+    }
+
+    set lessonStarted(value: boolean) {
+        this._lessonStarted = value;
+    }
 
     get selectedSession(): ScheduleProf {
         return this._selectedSession;
@@ -194,212 +220,223 @@ export class WebSocketService {
     public openWebSocket(user: User, prof: Prof, grpEtudiant: GroupeEtudiant, sender: string) {
         this.webSocket = new WebSocket(this.socketUrl);
         this.webSocket.onopen = (event) => {
-            this.prof = prof;
-            this.groupeEtudiant = grpEtudiant;
-            let index = 0;
-            for (let item of this.connectedUsers) {
-                if (item?.id === prof.id) {
-                    index = -1;
-                }
-            }
-            if (index === 0) {
-                this.connectedUsers.push({...prof});
-            }
-            if (sender === 'PROF') {
-                this.participants.set(prof.id, this.connectedUsers);
-                if (this.studentsEnLigne.get(prof.id) === undefined) {
-                    this.studentsEnLigne.set(prof.id, prof);
-                }
-            } else {
-                this.groupeEtudiantService.findAllGroupeEtudiantDetail(grpEtudiant.id).subscribe(
-                    data => {
-                        const groupeEtudiantDetails = data;
-                        for (let i = 0; i < groupeEtudiantDetails.length; i++) {
-                            this.connectedUsers.push({...groupeEtudiantDetails[i].etudiant});
-                        }
-                        this.participants.set(prof.id, this.connectedUsers);
-                        if (this.studentsEnLigne.get(prof.id) === undefined) {
-                            this.studentsEnLigne.set(prof.id, prof);
-                        }
-                    }
-                );
-                let chatMessage: ChatMessageDto = new ChatMessageDto(user.nom, 'join session', true);
-                chatMessage.prof = prof;
-                chatMessage.student = user;
-                chatMessage.type = 'CONNECT';
-                this.webSocket.send(JSON.stringify(chatMessage));
-            }
+            this.onOpen(prof, grpEtudiant, sender, user);
         };
         this.webSocket.onerror = (event) => {
-            console.log(event);
+            if (this.webSocket.readyState === this.webSocket.CLOSING) {
+                alert('Wb socket is CLOSING !');
+            }
         };
         this.webSocket.onmessage = (event) => {
+            this.onMessage(event);
+        };
+    }
 
-            const data: ChatMessageDto = JSON.parse(event.data);
+    private onOpen(prof: Prof, grpEtudiant: GroupeEtudiant, sender: string, user: User) {
+        this.prof = prof;
+        this.groupeEtudiant = grpEtudiant;
+        let index = 0;
+        for (let item of this.connectedUsers) {
+            if (item?.id === prof.id) {
+                index = -1;
+            }
+        }
+        if (index === 0) {
+            this.connectedUsers.push({...prof});
+        }
+        if (sender === 'PROF') {
+            this.participants.set(prof.id, this.connectedUsers);
+            if (this.studentsEnLigne.get(prof.id) === undefined) {
+                this.studentsEnLigne.set(prof.id, prof);
+            }
+        } else {
+            this.groupeEtudiantService.findAllGroupeEtudiantDetail(grpEtudiant.id).subscribe(
+                data => {
+                    const groupeEtudiantDetails = data;
+                    for (let i = 0; i < groupeEtudiantDetails.length; i++) {
+                        if (this.connectedUsers.filter(s => s.id === groupeEtudiantDetails[i].etudiant.id).length === 0) {
+                            this.connectedUsers.push({...groupeEtudiantDetails[i].etudiant});
+                        }
+                    }
+                    this.participants.set(prof.id, this.connectedUsers);
+                    if (this.studentsEnLigne.get(prof.id) === undefined) {
+                        this.studentsEnLigne.set(prof.id, prof);
+                    }
+                }
+            );
+            let chatMessage: ChatMessageDto = new ChatMessageDto(user.nom, 'join session', true);
+            chatMessage.prof = prof;
+            chatMessage.student = user;
+            chatMessage.type = 'CONNECT';
+            this.webSocket.send(JSON.stringify(chatMessage));
+        }
+    }
+
+    private onMessage(event: MessageEvent<any>) {
+        const data: ChatMessageDto = JSON.parse(event.data);
+        if (data.type === 'message') {
+            console.log(this.participants);
             console.log(data);
-            if (data.type === 'message') {
+            for (const etudiant of this.participants?.get(data.prof.id)) {
+                if (etudiant.id === this.loginservice.getConnectedStudent().id) {
+                    this.chatMessages.push({...data});
+                    if (this.loginservice.getConnecteUser().role === Role.PROF) {
+                        if (this.activeIndexForTabView === 2) { // chat Prof
+                            this.badgeNrMsg = 0;
+                        } else {
+                            this.badgeNrMsg = this.chatMessages.length;
+                            this.notificationMessageSound();
+                        }
+                    } else {
+                        if (this.tabViewActiveIndex === 3) { // chat student
+                            this.badgeNrMsg = 0;
+                        } else {
+                            this.badgeNrMsg = this.chatMessages.length;
+                            this.notificationMessageSound();
+                        }
+                    }
+                }
+            }
+        } else if (data.type === 'SECTION') {
+            if (data?.user === 'SUMMARY' && data?.message === 'SUMMARY') {
                 for (const etudiant of this.participants.get(data.prof.id)) {
                     if (etudiant.id === this.loginservice.getConnectedStudent().id) {
-                        this.chatMessages.push({...data});
-                        if (this.loginservice.getConnecteUser().role === Role.PROF) {
-                            if (this.activeIndexForTabView === 2) { // chat Prof
-                                this.badgeNrMsg = 0;
-                            } else {
-                                this.badgeNrMsg = this.chatMessages.length;
-                                this.notificationMessageSound();
-                            }
-                        } else {
-                            if (this.tabViewActiveIndex === 3) { // chat student
-                                this.badgeNrMsg = 0;
-                            } else {
-                                this.badgeNrMsg = this.chatMessages.length;
-                                this.notificationMessageSound();
-                            }
-                        }
+                        this.simulatesectionService.goToSummary();
                     }
                 }
-            } else if (data.type === 'SECTION') {
-                if (data?.user === 'SUMMARY' && data?.message === 'SUMMARY') {
-                    for (const etudiant of this.participants.get(data.prof.id)) {
-                        if (etudiant.id === this.loginservice.getConnectedStudent().id) {
-                            this.simulatesectionService.goToSummary();
-                        }
-                    }
-                } else if (data?.user === 'FINISHLESSON' && data?.message === 'FINISHLESSON') {
-                    for (const etudiant of this.participants.get(data.prof.id)) {
-                        if (etudiant.id === this.loginservice.getConnectedStudent().id) {
-                            this.simulatesectionService.finishLesson();
-                        }
-                    }
-                } else {
-                    this.grpStudentAnswers = new Map<Etudiant, QuizReponse>();
-                    const sectionId = Number(data.message);
-                    for (const etudiant of this.participants.get(data.prof.id)) {
-                        if (etudiant.id === this.loginservice.getConnectedStudent().id) {
-                            this.simulatesectionService.nextSection(sectionId, data?.user);
-                        }
+            } else if (data?.user === 'FINISHLESSON' && data?.message === 'FINISHLESSON') {
+                for (const etudiant of this.participants.get(data.prof.id)) {
+                    if (etudiant.id === this.loginservice.getConnectedStudent().id) {
+                        this.simulatesectionService.finishLesson();
                     }
                 }
+            } else {
+                console.log(data);
+                this.grpStudentAnswers = new Map<Etudiant, QuizReponse>();
+                const sectionId = Number(data.message);
+                for (const etudiant of this.participants.get(data.prof.id)) {
+                    if (etudiant.id === this.loginservice.getConnectedStudent().id) {
+                        this.simulatesectionService.nextSection(sectionId, data?.user);
+                    }
+                }
+            }
 
-            } else if (data.type === 'FOLLOW-QUIZ') {
+        } else if (data.type === 'FOLLOW-QUIZ') {
+            this.reponseQuiz = data.quizReponse;
+            this.question = this.reponseQuiz?.question;
+            this.learnService.nextQuestionFct();
+            if (this.question.typeDeQuestion.ref === 't5') {
+                document.getElementById('trueFalse').className = 'p-grid trueOrFalseQst';
+            }
+        } else if (data.type === 'QUIZ') {
+            if (this.groupeEtudiant?.groupeEtude?.nombreEtudiant === 1 ||
+                data.quizReponse.sender === 'PROF' || data.isStudent === false) {
                 this.reponseQuiz = data.quizReponse;
-                this.question = this.reponseQuiz?.question;
-                this.learnService.nextQuestionFct();
-                if (this.question.typeDeQuestion.ref === 't5') {
-                    document.getElementById('trueFalse').className = 'p-grid trueOrFalseQst';
+                console.log(this.reponseQuiz);
+                if (this.reponseQuiz?.question?.typeDeQuestion?.ref === 't5') {
+                    this.trueOrFalse = this.reponseQuiz.lib !== 'false';
+                } else if (this.reponseQuiz?.question?.typeDeQuestion?.ref === 't12') {
+                    let reponse: Reponse = new Reponse();
+                    reponse.lib = this.reponseQuiz.lib;
+                    reponse.etatReponse = this.reponseQuiz.etatReponse;
+                    reponse.id = this.reponseQuiz.id;
+                    reponse.question = this.reponseQuiz.question;
+                    reponse.numero = this.reponseQuiz.numero;
+
+                    if (data.message === 'STUDENT_CHOICE_T12' && this.reponseQuiz.sender === 'STUDENT_CHOICE_T12') {
+                        this.showCheckButton = this.learnService.onClickT12(reponse);
+                        console.log(this.showCheckButton);
+                    } else {
+                        this.learnService.checkT12Answer(reponse.question);
+                    }
+                } else if (this.reponseQuiz?.question?.typeDeQuestion?.ref === 't13' && data.user === 'T13') {
+                    console.log('T13QST');
+                    this.dragAndDropData = data.quizReponse.lib;
+                    this.learnService.dropSynch(Number(data.ev));
                 }
-            } else if (data.type === 'QUIZ') {
-                if (this.groupeEtudiant?.groupeEtude?.nombreEtudiant === 1 ||
-                    data.quizReponse.sender === 'PROF' || data.isStudent === false) {
+                if (data?.message !== 'QUESTION_T13') {
+                    if (this.reponseQuiz.sender === 'PROF') {
+                        this.learnService.saveAnswers(this.question, 'TEACHER_ANSWER');
+                    } else if (this.reponseQuiz.sender === 'STUDENT') {
+                        this.learnService.saveAnswers(this.question, 'STUDENT_ANSWER');
+                    } else if (this.reponseQuiz.sender === 'STUDENT_DONT_KNOW') {
+                        this.learnService.saveAnswers(this.question, 'STUDENT_DONT_KNOW');
+                    }
+                }
+            } else {
+                if (data.message === 'STUDENT_CHOICE_T12') {
                     this.reponseQuiz = data.quizReponse;
-                    console.log(this.reponseQuiz);
-                    if (this.reponseQuiz?.question?.typeDeQuestion?.ref === 't5') {
-                        this.trueOrFalse = this.reponseQuiz.lib !== 'false';
-                    } else if (this.reponseQuiz?.question?.typeDeQuestion?.ref === 't12') {
+                    if (data.quizReponse.sender === 'STUDENT_CHOICE_T12_FOR_GRP') {
                         let reponse: Reponse = new Reponse();
                         reponse.lib = this.reponseQuiz.lib;
                         reponse.etatReponse = this.reponseQuiz.etatReponse;
                         reponse.id = this.reponseQuiz.id;
                         reponse.question = this.reponseQuiz.question;
                         reponse.numero = this.reponseQuiz.numero;
-
-                        if (data.message === 'STUDENT_CHOICE_T12' && this.reponseQuiz.sender === 'STUDENT_CHOICE_T12') {
-                            this.showCheckButton = this.learnService.onClickT12(reponse);
-                            console.log(this.showCheckButton);
-                        } else {
-                            this.learnService.checkT12Answer(reponse.question);
-                        }
-                    } else if (this.reponseQuiz?.question?.typeDeQuestion?.ref === 't13' && data.user === 'T13') {
-                        console.log('T13QST');
-                        this.dragAndDropData = data.quizReponse.lib;
-                        this.learnService.dropSynch(Number(data.ev));
-                    }
-                    if (data?.message !== 'QUESTION_T13') {
-                        if (this.reponseQuiz.sender === 'PROF') {
-                            this.learnService.saveAnswers(this.question, 'TEACHER_ANSWER');
-                        } else if (this.reponseQuiz.sender === 'STUDENT') {
-                            this.learnService.saveAnswers(this.question, 'STUDENT_ANSWER');
-                        } else if (this.reponseQuiz.sender === 'STUDENT_DONT_KNOW') {
-                            this.learnService.saveAnswers(this.question, 'STUDENT_DONT_KNOW');
+                        this.numerOft12Qst = reponse.numero;
+                        this.showCheckButton = this.learnService.onClickT12(reponse);
+                    } else if (Number(data.user) > this.numerOft12Qst) {
+                        this.numerOft12Qst = Number(data.user);
+                        if (data.prof.id === this.loginservice.getConnectedProf().id) {
+                            let reponse: Reponse = new Reponse();
+                            for (const rep of this.quizT12AnswersList.filter(t => t.numero === Number(data.user))) {
+                                if (rep.etatReponse === 'true') {
+                                    reponse = rep;
+                                }
+                            }
+                            this.learnService.onClickT12(reponse);
                         }
                     }
                 } else {
-                    if (data.message === 'STUDENT_CHOICE_T12') {
-                        this.reponseQuiz = data.quizReponse;
-                        if (data.quizReponse.sender === 'STUDENT_CHOICE_T12_FOR_GRP') {
-                            let reponse: Reponse = new Reponse();
-                            reponse.lib = this.reponseQuiz.lib;
-                            reponse.etatReponse = this.reponseQuiz.etatReponse;
-                            reponse.id = this.reponseQuiz.id;
-                            reponse.question = this.reponseQuiz.question;
-                            reponse.numero = this.reponseQuiz.numero;
-                            this.numerOft12Qst = reponse.numero;
-                            this.showCheckButton = this.learnService.onClickT12(reponse);
-                        } else if (Number(data.user) > this.numerOft12Qst) {
-                            this.numerOft12Qst = Number(data.user);
-                            if (data.prof.id === this.loginservice.getConnectedProf().id) {
-                                let reponse: Reponse = new Reponse();
-                                for (const rep of this.quizT12AnswersList.filter(t => t.numero === Number(data.user))) {
-                                    if (rep.etatReponse === 'true') {
-                                        reponse = rep;
-                                    }
-                                }
-                                this.learnService.onClickT12(reponse);
-                            }
-                        }
-                    } else {
-                        const rpsQuiz = data.quizReponse;
-                        // @ts-ignore
-                        this.grpStudentAnswers.set(data.student, rpsQuiz);
-                    }
-                }
-            } else if (data.user === 'FINISH_QUIZ' && data.type === 'FINISH_QUIZ') {
-                if (data.prof.id === this.prof.id) {
-                    this.learnService.finishQuiz();
-                }
-            } else if (data?.type === 'CONNECT') {
-                const mydata: ChatMessageDto = JSON.parse(event.data);
-                let studentList = this.participants.get(this.prof.id);
-                for (const student of studentList) {
-                    if (student.id === mydata.student.id) {
-                        if (this.studentsEnLigne.get(student.id) === undefined) {
-                            this.studentsEnLigne.set(student.id, student);
-                            this.messageService.add({
-                                severity: 'success',
-                                life: 3000,
-                                detail: data?.student?.nom + ' join the classroom'
-                            });
-                        }
-                    }
-                }
-            } else if (data?.type === 'DISCONNECT') {
-                if (this.studentsEnLigne.get(data?.student?.id) !== undefined) {
-                    this.studentsEnLigne.delete(data?.student?.id);
-                    this.messageService.add({
-                        severity: 'warn',
-                        life: 4000,
-                        detail: data?.student?.nom + ' is out of the classroom'
-                    });
-                }
-            } else if (data.type === 'VOC') {
-                if (this.groupeEtudiantForThisStudent(data.prof) === true) {
-                    if (data?.user === 'VOC_FLIP' && data?.message === 'VOC_FLIP') {
-                        this.vocabularyService.flip();
-                    } else if (data?.user === 'VOC_NEXT' && data?.message === 'VOC_NEXT') {
-                        this.vocabularyService.nextItem();
-                    } else if (data?.user === 'VOC_FINISH' && data?.message === 'VOC_FINISH') {
-                        this.vocabularyService.endShow();
-                    }
-                }
-            } else if (data.type === 'HOME_WORK_REVIEW_NOTES') {
-                if (this.groupeEtudiantForThisStudent(data.prof) === true) {
-                    this.reponseHomeWorkReviewComponent.profNote = data.message;
+                    const rpsQuiz = data.quizReponse;
+                    // @ts-ignore
+                    this.grpStudentAnswers.set(data.student, rpsQuiz);
                 }
             }
-        };
-
-        if (this.webSocket.readyState === this.webSocket.CLOSING) {
-            alert('Wb socket is CLOSING !');
+        } else if (data.user === 'FINISH_QUIZ' && data.type === 'FINISH_QUIZ') {
+            if (data.prof.id === this.prof.id) {
+                this.learnService.finishQuiz();
+            }
+        } else if (data?.type === 'CONNECT') {
+            const mydata: ChatMessageDto = JSON.parse(event.data);
+            const studentList = this.participants.get(this.prof.id);
+            for (const student of studentList) {
+                if (student.id === mydata.student.id) {
+                    if (this.studentsEnLigne.get(student.id) === undefined) {
+                        this.studentsEnLigne.set(student.id, student);
+                        this.messageService.add({
+                            severity: 'success',
+                            life: 3000,
+                            detail: data?.student?.nom + ' join the classroom'
+                        });
+                    }
+                }
+            }
+        } else if (data?.type === 'DISCONNECT') {
+            if (this.studentsEnLigne.get(data?.student?.id) !== undefined) {
+                this.studentsEnLigne.delete(data?.student?.id);
+                this.messageService.add({
+                    severity: 'warn',
+                    life: 4000,
+                    detail: data?.student?.nom + ' is out of the classroom'
+                });
+            }
+        } else if (data.type === 'VOC') {
+            if (this.groupeEtudiantForThisStudent(data.prof) === true) {
+                if (data?.user === 'VOC_FLIP' && data?.message === 'VOC_FLIP') {
+                    this.vocabularyService.flip();
+                } else if (data?.user === 'VOC_NEXT' && data?.message === 'VOC_NEXT') {
+                    this.vocabularyService.nextItem();
+                } else if (data?.user === 'VOC_FINISH' && data?.message === 'VOC_FINISH') {
+                    this.vocabularyService.endShow();
+                }
+            }
+        } else if (data.type === 'HOME_WORK_REVIEW_NOTES') {
+            if (this.groupeEtudiantForThisStudent(data.prof) === true) {
+                this.reponseHomeWorkReviewComponent.profNote = data.message;
+            }
+        } else if (data?.type === 'START_LESSON') {
+            this.startLesson();
         }
     }
 
@@ -427,16 +464,18 @@ export class WebSocketService {
         if (this.webSocket.readyState === this.webSocket.OPEN) {
             if (chatMessageDto.type === 'message') {
                 this.webSocket.send(JSON.stringify((chatMessageDto)));
+            } else if (chatMessageDto?.type === 'START_LESSON') {
+                this.webSocket.send(JSON.stringify((chatMessageDto)));
             } else {
                 chatMessageDto.quizReponse.question.quiz = null;
                 chatMessageDto.quizReponse.question.reponses = null;
                 const myData = JSON.stringify((chatMessageDto));
+                console.log(chatMessageDto);
+                console.log(this.webSocket.readyState);
                 this.webSocket.send(myData);
             }
-            this.webSocket.onerror = (event) => {
-                console.log(event);
-            };
         } else {
+            console.log(chatMessageDto);
             if (chatMessageDto.type !== 'message') {
                 chatMessageDto.quizReponse.question.quiz = null;
                 chatMessageDto.quizReponse.question.reponses = null;
@@ -445,6 +484,7 @@ export class WebSocketService {
                 this.openWebSocket(this.loginservice.getConnectedProf(), this.loginservice.getConnectedProf(),
                     this.groupeEtudiant, 'PROF');
                 this.webSocket.onopen = (event) => {
+                    console.log(chatMessageDto);
                     this.webSocket.send(JSON.stringify(chatMessageDto));
                 };
             } else {
@@ -509,9 +549,7 @@ export class WebSocketService {
         this.http.post<number>(this.profUrl + this.synchronizationUrl + '/update/' + id, section).subscribe(
             data => {
                 if (data > 0) {
-                    console.log('CurrentSection updated');
                 } else {
-                    console.log('section not updated');
                 }
             }, error => {
                 console.log('problem while updating current section');
@@ -538,12 +576,8 @@ export class WebSocketService {
             async data => {
                 if (data !== null) {
                     this.parcoursService.selectedsection = data;
-                    console.log('CurrentSection found');
-                    console.log(this.parcoursService.selectedsection);
                     this.simulatesectionService.findSectionOneByOne(cours);
-                    this.router.navigate(['etudiant/etudiant-simulate-sections']);
                     this.simulatesectionService.goToSection(this.parcoursService.selectedsection.categorieSection.libelle);
-
                 } else {
                     console.log('section not found');
                 }
@@ -583,4 +617,14 @@ export class WebSocketService {
         audio.play();
     }
 
+    private startLesson() {
+        this.lessonStarted = true;
+        setInterval(() => {
+            this.seconde -= 1;
+            if (this.seconde === 0) {
+                this.minute -= 1;
+                this.seconde = 60;
+            }
+        }, 1000);
+    }
 }
