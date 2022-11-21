@@ -1,0 +1,56 @@
+#row{
+  padding: 50px 20px!important;
+  background: #ff725e!important;
+  border-radius: 20px!important;
+}
+#bank-transfer{
+  text-align: center;
+  font-size: 35px;
+  font-family: cursive;
+}
+#instructions{
+  text-align: center;
+}
+
+.insc{
+  background: #e1e1e1;
+  padding: 50px;
+  border-radius: 10px;
+  color: black;
+  line-height: 45px;
+}
+
+.important{
+  background: #ef9292;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 15px;
+  font-size: 25px;
+}
+#importantText{
+  color: black!important;
+  text-decoration: underline!important;
+  font-size: 20px!important;
+}
+
+.details{
+  direction: ltr!important;
+  text-align: right;
+  font-size: 30px;
+  color: #ff725e;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.details-title{
+  font-size: 20px;
+  font-weight: 600;
+  color: white;
+}
+
+.payContent{
+  background: #263238;
+  padding: 10px;
+  border-radius: 5px;
+}
+

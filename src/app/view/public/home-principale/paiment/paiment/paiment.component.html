@@ -1,0 +1,142 @@
+<section style="direction: rtl" class="course__area  pb-120">
+    <div class="container">
+        <div class="row">
+            <p-steps [model]="items" [(activeIndex)]="activeIndex" [readonly]="true"></p-steps>
+        </div>
+
+        <div *ngIf="activeIndex === 0" class="row">
+            <div class="row">
+                <div class="col-md-12  shadow-lg mt-5 p-3 mb-5 bg-body rounded">
+                    <h1 id="bank-transfer">{{'Bank transfer' | translate}}</h1>
+                </div>
+            </div>
+
+            <div class="row pt-20 insc">
+                <div class="col-md-12 ">
+                    <h4 id="instructions">{{'instructions' | translate}}</h4>
+                </div>
+
+                <div class="col-md-12">
+                    <h5>نظرا لعدم توفر خاصية الدفع عبر الانترنيت حتى الان، المرجو من مستخدمينا الاعزاء ارسال المبلغ
+                        الموجود في خانة "المبلغ" على رقم الحساب الموجود في خانة "رقم الحساب" .</h5>
+                </div>
+
+                <div class="row important">
+                    <strong>ملحوضة هامة</strong>
+                    <p id="importantText">المرجو ارسال ايصال الدفع عبر الواتساب في الرقم اسفله، حتى يتسنى لنا تفعيل
+                        حسابكم.</p>
+                </div>
+
+                <div class="row payContent">
+                    <div class="col-md-12 details-title">رقم الحساب</div>
+                    <div style="direction: ltr!important;" [pTooltip]="'click to copy' | translate" id="rib"
+                         (click)="copy()"
+                         [cdkCopyToClipboard]="'350810000000000947282482'"
+                         class="col-md-12 details">
+                        350 810 00 00 00 00 09 47 28 24 82
+                    </div>
+
+                    <div class="col-md-12 details-title">المبلغ</div>
+                    <div class="col-md-12 details ">
+                        {{selectedCourse?.prix}} DH
+                    </div>
+
+                    <div class="col-md-12 details-title">المرجو ارسال ايصال الدفع عبر الرقم</div>
+                    <div class="col-md-12 details">
+                        <div class="social-information"><i class="fa fa-solid fa-mobile"></i>
+                            <a style="direction: ltr!important;" href="https://wa.me/message/7ACDXXHNEB5RA1"
+                               target="_blank" class="whtsp"> +212 6 54 79 58 00 </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="padding: 20px 0" class="row">
+                    <div class="col-md-4 col-sm-12"></div>
+                    <div class="col-md-4 col-sm-12"></div>
+                    <div class="col-md-4 col-sm-12">
+                        <button style="height: 50px!important;" pButton pRipple
+                                (click)="activeIndex = 1"
+                                type="button" label="{{'NEXT' | translate}}"
+                                class="ngFlexyBlackButton">
+                            <i class="fa fa-solid fa-arrow-right-to-arc"></i>
+                        </button>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+        <div *ngIf="activeIndex === 1" id="row" class="row shadow-lg mt-5 p-3 mb-5 bg-body rounded">
+            <div class="col-md-6 col-sm-12">
+                <div class="cta__form-inner">
+                    <form action="#">
+                        <input [style]="{ width: '100%'}" name="nom" [(ngModel)]="selected.nom" type="text"
+                               placeholder="{{'Your name * ' | translate}}">
+                    </form>
+                </div>
+            </div>
+
+
+            <div class="col-md-6 col-sm-12">
+                <div class="cta__form grey-bg-2">
+                    <div class="cta__form-inner">
+                        <form action="#">
+                            <input [style]="{ width: '100%'}" name="username" [(ngModel)]="selected.username"
+                                   type="email"
+                                   placeholder="{{'Email *' | translate}}">
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-6 col-sm-12">
+                <div class="cta__form grey-bg-2">
+                    <div class="cta__form-inner">
+                        <form action="#">
+                            <input [style]="{ width: '100%'}" name="numero" [(ngModel)]="selected.numero" type="tel"
+                                   placeholder="{{'Phone *' | translate}}">
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-sm-12">
+                <div class="cta__form grey-bg-2">
+                    <div class="cta__form-inner">
+                        <form action="#">
+                            <input [style]="{ width: '100%'}" name="numero" [(ngModel)]="selected.age" type="tel"
+                                   placeholder="{{'Age' | translate}}">
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-4 col-sm-12">
+                <button style="height: 50px!important;" pButton pRipple
+                        (click)="activeIndex = 0"
+                        type="button" label="{{'PREVIOUS' | translate}}"
+                        class="ngFlexyBlackButton">
+                    <i class="fa fa-solid fa-arrow-right-to-arc"></i>
+                </button>
+            </div>
+
+            <div class="col-md-4 col-sm-12"></div>
+
+            <div class="col-md-4 col-sm-12">
+                <button [disabled]="isDisabled()" style="height: 50px!important;" pButton pRipple
+                        (click)="createEtudiant()"
+                        type="button" label="{{'FINISH' | translate}}"
+                        class="ngFlexyBlackButton">
+                    <i class="fa fa-solid fa-arrow-right-to-arc"></i>
+                </button>
+            </div>
+
+            <div class="col-md-4 col-sm-12"></div>
+        </div>
+    </div>
+</section>

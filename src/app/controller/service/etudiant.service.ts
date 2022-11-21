@@ -13,7 +13,6 @@ import {LoginService} from './login.service';
 import {GroupeEtude} from '../model/groupe-etude.model';
 import {User} from '../model/user.model';
 import {MessageService} from 'primeng/api';
-import {error} from 'protractor';
 import {InteretEtudiant} from '../model/interet-etudiant.model';
 import {Fonction} from '../model/fonction.model';
 import {StatutSocial} from '../model/statut-social.model';
@@ -394,6 +393,9 @@ export class EtudiantService {
 
     public create(): Observable<User> {
         return this.http.post<User>(this.etudiantUrl + 'etudiant/save/pack/' + this.packCode, this.selected);
+    }
+    public addStudentWithPack(selected: Etudiant, packId: number): Observable<User> {
+        return this.http.post<User>(this.etudiantUrl + 'etudiant/save/pack/' + packId, selected);
     }
 
     get groupeEtudeList(): Array<GroupeEtude> {

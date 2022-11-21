@@ -48,6 +48,12 @@ import {ToastModule} from 'primeng/toast';
 import {PrivacyPolicyComponent} from '../privacy-policy/privacy-policy.component';
 import {TermOfServiceComponent} from '../term-of-service/term-of-service.component';
 import {ContactUsMainComponent} from './contact-us/contact-us-main/contact-us-main.component';
+import {PaimentComponent} from './paiment/paiment/paiment.component';
+import {MainPaimentComponent} from './paiment/main-paiment/main-paiment.component';
+import {StepsModule} from 'primeng/steps';
+import {TooltipModule} from 'primeng/tooltip';
+import {InputTextModule} from 'primeng/inputtext';
+import {ClipboardModule} from '@angular/cdk/clipboard';
 
 
 @NgModule({
@@ -90,7 +96,12 @@ import {ContactUsMainComponent} from './contact-us/contact-us-main/contact-us-ma
         AboutUsComponent,
         PrivacyPolicyComponent,
         TermOfServiceComponent,
-        ContactUsMainComponent
+        ContactUsMainComponent,
+        PaimentComponent,
+        MainPaimentComponent,
+    ],
+    providers: [
+        Clipboard
     ],
     imports: [
         CommonModule,
@@ -103,6 +114,10 @@ import {ContactUsMainComponent} from './contact-us/contact-us-main/contact-us-ma
         TranslateModule,
         MessagesModule,
         ToastModule,
+        StepsModule,
+        TooltipModule,
+        InputTextModule,
+        ClipboardModule
 
     ],
     exports: [

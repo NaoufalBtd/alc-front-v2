@@ -99,6 +99,7 @@ import {TermOfServiceComponent} from './view/public/term-of-service/term-of-serv
 import {TestLevelComponent} from './view/etudiant/test-level/test-level.component';
 import {DiscoverLevelComponent} from './view/public/discover-level/discover-level.component';
 import {ContactUsMainComponent} from './view/public/home-principale/contact-us/contact-us-main/contact-us-main.component';
+import {MainPaimentComponent} from './view/public/home-principale/paiment/main-paiment/main-paiment.component';
 
 
 @NgModule({
@@ -219,6 +220,7 @@ import {ContactUsMainComponent} from './view/public/home-principale/contact-us/c
                     {path: 'contact', component: ContactUsMainComponent},
                     {path: 'online-english-level-test', component: DiscoverLevelComponent},
                     {path: 'about-us', component: AboutUsComponent},
+                    {path: 'payment', component: MainPaimentComponent},
                     {
                         path: 'blog',
                         component: BlogComponent

@@ -6,6 +6,7 @@ import {PackStudentService} from '../../../../controller/service/pack-student.se
 import {Cours} from '../../../../controller/model/cours.model';
 import {ParcoursService} from '../../../../controller/service/parcours.service';
 import {TranslateService} from '@ngx-translate/core';
+import {Router} from '@angular/router';
 
 // install Swiper modules
 SwiperCore.use([Pagination, Autoplay]);
@@ -21,7 +22,10 @@ export class CourseDetailsAreaComponent implements OnInit {
 
     courseData: Array<PackStudent> = new Array<PackStudent>();
 
-    constructor(private packService: PackStudentService, private translate: TranslateService, private parcoursService: ParcoursService,
+    constructor(private packService: PackStudentService,
+                private translate: TranslateService,
+                private router: Router,
+                private parcoursService: ParcoursService,
     ) {
     }
 
@@ -54,5 +58,10 @@ export class CourseDetailsAreaComponent implements OnInit {
 
     getPercentage(): number {
         return (Number(this.selectedCourse.prix) / Number(this.selectedCourse.oldPrice)) * 100;
+    }
+
+    pay() {
+        console.log(this.selectedCourse);
+        this.router.navigate(['/payment']);
     }
 }
