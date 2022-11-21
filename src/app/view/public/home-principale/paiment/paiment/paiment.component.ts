@@ -122,7 +122,7 @@ export class PaimentComponent implements OnInit {
                         detail: 'Registration added, please check your email to get your password.',
                         life: 4000
                     });
-                    this.activeIndex = 2;
+                    this.router.navigate(['/etudiant/dashboard']);
                 }
             }, error => {
                 this.animation.showAnimation = false;
