@@ -99,9 +99,7 @@ export class HomeComponent implements OnInit {
 
 
     getProgressValueForLesson(): number {
-        const n = (this.lessonFinished.length / this.allLesson.length) * 100;
-        console.log(n);
-        return n;
+        return (this.lessonFinished.length / this.allLesson.length) * 100;
     }
 
     getProgressValueForHoursFct(lessonFinished: Array<SessionCours>): number {
