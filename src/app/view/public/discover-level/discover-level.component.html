@@ -1,7 +1,7 @@
 <main>
     <app-header-two headerShadow="header__area header__padding-2 header__shadow">
     </app-header-two>
-    <section class="signup__area po-rel-z1 ">
+    <section  [style.direction]="(translate.currentLang === 'ar') ? 'rtl': 'ltr'" class="signup__area po-rel-z1 ">
         <div class="container">
             <div class="row">
                 <div class=" col-md-6 col-xl-6 col-sm-12">
@@ -11,27 +11,28 @@
                 <div class=" col-md-6 col-sm-12 col-xl-6">
                     <div class="row">
                         <div class="col-md-12">
-                            <h1 id="discoverText">Discover your current English level</h1>
+                            <h1 id="discoverText">{{"Discover your current English level" | translate}}</h1>
                         </div>
 
                         <div class="col-md-2"><img src="/assets/icons/icons8-clock-48.png" alt=""></div>
-                        <div class="col-md-10">Take the test online anytime, anywhere</div>
+                        <div class="col-md-10">{{"Take the test online anytime, anywhere" | translate}}</div>
 
 
                         <div class="col-md-2"><img src="/assets/icons/icon-historical.png" alt=""></div>
-                        <div class="col-md-10">Finish in 10 min and get results right now !</div>
+                        <div class="col-md-10">{{"Finish in 10 min and get results right now !" | translate}}</div>
 
 
                         <div class="col-md-2"><img src="/assets/icons/icon-book.png" alt=""></div>
-                        <div class="col-md-10">The level test is available to all users with a free account on
-                            EngFlexy
+                        <div class="col-md-10">
+                            {{"The level test is available to all users with a free account on EngFlexy" | translate}}
                         </div>
 
 
                         <div class="col-md-3"></div>
 
                         <div class="col-md-6">
-                            <a (click)="startPractice()" style="cursor: pointer; width: 100%" class="e-btn">PRACTICE FREE</a>
+                            <a (click)="startPractice()" style="cursor: pointer; width: 100%" class="e-btn">
+                                {{"PRACTICE FREE" | translate}}</a>
                         </div>
                         <div class="col-md-3"></div>
 
@@ -42,15 +43,7 @@
     </section>
 
 
-<!--    <section class="signup__area po-rel-z1">-->
-<!--        <div class="row">-->
-<!--            <div class="col-md-12">-->
-<!--                <h1 id="discoverText">{{'Advantages of studying in EngFlexy' | translate}}</h1>-->
-<!--            </div>-->
 
-
-<!--        </div>-->
-<!--    </section>-->
 
     <app-advantages-engflexy></app-advantages-engflexy>
 
@@ -65,74 +58,3 @@
 
     <app-home-footer footerPadd='footer__top pt-90 pb-40'></app-home-footer>
 </main>
-
-
-<p-dialog [showHeader]="false"  [closable]="true" [(visible)]="displayModal" [modal]="true"
-          [style]="{width: '65vw'}"
-          [draggable]="true" [resizable]="true">
-    <div class="row shadow p-3 mb-5 bg-body rounded">
-        <div style="text-align: end" class="col-md-offset-3 col-sm-12 col-md-12">
-            <i style="cursor:pointer" (click)="displayModal= false" class="pi pi-times"></i>
-        </div>
-        <div style="text-align: center" class="col-md-offset-3 col-sm-12 col-md-12">
-            <h2>{{'Book your free trial session' | translate}}</h2>
-            <h4><i class="fa fa-solid fa-gift"></i> {{'gift' | translate}}</h4>
-        </div>
-        <div class="col-md-offset-3 col-sm-12 col-md-6">
-            <div class="textInfo"> <i style="color: blue; font-size: 25px;" class="fa fa-solid fa-hand-pointer"></i> {{"We'll demonstrate our platform" | translate}}</div>
-            <div class="textInfo"><i style="color: yellow; font-size: 25px;"  class="fa fa-solid fa-star-shooting"></i>
-                {{"We will assess your English level and also give you an opportunity to practice your English" | translate}}</div>
-            <div class="textInfo"><i style="color: red; font-size: 25px;" class="fa fa-solid fa-heart"></i>{{'Recommend a study plan' | translate}}</div>
-        </div>
-        <div class="col-md-offset-3 col-md-6 col-sm-12">
-            <form class="form-horizontal">
-                <div class="form-group">
-                    <input type="text" [(ngModel)]="selected.nom" name="nom" class="form-control" id="name" placeholder="{{'Your name * ' | translate}}">
-                    <i class="fa fa-user"></i>
-                </div>
-                <div class="form-group">
-                    <input type="email" [(ngModel)]="selected.username" name="username"  class="form-control" id="inputEmail3"  placeholder="{{'Email *' | translate}}">
-                    <i class="fa fa-solid fa-envelope"></i>
-                </div>
-                <div class="form-group">
-                    <input type="tel" [(ngModel)]="selected.numero" name="numero"  class="form-control" id="Phone"  placeholder="{{'Phone *' | translate}}">
-                    <i class=" fa fa-solid fa-phone"></i>
-                </div>
-                <div class="form-group">
-                    <button [disabled]="isDisabled()"
-                            (click)="createEtudiant()"
-                            style=" width: 100%;" type="submit" class="btn btn-default">{{'NEXT' | translate}}</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</p-dialog>
-
-<p-dialog [showHeader]="false"  [closable]="true" [(visible)]="nextModel" [modal]="true"
-          [style]="{width: '65vw'}"
-          [draggable]="true" [resizable]="true">
-    <div style="min-height: auto" class="row shadow p-3 mb-5 bg-body rounded">
-        <div style="text-align: center" class="col-md-offset-3 col-sm-12 col-md-12">
-            <h2>{{'Instructions' | translate}} <i class="fa fa-solid fa-question-circle"></i> </h2>
-        </div>
-
-        <div class="col-md-offset-3 col-sm-12 col-md-12">
-            <ul>
-                <li>This test is designed to assess your understanding of English grammar, vocabulary and phrasing.</li>
-                <li>Each question is in the format of multiple choice and you will have a choice of three possible answers.</li>
-                <li>You will be required to read each question carefully and select the answer that you think is correct.</li>
-                <li>At the end of the test, you will be given an estimation of your current level of English proficiency.</li>
-            </ul>
-        </div>
-
-        <div class="col-md-4"></div>
-
-        <div class="col-md-4">
-            <button
-                    pButton pRipple type="button " icon="pi pi-arrow-right" iconPos="right" label="START TEST"
-                    (click)="startTest()" class="ngFlexyBlackButton"></button>
-        </div>
-        <div class="col-md-4"></div>
-
-    </div>
-</p-dialog>

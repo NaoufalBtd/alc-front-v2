@@ -24,8 +24,9 @@ export class DiscoverLevelComponent implements OnInit {
                 private confirmationService: ConfirmationService,
                 private authenticationService: AuthenticationService,
                 private packStudentService: PackStudentService,
-                private translate: TranslateService,
-                private service: InscriptionService, private router: Router) {
+                public translate: TranslateService,
+                private service: InscriptionService,
+                private router: Router) {
     }
 
     get selected(): Etudiant {
@@ -40,7 +41,7 @@ export class DiscoverLevelComponent implements OnInit {
     }
 
     startPractice() {
-        this.displayModal = true;
+        this.router.navigate(['/start-test-level']);
     }
 
     isDisabled(): boolean {

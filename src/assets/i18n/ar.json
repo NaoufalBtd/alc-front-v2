@@ -305,7 +305,8 @@
   "Overview": "نضرة عامة",
   "All packs": "جميع الدورات",
   "Previous": "السابق",
-  "Next": "القادم ",
+  "Next": "التالي",
+  "NEXT": "التالي",
   "Note final:": "النقطة النهائية : ",
   "Number": "العدد",
   "Your answer": "جوابك",
@@ -438,6 +439,24 @@
   "discover your level": "اكتشف مستواك",
   "Advantages of studying in EngFlexy": "مزايا الدراسة في EngFlexy",
   "Bank transfer": "التحويل البنكي",
-  "instructions": "التعليمات",
-  "click to copy": "اضغط لنسخ الرقم"
+  "Instructions": "التعليمات",
+  "click to copy": "اضغط لنسخ الرقم",
+  "Discover your current English level": "اكتشف مستواك الحالي في اللغة الإنجليزية",
+  "Take the test online anytime, anywhere": "بامكانك اجتياز الاختبار في اي وقت تريد، و من اي مكان😉",
+  "Finish in 10 min and get results right now !": "تعرف على النتيجة مباشرة بعد الانتهاء من الاختبار!",
+  "The level test is available to all users with a free account on EngFlexy": "اختبار المستوى متاح لجميع المستخدمين الذين لديهم حساب مجاني على EngFlexy🧡",
+  "PRACTICE FREE": "ابدأ الاختبار",
+  "This test is designed to assess your understanding of English grammar, vocabulary and phrasing.": "تم تصميم هذا الاختبار لتقييم فهمك لقواعد اللغة الإنجليزية ومفرداتها وصياغتها.",
+  "Each question is in the format of multiple choice and you will have a choice of three possible answers, correct the mistake or create the correct form for a verb": "يتكون الاختبار بالمجمل من ثلاث أنواع من الاسئلة. الاول ’Choose the correct alternative’ عبارة عن سؤال متعدد الخيارات، النوع الثاني ’Write the correct form’ على التلميذ كتابة الصيغة الصحيحة للفعل. و النوع الاخير من الاسئلة  ’Correct the mistake‘ يجب تصحيح الخطأ الموجود في الجمل.",
+  "You will be required to read each question carefully and select the answer that you think is correct.": "اجتياز الاختبار ليس له وقت محدد، خد وقتك في قراءة كل سؤال بعناية واختيار الإجابة التي تعتقد أنها صحيحة.",
+  "At the end of the test, you will be given an estimation of your current level of English.": "في نهاية الاختبار ، سيتم إعطاؤك تقديرًا لمستواك الحالي في اللغة الإنجليزية بناءً على إجاباتك في الاختبار.",
+  "Please fill the form below to start test": "يرجى ملء النموذج أسفله لبدء الاختبار📝😍",
+  "START TEST": "بدأ الاختبار"
+
+
+
+
+
+
+
 }

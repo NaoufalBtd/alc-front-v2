@@ -392,8 +392,9 @@ export class EtudiantService {
     }
 
     public create(): Observable<User> {
-        return this.http.post<User>(this.etudiantUrl + 'etudiant/save/pack/' + this.packCode, this.selected);
+        return this.http.post<User>(this.etudiantUrl + 'etudiant/save/', this.selected);
     }
+
     public addStudentWithPack(selected: Etudiant, packId: number): Observable<User> {
         return this.http.post<User>(this.etudiantUrl + 'etudiant/save/pack/' + packId, selected);
     }

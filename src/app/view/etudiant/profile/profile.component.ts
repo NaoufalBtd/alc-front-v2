@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {User} from '../../../controller/model/user.model';
 import {Etudiant} from '../../../controller/model/etudiant.model';
 import {FileUploadStatus} from '../../../controller/model/FileUploadStatus';
@@ -45,8 +45,6 @@ export class ProfileComponent implements OnInit {
   updated = false;
 
 
-
-
   constructor(private menuService: MenuService, public router: Router,
               private authenticationService: AuthenticationService,
               public userService: UserService,
@@ -55,6 +53,7 @@ export class ProfileComponent implements OnInit {
               public packStudentService: PackStudentService, private messageService: MessageService,
               public groupeEtudeService: GroupeEtudeService) {
   }
+
   get selected(): Etudiant {
     return this.userService.selected;
   }
@@ -64,20 +63,21 @@ export class ProfileComponent implements OnInit {
     this.userService.selected = value;
   }
 
-  public edit(){
+  public edit() {
     console.log(this.etudiant);
     this.router.navigate(['etudiant/profile']);
     this.userService.edit(this.etudiant).subscribe(data => {
-      this.etudiant  = data;
+      this.etudiant = data;
     });
   }
+
   ngOnInit(): void {
     this.etudiantService.findAllEtudiant().subscribe(data =>
-        this.etudiant = data );
+        this.etudiant = data);
     this.user = this.authenticationService.getUserFromLocalCache();
     this.etudiantService.findAllParcours().subscribe(
         data => {
-          this.parcoursList = data ;
+          this.parcoursList = data;
         }
     );
     this.service.findByEtudiantId(this.user.id).subscribe(
@@ -88,7 +88,7 @@ export class ProfileComponent implements OnInit {
     );
     this.groupeEtudeService.findAll().subscribe(
         data => {
-          this.groupeEtudeList = data ;
+          this.groupeEtudeList = data;
         }
     );
     this.packStudentService.findPackIndividualOrgroupe(true);
@@ -214,6 +214,7 @@ export class ProfileComponent implements OnInit {
   private clickButton(buttonId: string): void {
     document.getElementById(buttonId).click();
   }
+
   get interetEtudiant(): InteretEtudiant {
     return this.userService.interetEtudiant;
   }
@@ -229,36 +230,47 @@ export class ProfileComponent implements OnInit {
   set interetEtudiants(value: Array<InteretEtudiant>) {
     this.userService.interetEtudiants = value;
   }
+
   get fonctions(): Array<Fonction> {
     return this.userService.fonctions;
   }
+
   set fonctions(value: Array<Fonction>) {
     this.userService.fonctions = value;
   }
+
   get fonction(): Fonction {
     return this.userService.fonction;
   }
+
   set fonction(value: Fonction) {
     this.userService.fonction = value;
   }
+
   get statutSocial(): StatutSocial {
     return this.userService.statutSocial;
   }
+
   set statutSocial(value: StatutSocial) {
     this.userService.statutSocial = value;
   }
+
   get statutSocials(): Array<StatutSocial> {
     return this.userService.statutSocials;
   }
+
   set statutSocials(value: Array<StatutSocial>) {
     this.userService.statutSocials = value;
   }
+
   get niveauEtudes(): Array<NiveauEtude> {
     return this.userService.niveauEtudes;
   }
+
   set niveauEtudes(value: Array<NiveauEtude>) {
     this.userService.niveauEtudes = value;
   }
+
   get niveauEtude(): NiveauEtude {
     return this.userService.niveauEtude;
   }
@@ -281,49 +293,5 @@ export class ProfileComponent implements OnInit {
 
   }
 
-  showdialogPacks(){
-    this.getgroupechosen(this.etudiant.groupeEtude.id);
-    this.showdialog = true;
-    if (this.etudiantService.groupeEtude.nombreEtudiant > 1){
-      this.packStudentService.findPackIndividualOrgroupe(true);
-      console.log(this.packStudentService.packstudentgroupeList);
-
-    }else {
-      this.packStudentService.findPackIndividualOrgroupe(false);
-      console.log(this.packStudentService.packstudentIndividialList);
-    }
-  }
-  getgroupechosen(id: number) {
-    this.etudiantService.findGroupeById(id);
-  }
-  selectedPack(pack: PackStudent) {
-    this.etudiantService.packCode = pack.code ;
-    this.packChossen = pack;
-    this.showdialog = false;
-    console.log(this.etudiantService.packCode);
-  }
-  updateInscriptionByStudent(){
-    this.etudiantService.updateInscriptionByStudent(this.packChossen.code, this.etudiant).subscribe(
-        data => {
-          if (data > 0){
-            this.updated = true;
-          }
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Successful',
-            detail: 'Registration updated Successfully',
-            life: 3000}
-          );
-        }, error => {
-          this.messageService.add({
-            severity: 'error',
-            summary: 'Error',
-            detail: 'Update canceled',
-            life: 3000}
-          );
-        }
-    );
-
-  }
 
 }

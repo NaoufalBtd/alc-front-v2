@@ -8,7 +8,6 @@ import {InscriptionService} from '../../../../../controller/service/inscription.
 import {Router} from '@angular/router';
 import {AnimationService} from '../../../../../controller/service/animation.service';
 import {PackStudent} from '../../../../../controller/model/pack-student.model';
-import {Inscription} from '../../../../../controller/model/inscription.model';
 import {TranslateService} from '@ngx-translate/core';
 
 @Component({
@@ -46,7 +45,6 @@ export class PaimentComponent implements OnInit {
     items: MenuItem[];
     activeIndex = 0;
     selected: Etudiant = new Etudiant();
-    private insciption: Inscription = new Inscription();
 
     constructor(private messageService: MessageService,
                 public etudiantService: EtudiantService,
@@ -68,7 +66,6 @@ export class PaimentComponent implements OnInit {
 
     ngOnInit(): void {
         this.translate.use('ar');
-        console.log(this.selectedCourse);
         if (this.translate.currentLang === 'en') {
             this.items = [
                 {

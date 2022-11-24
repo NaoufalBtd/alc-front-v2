@@ -124,7 +124,9 @@ import {ClipboardModule} from '@angular/cdk/clipboard';
         HeaderThreeComponent,
         HeaderTwoComponent,
         FooterComponent,
-        ContactUsComponent
+        ContactUsComponent,
+        HeaderOneComponent,
+        BreadcrumbComponent
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

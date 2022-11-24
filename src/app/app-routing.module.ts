@@ -100,6 +100,7 @@ import {TestLevelComponent} from './view/etudiant/test-level/test-level.componen
 import {DiscoverLevelComponent} from './view/public/discover-level/discover-level.component';
 import {ContactUsMainComponent} from './view/public/home-principale/contact-us/contact-us-main/contact-us-main.component';
 import {MainPaimentComponent} from './view/public/home-principale/paiment/main-paiment/main-paiment.component';
+import {TestLevelInstructionsComponent} from './view/public/discover-level/test-level-instructions/test-level-instructions.component';
 
 
 @NgModule({
@@ -219,6 +220,7 @@ import {MainPaimentComponent} from './view/public/home-principale/paiment/main-p
                     {path: 'free-trial', component: InscriptionStudentMainComponent},
                     {path: 'contact', component: ContactUsMainComponent},
                     {path: 'online-english-level-test', component: DiscoverLevelComponent},
+                    {path: 'start-test-level', component: TestLevelInstructionsComponent},
                     {path: 'about-us', component: AboutUsComponent},
                     {path: 'payment', component: MainPaimentComponent},
                     {
