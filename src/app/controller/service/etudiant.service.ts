@@ -50,7 +50,7 @@ export class EtudiantService {
     private _parcoursList: Array<Parcours>;
     private _connectedStudent: Map<number, User> = new Map<number, User>();
     private _selecteetudiant: Array<Etudiant>;
-    public packCode: string;
+    public packCode = null;
     private _groupeEtude: GroupeEtude;
     private etudiant: Etudiant;
     private _niveauEtudes: Array<NiveauEtude>;
