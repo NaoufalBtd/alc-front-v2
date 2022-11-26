@@ -942,11 +942,21 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
         this.scheduleService.findById(id).subscribe(
             selectedMeeting => {
                 this.animationService.showAnimation = false;
-
                 this.showTpBar = false;
                 this.webSocketService.isInSession = false;
                 this.selectedcours = selectedMeeting.cours;
+                this.prof = selectedMeeting.prof;
                 this.simulateSectionService.findSectionOneByCoursId(selectedMeeting.cours);
+                this.findhomeworkbycours(this.selectedcours);
+                if (this.webSocketService.isInSession) {
+                    this.webSocketService.findCurrentSectionForstudent(this.service.selectedcours, selectedMeeting.prof);
+                }
+                this.learnService.onStartHomeWork(this.selectedcours);
+                this.homeWorkService.onStartHomeWork(this.selectedcours);
+                this.review.findReview(this.selectedcours.id).subscribe(
+                    data => {
+                        this.selectedReview = data;
+                    });
             }, error => {
                 this.animationService.showAnimation = false;
             }
