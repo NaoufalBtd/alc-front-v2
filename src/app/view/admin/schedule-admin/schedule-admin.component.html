@@ -12,7 +12,7 @@
 
 
 <div class="control-section" style="margin-right: 1%;">
-    <div class="p-grid" style="background-color: #ff8800; margin-right: 0 !important; border-radius: 5px;">
+    <div class="p-grid" style="background-color: #ff725e; margin-right: 0 !important; border-radius: 5px;">
         <div class="p-col-8">
             <input class="searchValue" [(ngModel)]="schedule.groupeEtudiant.libelle" type="text" pInputText
                    placeholder="Search by group.."/>
@@ -87,11 +87,6 @@
                     </div>
                 </div>
             </ng-template>
-            <!--                <ng-template #eventSettingsTemplate let-data>-->
-            <!--                    <div class='template-wrap'>-->
-            <!--                        <div class="subject">{{data.Subject}}</div>-->
-            <!--                    </div>-->
-            <!--                </ng-template>-->
             <e-views>
                 <e-view option="Day"></e-view>
                 <e-view option="Week"></e-view>
@@ -116,9 +111,9 @@
                 <table class="custom-event-editor" width="100%" cellpadding="5">
                     <tbody>
                     <tr>
-                        <td class="e-textlabel">Start time</td>
+                        <td style="padding-bottom: 35px!important;" class="e-textlabel">Start time</td>
                         <td colspan="4">
-                            <p-calendar [style]="{width: '100%',marginBottom: '4%'}" id="start"
+                            <p-calendar [style]="{width: '100%',marginBottom: '35px'}" id="start"
                                         [(ngModel)]="scheduleProf.startTime" [showTime]="true" name="StartTime"
                                         class="e-field"
                                         data-name="startTime"
@@ -128,9 +123,9 @@
                     </tr>
 
                     <tr>
-                        <td class="e-textlabel">End time</td>
+                        <td style="padding-bottom: 35px!important;" class="e-textlabel">End time</td>
                         <td colspan="4">
-                            <p-calendar [style]="{width: '100%',marginBottom: '4%'}" id="end"
+                            <p-calendar [style]="{width: '100%',marginBottom: '35px'}" id="end"
                                         [(ngModel)]="scheduleProf.endTime" [showTime]="true" name="StartTime"
                                         class="e-field"
                                         data-name="endTime"
@@ -140,9 +135,9 @@
                     </tr>
 
                     <tr>
-                        <td class="e-textlabel">Group</td>
+                        <td style="padding-bottom: 35px!important;" class="e-textlabel">Group</td>
                         <td colspan="4">
-                            <p-dropdown [style]="{width: '100%',marginBottom: '4%'}"
+                            <p-dropdown [style]="{width: '100%',marginBottom: '35px'}"
                                         [(ngModel)]="scheduleProf.groupeEtudiant" [options]="groupeStudent"
                                         optionLabel="libelle"
                                         class="e-field"
@@ -153,12 +148,11 @@
                     </tr>
 
 
-
-
                     <tr>
-                        <td class="e-textlabel">Subject</td>
+                        <td style="padding-bottom: 35px!important;" class="e-textlabel">Subject</td>
                         <td colspan="4">
-                            <p-dropdown [style]="{width: '100%',marginBottom: '4%'}" [(ngModel)]="scheduleProf.cours"
+                            <p-dropdown [style]="{width: '100%',marginBottom: '35px'}" [(ngModel)]="scheduleProf.cours"
+                                        (ngModelChange)="generateRef()"
                                         [options]="courses" optionLabel="libelle"
                                         class="e-field"
                                         data-name="cours"
@@ -167,19 +161,9 @@
                     </tr>
 
                     <tr>
-                        <td class="e-textlabel">Reference</td>
+                        <td style="padding-bottom: 35px!important;" class="e-textlabel">Repeat</td>
                         <td colspan="4">
-                            <input [style]="{width: '100%',marginBottom: '4%'}" [(ngModel)]="scheduleProf.ref" autofocus
-                                   id="ref" pInputText required type="text"
-                                   class="e-field"
-                                   data-name="ref"/>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td class="e-textlabel">Repeat</td>
-                        <td colspan="4">
-                            <p-dropdown [style]="{width: '100%',marginBottom: '4%'}" [(ngModel)]="optionSelected"
+                            <p-dropdown [style]="{width: '100%',marginBottom: '35px'}" [(ngModel)]="optionSelected"
                                         [options]="repeats" optionLabel="option" class="e-field"
                                         data-name="optionSelected"
                                         placeholder="Repeat"></p-dropdown>

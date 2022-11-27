@@ -1,27 +1,19 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {ScheduleService} from '../../../controller/service/schedule.service';
-import {ConfirmationService, MessageService} from 'primeng/api';
+import {MessageService} from 'primeng/api';
 import {EtatEtudiantSchedule} from '../../../controller/model/etat-etudiant-schedule.model';
 import {Etudiant} from '../../../controller/model/etudiant.model';
 import {Prof} from '../../../controller/model/prof.model';
-import {L10n} from '@syncfusion/ej2-base';
-import {
-    CurrentAction,
-    EventSettingsModel,
-    GroupModel,
-    PopupOpenEventArgs,
-    ScheduleComponent,
-    TimeScaleModel, WorkHoursModel
-} from '@syncfusion/ej2-angular-schedule';
+import {EventSettingsModel, GroupModel, PopupOpenEventArgs, ScheduleComponent, TimeScaleModel} from '@syncfusion/ej2-angular-schedule';
 import {ScheduleProf} from '../../../controller/model/calendrier-prof.model';
 import {GroupeEtudiant} from '../../../controller/model/groupe-etudiant.model';
 import {ParcoursService} from '../../../controller/service/parcours.service';
 import {Cours} from '../../../controller/model/cours.model';
-import {extend, Internationalization} from '@syncfusion/ej2-base';
-import {TimePickerComponent} from '@syncfusion/ej2-angular-calendars';
 import {DropDownListComponent} from '@syncfusion/ej2-angular-dropdowns';
 import timezones from 'timezones-list';
-
+import {GroupeEtudiantService} from '../../../controller/service/groupe-etudiant-service';
+import {PackStudentService} from '../../../controller/service/pack-student.service';
+import {InscriptionService} from '../../../controller/service/inscription.service';
 
 
 @Component({
@@ -33,6 +25,9 @@ export class ScheduleAdminComponent implements OnInit {
 
     constructor(private scheduleService: ScheduleService,
                 private parcourService: ParcoursService,
+                private packService: PackStudentService,
+                private inscriptionService: InscriptionService,
+                private groupEtudiantService: GroupeEtudiantService,
                 private messageService: MessageService) {
     }
 
@@ -232,7 +227,7 @@ export class ScheduleAdminComponent implements OnInit {
             scheduleObj.eventSettings.dataSource = null;
             this.scheduleProf.subject = this.scheduleProf.cours.libelle;
             this.scheduleProf.grpName = this.scheduleProf.groupeEtudiant.libelle;
-            this.scheduleProf.profName = this.scheduleProf.prof.nom ;
+            this.scheduleProf.profName = this.scheduleProf.prof.nom;
             console.log(this.scheduleProf);
             if (this.optionSelected.option === 'Daily') {
                 while (this.scheduleProf.startTime < this.endDate) {
@@ -246,8 +241,6 @@ export class ScheduleAdminComponent implements OnInit {
                 while (this.scheduleProf.startTime < this.endDate) {
                     for (const day of this.selectedDays) {
                         if (this.scheduleProf.startTime.getDay() === day) {
-                            console.log(this.scheduleProf.startTime.getDay());
-                            console.log(this.scheduleProf.startTime.getDate());
                             this.scheduleProf.ref = fixedRef + String(this.scheduleProf.startTime.getDay());
                             console.log(this.courses);
                             for (let i = 0; i < this.courses.length; i++) {
@@ -256,7 +249,6 @@ export class ScheduleAdminComponent implements OnInit {
                                         firstSubject = null;
                                         break;
                                     } else {
-                                        console.log(this.courses[i]);
                                         console.log(this.courses[i + 1]);
                                         this.scheduleProf.cours = this.courses[i + 1];
                                         this.scheduleProf.subject = this.scheduleProf.cours.libelle;
@@ -290,7 +282,7 @@ export class ScheduleAdminComponent implements OnInit {
                         this.messageService.add({
                             severity: 'error',
                             summary: 'Warning',
-                            detail: 'Registration canceled, please try again.',
+                            detail: 'Schedule canceled, please try again.',
                             life: 3000
                         });
                     } else {
@@ -301,9 +293,7 @@ export class ScheduleAdminComponent implements OnInit {
                             detail: 'Schedule added.',
                             life: 3000
                         });
-                        console.log(this.scheduleProfs);
                         scheduleObj.eventSettings.dataSource = this.scheduleProfs;
-                        console.log(scheduleObj.eventSettings.dataSource);
                     }
 
                 }, error => {
@@ -311,7 +301,7 @@ export class ScheduleAdminComponent implements OnInit {
                     this.messageService.add({
                         severity: 'error',
                         summary: 'Warning',
-                        detail: 'Registration canceled',
+                        detail: 'Schedule canceled',
                         life: 3000
                     });
                     scheduleObj.eventSettings.dataSource = this.scheduleProfs;
@@ -340,9 +330,8 @@ export class ScheduleAdminComponent implements OnInit {
 
 
     public onPopupOpen(args: PopupOpenEventArgs): void {
-        console.log(args);
+        console.log(args.type);
         this.scheduleProf = new ScheduleProf();
-        console.log(args.data);
         if (args.data?.id !== undefined) {
             this.data.subject = args.data?.subject;
             this.data.startTime = args.data?.startTime;
@@ -350,20 +339,17 @@ export class ScheduleAdminComponent implements OnInit {
             this.scheduleProf.startTime = args.data?.startTime;
             this.scheduleProf.endTime = args.data?.endTime;
             this.scheduleProf.grpName = args.data?.groupeEtudiant?.libelle;
-            this.scheduleProf.profName = args.data?.prof.nom;
+            this.scheduleProf.profName = args.data?.prof?.nom;
             this.scheduleProf.subject = args.data?.subject;
             this.scheduleProf.cours = args.data?.cours;
             this.scheduleProf.ref = args.data?.ref;
-            this.scheduleProf.prof = args.data.prof;
+            this.scheduleProf.prof = args.data?.prof;
             this.scheduleProf.id = args.data.id;
-            console.log(this.scheduleProf.id);
             this.scheduleProf.groupeEtudiant = args.data?.groupeEtudiant;
             this.grpEtudiant = this.scheduleProf?.groupeEtudiant;
             this.selectionTarget = null;
             this.selectionTarget = args.target;
-            this.getCourses(this.scheduleProf.groupeEtudiant);
         } else if (args.type === 'DeleteAlert') {
-            console.log(args);
         } else if (args.type === 'Editor') {
             this.scheduleProf.startTime = args.data?.startTime;
             this.scheduleProf.endTime = args.data?.endTime;
@@ -374,15 +360,6 @@ export class ScheduleAdminComponent implements OnInit {
         this.scheduleProf = new ScheduleProf();
         const data: Object = this.scheduleObj?.getCellDetails(this.scheduleObj?.getSelectedElements()) as Object;
         this.scheduleObj?.openEditor(data, 'Add');
-    }
-
-
-    public onEditClick(): void {
-        const scheduleProf = this.scheduleObj.getEventDetails(this.selectionTarget) as ScheduleProf;
-        this.scheduleService.update(scheduleProf);
-        this.scheduleProf = scheduleProf;
-        console.log(this.scheduleProf);
-        this.scheduleObj.openEditor(scheduleProf, 'Add');
     }
 
 
@@ -440,19 +417,24 @@ export class ScheduleAdminComponent implements OnInit {
     }
 
     getCourses(groupeEtudiant: GroupeEtudiant) {
-        this.parcourService.FindCoursByParcours(groupeEtudiant.parcours.id).subscribe(data => this.courses = data);
-        console.log(this.courses);
-        console.log(this.scheduleProf.startTime);
-        console.log(this.scheduleProf.endTime);
-        console.log(this.scheduleProf.groupeEtudiant);
-        for (const prof of this.professors) {
-            if (this.scheduleProf.groupeEtudiant.prof.id === prof.id) {
-                this.scheduleProf.prof = prof;
+        this.groupEtudiantService.findAllGroupeEtudiantDetail(groupeEtudiant.id).subscribe(
+            list => {
+                this.inscriptionService.findByEtudiantId(list[0].etudiant?.id).subscribe(
+                    inscription => {
+                        console.log(inscription);
+                        this.parcourService.FindCoursByParcours(groupeEtudiant.parcours.id).subscribe(data => {
+                            this.courses = data.slice(0, inscription.packStudent.nombreCours);
+                            console.log(this.courses);
+                        });
+                    }, error => {
+                        console.log(error);
+                    }
+                );
+            }, error => {
+                console.log(error);
             }
-        }
-    }
-
-    repeatOption(selected: any) {
+        );
+        this.scheduleProf.prof = this.scheduleProf.groupeEtudiant.prof;
     }
 
     getDaysSelected(data: any) {
@@ -478,5 +460,10 @@ export class ScheduleAdminComponent implements OnInit {
     setProf(prof: Prof) {
         console.log(prof);
         this.scheduleProf.prof = prof;
+    }
+
+    generateRef() {
+        console.log(this.scheduleProf.cours);
+        this.scheduleProf.ref = 'R-' + this.scheduleProf.cours.id;
     }
 }
