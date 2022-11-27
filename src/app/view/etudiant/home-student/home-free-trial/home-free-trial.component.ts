@@ -81,10 +81,9 @@ export class HomeFreeTrialComponent implements OnInit {
         this.webSocketService.isInSession = false;
         this.tabViewActiveIndex = 0;
         this.showLesson = true;
-        console.log(cours);
         this.showTpBar = false;
         this.selectedcours = cours;
         this.simulateSectionService.findSectionOneByCoursId(cours);
-        this.router.navigate(['etudiant/etudiant-simulate-sections']);
+        this.router.navigate(['etudiant/simulate-sections/' + 'free-trial']);
     }
 }

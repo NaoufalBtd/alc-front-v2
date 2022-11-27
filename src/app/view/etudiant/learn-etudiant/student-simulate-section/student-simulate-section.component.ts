@@ -647,6 +647,8 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
         if (idCurrentDoc.includes('view')) {
             const id = idCurrentDoc.substring('view-'.length);
             this.startReview(Number(id));
+        } else if (idCurrentDoc.includes('free-trial')) {
+            this.startFreeLesson();
         } else {
             this.startSession(Number(idCurrentDoc));
         }
@@ -945,12 +947,8 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
                 this.showTpBar = false;
                 this.webSocketService.isInSession = false;
                 this.selectedcours = selectedMeeting.cours;
-                this.prof = selectedMeeting.prof;
-                this.simulateSectionService.findSectionOneByCoursId(selectedMeeting.cours);
+                this.simulateSectionService.findSectionOneByCoursId(this.selectedcours);
                 this.findhomeworkbycours(this.selectedcours);
-                if (this.webSocketService.isInSession) {
-                    this.webSocketService.findCurrentSectionForstudent(this.service.selectedcours, selectedMeeting.prof);
-                }
                 this.learnService.onStartHomeWork(this.selectedcours);
                 this.homeWorkService.onStartHomeWork(this.selectedcours);
                 this.review.findReview(this.selectedcours.id).subscribe(
@@ -961,5 +959,20 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
                 this.animationService.showAnimation = false;
             }
         );
+    }
+
+    private startFreeLesson() {
+        this.animationService.showAnimation = true;
+        this.animationService.showAnimation = false;
+        this.showTpBar = false;
+        this.webSocketService.isInSession = false;
+        this.simulateSectionService.findSectionOneByCoursId(this.selectedcours);
+        this.findhomeworkbycours(this.selectedcours);
+        this.learnService.onStartHomeWork(this.selectedcours);
+        this.homeWorkService.onStartHomeWork(this.selectedcours);
+        this.review.findReview(this.selectedcours.id).subscribe(
+            data => {
+                this.selectedReview = data;
+            });
     }
 }
