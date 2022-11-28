@@ -71,12 +71,17 @@ export class DiscoverLevelComponent implements OnInit {
                     this.authenticationService.addUserToLocalCache(data);
                     this.messageService.add({
                         severity: 'success',
-                        summary: 'Successful',
-                        detail: 'Registration added, please check your email to get your password.',
-                        life: 4000
+                        detail: 'تم التسجيل بنجاح 😍،  يرجى التحقق من بريدك الإلكتروني للحصول على كلمة المرور الخاصة بك',
+                        life: 8000
                     });
                     this.displayModal = false;
                     this.nextModel = true;
+                } else {
+                    this.messageService.add({
+                        severity: 'info',
+                        detail: 'البريد الالكتروني موجود بالفعل، من فضلك تفقد بريدك الالكتروني للحصول على اسم المستخدم و كلمة المرور للولوج الى حسابك',
+                        life: 9000
+                    });
                 }
             }, error => {
                 this.animation.showAnimation = false;

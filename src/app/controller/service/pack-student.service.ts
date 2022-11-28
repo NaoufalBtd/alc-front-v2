@@ -164,7 +164,6 @@ export class PackStudentService {
     }
 
     savePack() {
-        console.log(this.packstudentIndividial);
         this.http.post<number>(this.adminUrl + 'packStudent/', this.packstudentIndividial).subscribe(
             data => {
                 this.messageService.add({
@@ -182,10 +181,11 @@ export class PackStudentService {
                 }
                 this.packstudentIndividial = new PackStudent();
             }, error => {
+                console.log(error);
                 this.messageService.add({
                     severity: 'error',
                     summary: 'Error!',
-                    detail: error?.error?.message,
+                    detail: error?.error?.message || 'Something went wrong, please try again.',
                     life: 3000
                 });
             }
@@ -207,23 +207,37 @@ export class PackStudentService {
                     this.findPackIndividualOrgroupe(false);
                 }
                 this.packstudentIndividial = new PackStudent();
+            }, error => {
+                console.log(error);
+                this.messageService.add({
+                    severity: 'error',
+                    summary: 'Error!',
+                    detail: error?.error?.message || 'Something went wrong, please try again.',
+                    life: 3000
+                });
             }
         );
     }
 
-    deletebycode(code: string) {
-        this.http.delete<number>(this.adminUrl + 'packStudent/code/' + code).subscribe(
+    deleteById(pack: PackStudent) {
+        this.http.delete(this.adminUrl + 'packStudent/code/' + pack.id).subscribe(
             data => {
-                if (data > 0) {
-                    this.messageService.add({
-                        severity: 'info',
-                        summary: 'Successful',
-                        detail: 'Pack deleted',
-                        life: 3000
-                    });
-                    this.findPackIndividualOrgroupe(true);
-                    this.findPackIndividualOrgroupe(false);
-                }
+                this.messageService.add({
+                    severity: 'info',
+                    summary: 'Successful',
+                    detail: 'Pack deleted',
+                    life: 3000
+                });
+                this.findPackIndividualOrgroupe(true);
+                this.findPackIndividualOrgroupe(false);
+            }, error => {
+                console.log(error);
+                this.messageService.add({
+                    severity: 'error',
+                    summary: 'Error!',
+                    detail: error?.error?.message || 'Something went wrong, please try again.',
+                    life: 3000
+                });
             }
         );
     }

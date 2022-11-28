@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ConfirmationService, MessageService} from 'primeng/api';
 import {EtudiantService} from '../../../../controller/service/etudiant.service';
 import {AuthenticationService} from '../../../../controller/service/authentication.service';
@@ -54,11 +54,16 @@ export class HomeThreeCtaComponent implements OnInit {
             this.showdialog = true;
             this.messageService.add({
               severity: 'success',
-              summary: 'Successful',
-              detail: 'Registration added, please check your email to get your password.',
-              life: 4000
+              detail: 'تم التسجيل بنجاح 😍،  يرجى التحقق من بريدك الإلكتروني للحصول على كلمة المرور الخاصة بك',
+              life: 8000
             });
             this.router.navigate(['public/etudianthomepage']);
+          } else {
+            this.messageService.add({
+              severity: 'info',
+              detail: 'البريد الالكتروني موجود بالفعل، من فضلك تفقد بريدك الالكتروني للحصول على اسم المستخدم و كلمة المرور للولوج الى حسابك',
+              life: 9000
+            });
           }
         }, error => {
           this.showdialog = true;

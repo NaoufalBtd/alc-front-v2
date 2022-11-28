@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {PackStudentService} from '../../../controller/service/pack-student.service';
 import {PackStudent} from '../../../controller/model/pack-student.model';
-import {MessageService} from 'primeng/api';
+import {ConfirmationService, MessageService} from 'primeng/api';
 import {Parcours} from '../../../controller/model/parcours.model';
 import {ParcoursService} from '../../../controller/service/parcours.service';
 
@@ -18,7 +18,10 @@ export class PackStudentComponent implements OnInit {
     public displayPackgroupeforUpdate = false;
     parcours: Array<Parcours> = new Array<Parcours>();
 
-    constructor(public packStudentServie: PackStudentService, private parcoursService: ParcoursService, private messageService: MessageService) {
+    constructor(public packStudentServie: PackStudentService,
+                private parcoursService: ParcoursService,
+                private confirmation: ConfirmationService,
+                private messageService: MessageService) {
     }
 
     get packstudentIndividial(): PackStudent {
@@ -112,8 +115,15 @@ export class PackStudentComponent implements OnInit {
         this.displayPackgroupeforUpdate = false;
     }
 
-    deletebycode(code: string) {
-        this.packStudentServie.deletebycode(code);
+    deletebycode(pack: PackStudent) {
+        this.confirmation.confirm({
+            message: 'Are you sure you want to delete this pack ?',
+            header: 'Confirm',
+            icon: 'pi pi-exclamation-triangle',
+            accept: () => {
+                this.packStudentServie.deleteById(pack);
+            }
+        });
     }
 
     findBycreteria(b: boolean) {
