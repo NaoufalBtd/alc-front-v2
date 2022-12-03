@@ -38,6 +38,9 @@ export class SimulateSectionService {
     private _vocabularySection: Section = new Section();
     private _getToKnowSection: Section = new Section();
     private _showViewQuiz = false;
+    private _images: any[];
+    private _showGalleria: boolean;
+    private _listOfContent: string[];
 
     constructor(private messageService: MessageService,
                 private router: Router,
@@ -57,6 +60,30 @@ export class SimulateSectionService {
                 private homeWorkEtudiantService: HomeWorkEtudiantServiceService) {
     }
 
+
+    get images(): any[] {
+        return this._images;
+    }
+
+    set images(value: any[]) {
+        this._images = value;
+    }
+
+    get showGalleria(): boolean {
+        return this._showGalleria;
+    }
+
+    set showGalleria(value: boolean) {
+        this._showGalleria = value;
+    }
+
+    get listOfContent(): string[] {
+        return this._listOfContent;
+    }
+
+    set listOfContent(value: string[]) {
+        this._listOfContent = value;
+    }
 
     get showViewQuiz(): boolean {
         return this._showViewQuiz;
@@ -523,7 +550,7 @@ export class SimulateSectionService {
                 this.selectedsection = this.itemssection2[i];
             }
         }
-        console.log(this.selectedsection);
+        this.verifyImagesUrl();
         if (this.selectedsection.categorieSection?.libelle?.toUpperCase()?.includes('VOCABULARY')) {
             this.Vocab(this.selectedsection);
         } else {
@@ -554,6 +581,51 @@ export class SimulateSectionService {
                     }
                 },
             );
+        }
+    }
+
+    private verifyImagesUrl() {
+        console.log(this.selectedsection);
+        if (this.selectedsection?.urlImage && this.selectedsection?.urlImage2 && this.selectedsection?.urlImage3) {
+            this._images = [
+                {
+                    previewImageSrc: this.selectedsection?.urlImage,
+                    alt: 'Image 1',
+                    title: 'Title 1'
+                },
+                {
+                    previewImageSrc: this.selectedsection?.urlImage2,
+                    alt: 'Image 2',
+                    title: 'Title 2'
+                },
+                {
+                    previewImageSrc: this.selectedsection?.urlImage3,
+                    alt: 'Image 3',
+                    title: 'Title 3'
+                }
+            ];
+            this._listOfContent = this.selectedsection.contenu?.split(/\s\s\s+/);
+            console.log(this._listOfContent);
+            this._showGalleria = true;
+        } else if (this.selectedsection?.urlImage && this.selectedsection?.urlImage2) {
+            this._images = [
+                {
+                    previewImageSrc: this.selectedsection?.urlImage,
+                    alt: 'Image 1',
+                    title: 'Title 1'
+                },
+                {
+                    previewImageSrc: this.selectedsection?.urlImage2,
+                    alt: 'Image 2',
+                    title: 'Title 2'
+                }
+            ];
+            this._listOfContent = this.selectedsection.contenu?.split(/\s\s\s+/);
+            console.log(this._listOfContent);
+            this._showGalleria = true;
+
+        } else {
+            this._showGalleria = false;
         }
     }
 

@@ -108,7 +108,28 @@
                          style="background-color: white">
                         <div class="product-grid-item ">
                             <div *ngIf="showVocabulary===false" class="product-grid-item-content">
-                                <div style="width: 100%;margin: 0 auto">
+
+
+                                <div *ngIf="showGalleria"
+                                     style="width: 100%;margin: 0 auto">
+                                    <p-galleria [value]="images" [responsiveOptions]="responsiveOptions"
+                                                [numVisible]="5"
+                                                (activeIndexChange)="activeIndexChange($event)"
+                                                [circular]="false" [showItemNavigators]="true" [showThumbnails]="false">
+                                        <ng-template pTemplate="item" let-item>
+                                            <img [src]="item.previewImageSrc"
+                                                 style="width: 100%; display: block;"/>
+                                        </ng-template>
+
+                                    </p-galleria>
+
+                                    <div *ngIf=" this.selectedsection?.contenu != null && this.selectedsection?.urlVideo == null">
+                                        <p (mouseup)="dict()"
+                                           class="section-content">{{listOfContent[activeIndex]}}</p>
+                                    </div>
+                                </div>
+
+                                <div *ngIf="!showGalleria" style="width: 100%;margin: 0 auto">
                                     <img *ngIf=" this.selectedsection?.urlImage && !this.selectedsection.urlVideo"
                                          src="{{photoURL()}}"
                                          style="width: 100%">
@@ -126,8 +147,8 @@
 
                                     </div>
                                     <img *ngIf="!this.selectedsection?.urlImage && !this.selectedsection?.urlVideo
-           && this.selectedsection?.categorieSection?.libelle !== CategoriesSectionItemEnum.LETS_PRACTICE
-            && this.selectedsection?.categorieSection?.libelle !== CategoriesSectionItemEnum.WARM_UP "
+                                                && this.selectedsection?.categorieSection?.libelle !== CategoriesSectionItemEnum.LETS_PRACTICE
+                                                && this.selectedsection?.categorieSection?.libelle !== CategoriesSectionItemEnum.WARM_UP "
                                          src="../../../../../assets/notfound.jpg" style="width: 40%">
 
 
@@ -136,6 +157,8 @@
                                            class="section-content">{{this.selectedsection?.contenu}}</p>
                                     </div>
                                 </div>
+
+
                             </div>
                             <div *ngIf="showVocabulary===true" class="p-col">
                                 <app-vocabulary-section-prof (someEvent)="return($event)"></app-vocabulary-section-prof>
@@ -267,7 +290,8 @@
                              src="./assets/icons/icons-yeux-cartoon.png" alt="">
                         <h4 *ngIf="webSocketService.isInSession && !lessonStarted" id="startText">Let's Start</h4>
                         <h4 *ngIf="webSocketService.isInSession && lessonStarted" id="startText">Lesson started</h4>
-                        <h4 *ngIf="webSocketService.isInSession && lessonStarted" id="startText">{{minute}}m: {{seconde}}s</h4>
+                        <h4 *ngIf="webSocketService.isInSession && lessonStarted" id="startText">{{minute}}
+                            m: {{seconde}}s</h4>
                         <h4 *ngIf="!webSocketService.isInSession" id="startText">Teacher's preview mode</h4>
                     </div>
 
@@ -288,7 +312,6 @@
                                 <div class="dict">:</div>
                                 <div class="dict">{{synonymes}}</div>
                             </div>
-
                         </ng-template>
                     </p-overlayPanel>
                     <div class="product-grid-item-content" style="background-color: white;">
@@ -309,11 +332,14 @@
                                             (click)="allerVerSection(section)"
                                             class="list-unstyled list pl-5">
                                             <li class="mb-3 d-flex align-items-center">
-                                                 <i *ngIf="!sectionIsFinished(section)" [style.color]="(section?.categorieSection?.libelle) == (this.selectedsection?.categorieSection?.libelle)? '#ff725e' :'#757f8a' "
-                                                    style="margin: 0 9px 0 0;font-size: 9px!important;" class="fa fa-circle mr-3"></i>
+                                                <i *ngIf="!sectionIsFinished(section)"
+                                                   [style.color]="(section?.categorieSection?.libelle) == (this.selectedsection?.categorieSection?.libelle)? '#ff725e' :'#757f8a' "
+                                                   style="margin: 0 9px 0 0;font-size: 9px!important;"
+                                                   class="fa fa-circle mr-3"></i>
 
 
-                                                <i *ngIf="sectionIsFinished(section)" [style.color]="(section?.categorieSection?.libelle) == (this.selectedsection?.categorieSection?.libelle)? '#ff725e' :'#757f8a' "
+                                                <i *ngIf="sectionIsFinished(section)"
+                                                   [style.color]="(section?.categorieSection?.libelle) == (this.selectedsection?.categorieSection?.libelle)? '#ff725e' :'#757f8a' "
                                                    style="margin: 0 9px 0 0;font-size: 9px!important;"
                                                    class="fa fa-check-circle text-primary mr-3"></i>
 
@@ -330,11 +356,14 @@
                                             (click)="allerVerSection(section)"
                                             class="list-unstyled list pl-5">
                                             <li class="mb-3 d-flex align-items-center">
-                                                <i *ngIf="!sectionIsFinished(section)" [style.color]="(section?.categorieSection?.libelle) == (this.selectedsection?.categorieSection?.libelle)? '#ff725e' :'#757f8a' "
-                                                   style="margin: 0 9px 0 0;font-size: 9px!important;" class="fa fa-circle mr-3"></i>
+                                                <i *ngIf="!sectionIsFinished(section)"
+                                                   [style.color]="(section?.categorieSection?.libelle) == (this.selectedsection?.categorieSection?.libelle)? '#ff725e' :'#757f8a' "
+                                                   style="margin: 0 9px 0 0;font-size: 9px!important;"
+                                                   class="fa fa-circle mr-3"></i>
 
 
-                                                <i *ngIf="sectionIsFinished(section)" [style.color]="(section?.categorieSection?.libelle) == (this.selectedsection?.categorieSection?.libelle)? '#ff725e' :'#757f8a' "
+                                                <i *ngIf="sectionIsFinished(section)"
+                                                   [style.color]="(section?.categorieSection?.libelle) == (this.selectedsection?.categorieSection?.libelle)? '#ff725e' :'#757f8a' "
                                                    style="margin: 0 9px 0 0;font-size: 9px!important;"
                                                    class="fa fa-check-circle text-primary mr-3"></i>
 

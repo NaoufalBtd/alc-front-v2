@@ -95,7 +95,28 @@
                          style="background-color: white" (mouseup)="dict()">
                         <div class="product-grid-item ">
                             <div *ngIf="showVocabulary===false" class="product-grid-item-content">
-                                <div style="width: 100%;margin: 0 auto">
+
+                                <div *ngIf="showGalleria"
+                                     style="width: 100%;margin: 0 auto">
+                                    <p-galleria [value]="images" [responsiveOptions]="responsiveOptions"
+                                                [numVisible]="5"
+                                                (activeIndexChange)="activeIndexChange($event)"
+                                                [circular]="false" [showItemNavigators]="true" [showThumbnails]="false">
+                                        <ng-template pTemplate="item" let-item>
+                                            <img [src]="item.previewImageSrc"
+                                                 style="width: 100%; display: block;"/>
+                                        </ng-template>
+
+                                    </p-galleria>
+
+                                    <div *ngIf=" this.selectedsection?.contenu != null && this.selectedsection?.urlVideo == null">
+                                        <p (mouseup)="dict()"
+                                           class="section-content">{{listOfContent[activeIndex]}}</p>
+                                    </div>
+                                </div>
+
+
+                                <div *ngIf="!showGalleria" style="width: 100%;margin: 0 auto">
                                     <img *ngIf=" this.selectedsection.urlImage && !this.selectedsection.urlVideo"
                                          src="{{photoURL()}}"
                                          style="width: 100%">
@@ -113,8 +134,8 @@
 
                                     </div>
                                     <img *ngIf="!this.selectedsection.urlImage && !this.selectedsection.urlVideo
-           && this.selectedsection?.categorieSection?.libelle !== CategoriesSectionItemEnum.LETS_PRACTICE
-            && this.selectedsection?.categorieSection?.libelle !== CategoriesSectionItemEnum.WARM_UP "
+                                                    && this.selectedsection?.categorieSection?.libelle !== CategoriesSectionItemEnum.LETS_PRACTICE
+                                                    && this.selectedsection?.categorieSection?.libelle !== CategoriesSectionItemEnum.WARM_UP "
                                          src="../../../../../assets/notfound.jpg" style="width: 40%">
 
 
@@ -123,6 +144,8 @@
                                            class="section-content">{{this.selectedsection.contenu}}</p>
                                     </div>
                                 </div>
+
+
                             </div>
                             <div *ngIf="showVocabulary===true" class="p-col">
                                 <app-vocabulary-section (someEvent)="return($event)"></app-vocabulary-section>
@@ -157,13 +180,6 @@
 
 
                             <div class="p-col-4">
-
-                                <button *ngIf="selectedsection?.id === itemssection2[itemssection2?.length - 1]?.id"
-                                        (click)="navigate()"
-                                        class="p-button-warning" icon="pi pi-check" label="Bach to All Course"
-                                        pButton
-                                        pRipple
-                                        type="button"></button>
                             </div>
 
 

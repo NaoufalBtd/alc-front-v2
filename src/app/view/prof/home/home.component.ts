@@ -224,7 +224,7 @@ export class HomeComponent implements OnInit {
         this.getRestOfTime.clear();
         for (const group of nearestLesson.keys()) {
 
-            const date = new Date(nearestLesson.get(group).startTime);
+            const date = new Date(nearestLesson.get(group)?.startTime);
             const dateNow = new Date();
             const milliseconds = date.getTime() - dateNow.getTime();
             // ----------------------- Days -----------------------------
@@ -279,7 +279,7 @@ export class HomeComponent implements OnInit {
                 for (const group of groupeEtudiantList) {
                     const courseList = scheduleProfs.filter(s => s.groupeEtudiant.id === group.id);
                     const sessionList = data.filter(s => s.groupeEtudiant.id === group.id);
-                    for (let i = 0; i < courseList.length; i++) {
+                    for (let i = 0; i < courseList.length - 1; i++) {
                         for (const item of sessionList) {
                             if (courseList[i].cours.id === item.cours.id) {
                                 this.lessonFinished.push({...item});
@@ -289,7 +289,6 @@ export class HomeComponent implements OnInit {
                     }
                     if (this.nearestLesson.has(group) === false) {
                         this.nearestLesson.set(group, courseList[0]);
-
                     }
                 }
                 this.getProgressValueForHoursFct(this.lessonFinished);

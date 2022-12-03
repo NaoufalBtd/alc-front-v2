@@ -55,6 +55,23 @@ export class SafePipe implements PipeTransform {
     styleUrls: ['./student-simulate-section.component.scss']
 })
 export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
+
+    activeIndex = 0;
+    responsiveOptions: any[] = [
+        {
+            breakpoint: '1024px',
+            numVisible: 5
+        },
+        {
+            breakpoint: '768px',
+            numVisible: 3
+        },
+        {
+            breakpoint: '560px',
+            numVisible: 1
+        }
+    ];
+
     synonymes: string;
     options: any = {
         title: {
@@ -503,6 +520,30 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
     get studentsEnLigne(): Map<number, User> {
         return this.webSocketService.studentsEnLigne;
     }
+    get images(): any[] {
+        return this.simulateSectionService.images;
+    }
+
+    set images(value: any[]) {
+        this.simulateSectionService.images = value;
+    }
+
+    get showGalleria(): boolean {
+        return this.simulateSectionService.showGalleria;
+    }
+
+    set showGalleria(value: boolean) {
+        this.simulateSectionService.showGalleria = value;
+    }
+
+    get listOfContent(): string[] {
+        return this.simulateSectionService.listOfContent;
+    }
+
+    set listOfContent(value: string[]) {
+        this.simulateSectionService.listOfContent = value;
+    }
+
 
     showTakeQuiz = false;
     showViewQuiz = false;
@@ -975,4 +1016,9 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
                 this.selectedReview = data;
             });
     }
+
+    activeIndexChange(event: any) {
+        this.activeIndex = event;
+    }
+
 }

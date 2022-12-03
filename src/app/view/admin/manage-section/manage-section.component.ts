@@ -118,7 +118,13 @@ export class ManageSectionComponent implements OnInit {
         this.localSectionSelected = section;
         this.findAllCategorie();
         this.showEditDialog = true;
-        console.log(section);
+    }
+
+    showAddSectionDialog() {
+        this.localSectionSelected = new Section();
+        this.localSectionSelected.cours = this.selectedcours;
+        this.findAllCategorie();
+        this.showEditDialog = true;
     }
 
     findAllCategorie() {

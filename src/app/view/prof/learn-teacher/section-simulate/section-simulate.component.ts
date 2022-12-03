@@ -54,6 +54,24 @@ export class SafePipe1 implements PipeTransform {
     styleUrls: ['./section-simulate.component.scss']
 })
 export class SectionSimulateComponent implements OnInit, OnDestroy {
+    images: any[];
+    showGalleria: boolean;
+    listOfContent: string[];
+    activeIndex = 0;
+    responsiveOptions: any[] = [
+        {
+            breakpoint: '1024px',
+            numVisible: 5
+        },
+        {
+            breakpoint: '768px',
+            numVisible: 3
+        },
+        {
+            breakpoint: '560px',
+            numVisible: 1
+        }
+    ];
     public CategoriesSectionItemEnum = CategoriesSectionItemEnum;
     lessonDurationEnSecond = 0;
     rows = 5;
@@ -73,6 +91,7 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
             position: 'bottom'
         },
     };
+
 
     constructor(private sectionItemService: SectionItemService,
                 private sessionservice: SessionCoursService,
@@ -95,6 +114,7 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
                 private confirmationService: ConfirmationService,
                 private service: ParcoursService, private http: HttpClient, private review: EtudiantReviewService) {
     }
+
     get lessonStarted(): boolean {
         return this.webSocketService.lessonStarted;
     }
@@ -512,9 +532,55 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
         for (let i = 0; i < this.itemssection2.length; i++) {
             if (section.id === this.itemssection2[i].id) {
                 this.selectedsection = this.itemssection2[i - 1];
+                this.verifyImagesUrl();
                 this.webSocketService.updateCurrentSection(this.prof.id, this.itemssection2[i - 1]);
                 this.goToSection(this.itemssection2[i - 1], 'PREVIOUS');
             }
+        }
+    }
+
+    private verifyImagesUrl() {
+        console.log(this.selectedsection);
+        if (this.selectedsection?.urlImage && this.selectedsection?.urlImage2 && this.selectedsection?.urlImage3) {
+            this.images = [
+                {
+                    previewImageSrc: this.selectedsection?.urlImage,
+                    alt: 'Image 1',
+                    title: 'Title 1'
+                },
+                {
+                    previewImageSrc: this.selectedsection?.urlImage2,
+                    alt: 'Image 2',
+                    title: 'Title 2'
+                },
+                {
+                    previewImageSrc: this.selectedsection?.urlImage3,
+                    alt: 'Image 3',
+                    title: 'Title 3'
+                }
+            ];
+            this.listOfContent = this.selectedsection.contenu?.split(/\s\s\s+/);
+            console.log(this.listOfContent);
+            this.showGalleria = true;
+        } else if (this.selectedsection?.urlImage && this.selectedsection?.urlImage2) {
+            this.images = [
+                {
+                    previewImageSrc: this.selectedsection?.urlImage,
+                    alt: 'Image 1',
+                    title: 'Title 1'
+                },
+                {
+                    previewImageSrc: this.selectedsection?.urlImage2,
+                    alt: 'Image 2',
+                    title: 'Title 2'
+                }
+            ];
+            this.listOfContent = this.selectedsection.contenu?.split(/\s\s\s+/);
+            console.log(this.listOfContent);
+            this.showGalleria = true;
+
+        } else {
+            this.showGalleria = false;
         }
     }
 
@@ -534,6 +600,7 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
         for (let i = 0; i < this.itemssection2.length; i++) {
             if (section.id === this.itemssection2[i].id) {
                 this.selectedsection = this.itemssection2[i + 1];
+                this.verifyImagesUrl();
                 this.webSocketService.updateCurrentSection(this.prof.id, this.itemssection2[i + 1]);
                 this.goToSection(this.itemssection2[i + 1], 'NEXT');
                 this.showFlowMeButton = false;
@@ -546,6 +613,7 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
         for (const sec of this.itemssection2) {
             if (section.id === sec.id) {
                 this.selectedsection = sec;
+                this.verifyImagesUrl();
                 this.webSocketService.updateCurrentSection(this.prof.id, sec);
                 this.showFlowMeButton = true;
                 this.findQuizIfExist(section);
@@ -885,5 +953,9 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
 
     set selectedSession(value: ScheduleProf) {
         this.webSocketService.selectedSession = value;
+    }
+
+    activeIndexChange(event: any) {
+        this.activeIndex = event;
     }
 }
