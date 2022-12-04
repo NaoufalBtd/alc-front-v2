@@ -41,8 +41,15 @@
                                placeholder="Search..."/>
                     </div>
                     <div style="text-align: end" class="p-col-9">
+
+                        <button (click)="add()"
+                                class="p-button-rounded p-button-success p-mr-2" icon="pi pi-plus" pButton
+                                pTooltip="new quiz" tooltipPosition="top"
+                                pRipple></button>
+
+
                         <button (click)="edit()"
-                                class="p-button-rounded p-button-success p-mr-2" icon="pi pi-pencil" pButton
+                                class="p-button-rounded p-button-warning p-mr-2" icon="pi pi-pencil" pButton
                                 pTooltip="Edit quiz" tooltipPosition="top"
                                 pRipple></button>
 

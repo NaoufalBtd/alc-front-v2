@@ -10,19 +10,16 @@ import {LoginService} from '../../../../controller/service/login.service';
 import {ReponseEtudiant} from '../../../../controller/model/reponse-etudiant.model';
 import {Etudiant} from '../../../../controller/model/etudiant.model';
 import {QuizEtudiant} from '../../../../controller/model/quiz-etudiant.model';
-import {ConfirmationService, MenuItem, MessageService, TreeNode} from 'primeng/api';
+import {ConfirmationService, MessageService} from 'primeng/api';
 import {DictionaryService} from '../../../../controller/service/dictionary.service';
 import {DomSanitizer} from '@angular/platform-browser';
 import {ParcoursService} from '../../../../controller/service/parcours.service';
-import {HttpClient} from '@angular/common/http';
-import {VocabularyService} from '../../../../controller/service/vocabulary.service';
 import {Dictionary} from '../../../../controller/model/dictionary.model';
 import {Section} from '../../../../controller/model/section.model';
 import {ReponseEtudiantService} from '../../../../controller/service/reponse-etudiant.service';
 import {Cours} from '../../../../controller/model/cours.model';
 import {LearnService} from '../../../../controller/service/learn.service';
 import {Parcours} from '../../../../controller/model/parcours.model';
-import {environment} from '../../../../../environments/environment';
 
 @Component({
     selector: 'app-quiz-preview',
@@ -38,12 +35,10 @@ export class QuizPreviewComponent implements OnInit {
     home = {icon: 'pi pi-home', routerLink: '/admin/parcours'};
     rows = 10;
     first = 0;
-    reponseList: Array<Reponse> = new Array<Reponse>();
     showTakeQuiz = true;
     showQuizReview = false;
     myAnswer: Reponse = new Reponse();
     answerSelected: Reponse = new Reponse();
-    questionOptions = [{label: 'True', value: 'true'}, {label: 'False', value: 'false'}];
     disabledButtonCheck = false;
     inputAnswer: string;
     trueOrFalse = true;
@@ -521,6 +516,26 @@ export class QuizPreviewComponent implements OnInit {
     edit() {
         this.selectedQuiz.questions = this.questionList;
         this.router.navigate(['/admin/quiz-update']);
+    }
+
+    set selected(value: Quiz) {
+        this.quizService.selected = value;
+    }
+    get selected(): Quiz {
+        return this.quizService.selected;
+    }
+
+    set questionNumero(value: number) {
+        this.quizService.questionNumero = value;
+    }
+
+    add() {
+        this.selectedQuiz.questions = this.questionList;
+        this.selected = this.selectedQuiz;
+        this.questionNumero = this.selectedQuiz.questions.length + 1;
+        this.selected.questions = new Array<Question>();
+        console.log(this.selected);
+        this.router.navigate(['/admin/quiz-create']);
     }
 
     delete(qst: Question) {

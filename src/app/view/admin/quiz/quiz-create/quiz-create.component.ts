@@ -29,7 +29,9 @@ export class QuizCreateComponent implements OnInit {
     // tslint:disable-next-line:max-line-length
     constructor(private service: QuizService,
                 private learnService: LearnService,
-                private messageService: MessageService, private confirmationService: ConfirmationService, private router: Router, private serviceParcours: ParcoursService) {
+                private messageService: MessageService,
+                private confirmationService: ConfirmationService,
+                private router: Router, private serviceParcours: ParcoursService) {
     }
 
     get courseCurrent(): Cours {
@@ -226,20 +228,16 @@ export class QuizCreateComponent implements OnInit {
         console.log(this.service.sectionSelected.id);
         this.service.findType().subscribe(
             data => {
-                console.log(data);
                 this.service.types = data.filter(t => (t.ref !== 't10' &&
                     t.ref !== 't8' && t.ref !== 't9' && t.ref !== 't7' && t.ref !== 't2'));
             }, error1 => {
-                console.log('can\'t bring data from database');
+                console.log(error1);
             }
         );
-        // this.service.findSections().subscribe(data => this.service.sections = data);
-        this.service.findQuizByRef(this.selected.ref);
         this.initCol();
         this.question = new Question();
-        this.selected.questions.push(this.question);
         this.nodes = [];
-        this.question.numero = 1;
+        this.question.numero = this.questionNumero;
         this.reponse.numero = 1;
         this.reponse.etatReponse = 'true';
         this.question.pointReponseJuste = 1;
@@ -250,9 +248,6 @@ export class QuizCreateComponent implements OnInit {
         this.viewDialogType = false;
     }
 
-    defaultchecked() {
-        return this.service.defaultchecked();
-    }
 
     checked(event) {
         return this.service.checked(event);
@@ -334,7 +329,7 @@ export class QuizCreateComponent implements OnInit {
     }
 
     public addFormule() {
-        if (this.isUpdate == 'false') {
+        if (this.isUpdate === 'false') {
             this.selected.questions.push(this.clone(this.question));
             this.question2 = this.question;
 
@@ -359,7 +354,8 @@ export class QuizCreateComponent implements OnInit {
                 this.nodes.push(
                     {
                         key: i.toString(),
-                        label: 'Question ' + this.selected.questions[i].numero + ' : ' + this.selected.questions[i].libelle + ' ( ' + this.selected.questions[i].typeDeQuestion.lib + ' ) ',
+                        label: 'Question ' + this.selected.questions[i].numero + ' : ' + this.selected.questions[i].libelle +
+                            ' ( ' + this.selected.questions[i].typeDeQuestion.lib + ' ) ',
                         children: list
                     },
                 );
@@ -407,10 +403,7 @@ export class QuizCreateComponent implements OnInit {
     public save() {
         this.selected.ref = 'quiz-' + this.selectedsection.id;
         this.selected.section = this.selectedsection;
-        console.log(this.selected.section.id);
         this.service.refQuiz = this.service.selected.ref;
-        console.log('========================= QUIZ ====================================');
-        console.log(this.selected);
         if (this.selected.section.id === undefined) {
             this.messageService.add({
                 severity: 'error',
@@ -422,8 +415,6 @@ export class QuizCreateComponent implements OnInit {
             this.service.save().subscribe(
                 data => {
                     this.items.push({...data});
-                    console.log(this.questions);
-                    console.log(this.items);
                     this.question = null;
                     this.selected = null;
                     this.messageService.add({
@@ -442,7 +433,6 @@ export class QuizCreateComponent implements OnInit {
                     });
                 });
         }
-
     }
 
     public edit() {
