@@ -246,7 +246,7 @@ export class ManageSectionComponent implements OnInit {
     createVocab(section: Section) {
         this.sectionItemService.sectionSelected = section;
 
-        this.sectionItemService.getSectionItems().subscribe(data => {
+        this.sectionItemService.getSectionItems(section).subscribe(data => {
             this.sectionItemService.sectionSelected.sectionItems = data;
             console.log(data);
             this.router.navigate(['admin/create-section-items']);

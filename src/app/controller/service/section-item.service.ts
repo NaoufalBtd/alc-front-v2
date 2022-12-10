@@ -4,7 +4,7 @@ import {environment} from '../../../environments/environment';
 import {Section} from '../model/section.model';
 import {SectionItemModel} from '../model/section-item.model';
 import {Observable} from 'rxjs';
-import {Cours} from "../model/cours.model";
+import {Cours} from '../model/cours.model';
 
 @Injectable({
     providedIn: 'root'
@@ -72,9 +72,8 @@ export class SectionItemService {
         );
     }
 
-    public getSectionItems(): Observable<SectionItemModel[]> {
-        console.log('Hadaa howa id=' + this.sectionSelected?.id);
-        return this.http.get<SectionItemModel[]>(this.adminUrl + 'sectionItem/sectionId/' + this.sectionSelected?.id);
+    public getSectionItems(section: Section): Observable<SectionItemModel[]> {
+        return this.http.get<SectionItemModel[]>(this.adminUrl + 'sectionItem/sectionId/' + section?.id);
     }
 
 

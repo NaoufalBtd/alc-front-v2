@@ -824,7 +824,7 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
     Vocab(section: Section) {
         this.sectionItemService.sectionSelected = section;
 
-        this.sectionItemService.getSectionItems().subscribe(data => {
+        this.sectionItemService.getSectionItems(section).subscribe(data => {
             this.sectionItemService.sectionSelected.sectionItems = data;
 
             this.showVocabulary = true;

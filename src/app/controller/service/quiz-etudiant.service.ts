@@ -481,9 +481,9 @@ export class QuizEtudiantService {
   {
     return this.http.get<QuizEtudiant>(this.adminUrl + 'quizEtudiant/ref/qe1');
   }
-  public findQuizSection(): Observable<Quiz>
+  public findQuizSection(section: Section): Observable<Quiz>
   {
-    return this.http.get<Quiz>(this.adminUrl + 'quiz/section/id/' + this.section.id);
+    return this.http.get<Quiz>(this.adminUrl + 'quiz/section/id/' + section.id);
   }
 
   public insertQuizEtudiant(): Observable<QuizEtudiant>

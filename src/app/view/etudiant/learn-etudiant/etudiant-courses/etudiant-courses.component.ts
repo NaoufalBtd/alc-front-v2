@@ -60,7 +60,7 @@ export class EtudiantCoursesComponent implements OnInit {
     Vocab(section: Section) {
         this.sectionItemService.sectionSelected = section;
 
-        this.sectionItemService.getSectionItems().subscribe(data => {
+        this.sectionItemService.getSectionItems(section).subscribe(data => {
             this.sectionItemService.sectionSelected.sectionItems = data;
             console.log(data);
             this.showVocabulary = true;

@@ -228,22 +228,19 @@ export class WebSocketService {
             }
         };
         this.webSocket.onmessage = (event) => {
-            this.onMessage(event);
+            console.log(prof);
+            console.log(this.connectedUsers);
+            console.log(this.loginservice.getConnecteUser());
+            if (this.connectedUsers.filter(d => d.id === this.loginservice.getConnecteUser().id)?.length > 0 ||
+                this.loginservice.getConnecteUser().id === prof.id) {
+                this.onMessage(event);
+            }
         };
     }
 
     private onOpen(prof: Prof, grpEtudiant: GroupeEtudiant, sender: string, user: User) {
         this.prof = prof;
         this.groupeEtudiant = grpEtudiant;
-        let index = 0;
-        for (let item of this.connectedUsers) {
-            if (item?.id === prof.id) {
-                index = -1;
-            }
-        }
-        if (index === 0) {
-            this.connectedUsers.push({...prof});
-        }
         if (sender === 'PROF') {
             this.participants.set(prof.id, this.connectedUsers);
             if (this.studentsEnLigne.get(prof.id) === undefined) {
@@ -252,10 +249,9 @@ export class WebSocketService {
         } else {
             this.groupeEtudiantService.findAllGroupeEtudiantDetail(grpEtudiant.id).subscribe(
                 data => {
-                    const groupeEtudiantDetails = data;
-                    for (let i = 0; i < groupeEtudiantDetails.length; i++) {
-                        if (this.connectedUsers.filter(s => s.id === groupeEtudiantDetails[i].etudiant.id).length === 0) {
-                            this.connectedUsers.push({...groupeEtudiantDetails[i].etudiant});
+                    for (let i = 0; i < data.length; i++) {
+                        if (this.connectedUsers.filter(s => s.id === data[i].etudiant.id).length === 0) {
+                            this.connectedUsers.push({...data[i].etudiant});
                         }
                     }
                     this.participants.set(prof.id, this.connectedUsers);
@@ -264,7 +260,7 @@ export class WebSocketService {
                     }
                 }
             );
-            let chatMessage: ChatMessageDto = new ChatMessageDto(user.nom, 'join session', true);
+            const chatMessage: ChatMessageDto = new ChatMessageDto(user.nom, 'join session', true);
             chatMessage.prof = prof;
             chatMessage.student = user;
             chatMessage.type = 'CONNECT';
@@ -275,50 +271,36 @@ export class WebSocketService {
     private onMessage(event: MessageEvent<any>) {
         const data: ChatMessageDto = JSON.parse(event.data);
         if (data.type === 'message') {
-            console.log(this.participants);
-            console.log(data);
-            for (const etudiant of this.participants?.get(data.prof.id)) {
-                if (etudiant.id === this.loginservice.getConnectedStudent().id) {
-                    this.chatMessages.push({...data});
-                    if (this.loginservice.getConnecteUser().role === Role.PROF) {
-                        if (this.activeIndexForTabView === 2) { // chat Prof
-                            this.badgeNrMsg = 0;
-                        } else {
-                            this.badgeNrMsg = this.chatMessages.length;
-                            this.notificationMessageSound();
-                        }
+            if (this.chatMessages.filter(c =>
+                c.user === data.user &&
+                c.message === data.message &&
+                c.dateSent === data.dateSent).length === 0) {
+                this.chatMessages.push({...data});
+                if (this.loginservice.getConnecteUser().role === Role.PROF) {
+                    if (this.activeIndexForTabView === 2) { // chat Prof
+                        this.badgeNrMsg = 0;
                     } else {
-                        if (this.tabViewActiveIndex === 3) { // chat student
-                            this.badgeNrMsg = 0;
-                        } else {
-                            this.badgeNrMsg = this.chatMessages.length;
-                            this.notificationMessageSound();
-                        }
+                        this.badgeNrMsg = this.chatMessages.length;
+                        this.notificationMessageSound();
+                    }
+                } else {
+                    if (this.tabViewActiveIndex === 3) { // chat student
+                        this.badgeNrMsg = 0;
+                    } else {
+                        this.badgeNrMsg = this.chatMessages.length;
+                        this.notificationMessageSound();
                     }
                 }
             }
         } else if (data.type === 'SECTION') {
             if (data?.user === 'SUMMARY' && data?.message === 'SUMMARY') {
-                for (const etudiant of this.participants.get(data.prof.id)) {
-                    if (etudiant.id === this.loginservice.getConnectedStudent().id) {
-                        this.simulatesectionService.goToSummary();
-                    }
-                }
+                this.simulatesectionService.goToSummary();
             } else if (data?.user === 'FINISHLESSON' && data?.message === 'FINISHLESSON') {
-                for (const etudiant of this.participants.get(data.prof.id)) {
-                    if (etudiant.id === this.loginservice.getConnectedStudent().id) {
-                        this.simulatesectionService.finishLesson();
-                    }
-                }
+                this.simulatesectionService.finishLesson();
             } else {
-                console.log(data);
                 this.grpStudentAnswers = new Map<Etudiant, QuizReponse>();
                 const sectionId = Number(data.message);
-                for (const etudiant of this.participants.get(data.prof.id)) {
-                    if (etudiant.id === this.loginservice.getConnectedStudent().id) {
-                        this.simulatesectionService.nextSection(sectionId, data?.user);
-                    }
-                }
+                this.simulatesectionService.nextSection(sectionId, data?.user);
             }
 
         } else if (data.type === 'FOLLOW-QUIZ') {
@@ -345,7 +327,6 @@ export class WebSocketService {
 
                     if (data.message === 'STUDENT_CHOICE_T12' && this.reponseQuiz.sender === 'STUDENT_CHOICE_T12') {
                         this.showCheckButton = this.learnService.onClickT12(reponse);
-                        console.log(this.showCheckButton);
                     } else {
                         this.learnService.checkT12Answer(reponse.question);
                     }
@@ -367,7 +348,7 @@ export class WebSocketService {
                 if (data.message === 'STUDENT_CHOICE_T12') {
                     this.reponseQuiz = data.quizReponse;
                     if (data.quizReponse.sender === 'STUDENT_CHOICE_T12_FOR_GRP') {
-                        let reponse: Reponse = new Reponse();
+                        const reponse: Reponse = new Reponse();
                         reponse.lib = this.reponseQuiz.lib;
                         reponse.etatReponse = this.reponseQuiz.etatReponse;
                         reponse.id = this.reponseQuiz.id;
@@ -422,19 +403,16 @@ export class WebSocketService {
                 });
             }
         } else if (data.type === 'VOC') {
-            if (this.groupeEtudiantForThisStudent(data.prof) === true) {
-                if (data?.user === 'VOC_FLIP' && data?.message === 'VOC_FLIP') {
-                    this.vocabularyService.flip();
-                } else if (data?.user === 'VOC_NEXT' && data?.message === 'VOC_NEXT') {
-                    this.vocabularyService.nextItem();
-                } else if (data?.user === 'VOC_FINISH' && data?.message === 'VOC_FINISH') {
-                    this.vocabularyService.endShow();
-                }
+            if (data?.user === 'VOC_FLIP' && data?.message === 'VOC_FLIP') {
+                this.vocabularyService.flip();
+            } else if (data?.user === 'VOC_NEXT' && data?.message === 'VOC_NEXT') {
+                this.vocabularyService.nextItem();
+            } else if (data?.user === 'VOC_FINISH' && data?.message === 'VOC_FINISH') {
+                this.vocabularyService.endShow();
             }
+
         } else if (data.type === 'HOME_WORK_REVIEW_NOTES') {
-            if (this.groupeEtudiantForThisStudent(data.prof) === true) {
-                this.reponseHomeWorkReviewComponent.profNote = data.message;
-            }
+            this.reponseHomeWorkReviewComponent.profNote = data.message;
         } else if (data?.type === 'START_LESSON') {
             this.startLesson();
         }
@@ -601,7 +579,7 @@ export class WebSocketService {
 
 
     private groupeEtudiantForThisStudent(prof: Prof): boolean {
-        let studentList = this.participants.get(this.prof.id);
+        const studentList = this.participants.get(prof.id);
         for (const student of studentList) {
             if (student.id === this.loginservice.getConnecteUser().id) {
                 return true;

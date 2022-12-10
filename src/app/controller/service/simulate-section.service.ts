@@ -443,24 +443,19 @@ export class SimulateSectionService {
     Vocab(section: Section) {
         this.sectionItemService.sectionSelected = section;
 
-        this.sectionItemService.getSectionItems().subscribe(data => {
+        this.sectionItemService.getSectionItems(section).subscribe(data => {
             this.sectionItemService.sectionSelected.sectionItems = data;
-            console.log(data);
             this.showVocabulary = true;
+        }, error => {
+            console.log(error);
         });
-
     }
 
     public updateCurrentSection(id: number, section: Section) {
         this.http.post<number>(this.profUrl + this.synchronizationUrl + '/update/' + id, section).subscribe(
             data => {
-                if (data > 0) {
-                    console.log('CurrentSection updated');
-                } else {
-                    console.log('section not updated');
-                }
             }, error => {
-                console.log('problem while updating current section');
+                console.log(error);
             }
         );
     }
@@ -558,13 +553,10 @@ export class SimulateSectionService {
             this.quizService.findQuizBySectionId(this.selectedsection).subscribe(
                 data => {
                     this.selectedQuiz = data;
-                    console.log(this.selectedQuiz);
-                    console.log(data);
                     if (data !== null) {
                         this.quizService.findQuizEtudanitByEtudiantIdAndQuizId(this.loginService.etudiant, this.selectedQuiz).subscribe(
                             data1 => {
                                 this.quizEtudiantList = data1;
-                                console.log(this.quizEtudiantList);
                                 if (this.quizEtudiantList?.id === 0 || this.quizEtudiantList === null
                                     || this.quizEtudiantList?.id === undefined) {
                                     this.quizView = false;
@@ -572,6 +564,7 @@ export class SimulateSectionService {
                                     this.quizView = true;
                                 }
                             }, error => {
+                                console.log(error);
                                 this.passerQuiz = 'Take Quiz';
                                 this.quizView = false;
                             }
@@ -585,7 +578,6 @@ export class SimulateSectionService {
     }
 
     private verifyImagesUrl() {
-        console.log(this.selectedsection);
         if (this.selectedsection?.urlImage && this.selectedsection?.urlImage2 && this.selectedsection?.urlImage3) {
             this._images = [
                 {
@@ -605,7 +597,6 @@ export class SimulateSectionService {
                 }
             ];
             this._listOfContent = this.selectedsection.contenu?.split(/\s\s\s+/);
-            console.log(this._listOfContent);
             this._showGalleria = true;
         } else if (this.selectedsection?.urlImage && this.selectedsection?.urlImage2) {
             this._images = [
@@ -621,7 +612,6 @@ export class SimulateSectionService {
                 }
             ];
             this._listOfContent = this.selectedsection.contenu?.split(/\s\s\s+/);
-            console.log(this._listOfContent);
             this._showGalleria = true;
 
         } else {
@@ -645,7 +635,6 @@ export class SimulateSectionService {
                     this.dictionnaryService.Translate(this.textSeleted).subscribe(
                         data => {
                             this.Synonymes = data;
-                            console.log(this.Synonymes);
                             this.wordDict = '';
                             this.j = 0;
                             this.listSynonymes = new Array<any>();
@@ -671,7 +660,6 @@ export class SimulateSectionService {
                             }
                         });
 
-                    console.log(this.listSynonymes);
                     this.selected.word = this.textSeleted;
                     this.submittedDict = false;
                     this.TranslateSynonymeDialog = true;
@@ -680,7 +668,6 @@ export class SimulateSectionService {
                     this.selected.word = this.textSeleted;
                     this.submittedDictEdit = false;
                     this.editDialogDict = true;
-                    // console.log(this.selected.word);
                 }
             });
     }
@@ -696,15 +683,12 @@ export class SimulateSectionService {
 
     public findSectionOneByOne(cour: Cours): Section {
         this.selectedcours = cour;
-        let i = 0;
-        i = i + 1;
         this.service.affichelistSection().subscribe(
             data => {
                 this.itemssection2 = data;
                 this.service.sectionAdditional = [];
                 this.service.sectionStandard = [];
                 this.itemssection2 = data;
-                console.log(this.itemssection2);
                 for (let _i = 0; _i < data.length; _i++) {
                     if (data[_i].categorieSection.superCategorieSection.libelle === 'Obligatory') {
                         this.sectionStandard.push({...data[_i]});
@@ -713,13 +697,15 @@ export class SimulateSectionService {
                     }
                 }
 
+            }, error => {
+                console.log(error);
             });
         this.service.image = '';
         if (this.loginService.prof !== null) {
             this.service.afficheOneSection().subscribe(
                 data => {
                     this.selectedsection = data;
-                    if (data.categorieSection.libelle === 'Vocabulary') {
+                    if (data.categorieSection?.libelle?.toUpperCase()?.includes('VOCABULARY')) {
                         this.Vocab(data);
                     } else {
                         this.showVocabulary = false;
@@ -730,7 +716,6 @@ export class SimulateSectionService {
                             this.quizService.findQuizEtudanitByEtudiantIdAndQuizId(this.loginService.etudiant, this.selectedQuiz).subscribe(
                                 data1 => {
                                     this.quizEtudiantList = data1;
-                                    console.log(this.quizEtudiantList);
                                     if (this.quizEtudiantList.id !== 0) {
                                         this.quizView = true;
                                     } else {
@@ -743,13 +728,11 @@ export class SimulateSectionService {
                                 }
                             );
                         });
-                    console.log(this.service.image);
                     this.service.image = this.selectedsection.urlImage;
                     this.quizService.section.id = this.selectedsection.id;
-                    this.quizService.findQuizSection().subscribe(dataQuiz => this.selectedQuiz = dataQuiz);
+                    this.quizService.findQuizSection(this.selectedsection).subscribe(dataQuiz => this.selectedQuiz = dataQuiz);
                 });
         }
-        console.log(this.selectedsection);
         return this.selectedsection;
     }
 
@@ -757,7 +740,7 @@ export class SimulateSectionService {
         this.service.afficheSection(libelle).subscribe(
             data => {
                 this.selectedsection = data;
-                if (data.categorieSection.libelle === 'Vocabulary') {
+                if (data.categorieSection?.libelle?.toUpperCase()?.includes('VOCABULARY')) {
                     this.Vocab(data);
                 } else {
                     this.showVocabulary = false;
@@ -769,7 +752,6 @@ export class SimulateSectionService {
                             this.quizService.findQuizEtudanitByEtudiantIdAndQuizId(this.loginService.etudiant, this.selectedQuiz).subscribe(
                                 data1 => {
                                     this.quizEtudiantList = data1;
-                                    console.log(this.quizEtudiantList);
                                     if (this.quizEtudiantList?.id === 0 || this.quizEtudiantList === null
                                         || this.quizEtudiantList?.id === undefined) {
                                         this.quizView = false;
@@ -787,7 +769,7 @@ export class SimulateSectionService {
                         }
                     },
                 );
-            }, error => console.log('erreeeeeeeeeeeeeeeeur'));
+            }, error => console.log(error));
     }
 
     findSectionOneByCoursId(cours: Cours) {
@@ -795,14 +777,12 @@ export class SimulateSectionService {
             data => {
                 this.itemssection2 = data;
                 this.selectedsection = this.itemssection2[0];
-                this.selectedsection = data[0];
                 this.quizService.findQuizBySectionId(this.selectedsection).subscribe(data12 => {
                     this.quizExist = true;
                     if (data12 !== null) {
                         this.quizService.findQuizEtudanitByEtudiantIdAndQuizId(this.loginService.etudiant, this.selectedQuiz).subscribe(
                             data1 => {
                                 this.quizEtudiantList = data1;
-                                console.log(this.quizEtudiantList);
                                 if (this.quizEtudiantList?.id === 0 || this.quizEtudiantList === null
                                     || this.quizEtudiantList?.id === undefined) {
                                     this.quizView = false;
@@ -819,16 +799,16 @@ export class SimulateSectionService {
                         this.quizView = false;
                     }
                 }, error => {
+                    console.log(error);
                     this.quizExist = false;
                 });
-                if (this.selectedsection.categorieSection.libelle === 'Vocabulary') {
+                if (this.selectedsection.categorieSection.libelle?.toUpperCase()?.includes('VOCABULARY')) {
                     this.Vocab(this.selectedsection);
                 } else {
                     this.showVocabulary = false;
                 }
                 this.service.sectionAdditional = new Array<Section>();
                 this.service.sectionStandard = new Array<Section>();
-                console.log(this.selectedsection);
                 for (let _i = 0; _i < this.itemssection2.length; _i++) {
                     if (this.itemssection2[_i].categorieSection.superCategorieSection.libelle === 'Obligatory') {
                         this.sectionStandard.push({...data[_i]});
@@ -836,20 +816,17 @@ export class SimulateSectionService {
                         this.sectionAdditional.push({...data[_i]});
                     }
                 }
-                this.vocabularySection = this.sectionStandard.filter(s => s.categorieSection?.libelle === 'Vocabulary')[0];
-                this.getToKnowSection = this.sectionStandard.filter(s => s.categorieSection?.libelle === 'Get to know')[0];
+                this.vocabularySection = this.sectionStandard.filter(s => s.categorieSection?.libelle?.toUpperCase()?.includes('VOCABULARY'))[0];
+                this.getToKnowSection = this.sectionStandard.filter(s => s.categorieSection?.libelle?.toUpperCase()?.includes('Get to know'))[0];
                 this.displayData(this.selectedsection);
             }
         );
     }
 
     private displayData(section: Section) {
-        console.log('------------------------SECTION -------------------------------');
-        console.log(section);
-        console.log('------------------------SECTION -------------------------------');
         this.selectedsection = section;
         this.quizService.section.id = this.selectedsection.id;
-        this.quizService.findQuizSection().subscribe(data => this.selectedQuiz = data);
+        this.quizService.findQuizSection(this.selectedsection).subscribe(data => this.selectedQuiz = data);
         this.quizService.findQuizBySectionId(this.selectedsection).subscribe(
             data => {
                 this.selectedQuiz = data;
@@ -885,8 +862,10 @@ export class SimulateSectionService {
                     this.quizView = false;
                 }
             });
-        this.vocab.findAllVocabSection().subscribe(data => {
+        this.vocab.findAllVocabSection(section).subscribe(data => {
             this.vocab.nombreVocab = data.length;
+        }, error => {
+            console.log(error);
         });
     }
 

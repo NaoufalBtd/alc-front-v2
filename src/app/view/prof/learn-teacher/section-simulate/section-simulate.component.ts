@@ -467,8 +467,10 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
     public findAllGroupeEtudiantDetail(id: number) {
         this.groupeEtudiantService.findAllGroupeEtudiantDetail(id).subscribe(
             data => {
-                for (let i = 0; i < this.data?.length; i++) {
-                    this.webSocketService.connectedUsers.push(this.data[i].etudiant);
+                for (let i = 0; i < data?.length; i++) {
+                    if (this.connectedUsers.filter(d => d?.username === data[i].etudiant.username)?.length === 0) {
+                        this.connectedUsers.push(data[i].etudiant);
+                    }
                 }
             }
         );
@@ -585,7 +587,6 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
     }
 
     NextSection(section: Section) {
-        console.log(section);
         this.grpStudentAnswers = new Map<Etudiant, QuizReponse>();
         let index = 0;
         for (const item of this.sessionCour.sections) {
@@ -614,6 +615,7 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
             if (section.id === sec.id) {
                 this.selectedsection = sec;
                 this.verifyImagesUrl();
+                this.simulateSectionService.nextSection(section.id, 'NEXT');
                 this.webSocketService.updateCurrentSection(this.prof.id, sec);
                 this.showFlowMeButton = true;
                 this.findQuizIfExist(section);
@@ -622,6 +624,7 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
     }
 
     public goToSection(section: Section, type: string) {
+        this.simulateSectionService.nextSection(section.id, type);
         this.findQuizIfExist(section);
         this.showFlowMeButton = false;
         if (this.webSocketService.sessionHasStarted) {
@@ -679,9 +682,12 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
 
 
     addToDictionary(type: string) {
+        console.log(this.connectedUsers);
+        console.log(this.participants);
+        console.log(this.studentsEnLigne);
         if (type === 'SELECT') {
             this.createDialogDict = false;
-            for (const etudiant of this.participants.get(this.loginService.getConnectedProf().id)) {
+            for (const etudiant of this.connectedUsers) {
                 this.selectedNow.etudiant = etudiant;
                 this.dictionnaryService.addToDictionary(this.selectedNow).subscribe(data => {
                     let index = 0;
@@ -707,7 +713,7 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
             const dict: Dictionary = new Dictionary();
             dict.word = this.searchInput;
             dict.definition = this.synonymes;
-            for (const etudiant of this.participants.get(this.loginService.getConnectedProf().id)) {
+            for (const etudiant of this.connectedUsers) {
                 dict.etudiant = etudiant;
                 this.dictionnaryService.addToDictionary(dict).subscribe(data => {
                     let index = 0;
@@ -881,20 +887,21 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
     }
 
     finishLesson() {
+        console.log(this.selectedSchedule);
         this.showFinishLesson = false;
         this.sessionCour.prof = this.loginService.getConnectedProf();
         this.sessionCour.cours = this.selectedcours;
         this.sessionCour.groupeEtudiant = this.groupeEtudiant;
-        this.sessionCour.annee = this.selectedSchedule.startTime.getFullYear();
-        this.sessionCour.dateDebut = this.selectedSchedule.startTime;
-        this.sessionCour.dateFin = this.selectedSchedule.endTime;
-        this.sessionCour.duree = this.selectedSchedule.endTime.getHours() - this.selectedSchedule.startTime.getHours();
-        this.sessionCour.mois = this.selectedSchedule.startTime.getMonth();
+        this.sessionCour.annee = new Date().getUTCFullYear();
+        this.sessionCour.dateDebut = this.selectedSchedule?.startTime;
+        this.sessionCour.dateFin = this.selectedSchedule?.endTime;
+        this.sessionCour.duree = new Date(this.selectedSchedule.endTime).getHours() - new Date(this.selectedSchedule.startTime).getHours();
+        this.sessionCour.mois = new Date(this.selectedSchedule.startTime).getMonth();
         this.sessionCour.payer = false;
         this.sessionCour.salary = null;
         this.sessionCour.reference = this.selectedSchedule.startTime.toString() + this.groupeEtudiant.libelle;
-        this.sessionCour.totalheure = this.selectedSchedule.endTime.getHours() - this.selectedSchedule.startTime.getHours();
-        // this.sessionservice.saveSessionCours(this.sessionCour);
+        this.sessionCour.totalheure = new Date(this.selectedSchedule.endTime).getHours() -
+            new Date(this.selectedSchedule.startTime).getHours();
         this.saveSessionCoursForGroupEtudiant(this.sessionCour.prof.id, this.sessionCour.cours.id, this.sessionCour.groupeEtudiant.id);
         const chatMessage: ChatMessageDto = new ChatMessageDto('FINISHLESSON', 'FINISHLESSON', false);
         chatMessage.prof = this.loginService.getConnectedProf();

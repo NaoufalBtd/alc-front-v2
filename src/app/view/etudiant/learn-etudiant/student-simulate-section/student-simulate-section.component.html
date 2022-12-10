@@ -18,6 +18,20 @@
                                 <th style="min-width:200px">Status</th>
                             </tr>
                         </ng-template>
+
+                        <ng-template pTemplate="body">
+                            <tr>
+                                <td>{{this.prof?.nom }}</td>
+                                <td>
+                                    <button
+                                            style="width: 15px;height: 0" pButton pRipple
+                                            type="button" icon="pi pi-circle-fill"
+                                            class="p-button-rounded p-button-success">
+                                    </button>
+                                </td>
+                            </tr>
+                        </ng-template>
+
                         <ng-template pTemplate="body" let-etudiant>
                             <tr>
                                 <td>{{etudiant?.nom }} {{ etudiant?.prenom }}</td>
@@ -249,7 +263,7 @@
                 <div class="p-col-3 product-grid-item">
                     <div class="skipeContainer">
                         <img src="./assets/icons/icon-book.png" alt="">
-                        <h4 id="startText">Let's Start</h4>
+                        <h4 *ngIf="!lessonStarted" id="startText">Let's Start</h4>
                         <h4 *ngIf="webSocketService.isInSession && lessonStarted" id="startText">Lesson started</h4>
                         <h4 *ngIf="webSocketService.isInSession && lessonStarted" id="startText">{{minute}}
                             m: {{seconde}}s</h4>

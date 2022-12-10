@@ -43,10 +43,11 @@ export class ChatComponent implements OnInit, OnDestroy {
 
 
     sendMessage() {
-        let chatMessageDto = new ChatMessageDto(this.loginService.prof.nom,
+        const chatMessageDto = new ChatMessageDto(this.loginService.prof.nom,
             this.message, false);
         chatMessageDto.grpStudent = this.groupeEtudiant;
         chatMessageDto.student = null;
+        chatMessageDto.dateSent = new Date();
         chatMessageDto.quizReponse = null;
         chatMessageDto.isStudent = false;
         chatMessageDto.prof = this.loginService.prof;

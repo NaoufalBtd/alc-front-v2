@@ -1,12 +1,10 @@
-import {EventEmitter, Injectable, Output, ViewChild, ViewChildren} from '@angular/core';
+import {EventEmitter, Injectable, Output} from '@angular/core';
 import {Section} from '../model/section.model';
 import {Vocabulary} from '../model/vocabulary.model';
 import {Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
-import {VocabularySectionItemProfComponent} from '../../view/prof/learn-teacher/vocabulary-section-prof/vocabulary-section-item-prof/vocabulary-section-item-prof.component';
 import {SectionItemModel} from '../model/section-item.model';
-import {VocabularySectionItemComponent} from '../../view/etudiant/learn-etudiant/vocabulary-section/vocabulary-section-item/vocabulary-section-item.component';
 import {VocabularySectionItemService} from './vocabulary-section-item.service';
 
 @Injectable({
@@ -240,8 +238,8 @@ export class VocabularyService {
         return this.http.get<Array<Vocabulary>>(this.adminUrl + 'vocabulary/');
     }
 
-    public findAllVocabSection(): Observable<Array<Vocabulary>> {
-        return this.http.get<Array<Vocabulary>>(this.adminUrl + 'vocabulary/section/id/' + this.idSection);
+    public findAllVocabSection(section: Section): Observable<Array<Vocabulary>> {
+        return this.http.get<Array<Vocabulary>>(this.adminUrl + 'vocabulary/section/id/' + section.id);
     }
 
     public findVocabularybySection(): Observable<Array<Vocabulary>> {

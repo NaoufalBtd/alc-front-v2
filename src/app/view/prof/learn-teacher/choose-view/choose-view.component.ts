@@ -111,7 +111,7 @@ export class ChooseViewComponent implements OnInit {
     Vocab(section: Section) {
         this.sectionItemService.sectionSelected = section;
 
-        this.sectionItemService.getSectionItems().subscribe(data => {
+        this.sectionItemService.getSectionItems(section).subscribe(data => {
             this.sectionItemService.sectionSelected.sectionItems = data;
             console.log(data);
             this.showVocabulary = true;
@@ -150,7 +150,7 @@ export class ChooseViewComponent implements OnInit {
                 console.log(this.service.image);
             });
         this.quizService.section.id = this.selectedsection.id;
-        this.quizService.findQuizSection().subscribe(data => this.selectedQuiz = data);
+        this.quizService.findQuizSection(this.selectedsection).subscribe(data => this.selectedQuiz = data);
     }
 
     public viewType() {

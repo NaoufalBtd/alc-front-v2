@@ -30,7 +30,7 @@ webSocketService.chatMessages
                     <p *ngIf="chatMessage.isStudent" class="name alt">{{chatMessage.user}}</p>
                     <p *ngIf="!chatMessage.isStudent" class="name altTeacher">{{chatMessage.user}}</p>
                     <p class="message">{{chatMessage.message}}</p>
-                    <span class="timestamp">{{today | date:'h:mm'}}</span>
+                    <span class="timestamp">{{chatMessage?.dateSent | date:'h:mm'}}</span>
                 </div>
                 <div class="bubble-arrow alt"></div>
             </div>
@@ -39,7 +39,7 @@ webSocketService.chatMessages
                     <p *ngIf="chatMessage.isStudent" class="name alt">{{chatMessage.user}}</p>
                     <p *ngIf="!chatMessage.isStudent" class="name altTeacher">{{chatMessage.user}}</p>
                     <p class="message">{{chatMessage.message}}</p>
-                    <span class="timestamp">{{today | date:'h:mm'}}</span>
+                    <span class="timestamp">{{chatMessage?.dateSent | date:'h:mm'}}</span>
                 </div>
                 <div class="bubble-arrow-teacher alt"></div>
             </div>

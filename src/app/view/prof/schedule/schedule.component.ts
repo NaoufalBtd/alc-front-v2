@@ -422,7 +422,6 @@ export class ScheduleLocalComponent implements OnInit {
     }
 
     startSession() {
-        console.log(this.selectedSchedule);
         this.router.navigate(['prof/sections-simulate/' + this.selectedSchedule.id]);
     }
 

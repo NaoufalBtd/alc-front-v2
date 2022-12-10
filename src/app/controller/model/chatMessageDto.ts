@@ -1,8 +1,6 @@
-import {Etudiant} from './etudiant.model';
 import {Prof} from './prof.model';
 import {QuizReponse} from './quiz-reponse';
 import {GroupeEtudiant} from './groupe-etudiant.model';
-import {Section} from './section.model';
 import {User} from './user.model';
 
 export class ChatMessageDto {
@@ -10,6 +8,7 @@ export class ChatMessageDto {
     ev: any;
     user: string;
     message: string;
+    dateSent: Date;
     isStudent: boolean;
     prof: Prof = new Prof();
     student: User  = new User();

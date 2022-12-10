@@ -122,7 +122,7 @@ export class SectionListComponent implements OnInit {
     ngOnInit(): void {
         this.initCol();
         this.quizService.section.id = this.selectedsection.id;
-        this.quizService.findQuizSection().subscribe(data => this.selectedQuiz = data);
+        this.quizService.findQuizSection(this.selectedsection).subscribe(data => this.selectedQuiz = data);
         this.quizService.findAllQuiz().subscribe(
             data => {
                 this.quizItems = data;
@@ -244,7 +244,7 @@ export class SectionListComponent implements OnInit {
     createVocab(section: Section) {
         this.sectionItemService.sectionSelected = section;
 
-        this.sectionItemService.getSectionItems().subscribe(data => {
+        this.sectionItemService.getSectionItems(section).subscribe(data => {
             this.sectionItemService.sectionSelected.sectionItems = data;
             console.log(data);
             this.router.navigate(['admin/create-section-items']);

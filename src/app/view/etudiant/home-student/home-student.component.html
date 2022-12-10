@@ -43,7 +43,7 @@
 
 
                     <button *ngIf="isLessonCompleted(schedule.cours) === 3" pButton pRipple type="button"
-                            (click)="openSession(schedule.cours, 'HOMWORK')"
+                            (click)="openSession(schedule, 'HOMWORK')"
                             [label]="'HOME WORK' | translate"
 
                             class="p-button-success"></button>
@@ -94,7 +94,7 @@
                 </div>
                 <div class="p-col-6">
                     <p class="NumberOfCourses">{{this.scheduleProfs?.length - lessonFinished?.length}}</p>
-                    <p class="lessonDate"> {{'Lessons cumming' | translate}}</p>
+                    <p class="lessonDate"> {{'Lessons coming' | translate}}</p>
                 </div>
             </div>
 

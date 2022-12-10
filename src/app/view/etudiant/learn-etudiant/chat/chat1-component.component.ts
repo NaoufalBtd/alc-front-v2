@@ -30,6 +30,7 @@ export class Chat1Component implements OnInit, OnDestroy {
         chatMessageDto.prof = this.groupeEtudiant.prof;
         chatMessageDto.grpStudent = this.groupeEtudiant;
         chatMessageDto.student = null;
+        chatMessageDto.dateSent = new Date();
         chatMessageDto.quizReponse = null;
         chatMessageDto.type = 'message';
         this.webSocketService.sendMessage(chatMessageDto, 'STUDENT');
