@@ -17,24 +17,22 @@
                                 <th style="min-width:200px">Full Name</th>
                                 <th style="min-width:200px">Status</th>
                             </tr>
-                        </ng-template>
 
-                        <ng-template pTemplate="body">
                             <tr>
-                                <td>{{this.prof?.nom }}</td>
-                                <td>
+                                <th>{{this.prof?.nom }}</th>
+                                <th>
                                     <button
                                             style="width: 15px;height: 0" pButton pRipple
                                             type="button" icon="pi pi-circle-fill"
                                             class="p-button-rounded p-button-success">
                                     </button>
-                                </td>
+                                </th>
                             </tr>
                         </ng-template>
 
                         <ng-template pTemplate="body" let-etudiant>
                             <tr>
-                                <td>{{etudiant?.nom }} {{ etudiant?.prenom }}</td>
+                                <td>{{etudiant?.nom}}</td>
                                 <td>
                                     <button *ngIf=" etudiant.id === loginService.getConnectedStudent().id"
                                             style="width: 15px;height: 0" pButton pRipple
