@@ -4,7 +4,7 @@
         <p-dropdown [options]="studentList" [(ngModel)]="selectedStudent"
                     (ngModelChange)="getResult(selectedStudent, homeWorkEtudiantList)"
                     [style]="{width: '100%'}"
-                    optionLabel="prenom" [filter]="true" filterBy="prenom" [showClear]="true"
+                    optionLabel="nom" [filter]="true" filterBy="nom" [showClear]="true"
                     placeholder="Select a student">
         </p-dropdown>
     </div>

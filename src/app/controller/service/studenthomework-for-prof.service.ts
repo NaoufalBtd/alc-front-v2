@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {HomeWOrkEtudiant} from '../model/home-work-etudiant.model';
 import {environment} from '../../../environments/environment';
-import {LoginService} from "./login.service";
-import {AuthenticationService} from "./authentication.service";
+import {LoginService} from './login.service';
+import {AuthenticationService} from './authentication.service';
 
 @Injectable({
   providedIn: 'root'
@@ -41,8 +41,10 @@ export class StudenthomeworkForProfService {
   public findByProf(){
     this.http.get<Array<HomeWOrkEtudiant>>(this.profUrl + 'homeWorkEtudiant/homeworklist/' + this.authentificationService.getUserFromLocalCache().id).subscribe(
         data => {
-          console.log('rah dazt l requete');
+          console.log(data);
           this.studentHomeWorkList = data;
+        }, error => {
+          console.log(error);
         }
     );
   }

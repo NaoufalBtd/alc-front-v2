@@ -92,11 +92,6 @@ export class HomeWorkReviewComponent implements OnInit {
         if (this.webSocketService.isInSession) {
             if (this.loginService.getConnecteUser().role === Role.PROF) {
                 this.studentList = this.participants.get(this.loginService.prof.id);
-                for (let i = 0; i < this.studentList.length; i++) {
-                    if (this.studentList[i].id === this.loginService.prof.id) {
-                        this.studentList.splice(i, 1);
-                    }
-                }
             } else {
                 this.studentList.push({...this.loginService.getConnectedStudent()});
             }
@@ -121,7 +116,8 @@ export class HomeWorkReviewComponent implements OnInit {
             }
             this.homeWorkService.findhomeworkbyCoursId(course).subscribe(homeWork => {
                 console.log(homeWork);
-                this.homeWorkSelected = homeWork.filter(h => h.libelle === TypeHomeWorkEnum.WRITE_IT_UP)[0];
+                this.homeWorkSelected = homeWork.filter(h => h.libelle.toUpperCase() === TypeHomeWorkEnum.WRITE_IT_UP.toUpperCase())[0];
+                console.log(this.homeWorkSelected);
                 if (this.homeWorkSelected.id !== undefined && this.homeWorkSelected.id !== null && this.homeWorkSelected.id !== 0) {
                     this.homeWorkService.findHomeWorkEtudiantByHomeWorkId(this.homeWorkSelected).subscribe(homeWorkEtudiantData => {
                         console.log(homeWorkEtudiantData);
