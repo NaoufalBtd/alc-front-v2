@@ -57,7 +57,7 @@ export class CourseDetailsAreaComponent implements OnInit {
     }
 
     getPercentage(): number {
-        return (Number(this.selectedCourse.prix) / Number(this.selectedCourse.oldPrice)) * 100;
+        return (100 - ((Number(this.selectedCourse.prix) / Number(this.selectedCourse.oldPrice)) * 100)) ;
     }
 
     pay() {
