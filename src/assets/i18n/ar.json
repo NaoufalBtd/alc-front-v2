@@ -1,13 +1,13 @@
 {
   "courses": "الدورات",
-  "Blog": "المنصة",
-  "blog": "المنصة",
-  "contact": "اتصال",
+  "Blog": "المدونة",
+  "blog": "المدونة",
+  "contact": " تواصل معنا ",
   "signin": "تسجيل الدخول",
   "treetrialLesson": "درس تجريبي مجاني",
   "title": "أكاديمية EngFlexy",
   "home": "الرئيسية",
-  "Individual": "فرد",
+  "Individual": "حصص فردية",
   "Group": "مجموعة",
   "Lesson": "درس",
   "Knowdetails": "تعرف على التفاصيل",
@@ -28,7 +28,7 @@
   "email": "البريد الإلكتروني ",
   "Phone": "الهاتف",
   "Message": "رسالة",
-  "aboutus": "معلومات عنا",
+  "aboutus": "من نحن",
   "EngFlexy": "EngFlexy هي أول منصة تعليمية تفاعلية للغة الإنجليزية في العالم العربي (100٪ عبر الإنترنت). تتمثل مهمة EngFlexy في تبسيط وتسهيل الوصول إلى تعلم اللغة الإنجليزية وبناء مؤسسة تعليمية ملهمة.\n ",
   "Developers": "المؤسسون:\nشباب متحمسون لتحقيق أهدافهم لدفع منطقتنا إلى الأمام من خلال الاستفادة من التكنولوجيا المتطورة لتبسيط التعلم وتحسينه\n",
   "wheredid": "من أين جاء اسم “EngFlexy”؟\nالإسم يدل على نفسه،EngFlexy هي كلمة مركبة من كلمتين Engو Flexy.\nEng-إختصار لEnglish(اللغة الإنجليزية )،أما Flexy-إختصار لكلمة flexible (مرن).\nفالفكرة الأساسية هنا أنه لابد أن تكون منصتنا بعيدة كل البعد عن المراكز اللغوية التقليدية (بناية بها أساتذة+أقسام مكدسة+سبورة )،باستخدام التكنولوجيا المتطورة قمنا بتطوير منصة تفاعلية 100% Online مرنة،أي المتعلم هو من يختار التوقيت و المكان المناسب له بالإضافة إلى ذلك هناك إمكانية الإختيار بين الحصص الفردية أو الجماعية\n",
@@ -48,7 +48,7 @@
   "sayhi2": "",
   "ready": "على استعداد للبدء؟",
   "learn": "تعلم وحقق",
-  "find": "تعلم الإنجليزية أينما كنت وقتما تشاء مع مدرس من اختيارك",
+  "find": "تعلم الإنجليزية أينما كنت وقتما تشاء مع مدرسك الخاص",
   "online": "مدرس عبر الإنترنت",
   "online2": "عبر الإنترنت",
   "onlinplatform": "منصة التعلم",
@@ -141,7 +141,7 @@
   "partners": "عرض جميع الشركاء",
   "trusted": "موثوق به من قبل أفضل 100 شركة في العالم",
   "guid": "يمكنك أن تكون نجمك الإرشادي بمساعدتنا",
-  "foranyone": "دورات عبر الإنترنت لأي شخص وفي أي مكان",
+  "foranyone": "دورات عبر منصتنا التفاعلية لأي شخص و في أي مكان",
   "view": "عرض كل الدورات",
   "vocabulary": "زيادة معرفة المفردات",
   "blognews": "نشارك أخبارنا و مدونتنا",
@@ -158,7 +158,9 @@
   "times": "2-3 مرات في الأسبوع\nيوصي بكثافة\n",
   "1ON1": " من 1 إلى 1 أو دروس جماعية",
   "Classes with a teacher": "فصول مع مدرس ",
-  "popularteachers": "معلمين مشهورين",
+  "popularteachers": " الأساتذة الأكتر شهرة",
+  "Popular": "الأساتذة الأكتر شهرة",
+
   "wegive": "نقدم ما يصل إلى 3 دروس مجانية للطلاب الجدد",
   "Sign Up": "اشترك الان",
   "Our Most": "أكثر",
@@ -184,10 +186,10 @@
   "Tutor": "المدرس",
   "students": "تلاميذ",
   "student": "تلميذ",
-  "Goals": "الاهداف",
+  "Goals": " أهدافك مع ",
   "Acquire practical grammar skills": "نساعدك على تطوير مهارتك في النحو",
   "Increase vocabulary knowledge": "طور من مهاراتك في النطق، وتعلم كل يوم مفردات جديدة مع قاموسك الخاص!",
-  "with EngFlexy": "EngFlexy مع",
+  "with EngFlexy": " EngFlexy ",
   "Achieve your": "حقق",
   "About": "حول",
   "Enroll": "اشترك الان",
@@ -251,7 +253,7 @@
   "Explore our packs": "اكتشف دوراتنا ",
   "Non-native": "غير مقيم",
   "Native": "مقيم",
-  "Teacher": "المعلم",
+  "Teacher": "الأستاذ",
   "English Level": "مستواك في الانجليزية ",
   "Group Option": "تفضيلات المجموعة الخاصة بك",
   "Complete your registration": "يرجى استكمال التسجيل الخاص بك",
@@ -322,9 +324,9 @@
   "Lessons cumming": "دروس قادمة ",
   "Completed Lessons": "دروس مكتملة",
   "This is the schedule of your part of teaching , the students how are in color green are the students that they are just start the courses, the others how are in color orange are the students active in your courses.": "This is the schedule of your part of teaching , the students how are in color green are the students that they are just start the courses, the others how are in color orange are the students active in your courses.",
-  "LEGAL": "LEGAL",
-  "Terms of Service": "Terms of Service",
-  "Privacy policy": "Privacy Policy",
+  "LEGAL": "الشروط ",
+  "Terms of Service": "الشروط و الاحكام العامة",
+  "Privacy Policy": "سياسة الخصوصية",
   "privacySubTitle": "This Privacy Policy is intended to clarify the manner in which your personal information is collected and used. Unless otherwise specified, the following terms and expressions will have the following meanings",
   "1- COOKIES": "1- COOKIES",
   "1- COOKIES-text": "Cookies are tiny files that contain a small piece of data or information stored on the user's\n                    computer by the web browser, which may or may not contain anonymous unique identifiers related to\n                    cookies. It is a small text file transmitted and stored by a website on your device, with the purpose of tracking your movement within the website and your interaction with various components\n                    and functions of the website. These files help to improve and enhance the user’s website experience and record their preferences. Cookies will not attempt to control the devices on which they are\n                    stored, nor will they damage them, nor will they extract your personal information from your device.\n                    Cookies will stay on your device(s) until they expire or are deleted.",
@@ -451,8 +453,14 @@
   "You will be required to read each question carefully and select the answer that you think is correct.": "اجتياز الاختبار ليس له وقت محدد، خد وقتك في قراءة كل سؤال بعناية واختيار الإجابة التي تعتقد أنها صحيحة.",
   "At the end of the test, you will be given an estimation of your current level of English.": "في نهاية الاختبار ، سيتم إعطاؤك تقديرًا لمستواك الحالي في اللغة الإنجليزية بناءً على إجاباتك في الاختبار.",
   "Please fill the form below to start test": "يرجى ملء النموذج أسفله لبدء الاختبار📝😍",
-  "START TEST": "بدأ الاختبار"
-
+  "START TEST": "بدأ الاختبار",
+  "1 on 1 or Group classes": "الحصص ",
+  "classes with a teacher": "دروس فردية أو جماعية حسب اختيارك مع أستاذك الخاص",
+  "60 minutes": " ساعة واحدة",
+  "lesson duration": "مدة الدرس",
+  "2-3 times a week": "ننصح ب 2-3 دروس في الأسبوع",
+  "recommended intensity": "عدد الحصص في الأسبوع",
+  "local or native speaker": "local أو native speaker"
 
 
 

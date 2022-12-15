@@ -164,6 +164,7 @@
   "1ON1": "Cours 1 à 1 ou en groupe ",
   "Classes with a teacher": "Cours avec un professeur ",
   "popularteachers": "populaires professeurs",
+  "Popular": "Les plus populaires professeurs",
   "wegive": " nous donnons jusqu'à 3 leçons gratuites pour les nouveaux étudiants",
   "Sign Up": "Inscrire",
   "Our Most": "Les plus",
@@ -457,7 +458,13 @@
   "You will be required to read each question carefully and select the answer that you think is correct.": "You will be required to read each question carefully and select the answer that you think is correct.",
   "At the end of the test, you will be given an estimation of your current level of English.": "At the end of the test, you will be given an estimation of your current level of English.",
   "Please fill the form below to start test": "Please fill the form below to start test",
-  "START TEST": "START TEST"
-
+  "START TEST": "START TEST",
+  "1 on 1 or Group classes": "Cours 1 à 1 ou en groupe",
+  "classes with a teacher": "Des cours avec un professeur",
+  "60 minutes": "60 minutes",
+  "lesson duration": "Durée de la leçon",
+  "2-3 times a week": "2-3 fois par semaine",
+  "recommended intensity": "intensité recommandée",
+  "local or native speaker": "locuteur local ou natif"
 
 }

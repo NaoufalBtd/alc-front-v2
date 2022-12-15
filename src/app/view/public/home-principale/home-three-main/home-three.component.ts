@@ -7,6 +7,7 @@ import {InscriptionService} from '../../../../controller/service/inscription.ser
 import {Router} from '@angular/router';
 import {Etudiant} from '../../../../controller/model/etudiant.model';
 import {TranslateService} from '@ngx-translate/core';
+import {BreakpointObserver} from '@angular/cdk/layout';
 
 @Component({
     selector: 'app-home-three',
@@ -22,6 +23,7 @@ export class HomeThreeComponent implements OnInit {
     ];
     id: number;
     showdialog = false;
+    public isSmallScreen: boolean;
 
     constructor(private messageService: MessageService,
                 public etudiantService: EtudiantService,
@@ -29,7 +31,13 @@ export class HomeThreeComponent implements OnInit {
                 public authenticationService: AuthenticationService,
                 public packStudentService: PackStudentService,
                 public translate: TranslateService,
+                public breakpointObserver: BreakpointObserver,
                 private service: InscriptionService, private router: Router) {
+        const layoutChanges = breakpointObserver.observe('(max-width: 599px)');
+
+        layoutChanges.subscribe(result => {
+            this.isSmallScreen = result.matches;
+        });
     }
 
     get numberOfTime(): number {
@@ -42,14 +50,16 @@ export class HomeThreeComponent implements OnInit {
 
 
     ngOnInit(): void {
-        setInterval(() => {
-            if (this.numberOfTime === 0) {
-                this.displayModal = true;
-            }
-            this.numberOfTime = 1;
-        }, 15000);
-    }
+        if (!this.isSmallScreen) {
+            setInterval(() => {
+                if (this.numberOfTime === 0) {
+                    this.displayModal = true;
+                }
+                this.numberOfTime = 1;
+            }, 15000);
+        }
 
+    }
 
 
     get selected(): Etudiant {

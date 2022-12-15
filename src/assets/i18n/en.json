@@ -124,7 +124,7 @@
   "social": "Social",
   "officialblog": "Official Blog",
   "profs": "most popular teachers",
-  "Popular": "Popular",
+  "Popular": "Our most popular teachers",
   "Teachers": "Teachers",
   "base2": "You don't have to struggle alone, you've got our assistance and help. ",
   "try": "Try for free now",
@@ -449,5 +449,12 @@
   "You will be required to read each question carefully and select the answer that you think is correct.": "You will be required to read each question carefully and select the answer that you think is correct.",
   "At the end of the test, you will be given an estimation of your current level of English.": "At the end of the test, you will be given an estimation of your current level of English.",
   "Please fill the form below to start test": "Please fill the form below to start test📝😍",
-  "START TEST": "START TEST"
+  "START TEST": "START TEST",
+  "1 on 1 or Group classes": "1 on 1 or Group classes",
+  "classes with a teacher": "classes with a teacher",
+  "60 minutes": "60 minutes",
+  "lesson duration": "lesson duration",
+  "2-3 times a week": "2-3 times a week",
+  "recommended intensity": "recommended intensity",
+  "local or native speaker": "local or native speaker"
 }

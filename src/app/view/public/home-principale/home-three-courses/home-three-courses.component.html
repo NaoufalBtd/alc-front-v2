@@ -3,9 +3,9 @@
      <div class="row align-items-end">
         <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-8">
            <div class="section__title-wrapper mb-60">
-              <h2 class="section__title">{{'online2' | translate}}<span class="yellow-bg"> {{'courses' | translate}} <img src="assets/img/shape/yellow-bg-2.png" alt="">  </span> {{'foranyone' | translate}}<br>
+              <h2  [style.direction]="translate.currentLang === 'ar' ? 'rtl': 'ltr'" class="section__title"> {{'foranyone' | translate}}<br>
               </h2>
-              <p> {{'base2' | translate}}</p>
+              <p   [style.direction]="translate.currentLang === 'ar' ? 'rtl': 'ltr'"> {{'base2' | translate}}</p>
            </div>
         </div>
         <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-4">

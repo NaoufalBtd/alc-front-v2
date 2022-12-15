@@ -13,7 +13,7 @@
                          </div>
                       </div>
                       <div class="footer__widget-body">
-                         <p>{{'EngFlexy' | translate}}</p>
+                         <p  [style.direction]="translate.currentLang === 'ar' ? 'rtl': 'ltr'" >{{'EngFlexy' | translate}}</p>
 
                          <div class="footer__social">
                             <ul>
@@ -95,7 +95,7 @@
                                   </button>
                                </div>
                             </form>
-                            <p>{{'get' | translate}}</p>
+                            <p  [style.direction]="translate.currentLang === 'ar' ? 'rtl': 'ltr'">{{'get' | translate}}</p>
                          </div>
                       </div>
                    </div>
@@ -108,7 +108,7 @@
              <div class="row">
                 <div class="col-xxl-12">
                    <div class="footer__copyright text-center">
-                      <p>© 2022 EngFlexy, All Rights Reserved.</p>
+                      <p>© 2022 <a style="display: inline-block" routerLink="/">EngFlexy</a> , All Rights Reserved.</p>
                    </div>
                 </div>
              </div>

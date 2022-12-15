@@ -1,7 +1,13 @@
 
 <main>
   <app-header-one header__white="header__white"></app-header-one>
-  <app-breadcrumb title="{{'courses' | translate}}" subtitle="{{'courses' | translate}}"></app-breadcrumb>
+  <section style="min-height: 130px!important;" class="page__title-area  page__title-overlay d-flex align-items-center"
+           [ngStyle]="{background:'url(assets/img/page-title/page-title.jpg)',
+           backgroundRepeat:'no-repeat',
+           backgroundSize:'cover',
+           backgroundPosition:'center'}">
+
+  </section>
   <app-courses-page-courses-area></app-courses-page-courses-area>
   <app-cta></app-cta>
   <app-home-footer footerPadd="footer__top pt-90 pb-40"></app-home-footer>
