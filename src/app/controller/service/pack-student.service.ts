@@ -132,9 +132,15 @@ export class PackStudentService {
         );
     }
 
+
+    public findPackByGroupOption(isforgroupe: boolean): Observable<Array<PackStudent>> {
+        return this.http.get<Array<PackStudent>>(this.adminUrl + 'packStudent/packForgroupe/' + isforgroupe);
+    }
+
     public findPackByLevel(isforgroupe: boolean): Observable<Array<PackStudent>> {
         return this.http.get<Array<PackStudent>>(this.adminUrl + 'packStudent/packForgroupe/' + isforgroupe);
     }
+
 
     public findbyCode(code: string) {
         this.http.get(this.adminUrl + 'packStudent/code/' + code).subscribe(

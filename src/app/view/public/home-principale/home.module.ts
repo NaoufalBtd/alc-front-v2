@@ -54,6 +54,7 @@ import {StepsModule} from 'primeng/steps';
 import {TooltipModule} from 'primeng/tooltip';
 import {InputTextModule} from 'primeng/inputtext';
 import {ClipboardModule} from '@angular/cdk/clipboard';
+import {FilterCoursesComponent} from './courses/filter-courses/filter-courses.component';
 
 
 @NgModule({
@@ -99,6 +100,7 @@ import {ClipboardModule} from '@angular/cdk/clipboard';
         ContactUsMainComponent,
         PaimentComponent,
         MainPaimentComponent,
+        FilterCoursesComponent,
     ],
     providers: [
         Clipboard

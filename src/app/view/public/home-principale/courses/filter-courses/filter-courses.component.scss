@@ -1,0 +1,49 @@
+#individual-text {
+  width: 100%;
+  text-align: center;
+  font-size: 35px;
+  color: #263238;
+  font-weight: bold;
+  font-family: 'Roboto', serif;
+  letter-spacing: 3px;
+}
+
+.select-course {
+  cursor: pointer !important;
+}
+
+.course-type {
+  width: 130px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.course__tag {
+  width: 100%;
+  text-align: center;
+  left: 0!important;
+}
+
+.silver {
+  background: #ffffff;
+  color: #459198;
+}
+
+.gold {
+  background: #ffffff;
+  color: #eb9a0c;
+}
+
+.platinum {
+  background: #ffffff;
+  color: #102c45;
+}
+
+#individual-text:hover{
+  text-decoration: underline;
+  color: white;
+  font-size: 37px;
+}
+
+
+
