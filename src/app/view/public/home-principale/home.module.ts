@@ -55,6 +55,8 @@ import {TooltipModule} from 'primeng/tooltip';
 import {InputTextModule} from 'primeng/inputtext';
 import {ClipboardModule} from '@angular/cdk/clipboard';
 import {FilterCoursesComponent} from './courses/filter-courses/filter-courses.component';
+import {PricesComponent} from './prices/prices.component';
+import {AdvantagesComponent} from './advantages/advantages.component';
 
 
 @NgModule({
@@ -101,6 +103,8 @@ import {FilterCoursesComponent} from './courses/filter-courses/filter-courses.co
         PaimentComponent,
         MainPaimentComponent,
         FilterCoursesComponent,
+        PricesComponent,
+        AdvantagesComponent,
     ],
     providers: [
         Clipboard
