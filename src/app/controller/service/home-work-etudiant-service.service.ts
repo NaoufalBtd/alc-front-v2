@@ -8,8 +8,8 @@ import {HomeWorkQST} from '../model/home-work-qst.model';
 import {HoweWorkQSTReponse} from '../model/howe-work-qstreponse.model';
 import {TreeNode} from 'primeng/api';
 import {LoginService} from './login.service';
-import {Environment} from '@angular/compiler-cli/src/ngtsc/typecheck/src/environment';
 import {environment} from '../../../environments/environment';
+import {Etudiant} from '../model/etudiant.model';
 
 
 @Injectable({
@@ -166,10 +166,19 @@ export class HomeWorkEtudiantServiceService {
         return this.http.get<Array<HomeWOrkEtudiant>>(this.etudianturl + 'homeWorkEtudiant/etudiant/id/' + this.loginservice.etudiant.id + '/homeWork/id/' + homeWork.id);
     }
 
+    public findByStudentAndHomeWork(homeWork: HomeWork, student: Etudiant): Observable<Array<HomeWOrkEtudiant>> {
+        return this.http.get<Array<HomeWOrkEtudiant>>(this.etudianturl + 'homeWorkEtudiant/etudiant/id/' +
+            student.id + '/homeWork/id/' + homeWork.id);
+    }
+
 
 
     public findbyetudiantId(): Observable<Array<HomeWOrkEtudiant>> {
         return this.http.get<Array<HomeWOrkEtudiant>>(this.etudianturl + 'homeWorkEtudiant/etudiant/id/' + this.loginservice.etudiant.id);
+    }
+
+    public findHomeWorkByetudiantId(student: Etudiant): Observable<Array<HomeWOrkEtudiant>> {
+        return this.http.get<Array<HomeWOrkEtudiant>>(this.etudianturl + 'homeWorkEtudiant/etudiant/id/' + student.id);
     }
 
     public findReponsesByQuestionId(id: number): Observable<Array<HoweWorkQSTReponse>> {
@@ -180,6 +189,7 @@ export class HomeWorkEtudiantServiceService {
     public findHomeWorkEtudiantReponseByHomeWorkEtudiantId(id: number): Observable<Array<ReponseEtudiantHomeWork>> {
         return this.http.get<Array<ReponseEtudiantHomeWork>>(this.etudianturl + 'reponseEtudiantHomeWork/homeWorkEtudiant/id/' + id);
     }
+
 
     public findByQuestionId(id: number) {
         this.http.get<Array<ReponseEtudiantHomeWork>>(this.etudianturl + 'reponseEtudiantHomeWork/QuestionId/' + id).subscribe(

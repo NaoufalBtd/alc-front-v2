@@ -48,8 +48,8 @@
     </p-tabPanel>
 
 
-    <p-tabPanel *ngFor="let item of quizEtudiantMap | keyvalue" [header]="item?.key?.quiz?.section?.libelle">
-        <app-quiz-preview-student-teacher [quizStudent]="item.key"></app-quiz-preview-student-teacher>
+    <p-tabPanel *ngFor="let item of homeWorkMap | keyvalue" [header]="item?.key?.libelle">
+        <app-teacher-home-wrok-review [homeWorkEtudiantList]="item.value"></app-teacher-home-wrok-review>
     </p-tabPanel>
 </p-tabView>
 

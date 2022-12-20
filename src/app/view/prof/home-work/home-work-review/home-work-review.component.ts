@@ -40,6 +40,7 @@ export class HomeWorkReviewComponent implements OnInit {
     noteProf: HomeWorkReponse = new HomeWorkReponse();
     showResult: boolean;
     quizEtudiantMap: Map<QuizEtudiant, Array<ReponseEtudiant>> = new Map<QuizEtudiant, Array<ReponseEtudiant>>();
+    homeWorkMap: Map<HomeWork, Array<HomeWOrkEtudiant>> = new Map<HomeWork, Array<HomeWOrkEtudiant>>();
 
     constructor(private homeWorkService: HomeworkService,
                 private parcoursService: ParcoursService,
@@ -51,6 +52,14 @@ export class HomeWorkReviewComponent implements OnInit {
                 public loginService: LoginService,
                 private webSocketService: WebSocketService,
                 private homeWorkEtudiantService: HomeWorkEtudiantServiceService) {
+    }
+
+    get homeWorkStudentList(): Array<HomeWOrkEtudiant> {
+        return this.homeWorkEtudiantService.homeWorkEtudiantList;
+    }
+
+    set homeWorkStudentList(value: Array<HomeWOrkEtudiant>) {
+        this.homeWorkEtudiantService.homeWorkEtudiantList = value;
     }
 
 
@@ -88,6 +97,7 @@ export class HomeWorkReviewComponent implements OnInit {
         return this.webSocketService.groupeEtudiant;
     }
 
+
     ngOnInit(): void {
         if (this.webSocketService.isInSession) {
             if (this.loginService.getConnecteUser().role === Role.PROF) {
@@ -115,16 +125,12 @@ export class HomeWorkReviewComponent implements OnInit {
                 }
             }
             this.homeWorkService.findhomeworkbyCoursId(course).subscribe(homeWork => {
-                console.log(homeWork);
                 this.homeWorkSelected = homeWork.filter(h => h.libelle.toUpperCase() === TypeHomeWorkEnum.WRITE_IT_UP.toUpperCase())[0];
-                console.log(this.homeWorkSelected);
                 if (this.homeWorkSelected.id !== undefined && this.homeWorkSelected.id !== null && this.homeWorkSelected.id !== 0) {
                     this.homeWorkService.findHomeWorkEtudiantByHomeWorkId(this.homeWorkSelected).subscribe(homeWorkEtudiantData => {
-                        console.log(homeWorkEtudiantData);
                         this.homeWorkEtudiantList = homeWorkEtudiantData;
                         if (this.studentList.length === 1) {
                             this.selectedStudent = this.studentList[0];
-                            console.log(this.studentList[0]);
                             this.getResult(this.selectedStudent, this.homeWorkEtudiantList);
                         }
                     });
@@ -138,8 +144,7 @@ export class HomeWorkReviewComponent implements OnInit {
 
 
     getResult(selectedStudent: Etudiant, homeWorkEtudiantList: Array<HomeWOrkEtudiant>) {
-        console.log(homeWorkEtudiantList);
-        console.log(selectedStudent);
+        this.homeWorkMap.clear();
         this.homeWorkEtudiantSelected = homeWorkEtudiantList.filter(h => h.etudiant.id === selectedStudent.id)[0];
         if (this.homeWorkEtudiantSelected.id !== undefined) {
             this.homeWorkEtudiantService.findHomeWorkEtudiantReponseByHomeWorkEtudiantId(this.homeWorkEtudiantSelected.id).subscribe(
@@ -152,20 +157,37 @@ export class HomeWorkReviewComponent implements OnInit {
         this.quizEtudiantService.findAllQuizByEtudiantId(selectedStudent.id).subscribe(data => {
             for (const quizEtudiant of data) {
                 if (quizEtudiant.note < quizEtudiant.questionCurrent) {
-                    this.quizEtudiantService.findReponseEtudiantByQuizEtudiantId(quizEtudiant).subscribe(reponseList => {
+                    this.quizEtudiantService.findReponseEtudiant(quizEtudiant).subscribe(reponseList => {
                         this.quizEtudiantMap.set(quizEtudiant, reponseList);
                     });
                 }
             }
         });
 
+        this.homeWorkEtudiantService.findHomeWorkByetudiantId(selectedStudent).subscribe(
+            homeWorkStudents => {
+                for (const homeWorkStudent of homeWorkStudents) {
+                    if (homeWorkStudent?.homeWork?.libelle?.toUpperCase() !== 'WRITE IT UP') {
+                        this.homeWorkEtudiantService.findByStudentAndHomeWork(homeWorkStudent.homeWork, selectedStudent).subscribe(
+                            homeWorkEtudianData => {
+                                if (!this.homeWorkMap.has(homeWorkStudent.homeWork)) {
+                                    this.homeWorkMap.set(homeWorkStudent.homeWork, homeWorkEtudianData);
+                                }
+                            }, error => {
+                                console.log(error);
+                            });
+                    }
+                }
+            }, error => {
+                console.log(error);
+            }
+        );
     }
 
     saveNotes() {
         this.homeWorkEtudiantSelected.reponseEtudiantHomeWork = new Array<ReponseEtudiantHomeWork>();
         this.homeWorkEtudiantSelected.reponseEtudiantHomeWork.push({...this.reponse});
         this.homeWorkEtudiantSelected.resultat = this.reponse.note + '/10';
-        console.log(this.homeWorkEtudiantSelected);
         this.homeWorkEtudiantService.update(this.homeWorkEtudiantSelected).subscribe(data => {
             this.messageService.add({
                 severity: 'info',

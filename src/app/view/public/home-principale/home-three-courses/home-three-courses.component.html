@@ -1,4 +1,4 @@
-<section class="course__area grey-bg pt-115 pb-120">
+<section class="course__area grey-bg pt-115">
   <div class="container">
      <div class="row align-items-end">
         <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-8">
@@ -18,46 +18,10 @@
            </div>
         </div>
      </div>
+
      <div class="row">
-
-
-
-        <div *ngFor="let pack of packs.slice(0,2)" class="col-xxl-6 col-xl-6 col-lg-6 col-md-6">
-           <div class="course__item course__item-2 white-bg mb-30 transition-3">
-              <div class="course__thumb fix w-img">
-                 <a [routerLink]="['/course-details']">
-                    <img [src]="pack?.imgUrl" alt="">
-                 </a>
-              </div>
-              <div class="course__content-2">
-                 <h3 class="course__title-2"><a [routerLink]="['/course-details']">{{pack?.libelle}}</a></h3>
-                 <p>{{pack?.description}}</p>
-                 <div class="course__bottom d-sm-flex justify-content-between align-items-center">
-                    <div class="course__teacher-2 d-flex align-items-center">
-                       <div class="course__teacher-thumb-2 mr-20">
-                          <img [src]="pack?.imgUrl" alt="">
-                          <div class="course__teacher-rating">
-                             <i class="icon_star"></i>
-                          </div>
-                       </div>
-                       <div class="course__teacher-info">
-                          <h6><a [routerLink]="['/instructor-details']">{{pack?.level?.libelle}}</a></h6>
-                          <span>{{pack?.nombreCours }} {{'Lesson' | translate}}</span>
-                       </div>
-                    </div>
-                    <div class="course__meta">
-                       <div class="course__lesson">
-                          <span><i class="far fa-book-alt"></i></span>
-                       </div>
-                    </div>
-                 </div>
-              </div>
-           </div>
-        </div>
-
-
-
-
+        <app-prices></app-prices>
      </div>
+
   </div>
 </section>

@@ -312,6 +312,7 @@ import {TestLevelComponent} from './view/etudiant/test-level/test-level.componen
 import {DiscoverLevelComponent} from './view/public/discover-level/discover-level.component';
 import {AdvantagesEngflexyComponent} from './view/public/discover-level/advantages-engflexy/advantages-engflexy.component';
 import {TestLevelInstructionsComponent} from './view/public/discover-level/test-level-instructions/test-level-instructions.component';
+import {TeacherHomeWorkReviewComponent} from './view/prof/home-work/teacher-home-wrok-review/teacher-home-work-review.component';
 
 
 export function createTranslateLoader(http: HttpClient) {
@@ -645,8 +646,7 @@ export function createTranslateLoader(http: HttpClient) {
             DiscoverLevelComponent,
             AdvantagesEngflexyComponent,
             TestLevelInstructionsComponent,
-
-
+            TeacherHomeWorkReviewComponent
         ],
     providers: [
         {provide: LocationStrategy, useClass: PathLocationStrategy},
