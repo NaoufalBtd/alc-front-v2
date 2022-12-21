@@ -101,6 +101,7 @@ import {DiscoverLevelComponent} from './view/public/discover-level/discover-leve
 import {ContactUsMainComponent} from './view/public/home-principale/contact-us/contact-us-main/contact-us-main.component';
 import {MainPaimentComponent} from './view/public/home-principale/paiment/main-paiment/main-paiment.component';
 import {TestLevelInstructionsComponent} from './view/public/discover-level/test-level-instructions/test-level-instructions.component';
+import {ProfesseurEditComponent} from './view/admin/professeur/professeur-edit/professeur-edit.component';
 
 
 @NgModule({
@@ -120,6 +121,7 @@ import {TestLevelInstructionsComponent} from './view/public/discover-level/test-
                     {path: 'view-quiz-etudiant', component: ViewQuizEtudiantComponent},
                     {path: 'inscription', component: InscriptionsComponent},
                     {path: 'teacher-lists', component: ProfesseurListComponent},
+                    {path: 'teacher-lists/teacher', component: ProfesseurEditComponent},
                     {path: 'teacher-lists/schedule', component: ScheduleProfComponent},
                     {path: 'recommend-admin', component: RecommendAdminComponent},
                     {path: 'sessioncours', component: SessioncoursComponent},

@@ -1,108 +1,524 @@
-
-
-<p-dialog [(visible)]="editDialog" [modal]="true" [style]="{width: '90%', height: '90%'}" header="Professor Edit"
-          styleClass="p-fluid">
-    <div style="margin: 15px" class="row m-l-0 m-r-0">
-        <div class="col-sm-4 bg-c-lite-green user-profile">
-            <div class="card-block text-center text-white">
-                <div class="m-b-25"><img [src]="selected?.image" class="img-radius"
-                                         alt="User-Profile-Image"></div>
-                <h6 class="f-w-600">{{selected?.nom}}</h6>
-                <p>{{selected?.username}} </p> <i
-                    class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
+<section style="background-color: #eee;">
+    <div class="container py-5">
+        <div class="row">
+            <div class="col">
+                <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+                    <ol class="breadcrumb mb-0">
+                        <li class="breadcrumb-item"><a [routerLink]="'/admin/parcours'">Home</a></li>
+                        <li class="breadcrumb-item"><a [routerLink]="'/admin/teacher-lists'">Users</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">{{selected?.nom}}</li>
+                    </ol>
+                </nav>
             </div>
         </div>
-        <div class="col-sm-8">
-            <div class="card-block">
-                <p-tabView (onChange)="showTranche()">
-                    <p-tabPanel header="Professor information">
-                        <div class="row">
+
+        <div class="row  rounded-3 p-3 mb-4">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <ul id="myTab1" role="tablist"
+                    class="nav nav-tabs nav-pills with-arrow flex-column flex-sm-row text-center">
+                    <li class="nav-item flex-sm-fill">
+                        <a id="home1-tab" data-toggle="tab" role="tab" aria-controls="home1"
+                           [class.active]="index === 0"
+                           (click)="index = 0"
+                           [attr.aria-selected]="index === 0"
+                           class="nav-link text-uppercase font-weight-bold mr-sm-3
+                        rounded-0 border">Profile</a>
+                    </li>
+
+                    <li class="nav-item flex-sm-fill">
+                        <a id="profile1-tab" data-toggle="tab" role="tab" aria-controls="profile1"
+                           [class.active]="index === 1"
+                           (click)="index = 1; showScheduleDialog()"
+                           [attr.aria-selected]="index === 1"
+                           class="nav-link text-uppercase font-weight-bold mr-sm-3 rounded-0 border">Schedule</a>
+                    </li>
+
+                </ul>
+            </div>
+            <div class="col-md-3"></div>
+        </div>
 
 
+        <div *ngIf="index === 1" class="container">
+            <div class="row">
+                <div style="background: white; padding: 5px;" class="col-md-12">
+                    <table style="padding: 0 22px 10px 0;float: left;" class="property-table">
+                        <tbody>
+                        <tr>
+                            <td style="width: 80%;">
+                                <div>
+                                    <ejs-dropdownlist width='250px' id='scheduletimezone' #timezoneDropdown
+                                                      [dataSource]='timezoneData'
+                                                      (change)='onTimezoneDropDownChange($event)'
+                                                      [value]='dropDownValue'
+                                                      [allowFiltering]="true"
+                                                      [fields]='fields'
+                                                      popupWidth='250'></ejs-dropdownlist>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
 
-                            <div class="col-sm-6">
-                                <p class="m-b-10 f-w-600">Full name</p>
-                                <input [(ngModel)]="selected.nom" autofocus id="lastName" pInputText required
-                                       type="text"/>
-                                <small *ngIf="submitted && !selected.nom" class="p-invalid">Last Name is
-                                    required.</small>
+
+                    <ejs-schedule #scheduleObj cssClass='schedule-block-events'
+                                  width='100%'
+                                  [group]="group"
+                                  (actionComplete)="onActionComplete($event)"
+                                  [timeScale]='timeScale'
+                                  (popupOpen)="onPopupOpen($event)"
+                                  [currentView]="currentView" [selectedDate]="selectedDate"
+                                  [eventSettings]="eventSettings">
+                        <e-resources>
+                            <e-resource field='profsId' title='prenom' name='profs' [dataSource]='profsDataSource'
+                                        [allowMultiple]='true' groupIDField="prenom" textField='prenom' idField='id'
+                                        colorField='#ff8800'>
+                            </e-resource>
+                        </e-resources>
+                        <ng-template #resourceHeaderTemplate let-data>
+                            <div class="template-wrap">
+                                <div class="employee-category">
+                                    <div>
+                                        <img [src]="data.resourceData.image" class="employee-image"/>
+                                        {{data.nom}}
+                                    </div>
+                                    <div class="employee-name">{{data.resourceData.nom }} {{ data.resourceData.prenom}}</div>
+                                </div>
+                            </div>
+                        </ng-template>
+
+                        <e-views>
+                            <e-view option="Day"></e-view>
+                            <e-view option="Week"></e-view>
+                            <e-view option="Month"></e-view>
+                            <e-view option="WorkWeek"></e-view>
+                        </e-views>
+                        <!--     Header template -->
+
+
+                        <ng-template #quickInfoTemplatesFooter let-data>
+                            <div *ngIf="data.elementType == 'cell'" class="e-cell-footer">
+                                <div class="left-button">
+                                    <button class="e-event-details" title="Extra Details"
+                                            (click)="onDetailsClick(editorTemplate)">
+                                        More
+                                        Details
+                                    </button>
+                                </div>
+                            </div>
+                        </ng-template>
+
+                        <ng-template #editorTemplate>
+                            <table class="custom-event-editor" width="100%" cellpadding="5">
+                                <tbody>
+                                <tr>
+                                    <td class="e-textlabel">Start time</td>
+                                    <td colspan="4">
+                                        <p-calendar [style]="{width: '100%',marginBottom: '4%'}" id="start"
+                                                    [(ngModel)]="scheduleProf.startTime" [showTime]="true"
+                                                    name="StartTime"
+                                                    class="e-field"
+                                                    data-name="startTime"
+                                                    [showIcon]="true"
+                                                    inputId="start"></p-calendar>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td class="e-textlabel">End time</td>
+                                    <td colspan="4">
+                                        <p-calendar [style]="{width: '100%',marginBottom: '4%'}" id="end"
+                                                    [(ngModel)]="scheduleProf.endTime" [showTime]="true"
+                                                    name="StartTime"
+                                                    class="e-field"
+                                                    data-name="endTime"
+                                                    [showIcon]="true"
+                                                    inputId="end"></p-calendar>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td class="e-textlabel">Group</td>
+                                    <td colspan="4">
+                                        <p-dropdown [style]="{width: '100%',marginBottom: '4%'}"
+                                                    [(ngModel)]="scheduleProf.groupeEtudiant" [options]="groupeStudent"
+                                                    optionLabel="libelle"
+                                                    class="e-field"
+                                                    data-name="groupeEtudiant"
+                                                    (ngModelChange)="getCourses(scheduleProf.groupeEtudiant)"
+                                                    placeholder="Name of group"></p-dropdown>
+                                    </td>
+                                </tr>
+
+
+                                <tr>
+                                    <td class="e-textlabel">Teacher</td>
+                                    <td colspan="4">
+                                        <p-dropdown [style]="{width: '100%',marginBottom: '4%'}"
+                                                    [(ngModel)]="scheduleProf.prof"
+                                                    [options]="professors"
+                                                    [disabled]="true"
+                                                    optionLabel="nom"
+                                                    class="e-field"
+                                                    data-name="prof"
+                                                    placeholder="Name of Teacher"></p-dropdown>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td class="e-textlabel">Subject</td>
+                                    <td colspan="4">
+                                        <p-dropdown [style]="{width: '100%',marginBottom: '4%'}"
+                                                    [(ngModel)]="scheduleProf.cours"
+                                                    [options]="courses" optionLabel="libelle"
+                                                    class="e-field"
+                                                    data-name="cours"
+                                                    placeholder="subject"></p-dropdown>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td class="e-textlabel">Reference</td>
+                                    <td colspan="4">
+                                        <input [style]="{width: '100%',marginBottom: '4%'}"
+                                               [(ngModel)]="scheduleProf.ref" autofocus
+                                               id="ref" pInputText required type="text"
+                                               class="e-field"
+                                               data-name="ref"/>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td class="e-textlabel">Repeat</td>
+                                    <td colspan="4">
+                                        <p-dropdown [style]="{width: '100%',marginBottom: '4%'}"
+                                                    [(ngModel)]="optionSelected"
+                                                    [options]="repeats" optionLabel="option" class="e-field"
+                                                    data-name="optionSelected"
+                                                    placeholder="Repeat"></p-dropdown>
+                                    </td>
+                                </tr>
+
+
+                                <tr>
+                                    <div class="p-grid " style="width: 150%">
+
+
+                                        <div *ngIf="optionSelected.option === 'Daily' " class="p-col-7">
+                                            <label for="minmax">Repeat every</label>
+                                            <p-inputNumber [(ngModel)]="repeatNumber" [showButtons]="true" id="minmax"
+                                                           inputId="minmax"
+                                                           mode="decimal" [min]="1" [max]="100">
+                                            </p-inputNumber>
+                                            Days
+                                        </div>
+
+
+                                        <div *ngIf="optionSelected.option === 'Daily'" class="p-col-5">
+                                            <label for="icon">Until</label>
+                                            <p-calendar [(ngModel)]="endDate" [showIcon]="true" id="icon"
+                                                        inputId="icon"></p-calendar>
+                                        </div>
+
+
+                                        <div *ngIf=" optionSelected.option === 'Weekly'" class="p-col-12">
+                                            <label for="selectButton">Repeat every</label>
+                                            <p-selectButton id='selectButton' [options]="daysOptions"
+                                                            [(ngModel)]="selectedDays"
+                                                            multiple="multiple"
+                                                            optionLabel="name" optionValue="value"></p-selectButton>
+                                        </div>
+
+
+                                        <div *ngIf="optionSelected.option === 'Weekly'" class="p-col-12">
+                                            <label for="iconDay">Until</label>
+                                            <p-calendar [(ngModel)]="endDate" [showIcon]="true" id="iconDay"
+                                                        inputId="icon"></p-calendar>
+                                        </div>
+
+
+                                        <div class="p-col-12" style="text-align: center;">
+                                            <button
+                                                    class="e-event-create e-text-ellipsis e-control e-btn e-lib e-flat e-primary"
+                                                    title="Save"
+                                                    (click)="onCloseClick() ; save()">
+                                                Save
+                                            </button>
+                                        </div>
+
+
+                                    </div>
+                                </tr>
+
+
+                                </tbody>
+                            </table>
+                        </ng-template>
+
+                    </ejs-schedule>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="index === 0" class="container">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="card mb-4">
+                        <div class="card-body text-center">
+                            <img [src]="selected?.image"
+                                 alt="avatar"
+                                 class="rounded-circle img-fluid" style="width: 150px;">
+                            <h5 class="my-3">{{selected?.nom}}</h5>
+                            <p class="text-muted mb-1">{{selected?.about}}</p>
+                            <p class="text-muted mb-4">{{selected?.addresse}}, {{selected?.ville}}
+                                , {{selected?.country}}</p>
+                            <div class="d-flex justify-content-center mb-2">
+                                <button type="button" class="btn btn-primary">Follow</button>
+                                <button type="button" class="btn btn-outline-primary ms-1">Message</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card mb-4 mb-lg-0">
+                        <div class="card-body p-0">
+                            <ul class="list-group list-group-flush rounded-3">
+                                <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                    <i class="fab fa-skype fa-lg" style="color: #3b5998;"></i>
+                                    <p class="mb-0">{{selected?.skype}}</p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Full Name</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p class="text-muted mb-0">{{selected?.nom}}</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Email</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p class="text-muted mb-0">{{selected?.username}}</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Phone</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p class="text-muted mb-0">{{selected?.numero}}</p>
+                                </div>
+                            </div>
+                            <hr>
+
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Age</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p class="text-muted mb-0">{{selected?.age}}</p>
+                                </div>
+                            </div>
+                            <hr>
+
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">About</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p class="text-muted mb-0">{{selected?.about}}</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Address</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p class="text-muted mb-0">{{selected?.addresse}}, {{selected?.ville}}
+                                        , {{selected?.country}}</p>
+                                </div>
                             </div>
 
-
-                            <div class="col-sm-6 " style="margin-top: 15px;">
-                                <p class="m-b-10 f-w-600">Phone number</p>
-                                <input [(ngModel)]="selected.numero" autofocus id="phoneNumber" pInputText required
-                                       type="text"/>
-                                <small *ngIf="submitted && !selected.numero" class="p-invalid">Phone Number is
-                                    required.</small>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Level</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p class="text-muted mb-0">{{selected?.categorieProf?.level}}</p>
+                                </div>
                             </div>
+                            <hr>
 
-
-                            <div class="col-sm-6 " style="margin-top: 15px;">
-                                <p class="m-b-10 f-w-600">Skype</p>
-                                <input [(ngModel)]="selected.skype" id="phoneNumber" pInputText type="text"/>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Level min</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p class="text-muted mb-0">{{selected?.levelMin?.libelle}}</p>
+                                </div>
                             </div>
+                            <hr>
 
-
-                            <div class="col-sm-6" style="margin-top: 15px;">
-                                <p class="m-b-10 f-w-600">Level max</p>
-                                <p-dropdown [options]="parcoursList" [(ngModel)]="selected.levelMax"
-                                            optionLabel="libelle"></p-dropdown>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Level max</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p class="text-muted mb-0">{{selected?.levelMax?.libelle}}</p>
+                                </div>
                             </div>
-
-
-                            <div class="col-sm-6" style="margin-top: 15px;">
-                                <p class="m-b-10 f-w-600">Level min</p>
-                                <p-dropdown [options]="parcoursList" [(ngModel)]="selected.levelMin"
-                                            optionLabel="libelle"></p-dropdown>
-                            </div>
-
-
-                            <div class="col-sm-6" style="margin-top: 15px;">
-                                <p class="m-b-10 f-w-600">Level</p>
-                                <p-dropdown id="float-input" [options]="categories"
-                                            [(ngModel)]="selected.categorieProf"
-                                            optionLabel="level"></p-dropdown>
-                            </div>
+                            <hr>
 
 
                         </div>
-                    </p-tabPanel>
+                    </div>
+                    <div class="row">
+                        <div *ngIf="!showAddTranche" class="col-md-12">
+                            <div class="card">
+                                <p-table [value]="trancheHoraireProfs">
+                                    <ng-template pTemplate="header">
+                                        <tr>
+                                            <th pSortableColumn="day">Day
+                                                <p-sortIcon field="day"></p-sortIcon>
+                                            </th>
+                                            <th pSortableColumn="startHour">Start hour
+                                                <p-sortIcon field="startHour"></p-sortIcon>
+                                            </th>
+                                            <th pSortableColumn="endHour">End hour
+                                                <p-sortIcon field="endHour"></p-sortIcon>
+                                            </th>
+                                            <th>
+                                                <button (click)="addNewTranche()"
+                                                        class="p-button-rounded   p-button-outlined p-button-sm p-button-success"
+                                                        label="New schedule"
+                                                        pButton pRipple></button>
+                                            </th>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-tranche>
+                                        <tr>
+                                            <td>{{getDay(tranche.day)}}</td>
+                                            <td>{{tranche.startHour}}</td>
+                                            <td>{{tranche.endHour}}</td>
+                                            <td>
+                                                <button (click)="editTranche(tranche)"
+                                                        class="p-button-rounded p-button-success p-mr-2"
+                                                        icon="pi pi-pencil"
+                                                        pButton
+                                                        pRipple></button>
+                                                <button (click)="deleteTranche(tranche)"
+                                                        class="p-button-rounded p-button-danger p-mr-2"
+                                                        icon="pi pi-trash"
+                                                        pButton
+                                                        pRipple></button>
+                                            </td>
+
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                            </div>
+                        </div>
+
+                        <div *ngIf="showAddTranche" class="col-md-12">
+                            <div class="p-grid">
+                                <div class="p-col-12">
+                                    <p-dropdown [options]="daysOptions" [(ngModel)]="selectedDay"
+                                                optionLabel="name"></p-dropdown>
+                                </div>
+                                <div class="p-col-6">
+                                    <label for="startHour">Start hour</label>
+                                    <p-calendar [(ngModel)]="dateDebut" [timeOnly]="true" [hourFormat]="24"
+                                                id="startHour"></p-calendar>
+                                </div>
+
+                                <div class="p-col-6">
+                                    <label for="endHour">End hour</label>
+                                    <p-calendar [(ngModel)]="dateFin" [timeOnly]="true" [hourFormat]="24"
+                                                id="endHour"></p-calendar>
+                                </div>
+                            </div>
 
 
-                    <p-tabPanel *ngIf="!showAddTranche" header="Work hours">
-                        <div class="card">
-                            <p-table [value]="trancheHoraireProfs">
+                            <div class="p-grid">
+                                <div class="p-col-4"></div>
+                                <div class="p-col-4">
+                                    <button [disabled]="(dateFin === undefined )|| (dateFin === undefined)"
+                                            (click)="addHoraire()" class="p-button-rounded table1" icon="pi pi-plus"
+                                            label="Add schedule"
+                                            pButton pRipple></button>
+                                </div>
+                                <div class="p-col-4"></div>
+                            </div>
+
+
+                            <p-table [value]="trancheHoraireProfList">
                                 <ng-template pTemplate="header">
                                     <tr>
-                                        <th pSortableColumn="day">Day
-                                            <p-sortIcon field="day"></p-sortIcon>
+                                        <th>Day</th>
+                                        <th pSortableColumn="datee"> Start hour</th>
+                                        <th pSortableColumn="datee"> End hour</th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template let-e pTemplate="body">
+                                    <tr>
+                                        <td>{{getDay(e?.day)}}</td>
+                                        <td>{{e?.startHour}}</td>
+                                        <td>{{e?.endHour}}</td>
+                                        <td>
+                                            <button (click)="delete(e)" class="p-button-rounded p-button-danger"
+                                                    icon="pi pi-trash"
+                                                    pButton
+                                                    pRipple></button>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+
+                        <div class="col-md-12">
+                            <p-table [value]="categories">
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th pSortableColumn="code">Code
+                                            <p-sortIcon field="code"></p-sortIcon>
                                         </th>
-                                        <th pSortableColumn="startHour">Start hour
-                                            <p-sortIcon field="startHour"></p-sortIcon>
+                                        <th pSortableColumn="level">Level
+                                            <p-sortIcon field="level"></p-sortIcon>
                                         </th>
-                                        <th pSortableColumn="endHour">End hour
-                                            <p-sortIcon field="endHour"></p-sortIcon>
+                                        <th pSortableColumn="lessonRate">Lesson Rate
+                                            <p-sortIcon field="lessonRate"></p-sortIcon>
                                         </th>
                                         <th>
-                                            <button (click)="addNewTranche()"
+                                            <button (click)="addNewLevel()"
                                                     class="p-button-rounded   p-button-outlined p-button-sm p-button-success"
-                                                    label="New schedule"
+                                                    label="New Level"
                                                     pButton pRipple></button>
                                         </th>
                                     </tr>
                                 </ng-template>
-                                <ng-template pTemplate="body" let-tranche>
+                                <ng-template pTemplate="body" let-level>
                                     <tr>
-                                        <td>{{getDay(tranche.day)}}</td>
-                                        <td>{{tranche.startHour}}</td>
-                                        <td>{{tranche.endHour}}</td>
+                                        <td>{{level?.code}}</td>
+                                        <td>{{level?.level}}</td>
+                                        <td>{{level?.lessonRate}}</td>
                                         <td>
-                                            <button (click)="editTranche(tranche)"
+                                            <button (click)="editLevel(level)"
                                                     class="p-button-rounded p-button-success p-mr-2" icon="pi pi-pencil"
                                                     pButton
                                                     pRipple></button>
-                                            <button (click)="deleteTranche(tranche)"
+                                            <button (click)="deleteLevel(level)"
                                                     class="p-button-rounded p-button-danger p-mr-2" icon="pi pi-trash"
                                                     pButton
                                                     pRipple></button>
@@ -112,143 +528,42 @@
                                 </ng-template>
                             </p-table>
                         </div>
-                    </p-tabPanel>
-
-
-                    <p-tabPanel *ngIf="showAddTranche" header="Work hours">
-                        <div class="p-grid">
-                            <div class="p-col-12">
-                                <p-dropdown [options]="daysOptions" [(ngModel)]="selectedDay"
-                                            optionLabel="name"></p-dropdown>
-                            </div>
-                            <div class="p-col-6">
-                                <label for="startHour">Start hour</label>
-                                <p-calendar [(ngModel)]="dateDebut" [timeOnly]="true" [hourFormat]="24"
-                                            id="startHour"></p-calendar>
-                            </div>
-
-                            <div class="p-col-6">
-                                <label for="endHour">End hour</label>
-                                <p-calendar [(ngModel)]="dateFin" [timeOnly]="true" [hourFormat]="24"
-                                            id="endHour"></p-calendar>
-                            </div>
-                        </div>
-
-
-                        <div class="p-grid">
-                            <div class="p-col-4"></div>
-                            <div class="p-col-4">
-                                <button [disabled]="(dateFin === undefined )|| (dateFin === undefined)"
-                                        (click)="addHoraire()" class="p-button-rounded table1" icon="pi pi-plus"
-                                        label="Add schedule"
-                                        pButton pRipple></button>
-                            </div>
-                            <div class="p-col-4"></div>
-                        </div>
-
-
-
-                        <p-table [value]="trancheHoraireProfList">
-                            <ng-template pTemplate="header">
-                                <tr>
-                                    <th>Day</th>
-                                    <th pSortableColumn="datee"> Start hour</th>
-                                    <th pSortableColumn="datee"> End hour</th>
-                                </tr>
-                            </ng-template>
-                            <ng-template let-e pTemplate="body">
-                                <tr>
-                                    <td>{{getDay(e?.day)}}</td>
-                                    <td>{{e?.startHour}}</td>
-                                    <td>{{e?.endHour}}</td>
-                                    <td>
-                                        <button (click)="delete(e)" class="p-button-rounded p-button-danger"
-                                                icon="pi pi-trash"
-                                                pButton
-                                                pRipple></button>
-                                    </td>
-                                </tr>
-                            </ng-template>
-                        </p-table>
-                    </p-tabPanel>
-
-
-                    <p-tabPanel header="Levels">
-                        <p-table [value]="categories">
-                            <ng-template pTemplate="header">
-                                <tr>
-                                    <th pSortableColumn="code">Code
-                                        <p-sortIcon field="code"></p-sortIcon>
-                                    </th>
-                                    <th pSortableColumn="level">Level
-                                        <p-sortIcon field="level"></p-sortIcon>
-                                    </th>
-                                    <th pSortableColumn="lessonRate">Lesson Rate
-                                        <p-sortIcon field="lessonRate"></p-sortIcon>
-                                    </th>
-                                    <th>
-                                        <button (click)="addNewLevel()"
-                                                class="p-button-rounded   p-button-outlined p-button-sm p-button-success"
-                                                label="New Level"
-                                                pButton pRipple></button>
-                                    </th>
-                                </tr>
-                            </ng-template>
-                            <ng-template pTemplate="body" let-level>
-                                <tr>
-                                    <td>{{level?.code}}</td>
-                                    <td>{{level?.level}}</td>
-                                    <td>{{level?.lessonRate}}</td>
-                                    <td>
-                                        <button (click)="editLevel(level)"
-                                                class="p-button-rounded p-button-success p-mr-2" icon="pi pi-pencil"
-                                                pButton
-                                                pRipple></button>
-                                        <button (click)="deleteLevel(level)"
-                                                class="p-button-rounded p-button-danger p-mr-2" icon="pi pi-trash"
-                                                pButton
-                                                pRipple></button>
-                                    </td>
-
-                                </tr>
-                            </ng-template>
-                        </p-table>
-                    </p-tabPanel>
-                </p-tabView>
+                    </div>
+                </div>
             </div>
         </div>
+
+
     </div>
-    <ng-template pTemplate="footer">
-        <button (click)="hideEditDialog()" class="p-button-text" icon="pi pi-times" label="Cancel" pButton
-                style="color: #ee5a6f" pRipple></button>
-        <button (click)="edit()" class="p-button-text " icon="pi pi-check" label="Edit" pButton pRipple
-                style="color: #ee5a6f"></button>
+</section>
 
 
-    </ng-template>
-</p-dialog>
-<p-dialog header="Edit" [(visible)]="displayModal" [modal]="true" [style]="{width: '25vw'}"
+<p-dialog header="Edit" [(visible)]="displayModal" [modal]="true" [style]="{width: '50vw'}"
           [draggable]="false" [resizable]="false">
     <ng-template pTemplate="content">
 
-        <div class="p-grid">
-            <div *ngIf="trancheEdit.id === 0" class="p-col-12">
-                <label for="startHour">Day</label>
-                <p-dropdown [style]="{width:'100%'}" [options]="daysOptions" [(ngModel)]="selectedDay"
-                            optionLabel="name"></p-dropdown>
-            </div>
-            <div class="p-col-12">
-                <label for="startHour2">Start hour</label><br>
-                <p-calendar [style]="{width: '100%'}" [(ngModel)]="dateDebut" [timeOnly]="true" [hourFormat]="24"
-                            id="startHour2"></p-calendar>
-            </div>
+        <div style="padding: 20px" class="container">
+            <div class="p-grid">
+                <div *ngIf="trancheEdit.id === 0" class="p-col-12">
+                    <label>Day</label>
+                    <p-dropdown [style]="{width:'100%'}" [options]="daysOptions" [(ngModel)]="selectedDay"
+                                optionLabel="name"></p-dropdown>
+                </div>
+                <div class="p-col-12">
+                    <label for="startHour2">Start hour</label><br>
+                    <p-calendar [style]="{width: '100%'}" [(ngModel)]="dateDebut" [timeOnly]="true" [hourFormat]="24"
+                                id="startHour2"></p-calendar>
+                </div>
 
-            <div class="p-col-12">
-                <label for="endHour2">End hour</label><br>
-                <p-calendar [style]="{width: '100%'}" [(ngModel)]="dateFin" [timeOnly]="true" [hourFormat]="24"
-                            id="endHour2"></p-calendar>
+                <div class="p-col-12">
+                    <label for="endHour2">End hour</label><br>
+                    <p-calendar [style]="{width: '100%'}" [(ngModel)]="dateFin" [timeOnly]="true" [hourFormat]="24"
+                                id="endHour2"></p-calendar>
+                </div>
             </div>
         </div>
+
+
     </ng-template>
 
     <ng-template pTemplate="footer">
@@ -260,13 +575,6 @@
 </p-dialog>
 
 <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel="stylesheet"/>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
-      crossorigin="anonymous">
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 
 <p-dialog header="Level" [(visible)]="showAddCategoryDialog" [style]="{width: '50vw'}" [baseZIndex]="10000">
 
@@ -274,25 +582,27 @@
         <div class="p-grid">
             <div class="p-col-6">
                 <p class="m-b-10 f-w-600">Code</p>
-                <input [style]="{width: '100%'}" [(ngModel)]="selectedCategory.code" name="code" autofocus id="code" pInputText
+                <input [style]="{width: '100%'}" [(ngModel)]="selectedCategory.code" name="code" autofocus id="code"
+                       pInputText
                        type="text"/>
 
             </div>
             <div class="p-col-6">
                 <p class="m-b-10 f-w-600">Level</p>
-                <input [style]="{width: '100%'}" [(ngModel)]="selectedCategory.level" name="level" autofocus id="levee" pInputText
+                <input [style]="{width: '100%'}" [(ngModel)]="selectedCategory.level" name="level" autofocus id="levee"
+                       pInputText
                        type="text"/>
 
             </div>
             <div class="p-col-6">
                 <p class="m-b-10 f-w-600">Lesson rate</p>
-                <input  [style]="{width: '100%'}" [(ngModel)]="selectedCategory.lessonRate" name="lessonRate" autofocus id="lessonRate" pInputText
+                <input [style]="{width: '100%'}" [(ngModel)]="selectedCategory.lessonRate" name="lessonRate" autofocus
+                       id="lessonRate" pInputText
                        type="text"/>
 
             </div>
         </div>
     </div>
-
 
 
     <ng-template pTemplate="footer">

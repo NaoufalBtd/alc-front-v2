@@ -4,11 +4,7 @@ img{
   border-radius: 25%;
 }
 
-.p-col-12{
-  border-bottom: 3px  solid #607d8b;
-  border-top: 3px  solid #607d8b;
-  background-color: #f4f4f4;
-}
+
 
 .p-grid{
   margin-top: 10px;
@@ -145,4 +141,129 @@ h6 {
   margin: 0 10px 0 0;
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out
+}
+
+/*
+*
+* ==========================================
+* CUSTOM UTIL CLASSES
+* ==========================================
+*
+*/
+
+/* Rounded tabs */
+
+.nav-item{
+  cursor: pointer;
+}
+
+@media (min-width: 576px) {
+  .rounded-nav {
+    border-radius: 50rem !important;
+  }
+}
+
+@media (min-width: 576px) {
+  .rounded-nav .nav-link {
+    border-radius: 50rem !important;
+  }
+}
+
+/* With arrow tabs */
+
+.with-arrow .nav-link.active {
+  position: relative;
+}
+
+.with-arrow .nav-link.active::after {
+  content: '';
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid #263238;
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: block;
+}
+
+/* lined tabs */
+
+.lined .nav-link {
+  border: none;
+  border-bottom: 3px solid transparent;
+}
+
+.lined .nav-link:hover {
+  border: none;
+  border-bottom: 3px solid transparent;
+}
+
+.lined .nav-link.active {
+  background: none;
+  color: #ff725e;
+  border-color: #263238;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+  color: #fff;
+  background-color: #263238;
+}
+
+
+
+
+
+.nav-pills .nav-link {
+  color: #263238;
+}
+.text-uppercase {
+  letter-spacing: 0.1em;
+}
+
+.schedule-block-events.e-schedule .e-timeline-view .e-appointment .template-wrap .subject {
+  padding: 10px 25px;
+}
+
+.schedule-block-events .subject {
+  text-align: center;
+}
+
+.schedule-block-events.e-schedule .template-wrap {
+  width: 100%;
+}
+
+.schedule-block-events.e-schedule .e-vertical-view .e-resource-cells {
+  height: 58px;
+}
+
+.schedule-block-events.e-block-appointment .subject,
+.schedule-block-events.e-schedule .e-vertical-view .e-appointment .template-wrap .subject {
+  padding-top: 10px;
+}
+
+.schedule-block-events.e-schedule .e-timeline-view .e-resource-left-td,
+.schedule-block-events.e-schedule .e-timeline-month-view .e-resource-left-td {
+  width: 170px;
+}
+
+.schedule-block-events.e-schedule .e-resource-cells.e-child-node .employee-category,
+.schedule-block-events.e-schedule .e-resource-cells.e-child-node .employee-name {
+  padding: 5px
+}
+
+.schedule-block-events.e-schedule .employee-image {
+  width: 45px;
+  height: 40px;
+  float: left;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.schedule-block-events.e-schedule .employee-name {
+  font-size: 13px;
+}
+
+.schedule-block-events.e-schedule .employee-designation {
+  font-size: 10px;
 }

@@ -63,3 +63,33 @@
   padding-top: 20px;
   height: 370px;
 }
+
+.badge-v {
+  background: #C8E6C9;
+  color: #256029;
+  border-radius: 2px;
+  padding: 0.25em 0.5rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: .3px;
+}
+
+.badge-nv {
+  background: #ffb3b3;
+  color: #ff3333;
+  border-radius: 2px;
+  padding: 0.25em 0.5rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: .3px;
+}
+small{
+  color: red;font-weight: bold;
+
+}
+
+.form-control.ng-touched.ng-valid{
+  outline: 1px solid green;
+}

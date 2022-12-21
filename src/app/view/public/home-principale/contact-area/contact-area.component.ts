@@ -75,19 +75,14 @@ export class ContactAreaComponent implements OnInit {
                 this.messageService.add({
                     severity: 'success',
                     summary: 'Successful',
-                    detail: 'Registration added, please check your email to get your password.',
+                    detail: 'Registration sent successfully, We will contact you as soon as possible thank you.',
                     life: 3000
                 });
-                console.log(response);
-                this.authService.saveToken(response.token);
-                this.authService.addUserToLocalCache(response);
-                this.loginService.hasloged = true;
-                this.router.navigate(['prof/home']);
             }, error => {
                 this.messageService.add({
                     severity: 'error',
                     summary: 'Warning',
-                    detail: error?.error?.message,
+                    detail: error?.error?.message || 'Something went wrong, please try again.',
                     life: 3000
                 });
             });
