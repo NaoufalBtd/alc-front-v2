@@ -29,6 +29,8 @@ import {Cours} from '../../../../controller/model/cours.model';
 import {ScheduleService} from '../../../../controller/service/schedule.service';
 import {TimePickerComponent} from '@syncfusion/ej2-angular-calendars';
 import {ParcoursService} from '../../../../controller/service/parcours.service';
+import {AdminService} from '../../../../controller/service/admin.service';
+import {AnimationService} from '../../../../controller/service/animation.service';
 
 @Component({
     selector: 'app-professeur-edit',
@@ -55,9 +57,11 @@ export class ProfesseurEditComponent implements OnInit {
     constructor(private messageService: MessageService,
                 private trancheHoraireProfService: TrancheHoraireProfService,
                 private classRoomService: ClassRoomService,
+                private animation: AnimationService,
                 private service: ProfessorService,
                 private scheduleService: ScheduleService,
                 private parcourService: ParcoursService,
+                private adminService: AdminService,
                 private confirmationService: ConfirmationService) {
     }
 
@@ -815,4 +819,62 @@ export class ProfesseurEditComponent implements OnInit {
         );
     }
 
+    allowUser(allow: boolean, text: string) {
+        this.confirmationService.confirm({
+            message: 'Are you sure you want to ' + text + ' this teacher ?',
+            header: 'Confirm',
+            icon: 'pi pi-exclamation-triangle',
+            accept: () => {
+                this.selected.enabled = allow;
+                this.adminService.allowTeachers(this.selected).subscribe(
+                    data => {
+                        console.log(data);
+                        this.messageService.add({
+                            severity: 'success',
+                            detail: 'Teacher is ' + text,
+                            life: 3000
+                        });
+                    }, error => {
+                        console.log(error);
+                        this.messageService.add({
+                            severity: 'error',
+                            detail: error?.error?.message || 'Something went wrong, please try again.',
+                            life: 3000
+                        });
+                    }
+                );
+            }
+        });
+    }
+
+    lockUser(lock: boolean, text: string) {
+        this.confirmationService.confirm({
+            message: 'Are you sure you want to ' + text + ' this teacher ?',
+            header: 'Confirm',
+            icon: 'pi pi-exclamation-triangle',
+            accept: () => {
+                this.animation.showAnimation = true;
+                this.selected.accountNonLocked = lock;
+                this.adminService.lockTeacher(this.selected).subscribe(
+                    data => {
+                        this.selected = data;
+                        this.animation.showAnimation = false;
+                        this.messageService.add({
+                            severity: 'success',
+                            detail: 'Teacher is ' + text,
+                            life: 3000
+                        });
+                    }, error => {
+                        this.animation.showAnimation = false;
+                        console.log(error);
+                        this.messageService.add({
+                            severity: 'error',
+                            detail: error?.error?.message || 'Something went wrong, please try again.',
+                            life: 3000
+                        });
+                    }
+                );
+            }
+        });
+    }
 }

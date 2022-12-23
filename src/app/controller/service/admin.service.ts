@@ -8,6 +8,7 @@ import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
 import {User} from '../model/user.model';
 import {ParcoursService} from './parcours.service';
+import {Prof} from '../model/prof.model';
 
 @Injectable({
     providedIn: 'root'
@@ -74,7 +75,7 @@ export class AdminService {
     }
 
     public saveData(): Observable<string> {
-         return this.http.get<string>(this.url + 'app');
+        return this.http.get<string>(this.url + 'app');
     }
 
     signInWithGoogle() {
@@ -83,5 +84,13 @@ export class AdminService {
                 console.log(data);
             }
         );
+    }
+
+    allowTeachers(selected: Prof): Observable<Prof> {
+        return this.http.post<Prof>(this.adminUrl + 'user/allow', selected);
+    }
+
+    lockTeacher(selected: Prof): Observable<Prof> {
+        return this.http.post<Prof>(this.adminUrl + 'user/lock', selected);
     }
 }

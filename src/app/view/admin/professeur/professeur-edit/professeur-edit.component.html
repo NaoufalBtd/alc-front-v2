@@ -5,7 +5,7 @@
                 <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
                     <ol class="breadcrumb mb-0">
                         <li class="breadcrumb-item"><a [routerLink]="'/admin/parcours'">Home</a></li>
-                        <li class="breadcrumb-item"><a [routerLink]="'/admin/teacher-lists'">Users</a></li>
+                        <li class="breadcrumb-item"><a [routerLink]="'/admin/teacher-lists'">Teachers</a></li>
                         <li class="breadcrumb-item active" aria-current="page">{{selected?.nom}}</li>
                     </ol>
                 </nav>
@@ -272,10 +272,6 @@
                             <p class="text-muted mb-1">{{selected?.about}}</p>
                             <p class="text-muted mb-4">{{selected?.addresse}}, {{selected?.ville}}
                                 , {{selected?.country}}</p>
-                            <div class="d-flex justify-content-center mb-2">
-                                <button type="button" class="btn btn-primary">Follow</button>
-                                <button type="button" class="btn btn-outline-primary ms-1">Message</button>
-                            </div>
                         </div>
                     </div>
 
@@ -283,9 +279,42 @@
                         <div class="card-body p-0">
                             <ul class="list-group list-group-flush rounded-3">
                                 <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                                    <i class="fab fa-skype fa-lg" style="color: #3b5998;"></i>
+                                    <i class="fab fa-skype fa-md" style="color: #3b5998;"></i>
                                     <p class="mb-0">{{selected?.skype}}</p>
                                 </li>
+
+                                <li *ngIf="selected?.enabled"
+                                    class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                    <i class="fa fa-solid fa-badge-check" style="color: green;">
+                                        ENABLED
+                                    </i>
+
+                                    <div class="mb-0">
+                                        <button (click)="allowUser(false, 'disable')" type="button" class="btn btn-danger">block</button>
+                                    </div>
+                                </li>
+
+                                <li *ngIf="!selected?.enabled"
+                                    class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                    <i class="fa fa-solid fa-ban" style="color: red;">
+                                        DISABLED
+                                    </i>
+                                    <div class="mb-0">
+                                        <button (click)="allowUser(true, 'enable')" type="button" class="btn btn-success">allow</button>
+                                    </div>
+                                </li>
+
+                                <li *ngIf="!selected?.accountNonLocked"
+                                    class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                    <i class="fa fa-solid fa-lock-alt" style="color: red;">
+                                        Account locked
+                                    </i>
+                                    <div class="mb-0">
+                                        <button (click)="lockUser(true, 'unlock')" type="button" class="btn btn-success">unlock</button>
+                                    </div>
+                                </li>
+
+
                             </ul>
                         </div>
                     </div>

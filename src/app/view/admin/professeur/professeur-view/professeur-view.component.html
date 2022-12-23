@@ -1,48 +1,3 @@
-<!--
-<p-dialog [(visible)]="viewDialog" [modal]="true" [style]="{width: '450px'}" header="Professor Details"
-          styleClass="p-fluid">
-    <ng-template pTemplate="content">
-        <p-tabView>
-            <p-tabPanel header="Agent information">
-
-                <div class="p-field">
-                    <label for="firstName">Firstfff Name</label>
-                    <input [(ngModel)]="selected.prenom" disabled id="firstName" pInputText type="text"/>
-                </div>
-                <div class="p-field">
-                    <label for="lastName">Last Name</label>
-                    <input [(ngModel)]="selected.nom" disabled id="lastName" pInputText type="text"/>
-                </div>
-
-                <div class="p-field">
-                    <label for="reference">UserName</label>
-                    <input [(ngModel)]="selected.username" disabled id="reference" pInputText type="text"/>
-                </div>
-
-                <div class="p-field">
-                    <label for="phoneNumber">Phone Number</label>
-                    <input [(ngModel)]="selected.numero" disabled id="phoneNumber" pInputText type="text"/>
-                </div>
-
-                <div class="p-field">
-                    <label for="address">Address</label>
-                    <input [(ngModel)]="selected.addresse" disabled id="address" pInputText type="text"/>
-                </div>
-
-
-            </p-tabPanel>
-
-
-        </p-tabView>
-
-    </ng-template>
-
-    <ng-template pTemplate="footer">
-        <button (click)="hideViewDialog()" class="p-button-text" icon="pi pi-times" label="Fermer" pButton
-                pRipple></button>
-    </ng-template>
-</p-dialog>
--->
 
 <p-dialog [(visible)]="viewDialog" [modal]="true" [style]="{width: '70vw'}" header="Professor Edit"
           styleClass="p-fluid">
@@ -124,11 +79,4 @@
 
 
 </p-dialog>
-
-<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel="stylesheet" />
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
-      crossorigin="anonymous">
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 
