@@ -1,191 +1,210 @@
-<div class="p-field">
-    <div class="p-grid">
-        <div class="p-col-6">
-            <div class="p-card">
-                <div class="p-card-title ">
-                    <h3 style="text-align: center;">Individual Pack</h3>
-                </div>
-                <div class="p-card-body">
-                    <div class="p-grid">
-                        <div class="p-col-4">
-                            <button class="p-button-primary p-mr-2 p-mb-2 " icon="pi pi-plus" label="New"
-                                    pButton
-                                    (click)="showindividual()"
-                                    pRipple style="width: 90px"></button>
-                        </div>
-                    </div>
-                    <div class="p-grid">
-                        <div class="p-col-3">
-                            <input [style]="{width: '100%'}" [(ngModel)]="this.packStudentServie.packstudentVo.code"
-                                   type="text" pInputText placeholder="code">
-                        </div>
-                        <div class="p-col-3">
-                            <input [style]="{width: '100%'}" [(ngModel)]="this.packStudentServie.packstudentVo.prix"
-                                   type="number" pInputText placeholder="prix">
-                        </div>
-                        <div class="p-col-3">
-                            <input [style]="{width: '100%'}"
-                                   [(ngModel)]="this.packStudentServie.packstudentVo.nombreCours" type="number"
-                                   pInputText placeholder="nombre cours">
-                        </div>
-                        <div class="p-col-3">
-                            <input [style]="{width: '100%'}" [(ngModel)]="this.packStudentServie.packstudentVo.libelle"
-                                   type="text" pInputText placeholder="libelle">
-                        </div>
-                        <div class="p-col-3">
-                            <input [style]="{width: '100%'}"
-                                   [(ngModel)]="this.packStudentServie.packstudentVo.totalStudents" type="number"
-                                   pInputText placeholder="total Students">
-                        </div>
-                        <div class="p-col-1">
-                            <p-button [style]="{width: '100%'}" icon="pi pi-search"
-                                      (click)="findBycreteria(false)"></p-button>
-                        </div>
-                    </div>
-                    <div class="p-grid">
-                        <p-table responsiveLayout="scroll" [value]="packstudentIndividialList">
-                            <ng-template pTemplate="header">
-                                <tr>
-                                    <th>Code</th>
-                                    <th>libelle</th>
-                                    <th>Nombre de cours</th>
-                                    <th>Prix</th>
-                                    <th>Total Students</th>
-                                    <th>Action</th>
-                                </tr>
-                            </ng-template>
-                            <ng-template pTemplate="body" let-c>
-                                <tr>
-                                    <td>{{c.code}}</td>
-                                    <td>{{c.libelle}}</td>
-                                    <td>{{c.nombreCours}}</td>
-                                    <td>{{c.prix}}</td>
-                                    <td>{{c.totalStudents}}</td>
-                                    <td>
-                                        <button class="p-button-rounded p-button-success p-mr-2" icon="pi pi-pencil"
-                                                pButton
-                                                (click)="showindividualforupdate(c)"
-                                                pRipple></button>
-                                        <button class="p-button-rounded p-button-danger p-mr-2" icon="pi pi-trash"
-                                                pButton
-                                                (click)="deletebycode(c)"
-                                                pRipple></button>
-                                    </td>
+<p-tabView styleClass="tabview-custom">
+    <p-tabPanel>
+        <ng-template pTemplate="header">
+            <i class="fas fa-books m-2"></i>
+            <span>Packs</span>
+        </ng-template>
 
-                                </tr>
-                            </ng-template>
-                        </p-table>
+        <div class="p-field">
+            <div class="p-grid">
+                <div class="p-col-6">
+                    <div class="p-card">
+                        <div class="p-card-title ">
+                            <h3 style="text-align: center;">Individual Pack</h3>
+                        </div>
+                        <div class="p-card-body">
+                            <div class="p-grid">
+                                <div class="p-col-4">
+                                    <button class="p-button-primary p-mr-2 p-mb-2 " icon="pi pi-plus" label="New"
+                                            pButton
+                                            (click)="showindividual()"
+                                            pRipple style="width: 90px"></button>
+                                </div>
+                            </div>
+                            <div class="p-grid">
+                                <div class="p-col-3">
+                                    <input [style]="{width: '100%'}"
+                                           [(ngModel)]="this.packStudentServie.packstudentVo.code"
+                                           type="text" pInputText>
+                                </div>
+                                <div class="p-col-3">
+                                    <input [style]="{width: '100%'}"
+                                           [(ngModel)]="this.packStudentServie.packstudentVo.nombreCours" type="number"
+                                           pInputText>
+                                </div>
+                                <div class="p-col-3">
+                                    <input [style]="{width: '100%'}"
+                                           [(ngModel)]="this.packStudentServie.packstudentVo.libelle"
+                                           type="text" pInputText>
+                                </div>
+                                <div class="p-col-3">
+                                    <input [style]="{width: '100%'}"
+                                           [(ngModel)]="this.packStudentServie.packstudentVo.totalStudents"
+                                           type="number"
+                                           pInputText>
+                                </div>
+                                <div class="p-col-1">
+                                    <p-button [style]="{width: '100%'}" icon="pi pi-search"
+                                              (click)="findBycreteria(false)"></p-button>
+                                </div>
+                            </div>
+                            <div class="p-grid">
+                                <p-table responsiveLayout="scroll" [value]="packstudentIndividialList">
+                                    <ng-template pTemplate="header">
+                                        <tr>
+                                            <th>Code</th>
+                                            <th>libelle</th>
+                                            <th>Nombre de cours</th>
+                                            <th>Price</th>
+                                            <th>Total Students</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-c>
+                                        <tr>
+                                            <td>{{c.code}}</td>
+                                            <td>{{c.libelle}}</td>
+                                            <td>{{c.nombreCours}}</td>
+                                            <td>{{c.price?.price}}</td>
+                                            <td>{{c.totalStudents}}</td>
+                                            <td>
+                                                <button class="p-button-rounded p-button-success p-mr-2"
+                                                        icon="pi pi-pencil"
+                                                        pButton
+                                                        (click)="showindividualforupdate(c)"
+                                                        pRipple></button>
+                                                <button class="p-button-rounded p-button-danger p-mr-2"
+                                                        icon="pi pi-trash"
+                                                        pButton
+                                                        (click)="deletebycode(c)"
+                                                        pRipple></button>
+                                            </td>
+
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                            </div>
+                        </div>
+                        <div></div>
                     </div>
                 </div>
-                <div></div>
+                <div class="p-col-6">
+                    <div class="p-card">
+                        <div class="p-card-title ">
+                            <h3 style="text-align: center;">Groupe Pack</h3>
+                        </div>
+                        <div class="p-card-body">
+                            <div class="p-grid">
+                                <div class="p-col-4">
+                                    <button class="p-button-primary p-mr-2 p-mb-2 " icon="pi pi-plus" label="New"
+                                            pButton
+                                            (click)="showgroupe()"
+                                            pRipple style="width: 90px"></button>
+                                </div>
+                            </div>
+                            <div class="p-grid">
+                                <div class="p-col-3">
+                                    <input [(ngModel)]="this.packStudentServie.packstudentVo.code"
+                                           [style]="{width: '100%'}"
+                                           type="text" pInputText>
+                                </div>
+
+
+                                <div class="p-col-3">
+                                    <input [(ngModel)]="this.packStudentServie.packstudentVo.nombreCours"
+                                           [style]="{width: '100%'}"
+                                           type="number" pInputText>
+                                </div>
+
+
+                                <div class="p-col-3">
+                                    <input [(ngModel)]="this.packStudentServie.packstudentVo.libelle"
+                                           [style]="{width: '100%'}"
+                                           type="text" pInputText>
+                                </div>
+                                <div class="p-col-3">
+                                    <input [(ngModel)]="this.packStudentServie.packstudentVo.totalStudents"
+                                           [style]="{width: '100%'}"
+                                           type="number" pInputText>
+                                </div>
+                                <div class="p-col-1">
+                                    <p-button icon="pi pi-search" (click)="findBycreteria(true)"></p-button>
+                                </div>
+                            </div>
+                            <div class="p-grid">
+                                <p-table responsiveLayout="scroll" [value]="packstudentgroupeList">
+                                    <ng-template pTemplate="header">
+                                        <tr>
+                                            <th>Code</th>
+                                            <th>libelle</th>
+                                            <th>Nombre de cours</th>
+                                            <th>Price</th>
+                                            <th>Total Students</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-c>
+                                        <tr>
+                                            <td>{{c.code}}</td>
+                                            <td>{{c.libelle}}</td>
+                                            <td>{{c.nombreCours}}</td>
+                                            <td>{{c.price?.price}}</td>
+                                            <td>{{c.totalStudents}}</td>
+                                            <td>
+                                                <button class="p-button-rounded p-button-success p-mr-2"
+                                                        icon="pi pi-pencil"
+                                                        pButton
+                                                        (click)="showgroupeforUpdate(c)"
+                                                        pRipple></button>
+                                                <button class="p-button-rounded p-button-danger p-mr-2"
+                                                        icon="pi pi-trash"
+                                                        pButton
+                                                        (click)="deletebycode(c)"
+                                                        pRipple></button>
+                                            </td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                            </div>
+                        </div>
+                        <div></div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="p-col-6">
-            <div class="p-card">
-                <div class="p-card-title ">
-                    <h3 style="text-align: center;">Groupe Pack</h3>
-                </div>
-                <div class="p-card-body">
-                    <div class="p-grid">
-                        <div class="p-col-4">
-                            <button class="p-button-primary p-mr-2 p-mb-2 " icon="pi pi-plus" label="New"
-                                    pButton
-                                    (click)="showgroupe()"
-                                    pRipple style="width: 90px"></button>
-                        </div>
-                    </div>
-                    <div class="p-grid">
-                        <div class="p-col-3">
-                            <input [(ngModel)]="this.packStudentServie.packstudentVo.code" [style]="{width: '100%'}"
-                                   type="text" pInputText placeholder="code">
-                        </div>
+
+    </p-tabPanel>
+
+    <p-tabPanel header="Header II">
+        <ng-template pTemplate="header">
+            <i class="far fa-money-check-edit-alt m-2"></i>
+            <span>Prices</span>
+        </ng-template>
+        <app-create-price></app-create-price>
+
+    </p-tabPanel>
 
 
-                        <div class="p-col-3">
-                            <input [(ngModel)]="this.packStudentServie.packstudentVo.prix" [style]="{width: '100%'}"
-                                   type="number" pInputText placeholder="prix">
-                        </div>
+</p-tabView>
 
 
-                        <div class="p-col-3">
-                            <input [(ngModel)]="this.packStudentServie.packstudentVo.nombreCours"
-                                   [style]="{width: '100%'}"
-                                   type="number" pInputText placeholder="nombre cours">
-                        </div>
-
-
-                        <div class="p-col-3">
-                            <input [(ngModel)]="this.packStudentServie.packstudentVo.libelle" [style]="{width: '100%'}"
-                                   type="text" pInputText placeholder="libelle">
-                        </div>
-                        <div class="p-col-3">
-                            <input [(ngModel)]="this.packStudentServie.packstudentVo.totalStudents"
-                                   [style]="{width: '100%'}"
-                                   type="number" pInputText placeholder="total Students">
-                        </div>
-                        <div class="p-col-1">
-                            <p-button icon="pi pi-search" (click)="findBycreteria(true)"></p-button>
-                        </div>
-                    </div>
-                    <div class="p-grid">
-                        <p-table responsiveLayout="scroll" [value]="packstudentgroupeList">
-                            <ng-template pTemplate="header">
-                                <tr>
-                                    <th>Code</th>
-                                    <th>libelle</th>
-                                    <th>Nombre de cours</th>
-                                    <th>Prix</th>
-                                    <th>Total Students</th>
-                                    <th>Action</th>
-                                </tr>
-                            </ng-template>
-                            <ng-template pTemplate="body" let-c>
-                                <tr>
-                                    <td>{{c.code}}</td>
-                                    <td>{{c.libelle}}</td>
-                                    <td>{{c.nombreCours}}</td>
-                                    <td>{{c.prix}}</td>
-                                    <td>{{c.totalStudents}}</td>
-                                    <td>
-                                        <button class="p-button-rounded p-button-success p-mr-2" icon="pi pi-pencil"
-                                                pButton
-                                                (click)="showgroupeforUpdate(c)"
-                                                pRipple></button>
-                                        <button class="p-button-rounded p-button-danger p-mr-2" icon="pi pi-trash"
-                                                pButton
-                                                (click)="deletebycode(c)"
-                                                pRipple></button>
-                                    </td>
-                                </tr>
-                            </ng-template>
-                        </p-table>
-                    </div>
-                </div>
-                <div></div>
-            </div>
-        </div>
-
-    </div>
-</div>
-
-
-<p-dialog header="Add pack for one student" [style]="{width: '50vw'}" [(visible)]="displayPackIndividual">
+<p-dialog header="Add pack for one student" [style]="{width: '70vw'}" [(visible)]="displayPackIndividual">
     <div class="p-grid" style="padding: 10px">
-        <div class="p-col-6">
-            <label for="1"><strong>code</strong></label>
-            <input [style]="{width: '100%'}" class="p-mb-2 p-mr-2" type="text" pInputText placeholder="code"
+        <div class="p-col-4">
+            <label ><strong>code</strong></label>
+            <input [style]="{width: '100%'}" class="p-mb-2 p-mr-2" type="text" pInputText
                    [(ngModel)]="this.packStudentServie.packstudentIndividial.code" required autofocus>
         </div>
 
 
-        <div class="p-col-6">
-            <label for="1"><strong>libelle</strong></label>
-            <input [style]="{width: '100%'}" class="p-mb-2 p-mr-2" type="text" pInputText placeholder="libelle"
+        <div class="p-col-4">
+            <label ><strong>libelle</strong></label>
+            <input [style]="{width: '100%'}" class="p-mb-2 p-mr-2" type="text" pInputText
                    [(ngModel)]="this.packStudentServie.packstudentIndividial.libelle" required autofocus>
         </div>
 
-        <div class="p-col-6">
-            <label for="1"><strong>Levels</strong></label>
+        <div class="p-col-4">
+            <label ><strong>Levels</strong></label>
             <p-dropdown [options]="parcours" [(ngModel)]="packstudentIndividial.level"
                         [style]="{'width': '100%'}"
                         optionLabel="libelle" [filter]="true" filterBy="libelle" [showClear]="true"
@@ -193,69 +212,65 @@
             </p-dropdown>
         </div>
 
+        <div class="p-col-4">
+            <label><strong>Price</strong></label>
 
-        <div class="p-col-6">
-            <label for="1"><strong>Url image</strong></label>
-            <input [style]="{width: '100%'}" class="p-mb-2 p-mr-2" type="text" pInputText placeholder="Image url"
+            <p-dropdown [options]="priceList" [(ngModel)]="this.packStudentServie.packstudentIndividial.price"
+                        [style]="{'width': '100%'}"
+                        optionLabel="lib" [filter]="true" filterBy="lib" [showClear]="true"
+                        placeholder="Select a price">
+            </p-dropdown>
+
+        </div>
+
+        <div class="p-col-4">
+            <label ><strong>Url image</strong></label>
+            <input [style]="{width: '100%'}" class="p-mb-2 p-mr-2" type="text" pInputText
                    [(ngModel)]="this.packStudentServie.packstudentIndividial.imgUrl" required autofocus>
         </div>
 
 
-        <div class="p-col-6">
-            <label for="1"><strong>Description</strong></label>
+        <div class="p-col-4">
+            <label ><strong>Description</strong></label>
             <textarea [style]="{width: '100%'}" rows="2" cols="30" name="description"
                       [(ngModel)]="packstudentIndividial.description"
                       pInputTextarea [autoResize]="false"></textarea>
         </div>
 
 
-        <div class="p-col-6">
-            <label for="1"><strong>nombre de cours</strong></label>
+      
+
+
+
+
+        <div class="p-col-4">
+            <label><strong>Rating</strong></label>
             <input [style]="{width: '100%'}" class="p-mb-2 p-mr-2" type="number" pInputText
-                   placeholder="Nombre de cours"
-                   [(ngModel)]="this.packStudentServie.packstudentIndividial.nombreCours" required autofocus>
-        </div>
-
-        <div class="p-col-6">
-            <label for="2"><strong>Price</strong></label>
-            <input [style]="{width: '100%'}" class="p-mb-2 p-mr-2" type="number" pInputText placeholder="Prix"
-                   [(ngModel)]="this.packStudentServie.packstudentIndividial.prix" required autofocus>
-        </div>
-
-        <div class="p-col-6">
-            <label for="2"><strong>Old price</strong></label>
-            <input [style]="{width: '100%'}" class="p-mb-2 p-mr-2" type="number" pInputText placeholder="Prix"
-                   [(ngModel)]="this.packStudentServie.packstudentIndividial.oldPrice" required autofocus>
-        </div>
-
-        <div class="p-col-6">
-            <label for="2"><strong>Rating</strong></label>
-            <input [style]="{width: '100%'}" class="p-mb-2 p-mr-2" type="number" pInputText placeholder="Prix"
                    [(ngModel)]="this.packStudentServie.packstudentIndividial.rating" required autofocus>
         </div>
 
-        <div class="p-col-6">
-            <label for="1"><strong>Why take this course?</strong></label>
+        <div class="p-col-4">
+            <label ><strong>Why take this course?</strong></label>
             <textarea [style]="{width: '100%'}" rows="2" cols="30" name="description"
                       [(ngModel)]="packstudentIndividial.whyTakeThisCourse"
                       pInputTextarea [autoResize]="false"></textarea>
         </div>
 
-        <div class="p-col-6">
-            <label for="1"><strong>What will you be able to do ?</strong></label>
+        <div class="p-col-4">
+            <label ><strong>What will you be able to do ?</strong></label>
             <textarea [style]="{width: '100%'}" rows="2" cols="30" name="description"
                       [(ngModel)]="packstudentIndividial.expectations"
                       pInputTextarea [autoResize]="false"></textarea>
         </div>
 
-        <div class="p-col-6">
-            <label for="1"><strong>Pre-requisites</strong></label>
+        <div class="p-col-4">
+            <label ><strong>Pre-requisites</strong></label>
             <textarea [style]="{width: '100%'}" rows="2" cols="30" name="description"
                       [(ngModel)]="packstudentIndividial.preRequisites"
                       pInputTextarea [autoResize]="false"></textarea>
         </div>
 
-        <div class="p-col-6">
+        <div class="p-col-4">
             <button class="p-button-primary p-mr-2 p-mb-2 " icon="pi pi-plus" label="Add"
                     pButton
                     (click)="saveIndividualPack()"
@@ -265,18 +280,18 @@
 </p-dialog>
 
 
-<p-dialog header="Update pack for one student" [style]="{width: '50vw'}" [(visible)]="displayPackIndividualforUpdate">
+<p-dialog header="Update pack for one student" [style]="{width: '70vw'}" [(visible)]="displayPackIndividualforUpdate">
     <div class="p-grid" style="padding: 10px">
 
 
-        <div class="p-col-6">
-            <label for="1"><strong>libelle</strong></label>
-            <input [style]="{width: '100%'}" class="p-mb-2 p-mr-2" type="text" pInputText placeholder="code"
+        <div class="p-col-4">
+            <label ><strong>libelle</strong></label>
+            <input [style]="{width: '100%'}" class="p-mb-2 p-mr-2" type="text" pInputText
                    [(ngModel)]="this.packStudentServie.packstudentIndividial.libelle" required autofocus>
         </div>
 
-        <div class="p-col-6">
-            <label for="1"><strong>Levels</strong></label>
+        <div class="p-col-4">
+            <label ><strong>Levels</strong></label>
             <p-dropdown [options]="parcours" [(ngModel)]="packstudentIndividial.level"
                         [style]="{'width': '100%'}"
                         optionLabel="libelle" [filter]="true" filterBy="libelle" [showClear]="true"
@@ -284,68 +299,63 @@
             </p-dropdown>
         </div>
 
-        <div class="p-col-6">
-            <label for="1"><strong>Url image</strong></label>
-            <input [style]="{width: '100%'}" class="p-mb-2 p-mr-2" type="text" pInputText placeholder="Image url"
+
+        <div class="p-col-4">
+            <label><strong>Price</strong></label>
+                        <p-dropdown [options]="priceList" [(ngModel)]="this.packStudentServie.packstudentIndividial.price"
+                                    [style]="{'width': '100%'}"
+                                    optionLabel="lib" [filter]="true" filterBy="lib" [showClear]="true"
+                                    placeholder="Select a price">
+                        </p-dropdown>
+
+        </div>
+
+
+        <div class="p-col-4">
+            <label ><strong>Url image</strong></label>
+            <input [style]="{width: '100%'}" class="p-mb-2 p-mr-2" type="text" pInputText
                    [(ngModel)]="packstudentIndividial.imgUrl" required autofocus>
         </div>
 
 
-        <div class="p-col-6">
-            <label for="1"><strong>Description</strong></label>
+        <div class="p-col-4">
+            <label ><strong>Description</strong></label>
             <textarea [style]="{width: '100%'}" rows="2" cols="30" name="description"
                       [(ngModel)]="packstudentIndividial.description"
                       pInputTextarea [autoResize]="false"></textarea>
         </div>
 
 
-        <div class="p-col-6">
-            <label for="2"><strong>Price</strong></label>
-            <input [style]="{width: '100%'}" class="p-mb-2 p-mr-2" type="number" pInputText placeholder="Prix"
-                   [(ngModel)]="this.packStudentServie.packstudentIndividial.prix"
-                   required autofocus>
-        </div>
-        <div class="p-col-6">
-            <label for="2"><strong>Old price</strong></label>
-            <input [style]="{width: '100%'}" class="p-mb-2 p-mr-2" type="number" pInputText placeholder="Prix"
-                   [(ngModel)]="this.packStudentServie.packstudentIndividial.oldPrice" required autofocus>
-        </div>
 
-        <div class="p-col-6">
-            <label for="2"><strong>Rating</strong></label>
-            <input [style]="{width: '100%'}" class="p-mb-2 p-mr-2" type="number" pInputText placeholder="Prix"
+
+        <div class="p-col-4">
+            <label><strong>Rating</strong></label>
+            <input [style]="{width: '100%'}" class="p-mb-2 p-mr-2" type="number" pInputText
                    [(ngModel)]="this.packStudentServie.packstudentIndividial.rating" required autofocus>
         </div>
+        
 
-        <div class="p-col-6">
-            <label for="2"><strong>nombre de cours</strong></label>
-            <input [style]="{width: '100%'}" class="p-mb-2 p-mr-2" type="number" pInputText
-                   placeholder="nombre de cours"
-                   [(ngModel)]="this.packStudentServie.packstudentIndividial.nombreCours"
-                   required autofocus>
-        </div>
-
-        <div class="p-col-6">
-            <label for="1"><strong>Why take this course?</strong></label>
+        <div class="p-col-4">
+            <label ><strong>Why take this course?</strong></label>
             <textarea [style]="{width: '100%'}" rows="2" cols="30" name="description"
                       [(ngModel)]="packstudentIndividial.whyTakeThisCourse"
                       pInputTextarea [autoResize]="false"></textarea>
         </div>
 
-        <div class="p-col-6">
-            <label for="1"><strong>What will you be able to do ?</strong></label>
+        <div class="p-col-4">
+            <label ><strong>What will you be able to do ?</strong></label>
             <textarea [style]="{width: '100%'}" rows="2" cols="30" name="description"
                       [(ngModel)]="packstudentIndividial.expectations"
                       pInputTextarea [autoResize]="false"></textarea>
         </div>
 
-        <div class="p-col-6">
-            <label for="1"><strong>Pre-requisites</strong></label>
+        <div class="p-col-4">
+            <label ><strong>Pre-requisites</strong></label>
             <textarea [style]="{width: '100%'}" rows="2" cols="30" name="description"
                       [(ngModel)]="packstudentIndividial.preRequisites"
                       pInputTextarea [autoResize]="false"></textarea>
         </div>
-        <div class="p-col-6">
+        <div class="p-col-4">
             <button class="p-button-primary p-mr-2 p-mb-2 " icon="pi pi-plus" label="Update"
                     pButton
                     (click)="updatepack()"
@@ -355,21 +365,22 @@
 </p-dialog>
 
 
-<p-dialog header="Add pack for group of student" [style]="{width: '50vw'}" [(visible)]="displayPackgroupe">
+<p-dialog header="Add pack for group of student" [style]="{width: '70vw'}" [(visible)]="displayPackgroupe">
     <div class="p-grid" style="padding: 10px">
-        <div class="p-col-6">
-            <label for="1"><strong>code</strong></label>
-            <input [style]="{width: '100%'}" class="p-mb-2 p-mr-2" type="text" pInputText placeholder="code" id="0"
+        <div class="p-col-4">
+            <label ><strong>code</strong></label>
+            <input [style]="{width: '100%'}" class="p-mb-2 p-mr-2" type="text" pInputText id="0"
                    [(ngModel)]="this.packStudentServie.packstudentIndividial.code" required autofocus>
         </div>
-        <div class="p-col-6">
-            <label for="1"><strong>libelle</strong></label>
-            <input [style]="{width: '100%'}" class="p-mb-2 p-mr-2" type="text" pInputText placeholder="code"
+        <div class="p-col-4">
+            <label ><strong>libelle</strong></label>
+            <input [style]="{width: '100%'}" class="p-mb-2 p-mr-2" type="text" pInputText
                    [(ngModel)]="this.packStudentServie.packstudentIndividial.libelle" required autofocus>
         </div>
 
-        <div class="p-col-6">
-            <label for="1"><strong>Levels</strong></label>
+
+        <div class="p-col-4">
+            <label ><strong>Levels</strong></label>
             <p-dropdown [options]="parcours" [(ngModel)]="packstudentIndividial.level"
                         [style]="{'width': '100%'}"
                         optionLabel="libelle" [filter]="true" filterBy="libelle" [showClear]="true"
@@ -377,81 +388,63 @@
             </p-dropdown>
         </div>
 
-        <div class="p-col-6">
-            <label for="1"><strong>Levels</strong></label>
-            <p-dropdown [options]="parcours" [(ngModel)]="packstudentIndividial.level"
+        <div class="p-col-4">
+            <label><strong>Price</strong></label>
+
+            <p-dropdown [options]="priceList" [(ngModel)]="this.packStudentServie.packstudentIndividial.price"
                         [style]="{'width': '100%'}"
-                        optionLabel="libelle" [filter]="true" filterBy="libelle" [showClear]="true"
-                        placeholder="Select a Level">
+                        optionLabel="lib" [filter]="true" filterBy="lib" [showClear]="true"
+                        placeholder="Select a price">
             </p-dropdown>
         </div>
 
-        <div class="p-col-6">
-            <label for="1"><strong>Url image</strong></label>
-            <input [style]="{width: '100%'}" class="p-mb-2 p-mr-2" type="text" pInputText placeholder="Image url"
+        <div class="p-col-4">
+            <label ><strong>Url image</strong></label>
+            <input [style]="{width: '100%'}" class="p-mb-2 p-mr-2" type="text" pInputText
                    [(ngModel)]="packstudentIndividial.imgUrl" required autofocus>
         </div>
 
 
-        <div class="p-col-6">
-            <label for="1"><strong>Description</strong></label>
+        <div class="p-col-4">
+            <label ><strong>Description</strong></label>
             <textarea [style]="{width: '100%'}" rows="2" cols="30" name="description"
                       [(ngModel)]="packstudentIndividial.description"
                       pInputTextarea [autoResize]="false"></textarea>
         </div>
 
+        
 
-        <div class="p-col-6">
-            <label for="1"><strong>Nombre de cours</strong></label>
+
+        <div class="p-col-4">
+            <label><strong>Rating</strong></label>
             <input [style]="{width: '100%'}" class="p-mb-2 p-mr-2" type="number" pInputText
-                   placeholder="Nombre de cours" id="1"
-                   [(ngModel)]="this.packStudentServie.packstudentIndividial.nombreCours" required autofocus>
-        </div>
-
-
-        <div class="p-col-6">
-            <label for="2"><strong>Price</strong></label>
-            <input [style]="{width: '100%'}" class="p-mb-2 p-mr-2" type="number" pInputText placeholder="Prix"
-                   [(ngModel)]="this.packStudentServie.packstudentIndividial.prix"
-                   required autofocus>
-        </div>
-        <div class="p-col-6">
-            <label for="2"><strong>Old price</strong></label>
-            <input [style]="{width: '100%'}" class="p-mb-2 p-mr-2" type="number" pInputText placeholder="Prix"
-                   [(ngModel)]="this.packStudentServie.packstudentIndividial.oldPrice" required autofocus>
-        </div>
-
-        <div class="p-col-6">
-            <label for="2"><strong>Rating</strong></label>
-            <input [style]="{width: '100%'}" class="p-mb-2 p-mr-2" type="number" pInputText placeholder="Prix"
                    [(ngModel)]="this.packStudentServie.packstudentIndividial.rating" required autofocus>
         </div>
 
 
-
-        <div class="p-col-6">
-            <label for="1"><strong>Why take this course?</strong></label>
+        <div class="p-col-4">
+            <label ><strong>Why take this course?</strong></label>
             <textarea [style]="{width: '100%'}" rows="2" cols="30" name="description"
                       [(ngModel)]="packstudentIndividial.whyTakeThisCourse"
                       pInputTextarea [autoResize]="false"></textarea>
         </div>
 
-        <div class="p-col-6">
-            <label for="1"><strong>What will you be able to do ?</strong></label>
+        <div class="p-col-4">
+            <label ><strong>What will you be able to do ?</strong></label>
             <textarea [style]="{width: '100%'}" rows="2" cols="30" name="description"
                       [(ngModel)]="packstudentIndividial.expectations"
                       pInputTextarea [autoResize]="false"></textarea>
         </div>
 
-        <div class="p-col-6">
-            <label for="1"><strong>Pre-requisites</strong></label>
+        <div class="p-col-4">
+            <label ><strong>Pre-requisites</strong></label>
             <textarea [style]="{width: '100%'}" rows="2" cols="30" name="description"
                       [(ngModel)]="packstudentIndividial.preRequisites"
                       pInputTextarea [autoResize]="false"></textarea>
         </div>
 
 
-        <div class="p-col-6">
+        <div class="p-col-4">
             <button class="p-button-primary p-mr-2 p-mb-2 " icon="pi pi-plus" label="Add"
                     pButton
                     (click)="savegroupePack()"
@@ -461,22 +454,22 @@
 </p-dialog>
 
 
-<p-dialog header="Update pack for group of student" [style]="{width: '50vw'}" [(visible)]="displayPackgroupeforUpdate">
+<p-dialog header="Update pack for group of student" [style]="{width: '70vw'}" [(visible)]="displayPackgroupeforUpdate">
     <div class="p-grid">
-        <div class="p-col-6">
-            <label for="1"><strong>libelle</strong></label>
-            <input [style]="{width: '100%'}" class="p-mb-2 p-mr-2" type="text" pInputText placeholder="code"
+        <div class="p-col-4">
+            <label ><strong>libelle</strong></label>
+            <input [style]="{width: '100%'}" class="p-mb-2 p-mr-2" type="text" pInputText
                    [(ngModel)]="this.packStudentServie.packstudentIndividial.libelle" required autofocus>
         </div>
 
-        <div class="p-col-6">
-            <label for="1"><strong>Url image</strong></label>
-            <input [style]="{width: '100%'}" class="p-mb-2 p-mr-2" type="text" pInputText placeholder="Image url"
+        <div class="p-col-4">
+            <label ><strong>Url image</strong></label>
+            <input [style]="{width: '100%'}" class="p-mb-2 p-mr-2" type="text" pInputText
                    [(ngModel)]="packstudentIndividial.imgUrl" required autofocus>
         </div>
 
-        <div class="p-col-6">
-            <label for="1"><strong>Levels</strong></label>
+        <div class="p-col-4">
+            <label ><strong>Levels</strong></label>
             <p-dropdown [options]="parcours" [(ngModel)]="packstudentIndividial.level"
                         [style]="{'width': '100%'}"
                         optionLabel="libelle" [filter]="true" filterBy="libelle" [showClear]="true"
@@ -484,9 +477,18 @@
             </p-dropdown>
         </div>
 
+        <div class="p-col-4">
+            <label><strong>Price</strong></label>
+            <p-dropdown [options]="priceList" [(ngModel)]="packstudentIndividial.price"
+                        [style]="{'width': '100%'}"
+                        optionLabel="lib" [filter]="true" filterBy="lib" [showClear]="true"
+                        placeholder="Select a price">
+            </p-dropdown>
+        </div>
 
-        <div class="p-col-6">
-            <label for="1"><strong>Description</strong></label>
+
+        <div class="p-col-4">
+            <label ><strong>Description</strong></label>
             <textarea [style]="{width: '100%'}" rows="2" cols="30" name="description"
                       [(ngModel)]="packstudentIndividial.description"
                       pInputTextarea [autoResize]="false"></textarea>
@@ -494,58 +496,37 @@
 
 
 
-        <div class="p-col-6">
-            <label for="2"><strong>Price</strong></label>
-            <input [style]="{width: '100%'}" class="p-mb-2 p-mr-2" type="number" pInputText placeholder="Prix"
-                   [(ngModel)]="this.packStudentServie.packstudentIndividial.prix"
-                   required autofocus>
-        </div>
-        <div class="p-col-6">
-            <label for="2"><strong>Old price</strong></label>
-            <input [style]="{width: '100%'}" class="p-mb-2 p-mr-2" type="number" pInputText placeholder="Prix"
-                   [(ngModel)]="this.packStudentServie.packstudentIndividial.oldPrice" required autofocus>
-        </div>
-
-        <div class="p-col-6">
-            <label for="2"><strong>Rating</strong></label>
-            <input [style]="{width: '100%'}" class="p-mb-2 p-mr-2" type="number" pInputText placeholder="Prix"
+        <div class="p-col-4">
+            <label><strong>Rating</strong></label>
+            <input [style]="{width: '100%'}" class="p-mb-2 p-mr-2" type="number" pInputText
                    [(ngModel)]="this.packStudentServie.packstudentIndividial.rating" required autofocus>
         </div>
 
+        
 
-
-
-        <div class="p-col-6">
-            <label for="2"><strong>nombre de cours</strong></label>
-            <input [style]="{width: '100%'}" class="p-mb-2 p-mr-2" type="number" pInputText
-                   placeholder="nombre de cours" id="5"
-                   [(ngModel)]="this.packStudentServie.packstudentIndividial.nombreCours"
-                   required autofocus>
-        </div>
-
-        <div class="p-col-6">
-            <label for="1"><strong>Why take this course?</strong></label>
+        <div class="p-col-4">
+            <label ><strong>Why take this course?</strong></label>
             <textarea [style]="{width: '100%'}" rows="2" cols="30" name="description"
                       [(ngModel)]="packstudentIndividial.whyTakeThisCourse"
                       pInputTextarea [autoResize]="false"></textarea>
         </div>
 
-        <div class="p-col-6">
-            <label for="1"><strong>What will you be able to do ?</strong></label>
+        <div class="p-col-4">
+            <label ><strong>What will you be able to do ?</strong></label>
             <textarea [style]="{width: '100%'}" rows="2" cols="30" name="description"
                       [(ngModel)]="packstudentIndividial.expectations"
                       pInputTextarea [autoResize]="false"></textarea>
         </div>
 
-        <div class="p-col-6">
-            <label for="1"><strong>Pre-requisites</strong></label>
+        <div class="p-col-4">
+            <label ><strong>Pre-requisites</strong></label>
             <textarea [style]="{width: '100%'}" rows="2" cols="30" name="description"
                       [(ngModel)]="packstudentIndividial.preRequisites"
                       pInputTextarea [autoResize]="false"></textarea>
         </div>
 
 
-        <div class="p-col-6">
+        <div class="p-col-4">
             <button class="p-button-primary p-mr-2 p-mb-2 " icon="pi pi-plus" label="Update"
                     pButton
                     (click)="updatepack()"

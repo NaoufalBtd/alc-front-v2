@@ -13,7 +13,7 @@
             <p>{{selectedPack?.description}}</p>
             <ng-template  pTemplate="footer">
                 <ng-container *ngIf="inscription?.packStudent === null">
-                    <h2><i style="font-weight: bold;" class="pi pi-angle-right"></i> {{selectedPack?.prix}} $</h2>
+                    <h2><i style="font-weight: bold;" class="pi pi-angle-right"></i> {{selectedPack?.price?.price}} $</h2>
                     <button pButton pRipple type="button" icon="pi pi-arrow-right" label="Buy now" iconPos="right"
                             (click)="startPack()"
                             class="Startnow"></button>

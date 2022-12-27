@@ -1,4 +1,5 @@
 import {Parcours} from './parcours.model';
+import {Price} from './price.model';
 
 export class PackStudent {
 
@@ -9,7 +10,7 @@ export class PackStudent {
     public libelle: string;
     public description: string;
     public imgUrl: string;
-    public prix: number;
+    public price: Price = new Price();
     public totalStudents: number;
     public preRequisites: string;
     public whyTakeThisCourse: string;

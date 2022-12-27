@@ -1,0 +1,184 @@
+<div id="Mycontainer" class="container">
+
+    <div id="con0" class="row  rounded-3 p-3 mb-4">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <ul id="myTab1" role="tablist"
+                class="nav nav-tabs nav-pills with-arrow flex-column flex-sm-row text-center">
+                <li class="nav-item flex-sm-fill">
+                    <a id="home1-tab" data-toggle="tab" role="tab" aria-controls="home1"
+                       [class.active]="index === 0"
+                       [attr.aria-selected]="index === 0"
+                       class="nav-link text-uppercase font-weight-bold mr-sm-3
+                        rounded-0 border">Password</a>
+                </li>
+
+                <li class="nav-item flex-sm-fill">
+                    <a id="profile1-tab" data-toggle="tab" role="tab" aria-controls="profile1"
+                       [class.active]="index === 1"
+                       [attr.aria-selected]="index === 1"
+                       class="nav-link text-uppercase font-weight-bold mr-sm-3 rounded-0 border">Start</a>
+                </li>
+
+            </ul>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+
+    <div id="con1" *ngIf="index === 0" class="container">
+        <div class="row">
+            <div class="col-md-12 smallTitle"> {{'please change your password before you start' | translate}}</div>
+
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <div class="p-grid p-fluid">
+
+
+                    <div class="p-col-12">
+                        <h5 style="color: #263238"> {{'New Password' | translate}}</h5>
+                        <div class="p-inputgroup">
+                            <span style="cursor: pointer" *ngIf="newPass.type === 'password'"
+                                  (click)="showPass(newPass)" class="p-inputgroup-addon"><i
+                                    class="pi pi-eye"></i></span>
+                            <span style="cursor: pointer" *ngIf="newPass.type === 'text'" (click)="showPass(newPass)"
+                                  class="p-inputgroup-addon"><i class="pi pi-eye-slash"></i></span>
+
+                            <input #newPass class="user-input-group" [(ngModel)]="newPassword" name="newPassword"
+                                   type="password"
+                                   pPassword
+                                   [placeholder]="'New Password' | translate">
+                        </div>
+                    </div>
+
+                    <div class="p-col-12">
+                        <h5 style="color: #263238"> {{'Repeat password' | translate}}</h5>
+                        <div class="p-inputgroup">
+                            <span style="cursor: pointer" *ngIf="Rep.type === 'password'" (click)="showPass(Rep)"
+                                  class="p-inputgroup-addon"><i class="pi pi-eye"></i></span>
+                            <span style="cursor: pointer" *ngIf="Rep.type === 'text'" (click)="showPass(Rep)"
+                                  class="p-inputgroup-addon"><i class="pi pi-eye-slash"></i></span>
+
+                            <input #Rep class="user-input-group" [(ngModel)]="newPasswordRepated"
+                                   name="newPasswordRepated" type="password"
+                                   pPassword
+                                   [placeholder]="'Repeat password' | translate">
+                        </div>
+                    </div>
+                    <div class="p-col-3"></div>
+                    <div class="p-col-6">
+                        <button pButton pRipple (click)="changePassword()"
+                                [label]="'Change password' | translate" icon="pi pi-check" iconPos="left"
+                                class="ngFlexyBlackButton"></button>
+                    </div>
+                    <div class="p-col-3"></div>
+
+                </div>
+            </div>
+            <div class="col-md-3"></div>
+
+        </div>
+    </div>
+
+
+    <div id="con2" *ngIf="index === 1" class="container">
+        <div class="p-grid">
+            <div style="text-align: center" class="p-col-12">
+                <h1 style="    font-family: system-ui; letter-spacing: 1px;">{{'Your account has been successfully validated!' | translate}}</h1>
+            </div>
+            <div class="p-col-2"></div>
+            <div style="text-align: center" class="p-col-8">
+                <p style=" font-size: medium; font-family: cursive;">{{"Already know about our school? Don't want to waste time on a trial lesson? Then pay immediately and get bonus lessons!" | translate}}</p>
+            </div>
+            <div class="p-col-2"></div>
+        </div>
+        <div class="p-grid justify-content-center">
+            <div class="p-col-2"></div>
+            <div class="p-col-4">
+
+                <div [style]="{width: '100%', height: '100%' ,  background:'#ff725e', color: '#263238!important'}"
+                     class="p-grid">
+                    <div style="text-align: center; color: #263238!important " class="p-col-12">
+                        <h2 style="color: #263238!important ">{{'Continue to purchase' | translate}}</h2></div>
+
+
+                    <div style="text-align: start" class="p-col-1">
+                        <img style="width: 30px" src="./assets/icons/icon-gift.png">
+                    </div>
+                    <div style="text-align: start" class="p-col-11">
+                        {{"You get a bonus up to 3 lessons when you pay now" | translate}}
+                    </div>
+
+
+                    <div style="text-align: start" class="p-col-1">
+                        <img style="width: 30px" src="./assets/icons/icon-prof.png">
+                    </div>
+                    <div style="text-align: start" class="p-col-11">
+                        {{"We will immediately coordinate the schedule of classes with the teacher" | translate}}
+                    </div>
+
+
+                    <div style="text-align: start" class="p-col-1">
+                        <img style="width: 30px" src="./assets/icons/icons8-clock-48.png">
+                    </div>
+                    <div style="text-align: start" class="p-col-11">
+                        {{"Pay immediately and save time and money" | translate}}
+                    </div>
+
+                    <div class="p-col-2"></div>
+                    <div class="p-col-8">
+                        <button pButton pRipple (click)="navigatetopurchase()"
+                                [label]="'Pay now' | translate" icon="pi pi-check"
+                                class="joinButton"></button>
+                    </div>
+                    <div class="p-col-2"></div>
+
+                </div>
+
+            </div>
+
+            <div class="p-col-4">
+                <div [style]="{width: '100%', height: '100%', background:'#263238', color: '#ff725e'}" class="p-grid">
+                    <div style="text-align: center" class="p-col-12">
+                        <h2 style="color: #ff725e!important ">{{'Free trial lesson' | translate}}</h2>
+                    </div>
+
+
+                    <div style="text-align: start" class="p-col-1">
+                        <img style="width: 30px" src="./assets/icons/icon-historical.png">
+                    </div>
+                    <div style="text-align: start" class="p-col-11">
+                        {{"We'll pick you up in 15 minutes" | translate}}
+
+                    </div>
+
+
+                    <div style="text-align: start" class="p-col-1">
+                        <img style="width: 30px" src="./assets/icons/icon-running.png">
+                    </div>
+                    <div style="text-align: start" class="p-col-11">
+                        {{"Appoint a trial lesson with a methodologies" | translate}}
+                    </div>
+
+
+                    <div style="text-align: start" class="p-col-1">
+                        <img style="width: 30px" src="./assets/icons/home-work-icon.png">
+                    </div>
+                    <div style="text-align: start" class="p-col-11">
+                        {{"Show the platform and determine your level" | translate}}
+                    </div>
+
+                    <div class="p-col-2"></div>
+                    <div class="p-col-8">
+                        <button pButton pRipple (click)="router.navigate(['public/etudiantTrialLesson'])"
+                                [label]="'Start now' | translate" icon="pi pi-check"
+                                class="Startnow"></button>
+                    </div>
+                    <div class="p-col-2"></div>
+
+                </div>
+            </div>
+            <div class="p-col-2"></div>
+        </div>
+    </div>
+
+</div>

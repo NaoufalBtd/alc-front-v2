@@ -122,10 +122,9 @@ export class TestLevelInstructionsComponent implements OnInit {
             data => {
                 if (data != null) {
                     this.animation.showAnimation = false;
-                    this.authenticationService.addUserToLocalCache(data);
                     this.messageService.add({
                         severity: 'success',
-                        detail: 'تم التسجيل بنجاح 😍،  يرجى التحقق من بريدك الإلكتروني للحصول على كلمة المرور الخاصة بك',
+                        detail: 'تم التسجيل بنجاح 😍،  يرجى التحقق من بريدك الإلكتروني  لتفعيل الحساب الخاص بك',
                         life: 8000
                     });
                     this.router.navigate(['etudiant/test-level']);

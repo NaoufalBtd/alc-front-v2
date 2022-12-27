@@ -1,7 +1,7 @@
 <main>
     <app-header-two headerShadow="header__area header__padding-2 header__shadow">
     </app-header-two>
-    <section  [style.direction]="(translate.currentLang === 'ar') ? 'rtl': 'ltr'" class="signup__area po-rel-z1 ">
+    <section [style.direction]="(translate.currentLang === 'ar') ? 'rtl': 'ltr'" class="signup__area po-rel-z1 ">
         <div class="container">
             <div class="row">
                 <div class=" col-md-6 col-xl-6 col-sm-12">
@@ -43,14 +43,14 @@
     </section>
 
 
-
-
     <app-advantages-engflexy></app-advantages-engflexy>
 
     <section class="signup__area po-rel-z1">
-        <div class="row">
-            <div class="col-md-12">
-                <h1 id="discoverText">{{'Contactuswith' | translate}}</h1>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 id="discoverText">{{'Contactuswith' | translate}}</h1>
+                </div>
             </div>
         </div>
         <app-contact-us></app-contact-us>

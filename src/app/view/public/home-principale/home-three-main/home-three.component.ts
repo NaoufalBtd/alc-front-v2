@@ -8,6 +8,7 @@ import {Router} from '@angular/router';
 import {Etudiant} from '../../../../controller/model/etudiant.model';
 import {TranslateService} from '@ngx-translate/core';
 import {BreakpointObserver} from '@angular/cdk/layout';
+import {AnimationService} from '../../../../controller/service/animation.service';
 
 @Component({
     selector: 'app-home-three',
@@ -27,6 +28,7 @@ export class HomeThreeComponent implements OnInit {
 
     constructor(private messageService: MessageService,
                 public etudiantService: EtudiantService,
+                private animation: AnimationService,
                 private confirmationService: ConfirmationService,
                 public authenticationService: AuthenticationService,
                 public packStudentService: PackStudentService,
@@ -72,18 +74,17 @@ export class HomeThreeComponent implements OnInit {
 
 
     createEtudiant() {
-        console.log('clicked');
+        this.animation.showAnimation = true;
         this.etudiantService.create().subscribe(
             data => {
+                this.animation.showAnimation = false;
                 if (data != null) {
-                    this.authenticationService.addUserToLocalCache(data);
                     this.showdialog = true;
                     this.messageService.add({
                         severity: 'success',
-                        detail: 'تم التسجيل بنجاح 😍،  يرجى التحقق من بريدك الإلكتروني للحصول على كلمة المرور الخاصة بك',
+                        detail: 'تم التسجيل بنجاح 😍،  يرجى التحقق من بريدك الإلكتروني لتفعيل الحساب الخاص بك',
                         life: 8000
                     });
-                    this.router.navigate(['public/etudianthomepage']);
                 } else {
                     this.messageService.add({
                         severity: 'info',
@@ -92,6 +93,8 @@ export class HomeThreeComponent implements OnInit {
                     });
                 }
             }, error => {
+                this.animation.showAnimation = false;
+
                 this.showdialog = true;
                 this.messageService.add({
                     severity: 'error',

@@ -66,14 +66,12 @@ export class FormLayoutDemoComponent implements OnInit {
                 console.log(data);
                 if (data != null) {
                     this.showAnimation = false;
-                    this.authenticationService.addUserToLocalCache(data);
                     this.showdialog = true;
                     this.messageService.add({
                         severity: 'success',
-                        detail: 'تم التسجيل بنجاح 😍،  يرجى التحقق من بريدك الإلكتروني للحصول على كلمة المرور الخاصة بك',
+                        detail: 'تم التسجيل بنجاح 😍،  يرجى التحقق من بريدك الإلكتروني لتفعيل الحساب الخاص بك',
                         life: 8000
                     });
-                    this.router.navigate(['public/etudianthomepage']);
                 } else {
                     this.messageService.add({
                         severity: 'info',

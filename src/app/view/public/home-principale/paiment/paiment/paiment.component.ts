@@ -9,6 +9,7 @@ import {Router} from '@angular/router';
 import {AnimationService} from '../../../../../controller/service/animation.service';
 import {PackStudent} from '../../../../../controller/model/pack-student.model';
 import {TranslateService} from '@ngx-translate/core';
+import {LoginService} from '../../../../../controller/service/login.service';
 
 @Component({
     selector: 'app-paiment',
@@ -49,6 +50,7 @@ export class PaimentComponent implements OnInit {
     constructor(private messageService: MessageService,
                 public etudiantService: EtudiantService,
                 public animation: AnimationService,
+                private login: LoginService,
                 public translate: TranslateService,
                 private confirmationService: ConfirmationService,
                 public authenticationService: AuthenticationService,
@@ -116,14 +118,14 @@ export class PaimentComponent implements OnInit {
                     this.messageService.add({
                         severity: 'success',
                         detail: 'تم التسجيل بنجاح 😍،  يرجى التحقق من بريدك الإلكتروني للحصول على كلمة المرور الخاصة بك',
-                        life: 8000
+                        life: 30000
                     });
                     this.router.navigate(['/etudiant/dashboard']);
                 } else {
                     this.messageService.add({
                         severity: 'info',
                         detail: 'البريد الالكتروني موجود بالفعل، من فضلك تفقد بريدك الالكتروني للحصول على اسم المستخدم و كلمة المرور للولوج الى حسابك',
-                        life: 9000
+                        life: 30000
                     });
                 }
             }, error => {
@@ -163,5 +165,14 @@ export class PaimentComponent implements OnInit {
             detail: 'RIB copied',
             life: 2000
         });
+    }
+
+    next() {
+        if (this.login.getConnecteUser() === null) {
+            this.activeIndex = 1;
+        } else {
+            this.selected = this.login.getConnectedStudent();
+            this.createEtudiant();
+        }
     }
 }

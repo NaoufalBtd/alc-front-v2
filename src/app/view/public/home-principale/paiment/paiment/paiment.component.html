@@ -38,7 +38,7 @@
 
                     <div class="col-md-12 details-title">المبلغ</div>
                     <div class="col-md-12 details ">
-                        {{selectedCourse?.prix}} DH
+                        {{selectedCourse?.price?.price}} DH
                     </div>
 
                     <div class="col-md-12 details-title">المرجو ارسال ايصال الدفع عبر الرقم</div>
@@ -55,7 +55,7 @@
                     <div class="col-md-4 col-sm-12"></div>
                     <div class="col-md-4 col-sm-12">
                         <button style="height: 50px!important;" pButton pRipple
-                                (click)="activeIndex = 1"
+                                (click)="next()"
                                 type="button" label="{{'NEXT' | translate}}"
                                 class="ngFlexyBlackButton">
                             <i class="fa fa-solid fa-arrow-right-to-arc"></i>

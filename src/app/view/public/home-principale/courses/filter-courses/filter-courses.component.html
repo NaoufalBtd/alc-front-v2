@@ -1,11 +1,10 @@
-
-
 <div class="row">
-    <p-steps (activeIndexChange)="indexChange()" [model]="items" [(activeIndex)]="activeIndex" [readonly]="false"></p-steps>
+    <p-steps (activeIndexChange)="indexChange()" [model]="items" [(activeIndex)]="activeIndex"
+             [readonly]="false"></p-steps>
 </div>
 
-<div *ngIf="index === 0 && activeIndex == 0" class="row">
-    <div  class=" col-xxl-2 col-xl-2 col-lg-2 col-md-2 col-sm-"></div>
+<div *ngIf="activeIndex == 0" class="row">
+    <div class=" col-xxl-2 col-xl-2 col-lg-2 col-md-2 col-sm-"></div>
     <div (click)="chooseOption('INDIVIDUAL')" class=" select-course  col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-6">
         <div style="background: #ff725e;" class="course__item mb-30 fix">
             <div style="cursor: pointer; width: 300px" class="course__thumb w-img p-relative fix">
@@ -16,10 +15,11 @@
 
             <div class="course__content">
                 <div id="individual-text" class="course__meta align-items-center justify-content-between">
-                  {{'Individual' | translate}}
+                    {{'Individual' | translate}}
                 </div>
                 <div style="    padding: 10px;text-align: center" class="course__teacher d-flex align-items-center">
-                    <h5>هو عبارة عن حصص فردية مع مدرسك الخاص، حيث يستفيد التلميذ من مجموعة من الامتيازات كتحديد الجدول الزمني الخاص به</h5>
+                    <h5>هو عبارة عن حصص فردية مع مدرسك الخاص، حيث يستفيد التلميذ من مجموعة من الامتيازات كتحديد الجدول
+                        الزمني الخاص به</h5>
                 </div>
             </div>
         </div>
@@ -38,94 +38,38 @@
                     {{'Group' | translate}}
                 </div>
                 <div style="    padding: 10px;text-align: center" class="course__teacher d-flex align-items-center">
-                    <h5> الدراسة في  مجموعة من شخصان الى خمسة اشخاص على الاكتر من نفس المستوى. تساعدك الدراسة في مجموعة على التعلم بسرعة واكتشاف أفكار جديدة مع زملائك</h5>
+                    <h5> الدراسة في مجموعة من شخصان الى خمسة اشخاص على الاكتر من نفس المستوى. تساعدك الدراسة في مجموعة
+                        على التعلم بسرعة واكتشاف أفكار جديدة مع زملائك</h5>
                 </div>
             </div>
         </div>
     </div>
-    <div  class=" col-xxl-2 col-xl-2 col-lg-2 col-md-2 col-sm-6"></div>
+    <div class=" col-xxl-2 col-xl-2 col-lg-2 col-md-2 col-sm-6"></div>
 
 </div>
 
 
-<div  *ngIf="index === 1 && activeIndex == 1" class="row">
+<div *ngIf="activeIndex == 1" class="row">
 
-
-    <div (click)="chooseType('SILVER (1149 DH)', 1149)" class="col-xxl-4 col-xl-4 col-lg-4 col-md-6">
+    <div *ngFor="let price of prices" (click)="chooseType(price.lib.toUpperCase() +'('+ price.price+' DH)', price.price)"
+         class="col-xxl-4 col-xl-4 col-lg-4 col-md-6">
         <div class="course__item white-bg mb-30 fix">
             <div class="course__thumb w-img p-relative fix">
                 <a>
-                    <img src="/assets/images/Silver.png" alt="">
+                    <img *ngIf="price?.lib?.toUpperCase() === 'SILVER'" src="/assets/images/Silver.png" alt="">
+                    <img  *ngIf="price?.lib?.toUpperCase() === 'GOLD'" src="/assets/images/GoldA.png" alt="">
+                    <img  *ngIf="price?.lib?.toUpperCase() === 'PLATINUM'" src="/assets/images/Platinum.gif" alt="">
                 </a>
                 <div class="course__tag">
-                    <a class="course-type silver" >1149 DH</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <div  (click)="chooseType('GOLD (3149 DH)', 3149)" class="col-xxl-4 col-xl-4 col-lg-4 col-md-6">
-        <div class="course__item white-bg mb-30 fix">
-            <div class="course__thumb w-img p-relative fix">
-                <a>
-                    <img src="/assets/images/GoldA.png" alt="">
-                </a>
-                <div class="course__tag">
-                    <a class="course-type gold" >3149 DH</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <div  (click)="chooseType('PLATINUM  (4999 DH)', 4999)" class="col-xxl-4 col-xl-4 col-lg-4 col-md-6">
-        <div class="course__item white-bg mb-30 fix">
-            <div class="course__thumb w-img p-relative fix">
-                <a>
-                    <img src="/assets/images/Platinum.gif" alt="">
-                </a>
-                <div class="course__tag">
-                    <a class="course-type platinum" >4999 DH</a>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-
-</div>
-
-<div  *ngIf="index === 2 && activeIndex == 1" class="row">
-
-    <div  (click)="chooseType('GOLD (1199 DH)', 1199)" class="col-xxl-4 col-xl-4 col-lg-4 col-md-6">
-        <div class="course__item white-bg mb-30 fix">
-            <div class="course__thumb w-img p-relative fix">
-                <a>
-                    <img src="../../../../../../assets/images/GoldA.png" alt="">
-                </a>
-                <div class="course__tag">
-                    <a class="course-type gold" >1199 DH</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div   (click)="chooseType('PLATINUM (1849 DH)', 1849)" class="col-xxl-4 col-xl-4 col-lg-4 col-md-6">
-        <div class="course__item white-bg mb-30 fix">
-            <div class="course__thumb w-img p-relative fix">
-                <a>
-                    <img src="/assets/images/Platinum.gif" alt="">
-                </a>
-                <div class="course__tag">
-                    <a class="course-type platinum" >1849 DH</a>
+                    <a class="course-type silver">{{price?.price}} DH</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<div  *ngIf="index === 3 && activeIndex == 2" class="row">
+
+<div *ngIf="activeIndex == 2" class="row">
     <div (click)="getCourse('1 ELEMENTARY')" class="col-xxl-3 col-xl-3 col-lg-3 col-md-3 col-sm-4">
         <div class="course__item white-bg mb-30 fix">
             <div class="course__thumb w-img p-relative fix">
@@ -136,7 +80,7 @@
         </div>
     </div>
 
-    <div  (click)="getCourse('2 PRE INTERMEDIATE')" class="col-xxl-3 col-xl-3 col-lg-3 col-md-3 col-sm-4">
+    <div (click)="getCourse('2 PRE INTERMEDIATE')" class="col-xxl-3 col-xl-3 col-lg-3 col-md-3 col-sm-4">
         <div class="course__item white-bg mb-30 fix">
             <div class="course__thumb w-img p-relative fix">
                 <a>
@@ -147,7 +91,7 @@
         </div>
     </div>
 
-    <div  (click)="getCourse('3 INTERMEDIATE')" class="col-xxl-3 col-xl-3 col-lg-3 col-md-3 col-sm-4">
+    <div (click)="getCourse('3 INTERMEDIATE')" class="col-xxl-3 col-xl-3 col-lg-3 col-md-3 col-sm-4">
         <div class="course__item white-bg mb-30 fix">
             <div class="course__thumb w-img p-relative fix">
                 <a>
@@ -158,7 +102,7 @@
         </div>
     </div>
 
-    <div  (click)="getCourse('4 UPPER INTERMEDIATE')" class="col-xxl-3 col-xl-3 col-lg-3 col-md-3 col-sm-4">
+    <div (click)="getCourse('4 UPPER INTERMEDIATE')" class="col-xxl-3 col-xl-3 col-lg-3 col-md-3 col-sm-4">
         <div class="course__item white-bg mb-30 fix">
             <div class="course__thumb w-img p-relative fix">
                 <a>
@@ -169,7 +113,7 @@
         </div>
     </div>
 
-    <div  (click)="getCourse('5 ADVANCED')" class="col-xxl-3 col-xl-3 col-lg-3 col-md-3 col-sm-4">
+    <div (click)="getCourse('5 ADVANCED')" class="col-xxl-3 col-xl-3 col-lg-3 col-md-3 col-sm-4">
         <div class="course__item white-bg mb-30 fix">
             <div class="course__thumb w-img p-relative fix">
                 <a>

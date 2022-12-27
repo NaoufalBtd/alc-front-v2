@@ -203,7 +203,7 @@
 
                                         <div *ngIf="this.inscription.packStudent!=null" class="col-sm-6" style="margin-top: 10px;">
                                             <p class="m-b-10 f-w-600">   Pack chosen </p>
-                                            <h6 class="text-muted f-w-400"> {{ inscription.packStudent.libelle}} : {{inscription.packStudent.nombreCours}}h | {{inscription.packStudent.prix}}$</h6>
+                                            <h6 class="text-muted f-w-400"> {{ inscription.packStudent.libelle}} : {{inscription.packStudent.nombreCours}}h | {{inscription.packStudent.price?.price}}$</h6>
                                         </div>
                                     </div>
 

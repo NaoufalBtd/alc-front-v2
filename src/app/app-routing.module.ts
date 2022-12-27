@@ -71,7 +71,7 @@ import {TypeReclamationComponent} from './view/admin/type-reclamation/type-recla
 import {ProfileComponent} from './view/etudiant/profile/profile.component';
 import {DragHomeWorkComponent} from './view/etudiant/homeWork/drag-home-work/drag-home-work.component';
 import {InvitedStudentComponent} from './view/etudiant/invited-student/invited-student.component';
-import {HomePageEtudiantComponent} from './view/etudiant/home-page-etudiant/home-page-etudiant.component';
+import {HomePageEtudiantComponent} from './view/public/home-page-etudiant/home-page-etudiant.component';
 import {EtudiantpurchasepackComponent} from './view/etudiant/etudiantpurchasepack/etudiantpurchasepack.component';
 import {FreetriallessonComponent} from './view/etudiant/freetriallesson/freetriallesson.component';
 import {MoreInformationComponent} from './view/admin/more-information/more-information.component';
@@ -102,6 +102,9 @@ import {ContactUsMainComponent} from './view/public/home-principale/contact-us/c
 import {MainPaimentComponent} from './view/public/home-principale/paiment/main-paiment/main-paiment.component';
 import {TestLevelInstructionsComponent} from './view/public/discover-level/test-level-instructions/test-level-instructions.component';
 import {ProfesseurEditComponent} from './view/admin/professeur/professeur-edit/professeur-edit.component';
+import {PayNowCoursesComponent} from './view/shared/pay-now-courses/pay-now-courses.component';
+import {PayNowCourseDetailComponent} from './view/shared/pay-now-course-detail/pay-now-course-detail.component';
+import {PayNowComponent} from './view/shared/pay-now/pay-now.component';
 
 
 @NgModule({
@@ -182,8 +185,8 @@ import {ProfesseurEditComponent} from './view/admin/professeur/professeur-edit/p
                 path: 'etudiant', component: EtudiantComponent,
                 children: [
                     {path: 'etudiantTrialLesson', component: FreetriallessonComponent},
-                    {path: 'etudianthomepage', component: HomePageEtudiantComponent},
                     {path: 'dashboard', component: HomeStudentComponent},
+                    {path: 'courses', component: EtudiantpurchasepackComponent},
                     {path: 'faq-student', component: FaqStudentListComponent},
                     {path: 'news-student', component: NewsEtudiantListComponent},
                     {path: 'schedule-student', component: ScheduleStudentComponent},
@@ -216,7 +219,6 @@ import {ProfesseurEditComponent} from './view/admin/professeur/professeur-edit/p
                     {path: 'public/home', component: HomeThreeComponent},
                     {path: 'public/etudianthomepage', component: HomePageEtudiantComponent},
                     {path: 'public/etudiantTrialLesson', component: FreetriallessonComponent},
-                    {path: 'public/etudiantchoosepack', component: EtudiantpurchasepackComponent},
                     {path: 'public/login', component: SignInMainComponent},
                     {path: 'public/inscriptionEtudiant', component: FormLayoutDemoComponent},
                     {path: 'free-trial', component: InscriptionStudentMainComponent},
@@ -224,6 +226,7 @@ import {ProfesseurEditComponent} from './view/admin/professeur/professeur-edit/p
                     {path: 'online-english-level-test', component: DiscoverLevelComponent},
                     {path: 'start-test-level', component: TestLevelInstructionsComponent},
                     {path: 'about-us', component: AboutUsComponent},
+                    {path: 'validate-account/:id/:token', component: HomePageEtudiantComponent},
                     {path: 'payment', component: MainPaimentComponent},
                     {
                         path: 'blog',
@@ -241,9 +244,11 @@ import {ProfesseurEditComponent} from './view/admin/professeur/professeur-edit/p
                     {path: 'Privacy', component: PrivacyPolicyComponent},
                     {path: 'user-agreement', component: TermOfServiceComponent},
                     {path: 'course-details', component: CourseDetailsComponent},
-
                 ]
             },
+            {path: 'our-packs', component: PayNowCoursesComponent},
+            {path: 'pay', component: PayNowComponent},
+            {path: 'our-packs/:id', component: PayNowCourseDetailComponent},
             {path: '*', component: PageNotFoundComponent},
         ], {scrollPositionRestoration: 'enabled'})
     ],

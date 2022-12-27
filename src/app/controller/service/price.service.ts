@@ -1,5 +1,9 @@
 import {Injectable} from '@angular/core';
 import {MenuItem} from 'primeng/api';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {Price} from '../model/price.model';
+import {environment} from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +15,7 @@ export class PriceService {
   private _activeIndex = 0;
   private _items: MenuItem[];
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
 
   get items(): MenuItem[] {
@@ -53,4 +57,13 @@ export class PriceService {
   set activeIndex(value: number) {
     this._activeIndex = value;
   }
+
+  public save(price: Price): Observable<Price>{
+    return this.http.post<Price>(environment.adminUrl + 'price/', price);
+  }
+  public getAll(): Observable<Price[]>{
+    return this.http.get<Price[]>(environment.adminUrl + 'price/');
+  }
+
+
 }

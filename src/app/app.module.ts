@@ -275,7 +275,7 @@ import {ReclamationEtudiantViewComponent} from './view/etudiant/reclamation-etud
 import {ReclamationProfViewComponent} from './view/prof/reclamation-prof/reclamation-prof-view/reclamation-prof-view.component';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
-import {HomePageEtudiantComponent} from './view/etudiant/home-page-etudiant/home-page-etudiant.component';
+import {HomePageEtudiantComponent} from './view/public/home-page-etudiant/home-page-etudiant.component';
 import {EtudiantpurchasepackComponent} from './view/etudiant/etudiantpurchasepack/etudiantpurchasepack.component';
 import {DragHomeWorkComponent} from './view/etudiant/homeWork/drag-home-work/drag-home-work.component';
 import {DragDropModule} from '@angular/cdk/drag-drop';
@@ -313,6 +313,10 @@ import {DiscoverLevelComponent} from './view/public/discover-level/discover-leve
 import {AdvantagesEngflexyComponent} from './view/public/discover-level/advantages-engflexy/advantages-engflexy.component';
 import {TestLevelInstructionsComponent} from './view/public/discover-level/test-level-instructions/test-level-instructions.component';
 import {TeacherHomeWorkReviewComponent} from './view/prof/home-work/teacher-home-wrok-review/teacher-home-work-review.component';
+import {CreatePriceComponent} from './view/admin/create-price/create-price.component';
+import {PayNowCoursesComponent} from './view/shared/pay-now-courses/pay-now-courses.component';
+import {PayNowCourseDetailComponent} from './view/shared/pay-now-course-detail/pay-now-course-detail.component';
+import {PayNowComponent} from './view/shared/pay-now/pay-now.component';
 
 
 export function createTranslateLoader(http: HttpClient) {
@@ -646,7 +650,11 @@ export function createTranslateLoader(http: HttpClient) {
             DiscoverLevelComponent,
             AdvantagesEngflexyComponent,
             TestLevelInstructionsComponent,
-            TeacherHomeWorkReviewComponent
+            TeacherHomeWorkReviewComponent,
+            CreatePriceComponent,
+            PayNowCoursesComponent,
+            PayNowCourseDetailComponent,
+            PayNowComponent
         ],
     providers: [
         {provide: LocationStrategy, useClass: PathLocationStrategy},

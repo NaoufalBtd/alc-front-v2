@@ -4,6 +4,8 @@ import {PackStudent} from '../../../controller/model/pack-student.model';
 import {ConfirmationService, MessageService} from 'primeng/api';
 import {Parcours} from '../../../controller/model/parcours.model';
 import {ParcoursService} from '../../../controller/service/parcours.service';
+import {Price} from '../../../controller/model/price.model';
+import {PriceService} from '../../../controller/service/price.service';
 
 @Component({
     selector: 'app-pack-student',
@@ -17,9 +19,12 @@ export class PackStudentComponent implements OnInit {
     public displayPackIndividualforUpdate = false;
     public displayPackgroupeforUpdate = false;
     parcours: Array<Parcours> = new Array<Parcours>();
+    prices: Array<Price> = new Array<Price>();
+    priceList: Array<Price> = new Array<Price>();
 
     constructor(public packStudentServie: PackStudentService,
                 private parcoursService: ParcoursService,
+                private priceService: PriceService,
                 private confirmation: ConfirmationService,
                 private messageService: MessageService) {
     }
@@ -58,6 +63,7 @@ export class PackStudentComponent implements OnInit {
             this.displayPackgroupe = false;
         }
         this.displayPackIndividual = true;
+        this.priceList = this.prices.filter(p => p.forGroup === false);
     }
 
     showgroupeforUpdate(c: PackStudent) {
@@ -65,6 +71,7 @@ export class PackStudentComponent implements OnInit {
             this.displayPackIndividualforUpdate = false;
         }
         this.displayPackgroupeforUpdate = true;
+        this.priceList = this.prices.filter(p => p.forGroup === true);
         this.packStudentServie.packstudentIndividial = c;
     }
 
@@ -73,6 +80,7 @@ export class PackStudentComponent implements OnInit {
             this.displayPackgroupeforUpdate = false;
         }
         this.displayPackIndividualforUpdate = true;
+        this.priceList = this.prices.filter(p => p.forGroup === false);
         this.packStudentServie.packstudentIndividial = c;
     }
 
@@ -81,6 +89,7 @@ export class PackStudentComponent implements OnInit {
             this.displayPackIndividual = false;
         }
         this.displayPackgroupe = true;
+        this.priceList = this.prices.filter(p => p.forGroup === true);
     }
 
     ngOnInit(): void {
@@ -91,6 +100,7 @@ export class PackStudentComponent implements OnInit {
                 this.parcours = data;
             }
         );
+        this.priceService.getAll().subscribe(d => this.prices = d);
     }
 
     saveIndividualPack() {
@@ -130,4 +140,5 @@ export class PackStudentComponent implements OnInit {
         this.packStudentServie.packstudentVo.forGroupe = b;
         this.packStudentServie.findbycretira(b);
     }
+
 }

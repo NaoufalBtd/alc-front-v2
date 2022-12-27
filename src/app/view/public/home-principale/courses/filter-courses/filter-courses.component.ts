@@ -5,6 +5,8 @@ import {PackStudentService} from '../../../../../controller/service/pack-student
 import {PackStudent} from '../../../../../controller/model/pack-student.model';
 import {Router} from '@angular/router';
 import {PriceService} from '../../../../../controller/service/price.service';
+import {Price} from '../../../../../controller/model/price.model';
+import {LoginService} from '../../../../../controller/service/login.service';
 
 @Component({
     selector: 'app-filter-courses',
@@ -12,8 +14,12 @@ import {PriceService} from '../../../../../controller/service/price.service';
     styleUrls: ['./filter-courses.component.scss']
 })
 export class FilterCoursesComponent implements OnInit {
+    prices: Array<Price> = new Array<Price>();
+    priceList: Array<Price> = new Array<Price>();
+
     constructor(private translate: TranslateService,
                 private router: Router,
+                private login: LoginService,
                 private priceService: PriceService,
                 private messageService: MessageService,
                 private packService: PackStudentService) {
@@ -88,6 +94,7 @@ export class FilterCoursesComponent implements OnInit {
             }
             this.changeText(group, price, level);
         }
+        this.priceService.getAll().subscribe(d => this.priceList = d);
     }
 
     private changeText(group: string, price: string, level: string) {
@@ -111,10 +118,11 @@ export class FilterCoursesComponent implements OnInit {
         this.activeIndex = 1;
         this.items[0].label = type;
         this.groupOption = type;
+        this.index = 1;
         if (type === 'GROUP') {
-            this.index = 2;
+            this.prices = this.priceList.filter(p => p.forGroup === true);
         } else {
-            this.index = 1;
+            this.prices = this.priceList.filter(p => p.forGroup === false);
         }
     }
 
@@ -126,21 +134,13 @@ export class FilterCoursesComponent implements OnInit {
     }
 
     indexChange() {
-        if (this.activeIndex === 1) {
-            if (this.groupOption === 'GROUP') {
-                this.index = 2;
-            } else {
-                this.index = 1;
-            }
-        } else {
-            this.index = this.activeIndex;
-        }
+        this.index = this.activeIndex;
     }
 
     getCourse(level: string) {
         if (this.groupOption === 'GROUP') {
             this.packService.findPackByGroupOption(true).subscribe(data => {
-                const course = data.filter(d => d.level.libelle === level && d.prix === this.priceSelected);
+                const course = data.filter(d => d.level.libelle === level && d.price?.price === this.priceSelected);
                 if (course.length > 0) {
                     this.courseDetail(course[0]);
                 } else {
@@ -153,7 +153,7 @@ export class FilterCoursesComponent implements OnInit {
             });
         } else {
             this.packService.findPackByGroupOption(false).subscribe(data => {
-                const course = data.filter(d => d.level.libelle === level && d.prix === this.priceSelected);
+                const course = data.filter(d => d.level.libelle === level && d.price?.price === this.priceSelected);
                 if (course.length > 0) {
                     this.courseDetail(course[0]);
                 } else {
@@ -169,6 +169,10 @@ export class FilterCoursesComponent implements OnInit {
 
     courseDetail(course: PackStudent): void {
         this.selectedCourse = course;
-        this.router.navigate(['/course-details']);
+        if (this.login.getConnecteUser() !== null) {
+            this.router.navigate(['/our-packs/' + course.id]);
+        } else {
+            this.router.navigate(['/course-details']);
+        }
     }
 }

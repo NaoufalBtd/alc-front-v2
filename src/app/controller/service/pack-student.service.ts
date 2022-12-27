@@ -170,6 +170,8 @@ export class PackStudentService {
     }
 
     savePack() {
+        this.packstudentIndividial.nombreCours = this.packstudentIndividial.price.nreCourse;
+        this.packstudentIndividial.oldPrice = this.packstudentIndividial.price.oldPrice.toString();
         this.http.post<number>(this.adminUrl + 'packStudent/', this.packstudentIndividial).subscribe(
             data => {
                 this.messageService.add({
@@ -199,6 +201,8 @@ export class PackStudentService {
     }
 
     updatePack() {
+        this.packstudentIndividial.nombreCours = this.packstudentIndividial.price.nreCourse;
+        this.packstudentIndividial.oldPrice = this.packstudentIndividial.price.oldPrice.toString();
         this.http.put<number>(this.adminUrl + 'packStudent/', this.packstudentIndividial).subscribe(
             data => {
                 this.messageService.add({

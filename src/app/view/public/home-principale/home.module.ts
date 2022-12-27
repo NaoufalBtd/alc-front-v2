@@ -132,7 +132,10 @@ import {AdvantagesComponent} from './advantages/advantages.component';
         FooterComponent,
         ContactUsComponent,
         HeaderOneComponent,
-        BreadcrumbComponent
+        BreadcrumbComponent,
+        FilterCoursesComponent,
+        CourseDetailsAreaComponent,
+        PaimentComponent
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

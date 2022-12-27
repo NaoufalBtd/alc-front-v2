@@ -45,88 +45,11 @@
         </li>
     </ul>
 
-
-    <!--    <ul [hidden]="user != null" class="topbar-menu">
-
-            <li [ngClass]="{'active-topmenuitem fadeInDown': appMain.topbarUserMenuActive}" class="user-profile"
-                style="margin-top: 4px">
-                <a (click)="appMain.onTopbarUserMenuButtonClick($event)" *ngIf="!app.inlineUser" href="#">
-                    <div class="layout-profile-userinfo">
-                        <span class="layout-profile-name" style="color: cyan;"><b><h4>Space Admin &#9207;</h4></b></span>
-                    </div>
-                </a>
-                <ul class="fadeInDown">
-                    <li>
-                        <a [routerLink]="['/public/login-admin']">
-                            <i class="pi pi-fw pi-user"></i>
-                            <span>Sign in</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a [routerLink]="['/public/inscriptionAdmin']">
-                            <i class="pi pi-fw pi-user-plus"></i>
-                            <span>Sign up</span>
-                        </a>
-                    </li>
-                </ul>
-            </li>
-
-
-            <li [ngClass]="{'active-topmenuitem fadeInDown': appMain.topbarNotificationMenuActive}" class="user-profile"
-                style="margin-top: 4px">
-                <a (click)="appMain.onTopbarNotificationMenuButtonClick($event)" *ngIf="!app.inlineUser" href="#">
-                    <div class="layout-profile-userinfo">
-                        <span class="layout-profile-name" style="color: cyan;"><b><h4>Space Teacher &#9207;</h4></b></span>
-                    </div>
-                </a>
-                <ul class="fadeInDown">
-                    <li>
-                        <a [routerLink]="['/public/login-prof']">
-                            <i class="pi pi-fw pi-user"></i>
-                            <span>Sign in</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a [routerLink]="['/public/inscriptionTeacher']">
-                            <i class="pi pi-fw pi-user-plus"></i>
-                            <span>Sign up</span>
-                        </a>
-                    </li>
-                </ul>
-            </li>
-
-
-            <li [ngClass]="{'active-topmenuitem fadeInDown': appMain.topbarNotificationMenuActive2}" class="user-profile"
-                style="margin-top: 4px">
-                <a (click)="appMain.onTopbarNotificationMenuButtonClick2($event)" *ngIf="!app.inlineUser" href="#">
-                    <div class="layout-profile-userinfo">
-                        <span class="layout-profile-name" style="color: cyan;"><b><h4>Space Student &#9207;</h4></b></span>
-                    </div>
-                </a>
-                <ul class="fadeInDown">
-                    <li>
-                        <a [routerLink]="['/public/login-etudiant']">
-                            <i class="pi pi-fw pi-user"></i>
-                            <span>Sign in</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a [routerLink]="['/public/inscriptionEtudiant']">
-                            <i class="pi pi-fw pi-user-plus"></i>
-                            <span>Sign up</span>
-                        </a>
-                    </li>
-                </ul>
-            </li>
-
-
-        </ul>-->
-
-
 </div>
 
-<app-header-three *ngIf="this.authenticationService.getUserFromLocalCache() == null"></app-header-three>
-
+<app-header-two  *ngIf="this.authenticationService.getUserFromLocalCache() == null"
+                 headerShadow="header__area header__padding-2 header__shadow">
+</app-header-two>
 
 
 <script type="text/javascript" src="src/script.js"></script>

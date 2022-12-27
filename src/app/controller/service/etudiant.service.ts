@@ -168,8 +168,9 @@ export class EtudiantService {
         return this.http.post<number>(this.etudiantUrl + 'inscription/update/pack/' + code, etudiant);
     }
 
-    public updatePassword(newPassword: string): Observable<number> {
-        return this.http.get<number>(this.etudiantUrl + 'etudiant/username/' + this.serviceUser.getConnectedStudent().username + '/newpass/' + newPassword);
+    public updatePassword(newPassword: string, username: string): Observable<number> {
+        return this.http.get<number>(this.etudiantUrl + 'etudiant/username/' +
+            username + '/newpass/' + newPassword);
     }
 
     public deleteMultipleByNom(): Observable<number> {
@@ -541,4 +542,11 @@ export class EtudiantService {
         return this._skill;
     }
 
+    validateStudent(token: string): Observable<Etudiant> {
+        return this.http.get<Etudiant>(this.etudiantUrl + 'etudiant/validate/'  + token);
+    }
+
+    findById(idCurrentUser: string): Observable<Etudiant> {
+        return this.http.get<Etudiant>(this.etudiantUrl + 'etudiant/id/'  + idCurrentUser);
+    }
 }

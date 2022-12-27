@@ -10,7 +10,7 @@
                     <strong>{{p.totalStudents}} {{'Students' | translate}}</strong><br>
                      {{'have bought this pack' | translate}}
                 </p>
-                <a class="btn-1" (click)="selectedPack(p)">{{p.nombreCours}}h | {{p.prix}}$</a>
+                <a class="btn-1" (click)="selectedPackFct(p)">{{p.nombreCours}}h | {{p.price?.price}}$</a>
             </div>
         </div>
     </div>
@@ -24,7 +24,7 @@
                     <strong>{{p.totalStudents}} {{'Students' | translate}}</strong><br>
                      {{'have bought this pack' | translate}}
                 </p>
-                <a class="btn-1" (click)="selectedPack(p)">{{p.nombreCours}}h | {{p.prix}}$</a>
+                <a class="btn-1" (click)="selectedPackFct(p)">{{p.nombreCours}}h | {{p.price?.price}}$</a>
             </div>
         </div>
     </div>

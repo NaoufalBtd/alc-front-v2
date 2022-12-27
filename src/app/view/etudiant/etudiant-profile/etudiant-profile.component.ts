@@ -431,7 +431,7 @@ export class EtudiantProfileComponent implements OnInit {
     }
 
     changePassword() {
-        this.etudiantService.updatePassword(this.newPassword).subscribe(
+        this.etudiantService.updatePassword(this.newPassword, this.loginService.getConnectedStudent().username).subscribe(
             data => {
                 if (data > 0) {
                     this.changePass = false;
