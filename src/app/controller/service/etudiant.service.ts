@@ -4,7 +4,7 @@ import {Etudiant} from '../model/etudiant.model';
 
 import {Observable} from 'rxjs';
 import {environment} from '../../../environments/environment';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {EtudiantVo} from '../model/etudiant-vo.model';
 import {Prof} from '../model/prof.model';
 import {Centre} from '../model/centre.model';
@@ -543,10 +543,18 @@ export class EtudiantService {
     }
 
     validateStudent(token: string): Observable<Etudiant> {
-        return this.http.get<Etudiant>(this.etudiantUrl + 'etudiant/validate/'  + token);
+        return this.http.get<Etudiant>(this.etudiantUrl + 'etudiant/validate/' + token);
     }
 
     findById(idCurrentUser: string): Observable<Etudiant> {
-        return this.http.get<Etudiant>(this.etudiantUrl + 'etudiant/id/'  + idCurrentUser);
+        return this.http.get<Etudiant>(this.etudiantUrl + 'etudiant/id/' + idCurrentUser);
+    }
+
+    verifyEmail(username: string): Observable<any> {
+        const headers = new HttpHeaders({
+            'X-RapidAPI-Key': 'SIGN-UP-FOR-KEY',
+            'X-RapidAPI-Host': 'email-checker.p.rapidapi.com'
+        });
+        return this.http.get<any>('https://email-checker.p.rapidapi.com/verify/v1?email=' + username, {headers});
     }
 }

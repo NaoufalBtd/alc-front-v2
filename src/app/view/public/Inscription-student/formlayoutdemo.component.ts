@@ -9,6 +9,7 @@ import {VonPrimengFormModule} from '@von-development-studio/primeng-form-validat
 import {AuthenticationService} from '../../../controller/service/authentication.service';
 import {AnimationService} from '../../../controller/service/animation.service';
 import {TranslateService} from '@ngx-translate/core';
+import {HttpClient} from '@angular/common/http';
 
 @Component({
     selector: 'app-formlayoutdemo',
@@ -28,16 +29,19 @@ export class FormLayoutDemoComponent implements OnInit {
     ];
     id: number;
     showdialog = false;
+    showAccountModel: boolean;
 
     constructor(private messageService: MessageService,
                 public etudiantService: EtudiantService,
                 private animation: AnimationService,
                 private translate: TranslateService,
+                private http: HttpClient,
                 private confirmationService: ConfirmationService,
                 public authenticationService: AuthenticationService,
                 public packStudentService: PackStudentService,
                 private service: InscriptionService, private router: Router) {
     }
+
     get showAnimation(): boolean {
         return this.animation.showAnimation;
     }
@@ -45,6 +49,7 @@ export class FormLayoutDemoComponent implements OnInit {
     set showAnimation(value: boolean) {
         this.animation.showAnimation = value;
     }
+
     get selected(): Etudiant {
         return this.etudiantService.selected;
     }
@@ -57,39 +62,27 @@ export class FormLayoutDemoComponent implements OnInit {
 
     }
 
+    showConfirm() {
+        this.messageService.clear();
+        this.messageService.add({
+            key: 'ccc',
+            sticky: true,
+            closable: false,
+            severity: 'success',
+            detail: 'تم التسجيل بنجاح 😍،  يرجى التحقق من بريدك الإلكتروني لتفعيل الحساب الخاص بك'
+        });
+    }
+
+    onReject() {
+        this.messageService.clear('ccc');
+    }
+
+    clear() {
+        this.messageService.clear();
+    }
 
     createEtudiant() {
-        this.showAnimation = true;
-        this.etudiantService.create().subscribe(
-            data => {
-                this.showAnimation = false;
-                console.log(data);
-                if (data != null) {
-                    this.showAnimation = false;
-                    this.showdialog = true;
-                    this.messageService.add({
-                        severity: 'success',
-                        detail: 'تم التسجيل بنجاح 😍،  يرجى التحقق من بريدك الإلكتروني لتفعيل الحساب الخاص بك',
-                        life: 8000
-                    });
-                } else {
-                    this.messageService.add({
-                        severity: 'info',
-                        detail: 'البريد الالكتروني موجود بالفعل، من فضلك تفقد بريدك الالكتروني للحصول على اسم المستخدم و كلمة المرور للولوج الى حسابك',
-                        life: 9000
-                    });
-                }
-            }, error => {
-                this.showAnimation = false;
-                this.messageService.add({
-                    severity: 'error',
-                    summary: 'Error',
-                    detail: 'Registration Canceled',
-                    life: 4000
-                });
-                console.log(error);
-            }
-        );
+        this.verifyEmail(this.selected.username);
     }
 
 
@@ -109,5 +102,53 @@ export class FormLayoutDemoComponent implements OnInit {
         } else {
             return false;
         }
+    }
+
+    openGmail() {
+        this.clear();
+        window.open('https://mail.google.com/mail/u/0/#inbox', '_blank');
+    }
+
+    private verifyEmail(username: string) {
+        const url = 'https://emailvalidation.abstractapi.com/v1/?api_key=d928649ca44341bba9a9482419202c4c&email=' + username;
+        return this.http.get<any>(url).subscribe(data => {
+            console.log(data);
+            if (data?.deliverability === 'UNDELIVERABLE') {
+                this.messageService.add({
+                    severity: 'info',
+                    detail: 'لم يتم العثور على بريدك الالكتروني، يرجى محاولة استخدام بريد إلكتروني حقيقي',
+                    life: 30000
+                });
+            } else {
+                this.showAnimation = true;
+                this.etudiantService.create().subscribe(
+                    st => {
+                        this.showAnimation = false;
+                        if (st != null) {
+                            this.showAnimation = false;
+                            this.showdialog = true;
+                            this.showConfirm();
+                        } else {
+                            this.messageService.add({
+                                severity: 'info',
+                                detail: 'البريد الالكتروني موجود بالفعل، من فضلك تفقد بريدك الالكتروني للحصول على اسم المستخدم و كلمة المرور للولوج الى حسابك',
+                                life: 30000
+                            });
+                        }
+                    }, error => {
+                        this.showAnimation = false;
+                        this.messageService.add({
+                            severity: 'error',
+                            summary: 'Error',
+                            detail: 'Registration Canceled',
+                            life: 4000
+                        });
+                        console.log(error);
+                    }
+                );
+            }
+        }, error => {
+            console.log(error);
+        });
     }
 }

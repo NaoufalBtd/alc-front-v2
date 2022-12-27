@@ -38,3 +38,24 @@
         </div>
     </div>
 </div>
+
+<p-toast position="top-center" key="ccc" (onClose)="onReject()" [baseZIndex]="5000">
+    <ng-template let-message pTemplate="message">
+        <div class="flex flex-column" style="flex: 1; width: 500px">
+            <div class="text-center">
+                <i class="fas fa-badge-check"  style="font-size: 3rem"></i>
+                <h4>{{message.summary}}</h4>
+                <p style="text-align: center;margin-bottom: 15px;">{{message.detail}}</p>
+            </div>
+            <div class="p-grid p-fluid">
+                <div class="p-col-6">
+                    <button type="button" pButton (click)="clear()" label="OK" class="p-button-success"></button>
+                </div>
+
+                <div class="p-col-6">
+                    <button type="button" pButton iconPos="right" icon="pi pi-envelope" (click)="openGmail()" label="Open Gmail" class="p-button-secondary"></button>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</p-toast>
