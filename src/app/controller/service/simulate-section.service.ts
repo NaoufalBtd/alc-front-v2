@@ -554,7 +554,7 @@ export class SimulateSectionService {
                 data => {
                     this.selectedQuiz = data;
                     if (data !== null) {
-                        this.quizService.findQuizEtudanitByEtudiantIdAndQuizId(this.loginService.etudiant, this.selectedQuiz).subscribe(
+                        this.quizService.findQuizEtudanitByEtudiantIdAndQuizId(this.loginService.etudiant, data).subscribe(
                             data1 => {
                                 this.quizEtudiantList = data1;
                                 if (this.quizEtudiantList?.id === 0 || this.quizEtudiantList === null
@@ -713,20 +713,23 @@ export class SimulateSectionService {
                     this.quizService.findQuizBySection(this.selectedsection.id).subscribe(
                         dataQuiz => {
                             this.selectedQuiz = dataQuiz;
-                            this.quizService.findQuizEtudanitByEtudiantIdAndQuizId(this.loginService.etudiant, this.selectedQuiz).subscribe(
-                                data1 => {
-                                    this.quizEtudiantList = data1;
-                                    if (this.quizEtudiantList.id !== 0) {
-                                        this.quizView = true;
-                                    } else {
+                            if (dataQuiz !== null) {
+                                this.quizService.findQuizEtudanitByEtudiantIdAndQuizId(this.loginService.etudiant,
+                                    this.selectedQuiz).subscribe(
+                                    data1 => {
+                                        this.quizEtudiantList = data1;
+                                        if (this.quizEtudiantList.id !== 0) {
+                                            this.quizView = true;
+                                        } else {
+                                            this.quizView = false;
+                                        }
+                                    }, error => {
+                                        this.passerQuiz = 'Take Quiz';
+                                        console.log(error);
                                         this.quizView = false;
                                     }
-                                }, error => {
-                                    this.passerQuiz = 'Take Quiz';
-                                    console.log(error);
-                                    this.quizView = false;
-                                }
-                            );
+                                );
+                            }
                         });
                     this.service.image = this.selectedsection.urlImage;
                     this.quizService.section.id = this.selectedsection.id;
@@ -746,9 +749,9 @@ export class SimulateSectionService {
                     this.showVocabulary = false;
                 }
                 this.quizService.findQuizBySectionId(this.selectedsection).subscribe(
-                    data => {
-                        this.selectedQuiz = data;
-                        if (data !== null) {
+                    dataQuiz => {
+                        this.selectedQuiz = dataQuiz;
+                        if (dataQuiz !== null) {
                             this.quizService.findQuizEtudanitByEtudiantIdAndQuizId(this.loginService.etudiant, this.selectedQuiz).subscribe(
                                 data1 => {
                                     this.quizEtudiantList = data1;
@@ -779,6 +782,7 @@ export class SimulateSectionService {
                 this.selectedsection = this.itemssection2[0];
                 this.quizService.findQuizBySectionId(this.selectedsection).subscribe(data12 => {
                     this.quizExist = true;
+                    this.selectedQuiz = data12;
                     if (data12 !== null) {
                         this.quizService.findQuizEtudanitByEtudiantIdAndQuizId(this.loginService.etudiant, this.selectedQuiz).subscribe(
                             data1 => {
@@ -826,7 +830,6 @@ export class SimulateSectionService {
     private displayData(section: Section) {
         this.selectedsection = section;
         this.quizService.section.id = this.selectedsection.id;
-        this.quizService.findQuizSection(this.selectedsection).subscribe(data => this.selectedQuiz = data);
         this.quizService.findQuizBySectionId(this.selectedsection).subscribe(
             data => {
                 this.selectedQuiz = data;

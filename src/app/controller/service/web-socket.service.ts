@@ -207,10 +207,11 @@ export class WebSocketService {
 
     public closeWebSocket(chatMessageDto: ChatMessageDto) {
         this.chatMessages = [];
-        this.webSocket.send(JSON.stringify(chatMessageDto));
+        if (this.webSocket.readyState === this.webSocket.OPEN) {
+            this.webSocket.send(JSON.stringify(chatMessageDto));
+        }
+        this.isInSession = false;
         this.webSocket.close();
-        this.webSocket.onclose = (event) => {
-        };
     }
 
     set dragAndDropData(value: string) {
@@ -220,25 +221,35 @@ export class WebSocketService {
     public openWebSocket(user: User, prof: Prof, grpEtudiant: GroupeEtudiant, sender: string) {
         this.webSocket = new WebSocket(this.socketUrl);
         this.webSocket.onopen = (event) => {
+            console.log('--------------------OPENED-----------------------');
             this.onOpen(prof, grpEtudiant, sender, user);
         };
         this.webSocket.onerror = (event) => {
-            if (this.webSocket.readyState === this.webSocket.CLOSING) {
-                alert('Wb socket is CLOSING !');
-            }
         };
         this.webSocket.onmessage = (event) => {
-            console.log(prof);
-            console.log(this.connectedUsers);
-            console.log(this.loginservice.getConnecteUser());
             if (this.connectedUsers.filter(d => d.id === this.loginservice.getConnecteUser().id)?.length > 0 ||
                 this.loginservice.getConnecteUser().id === prof.id) {
                 this.onMessage(event);
             }
         };
+        this.webSocket.onclose = (event) => {
+            console.log('--------------------CLOSE-----------------------');
+            console.log(event.reason);
+            console.log('--------------------CLOSE-----------------------');
+            // if (this.isInSession) {
+            //     if (this.loginservice.getConnectedStudent().role === 'TEACHER') {
+            //         this.openWebSocket(this.loginservice.getConnectedProf(), this.loginservice.getConnectedProf(),
+            //             this.groupeEtudiant, 'PROF');
+            //     } else {
+            //         this.openWebSocket(this.loginservice.getConnectedStudent(), this.groupeEtudiant.prof,
+            //             this.groupeEtudiant, 'STUDENT');
+            //     }
+            // }
+        };
     }
 
     private onOpen(prof: Prof, grpEtudiant: GroupeEtudiant, sender: string, user: User) {
+        this.isInSession = true;
         this.prof = prof;
         this.groupeEtudiant = grpEtudiant;
         if (sender === 'PROF') {
@@ -247,24 +258,30 @@ export class WebSocketService {
                 this.studentsEnLigne.set(prof.id, prof);
             }
         } else {
-            this.groupeEtudiantService.findAllGroupeEtudiantDetail(grpEtudiant.id).subscribe(
-                data => {
-                    for (let i = 0; i < data.length; i++) {
-                        if (this.connectedUsers.filter(s => s.id === data[i].etudiant.id).length === 0) {
-                            this.connectedUsers.push({...data[i].etudiant});
-                        }
-                    }
-                    this.participants.set(prof.id, this.connectedUsers);
-                    if (this.studentsEnLigne.get(prof.id) === undefined) {
-                        this.studentsEnLigne.set(prof.id, prof);
-                    }
-                }
-            );
+            if (this.connectedUsers.filter(s => s.id === user.id).length === 0) {
+                this.connectedUsers.push({...user});
+            }
+            this.participants.set(prof.id, this.connectedUsers);
+            if (this.studentsEnLigne.get(prof.id) === undefined) {
+                this.studentsEnLigne.set(prof.id, prof);
+            }
             const chatMessage: ChatMessageDto = new ChatMessageDto(user.nom, 'join session', true);
             chatMessage.prof = prof;
             chatMessage.student = user;
             chatMessage.type = 'CONNECT';
-            this.webSocket.send(JSON.stringify(chatMessage));
+            chatMessage.quizReponse = null;
+            chatMessage.ev = null;
+            chatMessage.dateSent = null;
+            console.log(chatMessage);
+            console.log(this.webSocket.readyState);
+            if (this.webSocket.readyState === this.webSocket.OPEN) {
+                this.webSocket.send(JSON.stringify(chatMessage));
+            } else {
+                console.log('OPEN ' + this.webSocket.OPEN);
+                console.log('CLOSED ' + this.webSocket.CLOSED);
+                console.log('CONNECTING ' + this.webSocket.CONNECTING);
+                console.log('CLOSING ' + this.webSocket.CLOSING);
+            }
         }
     }
 
@@ -466,10 +483,12 @@ export class WebSocketService {
                     this.webSocket.send(JSON.stringify(chatMessageDto));
                 };
             } else {
-                this.openWebSocket(this.loginservice.getConnectedStudent(), this.loginservice.getConnectedStudent().prof,
+                this.openWebSocket(this.loginservice.getConnectedStudent(), this.groupeEtudiant.prof,
                     this.groupeEtudiant, 'STUDENT');
                 this.webSocket.onopen = (event) => {
-                    this.webSocket.send(JSON.stringify(chatMessageDto));
+                    if (this.webSocket.readyState === this.webSocket.OPEN) {
+                        this.webSocket.send(JSON.stringify(chatMessageDto));
+                    }
                 };
             }
         }

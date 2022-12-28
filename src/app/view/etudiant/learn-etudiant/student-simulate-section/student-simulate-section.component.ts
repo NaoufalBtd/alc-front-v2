@@ -520,6 +520,7 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
     get studentsEnLigne(): Map<number, User> {
         return this.webSocketService.studentsEnLigne;
     }
+
     get images(): any[] {
         return this.simulateSectionService.images;
     }
@@ -607,11 +608,11 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
                     this.showVocabulary = false;
                 }
                 this.quizService.findQuizBySectionId(this.selectedsection).subscribe(
-                    data => {
-                        this.selectedQuiz = data;
-
-                        if (data !== null) {
-                            this.quizService.findQuizEtudanitByEtudiantIdAndQuizId(this.loginService.etudiant, this.selectedQuiz).subscribe(
+                    dataQuiz => {
+                        this.selectedQuiz = dataQuiz;
+                        if (dataQuiz !== null) {
+                            this.quizService.findQuizEtudanitByEtudiantIdAndQuizId(this.loginService.etudiant,
+                                this.selectedQuiz).subscribe(
                                 (data) => {
                                     this.quizEtudiantList = data;
                                     this.quizService.findAllQuestions(this.selectedQuiz.ref).subscribe(
@@ -959,7 +960,6 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
             selectedMeeting => {
                 this.animationService.showAnimation = false;
                 this.showTpBar = false;
-                this.webSocketService.openWebSocket(this.etudiant, selectedMeeting.groupeEtudiant.prof, selectedMeeting.groupeEtudiant, 'STUDENT');
                 this.webSocketService.isInSession = true;
                 this.selectedcours = selectedMeeting.cours;
                 this.prof = selectedMeeting.prof;
@@ -974,6 +974,9 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
                     data => {
                         this.selectedReview = data;
                     });
+                this.webSocketService.openWebSocket(this.loginService.getConnectedStudent(),
+                    selectedMeeting.groupeEtudiant.prof,
+                    selectedMeeting.groupeEtudiant, 'STUDENT');
             }, error => {
                 this.animationService.showAnimation = false;
             }

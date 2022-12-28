@@ -104,10 +104,11 @@ export class EtudiantCoursesComponent implements OnInit {
                 //    }
                 // this.service.image += 'preview';
                 this.quizService.findQuizBySectionId(this.selectedsection).subscribe(
-                    data => {
-                        this.selectedQuiz = data;
-                        if (data !== null){
-                            this.quizService.findQuizEtudanitByEtudiantIdAndQuizId(this.loginService.getConnectedStudent(), this.selectedQuiz).subscribe(
+                    dataQuiz => {
+                        this.selectedQuiz = dataQuiz;
+                        if (dataQuiz !== null) {
+                            this.quizService.findQuizEtudanitByEtudiantIdAndQuizId(this.loginService.getConnectedStudent(),
+                                this.selectedQuiz).subscribe(
                                 data => {
                                     this.quizEtudiantList = data;
                                     console.log(this.quizEtudiantList);
