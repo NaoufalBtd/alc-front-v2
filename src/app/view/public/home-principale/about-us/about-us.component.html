@@ -6,12 +6,12 @@
             <div style="padding: 13% 0;" class="col-md-6 col-sm-12">
                 <div class="row">
                     <div class="col-md-12">
-                        <h1 class="about page__title">{{'aboutus' | translate}}</h1>
+                        <h1   [style.direction]="translate.currentLang === 'ar' ? 'rtl': 'ltr'" class="about page__title">{{'aboutus' | translate}}</h1>
                     </div>
 
 
                     <div style="margin: 40px 0" class="col-md-12">
-                        <p class="about-text ">
+                        <p   [style.direction]="translate.currentLang === 'ar' ? 'rtl': 'ltr'" class="about-text ">
                             {{'EngFlexy'| translate}}
                         </p>
                     </div>
@@ -29,8 +29,8 @@
                             <img class="about-img" src="/assets/icons/icon-question.png" alt="">
                         </div>
                         <div class="col-md-9">
-                            <h2 class="about-title">{{'DevelopersTitle' | translate}}</h2>
-                            <p class="about-title-detail">
+                            <h2   [style.direction]="translate.currentLang === 'ar' ? 'rtl': 'ltr'" class="about-title">{{'DevelopersTitle' | translate}}</h2>
+                            <p   [style.direction]="translate.currentLang === 'ar' ? 'rtl': 'ltr'" class="about-title-detail">
                                 {{'Developers' | translate}}
                             </p>
                         </div>
@@ -53,40 +53,11 @@
                         </div>
                         <div class="col-md-9">
                             <h2 class="about-title">{{'wheredidTitle' | translate}}</h2>
-                            <p class="about-title-detail">
+                            <p   [style.direction]="translate.currentLang === 'ar' ? 'rtl': 'ltr'" class="about-title-detail">
                                {{'wheredid' | translate}}
                             </p>
                         </div>
                     </ng-container>
-
-
-<!--                    <ng-container >-->
-<!--                        <div style="margin: 60px 0" class="col-md-3">-->
-<!--                        </div>-->
-<!--                        <div style="margin: 60px 0" class="col-md-9">-->
-<!--                        </div>-->
-<!--                    </ng-container>-->
-
-
-<!--                    <ng-container>-->
-<!--                        <div class="col-md-3">-->
-<!--                            <img class="about-img" src="/assets/icons/icon-developers.png" alt="">-->
-<!--                        </div>-->
-<!--                        <div class="col-md-9">-->
-<!--                            <h2 class="about-title">Research</h2>-->
-<!--                            <p class="about-title-detail">-->
-<!--                                Young people are passionate about achieving their goals to move-->
-<!--                                our region forward by leveraging-->
-<!--                                cutting-edge technology to simplify and improve learning.-->
-<!--                            </p>-->
-<!--                        </div>-->
-<!--                    </ng-container>-->
-
-
-
-
-
-
 
 
                 </div>

@@ -70,18 +70,17 @@ export class EtudiantComponent implements OnInit {
                 private learnService: LearnService,
                 public translate: TranslateService,
                 public app: AppComponent) {
-        translate.setDefaultLang('en');
-        const lang = window.navigator.language;
-        console.log('=====================');
-        console.log(lang);
-        console.log('=====================');
-        if (lang?.includes('ar')) {
-            translate.use('ar');
-        } else if (lang?.includes('fr')) {
-            translate.use('fr');
-        } else {
-            translate.use('en');
-        }
+
+        // console.log('=====================');
+        // console.log(lang);
+        // console.log('=====================');
+        // if (lang?.includes('ar')) {
+        //     translate.use('ar');
+        // } else if (lang?.includes('fr')) {
+        //     translate.use('fr');
+        // } else {
+        //     translate.use('en');
+        // }
     }
 
     get showAppMenu(): boolean {

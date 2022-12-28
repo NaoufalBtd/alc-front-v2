@@ -30,10 +30,6 @@ export class AppTopBarComponent implements OnInit, OnDestroy {
                 public router: Router,
                 public authenticationService: AuthenticationService, public loginservice: LoginService,
                 private profService: ProfService, private studentservice: EtudiantService, public translate: TranslateService) {
-        translate.setDefaultLang('en');
-
-        // the lang to use, if the lang isn't available, it will use the current loader to get them
-        translate.use('en');
     }
 
 

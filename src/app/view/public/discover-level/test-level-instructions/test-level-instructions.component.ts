@@ -60,7 +60,6 @@ export class TestLevelInstructionsComponent implements OnInit {
 
 
     ngOnInit(): void {
-        this.translate.use('ar');
         if (this.translate.currentLang === 'en') {
             this.items = [
                 {

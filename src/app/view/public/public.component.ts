@@ -75,15 +75,14 @@ export class PublicComponent implements OnInit {
                 private translate: TranslateService,
                 private authenticationService: AuthenticationService,
                 private primengConfig: PrimeNGConfig, public app: AppComponent) {
-        translate.setDefaultLang('en');
-        const lang = window.navigator.language;
-        if (lang?.includes('ar')) {
-            translate.use('ar');
-        } else if (lang?.includes('fr')) {
-            translate.use('fr');
-        } else {
-            translate.use('en');
-        }
+        // const lang = window.navigator.language;
+        // if (lang?.includes('ar')) {
+        //     translate.use('ar');
+        // } else if (lang?.includes('fr')) {
+        //     translate.use('fr');
+        // } else {
+        //     translate.use('en');
+        // }
     }
 
     onLayoutClick() {
