@@ -8,7 +8,7 @@ import {ConfirmationService, MessageService} from 'primeng/api';
 import {Parcours} from '../../../../controller/model/parcours.model';
 import {LearnService} from '../../../../controller/service/learn.service';
 import {AdminService} from '../../../../controller/service/admin.service';
-import {Router, RouterLink} from '@angular/router';
+import {Router} from '@angular/router';
 
 
 @Component({
@@ -131,7 +131,7 @@ export class ParcoursListComponent implements OnInit {
 
     ngOnInit(): void {
         this.initCol();
-        this.service.init().subscribe(data => this.itemsparcours = data);
+        this.service.findAllLevels().subscribe(data => this.itemsparcours = data);
         this.service.FindAllParcours().subscribe(
             data => {
                 this.itemsparcours = data;

@@ -7,6 +7,8 @@ import {Router} from '@angular/router';
 import {PriceService} from '../../../../../controller/service/price.service';
 import {Price} from '../../../../../controller/model/price.model';
 import {LoginService} from '../../../../../controller/service/login.service';
+import {ParcoursService} from '../../../../../controller/service/parcours.service';
+import {Parcours} from '../../../../../controller/model/parcours.model';
 
 @Component({
     selector: 'app-filter-courses',
@@ -16,10 +18,12 @@ import {LoginService} from '../../../../../controller/service/login.service';
 export class FilterCoursesComponent implements OnInit {
     prices: Array<Price> = new Array<Price>();
     priceList: Array<Price> = new Array<Price>();
+    levels: Array<Parcours> = new Array<Parcours>();
 
     constructor(private translate: TranslateService,
                 private router: Router,
                 private login: LoginService,
+                private levelSerivce: ParcoursService,
                 private priceService: PriceService,
                 private messageService: MessageService,
                 private packService: PackStudentService) {
@@ -74,6 +78,7 @@ export class FilterCoursesComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.levelSerivce.findAllLevels().subscribe(d => this.levels = d);
         if (this.activeIndex === 0) {
             let group: string;
             let price: string;
@@ -131,6 +136,7 @@ export class FilterCoursesComponent implements OnInit {
         this.activeIndex = 2;
         this.items[1].label = type;
         this.priceSelected = price;
+        console.log(this.priceSelected);;
     }
 
     indexChange() {
@@ -140,7 +146,7 @@ export class FilterCoursesComponent implements OnInit {
     getCourse(level: string) {
         if (this.groupOption === 'GROUP') {
             this.packService.findPackByGroupOption(true).subscribe(data => {
-                const course = data.filter(d => d.level.libelle === level && d.price?.price === this.priceSelected);
+                const course = data.filter(d => d.price?.price === this.priceSelected);
                 if (course.length > 0) {
                     this.courseDetail(course[0]);
                 } else {
@@ -153,7 +159,7 @@ export class FilterCoursesComponent implements OnInit {
             });
         } else {
             this.packService.findPackByGroupOption(false).subscribe(data => {
-                const course = data.filter(d => d.level.libelle === level && d.price?.price === this.priceSelected);
+                const course = data.filter(d => d.level.libelle === level);
                 if (course.length > 0) {
                     this.courseDetail(course[0]);
                 } else {

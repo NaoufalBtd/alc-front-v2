@@ -98,7 +98,7 @@ export class CoursEditComponent implements OnInit {
     }
 
     findAllParcours() {
-        this.service.init().subscribe(data => {
+        this.service.findAllLevels().subscribe(data => {
             this.itemsparcours = data;
         });
     }

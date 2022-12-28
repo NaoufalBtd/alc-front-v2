@@ -203,7 +203,7 @@ export class PackStudentService {
     updatePack() {
         this.packstudentIndividial.nombreCours = this.packstudentIndividial.price.nreCourse;
         this.packstudentIndividial.oldPrice = this.packstudentIndividial.price.oldPrice.toString();
-        this.http.put<number>(this.adminUrl + 'packStudent/', this.packstudentIndividial).subscribe(
+        this.http.put<PackStudent>(this.adminUrl + 'packStudent/', this.packstudentIndividial).subscribe(
             data => {
                 this.messageService.add({
                     severity: 'info',
@@ -212,9 +212,17 @@ export class PackStudentService {
                     life: 3000
                 });
                 if (this.packstudentIndividial.forGroupe) {
-                    this.findPackIndividualOrgroupe(true);
+                    for (let i = 0; i < this.packstudentgroupeList.length; i++) {
+                        if (this.packstudentgroupeList[i]?.id === this.packstudentIndividial.id) {
+                            this.packstudentgroupeList[i] = data;
+                        }
+                    }
                 } else {
-                    this.findPackIndividualOrgroupe(false);
+                    for (let i = 0; i < this.packstudentIndividialList.length; i++) {
+                        if (this.packstudentIndividialList[i]?.id === this.packstudentIndividial.id) {
+                            this.packstudentIndividialList[i] = data;
+                        }
+                    }
                 }
                 this.packstudentIndividial = new PackStudent();
             }, error => {

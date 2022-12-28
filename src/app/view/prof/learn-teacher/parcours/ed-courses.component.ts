@@ -75,7 +75,7 @@ export class EdCoursesComponent implements OnInit {
 
     ngOnInit(): void {
         this.initCol();
-        this.service.init().subscribe(data => this.itemsparcours = data);
+        this.service.findAllLevels().subscribe(data => this.itemsparcours = data);
     }
 
     public FindCours(parcour: Parcours) {

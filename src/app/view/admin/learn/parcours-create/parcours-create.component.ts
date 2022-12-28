@@ -75,7 +75,7 @@ export class ParcoursCreateComponent implements OnInit {
             if ( data === 1){
                 console.log('hani kandkhl l data positive');
                 // tslint:disable-next-line:no-shadowed-variable
-                this.service.init().subscribe(data => {
+                this.service.findAllLevels().subscribe(data => {
                     this.itemsparcours = data;
                     this.messageService.add({
                         severity: 'success',

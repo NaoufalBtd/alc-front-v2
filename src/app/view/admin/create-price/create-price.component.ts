@@ -37,7 +37,7 @@ export class CreatePriceComponent implements OnInit {
         this.priceService.save(this.price).subscribe(
             data => {
                 this.showAddDialog = false;
-                if (this.price?.id === 0 || this.price?.id === null) {
+                if (this.price?.id === 0 || this.price?.id === undefined || this.price?.id === null) {
                     this.prices.push({...data});
                     this.messageService.add({
                         severity: 'success',

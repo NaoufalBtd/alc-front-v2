@@ -687,7 +687,7 @@ export class ParcoursService {
         return this.http.get<Array<EtudiantCours>>(this.adminUrl + 'etudiantCours/');
     }
 
-    public init(): Observable<Array<Parcours>> {
+    public findAllLevels(): Observable<Array<Parcours>> {
         return this.http.get<Array<Parcours>>(this.adminUrl + 'parcours/');
 
     }
