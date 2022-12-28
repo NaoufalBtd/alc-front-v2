@@ -235,16 +235,15 @@ export class WebSocketService {
         this.webSocket.onclose = (event) => {
             console.log('--------------------CLOSE-----------------------');
             console.log(event.reason);
-            console.log('--------------------CLOSE-----------------------');
-            // if (this.isInSession) {
-            //     if (this.loginservice.getConnectedStudent().role === 'TEACHER') {
-            //         this.openWebSocket(this.loginservice.getConnectedProf(), this.loginservice.getConnectedProf(),
-            //             this.groupeEtudiant, 'PROF');
-            //     } else {
-            //         this.openWebSocket(this.loginservice.getConnectedStudent(), this.groupeEtudiant.prof,
-            //             this.groupeEtudiant, 'STUDENT');
-            //     }
-            // }
+            if (this.isInSession) {
+                if (this.loginservice.getConnectedStudent().role === 'TEACHER') {
+                    this.openWebSocket(this.loginservice.getConnectedProf(), this.loginservice.getConnectedProf(),
+                        this.groupeEtudiant, 'PROF');
+                } else {
+                    this.openWebSocket(this.loginservice.getConnectedStudent(), this.groupeEtudiant.prof,
+                        this.groupeEtudiant, 'STUDENT');
+                }
+            }
         };
     }
 
@@ -460,6 +459,9 @@ export class WebSocketService {
             if (chatMessageDto.type === 'message') {
                 this.webSocket.send(JSON.stringify((chatMessageDto)));
             } else if (chatMessageDto?.type === 'START_LESSON') {
+                chatMessageDto.quizReponse = null;
+                chatMessageDto.dateSent = null;
+                chatMessageDto.ev = null;
                 this.webSocket.send(JSON.stringify((chatMessageDto)));
             } else {
                 chatMessageDto.quizReponse.question.quiz = null;
