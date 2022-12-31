@@ -91,6 +91,7 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
             position: 'bottom'
         },
     };
+    public showAlert = false;
 
 
     constructor(private sectionItemService: SectionItemService,
@@ -611,6 +612,18 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
 
 
     public allerVerSection(section: Section) {
+        let timer: any;
+        if (!this.showFlowMeButton && (this.selectedsection.categorieSection?.libelle?.toUpperCase()?.includes('VOCABULARY') ||
+            this.selectedsection.categorieSection?.libelle?.toUpperCase()?.includes('LET\'S PRACTICE'))) {
+            this.showAlert = true;
+            if (this.showAlert) {
+                timer = setInterval(() => {
+                    clearInterval(timer);
+                    this.showAlert = false;
+                }, 5000);
+            }
+            return;
+        }
         for (const sec of this.itemssection2) {
             if (section.id === sec.id) {
                 this.selectedsection = sec;

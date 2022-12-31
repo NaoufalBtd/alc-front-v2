@@ -10,8 +10,7 @@ export class AppComponent implements OnInit {
 
     constructor(private primengConfig: PrimeNGConfig,
                 public translate: TranslateService) {
-        translate.setDefaultLang('en');
-        translate.use('ar');
+
         // const lang = window.navigator.language;
         // if (lang?.includes('ar')) {
         //     translate.use('ar');
@@ -46,7 +45,8 @@ export class AppComponent implements OnInit {
 
     ngOnInit() {
         this.primengConfig.ripple = true;
-
+        this.translate.setDefaultLang('en');
+        this.translate.use('ar');
     }
 
 }

@@ -3,6 +3,8 @@ import {SectionItemModel} from '../../../../../controller/model/section-item.mod
 import {MessageService} from 'primeng/api';
 import {VocabularyService} from '../../../../../controller/service/vocabulary.service';
 import {VocabularySectionItemService} from '../../../../../controller/service/vocabulary-section-item.service';
+import {LearnService} from '../../../../../controller/service/learn.service';
+import {QuizEtudiantService} from '../../../../../controller/service/quiz-etudiant.service';
 
 @Component({
     selector: 'app-vocabulary-section-item',
@@ -13,6 +15,8 @@ export class VocabularySectionItemComponent implements OnInit {
 
     constructor(private messageService: MessageService,
                 private vocabularySectionItemService: VocabularySectionItemService,
+                private learnService: LearnService,
+                private quizService: QuizEtudiantService,
                 private vocabularyService: VocabularyService) {
     }
 
@@ -65,9 +69,12 @@ export class VocabularySectionItemComponent implements OnInit {
         this.vocabularySectionItemService.cureentResponse = value;
     }
 
+    get selectedLanguage(): any {
+        return this.learnService.selectedLanguage;
+    }
+
 
     ngOnInit(): void {
-        console.log(this.current.imageUrl);
         this.showfinish = false;
         this.fliped = false;
     }
@@ -81,7 +88,7 @@ export class VocabularySectionItemComponent implements OnInit {
         if (this.cureentResponse === '') {
             this.messageService.add({severity: 'warn', summary: 'HEY??', detail: 'You didn\'t write anything '});
         } else {
-            if (this.cureentResponse == this.current.response) {
+            if (this.cureentResponse === this.current.response) {
                 this.messageService.add({severity: 'success', summary: 'GOOD', detail: 'your answer is correct'});
             } else {
                 this.messageService.add({severity: 'error', summary: 'OOPS!!', detail: 'your answer is incorrect'});
@@ -97,7 +104,18 @@ export class VocabularySectionItemComponent implements OnInit {
         audio.play();
     }
 
-    getExplanation() {
 
+    getTranslation() {
+        if (this.selectedLanguage.code === 'ar') {
+            this.quizService.translate(this.current.response).subscribe(data => {
+                this.current.translation = data;
+                console.log(this.current.translation);
+            });
+        } else if (this.selectedLanguage.code === 'fr') {
+            this.quizService.translateEnFr(this.current.response).subscribe(data => {
+                this.current.translation = data;
+                console.log(this.current.translation);
+            });
+        }
     }
 }

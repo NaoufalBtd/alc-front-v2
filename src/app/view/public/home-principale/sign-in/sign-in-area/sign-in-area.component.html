@@ -11,8 +11,8 @@
      <div class="row">
         <div class="col-xxl-8 offset-xxl-2 col-xl-8 offset-xl-2">
            <div class="section__title-wrapper text-center mb-55">
-              <h2 class="section__title">{{'signinto' | translate}}<br>  {{'Recharge Direct' | translate}} </h2>
-              <p>{{"it you don't have an account you can" | translate}} <a style="color: blue!important;" [routerLink]="['/free-trial']">{{"Register here!" | translate}}</a></p>
+              <h2  [style.direction]="translate.currentLang === 'ar' ? 'rtl': 'ltr'" class="section__title">{{'signinto' | translate}}</h2>
+              <p   [style.direction]="translate.currentLang === 'ar' ? 'rtl': 'ltr'">{{"it you don't have an account you can" | translate}} <a style="color: blue!important;" [routerLink]="['/free-trial']">{{"Register here!" | translate}}</a></p>
            </div>
         </div>
      </div>
@@ -51,7 +51,7 @@
                     </div>
                     <button class="e-btn  w-100" (click)="onLogin(user)"> <span></span> {{'signin' | translate}}</button>
                     <div class="sign__new text-center mt-20">
-                       <p>{{'new' | translate}} <a [routerLink]="['/free-trial']">{{'Sign Up'| translate}}</a></p>
+                       <p   [style.direction]="translate.currentLang === 'ar' ? 'rtl': 'ltr'">{{'new' | translate}} <a [routerLink]="['/free-trial']">{{'Sign Up'| translate}}</a></p>
                     </div>
                  </form>
               </div>

@@ -8,7 +8,6 @@
                 styleClass="p-card-shadow">
             <ng-template pTemplate="header">
                 <img *ngIf="selectedPack?.imgUrl !== null" alt="Card" [src]="selectedPack?.imgUrl">
-                <img *ngIf="selectedPack?.imgUrl === null" alt="Card" src="assets/demo/images/product/bamboo-watch.jpg">
             </ng-template>
             <p>{{selectedPack?.description}}</p>
             <ng-template  pTemplate="footer">

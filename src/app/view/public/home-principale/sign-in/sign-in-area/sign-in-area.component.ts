@@ -6,7 +6,7 @@ import {UserService} from '../../../../../controller/service/user.service';
 import {LoginService} from '../../../../../controller/service/login.service';
 import {Router} from '@angular/router';
 import {User} from '../../../../../controller/model/user.model';
-import {HttpErrorResponse, HttpHeaders, HttpResponse} from '@angular/common/http';
+import {HttpErrorResponse, HttpResponse} from '@angular/common/http';
 import {HeaderType} from '../../../../../enum/header-type.enum';
 import {Role} from '../../../../../enum/role.enum';
 import {TranslateService} from '@ngx-translate/core';
@@ -22,7 +22,8 @@ export class SignInAreaComponent implements OnInit {
     subscriptions: Subscription[] = [];
 
     constructor(private messageService: MessageService, private confirmationService: ConfirmationService,
-                private authenticationService: AuthenticationService,private translate: TranslateService,
+                private authenticationService: AuthenticationService,
+                public translate: TranslateService,
                 private userService: UserService,
                 private service: LoginService, private router: Router) {
 

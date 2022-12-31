@@ -6,6 +6,8 @@ import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
 import {SectionItemModel} from '../model/section-item.model';
 import {VocabularySectionItemService} from './vocabulary-section-item.service';
+import {LearnService} from './learn.service';
+import {QuizEtudiantService} from './quiz-etudiant.service';
 
 @Injectable({
     providedIn: 'root'
@@ -32,6 +34,8 @@ export class VocabularyService {
 
 
     constructor(private http: HttpClient,
+                private learnService: LearnService,
+                private quizService: QuizEtudiantService,
                 private vocabularySectionItemService: VocabularySectionItemService) {
     }
 
@@ -308,18 +312,34 @@ export class VocabularyService {
         if (index < this.listItems.length - 1) {
             this.vocabularySectionItemService.reloadComponent();
             this.currentItem = this.listItems[index + 1];
+            this.getTranslation();
             this.currentIndex = index + 2;
             this.calculProgressBarValue(this.currentIndex);
             this.showNext = true;
             this.showfinish = false;
             this.fliped = false;
             this.vocabularySectionItemService.fliped = false;
-            console.log('Hada howa index' + index + 1);
-
         }
         if (index + 1 >= this.listItems.length) {
             this.showNext = false;
             this.showfinish = true;
+        }
+    }
+
+
+    get selectedLanguage(): any {
+        return this.learnService.selectedLanguage;
+    }
+
+    getTranslation() {
+        if (this.selectedLanguage.code === 'ar') {
+            this.quizService.translate(this.currentItem.response).subscribe(data => {
+                this.currentItem.translation = data;
+            });
+        } else if (this.selectedLanguage.code === 'fr') {
+            this.quizService.translateEnFr(this.currentItem.response).subscribe(data => {
+                this.currentItem.translation = data;
+            });
         }
     }
 

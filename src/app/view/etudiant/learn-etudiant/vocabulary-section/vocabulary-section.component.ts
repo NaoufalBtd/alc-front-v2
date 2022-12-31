@@ -1,4 +1,4 @@
-import {Component, OnInit, Output, ViewChild, EventEmitter} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {SectionItemModel} from '../../../../controller/model/section-item.model';
 import {MessageService} from 'primeng/api';
 import {SectionItemService} from '../../../../controller/service/section-item.service';
@@ -193,7 +193,6 @@ export class VocabularySectionComponent implements OnInit {
     }
 
     flip() {
-        console.log('TEST');
         console.log(this.webSocketService.isInSession);
         if (this.webSocketService.isInSession && this.groupeEtudiant?.groupeEtude?.nombreEtudiant === 1) {
             const chatMessage: ChatMessageDto = new ChatMessageDto('VOC_FLIP', 'VOC_FLIP', true);

@@ -11,18 +11,18 @@
         <h2 class="p-d-inline">{{current?.transcription}}</h2><br>
         <h2 class="p-d-inline">{{current?.response}}</h2>
         <h3 id="translateShow"
-            style="margin-top: 10px;visibility: hidden">{{current?.translation}}</h3>
+            style="margin-top: 10px">{{current?.translation}}</h3>
     </div>
 
     <div id="infoDiv" class="card"
          style="width: 100%;margin:0 auto;margin-top: 7px;background: #F6F6F6;display: none">
         <p-accordion>
             <div class="p-text-left">
-                <h5>{{'Explanation' | translate}}</h5>
+                <h5>{{'Explanation'}}</h5>
                 <p>{{current?.explanation}}</p>
-                <h5>{{'Example' | translate}}</h5>
+                <h5>{{'Example'}}</h5>
                 <p>{{current?.example}}</p>
-                <h5>{{'Synonyms' | translate}}</h5>
+                <h5>{{'Synonyms'}}</h5>
                 <ul *ngIf="current?.synonyms!==null">
                     <li style="display: inline;margin-right: 10px" *ngFor="let s of current?.synonyms; let i = index">
                         <i class="pi pi-volume-up p-mr-2 p-d-inline"

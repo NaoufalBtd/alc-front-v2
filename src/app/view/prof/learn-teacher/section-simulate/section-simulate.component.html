@@ -92,7 +92,9 @@
         </div>
     </div>
 </div>
-
+<div class="alert alert-secondary" role="alert">
+    click not allowed in this section!
+</div>
 <div class=" card" style="background-color: transparent">
     <div class="p-grid" style=" padding:10px">
         <div class="p-col-12 middleBar">
@@ -304,6 +306,12 @@
                                 (click)="findAllSynonimes(searchInput); opdict.toggle($event)"
                                 icon="pi pi-plus"></button>
                     </div>
+
+                    <div *ngIf="showAlert" class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <strong>click not allowed in this section!</strong>
+                        <button type="button" (click)="showAlert = false" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+
 
                     <p-overlayPanel #opdict [showCloseIcon]="false" [style]="{width: '340px'}">
                         <ng-template pTemplate>

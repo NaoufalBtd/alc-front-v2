@@ -35,7 +35,7 @@
   "wheredid": "من أين جاء اسم “EngFlexy”؟\nالإسم يدل على نفسه،EngFlexy هي كلمة مركبة من كلمتين  Eng و Flexy .Flexy-إختصار لEnglish(اللغة الإنجليزية )،أما Flexy-إختصار لكلمة flexible (مرن).\nفالفكرة الأساسية هنا أنه لابد أن تكون منصتنا بعيدة كل البعد عن المراكز اللغوية التقليدية (بناية بها أساتذة+أقسام مكدسة+سبورة )،باستخدام التكنولوجيا المتطورة قمنا بتطوير منصة تفاعلية 100% Online مرنة،أي المتعلم هو من يختار التوقيت و المكان المناسب له بالإضافة إلى ذلك هناك إمكانية الإختيار بين الحصص الفردية أو الجماعية\n",
   "getintouch": "دعونا نحصل على اتصال",
   "Contactuswith": "اتصل بنا مع التفاصيل التالية. واملأ النموذج بالتفاصيل\n\n",
-  "signinto": "سجّل الدخول إلى\nإعادة الشحن المباشر\n",
+  "signinto": "تسجيل الدخول الى حسابك",
   "account": "إذا لم يكن لديك حساب يمكنك التسجيل هنا!",
   "Workemail": "البريد الإلكتروني",
   "Password": "كلمه السر",
@@ -461,7 +461,22 @@
   "lesson duration": "مدة الدرس",
   "2-3 times a week": "ننصح ب 2-3 دروس في الأسبوع",
   "recommended intensity": "عدد الحصص في الأسبوع",
-  "local or native speaker": "local أو native speaker"
+  "local or native speaker": "local أو native speaker",
+  "You only pay for one hour and then you have another hour free as you put your skills to the test in a place of assignments. You will find exercises accompanying the lesson where you can solve and re-solve as many times as you wish until you are fully able to complete the lesson. You will find a section for writing, where after you finish, you can send it to your professor for correction and discussion of all the shortcomings and mistakes.": "تدفع فقط لساعة واحدة ثم لديك ساعة أخرى مجانية حيث تختبر مهاراتك في مكان للواجبات. ستجد التمارين المصاحبة للدرس حيث يمكنك حلها وإعادة الحل عدد المرات التي ترغب فيها حتى تتمكن تماما من الدرس. ستجد قسما للكتابة حيث بعد إنتهاءك يمكنك إرساله لأستاذك للتصحيح و مناقشة مكان القصور والأخطاء. كلها هذا مجانا",
+  "Find out your level": "اكتشف مستواك",
+  "Do you want to know your level in English?": "هل ترغب في معرفة مستواك بالإنجليزية؟",
+  "EngFlexy Academy opens the platform for you to test your English proficiency through a test consisting of a set of questions. After answering, you will immediately get the result as well as your level (beginner, intermediate, advanced...)":  "أكاديمية EngFlexy تفتح لك المنصة لتختبر مدى تمكنك من الإنجليزية عبر إختبار مكون من مجموعة من الأسئلة. بعد الإجابة، ستحصل مباشرة على النتيجة و كذلك مستواك (مبتدئ، متوسط، متقدم...).",
+  "Fee refund feature": "خاصية إسترجاع الرسوم",
+  "Our primary goal is to enable you to master the English language professionally. Therefore, the feature of refunding the full amount in the event that you do not benefit. All future sessions within 48 hours of requesting a refund are refundable": "هدفنا الأساسي هو تمكنك من اللغة الإنجليزية بإحتراف. لذلك خاصية إسترجاع المبلغ كاملا في حال عدم إستفادتك. جميع الجلسات المستقبلية في غضون 48 ساعة من طلب إسترداد الأموال قابلة للإسترداد",
+  "English Language Completion Certificate": "شهادة إتمام اللغة الإنجليزية",
+  "At the end of completing any of the levels and passing the exam, you will receive a certificate of success presented by the academy": "في نهاية إتمامك أي مستوى من المستويات وإجتياز الإمتحان ستحصل على شهادة نجاح مقدمة من الأكاديمية.",
+  "Develop your level of English": "طور مستواك في اللغة الإنجليزية",
+  "Do you want to improve your level of English in an effective and professional way?": "هل ترغب أن تطور مستواك في اللغة الإنجليزية بطريقة فعالة وإحترافية؟",
+  "So EngFlexy Academy is the solution in which it gives you the opportunity to learn with a recognized professor directly and interactively where you can speak, learn grammar, listen, read and write in addition to exercises until you practice intensively with your teacher": "إذن أكاديمية EngFlexy هي الحل فهي تتيح لك الفرصة في التعلم مع أستاذ معترف به مباشرة و بشكل تفاعلي حيث يمكنك التحدث، تعلم القواعد، الإستماع، القراءة و كذلك الكتابة بالإضافة إلى التمارين حتى تتمرس بشكل مكثف مع أستاذك.",
+  "How better it is to study comfortably!": "كم هو أفضل أن تدرس وأنت مرتاح!",
+  "The Academy gives you the opportunity to learn English from anywhere. All you need is a device and the Internet. The psychological factor can be more important in the learning journey. Instead of wasting time going back and forth from your home to the place of learning, you can take advantage of this time to complete the exercises with your teacher directly.": "الأكاديمية تمنحك الفرصة بأن تتعلم الإنجليزية من أي مكان. ما يلزمك فقط جهاز و أنترنيت. العامل النفسي يمكن أن يكون أكثر أهمية في رحلة التعلم. فبدلا من ضياع الوقت التي تقضيه ذهابا وإيابا من منزلك إلى مكان التعلم،يمكنك أن تستفيد من هذا الوقت لإنجاز التمارين أو مع أستاذك بشكل مباشر.",
+  "Pay once and learn twice!": "تدفع مرة و تتعلم مرتين!"
+
 
 
 
