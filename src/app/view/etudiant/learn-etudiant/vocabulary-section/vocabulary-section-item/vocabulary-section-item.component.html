@@ -10,7 +10,7 @@
            (click)="sound(current.response)"></i>
         <h2 class="p-d-inline">{{current?.transcription}}</h2><br>
         <h2 class="p-d-inline">{{current?.response}}</h2>
-        <h3 id="translateShow"
+        <h3  *ngIf="fliped===true" id="translateShow"
             style="margin-top: 10px">{{current?.translation}}</h3>
     </div>
 
