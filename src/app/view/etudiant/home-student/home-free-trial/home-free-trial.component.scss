@@ -45,7 +45,7 @@
   -ms-align-items: flex-end;
   -ms-flex-align: flex-end;
   align-items: flex-end;
-  width:100%;
+  width: 100%;
   min-height: 240px;
   margin: 15px;
   background-color: #ff725e;
@@ -126,7 +126,8 @@
   right: 0;
   top: 0;
 }
-#explanationText{
+
+#explanationText {
   width: 100%;
   text-align: start;
   font-size: medium;
@@ -163,6 +164,7 @@
   max-width: 100%;
   height: auto;
 }
+
 .views-row .layout__region .field--name-field-image img {
   width: 100%;
 }
@@ -211,6 +213,7 @@
   margin-bottom: -5px;
   color: #f04e23;
 }
+
 .imgLesson {
   width: 75px;
   margin-top: -15px;
@@ -223,3 +226,12 @@
   margin-bottom: 20px;
 }
 
+#levelName {
+  color: #00aee0;
+  cursor: pointer
+}
+
+#levelName:hover {
+  color: #263238 !important;
+  text-decoration: underline;
+}

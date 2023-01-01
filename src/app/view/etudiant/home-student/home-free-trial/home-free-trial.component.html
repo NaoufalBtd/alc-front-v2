@@ -25,7 +25,7 @@
                 <div class="layout__region layout__region--content">
 
                     <div class="field field--name-field-image field--type-image field--label-hidden field--items">
-                        <div class="field--item"><a>
+                        <div (click)="showCoursesForLevel(level)" class="field--item"><a>
 
                             <img style="cursor: pointer"
                                  sizes="100vw"
@@ -39,8 +39,8 @@
                     <div class="content-wrapper">
 
                         <div class="field field--name-taxonomy-term-title field--type-ds field--label-hidden field--item">
-                            <h2>
-                                <a style="color: #00aee0;cursor: pointer"
+                            <h2 >
+                                <a id="levelName"
                                    (click)="showCoursesForLevel(level)"
                                 >{{level?.libelle}}</a>
                             </h2>
