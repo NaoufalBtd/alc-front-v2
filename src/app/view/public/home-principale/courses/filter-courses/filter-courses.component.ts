@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {MenuItem, MessageService} from 'primeng/api';
+import {MessageService} from 'primeng/api';
 import {TranslateService} from '@ngx-translate/core';
 import {PackStudentService} from '../../../../../controller/service/pack-student.service';
 import {PackStudent} from '../../../../../controller/model/pack-student.model';
@@ -16,9 +16,7 @@ import {Parcours} from '../../../../../controller/model/parcours.model';
     styleUrls: ['./filter-courses.component.scss']
 })
 export class FilterCoursesComponent implements OnInit {
-    prices: Array<Price> = new Array<Price>();
-    priceList: Array<Price> = new Array<Price>();
-    levels: Array<Parcours> = new Array<Parcours>();
+
 
     constructor(private translate: TranslateService,
                 private router: Router,
@@ -29,12 +27,29 @@ export class FilterCoursesComponent implements OnInit {
                 private packService: PackStudentService) {
     }
 
-    get items(): MenuItem[] {
-        return this.priceService.items;
+
+    get prices(): Array<Price> {
+        return this.priceService.prices;
     }
 
-    set items(value: MenuItem[]) {
-        this.priceService.items = value;
+    set prices(value: Array<Price>) {
+        this.priceService.prices = value;
+    }
+
+    get priceList(): Array<Price> {
+        return this.priceService.priceList;
+    }
+
+    set priceList(value: Array<Price>) {
+        this.priceService.priceList = value;
+    }
+
+    get levels(): Array<Parcours> {
+        return this.priceService.levels;
+    }
+
+    set levels(value: Array<Parcours>) {
+        this.priceService.levels = value;
     }
 
     get groupOption(): string {
@@ -43,6 +58,14 @@ export class FilterCoursesComponent implements OnInit {
 
     set groupOption(value: string) {
         this.priceService.groupOption = value;
+    }
+
+    get priceLib(): string {
+        return this.priceService.priceLib;
+    }
+
+    set priceLib(value: string) {
+        this.priceService.priceLib = value;
     }
 
     get priceSelected(): number {
@@ -78,69 +101,35 @@ export class FilterCoursesComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.levelSerivce.findAllLevels().subscribe(d => this.levels = d);
-        if (this.activeIndex === 0) {
-            let group: string;
-            let price: string;
-            let level: string;
-            if (this.translate.currentLang === 'en') {
-                group = 'Individual or group';
-                price = 'Choose price';
-                level = 'Choose your level';
-
-            } else if (this.translate.currentLang === 'fr') {
-                group = 'Individual or group';
-                price = 'Choose price';
-                level = 'Choose your level';
-            } else if (this.translate.currentLang === 'ar') {
-                group = 'تفضيلات المجموعة( فردي او مجموعة)';
-                price = ' السعر ';
-                level = 'المستوى';
-            }
-            this.changeText(group, price, level);
-        }
-        this.priceService.getAll().subscribe(d => this.priceList = d);
-    }
-
-    private changeText(group: string, price: string, level: string) {
-        this.items = [
-            {
-                label: group,
-
-            },
-            {
-                label: price,
-
-            },
-            {
-                label: level,
-
-            }
-        ];
+        this.levelSerivce.findAllLevels().subscribe(d => this.priceService.levels = d);
+        this.priceService.getAll().subscribe(d => this.priceService.priceList = d);
     }
 
     chooseOption(type: string) {
         this.activeIndex = 1;
-        this.items[0].label = type;
         this.groupOption = type;
         this.index = 1;
         if (type === 'GROUP') {
-            this.prices = this.priceList.filter(p => p.forGroup === true);
+            this.priceService.prices = this.priceService.priceList.filter(p => p.forGroup === true);
         } else {
-            this.prices = this.priceList.filter(p => p.forGroup === false);
+            this.priceService.prices = this.priceService.priceList.filter(p => p.forGroup === false);
         }
     }
 
     chooseType(type: string, price: number) {
         this.index = 3;
         this.activeIndex = 2;
-        this.items[1].label = type;
         this.priceSelected = price;
-        console.log(this.priceSelected);;
+        this.priceLib = type;
+        console.log(this.priceSelected);
     }
 
-    indexChange() {
-        this.index = this.activeIndex;
+    indexChange(index: number) {
+        if (index >= this.activeIndex) {
+            return;
+        }
+
+        this.activeIndex = index;
     }
 
     getCourse(level: string) {

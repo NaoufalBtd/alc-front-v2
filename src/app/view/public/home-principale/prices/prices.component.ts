@@ -38,6 +38,13 @@ export class PricesComponent implements OnInit {
         this.priceService.priceSelected = value;
     }
 
+    get priceLib(): string {
+        return this.priceService.priceLib;
+    }
+
+    set priceLib(value: string) {
+        this.priceService.priceLib = value;
+    }
 
     get index(): number {
         return this.priceService.index;
@@ -126,7 +133,7 @@ export class PricesComponent implements OnInit {
         this.index = 3;
         this.activeIndex = 2;
         this.items[1].label = type;
-
+        this.priceLib = type;
         if (this.indexOfGroup === 0) {
             this.items[0].label = 'INDIVIDUAL';
         } else {
