@@ -1,219 +1,226 @@
-<div class="p-grid" style="background-color: white;    width: 90%;  margin: 5% 5% 0 5%!important;">
-    <div class="p-col-2"></div>
-    <div class="p-col-8">
-        <p-steps [model]="items" [(activeIndex)]="activeIndex" [readonly]="true"></p-steps>
+
+<app-header-four></app-header-four>
+
+<div id="Mycontainer" class="container pt-50">
+
+    <div class="p-grid" style="background-color: white;">
+        <div class="p-col-2"></div>
+        <div class="p-col-8">
+            <p-steps [model]="items" [(activeIndex)]="activeIndex" [readonly]="true"></p-steps>
+        </div>
     </div>
-</div>
 
 
-<div class="p-grid" style="background-color: white;    width: 90%;  margin: 0 5%!important;">
-    <div class="p-col-2"></div>
-    <div class="p-col-8">
+    <div class="p-grid" style="background-color: white;">
+        <div class="p-col-2"></div>
+        <div class="p-col-8">
 
-        <div *ngIf="activeIndex ==0" style="background: #263238; color: white;border-radius: 5px; "
-             class="p-grid">
-            <div class="p-col-12 topText">
-                {{"Please fill out your Gender and birth date" | translate}}
+            <div *ngIf="activeIndex ==0" style="background: #263238; color: white;border-radius: 5px; "
+                 class="p-grid">
+                <div class="p-col-12 topText">
+                    {{"Please fill out your Gender and birth date" | translate}}
+                </div>
+
+                <div class="p-col-2"></div>
+
+
+                <div class="p-col-4">
+                    <div class="transimage"
+                         [style.background]="(maleselected)? '#ff725e' :'#757f8a' "
+                         style="width: 200px; color: white ;padding: 13px; border-radius: 10px;">
+
+                        <img (click)="disabelcard('female')" alt="Card" src="../../../../assets/manimage.png"
+                             style="width: 170px; cursor: pointer">
+
+                    </div>
+                </div>
+
+
+                <div class="p-col-4">
+                    <div class="transimage"
+                         [style.background]="(femaleselected)? '#ff725e' :'#757f8a' "
+
+                         style="width: 200px; color: white ;padding: 13px; border-radius: 10px;">
+                        <img (click)="disabelcard('male')" alt="Card" src="../../../../assets/femaleimage.png"
+                             style="width: 170px; cursor: pointer">
+                    </div>
+                </div>
+
+                <div class="p-col-2"></div>
+                <div class="p-col-12 topText">
+                    {{"birthday:" | translate}}
+                </div>
+
+                <div class="p-col-3"></div>
+                <div class="p-col-6">
+                    <p-calendar [style]="{width: '100%', background: '#263238'}"
+                                [(ngModel)]="loginService.getConnectedStudent().dateNaissance"
+                                [showWeek]="true"
+                                [yearNavigator]="true"
+                                [monthNavigator]="true"
+                                [yearRange]="'1950:2022'"
+                                [showIcon]="true" inputId="icon"></p-calendar>
+
+                </div>
+                <div class="p-col-3"></div>
+
+
+                <div class="p-col-4"></div>
+                <div class="p-col-4">
+                    <button pButton pRipple (click)="activeIndex= activeIndex+1"
+                            [label]="'Next' | translate" icon="pi pi-caret-right" iconPos="right"
+                            class="Startnow"></button>
+                </div>
+                <div class="p-col-4"></div>
+
             </div>
 
-            <div class="p-col-2"></div>
+
+            <div *ngIf="activeIndex ==1" style="background: #263238; color: white;border-radius: 5px; "
+                 class="p-grid">
+                <div class="p-col-12 topText">
+                    {{"please tell us further information about your social status" | translate}}
+                </div>
+
+                <div class="p-col-6">
+                    <p>{{"Status Social" | translate}}</p>
+                    <p-dropdown [options]="statutSocials" [style]="{width: '90%', background: '#263238'}"
+                                optionLabel="libelle"
+                                [(ngModel)]="freetrialService.freeTrialFormule.inscription.statutSocial"
+                    >
+                        <!--
+
+                        -->
+                    </p-dropdown>
+                </div>
+                <div class="p-col-6">
+                    <p>{{"Area of work" | translate}}</p>
+                    <p-dropdown [options]="fonctions" [style]="{width: '90%', background: '#263238'}"
+                                placeholder="List of areas of work"
+                                optionLabel="libelle"
+                                [(ngModel)]="freetrialService.freeTrialFormule.inscription.fonction"
+                    >
+                        <!--                                       -->
+                    </p-dropdown>
+                </div>
 
 
-            <div class="p-col-4">
-                <div class="transimage"
-                     [style.background]="(maleselected)? '#ff725e' :'#757f8a' "
-                     style="width: 200px; color: white ;padding: 13px; border-radius: 10px;">
+                <div class="p-col-6">
+                    <p class="status">{{"Study Level" | translate}}</p>
+                    <p-dropdown [options]="niveauEtudes" [style]="{width: '90%', background: '#263238'}"
+                                optionLabel="libelle"
+                                [(ngModel)]="freetrialService.freeTrialFormule.inscription.niveauEtude"
+                    ></p-dropdown>
+                </div>
+                <div class="p-col-6">
+                    <p> {{"Main goal with learning English" | translate}}</p>
+                    <p-dropdown [options]="interetEtudiants" [style]="{width: '90%', background: '#263238'}"
+                                optionLabel="libelle"
+                                [(ngModel)]="freetrialService.freeTrialFormule.inscription.interetEtudiant"
+                    >
+                        <!--
 
-                    <img (click)="disabelcard('female')" alt="Card" src="../../../../assets/manimage.png"
-                         style="width: 170px; cursor: pointer">
+                        -->
+                    </p-dropdown>
+                </div>
 
+
+                <div class="p-col-6">
+                    <p>  {{"Skill" | translate}}</p>
+                    <p-dropdown [options]="skills" [style]="{width: '90%', background: '#263238'}"
+                                optionLabel="libelle"
+                                [(ngModel)]="freetrialService.freeTrialFormule.inscription.skill"
+                    >
+                    </p-dropdown>
+                </div>
+
+                <div class="p-col-6"></div>
+
+
+                <div class="p-col-4">
+                    <button pButton pRipple (click)="activeIndex= activeIndex-1"
+                            [label]="'Previous' | translate" icon="pi pi-caret-left" iconPos="left"
+                            class="Startnow"></button>
+                </div>
+                <div class="p-col-4">
+
+                </div>
+                <div class="p-col-4">
+                    <button pButton pRipple (click)="activeIndex= activeIndex+1"
+                            [label]="'Next'| translate" icon="pi pi-caret-right" iconPos="right"
+                            class="Startnow"></button>
+                </div>
+
+            </div>
+
+
+            <div *ngIf="activeIndex ==2" style="background: #263238; color: white;border-radius: 5px; "
+                 class="p-grid">
+                <div class="p-col-12 topText">
+                    {{"please tell us about when and how do you want to study in our platform" | translate}}
+                </div>
+
+                <div class="p-col-6">
+                    <p> {{"Days peer week" | translate}}</p>
+                    <p-selectButton [options]="daysOptions" optionLabel="name"
+                                    [(ngModel)]="freetrialService.freeTrialFormule.dayspeerweek"
+                                    optionValue="name"></p-selectButton>
+                </div>
+                <div class="p-col-6">
+                    <p> {{"Times" | translate}}</p>
+                    <p-selectButton [options]="timeOptions" optionLabel="name"
+                                    [(ngModel)]="freetrialService.freeTrialFormule.timeperday"
+                                    optionValue="name"></p-selectButton>
+                </div>
+
+                <div class="p-col-6">
+                    <p> {{"Teacher Locality" | translate}}</p>
+                    <p-selectButton [options]="teacherlolality" optionLabel="name"
+                                    [(ngModel)]="loginService.getConnectedStudent().teacherLocality"
+                                    optionValue="name"></p-selectButton>
+                </div>
+                <div class="p-col-6">
+                    <p> {{"Teacher age range" | translate}}</p>
+                    <p-selectButton [options]="teacherAgerange" optionLabel="name"
+                                    [(ngModel)]="freetrialService.freeTrialFormule.teacherAgeRange"
+                                    optionValue="name"></p-selectButton>
+                </div>
+
+
+                <div class="p-col-6">
+                    <p> {{"Teacher gender" | translate}}</p>
+                    <p-selectButton [options]="teacherGneder" optionLabel="name"
+                                    [(ngModel)]="freetrialService.freeTrialFormule.teacherGenderoption"
+                                    optionValue="name"></p-selectButton>
+                </div>
+                <div class="p-col-6">
+                    <p> {{"Teacher personality" | translate}}</p>
+                    <p-selectButton [options]="teacherPersonnality" optionLabel="name"
+                                    [(ngModel)]="freetrialService.freeTrialFormule.teacherPersonnality"
+                                    optionValue="name"></p-selectButton>
+                </div>
+
+
+                <!-------------------------------- Previous And Next Button -------------------------------------->
+
+                <div class="p-col-4">
+                    <button pButton pRipple (click)="activeIndex= activeIndex-1"
+                            [label]="'Previous' | translate" icon="pi pi-caret-left" iconPos="left"
+                            class="Startnow"></button>
+                </div>
+                <div class="p-col-4">
+
+                </div>
+                <div class="p-col-4">
+                    <button pButton pRipple (click)="freetrialService.save()"
+                            [label]="'Confirm' | translate" icon="pi pi-caret-right" iconPos="right"
+                            class="Startnow"></button>
                 </div>
             </div>
 
 
-            <div class="p-col-4">
-                <div class="transimage"
-                     [style.background]="(femaleselected)? '#ff725e' :'#757f8a' "
-
-                     style="width: 200px; color: white ;padding: 13px; border-radius: 10px;">
-                    <img (click)="disabelcard('male')" alt="Card" src="../../../../assets/femaleimage.png"
-                         style="width: 170px; cursor: pointer">
-                </div>
-            </div>
-
-            <div class="p-col-2"></div>
-            <div class="p-col-12 topText">
-                {{"birthday:" | translate}}
-            </div>
-
-            <div class="p-col-3"></div>
-            <div class="p-col-6">
-                <p-calendar [style]="{width: '100%', background: '#263238'}"
-                            [(ngModel)]="loginService.getConnectedStudent().dateNaissance"
-                            [showWeek]="true"
-                            [yearNavigator]="true"
-                            [monthNavigator]="true"
-                            [yearRange]="'1950:2022'"
-                            [showIcon]="true" inputId="icon"></p-calendar>
-
-            </div>
-            <div class="p-col-3"></div>
-
-
-            <div class="p-col-4"></div>
-            <div class="p-col-4">
-                <button pButton pRipple (click)="activeIndex= activeIndex+1"
-                        [label]="'Next' | translate" icon="pi pi-caret-right" iconPos="right"
-                        class="Startnow"></button>
-            </div>
-            <div class="p-col-4"></div>
-
         </div>
-
-
-        <div *ngIf="activeIndex ==1" style="background: #263238; color: white;border-radius: 5px; "
-             class="p-grid">
-            <div class="p-col-12 topText">
-                {{"please tell us further information about your social status" | translate}}
-            </div>
-
-            <div class="p-col-6">
-                <p>{{"Status Social" | translate}}</p>
-                <p-dropdown [options]="statutSocials" [style]="{width: '90%', background: '#263238'}"
-                            optionLabel="libelle"
-                            [(ngModel)]="freetrialService.freeTrialFormule.inscription.statutSocial"
-                >
-                    <!--
-
-                    -->
-                </p-dropdown>
-            </div>
-            <div class="p-col-6">
-                <p>{{"Area of work" | translate}}</p>
-                <p-dropdown [options]="fonctions" [style]="{width: '90%', background: '#263238'}"
-                            placeholder="List of areas of work"
-                            optionLabel="libelle"
-                            [(ngModel)]="freetrialService.freeTrialFormule.inscription.fonction"
-                >
-                    <!--                                       -->
-                </p-dropdown>
-            </div>
-
-
-            <div class="p-col-6">
-                <p class="status">{{"Study Level" | translate}}</p>
-                <p-dropdown [options]="niveauEtudes" [style]="{width: '90%', background: '#263238'}"
-                            optionLabel="libelle"
-                            [(ngModel)]="freetrialService.freeTrialFormule.inscription.niveauEtude"
-                ></p-dropdown>
-            </div>
-            <div class="p-col-6">
-                <p> {{"Main goal with learning English" | translate}}</p>
-                <p-dropdown [options]="interetEtudiants" [style]="{width: '90%', background: '#263238'}"
-                            optionLabel="libelle"
-                            [(ngModel)]="freetrialService.freeTrialFormule.inscription.interetEtudiant"
-                >
-                    <!--
-
-                    -->
-                </p-dropdown>
-            </div>
-
-
-            <div class="p-col-6">
-                <p>  {{"Skill" | translate}}</p>
-                <p-dropdown [options]="skills" [style]="{width: '90%', background: '#263238'}"
-                            optionLabel="libelle"
-                            [(ngModel)]="freetrialService.freeTrialFormule.inscription.skill"
-                >
-                </p-dropdown>
-            </div>
-
-            <div class="p-col-6"></div>
-
-
-            <div class="p-col-4">
-                <button pButton pRipple (click)="activeIndex= activeIndex-1"
-                        [label]="'Previous' | translate" icon="pi pi-caret-left" iconPos="left"
-                        class="Startnow"></button>
-            </div>
-            <div class="p-col-4">
-
-            </div>
-            <div class="p-col-4">
-                <button pButton pRipple (click)="activeIndex= activeIndex+1"
-                        [label]="'Next'| translate" icon="pi pi-caret-right" iconPos="right"
-                        class="Startnow"></button>
-            </div>
-
-        </div>
-
-
-        <div *ngIf="activeIndex ==2" style="background: #263238; color: white;border-radius: 5px; "
-             class="p-grid">
-            <div class="p-col-12 topText">
-                 {{"please tell us about when and how do you want to study in our platform" | translate}}
-            </div>
-
-            <div class="p-col-6">
-                <p> {{"Days peer week" | translate}}</p>
-                <p-selectButton [options]="daysOptions" optionLabel="name"
-                                [(ngModel)]="freetrialService.freeTrialFormule.dayspeerweek"
-                                optionValue="name"></p-selectButton>
-            </div>
-            <div class="p-col-6">
-                <p> {{"Times" | translate}}</p>
-                <p-selectButton [options]="timeOptions" optionLabel="name"
-                                [(ngModel)]="freetrialService.freeTrialFormule.timeperday"
-                                optionValue="name"></p-selectButton>
-            </div>
-
-            <div class="p-col-6">
-                <p> {{"Teacher Locality" | translate}}</p>
-                <p-selectButton [options]="teacherlolality" optionLabel="name"
-                                [(ngModel)]="loginService.getConnectedStudent().teacherLocality"
-                                optionValue="name"></p-selectButton>
-            </div>
-            <div class="p-col-6">
-                <p> {{"Teacher age range" | translate}}</p>
-                <p-selectButton [options]="teacherAgerange" optionLabel="name"
-                                [(ngModel)]="freetrialService.freeTrialFormule.teacherAgeRange"
-                                optionValue="name"></p-selectButton>
-            </div>
-
-
-            <div class="p-col-6">
-                <p> {{"Teacher gender" | translate}}</p>
-                <p-selectButton [options]="teacherGneder" optionLabel="name"
-                                [(ngModel)]="freetrialService.freeTrialFormule.teacherGenderoption"
-                                optionValue="name"></p-selectButton>
-            </div>
-            <div class="p-col-6">
-                <p> {{"Teacher personality" | translate}}</p>
-                <p-selectButton [options]="teacherPersonnality" optionLabel="name"
-                                [(ngModel)]="freetrialService.freeTrialFormule.teacherPersonnality"
-                                optionValue="name"></p-selectButton>
-            </div>
-
-
-            <!-------------------------------- Previous And Next Button -------------------------------------->
-
-            <div class="p-col-4">
-                <button pButton pRipple (click)="activeIndex= activeIndex-1"
-                        [label]="'Previous' | translate" icon="pi pi-caret-left" iconPos="left"
-                        class="Startnow"></button>
-            </div>
-            <div class="p-col-4">
-
-            </div>
-            <div class="p-col-4">
-                <button pButton pRipple (click)="freetrialService.save()"
-                        [label]="'Confirm' | translate" icon="pi pi-caret-right" iconPos="right"
-                        class="Startnow"></button>
-            </div>
-        </div>
-
-
     </div>
-</div>
 
+
+</div>

@@ -57,6 +57,7 @@ import {ClipboardModule} from '@angular/cdk/clipboard';
 import {FilterCoursesComponent} from './courses/filter-courses/filter-courses.component';
 import {PricesComponent} from './prices/prices.component';
 import {AdvantagesComponent} from './advantages/advantages.component';
+import {HeaderFourComponent} from './header-four/header-four.component';
 
 
 @NgModule({
@@ -105,6 +106,7 @@ import {AdvantagesComponent} from './advantages/advantages.component';
         FilterCoursesComponent,
         PricesComponent,
         AdvantagesComponent,
+        HeaderFourComponent,
     ],
     providers: [
         Clipboard
@@ -135,7 +137,8 @@ import {AdvantagesComponent} from './advantages/advantages.component';
         BreadcrumbComponent,
         FilterCoursesComponent,
         CourseDetailsAreaComponent,
-        PaimentComponent
+        PaimentComponent,
+        HeaderFourComponent
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
