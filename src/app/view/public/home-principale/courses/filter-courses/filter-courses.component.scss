@@ -8,6 +8,21 @@
   letter-spacing: 3px;
 }
 
+.w-img{
+  cursor: pointer;
+  text-align: center;
+  color: #263238;
+  font-size: 65px;
+  padding: 8px;
+}
+.w-img:hover{
+  cursor: pointer;
+  text-align: center;
+  color: white;
+  font-size: 68px;
+  padding: 8px;
+}
+
 .select-course {
   cursor: pointer !important;
 }

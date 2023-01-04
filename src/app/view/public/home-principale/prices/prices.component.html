@@ -1,10 +1,11 @@
-<section   [style.direction]="translate.currentLang === 'ar' ? 'rtl': 'ltr'" class="teacher__area">
+<section [style.direction]="translate.currentLang === 'ar' ? 'rtl': 'ltr'" class="teacher__area">
     <div class="container py-5">
         <div class="p-5 bg-white rounded shadow mb-5">
             <!-- Bordered tabs-->
-            <ul id="myTab1" role="tablist" class="nav nav-tabs nav-pills with-arrow flex-column flex-sm-row text-center">
+            <ul id="myTab1" role="tablist"
+                class="nav nav-tabs nav-pills with-arrow flex-column flex-sm-row text-center">
                 <li class="nav-item flex-sm-fill">
-                    <a id="home1-tab" data-toggle="tab"  role="tab" aria-controls="home1"
+                    <a id="home1-tab" data-toggle="tab" role="tab" aria-controls="home1"
                        [class.active]="indexOfGroup === 0"
                        (click)="tabChange('INDIVIDUAL')"
                        [attr.aria-selected]="isIndividual"
@@ -13,10 +14,11 @@
                 </li>
 
                 <li class="nav-item flex-sm-fill">
-                    <a id="profile1-tab" data-toggle="tab"  role="tab" aria-controls="profile1"
-                       [class.active]="indexOfGroup === 1"
+                    <a id="profile1-tab" data-toggle="tab" role="tab" aria-controls="profile1"
+                       [class.active]="indexOfGroup === 0"
                        (click)="tabChange('GROUP')"
-                       [attr.aria-selected]="!isIndividual" class="nav-link text-uppercase font-weight-bold mr-sm-3 rounded-0 border">Group</a>
+                       [attr.aria-selected]="!isIndividual"
+                       class="nav-link text-uppercase font-weight-bold mr-sm-3 rounded-0 border">Group</a>
                 </li>
             </ul>
 
@@ -27,87 +29,25 @@
                      class="tab-pane fade px-4 py-5 ">
                     <div class="row">
 
-
-                        <div (click)="chooseType('SILVER (1149 DH)', 1149)"
+                        <div *ngFor="let price of prices"
+                             (click)="chooseType(price.lib.toUpperCase() +'('+ price.price+' DH)', price.price)"
                              class="col-xxl-4 col-xl-4 col-lg-4 col-md-6">
                             <div class="course__item white-bg mb-30 fix">
                                 <div class="course__thumb w-img p-relative fix">
                                     <a>
-                                        <img src="/assets/images/Silver.png" alt="">
+                                        <img *ngIf="price?.lib?.toUpperCase() === 'SILVER'" src="/assets/images/Silver.png" alt="">
+                                        <img *ngIf="price?.lib?.toUpperCase() === 'GOLD'" src="/assets/images/GoldA.png" alt="">
+                                        <img *ngIf="price?.lib?.toUpperCase() === 'PLATINUM'" src="/assets/images/Platinum.gif" alt="">
                                     </a>
                                     <div class="course__tag">
-                                        <a class="course-type silver" >1149 DH</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div  (click)="chooseType('GOLD (3149 DH)', 3149)" class="col-xxl-4 col-xl-4 col-lg-4 col-md-6">
-                            <div class="course__item white-bg mb-30 fix">
-                                <div class="course__thumb w-img p-relative fix">
-                                    <a>
-                                        <img src="/assets/images/GoldA.png" alt="">
-                                    </a>
-                                    <div class="course__tag">
-                                        <a class="course-type gold" >3149 DH</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div  (click)="chooseType('PLATINUM  (4999 DH)', 4999)" class="col-xxl-4 col-xl-4 col-lg-4 col-md-6">
-                            <div class="course__item white-bg mb-30 fix">
-                                <div class="course__thumb w-img p-relative fix">
-                                    <a>
-                                        <img src="/assets/images/Platinum.gif" alt="">
-                                    </a>
-                                    <div class="course__tag">
-                                        <a class="course-type platinum" >4999 DH</a>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-
-
-                    </div>
-                </div>
-                <div id="profile1" role="tabpanel" aria-labelledby="profile-tab"
-                     [class.active]="indexOfGroup === 1"
-                     [class.show]="indexOfGroup === 1"
-                     class="tab-pane fade px-4 py-5">
-                    <div class="row">
-
-                        <div  (click)="chooseType('GOLD (1199 DH)', 1199)" class="col-xxl-4 col-xl-4 col-lg-4 col-md-6">
-                            <div class="course__item white-bg mb-30 fix">
-                                <div class="course__thumb w-img p-relative fix">
-                                    <a>
-                                        <img src="/assets/images/GoldA.png" alt="">
-                                    </a>
-                                    <div class="course__tag">
-                                        <a class="course-type gold" >1199 DH</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div   (click)="chooseType('PLATINUM (1849 DH)', 1849)" class="col-xxl-4 col-xl-4 col-lg-4 col-md-6">
-                            <div class="course__item white-bg mb-30 fix">
-                                <div class="course__thumb w-img p-relative fix">
-                                    <a>
-                                        <img src="/assets/images/Platinum.gif" alt="">
-                                    </a>
-                                    <div class="course__tag">
-                                        <a class="course-type platinum" >1849 DH</a>
+                                        <a class="course-type silver">{{price?.price}} DH</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
+                </div>
             </div>
             <!-- End bordered tabs -->
         </div>

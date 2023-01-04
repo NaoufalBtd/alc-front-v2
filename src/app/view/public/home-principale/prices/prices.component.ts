@@ -5,6 +5,8 @@ import {Router} from '@angular/router';
 import {MenuItem, MessageService} from 'primeng/api';
 import {PackStudentService} from '../../../../controller/service/pack-student.service';
 import {PriceService} from '../../../../controller/service/price.service';
+import {Price} from '../../../../controller/model/price.model';
+import {ParcoursService} from '../../../../controller/service/parcours.service';
 
 @Component({
     selector: 'app-prices',
@@ -17,6 +19,7 @@ export class PricesComponent implements OnInit {
 
     constructor(public translate: TranslateService,
                 private router: Router,
+                private levelSerivce: ParcoursService,
                 private priceService: PriceService,
                 private messageService: MessageService,
                 private packService: PackStudentService) {
@@ -70,6 +73,15 @@ export class PricesComponent implements OnInit {
         this.packService.selectedCourse = value;
     }
 
+    get prices(): Array<Price> {
+        return this.priceService.prices;
+    }
+
+    set prices(value: Array<Price>) {
+        this.priceService.prices = value;
+    }
+
+
 
     get items(): MenuItem[] {
         return this.priceService.items;
@@ -98,6 +110,8 @@ export class PricesComponent implements OnInit {
             level = 'المستوى';
         }
         this.changeText(group, price, level);
+        this.levelSerivce.findAllLevels().subscribe(d => this.priceService.levels = d);
+        this.priceService.getAll().subscribe(d => this.priceService.priceList = d);
     }
 
     private changeText(group: string, price: string, level: string) {
