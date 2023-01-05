@@ -14,8 +14,8 @@
             style="margin-top: 10px">{{current?.translation}}</h3>
     </div>
 
-    <div id="infoDiv" class="card"
-         style="width: 100%;margin:0 auto;margin-top: 7px;background: #F6F6F6;display: none">
+    <div   *ngIf="fliped===true" id="infoDiv" class="card"
+         style="width: 100%;margin:0 auto;margin-top: 7px;background: #F6F6F6;">
         <p-accordion>
             <div class="p-text-left">
                 <h5>{{'Explanation'}}</h5>
@@ -30,7 +30,6 @@
                            (click)="sound(s)"><span style="margin-left: 3px">{{s}}</span></i>
                     </li>
                 </ul>
-
             </div>
         </p-accordion>
     </div>

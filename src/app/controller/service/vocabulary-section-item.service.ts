@@ -55,13 +55,9 @@ export class VocabularySectionItemService {
   }
 
   reloadComponent() {
-    document.getElementById('infoDiv').style.display = 'none';
-    document.getElementById('translateShow').style.display = 'none';
     this.fliped = false;
   }
   showHidden() {
-    document.getElementById('infoDiv').style.display = 'block';
-    document.getElementById('translateShow').style.display = 'block';
     this.fliped = true;
   }
 

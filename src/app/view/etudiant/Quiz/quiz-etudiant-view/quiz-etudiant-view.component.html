@@ -6,9 +6,8 @@
             </div>
 
 
-
-            <div style="float:right;display: inline-block;text-align: center">{{reponse.question.numero }}
-                /{{reponseList.length}}</div>
+            <div style="float:right;display: inline-block;text-align: center">{{reponse?.question?.numero }}
+                /{{reponseList?.length}}</div>
         </div>
     </div>
 
@@ -21,26 +20,26 @@
 
     <!--------------------------------- UNIQUE CHOICE-------------------------------------------------------->
 
-    <div *ngIf="reponse.question.typeDeQuestion.ref === 't1'" class="p-grid">
+    <div *ngIf="reponse?.question?.typeDeQuestion?.ref === 't1'" class="p-grid">
         <div class="p-col-12 question">
-            <button pButton pRipple type="button" (click)="sound(reponse.question)"
+            <button pButton pRipple type="button" (click)="sound(reponse?.question)"
                     icon="pi pi-volume-up" class="p-button-rounded sonButton "></button>
             <h5 class="h5"> {{  questionSideLeft}}  </h5>
             <span class="p-float-label">
 
-            <input *ngIf="reponse.answer === reponse.reponse.lib" disabled
+            <input *ngIf="reponse.answer === reponse?.reponse?.lib" disabled
                    id="inputCorrectAnswer" inputId="inputDashedBorder" type="text"
                    [(ngModel)]="reponse.answer"
                    class="p-inputtext-sm " pInputText/>
 
-            <input *ngIf="reponse.answer !== reponse.reponse.lib" disabled
+            <input *ngIf="reponse?.answer !== reponse?.reponse?.lib" disabled
                    id="inputFalseAnswer" inputId="inputDashedBorder" type="text"
                    [(ngModel)]="reponse.answer"
                    class="p-inputtext-sm " pInputText/>
 
-            <label *ngIf="reponse.answer !== reponse.reponse.lib"
-                   class="correctAnswer">{{reponse.reponse.lib}}</label>
-            <label *ngIf="reponse.answer !== reponse.reponse.lib"
+            <label *ngIf="reponse?.answer !== reponse?.reponse?.lib"
+                   class="correctAnswer">{{reponse?.reponse?.lib}}</label>
+            <label *ngIf="reponse?.answer !== reponse?.reponse?.lib"
                    id="triangle-down">
             </label>
 
@@ -49,10 +48,10 @@
             <h4>{{translateWord}}</h4>
         </div>
         <div class="p-col-12 answers">
-            <div *ngFor="let rep of reponse.question.reponses" class="p-field-checkbox textQuestion">
+            <div *ngFor="let rep of reponse?.question?.reponses" class="p-field-checkbox textQuestion">
                 <p-radioButton disabled [inputId]="rep.lib" name="category" [(ngModel)]="reponse.reponse"
                                [value]="rep"></p-radioButton>
-                <label>{{rep.lib}}</label>
+                <label>{{rep?.lib}}</label>
             </div>
         </div>
     </div>
@@ -83,7 +82,7 @@
         </div>
 
         <div class="p-col-12 answers">
-            <button *ngIf="reponse?.answer !== reponse?.reponse.lib"
+            <button *ngIf="reponse?.answer !== reponse?.reponse?.lib"
                     pButton pRipple type="button" (click)="sound(reponse.question)"
                     icon="pi pi-volume-up" class="p-button-rounded sonButton ">
             </button>
@@ -133,7 +132,7 @@
 
     <div *ngIf="reponse?.question?.typeDeQuestion?.ref === 't6'" class="p-grid">
         <div class="p-col-12 question">
-            <button pButton pRipple type="button" (click)="sound(reponse.question)"
+            <button pButton pRipple type="button" (click)="sound(reponse?.question)"
                     icon="pi pi-volume-up" class="p-button-rounded sonButton "></button>
             <h5 class="h5"> {{  questionSideLeft}}  </h5>
             <span class="p-float-label">
@@ -149,7 +148,7 @@
                    class="p-inputtext-sm " pInputText/>
 
             <label *ngIf="reponse?.answer !== reponse?.reponse?.lib"
-                   class="correctAnswer">{{reponse.reponse.lib}}</label>
+                   class="correctAnswer">{{reponse?.reponse?.lib}}</label>
             <label *ngIf="reponse?.answer !== reponse?.reponse?.lib"
                    id="triangle-down">
             </label>
@@ -163,9 +162,9 @@
 
     <!--------------------------------- TRUE OR FALSE -------------------------------------------------------->
 
-    <div *ngIf="reponse.question.typeDeQuestion.ref === 't5'" class="p-grid">
+    <div *ngIf="reponse?.question?.typeDeQuestion?.ref === 't5'" class="p-grid">
         <div class="p-col-12 question ">
-            <div *ngIf="reponse.answer === reponse.reponse.lib" id="trueFalse" class="p-grid trueQst">
+            <div *ngIf="reponse?.answer === reponse?.reponse?.lib" id="trueFalse" class="p-grid trueQst">
                 <div class="p-col-9">
                     {{  reponse.question?.libelle}}
                 </div>
@@ -200,8 +199,24 @@
         </div>
     </div>
 
+    <div *ngIf="reponse?.question?.typeDeQuestion?.ref !== 't5' &&
+                  reponse?.question?.typeDeQuestion?.ref !== 't6' &&
+                  reponse?.question?.typeDeQuestion?.ref !== 't4' &&
+                  reponse?.question?.typeDeQuestion?.ref !== 't3' &&
+                  reponse?.question?.typeDeQuestion?.ref !== 't1'"
+         class="p-grid">
+        <div class="p-col-12">
+            <h3 style="text-align: center">Exercise already done.</h3>
+        </div>
+    </div>
 
-    <div class="p-grid sideBar">
+
+    <div *ngIf="reponse?.question?.typeDeQuestion?.ref === 't5' ||
+                  reponse?.question?.typeDeQuestion?.ref === 't6' ||
+                  reponse?.question?.typeDeQuestion?.ref === 't4' ||
+                  reponse?.question?.typeDeQuestion?.ref === 't3' ||
+                  reponse?.question?.typeDeQuestion?.ref === 't1'"
+         class="p-grid sideBar">
         <div class="p-col-3">
             <button *ngIf="reponse?.id !== reponseList[0]?.id "
                     style="float:left"

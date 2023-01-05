@@ -1133,6 +1133,7 @@ export class LearnService {
     }
 
     private extractDataForDragAndDrop(qstLibelle: string) {
+        console.log(qstLibelle);
         let libelle = qstLibelle;
         let index = 1;
         let test = '@';
