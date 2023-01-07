@@ -665,9 +665,6 @@ export class HomeWorkEtudiantComponent implements OnInit {
 
 
     nextQuestionFct(): HomeWorkQST {
-        console.log('=========================== NEXT QUESTION  FUNCTION =================================');
-        console.log(this.homeWorkQuestion);
-        console.log('=========================== NEXT QUESTION  FUNCTION =================================');
         this.homeWorkReponse = new HomeWorkReponse();
         this.translateWord = String();
         this.wordDictionnary = String();
@@ -686,8 +683,6 @@ export class HomeWorkEtudiantComponent implements OnInit {
         for (let i = 0; i < (this.homeWorkQuestionList.length); i++) {
             if (this.homeWorkQuestion.id === this.homeWorkQuestionList[i].id) {
                 this.homeWorkQuestion = this.homeWorkQuestionList[i + 1];
-                console.log('===========================  QUESTION  ACTUEL =================================');
-                console.log(this.homeWorkQuestion);
                 if (this.homeWorkQuestion.typeDeQuestion.ref === 't1') {
                     this.questionSideLeft = this.homeWorkQuestion.libelle.substring(0, this.homeWorkQuestion.libelle.indexOf('...'));
                     this.questionSideRight = this.homeWorkQuestion.libelle.substring(this.homeWorkQuestion.libelle.lastIndexOf('...') + 3);
@@ -697,9 +692,6 @@ export class HomeWorkEtudiantComponent implements OnInit {
                     this.inputAnswer = this.homeWorkQuestion.libelle.substring(this.homeWorkQuestion.libelle.indexOf('@') + 1,
                         this.homeWorkQuestion.libelle.lastIndexOf('@'));
                 } else if (this.homeWorkQuestion.typeDeQuestion.ref === 't3') {
-                    console.log('====================== T3 =======================================');
-                    console.log(this.correctAnswersList.get(this.homeWorkQuestion.id)[0]);
-                    console.log('====================== T3 =======================================');
                 } else if (this.homeWorkQuestion.typeDeQuestion.ref === 't11') {
                     this.extractedData(this.homeWorkQuestion.libelle, 't11');
                 } else if (this.homeWorkQuestion.typeDeQuestion.ref === 't12') {

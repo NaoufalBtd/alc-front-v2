@@ -390,6 +390,20 @@
     </div>
 
 
+    <!--------------------------------- Put in Order -------------------------------------------------------->
+    <div style="background-color: white;" *ngIf="question?.typeDeQuestion?.ref=== 't11'"
+         class="row dragContainer">
+        <div class="col-md-12">
+            <div cdkDropList class="example-list" (cdkDropListDropped)="drop_put_in_order($event)">
+                <div [id]="item" class="example-box" (cdkDragStarted)="drag_put_in_order(item, i+1)"
+                     *ngFor="let item of dragList; index as i"
+                     cdkDrag>
+                    {{item}}</div>
+            </div>
+        </div>
+    </div>
+
+
     <div class="p-grid sideBar">
         <div class="p-col-3">
         </div>

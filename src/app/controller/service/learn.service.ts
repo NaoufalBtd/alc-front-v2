@@ -756,6 +756,8 @@ export class LearnService {
                 } else if (this.question.typeDeQuestion.ref === 't12') {
                     this.extractedData(this.question.libelle, 't12');
                     this.showT12Answers();
+                } else if (this.question.typeDeQuestion.ref === 't11') {
+                    this.extractedData_put_in_order(this.question.libelle, 't11');
                 } else if (this.question.typeDeQuestion.ref === 't13') {
                     this.extractDataForDragAndDrop(this.question.libelle);
                 }
@@ -799,6 +801,8 @@ export class LearnService {
                 } else if (this.question.typeDeQuestion.ref === 't12') {
                     this.extractedData(this.question.libelle, 't12');
                     this.showT12Answers();
+                }else if (this.question.typeDeQuestion.ref === 't11') {
+                    this.extractedData_put_in_order(this.question.libelle, 't11');
                 } else if (this.question.typeDeQuestion.ref === 't13') {
                     this.extractDataForDragAndDrop(this.question.libelle);
                 }
@@ -914,6 +918,8 @@ export class LearnService {
                     } else if (this.question.typeDeQuestion.ref === 't12') {
                         this.extractedData(this.question.libelle, 't12');
                         this.showT12Answers();
+                    } else if (this.question.typeDeQuestion.ref === 't11') {
+                        this.extractedData_put_in_order(this.question.libelle, 't11');
                     } else if (this.question.typeDeQuestion.ref === 't13') {
                         this.extractDataForDragAndDrop(this.question.libelle);
                     }
@@ -921,6 +927,7 @@ export class LearnService {
             }
         );
     }
+
 
     private showT12Answers() {
         this.quizT12AnswersList = new Array<Reponse>();
@@ -943,10 +950,40 @@ export class LearnService {
         document.getElementById(String(index)).style.color = '#2196f3';
     }
 
-    private extractedData(libelle: string, code: string) {
+    private extractedData_put_in_order(libelle: string, code: string) {
         this.dragAnswersList = new Map<string, number>();
         this.dragList = new Array<string>();
         const text = libelle;
+        let counter = 2;
+        while (counter !== -1) {
+            const myNumber = libelle[0];
+            let sentence: string;
+            const index = libelle.indexOf(String(counter));
+            if (index !== -1) {
+                sentence = libelle.substring(1, index);
+                counter++;
+            } else {
+                sentence = libelle.substring(1, libelle.length);
+                counter = -1;
+            }
+            libelle = libelle.substring(sentence.length + 1, libelle.length);
+            if (code === 't11') {
+                this.dragAnswersList.set(sentence, Number(myNumber));
+            } else {
+                this.answersT12List.set(Number(myNumber), sentence);
+            }
+
+            this.dragList.push(sentence);
+        }
+        console.log(this.dragAnswersList);
+        console.log(this.dragList);
+        this.dragList = this.dragList.sort((a, b) => b.localeCompare(a));
+        console.log(text);
+    }
+
+    private extractedData(libelle: string, code: string) {
+        this.dragAnswersList = new Map<string, number>();
+        this.dragList = new Array<string>();
         let counter = 2;                  // _1 It's been a while /_2 we have been in touch.
         while (counter !== -1) {
             const myNumIndex = libelle.indexOf(String(counter - 1));
@@ -963,11 +1000,12 @@ export class LearnService {
 
             libelle = libelle.substring(sentence.length + 1, libelle.length);
             if (code === 't11') {
+                console.log(sentence);
+                console.log(Number(myNumber));
                 this.dragAnswersList.set(sentence, Number(myNumber));
             } else {
                 this.answersT12List.set(Number(myNumber), sentence);
             }
-
             this.dragList.push(sentence);
         }
         this.dragList = this.dragList.sort((a, b) => b.localeCompare(a));

@@ -1,32 +1,24 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {QuizEtudiantService} from '../../../controller/service/quiz-etudiant.service';
 import {LoginService} from '../../../controller/service/login.service';
-import {ConfirmationService, MenuItem, MessageService, TreeNode} from 'primeng/api';
+import {ConfirmationService, MessageService} from 'primeng/api';
 import {Router} from '@angular/router';
 import {DictionaryService} from '../../../controller/service/dictionary.service';
 import {DomSanitizer} from '@angular/platform-browser';
 import {ParcoursService} from '../../../controller/service/parcours.service';
-import {HttpClient} from '@angular/common/http';
-import {VocabularyService} from '../../../controller/service/vocabulary.service';
 import {Reponse} from '../../../controller/model/reponse.model';
 import {ReponseEtudiant} from '../../../controller/model/reponse-etudiant.model';
 import {Etudiant} from '../../../controller/model/etudiant.model';
 import {Quiz} from '../../../controller/model/quiz.model';
 import {Question} from '../../../controller/model/question.model';
 import {QuizEtudiant} from '../../../controller/model/quiz-etudiant.model';
-import {Dictionary} from '../../../controller/model/dictionary.model';
-import {Section} from '../../../controller/model/section.model';
 import {LearnService} from '../../../controller/service/learn.service';
 import {ReponseEtudiantService} from '../../../controller/service/reponse-etudiant.service';
-import {Cours} from '../../../controller/model/cours.model';
-import {Parcours} from '../../../controller/model/parcours.model';
 import {WebSocketService} from '../../../controller/service/web-socket.service';
 import {QuizReponse} from '../../../controller/model/quiz-reponse';
 import {ChatMessageDto} from '../../../controller/model/chatMessageDto';
-import {findIndexInData} from '@syncfusion/ej2-angular-schedule';
-import {HomeWorkReponse} from '../../../controller/model/home-work-reponse.model';
 import {GroupeEtudiant} from '../../../controller/model/groupe-etudiant.model';
-import {measureColumnDepth} from '@syncfusion/ej2-angular-grids';
+import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 
 @Component({
     selector: 'app-quiz-preview-prof',
@@ -654,5 +646,24 @@ export class QuizPreviewProfComponent implements OnInit, OnDestroy {
 
     hideTooltipsT13(key: number) {
         document.getElementById('toolTipT13' + key.toString()).style.visibility = 'hidden';
+    }
+
+    drag_put_in_order(item: string, index: number) {
+        this.dragData = item;
+        this.dragIndex = index;
+    }
+
+    drop_put_in_order(event: CdkDragDrop<string[]>) {
+        console.log(event.currentIndex + 1);
+        const key = this.dragAnswersList.get(this.dragData);
+        console.log(key);
+        if (key === Number(event.currentIndex + 1)) {
+            document.getElementById(this.dragData).style.border = '1px solid green';
+            document.getElementById(this.dragData).style.backgroundColor = '#bcf0da';
+        } else {
+            document.getElementById(this.dragData).style.border = '1px solid red';
+            document.getElementById(this.dragData).style.backgroundColor = '#f0bcbc';
+        }
+        moveItemInArray(this.dragList, event.previousIndex, event.currentIndex);
     }
 }

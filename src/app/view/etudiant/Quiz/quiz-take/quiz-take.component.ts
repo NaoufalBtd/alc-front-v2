@@ -16,14 +16,14 @@ import {LearnService} from '../../../../controller/service/learn.service';
 import {ChatMessageDto} from '../../../../controller/model/chatMessageDto';
 import {Prof} from '../../../../controller/model/prof.model';
 import {GroupeEtudiant} from '../../../../controller/model/groupe-etudiant.model';
+import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 
 @Component({
     selector: 'app-quiz-take',
     templateUrl: './quiz-take.component.html',
     styleUrls: ['./quiz-take.component.scss']
 })
-export class QuizTakeComponent implements OnInit, OnDestroy
-{
+export class QuizTakeComponent implements OnInit, OnDestroy {
 
     constructor(private service: QuizEtudiantService,
                 private learnService: LearnService,
@@ -350,8 +350,6 @@ export class QuizTakeComponent implements OnInit, OnDestroy
 
 
     ngOnInit(): void {
-        console.log('-------------------------------------------------');
-        console.log(this.trueOrFalse);
 
         this.learnService.onStart(this.selectedQuiz);
         this.trueOrFalse = null;
@@ -561,7 +559,6 @@ export class QuizTakeComponent implements OnInit, OnDestroy
     }
 
     drop(ev) {
-        console.log(ev.target);
         const data = this.dragAndDropData;
         const chatMessage: ChatMessageDto = new ChatMessageDto('T13', 'QUESTION_T13', true);
         chatMessage.prof = this.prof;
@@ -572,15 +569,27 @@ export class QuizTakeComponent implements OnInit, OnDestroy
         chatMessage.quizReponse.type = 'T13';
         chatMessage.quizReponse.lib = data;
         if (this.webSocketService.isInSession) {
-            console.log('WEB');
             this.webSocketService.sendMessage(chatMessage, 'STUDENT');
             if (this.groupeEtudiant?.groupeEtude?.nombreEtudiant > 1) {
                 this.learnService.dropSynch(ev.target.id);
             }
         } else {
-            console.log('SANS WEB');
             this.learnService.dropSynch(ev.target.id);
         }
+    }
+
+    drop_put_in_order(event: CdkDragDrop<string[]>) {
+        console.log(event.currentIndex + 1);
+        const key = this.dragAnswersList.get(this.dragData);
+        console.log(key);
+        if (key === Number(event.currentIndex + 1)) {
+            document.getElementById(this.dragData).style.border = '1px solid green';
+            document.getElementById(this.dragData).style.backgroundColor = '#bcf0da';
+        } else {
+            document.getElementById(this.dragData).style.border = '1px solid red';
+            document.getElementById(this.dragData).style.backgroundColor = '#f0bcbc';
+        }
+        moveItemInArray(this.dragList, event.previousIndex, event.currentIndex);
     }
 
     getCorrectAnswerForT13(key: number): string {
@@ -593,5 +602,10 @@ export class QuizTakeComponent implements OnInit, OnDestroy
 
     hideTooltipsT13(key: number) {
         document.getElementById('toolTipT13' + key.toString()).style.visibility = 'hidden';
+    }
+
+    drag_put_in_order(item: string, index: number) {
+        this.dragData = item;
+        this.dragIndex = index;
     }
 }
