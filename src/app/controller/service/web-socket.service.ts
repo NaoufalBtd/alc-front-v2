@@ -26,6 +26,8 @@ import {Reponse} from '../model/reponse.model';
 import {Role} from '../../enum/role.enum';
 import {VocabularyService} from './vocabulary.service';
 import {ReponseEtudiantHomeWork} from '../model/reponse-etudiant-home-work.model';
+import {Quiz} from '../model/quiz.model';
+import {QuizEtudiantService} from './quiz-etudiant.service';
 
 @Injectable({
     providedIn: 'root'
@@ -68,10 +70,15 @@ export class WebSocketService {
                 private parcoursService: ParcoursService,
                 private messageService: MessageService,
                 private router: Router,
+                private quizEtudiantService: QuizEtudiantService,
                 private vocabularyService: VocabularyService,
                 private groupeEtudiantService: GroupeEtudiantService,
                 private learnService: LearnService
     ) {
+    }
+
+    get selectedQuiz(): Quiz {
+        return this.quizEtudiantService.selectedQuiz;
     }
 
 
@@ -219,7 +226,7 @@ export class WebSocketService {
     }
 
     public openWebSocket(user: User, prof: Prof, grpEtudiant: GroupeEtudiant, sender: string) {
-        this.webSocket = new WebSocket(this.socketUrl);
+        this.openSession();
         this.webSocket.onopen = (event) => {
             console.log('--------------------OPENED-----------------------');
             this.onOpen(prof, grpEtudiant, sender, user);
@@ -326,15 +333,21 @@ export class WebSocketService {
             if (this.question.typeDeQuestion.ref === 't5') {
                 document.getElementById('trueFalse').className = 'p-grid trueOrFalseQst';
             }
-        } else if (data.type === 'QUIZ') {
+        } else if (data?.type === 'QUIZ') {
+            if (data?.user === 'PUT_IN_ORDER_DRAG') {
+                this.learnService.drag_put_in_order(data?.message, data?.ev);
+                return;
+            } else if (data?.user === 'PUT_IN_ORDER_DROP') {
+                this.learnService.drop_put_in_order(data?.ev);
+                return;
+            }
             if (this.groupeEtudiant?.groupeEtude?.nombreEtudiant === 1 ||
                 data.quizReponse.sender === 'PROF' || data.isStudent === false) {
                 this.reponseQuiz = data.quizReponse;
-                console.log(this.reponseQuiz);
                 if (this.reponseQuiz?.question?.typeDeQuestion?.ref === 't5') {
                     this.trueOrFalse = this.reponseQuiz.lib !== 'false';
                 } else if (this.reponseQuiz?.question?.typeDeQuestion?.ref === 't12') {
-                    let reponse: Reponse = new Reponse();
+                    const reponse: Reponse = new Reponse();
                     reponse.lib = this.reponseQuiz.lib;
                     reponse.etatReponse = this.reponseQuiz.etatReponse;
                     reponse.id = this.reponseQuiz.id;
@@ -391,7 +404,7 @@ export class WebSocketService {
                 }
             }
         } else if (data.user === 'FINISH_QUIZ' && data.type === 'FINISH_QUIZ') {
-            if (data.prof.id === this.prof.id) {
+            if (this.loginservice.getConnectedStudent()?.role === Role.STUDENT) {
                 this.learnService.finishQuiz();
             }
         } else if (data?.type === 'CONNECT') {
@@ -462,6 +475,9 @@ export class WebSocketService {
                 chatMessageDto.quizReponse = null;
                 chatMessageDto.dateSent = null;
                 chatMessageDto.ev = null;
+                this.webSocket.send(JSON.stringify((chatMessageDto)));
+            } else if (chatMessageDto.type === 'QUIZ' && chatMessageDto.user.includes('PUT_IN_ORDER')) {
+                console.log(chatMessageDto);
                 this.webSocket.send(JSON.stringify((chatMessageDto)));
             } else {
                 chatMessageDto.quizReponse.question.quiz = null;
@@ -625,5 +641,10 @@ export class WebSocketService {
                 this.seconde = 60;
             }
         }, 1000);
+    }
+
+    openSession() {
+        const token = localStorage.getItem('token');
+        this.webSocket = new WebSocket(this.socketUrl + '?token=' + token);
     }
 }

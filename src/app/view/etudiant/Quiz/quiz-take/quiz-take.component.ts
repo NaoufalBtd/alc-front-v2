@@ -16,7 +16,7 @@ import {LearnService} from '../../../../controller/service/learn.service';
 import {ChatMessageDto} from '../../../../controller/model/chatMessageDto';
 import {Prof} from '../../../../controller/model/prof.model';
 import {GroupeEtudiant} from '../../../../controller/model/groupe-etudiant.model';
-import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
+import {CdkDragDrop} from '@angular/cdk/drag-drop';
 
 @Component({
     selector: 'app-quiz-take',
@@ -578,19 +578,6 @@ export class QuizTakeComponent implements OnInit, OnDestroy {
         }
     }
 
-    drop_put_in_order(event: CdkDragDrop<string[]>) {
-        console.log(event.currentIndex + 1);
-        const key = this.dragAnswersList.get(this.dragData);
-        console.log(key);
-        if (key === Number(event.currentIndex + 1)) {
-            document.getElementById(this.dragData).style.border = '1px solid green';
-            document.getElementById(this.dragData).style.backgroundColor = '#bcf0da';
-        } else {
-            document.getElementById(this.dragData).style.border = '1px solid red';
-            document.getElementById(this.dragData).style.backgroundColor = '#f0bcbc';
-        }
-        moveItemInArray(this.dragList, event.previousIndex, event.currentIndex);
-    }
 
     getCorrectAnswerForT13(key: number): string {
         return this.dragAndDropCorrectAnswersList.get(key);
@@ -605,7 +592,32 @@ export class QuizTakeComponent implements OnInit, OnDestroy {
     }
 
     drag_put_in_order(item: string, index: number) {
-        this.dragData = item;
-        this.dragIndex = index;
+        // const chatMessage: ChatMessageDto = new ChatMessageDto('PUT_IN_ORDER_DRAG', item, true);
+        // chatMessage.prof = this.prof;
+        // chatMessage.type = 'QUIZ';
+        // chatMessage.ev = index;
+        // chatMessage.student = this.login.getConnectedStudent();
+        // chatMessage.quizReponse = null;
+        // if (this.webSocketService.isInSession && this.groupeEtudiant?.groupeEtude?.nombreEtudiant === 1) {
+        //     this.webSocketService.sendMessage(chatMessage, 'STUDENT');
+        // } else {
+        // }
+        this.learnService.drag_put_in_order(item, index);
+
+    }
+
+    drop_put_in_order(event: CdkDragDrop<string[]>) {
+        // const chatMessage: ChatMessageDto = new ChatMessageDto('PUT_IN_ORDER_DROP', '', true);
+        // chatMessage.prof = this.prof;
+        // chatMessage.type = 'QUIZ';
+        // chatMessage.ev = event;
+        // chatMessage.student = this.login.getConnectedStudent();
+        // chatMessage.quizReponse = null;
+        // if (this.webSocketService.isInSession && this.groupeEtudiant?.groupeEtude?.nombreEtudiant === 1) {
+        //     this.webSocketService.sendMessage(chatMessage, 'STUDENT');
+        // } else {
+        // }
+        this.learnService.drop_put_in_order(event);
+
     }
 }

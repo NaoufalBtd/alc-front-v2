@@ -16,18 +16,21 @@ import {HomeworkService} from './homework.service';
 import {HomeWorkEtudiantServiceService} from './home-work-etudiant-service.service';
 import {HomeWork} from '../model/home-work.model';
 import {Dictionary} from '../model/dictionary.model';
+import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 
 @Injectable({
     providedIn: 'root'
 })
 export class LearnService {
-    constructor(private service: QuizEtudiantService,
+    constructor(private quizEtudiantService: QuizEtudiantService,
                 private homeWorkService: HomeworkService,
                 private homeWorkEtudiantService: HomeWorkEtudiantServiceService,
                 private reponseEtudiantService: ReponseEtudiantService,
                 private login: LoginService) {
     }
 
+    private _reponseQuizList: Array<QuizEtudiant> = new Array<QuizEtudiant>();
+    private _listAnswers: Array<ReponseEtudiant> = new Array<ReponseEtudiant>();
     private _participants: Map<number, Array<Etudiant>> = new Map<number, Array<Etudiant>>();
     private _parcourCurrent: Parcours = new Parcours();
     private _sectionCurrent: Section = new Section();
@@ -94,6 +97,22 @@ export class LearnService {
     private _dragAndDropStudentAnswersList: Map<number, string> = new Map<number, string>();
     private _showToolTipForT13: boolean;
 
+
+    get reponseQuizList(): Array<QuizEtudiant> {
+        return this._reponseQuizList;
+    }
+
+    set reponseQuizList(value: Array<QuizEtudiant>) {
+        this._reponseQuizList = value;
+    }
+
+    get listAnswers(): Array<ReponseEtudiant> {
+        return this._listAnswers;
+    }
+
+    set listAnswers(value: Array<ReponseEtudiant>) {
+        this._listAnswers = value;
+    }
 
     get showToolTipForT13(): boolean {
         return this._showToolTipForT13;
@@ -582,20 +601,20 @@ export class LearnService {
 
     // List of Question
     get questionList(): Array<Question> {
-        return this.service.items;
+        return this.quizEtudiantService.items;
     }
 
     set questionList(value: Array<Question>) {
-        this.service.items = value;
+        this.quizEtudiantService.items = value;
     }
 
 
     get selectedQuiz(): Quiz {
-        return this.service.selectedQuiz;
+        return this.quizEtudiantService.selectedQuiz;
     }
 
     set selectedQuiz(value: Quiz) {
-        this.service.selectedQuiz = value;
+        this.quizEtudiantService.selectedQuiz = value;
     }
 
 
@@ -691,13 +710,13 @@ export class LearnService {
 
 
         if (this.selectedLanguage.code === 'ar') {
-            this.service.translate(this.wordDictionnary).subscribe(
+            this.quizEtudiantService.translate(this.wordDictionnary).subscribe(
                 data => {
                     this.translateWord = data;
                 }
             );
         } else if (this.selectedLanguage.code === 'fr') {
-            this.service.translateEnFr(this.wordDictionnary).subscribe(
+            this.quizEtudiantService.translateEnFr(this.wordDictionnary).subscribe(
                 data => {
                     this.translateWord = data;
                 }
@@ -801,7 +820,7 @@ export class LearnService {
                 } else if (this.question.typeDeQuestion.ref === 't12') {
                     this.extractedData(this.question.libelle, 't12');
                     this.showT12Answers();
-                }else if (this.question.typeDeQuestion.ref === 't11') {
+                } else if (this.question.typeDeQuestion.ref === 't11') {
                     this.extractedData_put_in_order(this.question.libelle, 't11');
                 } else if (this.question.typeDeQuestion.ref === 't13') {
                     this.extractDataForDragAndDrop(this.question.libelle);
@@ -888,7 +907,7 @@ export class LearnService {
         this.disableButtonSon = true;
         this.pourCentgage = 0;
         this.noteQuiz = 0;
-        this.service.findAllQuestions(selectedQuiz.ref).subscribe(
+        this.quizEtudiantService.findAllQuestions(selectedQuiz.ref).subscribe(
             data => {
                 this.questionList = data;
                 this.numberOfQuestion = this.questionList.length;
@@ -896,7 +915,7 @@ export class LearnService {
                 this.value = this.pourCentgage;
                 for (let i = 0; i < this.questionList.length; i++) {
                     this.question = this.questionList[0];
-                    this.service.findReponses(this.questionList[i].id).subscribe(
+                    this.quizEtudiantService.findReponses(this.questionList[i].id).subscribe(
                         data1 => {
                             this.questionList[i].reponses = data1;
                             this.correctAnswersList.set(this.questionList[i].id, data1.filter(r => r.etatReponse === 'true'));
@@ -931,7 +950,7 @@ export class LearnService {
 
     private showT12Answers() {
         this.quizT12AnswersList = new Array<Reponse>();
-        this.service.findReponses(this.question.id).subscribe(
+        this.quizEtudiantService.findReponses(this.question.id).subscribe(
             data1 => {
                 this.quizT12AnswersList = data1;
                 this.filterDatat12(this.quizT12AnswersList, 1);
@@ -1033,38 +1052,9 @@ export class LearnService {
         quizStudent.note = this.noteQuiz;
         quizStudent.questionCurrent = threshold;
         quizStudent.resultat = String(this.noteQuiz + ' / ' + threshold);
-        this.service.save(quizStudent).subscribe(
+        this.quizEtudiantService.save(quizStudent).subscribe(
             quitEtudiant => {
-                for (const entry of this.answersList.entries()) {
-                    this.answer.question = entry[0];
-                    this.answer.quizEtudiant = quitEtudiant;
-                    if (entry[0].typeDeQuestion.ref === 't13') {
-                        this.answer.reponse = entry[1];
-                        this.answer.answer = entry[1].lib;
-                    } else {
-                        this.answer.reponse = this.correctAnswersList.get(entry[0].id)[0];
-                        this.answer.answer = entry[1].lib;
-                    }
-
-                    if (entry[1].etatReponse === 'true') {
-                        if (this.answersPointStudent.get(entry[0]) === 'STUDENT_ANSWER') {
-                            this.answer.note = entry[0].pointReponseJuste;
-                        } else if (this.answersPointStudent.get(entry[0]) === 'TEACHER_ANSWER') {
-                            this.answer.note = entry[0].pointReponseJuste / 2;
-                        } else {
-                            this.answer.note = 0;
-                            this.answer.answer = null;
-                        }
-                    } else {
-                        this.answer.note = entry[0].pointReponsefausse;
-                    }
-                    this.reponseEtudiantService.save().subscribe(
-                        reponse => {
-                        }, error => {
-                            console.log(error);
-                        }
-                    );
-                }
+                this.getAnswers(quitEtudiant);
             }, error => {
                 console.log(error);
             }
@@ -1072,6 +1062,38 @@ export class LearnService {
         this.showTakeQuiz = false;
         this.showQuizReview = true;
         return quizStudent;
+    }
+
+    public getAnswers(quitEtudiant: QuizEtudiant) {
+        for (const entry of this.answersList.entries()) {
+            this.answer.question = entry[0];
+            this.answer.quizEtudiant = quitEtudiant;
+            if (entry[0].typeDeQuestion.ref === 't13') {
+                this.answer.reponse = entry[1];
+                this.answer.answer = entry[1].lib;
+            } else {
+                this.answer.reponse = this.correctAnswersList.get(entry[0].id)[0];
+                this.answer.answer = entry[1].lib;
+            }
+            if (entry[1].etatReponse === 'true') {
+                if (this.answersPointStudent.get(entry[0]) === 'STUDENT_ANSWER') {
+                    this.answer.note = entry[0].pointReponseJuste;
+                } else if (this.answersPointStudent.get(entry[0]) === 'TEACHER_ANSWER') {
+                    this.answer.note = entry[0].pointReponseJuste / 2;
+                } else {
+                    this.answer.note = 0;
+                    this.answer.answer = null;
+                }
+            } else {
+                this.answer.note = entry[0].pointReponsefausse;
+            }
+            this.reponseEtudiantService.save().subscribe(
+                reponse => {
+                }, error => {
+                    console.log(error);
+                }
+            );
+        }
     }
 
     public sound(qst: Question) {
@@ -1197,5 +1219,38 @@ export class LearnService {
             }
         }
         this.listOfWords = this.listOfWords.sort((a, b) => b.localeCompare(a));
+    }
+
+    getAnswersForProf() {
+        this.quizEtudiantService.findQuizEtudiantByQuizId(this.selectedQuiz.id).subscribe(
+            data => {
+                for (const student of this.participants.get(this.login.getConnectedProf().id)) {
+                    for (const reponse of data) {
+                        if (reponse.etudiant.id === student.id) {
+                            this.reponseQuizList.push({...reponse});
+                        }
+                    }
+                }
+                console.log(this.reponseQuizList);
+            }
+        );
+    }
+
+    drag_put_in_order(item: string, index: number) {
+        this.dragData = item;
+        this.dragIndex = index;
+    }
+
+    drop_put_in_order(event: CdkDragDrop<string[]>) {
+        const key = this.dragAnswersList.get(this.dragData);
+        console.log(key);
+        if (key === Number(event.currentIndex + 1)) {
+            document.getElementById(this.dragData).style.border = '1px solid green';
+            document.getElementById(this.dragData).style.backgroundColor = '#bcf0da';
+        } else {
+            document.getElementById(this.dragData).style.border = '1px solid red';
+            document.getElementById(this.dragData).style.backgroundColor = '#f0bcbc';
+        }
+        moveItemInArray(this.dragList, event.previousIndex, event.currentIndex);
     }
 }

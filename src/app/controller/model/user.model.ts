@@ -17,6 +17,7 @@ export class User {
     public  nom: string;
     public  numero: string;
     public  skype: string;
+    public  token: string;
     public  addresse: string;
     public  ville: string;
     public  country: string = String('Morocco');

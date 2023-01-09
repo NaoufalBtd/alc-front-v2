@@ -42,7 +42,7 @@ export class ScheduleStudentComponent implements OnInit {
     private selectionTarget: Element;
     public timeScale: TimeScaleModel = {interval: 60, slotCount: 1};
     public selectedDate: Date = new Date();
-    public showWeekend = false;
+    public showWeekend = true;
     public eventSettings: EventSettingsModel;
     public selectedMeeting: ScheduleProf = new ScheduleProf();
 

@@ -6,6 +6,7 @@ import {EtudiantClassRoom} from '../../../../../controller/model/etudiant-class-
 import {QuizClassRoom} from '../../../../../controller/model/quiz-class-room.model';
 import {Prof} from '../../../../../controller/model/prof.model';
 import {LoginService} from '../../../../../controller/service/login.service';
+import {WebSocketService} from '../../../../../controller/service/web-socket.service';
 
 
 @Component({
@@ -17,7 +18,9 @@ export class ClassRoomListComponent implements OnInit {
 
     cols: any[];
 
-    constructor(private messageService: MessageService, private confirmationService: ConfirmationService,
+    constructor(private messageService: MessageService,
+                private confirmationService: ConfirmationService,
+                private webSocketService: WebSocketService,
                 private serviceUser: LoginService, private service: ClassRoomService) {
     }
 
@@ -151,4 +154,7 @@ export class ClassRoomListComponent implements OnInit {
         ];
     }
 
+    testOpen() {
+        this.webSocketService.openSession();
+    }
 }

@@ -356,6 +356,7 @@ export class QuizEtudiantService {
 
     private adminUrl = environment.adminUrl;
     private profUrl = environment.profUrl;
+    private stdUrl = environment.etudiantUrl;
 
 
     private _etudiant: Etudiant;
@@ -488,7 +489,6 @@ export class QuizEtudiantService {
     }
 
 
-
     public findQuizEtudanitByEtudiantIdAndQuizId(etudiant: Etudiant, quiz: Quiz): Observable<QuizEtudiant> {
         return this.http.get<QuizEtudiant>(this.adminUrl + 'quizEtudiant/etudiant/idEtudiant/' + etudiant.id + '/quiz/idQuiz/' + quiz.id);
     }
@@ -539,6 +539,21 @@ export class QuizEtudiantService {
     public translate(word: string): Observable<any> {
         // @ts-ignore
         return this.http.get<string>(this.adminUrl + 'TranslateEnAr/text/' + word, {responseType: 'text'});
+    }
+
+    public translateArToFrForProf(word: string): Observable<any> {
+        // @ts-ignore
+        return this.http.get<string>(this.profUrl + 'TranslateEnAr/ar/fr/' + word, {responseType: 'text'});
+    }
+
+    public translateArToFrForAdmin(word: string): Observable<any> {
+        // @ts-ignore
+        return this.http.get<string>(this.adminUrl + 'TranslateEnAr/ar/fr/' + word, {responseType: 'text'});
+    }
+
+    public translateArToFrForStudent(word: string): Observable<any> {
+        // @ts-ignore
+        return this.http.get<string>(this.adminUrl + 'TranslateEnAr/ar/fr/' + word, {responseType: 'text'});
     }
 
     public translateEnFr(word: string): Observable<any> {

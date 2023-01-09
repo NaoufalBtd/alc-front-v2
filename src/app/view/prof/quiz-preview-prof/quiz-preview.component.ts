@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {QuizEtudiantService} from '../../../controller/service/quiz-etudiant.service';
 import {LoginService} from '../../../controller/service/login.service';
-import {ConfirmationService, MessageService} from 'primeng/api';
+import {MessageService} from 'primeng/api';
 import {Router} from '@angular/router';
 import {DictionaryService} from '../../../controller/service/dictionary.service';
 import {DomSanitizer} from '@angular/platform-browser';
@@ -18,7 +18,8 @@ import {WebSocketService} from '../../../controller/service/web-socket.service';
 import {QuizReponse} from '../../../controller/model/quiz-reponse';
 import {ChatMessageDto} from '../../../controller/model/chatMessageDto';
 import {GroupeEtudiant} from '../../../controller/model/groupe-etudiant.model';
-import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
+import {CdkDragDrop} from '@angular/cdk/drag-drop';
+import {AnimationService} from '../../../controller/service/animation.service';
 
 @Component({
     selector: 'app-quiz-preview-prof',
@@ -27,7 +28,7 @@ import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 })
 export class QuizPreviewProfComponent implements OnInit, OnDestroy {
 
-    constructor(private service: QuizEtudiantService,
+    constructor(private quizEtudiantService1: QuizEtudiantService,
                 private learnService: LearnService,
                 private reponseEtudiantService: ReponseEtudiantService,
                 public login: LoginService,
@@ -36,7 +37,7 @@ export class QuizPreviewProfComponent implements OnInit, OnDestroy {
                 private dictionnaryService: DictionaryService,
                 private sanitizer: DomSanitizer,
                 private quizEtudiantService: QuizEtudiantService,
-                private confirmationService: ConfirmationService,
+                private animation: AnimationService,
                 public webSocketService: WebSocketService,
                 private parcoursservice: ParcoursService) {
     }
@@ -203,16 +204,16 @@ export class QuizPreviewProfComponent implements OnInit, OnDestroy {
 
     // List of Question
     get questionList(): Array<Question> {
-        return this.service.items;
+        return this.quizEtudiantService1.items;
     }
 
 
     get reponses(): Array<Reponse> {
-        return this.service.reponses;
+        return this.quizEtudiantService1.reponses;
     }
 
     set reponses(value: Array<Reponse>) {
-        this.service.reponses = value;
+        this.quizEtudiantService1.reponses = value;
     }
 
 
@@ -316,11 +317,11 @@ export class QuizPreviewProfComponent implements OnInit, OnDestroy {
     }
 
     get selectedQuiz(): Quiz {
-        return this.service.selectedQuiz;
+        return this.quizEtudiantService1.selectedQuiz;
     }
 
     set selectedQuiz(value: Quiz) {
-        this.service.selectedQuiz = value;
+        this.quizEtudiantService1.selectedQuiz = value;
     }
 
 
@@ -332,8 +333,21 @@ export class QuizPreviewProfComponent implements OnInit, OnDestroy {
         return this.learnService.participants;
     }
 
-    reponseQuizList: Array<QuizEtudiant> = new Array<QuizEtudiant>();
-    listAnswers: Array<ReponseEtudiant> = new Array<ReponseEtudiant>();
+    get reponseQuizList(): Array<QuizEtudiant> {
+        return this.learnService.reponseQuizList;
+    }
+
+    set reponseQuizList(value: Array<QuizEtudiant>) {
+        this.learnService.reponseQuizList = value;
+    }
+
+    get listAnswers(): Array<ReponseEtudiant> {
+        return this.learnService.listAnswers;
+    }
+
+    set listAnswers(value: Array<ReponseEtudiant>) {
+        this.learnService.listAnswers = value;
+    }
 
     questionOptions = [{label: 'True', value: 'true'}, {label: 'False', value: 'false'}];
     showFollowButton = true;
@@ -343,8 +357,7 @@ export class QuizPreviewProfComponent implements OnInit, OnDestroy {
     display: boolean = false;
 
     ngOnInit(): void {
-        console.log(this.selectedQuiz);
-        console.log(this.webSocketService.isInSession);
+        this.reponseQuizList = new Array<QuizEtudiant>();
         if (this.webSocketService.isInSession) {
             this.quizEtudiantService.findQuizEtudiantByQuizId(this.selectedQuiz.id).subscribe(
                 data => {
@@ -368,7 +381,6 @@ export class QuizPreviewProfComponent implements OnInit, OnDestroy {
             this.quizEtudiantService.findQuizEtudiantByQuizId(this.selectedQuiz.id).subscribe(
                 data => {
                     this.reponseQuizList = data;
-                    console.log(this.reponseQuizList);
                     if (this.reponseQuizList.length === 0) {
                         this.learnService.onStart(this.selectedQuiz);
                     } else {
@@ -444,24 +456,18 @@ export class QuizPreviewProfComponent implements OnInit, OnDestroy {
     }
 
     finishQuiz() {
+        this.animation.showAnimation = true;
         const messageDto: ChatMessageDto = new ChatMessageDto('FINISH_QUIZ', 'FINISH_QUIZ', false);
         messageDto.type = 'FINISH_QUIZ';
         messageDto.prof = this.login.getConnectedProf();
         this.webSocketService.sendMessage(messageDto, 'PROF');
         this.showTakeQuiz = false;
         this.showQuizReview = true;
-        this.quizEtudiantService.findQuizEtudiantByQuizId(this.selectedQuiz.id).subscribe(
-            data => {
-                for (const student of this.participants.get(this.login.getConnectedProf().id)) {
-                    for (const reponse of data) {
-                        if (reponse.etudiant.id === student.id) {
-                            this.reponseQuizList.push({...reponse});
-                        }
-                    }
-                }
-                console.log(this.reponseQuizList);
-            }
-        );
+        const timer = setInterval(() => {
+            clearInterval(timer);
+            this.learnService.getAnswersForProf();
+            this.animation.showAnimation = false;
+        }, 3000);
     }
 
     showDetails(quizEtudiant: QuizEtudiant) {
@@ -649,21 +655,34 @@ export class QuizPreviewProfComponent implements OnInit, OnDestroy {
     }
 
     drag_put_in_order(item: string, index: number) {
-        this.dragData = item;
-        this.dragIndex = index;
+        // const chatMessage: ChatMessageDto = new ChatMessageDto('PUT_IN_ORDER_DRAG', item, false);
+        // chatMessage.prof = this.login.getConnectedProf();
+        // chatMessage.type = 'QUIZ';
+        // chatMessage.ev = index;
+        // chatMessage.student = null;
+        // chatMessage.quizReponse = null;
+        // if (this.webSocketService.isInSession) {
+        //     this.webSocketService.sendMessage(chatMessage, 'PROF');
+        // } else {
+        //     this.learnService.drag_put_in_order(item, index);
+        // }
+        this.learnService.drag_put_in_order(item, index);
+
     }
 
     drop_put_in_order(event: CdkDragDrop<string[]>) {
-        console.log(event.currentIndex + 1);
-        const key = this.dragAnswersList.get(this.dragData);
-        console.log(key);
-        if (key === Number(event.currentIndex + 1)) {
-            document.getElementById(this.dragData).style.border = '1px solid green';
-            document.getElementById(this.dragData).style.backgroundColor = '#bcf0da';
-        } else {
-            document.getElementById(this.dragData).style.border = '1px solid red';
-            document.getElementById(this.dragData).style.backgroundColor = '#f0bcbc';
-        }
-        moveItemInArray(this.dragList, event.previousIndex, event.currentIndex);
+        // const chatMessage: ChatMessageDto = new ChatMessageDto('PUT_IN_ORDER_DROP', '', false);
+        // chatMessage.prof = this.login.getConnectedProf();
+        // chatMessage.type = 'QUIZ';
+        // chatMessage.ev = event;
+        // chatMessage.student = null;
+        // chatMessage.quizReponse = null;
+        // if (this.webSocketService.isInSession) {
+        //     this.webSocketService.sendMessage(chatMessage, 'PROF');
+        // } else {
+        //     this.learnService.drop_put_in_order(event);
+        // }
+        this.learnService.drop_put_in_order(event);
+
     }
 }

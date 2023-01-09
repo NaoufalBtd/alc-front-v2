@@ -22,8 +22,7 @@ export class AuthenticationService {
     }
 
     public login(user: User): Observable<HttpResponse<User>> {
-        const headers: HttpHeaders = this.initHeaders();
-        return this.http.post<User>(`${this.host}/user/login`, user, {observe: 'response', headers});
+        return this.http.post<User>(`${this.host}/user/login`, user, {observe: 'response'});
     }
 
     public register(user: User): Observable<User> {

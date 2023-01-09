@@ -332,13 +332,15 @@ export class VocabularyService {
     }
 
     getTranslation() {
+        console.log(this.currentItem.translation);
         if (this.selectedLanguage.code === 'ar') {
-            this.quizService.translate(this.currentItem.response).subscribe(data => {
-                this.currentItem.translation = data;
-            });
+
         } else if (this.selectedLanguage.code === 'fr') {
-            this.quizService.translateEnFr(this.currentItem.response).subscribe(data => {
+            this.quizService.translateArToFrForStudent(this.currentItem.translation).subscribe(data => {
+                console.log(data);
                 this.currentItem.translation = data;
+            }, error => {
+                console.log(error);
             });
         }
     }
@@ -362,7 +364,6 @@ export class VocabularyService {
             this.showfinish = true;
         }
     }
-
 
 
     calculProgressBarValue(index: number) {

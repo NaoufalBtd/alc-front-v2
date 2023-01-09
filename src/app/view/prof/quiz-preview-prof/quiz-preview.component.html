@@ -78,7 +78,6 @@
 
         </span>
             <h5 class="h5"> {{  questionSideRight}}  </h5>
-            <h4 *ngIf="translateWord !== undefined">{{translateWord}}</h4>
         </div>
         <div class="p-col-12 answers">
             <div *ngFor="let reponse of question?.reponses" class="p-field-checkbox textQuestion">
@@ -124,8 +123,6 @@
                    id="input-answer-incorrect" type="text"
                    [(ngModel)]="answerSelected.lib" pInputText>
         </span>
-            <h4 *ngIf="translateWord !== undefined">{{translateWord}}</h4>
-
 
         </div>
 
@@ -174,7 +171,6 @@
 
         </span>
             <h5 class="h5"> {{  questionSideRight}}  </h5>
-            <h4 *ngIf="translateWord !== undefined">{{translateWord}}</h4>
         </div>
         <div class="p-col-12 answers">
             <button *ngIf="showCheckButton && !saveDone" pButton pRipple type="button"
@@ -218,7 +214,6 @@
 
         </span>
             <h5 class="h5"> {{  questionSideRight}}  </h5>
-            <h4 *ngIf="translateWord !== undefined">{{translateWord}}</h4>
         </div>
         <div class="p-col-12 answers">
             <button *ngIf="showCheckButton && !saveDone" pButton pRipple type="button"
@@ -234,11 +229,11 @@
 
     <div *ngIf="question.typeDeQuestion.ref === 't5'" class="p-grid">
         <div class="p-col-12  question ">
-            <div id="trueFalse" class="p-grid trueOrFalseQst">
+            <div [pTooltip]="correctAnswersList.get(question.id)[0]?.lib" id="trueFalse" class="p-grid trueOrFalseQst">
                 <div class="p-col-9">
                     {{  question?.libelle}}
                 </div>
-                <div style="padding-top: 2%;" class="p-col-3">
+                <div  style="padding-top: 2%;" class="p-col-3">
                     <button [style]="{width: '7em',
                                  height: '23px',
                                  display: 'inline-block',
@@ -247,14 +242,14 @@
                                    borderRight: '1px solid grey',
                                    borderRadius: '0'
                                  }"
-
                             [style.background]="trueOrFalse == true? '#5e8f32' :'white' "
                             [style.color]="trueOrFalse == true?  'white' : '#5e8f32' "
                             (click)="trueOrFalse = true; showCheckButton=true; showDontKnowButton=false"
                             [disabled]="trueOrFalse === true"
                             pButton pRipple type="button" label="True"
                             icon="pi pi-check"
-                            class="p-button-success p-button-outlined"></button>
+                            class="p-button-success p-button-outlined">
+                    </button>
 
 
                     <button [style]="{width: '7em',
@@ -271,7 +266,8 @@
                             pButton pRipple type="button" label="False"
                             icon="pi pi-times"
                             (click)="trueOrFalse = false ; showCheckButton=true; showDontKnowButton=false"
-                            class="p-button-danger p-button-outlined"></button>
+                            class="p-button-danger p-button-outlined">
+                    </button>
 
                 </div>
             </div>
@@ -378,7 +374,7 @@
                 <div [id]="item" class="example-box" (cdkDragStarted)="drag_put_in_order(item, i+1)"
                      *ngFor="let item of dragList; index as i"
                      cdkDrag>
-                    {{item}}</div>
+                    {{item}} ( sentence N° {{dragAnswersList.get(item)}})</div>
             </div>
         </div>
     </div>
@@ -408,7 +404,8 @@
                     class="p-button-rounded p-button-secondary"></button>
 
 
-            <button *ngIf="question.id === questionList[questionList.length -1]?.id  && this.webSocketService.isInSession" style="float:right" pButton
+            <button *ngIf="question.id === questionList[questionList.length -1]?.id
+              && this.webSocketService.isInSession && question?.typeDeQuestion?.ref !== 't11' " style="float:right" pButton
                     pRipple
                     (click)="finishQuiz()"
                     type="button" icon="pi pi-question" iconPos="right"
