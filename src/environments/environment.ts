@@ -16,4 +16,8 @@ export const environment = {
     socketUrl: socket,
     signWithGoogleApi: url + '/admin/admin/googlesignin',
     signWithGmailApi: url + '/admin/gmail/googlesignin',
+    okUrl: 'http://localhost:4200/ok',
+    failUrl: 'http://localhost:4200/fail',
+    shopUrl: 'http://localhost:4200',
+    callbackUrl: 'http://localhost:4200/back'
 };

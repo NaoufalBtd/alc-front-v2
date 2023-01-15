@@ -105,6 +105,9 @@ import {ProfesseurEditComponent} from './view/admin/professeur/professeur-edit/p
 import {PayNowCoursesComponent} from './view/shared/pay-now-courses/pay-now-courses.component';
 import {PayNowCourseDetailComponent} from './view/shared/pay-now-course-detail/pay-now-course-detail.component';
 import {PayNowComponent} from './view/shared/pay-now/pay-now.component';
+import {PaimentOkComponent} from './view/public/home-principale/paiment/paiment-ok/paiment-ok.component';
+import {PaimentFailComponent} from './view/public/home-principale/paiment/paiment-fail/paiment-fail.component';
+import {PaimentBackComponent} from './view/public/home-principale/paiment/paiment-back/paiment-back.component';
 
 
 @NgModule({
@@ -248,6 +251,9 @@ import {PayNowComponent} from './view/shared/pay-now/pay-now.component';
             },
             {path: 'our-packs', component: PayNowCoursesComponent},
             {path: 'pay', component: PayNowComponent},
+            {path: 'ok', component: PaimentOkComponent},
+            {path: 'fail', component: PaimentFailComponent},
+            {path: 'back', component: PaimentBackComponent},
             {path: 'our-packs/:id', component: PayNowCourseDetailComponent},
             {path: '*', component: PageNotFoundComponent},
         ], {scrollPositionRestoration: 'enabled'})

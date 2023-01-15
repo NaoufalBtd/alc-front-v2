@@ -210,7 +210,7 @@ export class InscriptionEditComponent implements OnInit {
             this.messageService.add({
                 severity: 'success',
                 summary: 'Successful',
-                detail: 'InscriptionUpdated',
+                detail: 'Inscription Updated',
                 life: 3000
             });
             this.service.findAll().subscribe(  data => this.items = data);

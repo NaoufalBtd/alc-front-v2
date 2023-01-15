@@ -7,7 +7,6 @@ import {LoginService} from '../../../../../controller/service/login.service';
 import {Router} from '@angular/router';
 import {User} from '../../../../../controller/model/user.model';
 import {HttpErrorResponse, HttpResponse} from '@angular/common/http';
-import {HeaderType} from '../../../../../enum/header-type.enum';
 import {Role} from '../../../../../enum/role.enum';
 import {TranslateService} from '@ngx-translate/core';
 
@@ -35,7 +34,8 @@ export class SignInAreaComponent implements OnInit {
         this.subscriptions.push(
             this.authenticationService.login(user).subscribe(
                 (response: HttpResponse<User>) => {
-                    const token = response.headers.get(HeaderType.JWT_TOKEN);
+                    const token = response.body.token;
+                    console.log(token);
                     this.authenticationService.saveToken(token);
                     this.authenticationService.addUserToLocalCache(response.body);
                     this.service.hasloged = true;

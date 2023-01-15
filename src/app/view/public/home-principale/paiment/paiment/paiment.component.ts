@@ -10,6 +10,9 @@ import {AnimationService} from '../../../../../controller/service/animation.serv
 import {PackStudent} from '../../../../../controller/model/pack-student.model';
 import {TranslateService} from '@ngx-translate/core';
 import {LoginService} from '../../../../../controller/service/login.service';
+import {HttpClient} from '@angular/common/http';
+import {User} from '../../../../../controller/model/user.model';
+import {environment} from '../../../../../../environments/environment';
 
 @Component({
     selector: 'app-paiment',
@@ -43,13 +46,19 @@ import {LoginService} from '../../../../../controller/service/login.service';
     encapsulation: ViewEncapsulation.None
 })
 export class PaimentComponent implements OnInit {
+    callbackUrl = environment.callbackUrl;
+    shopUrl = environment.shopUrl;
+    failUrl = environment.failUrl;
+    okUrl = environment.okUrl;
     items: MenuItem[];
     activeIndex = 0;
     selected: Etudiant = new Etudiant();
+    userRequest: User = new User();
 
     constructor(private messageService: MessageService,
                 public etudiantService: EtudiantService,
                 public animation: AnimationService,
+                private http: HttpClient,
                 private login: LoginService,
                 public translate: TranslateService,
                 private confirmationService: ConfirmationService,
@@ -67,37 +76,37 @@ export class PaimentComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.translate.use('ar');
         if (this.translate.currentLang === 'en') {
             this.items = [
                 {
-                    label: 'Payment',
+                    label: 'Personal',
 
                 },
                 {
-                    label: 'Personal',
+                    label: 'Payment',
 
                 }
             ];
         } else if (this.translate.currentLang === 'fr') {
             this.items = [
                 {
-                    label: 'Payement',
+                    label: 'Personnel',
 
                 },
                 {
-                    label: 'Personnel',
+                    label: 'Payement',
 
                 }
             ];
         } else if (this.translate.currentLang === 'ar') {
             this.items = [
+
                 {
-                    label: 'الدفع',
+                    label: 'المعلومات الشخصية',
 
                 },
                 {
-                    label: 'المعلومات الشخصية',
+                    label: 'الدفع',
 
                 }
             ];
@@ -105,6 +114,49 @@ export class PaimentComponent implements OnInit {
 
     }
 
+    public verifyEmail() {
+        const url = 'https://emailvalidation.abstractapi.com/v1/?api_key=d928649ca44341bba9a9482419202c4c&email=' + this.selected?.username;
+        return this.http.get<any>(url).subscribe(data => {
+            console.log(data);
+            if (data?.deliverability === 'UNDELIVERABLE') {
+                this.messageService.add({
+                    severity: 'info',
+                    detail: 'لم يتم العثور على بريدك الالكتروني، يرجى محاولة استخدام بريد إلكتروني حقيقي',
+                    life: 30000
+                });
+            } else {
+                this.animation.showAnimation = true;
+                this.etudiantService.addStudentWithPack(this.selected, this.selectedCourse.id).subscribe(
+                    st => {
+                        this.animation.showAnimation = false;
+                        if (st != null) {
+                            this.animation.showAnimation = false;
+                            this.userRequest = st;
+                            console.log(this.userRequest);
+                            this.activeIndex = 1;
+                        } else {
+                            this.messageService.add({
+                                severity: 'info',
+                                detail: 'البريد الالكتروني موجود بالفعل، من فضلك تفقد بريدك الالكتروني للحصول على اسم المستخدم و كلمة المرور للولوج الى حسابك',
+                                life: 30000
+                            });
+                        }
+                    }, error => {
+                        this.animation.showAnimation = false;
+                        this.messageService.add({
+                            severity: 'error',
+                            summary: 'Error',
+                            detail: 'Registration Canceled',
+                            life: 4000
+                        });
+                        console.log(error);
+                    }
+                );
+            }
+        }, error => {
+            console.log(error);
+        });
+    }
 
     createEtudiant() {
         this.animation.showAnimation = true;

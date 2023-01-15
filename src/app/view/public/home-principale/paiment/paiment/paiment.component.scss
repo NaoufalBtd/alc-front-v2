@@ -54,3 +54,69 @@
   border-radius: 5px;
 }
 
+
+.col-md-4.col-sm-12 {
+  padding: 10px;
+}
+
+/*Left Side card*/
+.card1 {
+  margin: 0;
+  padding: 15px;
+  padding-top: 25px;
+  padding-bottom: 0px;
+  background: #263238;
+  height: 100%;
+}
+
+.bill-head {
+  color: #ffffff;
+  font-weight: bold;
+  margin-bottom: 0px;
+  margin-top: 0px;
+  font-size: 30px;
+}
+
+.line {
+  border-right: 1px grey solid;
+}
+
+.bill-date {
+  color: #BDBDBD;
+}
+
+.red-bg {
+  margin-top: 25px;
+  margin-left: 0px;
+  margin-right: 0px;
+  background-color: #F44336;
+  padding-left: 20px !important;
+  padding: 25px 10px 25px 15px;
+}
+
+#total {
+  margin-top: 0px;
+  padding-left: 7px;
+}
+
+#total-label {
+  margin-bottom: 0px;
+  color: #ffffff;
+  padding-left: 7px;
+}
+
+#heading1 {
+  color: #ffffff;
+  font-size: 20px;
+  padding-left: 10px;
+}
+
+#heading2 {
+  font-size: 27px;
+  color: #D50000;
+}
+
+/*For font-awesome icons in Placeholder*/
+.placeicon {
+  font-family: fontawesome !important;
+}

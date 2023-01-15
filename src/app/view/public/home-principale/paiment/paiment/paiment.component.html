@@ -1,75 +1,11 @@
-<section style="direction: rtl" class="course__area  pb-120">
+<section [style.direction]="translate.currentLang === 'ar' ? 'rtl': 'ltr'" class="course__area  pb-120">
     <div class="container">
         <div class="row">
             <p-steps [model]="items" [(activeIndex)]="activeIndex" [readonly]="true"></p-steps>
         </div>
 
-        <div *ngIf="activeIndex === 0" class="row">
-            <div class="row">
-                <div class="col-md-12  shadow-lg mt-5 p-3 mb-5 bg-body rounded">
-                    <h1 id="bank-transfer">{{'Bank transfer' | translate}}</h1>
-                </div>
-            </div>
 
-            <div class="row pt-20 insc">
-                <div class="col-md-12 ">
-                    <h4 id="instructions">{{'instructions' | translate}}</h4>
-                </div>
-
-                <div class="col-md-12">
-                    <h5>نظرا لعدم توفر خاصية الدفع عبر الانترنيت حتى الان، المرجو من مستخدمينا الاعزاء ارسال المبلغ
-                        الموجود في خانة "المبلغ" على رقم الحساب الموجود في خانة "رقم الحساب" .</h5>
-                </div>
-
-                <div class="row important">
-                    <strong>ملحوضة هامة</strong>
-                    <p id="importantText">المرجو ارسال ايصال الدفع عبر الواتساب في الرقم اسفله، حتى يتسنى لنا تفعيل
-                        حسابكم.</p>
-                </div>
-
-                <div class="row payContent">
-                    <div class="col-md-12 details-title">رقم الحساب</div>
-                    <div style="direction: ltr!important;" [pTooltip]="'click to copy' | translate" id="rib"
-                         (click)="copy()"
-                         [cdkCopyToClipboard]="'011640000037200001435874'"
-                         class="col-md-12 details">
-                        011 640 00 00 37 20 00 01 43 58 74
-                    </div>
-
-                    <div class="col-md-12 details-title">المبلغ</div>
-                    <div class="col-md-12 details ">
-                        {{selectedCourse?.price?.price}} DH
-                    </div>
-
-                    <div class="col-md-12 details-title">المرجو ارسال ايصال الدفع عبر الرقم</div>
-                    <div class="col-md-12 details">
-                        <div class="social-information"><i class="fa fa-solid fa-mobile"></i>
-                            <a style="direction: ltr!important;" href="https://wa.me/message/7ACDXXHNEB5RA1"
-                               target="_blank" class="whtsp"> +212 6 54 79 58 00 </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div style="padding: 20px 0" class="row">
-                    <div class="col-md-4 col-sm-12"></div>
-                    <div class="col-md-4 col-sm-12"></div>
-                    <div class="col-md-4 col-sm-12">
-                        <button style="height: 50px!important;" pButton pRipple
-                                (click)="next()"
-                                type="button" label="{{'NEXT' | translate}}"
-                                class="ngFlexyBlackButton">
-                            <i class="fa fa-solid fa-arrow-right-to-arc"></i>
-                        </button>
-                    </div>
-                </div>
-
-
-            </div>
-
-        </div>
-
-
-        <div *ngIf="activeIndex === 1" id="row" class="row shadow-lg mt-5 p-3 mb-5 bg-body rounded">
+        <div *ngIf="activeIndex == 0" id="row" class="row shadow-lg mt-5 p-3 mb-5 bg-body rounded">
             <div class="col-md-6 col-sm-12">
                 <div class="cta__form-inner">
                     <form action="#">
@@ -116,21 +52,12 @@
             </div>
 
 
-            <div class="col-md-4 col-sm-12">
-                <button style="height: 50px!important;" pButton pRipple
-                        (click)="activeIndex = 0"
-                        type="button" label="{{'PREVIOUS' | translate}}"
-                        class="ngFlexyBlackButton">
-                    <i class="fa fa-solid fa-arrow-right-to-arc"></i>
-                </button>
-            </div>
-
             <div class="col-md-4 col-sm-12"></div>
 
             <div class="col-md-4 col-sm-12">
                 <button [disabled]="isDisabled()" style="height: 50px!important;" pButton pRipple
-                        (click)="createEtudiant()"
-                        type="button" label="{{'FINISH' | translate}}"
+                        (click)="verifyEmail()"
+                        type="button" label="{{'NEXT' | translate}}"
                         class="ngFlexyBlackButton">
                     <i class="fa fa-solid fa-arrow-right-to-arc"></i>
                 </button>
@@ -138,5 +65,251 @@
 
             <div class="col-md-4 col-sm-12"></div>
         </div>
+
+        <div *ngIf="activeIndex === 1" style="background: #ff725e;border-radius: 5px;" class="row">
+            <form name="formpaiement" Id="formpaiement" action="https://testpayment.cmi.co.ma/fim/est3Dgate"
+                  method="post">
+                <div hidden class="row">
+
+                    <div class="col-md-4 col-sm-12">
+                        <h5>OID</h5>
+                        <input  [style]="{width:'100%'}" pInputText type="text" name="oid"
+                               [value]="selectedCourse?.id + '-' + userRequest?.id ">
+                    </div>
+
+                    <div class="col-md-4 col-sm-12">
+                        <h5>Pack name</h5>
+                        <input  [style]="{width:'100%'}" pInputText type="text" name="itemNumber1"
+                               [value]="selectedCourse?.libelle">
+                    </div>
+
+                    <div class="col-md-4 col-sm-12">
+                        <h5>Pack code</h5>
+                        <input  [style]="{width:'100%'}" pInputText type="text" name="productCode1"
+                               [value]="selectedCourse?.libelle">
+                    </div>
+
+                    <div class="col-md-4 col-sm-12">
+                        <h5>Amount</h5>
+                        <input  [style]="{width:'100%'}" pInputText type="text" name="amount"
+                               [value]="selectedCourse?.price?.price">
+                    </div>
+
+                    <div class="col-md-4 col-sm-12">
+                        <h5>Description</h5>
+                        <input  [style]="{width:'100%'}" pInputText type="text" name="desc1"
+                               [value]="selectedCourse?.description">
+                    </div>
+
+                    <div class="col-md-4 col-sm-12">
+                        <h5>Course ID</h5>
+                        <input  [style]="{width:'100%'}" pInputText type="text" name="id1"
+                               [value]="selectedCourse?.id">
+                    </div>
+
+                    <div class="col-md-4 col-sm-12">
+                        <h5>Total</h5>
+                        <input  [style]="{width:'100%'}" pInputText type="text" name="total1"
+                               [value]="selectedCourse?.price?.price">
+                    </div>
+
+
+                    <div class="col-md-4 col-sm-12">
+                        <h5>Price</h5>
+                        <input  [style]="{width:'100%'}" pInputText type="text" name="price1"
+                               [value]="selectedCourse?.price?.price">
+                    </div>
+
+                    <div class="col-md-4 col-sm-12">
+                        <h5>Client ID</h5>
+                        <input [style]="{width:'100%'}" pInputText type="text" name="clientid"
+                               value="600003447">
+                    </div>
+
+                    <div class="col-md-4 col-sm-12">
+                        <h5>language</h5>
+                        <input  [style]="{width:'100%'}" pInputText type="text" name="lang"
+                               [value]="translate.currentLang">
+                    </div>
+
+                    <div hidden class="col-md-4 col-sm-12">
+                        <h5>Qte</h5>
+                        <input  [style]="{width:'100%'}" pInputText type="text" name="qty1" value="1">
+                    </div>
+
+
+                    <div hidden class="col-md-4 col-sm-12">
+                        <h5>encoding</h5>
+                        <input  [style]="{width:'100%'}" pInputText type="text" name="encoding" value="UTF-8">
+                    </div>
+
+
+                    <div hidden class="col-md-4 col-sm-12">
+                        <h5>BillToCountry</h5>
+                        <input [style]="{width:'100%'}" pInputText type="text" name="BillToCountry" value="Maroc">
+                    </div>
+
+                    <div hidden class="col-md-4 col-sm-12">
+                        <h5>BillToPostalCode</h5>
+                        <input [style]="{width:'100%'}" pInputText type="text" name="BillToPostalCode" value="20230">
+                    </div>
+
+                    <div hidden class="col-md-4 col-sm-12">
+                        <h5>BillToStateProv</h5>
+                        <input [style]="{width:'100%'}" pInputText type="text" name="BillToStateProv"
+                               value="Maarif Casablanca">
+                    </div>
+
+                    <div hidden class="col-md-4 col-sm-12">
+                        <h5>BillToCity</h5>
+                        <input [style]="{width:'100%'}" pInputText type="text" name="BillToCity" value="Marrakech">
+                    </div>
+
+                    <div hidden class="col-md-4 col-sm-12">
+                        <h5>BillToStreet</h5>
+                        <input [style]="{width:'100%'}" pInputText type="text" name="BillToStreet1"
+                               value="100 rue adress">
+                    </div>
+
+                    <div hidden class="col-md-4 col-sm-12">
+                        <h5>BillToCompany</h5>
+                        <input [style]="{width:'100%'}" pInputText type="text" name="EngFlexy"
+                               value="billToCompany">
+                    </div>
+
+
+                    <div hidden class="col-md-4 col-sm-12">
+                        <h5>hashAlgorithm</h5>
+                        <input [style]="{width:'100%'}" pInputText type="text" name="hashAlgorithm" value="ver3">
+                    </div>
+
+                    <div hidden class="col-md-4 col-sm-12">
+                        <h5>storetype</h5>
+                        <input [style]="{width:'100%'}" pInputText type="text" name="storetype" value="3D_PAY_HOSTING">
+                    </div>
+
+
+                    <div hidden class="col-md-4 col-sm-12">
+                        <h5>currency</h5>
+                        <input [style]="{width:'100%'}" pInputText type="text" name="currency" value="504">
+                    </div>
+
+                    <div hidden class="col-md-4 col-sm-12">
+                        <h5>callbackUrl</h5>
+                        <input [style]="{width:'100%'}" pInputText type="text" name="callbackUrl"
+                               [value]="callbackUrl">
+                    </div>
+
+                    <div hidden class="col-md-4 col-sm-12">
+                        <h5>TranType</h5>
+                        <input [style]="{width:'100%'}" pInputText type="text" name="TranType" value="PreAuth">
+                    </div>
+
+                    <div hidden class="col-md-4 col-sm-12">
+                        <h5>shopUrl</h5>
+                        <input [style]="{width:'100%'}" pInputText type="text" name="shopUrl"
+                               [value]="shopUrl">
+                    </div>
+
+                    <div hidden class="col-md-4 col-sm-12">
+                        <h5>failUrl</h5>
+                        <input [style]="{width:'100%'}" pInputText type="text" name="failUrl"
+                               [value]="failUrl">
+                    </div>
+
+                    <div hidden class="col-md-4 col-sm-12">
+                        <h5>okUrl</h5>
+                        <input [style]="{width:'100%'}" pInputText type="text" name="okUrl"
+                               [value]="okUrl">
+                    </div>
+
+
+                    <div hidden class="col-md-4 col-sm-12">
+                        <h5>storeKey</h5>
+                        <input [style]="{width:'100%'}" pInputText type="text" name="storeKey" value="anaZouani@2023">
+                    </div>
+
+                </div>
+
+
+                <div class="row">
+                    <div class="bg-light rounded d-flex flex-column">
+                        <div class="p-2 ml-3"><h4>Payment detail</h4></div>
+                        <div class="p-2 d-flex">
+                            <div class="col-8">Company name</div>
+                            <div class="ml-auto">EngFlexy Academy</div>
+                        </div>
+
+                        <div class="p-2 d-flex">
+                            <div class="col-8">OID</div>
+                            <div class="ml-auto">{{selectedCourse?.id + '-' + userRequest?.id}}</div>
+                        </div>
+
+                        <div class="p-2 d-flex">
+                            <div class="col-8">Pack name</div>
+                            <div class="ml-auto">{{selectedCourse?.libelle}}</div>
+                        </div>
+
+                        <div class="p-2 d-flex">
+                            <div class="col-8">Pack description</div>
+                            <div class="ml-auto">{{selectedCourse?.description}}</div>
+                        </div>
+
+                        <div class="border-top px-4 mx-3"></div>
+
+                        <div class="p-2 d-flex pt-3">
+                            <div class="col-8">Student name</div>
+                            <div class="ml-auto">{{userRequest?.nom}}</div>
+                        </div>
+
+                        <div class="p-2 d-flex">
+                            <div class="col-8">Student email</div>
+                            <div class="ml-auto">{{userRequest?.username}}</div>
+                        </div>
+
+                        <div class="border-top px-4 mx-3"></div>
+
+                        <div class="p-2 d-flex pt-3">
+                            <div class="col-8">Price</div>
+                            <div class="ml-auto">{{selectedCourse?.price?.oldPrice}} DH</div>
+                        </div>
+
+                        <div class="p-2 d-flex">
+                            <div class="col-8">Promo code  <span class="fa fa-question-circle text-secondary"></span></div>
+                            <div class="ml-auto">{{selectedCourse?.price?.oldPrice - selectedCourse?.price?.price}} DH</div>
+                        </div>
+
+                        <div class="border-top px-4 mx-3"></div>
+
+                        <div class="p-2 d-flex pt-3">
+                            <div class="col-8"><b>Total</b></div>
+                            <div class="ml-auto"><b class="green">{{selectedCourse?.price?.price}} DH</b></div>
+                        </div>
+
+                        <div class="border-top px-4 mx-3"></div>
+
+                    </div>
+                </div>
+
+                <div class="row bg-light">
+
+                    <div class="col-md-4 col-sm-12"></div>
+                    <div class="col-md-4 col-sm-12"></div>
+
+                    <div class="col-md-4 col-sm-12">
+                        <button style="height: 50px!important;" pButton pRipple
+                                value="valider" onclick="submitformpaiement();"
+                                type="button" label="{{'PAY' | translate}}"
+                                class="ngFlexyBlackButton">
+                            <i class="fa fa-solid fa-arrow-right-to-arc"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
     </div>
+
+
 </section>

@@ -63,10 +63,10 @@ export class CourseDetailsAreaComponent implements OnInit {
     }
 
     pay() {
-        if (this.login.getConnecteUser() === null) {
+        // if (this.login.getConnecteUser() === null) {
             this.router.navigate(['/payment']);
-        } else {
-            this.router.navigate(['/pay']);
-        }
+        // } else {
+        // this.router.navigate(['/pay']);
+        // }
     }
 }

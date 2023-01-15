@@ -14,4 +14,8 @@ export const environment = {
     socketUrl: socket,
     signWithGoogleApi: url + '/admin/admin/googlesignin',
     signWithGmailApi: url + '/admin/gmail/googlesignin',
+    okUrl: 'https://engflexy.com/ok',
+    failUrl: 'https://engflexy.com/fail',
+    shopUrl: 'https://engflexy.com',
+    callbackUrl: 'https://engflexy.com/back'
 };

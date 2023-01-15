@@ -58,6 +58,9 @@ import {FilterCoursesComponent} from './courses/filter-courses/filter-courses.co
 import {PricesComponent} from './prices/prices.component';
 import {AdvantagesComponent} from './advantages/advantages.component';
 import {HeaderFourComponent} from './header-four/header-four.component';
+import {PaimentOkComponent} from './paiment/paiment-ok/paiment-ok.component';
+import {PaimentFailComponent} from './paiment/paiment-fail/paiment-fail.component';
+import {PaimentBackComponent} from './paiment/paiment-back/paiment-back.component';
 
 
 @NgModule({
@@ -107,6 +110,9 @@ import {HeaderFourComponent} from './header-four/header-four.component';
         PricesComponent,
         AdvantagesComponent,
         HeaderFourComponent,
+        PaimentOkComponent,
+        PaimentFailComponent,
+        PaimentBackComponent,
     ],
     providers: [
         Clipboard
