@@ -18,7 +18,8 @@ import {
     RenderCellEventArgs,
     ScheduleComponent,
     TimeScaleModel,
-    View
+    View,
+    WorkHoursModel
 } from '@syncfusion/ej2-angular-schedule';
 import {addClass, Internationalization} from '@syncfusion/ej2-base';
 import {ScheduleProf} from '../../../../controller/model/calendrier-prof.model';
@@ -38,6 +39,11 @@ import {AnimationService} from '../../../../controller/service/animation.service
     styleUrls: ['./professeur-edit.component.scss']
 })
 export class ProfesseurEditComponent implements OnInit {
+    public workHours: WorkHoursModel = {
+        start: '06:00',
+        end: '20:00',
+        highlight: true,
+    };
     showAddTranche: boolean;
     displayModal: boolean;
     trancheEdit: TrancheHoraireProf = new TrancheHoraireProf();
@@ -95,7 +101,6 @@ export class ProfesseurEditComponent implements OnInit {
         this.service.findAllType().subscribe(
             data => {
                 this.typeTeachers = data;
-                console.log(data);
             }, error => {
                 console.log(error);
             }
@@ -107,6 +112,15 @@ export class ProfesseurEditComponent implements OnInit {
         this.scheduleService.getAllStudentsGroup().subscribe(data => this.groupeStudent = data);
 
         this.scheduleService.findEtat().subscribe(data => this.scheduleService.etatEtudiantSchedule = data);
+        this.trancheHoraireProfService.findTrancheHoraireByProfId(this.selected).subscribe(data => {
+                this.trancheHoraireProfs = data;
+                this.trancheHoraireProfList = data;
+                console.log(this.trancheHoraireProfs);
+                console.log(this.trancheHoraireProfList);
+            }, error => {
+                console.log(error);
+            }
+        );
     }
 
 
@@ -183,7 +197,6 @@ export class ProfesseurEditComponent implements OnInit {
         }
         this.trancheHoraireProf.day = this.selectedDay.value;
         this.trancheHoraireProf.groupIndex = 0;
-        console.log(this.trancheHoraireProf);
         this.trancheHoraireProfList.push({...this.trancheHoraireProf});
         this.trancheHoraireProf = new TrancheHoraireProf();
         this.dateFin = undefined;
@@ -209,8 +222,6 @@ export class ProfesseurEditComponent implements OnInit {
     public edit() {
 
         this.selected.trancheHoraireProfList = this.trancheHoraireProfList;
-        console.log(this.selected.trancheHoraireProfList);
-        console.log(this.selected);
         this.submitted = true;
         this.service.edit().subscribe(data => {
             this.selected = data;
@@ -257,26 +268,10 @@ export class ProfesseurEditComponent implements OnInit {
         }
     }
 
-    showTranche() {
-        this.trancheHoraireProfService.findTrancheHoraireByProfId(this.selected).subscribe(
-            dataTranche => {
-                this.trancheHoraireProfs = dataTranche;
-                console.log(this.trancheHoraireProfs);
-                if (dataTranche.length <= 0) {
-                    this.showAddTranche = true;
-                } else {
-                    this.showAddTranche = false;
-                }
-            }, error => {
-                console.log(error);
-            }
-        );
-    }
 
     editTranche(tranche: TrancheHoraireProf) {
         this.trancheEdit = new TrancheHoraireProf();
         this.showModalDialog();
-        console.log(tranche);
         this.trancheEdit = tranche;
     }
 
@@ -311,13 +306,12 @@ export class ProfesseurEditComponent implements OnInit {
         }
         this.trancheEdit.groupIndex = 0;
         this.trancheEdit.prof = this.selected;
-        console.log(this.selectedDay);
         if (this.trancheEdit.id === 0) {
             this.trancheEdit.day = this.selectedDay.value;
         }
-        console.log(this.trancheEdit);
         this.trancheHoraireProfService.edit(this.trancheEdit).subscribe(
             data => {
+                console.log(data);
                 for (let tr of this.trancheHoraireProfs) {
                     if (tr.id === data.id) {
                         tr = data;
@@ -335,7 +329,9 @@ export class ProfesseurEditComponent implements OnInit {
         this.selectedDay = undefined;
         this.dateFin = undefined;
         this.dateDebut = undefined;
+        this.displayModal = false;
     }
+
 
     addNewTranche() {
         this.trancheEdit = new TrancheHoraireProf();
@@ -415,9 +411,6 @@ export class ProfesseurEditComponent implements OnInit {
      */
     cols: any[];
     public timeScale: TimeScaleModel = {interval: 60, slotCount: 1};
-    prof: Prof = new Prof();
-    scheduleDialog = true;
-
     @ViewChild('scheduleObj')
     public scheduleObj: ScheduleComponent;
     @ViewChild('startTime') public startTimeObj: TimePickerComponent;
@@ -438,7 +431,7 @@ export class ProfesseurEditComponent implements OnInit {
         }
     };
     public data: ScheduleProf = new ScheduleProf();
-    public currentView: View = 'Day';
+    public currentView: View = 'Week';
 
     public islayoutChanged: boolean = false;
 
@@ -457,22 +450,11 @@ export class ProfesseurEditComponent implements OnInit {
         this.profs = new Array<Prof>();
         this.scheduleProfs.splice(0, this.scheduleProfs.length);
         this.scheduleProf.prof = this.selected;
-        this.trancheHoraireProfService.findTrancheHoraireByProfId(this.selected).subscribe(
-            data => {
-                this.trancheHoraireProfList = data;
-                this.onDataBound(data);
-            }, err => {
-                console.log(err);
-            }
-        );
-
         this.scheduleService.findByProf(this.selected).subscribe(
             scheduleData => {
-                console.log(this.scheduleProfs);
                 for (const item1 of scheduleData) {
                     this.scheduleProfs.push({...item1});
                 }
-                console.log(this.scheduleProfs);
                 this.eventSettings = {
                     dataSource: this.scheduleProfs,
                     fields: {
@@ -483,7 +465,6 @@ export class ProfesseurEditComponent implements OnInit {
                     }
                 };
                 this.profs.push({...this.selected});
-                console.log(this.profs);
                 this.profsDataSource = this.profs;
             }, error => {
                 console.log(error);
@@ -495,8 +476,6 @@ export class ProfesseurEditComponent implements OnInit {
 
 
     onPopupOpen(args: PopupOpenEventArgs): void {
-        console.log(this.scheduleObj.eventSettings.dataSource);
-        console.log(this.scheduleProfs);
         this.data.subject = args.data.subject;
         this.data.startTime = args.data.startTime;
         this.data.endTime = args.data.endTime;
@@ -507,25 +486,49 @@ export class ProfesseurEditComponent implements OnInit {
         this.scheduleProf.subject = args.data.subject;
         this.scheduleProf.prof = args.data.prof;
         this.scheduleProf.id = args.data.id;
-        console.log(this.scheduleProf.id);
         this.scheduleProf.groupeEtudiant = args.data.groupeEtudiant;
         this.grpEtudiant = this.scheduleProf.groupeEtudiant;
         this.selectionTarget = null;
         this.selectionTarget = args.target;
     }
 
-    onDataBound(trancheHoraireProfList: Array<TrancheHoraireProf>): void {
-        console.log(trancheHoraireProfList);
-        this.scheduleObj.eventSettings.dataSource = this.scheduleProfs;
-        this.eventSettings = {
-            dataSource: this.scheduleProfs,
-            fields: {
-                id: 'id',
-                subject: {name: 'subject', title: 'subject'},
-                startTime: {name: 'startTime', title: 'startTime'},
-                endTime: {name: 'endTime', title: 'endTime'}
+    onDataBound(): void {
+        this.scheduleObj.resetWorkHours();
+        if (this.islayoutChanged) {
+            this.scheduleObj.eventSettings.dataSource = this.scheduleProfs;
+            this.scheduleObj.workHours = null;
+            this.eventSettings = {
+                dataSource: this.scheduleProfs,
+                fields: {
+                    id: 'id',
+                    subject: {name: 'subject', title: 'subject'},
+                    startTime: {name: 'startTime', title: 'startTime'},
+                    endTime: {name: 'endTime', title: 'endTime'}
+                }
+            };
+            if (this.trancheHoraireProfs?.length > 0) {
+                const dates = this.scheduleObj.activeView.getRenderDates();
+                console.log(dates);
+                this.scheduleObj.setWorkHours(
+                    dates,
+                    '12:00',
+                    '22:00',
+                    0
+                );
+
+                // for (const tranche of this.trancheHoraireProfs) {
+                //     for (const date of dates) {
+                //         if (tranche.day === date.getDay()) {
+                //             this.scheduleObj.setWorkHours(
+                //                 [date],
+                //                 tranche.startHour,
+                //                 tranche.endHour
+                //             );
+                //         }
+                //     }
+                // }
             }
-        };
+        }
     }
 
 
@@ -536,14 +539,20 @@ export class ProfesseurEditComponent implements OnInit {
             args.requestType === 'viewNavigate'
         ) {
             this.islayoutChanged = true;
-            this.onDataBound(this.trancheHoraireProfList);
         }
         this.scheduleObj.eventSettings.dataSource = null;
         this.scheduleObj.eventSettings.dataSource = this.scheduleProfs;
-        console.log(this.scheduleObj.eventSettings.dataSource);
     }
 
     onRenderCell(args: RenderCellEventArgs): void {
+
+        if (args.element?.className === ('e-work-cells')) {
+            (args.element as HTMLElement).style.background = '#edf2fb';
+            (args.element as HTMLElement).style.borderColor = '#edf2fb';
+            (args.element as HTMLElement).style.pointerEvents = 'none';
+        } else if (args.element?.className === ('e-work-cells e-work-hours')) {
+            (args.element as HTMLElement).style.background = 'white';
+        }
         if (
             args.element?.classList?.contains('e-work-hours') ||
             args.element?.classList?.contains('e-work-cells')
@@ -566,7 +575,6 @@ export class ProfesseurEditComponent implements OnInit {
     }
 
     save() {
-        console.log(this.selected);
         this.scheduleProf.prof = this.scheduleProf.groupeEtudiant.prof;
         const fixedRef = this.scheduleProf.ref;
         const startedDate = this.scheduleProf.startTime;
@@ -576,7 +584,6 @@ export class ProfesseurEditComponent implements OnInit {
         this.scheduleProf.subject = this.scheduleProf.cours.libelle;
         this.scheduleProf.grpName = this.scheduleProf.groupeEtudiant.libelle;
         this.scheduleProf.profName = this.scheduleProf.prof.nom;
-        console.log(this.scheduleProf);
         if (this.optionSelected.option === 'Daily') {
             while (this.scheduleProf.startTime < this.endDate) {
                 this.saveSchedule(scheduleObj);
@@ -585,22 +592,16 @@ export class ProfesseurEditComponent implements OnInit {
             }
         } else if (this.optionSelected.option === 'Weekly') {
             let firstSubject = this.scheduleProf.subject;
-            console.log(this.selectedDays);
             while (this.scheduleProf.startTime < this.endDate) {
                 for (const day of this.selectedDays) {
                     if (this.scheduleProf.startTime.getDay() === day) {
-                        console.log(this.scheduleProf.startTime.getDay());
-                        console.log(this.scheduleProf.startTime.getDate());
                         this.scheduleProf.ref = fixedRef + String(this.scheduleProf.startTime.getDay());
-                        console.log(this.courses);
                         for (let i = 0; i < this.courses.length; i++) {
                             if (this.scheduleProf.cours.libelle === this.courses[i].libelle) {
                                 if (this.scheduleProf.subject === firstSubject) {
                                     firstSubject = null;
                                     break;
                                 } else {
-                                    console.log(this.courses[i]);
-                                    console.log(this.courses[i + 1]);
                                     this.scheduleProf.cours = this.courses[i + 1];
                                     this.scheduleProf.subject = this.scheduleProf.cours.libelle;
                                     break;
@@ -699,9 +700,7 @@ export class ProfesseurEditComponent implements OnInit {
                             detail: 'Schedule added.',
                             life: 3000
                         });
-                        console.log(this.scheduleProfs);
                         scheduleObj.eventSettings.dataSource = this.scheduleProfs;
-                        console.log(scheduleObj.eventSettings.dataSource);
                     }
 
                 }, error => {
@@ -716,21 +715,17 @@ export class ProfesseurEditComponent implements OnInit {
                 }
             );
         } else {
-            console.log(this.scheduleProf);
             this.scheduleService.save().subscribe(
                 data => {
                     for (let i = 0; i < this.scheduleProfs.length; i++) {
                         if (this.scheduleProfs[i].id === data.id) {
-                            console.log(data);
                             // this.scheduleProfs.splice(i, 1);
                             this.scheduleProfs[i] = data;
                         }
                     }
                 }
             );
-            console.log(this.scheduleProfs);
             scheduleObj.eventSettings.dataSource = this.scheduleProfs;
-            console.log(scheduleObj.eventSettings.dataSource);
             this.scheduleObj.eventWindow.refresh();
 
         }
@@ -741,7 +736,6 @@ export class ProfesseurEditComponent implements OnInit {
         const scheduleProf = this.scheduleObj.getEventDetails(this.selectionTarget) as ScheduleProf;
         this.scheduleService.update(scheduleProf);
         this.scheduleProf = scheduleProf;
-        console.log(this.scheduleProf);
         this.scheduleObj.openEditor(scheduleProf, 'Add');
     }
 
@@ -750,7 +744,6 @@ export class ProfesseurEditComponent implements OnInit {
         const scheduleObj = this.scheduleObj;
         this.scheduleObj.eventSettings.dataSource = null;
         const scheduleProf = this.scheduleObj.getEventDetails(this.selectionTarget) as ScheduleProf;
-        console.log(scheduleProf);
         if (this.deleteOption === false) {
             this.scheduleService.deleteScheduleProfById(scheduleProf).subscribe(
                 data => {
@@ -772,7 +765,6 @@ export class ProfesseurEditComponent implements OnInit {
             }
         }
         scheduleObj.eventSettings.dataSource = this.scheduleProfs;
-        console.log(scheduleObj.eventSettings.dataSource);
         this.hideDialog();
         this.scheduleObj.eventWindow.refresh();
         this.deleteOption = false;
@@ -785,7 +777,6 @@ export class ProfesseurEditComponent implements OnInit {
     public onDetailsClick(event: any): void {
         this.scheduleProf = new ScheduleProf();
         this.scheduleProf.prof = this.selected;
-        console.log(this.scheduleProf.prof);
         const data: Object = this.scheduleObj.getCellDetails(this.scheduleObj.getSelectedElements()) as Object;
         this.scheduleObj.openEditor(data, 'Add');
     }
@@ -796,7 +787,6 @@ export class ProfesseurEditComponent implements OnInit {
 
     getCourses(groupeEtudiant: GroupeEtudiant) {
         this.parcourService.FindCoursByParcours(groupeEtudiant.parcours.id).subscribe(data => this.courses = data);
-        console.log(this.scheduleProf.prof);
     }
 
     findAll() {
@@ -812,7 +802,6 @@ export class ProfesseurEditComponent implements OnInit {
                         endTime: {name: 'endTime', title: 'endTime'}
                     }
                 };
-                console.log(this.scheduleProfs);
             }, error => {
                 console.log(error);
             }
@@ -828,7 +817,6 @@ export class ProfesseurEditComponent implements OnInit {
                 this.selected.enabled = allow;
                 this.adminService.allowTeachers(this.selected).subscribe(
                     data => {
-                        console.log(data);
                         this.messageService.add({
                             severity: 'success',
                             detail: 'Teacher is ' + text,

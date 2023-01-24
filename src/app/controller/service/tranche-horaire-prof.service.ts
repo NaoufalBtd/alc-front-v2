@@ -4,8 +4,6 @@ import {TrancheHoraireProf} from '../model/tranche-horaire-prof.model';
 import {Observable} from 'rxjs';
 import {Prof} from '../model/prof.model';
 import {HttpClient} from '@angular/common/http';
-import {error} from 'protractor';
-import {dataBinding} from '@syncfusion/ej2-angular-schedule';
 
 @Injectable({
     providedIn: 'root'
@@ -29,18 +27,20 @@ export class TrancheHoraireProfService {
     }
 
     public findTrancheHoraireByProfId(prof: Prof): Observable<Array<TrancheHoraireProf>> {
-        return this.http.get<Array<TrancheHoraireProf>>(this.adminUrl + 'trancheHoraireProfRest/id/' + prof.id);
+        console.log(prof);
+        return this.http.get<Array<TrancheHoraireProf>>(this.adminUrl + 'work-hours/id/' + prof.id);
     }
+
     public findAll(): Observable<Array<TrancheHoraireProf>> {
-        return this.http.get<Array<TrancheHoraireProf>>(this.adminUrl + 'trancheHoraireProfRest/');
+        return this.http.get<Array<TrancheHoraireProf>>(this.adminUrl + 'work-hours/');
     }
 
     edit(trancheEdit: TrancheHoraireProf): Observable<TrancheHoraireProf> {
-        return this.http.post<TrancheHoraireProf>(this.adminUrl + 'trancheHoraireProfRest/', trancheEdit);
+        return this.http.post<TrancheHoraireProf>(this.adminUrl + 'work-hours/', trancheEdit);
     }
 
     deleteTrancheById(id: number) {
-        return this.http.delete(this.adminUrl + 'trancheHoraireProfRest/id/' + id).subscribe(
+        return this.http.delete(this.adminUrl + 'work-hours/id/' + id).subscribe(
             data => {
             }, err => {
                 console.log(err);

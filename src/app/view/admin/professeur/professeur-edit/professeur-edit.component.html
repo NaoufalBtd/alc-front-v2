@@ -40,7 +40,7 @@
         </div>
 
 
-        <div *ngIf="index === 1" class="container">
+        <div [hidden]="index !== 1" class="container">
             <div class="row">
                 <div style="background: white; padding: 5px;" class="col-md-12">
                     <table style="padding: 0 22px 10px 0;float: left;" class="property-table">
@@ -63,6 +63,9 @@
 
 
                     <ejs-schedule #scheduleObj cssClass='schedule-block-events'
+                                  (dataBound)="onDataBound()"
+                                  [workDays]="[0,1,2,3,4,5,6]"
+                                  (renderCell)="onRenderCell($event)"
                                   width='100%'
                                   [group]="group"
                                   (actionComplete)="onActionComplete($event)"
@@ -260,7 +263,7 @@
                 </div>
             </div>
         </div>
-        <div *ngIf="index === 0" class="container">
+        <div [hidden]="index !== 0" class="container">
             <div class="row">
                 <div class="col-lg-4">
                     <div class="card mb-4">
@@ -290,7 +293,9 @@
                                     </i>
 
                                     <div class="mb-0">
-                                        <button (click)="allowUser(false, 'disable')" type="button" class="btn btn-danger">block</button>
+                                        <button (click)="allowUser(false, 'disable')" type="button"
+                                                class="btn btn-danger">block
+                                        </button>
                                     </div>
                                 </li>
 
@@ -300,7 +305,9 @@
                                         DISABLED
                                     </i>
                                     <div class="mb-0">
-                                        <button (click)="allowUser(true, 'enable')" type="button" class="btn btn-success">allow</button>
+                                        <button (click)="allowUser(true, 'enable')" type="button"
+                                                class="btn btn-success">allow
+                                        </button>
                                     </div>
                                 </li>
 
@@ -310,7 +317,9 @@
                                         Account locked
                                     </i>
                                     <div class="mb-0">
-                                        <button (click)="lockUser(true, 'unlock')" type="button" class="btn btn-success">unlock</button>
+                                        <button (click)="lockUser(true, 'unlock')" type="button"
+                                                class="btn btn-success">unlock
+                                        </button>
                                     </div>
                                 </li>
 
@@ -561,8 +570,6 @@
                 </div>
             </div>
         </div>
-
-
     </div>
 </section>
 
@@ -598,7 +605,7 @@
     <ng-template pTemplate="footer">
         <p-button icon="pi pi-times" (click)="hideDialog()" label="Cancel"
                   styleClass="p-button-text p-button-warning"></p-button>
-        <p-button icon="pi pi-check" (click)="saveTranche(); displayModal=false" label="Save"
+        <p-button icon="pi pi-check" (click)="saveTranche()" label="Save"
                   styleClass="p-button-text"></p-button>
     </ng-template>
 </p-dialog>
