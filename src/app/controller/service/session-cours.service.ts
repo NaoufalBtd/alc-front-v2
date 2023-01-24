@@ -4,9 +4,6 @@ import {Observable} from 'rxjs';
 import {SessionCours} from '../model/session-cours.model';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
-import {Etudiant} from '../model/etudiant.model';
-import {Prof} from '../model/prof.model';
-import {EtudiantCours} from '../model/etudiant-cours.model';
 import {MessageService} from 'primeng/api';
 import {Router} from '@angular/router';
 import {EtudiantReviewService} from './etudiant-review.service';
@@ -259,10 +256,11 @@ export class SessionCoursService {
                 this.messageService.add({severity: 'success', summary: ' ', life: 5000, detail: 'Lesson is over', sticky: true});
 
             }, error => {
+                console.log(error);
                 this.messageService.add({
                     severity: 'error',
                     summary: ' ',
-                    detail: 'We got same problems, please contact administration !',
+                    detail: error?.error?.message || 'We got same problems, please contact administration !',
                     sticky: true
                 });
             }

@@ -660,6 +660,7 @@ export function createTranslateLoader(http: HttpClient) {
         {provide: LocationStrategy, useClass: PathLocationStrategy},
         MenuService, MessageService, ConfirmationService,
         // { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true } ,
+        // { provide: HTTP_INTERCEPTORS, useClass: CustomErrorHandlerInterceptor, multi: true },
         AppComponent, DatePipe,
         HomeWorkEtudiantComponent,
         WeekService, MonthService, DayService, WeekService, WorkWeekService, MonthService,

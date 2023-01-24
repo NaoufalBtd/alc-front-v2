@@ -900,7 +900,6 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
     }
 
     finishLesson() {
-        console.log(this.selectedSchedule);
         this.showFinishLesson = false;
         this.sessionCour.prof = this.loginService.getConnectedProf();
         this.sessionCour.cours = this.selectedcours;
