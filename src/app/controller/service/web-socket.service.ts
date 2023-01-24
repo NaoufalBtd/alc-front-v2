@@ -228,7 +228,6 @@ export class WebSocketService {
     public openWebSocket(user: User, prof: Prof, grpEtudiant: GroupeEtudiant, sender: string) {
         this.openSession();
         this.webSocket.onopen = (event) => {
-            console.log('--------------------OPENED-----------------------');
             this.onOpen(prof, grpEtudiant, sender, user);
         };
         this.webSocket.onerror = (event) => {
@@ -240,8 +239,6 @@ export class WebSocketService {
             }
         };
         this.webSocket.onclose = (event) => {
-            console.log('--------------------CLOSE-----------------------');
-            console.log(event.reason);
             if (this.isInSession) {
                 if (this.loginservice.getConnectedStudent().role === 'TEACHER') {
                     this.openWebSocket(this.loginservice.getConnectedProf(), this.loginservice.getConnectedProf(),
@@ -278,15 +275,8 @@ export class WebSocketService {
             chatMessage.quizReponse = null;
             chatMessage.ev = null;
             chatMessage.dateSent = null;
-            console.log(chatMessage);
-            console.log(this.webSocket.readyState);
             if (this.webSocket.readyState === this.webSocket.OPEN) {
                 this.webSocket.send(JSON.stringify(chatMessage));
-            } else {
-                console.log('OPEN ' + this.webSocket.OPEN);
-                console.log('CLOSED ' + this.webSocket.CLOSED);
-                console.log('CONNECTING ' + this.webSocket.CONNECTING);
-                console.log('CLOSING ' + this.webSocket.CLOSING);
             }
         }
     }
@@ -360,7 +350,6 @@ export class WebSocketService {
                         this.learnService.checkT12Answer(reponse.question);
                     }
                 } else if (this.reponseQuiz?.question?.typeDeQuestion?.ref === 't13' && data.user === 'T13') {
-                    console.log('T13QST');
                     this.dragAndDropData = data.quizReponse.lib;
                     this.learnService.dropSynch(Number(data.ev));
                 }
@@ -477,18 +466,14 @@ export class WebSocketService {
                 chatMessageDto.ev = null;
                 this.webSocket.send(JSON.stringify((chatMessageDto)));
             } else if (chatMessageDto.type === 'QUIZ' && chatMessageDto.user.includes('PUT_IN_ORDER')) {
-                console.log(chatMessageDto);
                 this.webSocket.send(JSON.stringify((chatMessageDto)));
             } else {
                 chatMessageDto.quizReponse.question.quiz = null;
                 chatMessageDto.quizReponse.question.reponses = null;
                 const myData = JSON.stringify((chatMessageDto));
-                console.log(chatMessageDto);
-                console.log(this.webSocket.readyState);
                 this.webSocket.send(myData);
             }
         } else {
-            console.log(chatMessageDto);
             if (chatMessageDto.type !== 'message') {
                 chatMessageDto.quizReponse.question.quiz = null;
                 chatMessageDto.quizReponse.question.reponses = null;
@@ -497,7 +482,6 @@ export class WebSocketService {
                 this.openWebSocket(this.loginservice.getConnectedProf(), this.loginservice.getConnectedProf(),
                     this.groupeEtudiant, 'PROF');
                 this.webSocket.onopen = (event) => {
-                    console.log(chatMessageDto);
                     this.webSocket.send(JSON.stringify(chatMessageDto));
                 };
             } else {
@@ -516,7 +500,6 @@ export class WebSocketService {
     public findstudentlist(idprof: number): Etudiant[] {
         this.serviceetudiant.findetudiantProf1(idprof).subscribe(
             data => {
-                console.log(data);
                 this.students = data;
             }, error => {
             }
@@ -567,7 +550,6 @@ export class WebSocketService {
                 } else {
                 }
             }, error => {
-                console.log('problem while updating current section');
             }
         );
     }

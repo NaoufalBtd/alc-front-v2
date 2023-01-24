@@ -1,7 +1,7 @@
-const url = 'http://localhost:8036';
-// const url = 'https://engflexy.ma';
-const socket = 'ws://localhost:8036/chat';
-// const socket = 'wss://engflexy.ma/chat';
+// const url = 'http://localhost:8036';
+const url = 'https://engflexy.ma';
+// const socket = 'ws://localhost:8036/chat';
+const socket = 'wss://engflexy.ma/chat';
 
 export const environment = {
     production: false,
@@ -16,8 +16,8 @@ export const environment = {
     socketUrl: socket,
     signWithGoogleApi: url + '/admin/admin/googlesignin',
     signWithGmailApi: url + '/admin/gmail/googlesignin',
-    okUrl: 'http://localhost:4200/ok',
-    failUrl: 'http://localhost:4200/fail',
+    okUrl: url + '/ok',
+    failUrl: url + '/fail',
     shopUrl: 'http://localhost:4200',
-    callbackUrl: 'http://localhost:4200/back'
+    callbackUrl: url + '/back'
 };

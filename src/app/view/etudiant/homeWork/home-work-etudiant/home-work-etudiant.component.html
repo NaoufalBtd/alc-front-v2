@@ -348,15 +348,9 @@
                          class="p-grid">
                         <img [src]="selectedHomeWork.urlImage" alt="Image Not Found !" width="100%">
 
-                        <div class="p-col-12 bookHeader ">
-                            <strong style="float: left">{{homeWorkQuestion?.ref}}</strong>
-                            <strong style="float: right">{{partOfStory}}</strong>
-
-                        </div>
-
 
                         <div (mouseup)="dict()" class="p-col-12 readingContainer">
-                            <p class="reading-text">{{homeWorkQuestion?.libelle}}</p>
+                            <pre aria-colspan="100" class="reading-text">{{homeWorkQuestion?.libelle}}</pre>
                         </div>
 
                         <div class="p-col-12">

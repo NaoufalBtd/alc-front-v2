@@ -12,17 +12,15 @@ import {ReponseEtudiantHomeWork} from '../../../../controller/model/reponse-etud
 import {HomeWorkReponse} from '../../../../controller/model/home-work-reponse.model';
 import {HomeWorkQST} from '../../../../controller/model/home-work-qst.model';
 import {MessageService} from 'primeng/api';
-import {TypeHomeWorkEnum} from '../../../../enum/type-question.enum';
 import {GroupeEtudiant} from '../../../../controller/model/groupe-etudiant.model';
 import {WebSocketService} from '../../../../controller/service/web-socket.service';
 import {GroupeEtudiantService} from '../../../../controller/service/groupe-etudiant-service';
 import {QuizService} from '../../../../controller/service/quiz.service';
 import {QuizEtudiantService} from '../../../../controller/service/quiz-etudiant.service';
-import {QuizEtudiant} from '../../../../controller/model/quiz-etudiant.model';
-import {ReponseEtudiant} from '../../../../controller/model/reponse-etudiant.model';
 import {QuizPreviewStudentTeacherComponent} from './quiz-preview-student-teacher/quiz-preview-student-teacher.component';
 import {Role} from '../../../../enum/role.enum';
 import {ChatMessageDto} from '../../../../controller/model/chatMessageDto';
+import {TypeHomeWorkEnum} from '../../../../enum/type-question.enum';
 
 @Component({
     selector: 'app-home-work-review',
@@ -34,13 +32,14 @@ export class HomeWorkReviewComponent implements OnInit {
     @ViewChild(QuizPreviewStudentTeacherComponent) private child: QuizPreviewStudentTeacherComponent;
     selectedStudent: Etudiant = new Etudiant();
     studentList: Array<Etudiant> = new Array<Etudiant>();
+    homeWorkList: Array<HomeWork> = new Array<HomeWork>();
     question: HomeWorkQST = new HomeWorkQST();
     homeWorkEtudiantList: Array<HomeWOrkEtudiant> = new Array<HomeWOrkEtudiant>();
     homeWorkEtudiantSelected: HomeWOrkEtudiant = new HomeWOrkEtudiant();
     noteProf: HomeWorkReponse = new HomeWorkReponse();
     showResult: boolean;
-    quizEtudiantMap: Map<QuizEtudiant, Array<ReponseEtudiant>> = new Map<QuizEtudiant, Array<ReponseEtudiant>>();
     homeWorkMap: Map<HomeWork, Array<HomeWOrkEtudiant>> = new Map<HomeWork, Array<HomeWOrkEtudiant>>();
+    previousCourse: Cours = new Cours();
 
     constructor(private homeWorkService: HomeworkService,
                 private parcoursService: ParcoursService,
@@ -102,8 +101,13 @@ export class HomeWorkReviewComponent implements OnInit {
         if (this.webSocketService.isInSession) {
             if (this.loginService.getConnecteUser().role === Role.PROF) {
                 this.studentList = this.participants.get(this.loginService.prof.id);
+                this.selectedStudent = this.studentList[0];
+                this.initStudentHomeWork(this.selectedStudent);
+
             } else {
                 this.studentList.push({...this.loginService.getConnectedStudent()});
+                this.selectedStudent = this.studentList[0];
+                this.initStudentHomeWork(this.selectedStudent);
             }
 
         } else {
@@ -112,34 +116,89 @@ export class HomeWorkReviewComponent implements OnInit {
                     for (let i = 0; i < data.length; i++) {
                         this.studentList.push({...data[i].etudiant});
                     }
-
+                    this.selectedStudent = this.studentList[0];
+                    this.initStudentHomeWork(this.selectedStudent);
                 }
             );
         }
-        let course: Cours = new Cours();
-        this.parcoursService.findCousByParcoursIdOrderByNumeroOrder(this.selectedcours.parcours.id).subscribe(data => {
+    }
 
+    initStudentHomeWork(student: Etudiant) {
+        this.parcoursService.findCousByParcoursIdOrderByNumeroOrder(this.selectedcours.parcours.id).subscribe(data => {
             for (let i = 0; i < data.length; i++) {
                 if (this.selectedcours.id === data[i].id) {
-                    course = data[i - 1];
+                    this.previousCourse = data[i - 1];
                 }
             }
-            this.homeWorkService.findhomeworkbyCoursId(course).subscribe(homeWork => {
-                this.homeWorkSelected = homeWork.filter(h => h.libelle.toUpperCase() === TypeHomeWorkEnum.WRITE_IT_UP.toUpperCase())[0];
-                if (this.homeWorkSelected.id !== undefined && this.homeWorkSelected.id !== null && this.homeWorkSelected.id !== 0) {
-                    this.homeWorkService.findHomeWorkEtudiantByHomeWorkId(this.homeWorkSelected).subscribe(homeWorkEtudiantData => {
-                        this.homeWorkEtudiantList = homeWorkEtudiantData;
-                        if (this.studentList.length === 1) {
-                            this.selectedStudent = this.studentList[0];
-                            this.getResult(this.selectedStudent, this.homeWorkEtudiantList);
-                        }
-                    });
-                    this.homeWorkEtudiantService.findQuestions(this.homeWorkSelected).subscribe(data2 => {
+
+            this.homeWorkService.findhomeworkbyCoursId(this.previousCourse).subscribe(homeWork => {
+                this.homeWorkList = homeWork;
+                for (const h of this.homeWorkList) {
+                    if (h.libelle.toUpperCase() === TypeHomeWorkEnum.WRITE_IT_UP.toUpperCase()) {
+                        this.homeWorkSelected = h;
+                        this.homeWorkService.findHomeWorkEtudiantByHomeWorkId(this.homeWorkSelected).subscribe(homeWorkEtudiantData => {
+                            this.homeWorkEtudiantList = homeWorkEtudiantData;
+                            this.homeWorkEtudiantSelected = homeWorkEtudiantData.filter(hm => hm.etudiant.id === student.id)[0];
+                            this.homeWorkEtudiantService.findHomeWorkEtudiantReponseByHomeWorkEtudiantId(this.homeWorkEtudiantSelected.id)
+                                .subscribe(
+                                    reponses => {
+                                        this.reponse = reponses[0];
+                                    }, error => {
+                                        console.log(error);
+                                    });
+                        }, error => {
+                            console.log(error);
+                        });
+                        this.homeWorkEtudiantService.findQuestions(this.homeWorkSelected)
+                            .subscribe(data2 => {
+                                this.question = data2[0];
+                            }, error => {
+                                console.log(error);
+                            });
+
+                    } else if (h.libelle.toUpperCase() === TypeHomeWorkEnum.LET_S_PRACTICE.toUpperCase()) {
+                        this.homeWorkService.findHomeWorkEtudiantByHomeWorkId(h).subscribe(homeWorkEtudiantData => {
+                            console.log(h);
+                            console.log(homeWorkEtudiantData);
+                            this.homeWorkMap.set(h, homeWorkEtudiantData);
+                        }, error => {
+                            console.log(error);
+                        });
+                    }
+                }
+
+            }, error => {
+                console.log(error);
+            });
+        }, error => {
+            console.log(error);
+        });
+        this.showResult = true;
+    }
+
+    getStudentHomeWork(student: Etudiant) {
+        for (const h of this.homeWorkList) {
+            if (h.libelle.toUpperCase() === TypeHomeWorkEnum.WRITE_IT_UP.toUpperCase()) {
+                this.homeWorkSelected = h;
+                this.homeWorkService.findHomeWorkEtudiantByHomeWorkId(this.homeWorkSelected).subscribe(homeWorkEtudiantData => {
+                    this.homeWorkEtudiantList = homeWorkEtudiantData;
+                    this.homeWorkEtudiantSelected = homeWorkEtudiantData.filter(hm => hm.etudiant.id === student.id)[0];
+                });
+                this.homeWorkEtudiantService.findQuestions(this.homeWorkSelected)
+                    .subscribe(data2 => {
                         this.question = data2[0];
                     });
-                }
-            });
-        });
+                this.homeWorkEtudiantService.findHomeWorkEtudiantReponseByHomeWorkEtudiantId(this.homeWorkEtudiantSelected.id)
+                    .subscribe(
+                        reponses => {
+                            this.reponse = reponses[0];
+                        });
+            } else if (h.libelle.toUpperCase() === TypeHomeWorkEnum.LET_S_PRACTICE.toUpperCase()) {
+                this.homeWorkService.findHomeWorkEtudiantByHomeWorkId(h).subscribe(homeWorkEtudiantData => {
+                    this.homeWorkMap.set(h, homeWorkEtudiantData);
+                });
+            }
+        }
     }
 
 
@@ -153,19 +212,11 @@ export class HomeWorkReviewComponent implements OnInit {
                 });
         }
         this.showResult = true;
-        // find quiz etudiant
-        this.quizEtudiantService.findAllQuizByEtudiantId(selectedStudent.id).subscribe(data => {
-            for (const quizEtudiant of data) {
-                if (quizEtudiant.note < quizEtudiant.questionCurrent) {
-                    this.quizEtudiantService.findReponseEtudiant(quizEtudiant).subscribe(reponseList => {
-                        this.quizEtudiantMap.set(quizEtudiant, reponseList);
-                    });
-                }
-            }
-        });
 
+        // find quiz etudiant
         this.homeWorkEtudiantService.findHomeWorkByetudiantId(selectedStudent).subscribe(
             homeWorkStudents => {
+                console.log(homeWorkStudents);
                 for (const homeWorkStudent of homeWorkStudents) {
                     if (homeWorkStudent?.homeWork?.libelle?.toUpperCase() !== 'WRITE IT UP') {
                         this.homeWorkEtudiantService.findByStudentAndHomeWork(homeWorkStudent.homeWork, selectedStudent).subscribe(
@@ -178,6 +229,7 @@ export class HomeWorkReviewComponent implements OnInit {
                             });
                     }
                 }
+                console.log(this.homeWorkMap);
             }, error => {
                 console.log(error);
             }
@@ -204,4 +256,6 @@ export class HomeWorkReviewComponent implements OnInit {
         chatMessage.type = 'HOME_WORK_REVIEW_NOTES';
         this.webSocketService.sendMessage(chatMessage, 'PROF');
     }
+
+
 }

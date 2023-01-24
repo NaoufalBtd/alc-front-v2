@@ -2,7 +2,7 @@
     <div class="p-col-4">
         <h6>Students</h6>
         <p-dropdown [options]="studentList" [(ngModel)]="selectedStudent"
-                    (ngModelChange)="getResult(selectedStudent, homeWorkEtudiantList)"
+                    (ngModelChange)="getStudentHomeWork(selectedStudent)"
                     [style]="{width: '100%'}"
                     optionLabel="nom" [filter]="true" filterBy="nom" [showClear]="true"
                     placeholder="Select a student">
@@ -12,7 +12,7 @@
 
 <p-tabView>
     <p-tabPanel [header]="homeWorkSelected?.libelle">
-        <div *ngIf="showResult" class="p-grid">
+        <div class="p-grid">
             <img [src]="homeWorkSelected?.urlImage" width="100%" alt="image not found !">
             <div class="p-col-12">
                 <h5>Question</h5>
@@ -21,9 +21,6 @@
                 <p>{{reponse?.answer}}</p>
             </div>
 
-        </div>
-
-        <div *ngIf="showResult" class="p-grid">
             <div class="p-col-6">
                 <h6>notes</h6>
                 <textarea [disabled]="loginService.getConnecteUser().role === ROLE.STUDENT" required
@@ -51,6 +48,7 @@
     <p-tabPanel *ngFor="let item of homeWorkMap | keyvalue" [header]="item?.key?.libelle">
         <app-teacher-home-wrok-review [homeWorkEtudiantList]="item.value"></app-teacher-home-wrok-review>
     </p-tabPanel>
+
 </p-tabView>
 
 
