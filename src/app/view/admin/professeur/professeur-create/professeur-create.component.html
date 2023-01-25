@@ -1,50 +1,67 @@
-<p-dialog [(visible)]="createDialog" [modal]="true" [style]="{width: '500px'}" header="Professor Create"
+<p-dialog [(visible)]="createDialog" [modal]="true"  header="Professor Create"
           styleClass="p-fluid">
     <ng-template pTemplate="content">
         <form>
-            <div class="container p-10">
-                <div class="p-field">
-                    <label for="lastName">Full Name</label>
-                    <input [(ngModel)]="selected.nom" autofocus id="lastName" pInputText required type="text"/>
-                    <small *ngIf="submitted && !selected.nom" class="p-invalid">full name is required.</small>
-                </div>
-                <div class="p-field">
-                    <label for="login">Username</label>
-                    <input [(ngModel)]="selected.username" autofocus id="login" pInputText required type="text"/>
-                    <small *ngIf="submitted && !selected.username" class="p-invalid">UserName is required.</small>
-                </div>
-                <div class="p-field">
-                    <label for="pass">Password</label>
-                    <input [(ngModel)]="selected.password" autofocus id="pass" pInputText required type="text"/>
-                    <small *ngIf="submitted && !selected.username" class="p-invalid">Password is required.</small>
-                </div>
-                <div class="p-field">
-                    <label for="phoneNumber">Phone Number</label>
-                    <input [(ngModel)]="selected.numero" autofocus id="phoneNumber" pInputText required type="text"/>
-                    <small *ngIf="submitted && !selected.numero" class="p-invalid">total is required.</small>
-                </div>
-
-                <div class="p-field">
-                    <label for="email">Email</label>
-                    <input [(ngModel)]="selected.username" autofocus id="email" pInputText required type="text"/>
-                    <small *ngIf="submitted && !selected.username" class="p-invalid">total is required.</small>
-                </div>
-                <div class="p-field">
-                    <label for="email">Type</label>
-                    <input [(ngModel)]="selected.typeTeacher.libelle" autofocus id="email" pInputText required
-                           type="text"/>
-
-                </div>
-
-            </div>
 
         </form>
 
     </ng-template>
 
-    <ng-template pTemplate="footer">
-        <button (click)="hideCreateDialog()" class="p-button-text" icon="pi pi-times" label="Cancel" pButton
-                pRipple></button>
-        <button (click)="save()" class="p-button-text" icon="pi pi-check" label="Save" pButton pRipple></button>
-    </ng-template>
+
 </p-dialog>
+
+<p-sidebar [(visible)]="createDialog"  [style]="{width: '60rem'}" position="right" [baseZIndex]="10000">
+    <div class="container p-10">
+        <div class="row">
+
+
+            <div class="col-md-6">
+                <label for="lastName">Full Name</label>
+                <input [(ngModel)]="selected.nom" autofocus id="lastName" pInputText required type="text"/>
+                <small *ngIf="submitted && !selected.nom" class="p-invalid">full name is required.</small>
+            </div>
+
+            <div class="col-md-6">
+                <label for="login">Email</label>
+                <input [(ngModel)]="selected.username" name="username" autofocus id="login" pInputText required
+                       type="text"/>
+                <small *ngIf="submitted && !selected.username" class="p-invalid">UserName is required.</small>
+            </div>
+
+
+            <div class="col-md-6">
+                <label for="login">Category prof</label>
+                <p-dropdown [options]="typeTeachers" [(ngModel)]="selected.typeTeacher"
+                            placeholder="Select a Category"
+                            optionLabel="libelle" [showClear]="false"></p-dropdown>
+            </div>
+
+
+            <div class="col-md-6">
+                <label for="login">Level min</label>
+                <p-dropdown [options]="levels" [(ngModel)]="selected.levelMin" placeholder="Select a Level min"
+                            optionLabel="libelle" [showClear]="false"></p-dropdown>
+            </div>
+
+
+            <div class="col-md-6">
+                <label for="login">Level max</label>
+                <p-dropdown [options]="levels" [(ngModel)]="selected.levelMax"
+                            placeholder="Select a Level max"
+                            optionLabel="libelle" [showClear]="false"></p-dropdown>
+            </div>
+
+
+            <div class="col-md-6">
+                <label for="phoneNumber">Phone Number</label>
+                <input [(ngModel)]="selected.numero" name="numero" autofocus id="phoneNumber" pInputText
+                       required
+                       type="text"/>
+                <small *ngIf="submitted && !selected.numero" class="p-invalid">total is required.</small>
+            </div>
+
+
+        </div>
+    </div>
+
+</p-sidebar>

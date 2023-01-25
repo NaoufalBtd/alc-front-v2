@@ -3,6 +3,10 @@ import {Prof} from '../../../../controller/model/prof.model';
 import {MessageService} from 'primeng/api';
 import {ProfessorService} from '../../../../controller/service/professor.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {TypeTeacherService} from '../../../../controller/service/type-teacher.service';
+import {TypeTeacher} from '../../../../controller/model/type-teacher.model';
+import {Parcours} from '../../../../controller/model/parcours.model';
+import {ParcoursService} from '../../../../controller/service/parcours.service';
 
 @Component({
     selector: 'app-professeur-create',
@@ -10,8 +14,13 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
     styleUrls: ['./professeur-create.component.scss']
 })
 export class ProfesseurCreateComponent implements OnInit {
+    typeTeachers: Array<TypeTeacher> = new Array<TypeTeacher>();
+    levels: Array<Parcours> = new Array<Parcours>();
 
-    constructor(private messageService: MessageService, private service: ProfessorService) {
+    constructor(private messageService: MessageService,
+                private typeTeacherService: TypeTeacherService,
+                private parcoursService: ParcoursService,
+                private service: ProfessorService) {
     }
 
     get selected(): Prof {
@@ -45,12 +54,19 @@ export class ProfesseurCreateComponent implements OnInit {
     set items(value: Array<Prof>) {
         this.service.items = value;
     }
+
     exform: FormGroup;
+
     ngOnInit(): void {
-        this.exform = new FormGroup({'fullName': new FormControl(null, Validators.required),
+        this.exform = new FormGroup({
+            'fullName': new FormControl(null, Validators.required),
             'password': new FormControl(null, Validators.required),
 
-            'email': new FormControl(null, Validators.required) });
+            'email': new FormControl(null, Validators.required)
+        });
+
+        this.typeTeacherService.findAllType().subscribe(d => this.typeTeachers = d);
+        this.parcoursService.findAllLevels().subscribe(d => this.levels = d);
 
     }
 
@@ -63,15 +79,7 @@ export class ProfesseurCreateComponent implements OnInit {
         this.submitted = true;
         this.selected.categorieProf.id = 1;
         this.service.save().subscribe(data => {
-            this.items.push({...data});
-            // tslint:disable-next-line:no-shadowed-variable
-            this.service.findAll().subscribe(data => this.items = data);
-            this.messageService.add({
-                severity: 'success',
-                summary: 'Successful',
-                detail: 'prof Created',
-                life: 3000
-            });
+
         });
         this.createDialog = false;
         this.selected = new Prof();

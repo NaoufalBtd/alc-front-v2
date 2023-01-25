@@ -42,6 +42,13 @@
 
         <div [hidden]="index !== 1" class="container">
             <div class="row">
+                <div class="col-md-12">
+                    <button (click)="onDataBound()"
+                            label="work hours"
+                            class="p-button-rounded p-button-success p-mr-2" icon="pi pi-arrow-right" pButton
+                            iconPos="right"
+                            pRipple></button>
+                </div>
                 <div style="background: white; padding: 5px;" class="col-md-12">
                     <table style="padding: 0 22px 10px 0;float: left;" class="property-table">
                         <tbody>
@@ -63,13 +70,15 @@
 
 
                     <ejs-schedule #scheduleObj cssClass='schedule-block-events'
-                                  (dataBound)="onDataBound()"
                                   [workDays]="[0,1,2,3,4,5,6]"
                                   (renderCell)="onRenderCell($event)"
+                                  (dataBound)="onDataBound()"
+                                  [workHours]="workHours"
                                   width='100%'
                                   [group]="group"
                                   (actionComplete)="onActionComplete($event)"
                                   [timeScale]='timeScale'
+
                                   (popupOpen)="onPopupOpen($event)"
                                   [currentView]="currentView" [selectedDate]="selectedDate"
                                   [eventSettings]="eventSettings">

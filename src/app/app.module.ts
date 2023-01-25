@@ -210,6 +210,7 @@ import {
     RecurrenceEditorAllModule,
     RecurrenceEditorModule,
     ScheduleAllModule,
+    ScheduleModule,
     TimelineMonthService,
     TimelineViewsService,
     WeekService,
@@ -421,6 +422,7 @@ export function createTranslateLoader(http: HttpClient) {
         FocusTrapModule,
         AppRoutingModule,
         VonPrimengFormModule,
+        ScheduleModule,
         TranslateModule.forRoot({
             defaultLanguage: 'en',
             loader: {

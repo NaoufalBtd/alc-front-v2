@@ -17,6 +17,7 @@ import {
     PopupOpenEventArgs,
     RenderCellEventArgs,
     ScheduleComponent,
+    ScheduleModel,
     TimeScaleModel,
     View,
     WorkHoursModel
@@ -434,6 +435,7 @@ export class ProfesseurEditComponent implements OnInit {
     public currentView: View = 'Week';
 
     public islayoutChanged: boolean = false;
+    scheduleOptions: ScheduleModel;
 
     get scheduleProfs(): Array<ScheduleProf> {
         return this.scheduleService.scheduleProfs;
@@ -470,7 +472,6 @@ export class ProfesseurEditComponent implements OnInit {
                 console.log(error);
             }
         );
-        this.groupeStudent = this.groupeStudent.filter(e => e.prof.id === this.selected.id);
         this.scheduleObj.eventWindow.refresh();
     }
 
@@ -507,26 +508,21 @@ export class ProfesseurEditComponent implements OnInit {
                 }
             };
             if (this.trancheHoraireProfs?.length > 0) {
+                this.scheduleObj.resetWorkHours();
                 const dates = this.scheduleObj.activeView.getRenderDates();
-                console.log(dates);
-                this.scheduleObj.setWorkHours(
-                    dates,
-                    '12:00',
-                    '22:00',
-                    0
-                );
-
-                // for (const tranche of this.trancheHoraireProfs) {
-                //     for (const date of dates) {
-                //         if (tranche.day === date.getDay()) {
-                //             this.scheduleObj.setWorkHours(
-                //                 [date],
-                //                 tranche.startHour,
-                //                 tranche.endHour
-                //             );
-                //         }
-                //     }
-                // }
+                for (const tranche of this.trancheHoraireProfs) {
+                    for (const date of dates) {
+                        if (tranche.day === date.getDay()) {
+                            console.log(date);
+                            this.scheduleObj.resetWorkHours(
+                                [date],
+                                tranche.startHour,
+                                tranche.endHour,
+                                0
+                            );
+                        }
+                    }
+                }
             }
         }
     }
@@ -539,6 +535,7 @@ export class ProfesseurEditComponent implements OnInit {
             args.requestType === 'viewNavigate'
         ) {
             this.islayoutChanged = true;
+            this.scheduleObj.resetWorkHours();
         }
         this.scheduleObj.eventSettings.dataSource = null;
         this.scheduleObj.eventSettings.dataSource = this.scheduleProfs;
