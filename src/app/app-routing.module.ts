@@ -252,6 +252,7 @@ import {PaimentBackComponent} from './view/public/home-principale/paiment/paimen
             {path: 'our-packs', component: PayNowCoursesComponent},
             {path: 'pay', component: PayNowComponent},
             {path: 'ok', component: PaimentOkComponent},
+            {path: 'fail/:oid', component: PaimentFailComponent},
             {path: 'fail', component: PaimentFailComponent},
             {path: 'back', component: PaimentBackComponent},
             {path: 'our-packs/:id', component: PayNowCourseDetailComponent},

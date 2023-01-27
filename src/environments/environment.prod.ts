@@ -18,5 +18,6 @@ export const environment = {
     failUrl: 'https://engflexy.ma/fail',
     callbackUrl: 'https://engflexy.ma/back',
     shopUrl: 'https://engflexy.com',
+    payFailedReasonUrl: url + '/pay-error-reason/'
 
 };

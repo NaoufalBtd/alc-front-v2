@@ -1,5 +1,11 @@
 <div class="container">
     <div style="display: block" id="myModal" class="modal">
+        <div  *ngIf="showAlert" class="alert alert-danger d-flex align-items-center" role="alert">
+            <i class="fas fs-4 me-2 fa-exclamation-circle"></i>
+            <div>
+                {{reason}}
+            </div>
+        </div>
         <div class="modal-dialog modal-confirm">
             <div class="modal-content bg-white">
                 <div class="modal-header justify-content-center">
@@ -10,7 +16,7 @@
                 <div class="modal-body text-center">
                     <h4>Payment fail!</h4>
                     <p>Please <a class="link" routerLink="/contact">contact the support</a>
-                    for more information.</p>
+                        for more information.</p>
                     <button class="btn btn-success" routerLink="/contact"><span>contact us</span> <i
                             class="material-icons">&#xE5C8;</i></button>
                 </div>
@@ -18,5 +24,6 @@
         </div>
     </div>
 </div>
+<p-toast></p-toast>
 
 

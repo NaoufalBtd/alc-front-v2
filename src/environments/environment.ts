@@ -19,5 +19,6 @@ export const environment = {
     okUrl: url + '/ok',
     failUrl: url + '/fail',
     shopUrl: 'http://localhost:4200',
-    callbackUrl: url + '/back'
+    callbackUrl: url + '/back',
+    payFailedReasonUrl: url + '/pay-error-reason/'
 };
