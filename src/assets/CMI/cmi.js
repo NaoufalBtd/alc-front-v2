@@ -666,7 +666,6 @@ function submitformpaiement() {
 
 
 //alert(arr.length);
-    console.log('-------------------USED PARAMS --------------')
     arr.forEach(function (element) {
 
             if (element !== "hash" && element !== "encoding") {
@@ -678,18 +677,15 @@ function submitformpaiement() {
 
         }
     );
-    console.log('---------------------------------------------')
-
 
     storeKey = $("input[name='storeKey']").val();
 
     hashval = hashval + storeKey;
     calculatedHashValue = SHA512(hashval);
     hash = btoa(pack('H*', calculatedHashValue));
-    console.log(hash)
     $('<input />').attr('type', 'hidden').attr('name', "hash").attr('value', hash).appendTo('#formpaiement');
 
 
-// document.formpaiement.submit();
+    document.formpaiement.submit();
 }
 
