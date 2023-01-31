@@ -14,6 +14,8 @@ export class FooterComponent implements OnInit {
 
     @Input() footerPadd: string | undefined;
     contact: Contact = new Contact();
+    year: number;
+    date: Date = new Date();
 
     constructor(private contactService: ContactService,
                 private datepipe: DatePipe,
@@ -23,6 +25,7 @@ export class FooterComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.year = this.date.getFullYear();
     }
 
     save(): void {
