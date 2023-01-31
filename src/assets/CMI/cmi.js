@@ -671,7 +671,6 @@ function submitformpaiement() {
             if (element !== "hash" && element !== "encoding") {
                 escapedParamValue = $("input[name=" + element + "], select[name=" + element + "]").val()
                     .replace("\\", "\\\\")
-                    .replace(/\s/g, '')
                     .replace(/\n/g, '')
                     .replace("|", "\\|");
                 //escapedParamValue = $("input[name="+element+"]").val().replace("|", "\\|").replace("\\", "\\\\");
