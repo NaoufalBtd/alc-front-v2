@@ -44,7 +44,7 @@
                 <div class="cta__form grey-bg-2">
                     <div class="cta__form-inner">
                         <form action="#">
-                            <input [style]="{ width: '100%'}" name="numero" [(ngModel)]="selected.age" type="tel"
+                            <input [style]="{ width: '100%'}" name="numero" [(ngModel)]="selected.age" type="number"
                                    placeholder="{{'Age' | translate}}">
                         </form>
                     </div>
@@ -118,6 +118,7 @@
                         <input  [style]="{width:'100%'}" pInputText type="text" name="tel"
                                [value]="selected?.numero">
                     </div>
+
                     <div class="col-md-4 col-sm-12">
                         <h5>name</h5>
                         <input  [style]="{width:'100%'}" pInputText type="text" name="BillToName"

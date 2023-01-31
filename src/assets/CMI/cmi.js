@@ -669,7 +669,11 @@ function submitformpaiement() {
     arr.forEach(function (element) {
 
             if (element !== "hash" && element !== "encoding") {
-                escapedParamValue = $("input[name=" + element + "], select[name=" + element + "]").val().replace("|", "\\|").replace("\\", "\\\\");
+                escapedParamValue = $("input[name=" + element + "], select[name=" + element + "]").val()
+                    .replace("\\", "\\\\")
+                    .replace(/\s/g, '')
+                    .replace(/\n/g, '')
+                    .replace("|", "\\|");
                 //escapedParamValue = $("input[name="+element+"]").val().replace("|", "\\|").replace("\\", "\\\\");
                 hashval = hashval + escapedParamValue + "|";
             }
