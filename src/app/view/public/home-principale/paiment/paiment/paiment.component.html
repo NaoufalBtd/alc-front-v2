@@ -9,8 +9,13 @@
             <div class="col-md-6 col-sm-12">
                 <div class="cta__form-inner">
                     <form action="#">
-                        <input [style]="{ width: '100%'}" name="nom" [(ngModel)]="selected.nom" type="text"
+                        <input (input)="checkNameInput()" [style]="{ width: '100%'}" name="nom"
+
+                               [(ngModel)]="selected.nom" type="text"
                                placeholder="{{'Your name * ' | translate}}">
+                        <div style="color: white" [style.display]="nameNotValid ? 'block' :'none'" class="invalid-feedback">
+                            {{'Please dont use the special characters' | translate}}
+                        </div>
                     </form>
                 </div>
             </div>

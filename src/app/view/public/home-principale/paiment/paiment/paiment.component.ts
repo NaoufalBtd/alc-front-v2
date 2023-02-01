@@ -54,6 +54,7 @@ export class PaimentComponent implements OnInit {
     activeIndex = 0;
     selected: Etudiant = new Etudiant();
     userRequest: User = new User();
+    nameNotValid = false;
 
     constructor(private messageService: MessageService,
                 public etudiantService: EtudiantService,
@@ -226,5 +227,17 @@ export class PaimentComponent implements OnInit {
             this.selected = this.login.getConnectedStudent();
             this.createEtudiant();
         }
+    }
+
+    checkNameInput() {
+        const specialCharacters = '@#$%^&*()_-+<>/!?,.';
+
+        for (let i = 0; i < this.selected.nom.length; i++) {
+            if (specialCharacters.indexOf(this.selected.nom.charAt(i)) >= 0) {
+                this.nameNotValid = true;
+                return;
+            }
+        }
+        this.nameNotValid = false;
     }
 }
