@@ -204,6 +204,7 @@ export class PaimentComponent implements OnInit {
             || !this.selected?.username?.includes('com')
             || this.selected?.numero === null
             || this.selected?.numero === undefined
+            || this.nameNotValid
             || this.selected?.numero?.length < 4
         ) {
             return true;

@@ -680,9 +680,9 @@ function submitformpaiement() {
         }
     );
 
-    //storeKey = $("input[name='storeKey']").val();
+    storeKey = $("input[name='storeKey']").val();
 
-    hashval = hashval + 'anaZouani@2023';
+    hashval = hashval + storeKey;
     alert(hashval);
     calculatedHashValue = SHA512(hashval);
     hash = btoa(pack('H*', calculatedHashValue));
