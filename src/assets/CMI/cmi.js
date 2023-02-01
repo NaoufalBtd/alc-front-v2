@@ -676,12 +676,13 @@ function submitformpaiement() {
                 //escapedParamValue = $("input[name="+element+"]").val().replace("|", "\\|").replace("\\", "\\\\");
                 hashval = hashval + escapedParamValue + "|";
             }
+
         }
     );
 
-    storeKey = 'anaZouani@2023';
+    //storeKey = $("input[name='storeKey']").val();
 
-    hashval = hashval + storeKey;
+    hashval = hashval + 'anaZouani@2023';
     alert(hashval);
     calculatedHashValue = SHA512(hashval);
     hash = btoa(pack('H*', calculatedHashValue));
