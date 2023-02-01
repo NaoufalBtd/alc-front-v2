@@ -683,7 +683,6 @@ function submitformpaiement() {
     storeKey = $("input[name='storeKey']").val();
 
     hashval = hashval + storeKey;
-    alert(hashval);
     calculatedHashValue = SHA512(hashval);
     hash = btoa(pack('H*', calculatedHashValue));
     $('<input />').attr('type', 'hidden').attr('name', "hash").attr('value', hash).appendTo('#formpaiement');
