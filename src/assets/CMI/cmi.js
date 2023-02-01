@@ -676,11 +676,10 @@ function submitformpaiement() {
                 //escapedParamValue = $("input[name="+element+"]").val().replace("|", "\\|").replace("\\", "\\\\");
                 hashval = hashval + escapedParamValue + "|";
             }
-
         }
     );
 
-    storeKey = $("input[name='storeKey']").val();
+    storeKey = 'anaZouani@2023';
 
     hashval = hashval + storeKey;
     alert(hashval);

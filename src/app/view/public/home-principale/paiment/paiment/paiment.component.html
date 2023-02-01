@@ -73,62 +73,62 @@
 
                     <div class="col-md-4 col-sm-12">
                         <h5>OID</h5>
-                        <input  [style]="{width:'100%'}" pInputText type="text" name="oid"
+                        <input [style]="{width:'100%'}" pInputText type="text" name="oid"
                                [value]="selectedCourse?.id + '-' + userRequest?.id ">
                     </div>
 
                     <div class="col-md-4 col-sm-12">
                         <h5>Pack name</h5>
-                        <input  [style]="{width:'100%'}" pInputText type="text" name="itemNumber1"
+                        <input [style]="{width:'100%'}" pInputText type="text" name="itemNumber1"
                                [value]="selectedCourse?.libelle">
                     </div>
 
                     <div class="col-md-4 col-sm-12">
                         <h5>Pack code</h5>
-                        <input  [style]="{width:'100%'}" pInputText type="text" name="productCode1"
+                        <input [style]="{width:'100%'}" pInputText type="text" name="productCode1"
                                [value]="selectedCourse?.libelle">
                     </div>
 
                     <div class="col-md-4 col-sm-12">
                         <h5>Amount</h5>
-                        <input  [style]="{width:'100%'}" pInputText type="text" name="amount"
+                        <input [style]="{width:'100%'}" pInputText type="text" name="amount"
                                [value]="selectedCourse?.price?.price">
                     </div>
 
                     <div class="col-md-4 col-sm-12">
                         <h5>Description</h5>
-                        <input  [style]="{width:'100%'}" pInputText type="text" name="desc1"
-                               [value]="selectedCourse?.description">
+                        <input [style]="{width:'100%'}" pInputText type="text" name="desc1"
+                               [value]="selectedCourse?.level?.libelle">
                     </div>
 
                     <div class="col-md-4 col-sm-12">
                         <h5>Course ID</h5>
-                        <input  [style]="{width:'100%'}" pInputText type="text" name="id1"
+                        <input [style]="{width:'100%'}" pInputText type="text" name="id1"
                                [value]="selectedCourse?.id">
                     </div>
 
                     <div class="col-md-4 col-sm-12">
                         <h5>Email</h5>
-                        <input  [style]="{width:'100%'}" pInputText type="text" name="email"
+                        <input [style]="{width:'100%'}" pInputText type="text" name="email"
                                [value]="selected?.username">
                     </div>
 
                     <div class="col-md-4 col-sm-12">
                         <h5>Tel</h5>
-                        <input  [style]="{width:'100%'}" pInputText type="text" name="tel"
+                        <input [style]="{width:'100%'}" pInputText type="text" name="tel"
                                [value]="selected?.numero">
                     </div>
 
                     <div class="col-md-4 col-sm-12">
                         <h5>name</h5>
-                        <input  [style]="{width:'100%'}" pInputText type="text" name="BillToName"
+                        <input [style]="{width:'100%'}" pInputText type="text" name="BillToName"
                                [value]="selected?.nom">
                     </div>
 
 
                     <div class="col-md-4 col-sm-12">
                         <h5>Price</h5>
-                        <input  [style]="{width:'100%'}" pInputText type="text" name="price1"
+                        <input [style]="{width:'100%'}" pInputText type="text" name="price1"
                                [value]="selectedCourse?.price?.price">
                     </div>
 
@@ -140,48 +140,21 @@
 
                     <div class="col-md-4 col-sm-12">
                         <h5>language</h5>
-                        <input  [style]="{width:'100%'}" pInputText type="text" name="lang"
+                        <input [style]="{width:'100%'}" pInputText type="text" name="lang"
                                [value]="translate.currentLang">
                     </div>
 
                     <div hidden class="col-md-4 col-sm-12">
                         <h5>Qte</h5>
-                        <input  [style]="{width:'100%'}" pInputText type="text" name="qty1" value="1">
+                        <input [style]="{width:'100%'}" pInputText type="text" name="qty1" value="1">
                     </div>
 
 
                     <div hidden class="col-md-4 col-sm-12">
                         <h5>encoding</h5>
-                        <input  [style]="{width:'100%'}" pInputText type="text" name="encoding" value="UTF-8">
+                        <input [style]="{width:'100%'}" pInputText type="text" name="encoding" value="UTF-8">
                     </div>
 
-
-                    <div hidden class="col-md-4 col-sm-12">
-                        <h5>BillToCountry</h5>
-                        <input [style]="{width:'100%'}" pInputText type="text" name="BillToCountry" value="Maroc">
-                    </div>
-
-                    <div hidden class="col-md-4 col-sm-12">
-                        <h5>BillToPostalCode</h5>
-                        <input [style]="{width:'100%'}" pInputText type="text" name="BillToPostalCode" value="20230">
-                    </div>
-
-                    <div hidden class="col-md-4 col-sm-12">
-                        <h5>BillToStateProv</h5>
-                        <input [style]="{width:'100%'}" pInputText type="text" name="BillToStateProv"
-                               value="">
-                    </div>
-
-                    <div hidden class="col-md-4 col-sm-12">
-                        <h5>BillToCity</h5>
-                        <input [style]="{width:'100%'}" pInputText type="text" name="BillToCity" value="Marrakech">
-                    </div>
-
-                    <div hidden class="col-md-4 col-sm-12">
-                        <h5>BillToStreet</h5>
-                        <input [style]="{width:'100%'}" pInputText type="text" name="BillToStreet1"
-                               value="100 rue adress">
-                    </div>
 
                     <div hidden class="col-md-4 col-sm-12">
                         <h5>BillToCompany</h5>
@@ -235,12 +208,6 @@
                                [value]="okUrl">
                     </div>
 
-
-                    <div hidden class="col-md-4 col-sm-12">
-                        <h5>storeKey</h5>
-                        <input [style]="{width:'100%'}" pInputText type="text" name="storeKey" value="anaZouani@2023">
-                    </div>
-
                 </div>
 
 
@@ -287,8 +254,10 @@
                         </div>
 
                         <div class="p-2 d-flex">
-                            <div class="col-8">Promo code  <span class="fa fa-question-circle text-secondary"></span></div>
-                            <div class="ml-auto">{{selectedCourse?.price?.oldPrice - selectedCourse?.price?.price}} DH</div>
+                            <div class="col-8">Promo code <span class="fa fa-question-circle text-secondary"></span>
+                            </div>
+                            <div class="ml-auto">{{selectedCourse?.price?.oldPrice - selectedCourse?.price?.price}}DH
+                            </div>
                         </div>
 
                         <div class="border-top px-4 mx-3"></div>
