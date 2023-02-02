@@ -922,7 +922,7 @@
                                                     >
                                                         <div class="course__status d-flex align-items-center">
                                                             <span>{{course.price?.price}} MAD</span>
-                                                            <span class="old-price">{{course?.oldPrice}} b</span>
+                                                            <span class="old-price">{{course?.price?.oldPrice}} MAD</span>
                                                         </div>
                                                         <div class="course__btn">
                                                             <a (click)="selectedCourse = course" class="link-btn">
@@ -974,7 +974,7 @@
                             >
                                 <div class="course__video-price">
                                     <h5>{{selectedCourse?.price?.price}}.<span>00 MAD</span></h5>
-                                    <h5 class="old-price">{{selectedCourse?.oldPrice}}.00</h5>
+                                    <h5 class="old-price">{{selectedCourse?.price?.oldPrice}}.00</h5>
                                 </div>
                                 <div class="course__video-discount">
                                     <span>{{getPercentage().toFixed(.2)}}% OFF</span>
