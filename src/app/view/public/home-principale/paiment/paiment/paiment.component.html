@@ -13,7 +13,8 @@
 
                                [(ngModel)]="selected.nom" type="text"
                                placeholder="{{'Your name * ' | translate}}">
-                        <div style="color: white" [style.display]="nameNotValid ? 'block' :'none'" class="invalid-feedback">
+                        <div style="color: white" [style.display]="nameNotValid ? 'block' :'none'"
+                             class="invalid-feedback">
                             {{'Please dont use the special characters' | translate}}
                         </div>
                     </form>
@@ -72,7 +73,7 @@
         </div>
 
         <div *ngIf="activeIndex === 1" style="background: #ff725e;border-radius: 5px;" class="row">
-            <form name="formpaiement" Id="formpaiement" action="https://testpayment.cmi.co.ma/fim/est3Dgate"
+            <form name="formpaiement" Id="formpaiement" action="https://payment.cmi.co.ma/fim/est3Dgate"
                   method="post">
                 <div hidden class="row">
 
@@ -140,7 +141,7 @@
                     <div class="col-md-4 col-sm-12">
                         <h5>Client ID</h5>
                         <input [style]="{width:'100%'}" pInputText type="text" name="clientid"
-                               value="600003447">
+                               value="600003583">
                     </div>
 
                     <div class="col-md-4 col-sm-12">
