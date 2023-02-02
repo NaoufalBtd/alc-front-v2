@@ -230,7 +230,8 @@ import {PaimentBackComponent} from './view/public/home-principale/paiment/paimen
                     {path: 'start-test-level', component: TestLevelInstructionsComponent},
                     {path: 'about-us', component: AboutUsComponent},
                     {path: 'validate-account/:id/:token', component: HomePageEtudiantComponent},
-                    {path: 'payment', component: MainPaimentComponent},
+                    {path: 'payment/:id', component: MainPaimentComponent},
+                    {path: 'payment/:id/:studentId', component: MainPaimentComponent},
                     {
                         path: 'blog',
                         component: BlogComponent
@@ -246,7 +247,7 @@ import {PaimentBackComponent} from './view/public/home-principale/paiment/paimen
                     {path: 'courses', component: CoursesPageComponent},
                     {path: 'Privacy', component: PrivacyPolicyComponent},
                     {path: 'user-agreement', component: TermOfServiceComponent},
-                    {path: 'course-details', component: CourseDetailsComponent},
+                    {path: 'course-details/:id', component: CourseDetailsComponent},
                 ]
             },
             {path: 'our-packs', component: PayNowCoursesComponent},

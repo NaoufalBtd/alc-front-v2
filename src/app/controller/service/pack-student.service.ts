@@ -164,6 +164,10 @@ export class PackStudentService {
         );
     }
 
+    public findById(id: number): Observable<PackStudent> {
+        return this.http.get<PackStudent>(this.adminUrl + 'packStudent/id/' + id);
+    }
+
 
     public findAllPacksByLevel(): Observable<Array<PackStudent>> {
         return this.http.get<PackStudent[]>(this.adminUrl + 'packStudent/');

@@ -6,7 +6,7 @@ import {PackStudentService} from '../../../../controller/service/pack-student.se
 import {Cours} from '../../../../controller/model/cours.model';
 import {ParcoursService} from '../../../../controller/service/parcours.service';
 import {TranslateService} from '@ngx-translate/core';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {LoginService} from '../../../../controller/service/login.service';
 
 // install Swiper modules
@@ -27,6 +27,7 @@ export class CourseDetailsAreaComponent implements OnInit {
                 private translate: TranslateService,
                 private router: Router,
                 private login: LoginService,
+                private _activatedRoute: ActivatedRoute,
                 private parcoursService: ParcoursService,
     ) {
     }
@@ -45,15 +46,20 @@ export class CourseDetailsAreaComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.findCourses();
-        this.packService.findPackIndividualOrgroupe(this.selectedCourse.forGroupe);
+        const id = this._activatedRoute.snapshot.params.id;
+        if (id !== null && id !== undefined) {
+            this.packService.findById(id).subscribe(pack => {
+                this.selectedCourse = pack;
+                this.findCourses(pack);
+                this.packService.findPackIndividualOrgroupe(this.selectedCourse.forGroupe);
+            });
+        }
     }
 
-    findCourses() {
-        this.parcoursService.FindCoursByParcours(this.selectedCourse.level.id).subscribe(
+    findCourses(selectedCourse: PackStudent) {
+        this.parcoursService.FindCoursByParcours(selectedCourse.level.id).subscribe(
             data => {
                 this.courses = data;
-                console.log(this.courses);
             }
         );
     }
@@ -63,10 +69,6 @@ export class CourseDetailsAreaComponent implements OnInit {
     }
 
     pay() {
-        // if (this.login.getConnecteUser() === null) {
-            this.router.navigate(['/payment']);
-        // } else {
-        // this.router.navigate(['/pay']);
-        // }
+        this.router.navigate(['/payment/' + this.selectedCourse.id]);
     }
 }

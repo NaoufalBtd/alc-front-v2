@@ -681,7 +681,6 @@ function submitformpaiement() {
     );
 
     storeKey = $("input[name='storeKey']").val();
-
     hashval = hashval + storeKey;
     calculatedHashValue = SHA512(hashval);
     hash = btoa(pack('H*', calculatedHashValue));

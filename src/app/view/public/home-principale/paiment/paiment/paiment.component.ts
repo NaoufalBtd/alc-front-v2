@@ -5,7 +5,7 @@ import {EtudiantService} from '../../../../../controller/service/etudiant.servic
 import {AuthenticationService} from '../../../../../controller/service/authentication.service';
 import {PackStudentService} from '../../../../../controller/service/pack-student.service';
 import {InscriptionService} from '../../../../../controller/service/inscription.service';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {AnimationService} from '../../../../../controller/service/animation.service';
 import {PackStudent} from '../../../../../controller/model/pack-student.model';
 import {TranslateService} from '@ngx-translate/core';
@@ -60,6 +60,7 @@ export class PaimentComponent implements OnInit {
                 public etudiantService: EtudiantService,
                 public animation: AnimationService,
                 private http: HttpClient,
+                private _activatedRoute: ActivatedRoute,
                 private login: LoginService,
                 public translate: TranslateService,
                 private confirmationService: ConfirmationService,
@@ -77,6 +78,24 @@ export class PaimentComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        const packId = this._activatedRoute.snapshot.params.id;
+        const studentId = this._activatedRoute.snapshot.params.studentId;
+        if (packId !== null && packId !== undefined) {
+            this.packService.findById(packId).subscribe(pack => {
+                this.selectedCourse = pack;
+            });
+            if (studentId !== null && studentId !== undefined) {
+                this.etudiantService.findById(studentId).subscribe(user => {
+                    this.userRequest = user;
+                    this.selected = user;
+                });
+                this.activeIndex = 1;
+            }
+        } else {
+            this.router.navigate(['/courses']);
+            return;
+        }
+
         if (this.translate.currentLang === 'en') {
             this.items = [
                 {
@@ -131,10 +150,9 @@ export class PaimentComponent implements OnInit {
                     st => {
                         this.animation.showAnimation = false;
                         if (st != null) {
-                            this.animation.showAnimation = false;
                             this.userRequest = st;
-                            console.log(this.userRequest);
                             this.activeIndex = 1;
+                            this.router.navigate(['/payment/' + this.selectedCourse.id + '/' + st.id]);
                         } else {
                             this.messageService.add({
                                 severity: 'info',

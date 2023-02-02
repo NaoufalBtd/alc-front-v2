@@ -135,7 +135,8 @@ export class FilterCoursesComponent implements OnInit {
     getCourse(level: string) {
         if (this.groupOption === 'GROUP') {
             this.packService.findPackByGroupOption(true).subscribe(data => {
-                const course = data.filter(d => d.price?.price === this.priceSelected);
+                const course = data.filter(d => d.price?.price === this.priceSelected &&
+                    d.level.libelle.toUpperCase() === level.toUpperCase());
                 if (course.length > 0) {
                     this.courseDetail(course[0]);
                 } else {
@@ -148,7 +149,8 @@ export class FilterCoursesComponent implements OnInit {
             });
         } else {
             this.packService.findPackByGroupOption(false).subscribe(data => {
-                const course = data.filter(d => d.level.libelle === level);
+                const course = data.filter(d => d.price?.price === this.priceSelected &&
+                    d.level.libelle.toUpperCase() === level.toUpperCase());
                 if (course.length > 0) {
                     this.courseDetail(course[0]);
                 } else {
@@ -167,7 +169,7 @@ export class FilterCoursesComponent implements OnInit {
         if (this.login.getConnecteUser() !== null) {
             this.router.navigate(['/our-packs/' + course.id]);
         } else {
-            this.router.navigate(['/course-details']);
+            this.router.navigate(['/course-details/'  + course.id]);
         }
     }
 }
