@@ -8,7 +8,7 @@
   "title": "أكاديمية EngFlexy",
   "home": "الرئيسية",
   "Individual": "حصص فردية",
-  "Group": "مجموعة",
+  "Group": "حصص في مجموعة",
   "Individual or Group": "حصص فردية أو في مجموعة",
   "Lesson": "درس",
   "all lessons": "مجمل الدروس",
@@ -201,7 +201,7 @@
   "Pre - requisites": "متطلبات الدورة",
   "Course Length": "مدة الدورة",
   "Experience Level": "المستوى",
-  "Why take this course?": "غاية من هذه الدورة",
+  "Why take this course ?": "الغاية من هذه الدورة",
   "Course Overview": "نظرة عامة",
   "Join over": "إنضم الينا",
   "Become a tutor": "كيف اصبح استاذ ",
@@ -465,7 +465,7 @@
   "You only pay for one hour and then you have another hour free as you put your skills to the test in a place of assignments. You will find exercises accompanying the lesson where you can solve and re-solve as many times as you wish until you are fully able to complete the lesson. You will find a section for writing, where after you finish, you can send it to your professor for correction and discussion of all the shortcomings and mistakes.": "تدفع فقط لساعة واحدة ثم لديك ساعة أخرى مجانية حيث تختبر مهاراتك في مكان للواجبات. ستجد التمارين المصاحبة للدرس حيث يمكنك حلها وإعادة الحل عدد المرات التي ترغب فيها حتى تتمكن تماما من الدرس. ستجد قسما للكتابة حيث بعد إنتهاءك يمكنك إرساله لأستاذك للتصحيح و مناقشة مكان القصور والأخطاء. كلها هذا مجانا",
   "Find out your level": "اكتشف مستواك",
   "Do you want to know your level in English?": "هل ترغب في معرفة مستواك بالإنجليزية؟",
-  "EngFlexy Academy opens the platform for you to test your English proficiency through a test consisting of a set of questions. After answering, you will immediately get the result as well as your level (beginner, intermediate, advanced...)":  "أكاديمية EngFlexy تفتح لك المنصة لتختبر مدى تمكنك من الإنجليزية عبر إختبار مكون من مجموعة من الأسئلة. بعد الإجابة، ستحصل مباشرة على النتيجة و كذلك مستواك (مبتدئ، متوسط، متقدم...).",
+  "EngFlexy Academy opens the platform for you to test your English proficiency through a test consisting of a set of questions. After answering, you will immediately get the result as well as your level (beginner, intermediate, advanced...)": "أكاديمية EngFlexy تفتح لك المنصة لتختبر مدى تمكنك من الإنجليزية عبر إختبار مكون من مجموعة من الأسئلة. بعد الإجابة، ستحصل مباشرة على النتيجة و كذلك مستواك (مبتدئ، متوسط، متقدم...).",
   "Fee refund feature": "خاصية إسترجاع الرسوم",
   "Our primary goal is to enable you to master the English language professionally. Therefore, the feature of refunding the full amount in the event that you do not benefit. All future sessions within 48 hours of requesting a refund are refundable": "هدفنا الأساسي هو تمكنك من اللغة الإنجليزية بإحتراف. لذلك خاصية إسترجاع المبلغ كاملا في حال عدم إستفادتك. جميع الجلسات المستقبلية في غضون 48 ساعة من طلب إسترداد الأموال قابلة للإسترداد",
   "English Language Completion Certificate": "شهادة إتمام اللغة الإنجليزية",
@@ -476,12 +476,10 @@
   "How better it is to study comfortably!": "كم هو أفضل أن تدرس وأنت مرتاح!",
   "The Academy gives you the opportunity to learn English from anywhere. All you need is a device and the Internet. The psychological factor can be more important in the learning journey. Instead of wasting time going back and forth from your home to the place of learning, you can take advantage of this time to complete the exercises with your teacher directly.": "الأكاديمية تمنحك الفرصة بأن تتعلم الإنجليزية من أي مكان. ما يلزمك فقط جهاز و أنترنيت. العامل النفسي يمكن أن يكون أكثر أهمية في رحلة التعلم. فبدلا من ضياع الوقت التي تقضيه ذهابا وإيابا من منزلك إلى مكان التعلم،يمكنك أن تستفيد من هذا الوقت لإنجاز التمارين أو مع أستاذك بشكل مباشر.",
   "Pay once and learn twice!": "تدفع مرة و تتعلم مرتين!",
-  "Please dont use the special characters": "من فضلك لا تستخدم الأحرف الخاصة"
-
-
-
-
-
-
-
+  "Please dont use the special characters": "من فضلك لا تستخدم الأحرف الخاصة",
+  "HOURS": ":عدد الساعات",
+  "LESSONS": ":عدد الدروس",
+  "MONTH": ":عدد الاشهر",
+  "Individual or group": "حصص فردية أو جماعية",
+  "Starting from": "إبتداءً من"
 }

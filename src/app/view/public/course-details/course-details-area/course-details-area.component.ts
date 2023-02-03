@@ -24,7 +24,7 @@ export class CourseDetailsAreaComponent implements OnInit {
     courseData: Array<PackStudent> = new Array<PackStudent>();
 
     constructor(private packService: PackStudentService,
-                private translate: TranslateService,
+                public translate: TranslateService,
                 private router: Router,
                 private login: LoginService,
                 private _activatedRoute: ActivatedRoute,

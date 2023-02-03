@@ -4,5 +4,7 @@ export class Price {
     public  oldPrice: number;
     public  lib: string;
     public  nreCourse: number;
+    public  nreHours: number;
+    public  nreMonth: number;
     public forGroup: boolean;
 }

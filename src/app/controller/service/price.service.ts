@@ -7,98 +7,111 @@ import {environment} from '../../../environments/environment';
 import {Parcours} from '../model/parcours.model';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class PriceService {
-  private _groupOption: string;
-  private _priceSelected: number;
-  private _priceLib: string;
-  private _index = 0;
-  private _activeIndex = 0;
-  private _items: MenuItem[];
-  private _prices: Array<Price> = new Array<Price>();
-  private _priceList: Array<Price> = new Array<Price>();
-  private _levels: Array<Parcours> = new Array<Parcours>();
-  constructor(private http: HttpClient) { }
+    private publicUrl = environment.publicUrl + 'price/';
+    private _groupOption: string;
+    private _priceSelected: number;
+    private _priceLib: string;
+    private _index = 0;
+    private _activeIndex = 0;
+    private _items: MenuItem[];
+    private _prices: Array<Price> = new Array<Price>();
+    private _priceList: Array<Price> = new Array<Price>();
+    private _levels: Array<Parcours> = new Array<Parcours>();
+
+    constructor(private http: HttpClient) {
+    }
 
 
-  get priceLib(): string {
-    return this._priceLib;
-  }
+    get priceLib(): string {
+        return this._priceLib;
+    }
 
-  set priceLib(value: string) {
-    this._priceLib = value;
-  }
+    set priceLib(value: string) {
+        this._priceLib = value;
+    }
 
-  get prices(): Array<Price> {
-    return this._prices;
-  }
+    get prices(): Array<Price> {
+        return this._prices;
+    }
 
-  set prices(value: Array<Price>) {
-    this._prices = value;
-  }
+    set prices(value: Array<Price>) {
+        this._prices = value;
+    }
 
-  get priceList(): Array<Price> {
-    return this._priceList;
-  }
+    get priceList(): Array<Price> {
+        return this._priceList;
+    }
 
-  set priceList(value: Array<Price>) {
-    this._priceList = value;
-  }
+    set priceList(value: Array<Price>) {
+        this._priceList = value;
+    }
 
-  get levels(): Array<Parcours> {
-    return this._levels;
-  }
+    get levels(): Array<Parcours> {
+        return this._levels;
+    }
 
-  set levels(value: Array<Parcours>) {
-    this._levels = value;
-  }
-  get items(): MenuItem[] {
-    return this._items;
-  }
+    set levels(value: Array<Parcours>) {
+        this._levels = value;
+    }
 
-  set items(value: MenuItem[]) {
-    this._items = value;
-  }
+    get items(): MenuItem[] {
+        return this._items;
+    }
 
-  get groupOption(): string {
-    return this._groupOption;
-  }
+    set items(value: MenuItem[]) {
+        this._items = value;
+    }
 
-  set groupOption(value: string) {
-    this._groupOption = value;
-  }
+    get groupOption(): string {
+        return this._groupOption;
+    }
 
-  get priceSelected(): number {
-    return this._priceSelected;
-  }
+    set groupOption(value: string) {
+        this._groupOption = value;
+    }
 
-  set priceSelected(value: number) {
-    this._priceSelected = value;
-  }
+    get priceSelected(): number {
+        return this._priceSelected;
+    }
 
-  get index(): number {
-    return this._index;
-  }
+    set priceSelected(value: number) {
+        this._priceSelected = value;
+    }
 
-  set index(value: number) {
-    this._index = value;
-  }
+    get index(): number {
+        return this._index;
+    }
 
-  get activeIndex(): number {
-    return this._activeIndex;
-  }
+    set index(value: number) {
+        this._index = value;
+    }
 
-  set activeIndex(value: number) {
-    this._activeIndex = value;
-  }
+    get activeIndex(): number {
+        return this._activeIndex;
+    }
 
-  public save(price: Price): Observable<Price>{
-    return this.http.post<Price>(environment.adminUrl + 'price/', price);
-  }
-  public getAll(): Observable<Price[]>{
-    return this.http.get<Price[]>(environment.adminUrl + 'price/');
-  }
+    set activeIndex(value: number) {
+        this._activeIndex = value;
+    }
+
+    public save(price: Price): Observable<Price> {
+        return this.http.post<Price>(environment.adminUrl + 'price/', price);
+    }
+
+    public getAll(): Observable<Price[]> {
+        return this.http.get<Price[]>(environment.adminUrl + 'price/');
+    }
+
+    public getMaxPrice(isGroup: boolean): Observable<Price> {
+        return this.http.get<Price>(this.publicUrl + 'max-price/' + isGroup);
+    }
+
+    public getMinPrice(isGroup: boolean): Observable<Price> {
+        return this.http.get<Price>(this.publicUrl + 'min-price/' + isGroup);
+    }
 
 
 }

@@ -17,14 +17,18 @@ import {Parcours} from '../../../../../controller/model/parcours.model';
 })
 export class FilterCoursesComponent implements OnInit {
 
+    steps: Map<number, string> = new Map<number, string>();
+    minPriceForGroup: number;
+    minPriceForIndividual: number;
 
-    constructor(private translate: TranslateService,
+    constructor(public translate: TranslateService,
                 private router: Router,
                 private login: LoginService,
                 private levelSerivce: ParcoursService,
                 private priceService: PriceService,
                 private messageService: MessageService,
                 private packService: PackStudentService) {
+        this.steps.set(0, 'Individual or group');
     }
 
 
@@ -60,13 +64,6 @@ export class FilterCoursesComponent implements OnInit {
         this.priceService.groupOption = value;
     }
 
-    get priceLib(): string {
-        return this.priceService.priceLib;
-    }
-
-    set priceLib(value: string) {
-        this.priceService.priceLib = value;
-    }
 
     get priceSelected(): number {
         return this.priceService.priceSelected;
@@ -76,13 +73,6 @@ export class FilterCoursesComponent implements OnInit {
         this.priceService.priceSelected = value;
     }
 
-    get index(): number {
-        return this.priceService.index;
-    }
-
-    set index(value: number) {
-        this.priceService.index = value;
-    }
 
     get activeIndex(): number {
         return this.priceService.activeIndex;
@@ -101,26 +91,33 @@ export class FilterCoursesComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.activeIndex = 0;
         this.levelSerivce.findAllLevels().subscribe(d => this.priceService.levels = d);
-        this.priceService.getAll().subscribe(d => this.priceService.priceList = d);
+        this.priceService.getAll().subscribe(d => this.priceList = d);
+        this.priceService.getMinPrice(true).subscribe(d => this.minPriceForGroup = d.price);
+        this.priceService.getMinPrice(false).subscribe(d => this.minPriceForIndividual = d.price);
     }
 
     chooseOption(type: string) {
         this.activeIndex = 1;
         this.groupOption = type;
-        this.index = 1;
         if (type === 'GROUP') {
-            this.priceService.prices = this.priceService.priceList.filter(p => p.forGroup === true);
+            this.steps.set(this.activeIndex, 'Group');
+            this.prices = this.priceService.priceList.filter(p => p.forGroup === true);
         } else {
-            this.priceService.prices = this.priceService.priceList.filter(p => p.forGroup === false);
+            this.prices = this.priceService.priceList.filter(p => p.forGroup === false);
+            this.steps.set(this.activeIndex, 'Individual');
         }
+
+        console.log(this.priceList);
+        console.log(this.prices);
     }
 
     chooseType(type: string, price: number) {
-        this.index = 3;
         this.activeIndex = 2;
         this.priceSelected = price;
-        this.priceLib = type;
+        this.steps.set(this.activeIndex, type);
+
         console.log(this.priceSelected);
     }
 
@@ -169,7 +166,12 @@ export class FilterCoursesComponent implements OnInit {
         if (this.login.getConnecteUser() !== null) {
             this.router.navigate(['/our-packs/' + course.id]);
         } else {
-            this.router.navigate(['/course-details/'  + course.id]);
+            this.router.navigate(['/course-details/' + course.id]);
         }
+    }
+
+
+    goTo(key: number) {
+        this.activeIndex = key;
     }
 }

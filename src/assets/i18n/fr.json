@@ -467,7 +467,6 @@
   "2-3 times a week": "2-3 fois par semaine",
   "recommended intensity": "intensité recommandée",
   "local or native speaker": "locuteur local ou natif",
-
   "You only pay for one hour and then you have another hour free as you put your skills to the test in a place of assignments. You will find exercises accompanying the lesson where you can solve and re-solve as many times as you wish until you are fully able to complete the lesson. You will find a section for writing, where after you finish, you can send it to your professor for correction and discussion of all the shortcomings and mistakes.": "Vous ne payez qu'une heure puis vous disposez d'une autre heure de gratuite pour mettre vos compétences à l'épreuve dans un lieu d'affectations. Vous trouverez des exercices accompagnant la leçon où vous pourrez résoudre autant de fois que vous le souhaitez jusqu'à ce que vous soyez pleinement capable de terminer la leçon. Vous trouverez une section pour l'écriture, où après avoir terminé, vous pouvez l'envoyer à votre professeur pour correction et discussion de toutes les lacunes et erreurs.",
   "Find out your level": "Découvrez votre niveau",
   "Do you want to know your level in English?": "Vous souhaitez connaître votre niveau en anglais ?",
@@ -482,7 +481,10 @@
   "How better it is to study comfortably!": "Comme il vaut mieux étudier confortablement !",
   "The Academy gives you the opportunity to learn English from anywhere. All you need is a device and the Internet. The psychological factor can be more important in the learning journey. Instead of wasting time going back and forth from your home to the place of learning, you can take advantage of this time to complete the exercises with your teacher directly.": "L'Académie vous donne la possibilité d'apprendre l'anglais de n'importe où. Tout ce dont vous avez besoin est un appareil et Internet. Le facteur psychologique peut être plus important dans le parcours d'apprentissage. Au lieu de perdre du temps à faire des allers-retours entre votre domicile et le lieu d'apprentissage, vous pouvez profiter de ce temps pour réaliser les exercices directement avec votre professeur.",
   "Pay once and learn twice!": "Payez une fois et apprenez deux fois !",
-  "Please dont use the special characters": "Veuillez ne pas utiliser les caractères spéciaux"
-
-
+  "Please dont use the special characters": "Veuillez ne pas utiliser les caractères spéciaux",
+  "HOURS": "heures",
+  "LESSONS": "cours",
+  "MONTH": "mois",
+  "Individual or group": "Individuel ou Groupe",
+  "Starting from": "à partir de"
 }

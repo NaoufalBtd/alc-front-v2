@@ -5,13 +5,13 @@
             <div class="card">
                 <h5>Manage prices</h5>
                 <p-table
-                         [value]="prices"
-                         [paginator]="true"
-                         [rowHover]="true"
-                         [rows]="6" [showCurrentPageReport]="true"
-                         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-                         dataKey="id"
-                         styleClass="p-datatable-customers">
+                        [value]="prices"
+                        [paginator]="true"
+                        [rowHover]="true"
+                        [rows]="6" [showCurrentPageReport]="true"
+                        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                        dataKey="id"
+                        styleClass="p-datatable-customers">
 
                     <ng-template pTemplate="caption">
                         <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
@@ -26,11 +26,13 @@
                     <ng-template pTemplate="header">
                         <tr>
 
-                            <th  style="width: 3rem"></th>
+                            <th style="width: 3rem"></th>
                             <th>Name</th>
                             <th>Price</th>
                             <th>Old price</th>
                             <th>Number of courses</th>
+                            <th>Number of hours</th>
+                            <th>Number of months</th>
                             <th> Action</th>
                         </tr>
                     </ng-template>
@@ -42,6 +44,8 @@
                             <td>{{price?.price}} DH</td>
                             <td>{{price?.oldPrice}} DH</td>
                             <td>{{price?.nreCourse}}</td>
+                            <td>{{price?.nreHours}}</td>
+                            <td>{{price?.nreMonth}}</td>
 
                             <td>
                                 <button (click)="edit(price)"
@@ -63,44 +67,62 @@
 </div>
 
 
-
 <p-dialog header="Price" [(visible)]="showAddDialog" [position]="'top'" [modal]="true" [style]="{width: '50vw'}"
           [draggable]="false" [resizable]="false">
     <div class="container p-10">
-            <div class="row">
+        <div class="row">
 
-                <div class="col-xxl-6 col-xl-6 col-md-6">
-                    <div class="contact__form-input">
-                        <input type="text" [(ngModel)]="price.lib" [required]="true"  placeholder="Name" name="lib">
-                    </div>
+            <div class="col-xxl-6 col-xl-6 col-md-6">
+                <div class="contact__form-input">
+                    <input type="text" [(ngModel)]="price.lib" [required]="true" placeholder="Name" name="lib">
                 </div>
-
-                <div class="col-xxl-6 col-xl-6 col-md-6">
-                    <div class="contact__form-input">
-                        <input type="number" [(ngModel)]="price.price" [required]="true"  placeholder="price" name="price">
-                    </div>
-                </div>
-
-                <div class="col-xxl-6 col-xl-6 col-md-6">
-                    <div class="contact__form-input">
-                        <input type="number" [(ngModel)]="price.oldPrice" [required]="true"  placeholder="old price" name="old price">
-                    </div>
-                </div>
-
-                <div class="col-xxl-6 col-xl-6 col-md-6">
-                    <div class="contact__form-input">
-                        <input type="number" [(ngModel)]="price.nreCourse" [required]="true"  placeholder="Number of course" name="nreCourse">
-                    </div>
-                </div>
-
-                <div class="col-xxl-6 col-xl-6 col-md-6">
-                    <input class="form-check-input"  [(ngModel)]="price.forGroup" type="checkbox" value="" id="flexCheckChecked">
-                    <label class="form-check-label" for="flexCheckChecked">
-                        is for group ({{price.forGroup}})
-                    </label>
-                </div>
-
             </div>
+
+            <div class="col-xxl-6 col-xl-6 col-md-6">
+                <div class="contact__form-input">
+                    <input type="number" [(ngModel)]="price.price" [required]="true" placeholder="price" name="price">
+                </div>
+            </div>
+
+            <div class="col-xxl-6 col-xl-6 col-md-6">
+                <div class="contact__form-input">
+                    <input type="number" [(ngModel)]="price.oldPrice" [required]="true" placeholder="old price"
+                           name="old price">
+                </div>
+            </div>
+
+            <div class="col-xxl-6 col-xl-6 col-md-6">
+                <div class="contact__form-input">
+                    <input type="number" [(ngModel)]="price.nreCourse" [required]="true" placeholder="Number of course"
+                           name="nreCourse">
+                </div>
+            </div>
+
+            <div class="col-xxl-6 col-xl-6 col-md-6">
+                <div class="contact__form-input">
+                    <input type="number" [(ngModel)]="price.nreHours" [required]="true" placeholder="Number of hours"
+                           name="nreHours">
+                </div>
+            </div>
+
+
+            <div class="col-xxl-6 col-xl-6 col-md-6">
+                <div class="contact__form-input">
+                    <input type="number" [(ngModel)]="price.nreMonth" [required]="false" placeholder="Number of months"
+                           name="nreMonth">
+                </div>
+            </div>
+
+
+            <div class="col-xxl-6 col-xl-6 col-md-6">
+                <input class="form-check-input" [(ngModel)]="price.forGroup" type="checkbox" value=""
+                       id="flexCheckChecked">
+                <label class="form-check-label" for="flexCheckChecked">
+                    is for group ({{price.forGroup}})
+                </label>
+            </div>
+
+        </div>
     </div>
 
     <ng-template pTemplate="footer">
