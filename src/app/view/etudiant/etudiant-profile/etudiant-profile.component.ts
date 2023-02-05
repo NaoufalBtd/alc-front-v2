@@ -345,18 +345,6 @@ export class EtudiantProfileComponent implements OnInit {
 
     }
 
-    showdialogPacks() {
-        this.getgroupechosen(this.etudiant.groupeEtude.id);
-        this.showdialog = true;
-        if (this.etudiantService.groupeEtude.nombreEtudiant > 1) {
-            this.packStudentService.findPackIndividualOrgroupe(true);
-            console.log(this.packStudentService.packstudentgroupeList);
-
-        } else {
-            this.packStudentService.findPackIndividualOrgroupe(false);
-            console.log(this.packStudentService.packstudentIndividialList);
-        }
-    }
 
     getgroupechosen(id: number) {
         this.etudiantService.findGroupeById(id);

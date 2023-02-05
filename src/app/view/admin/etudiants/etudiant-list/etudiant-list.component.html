@@ -3,19 +3,16 @@
 <div class="p-grid p-shadow-5">
 
     <div class="p-col-10">
-            <input type="search" [(ngModel)]="etudiant.nom" class='searchInput' pInputText placeholder="Search by full Name.."/>
-            <input type="search" [(ngModel)]="etudiant.prof.nom"  class='searchInput' pInputText placeholder="Search by teacher.."/>
-            <button pButton pRipple type="button" icon="pi pi-search" (click)="searchUsers()"
-                    style="margin-left: 25px"
-                    class="p-button-rounded p-button-success"></button>
+        <input type="search" [(ngModel)]="etudiant.nom" class='searchInput' pInputText
+               placeholder="Search by full Name.."/>
+        <input type="search" [(ngModel)]="etudiant.prof.nom" class='searchInput' pInputText
+               placeholder="Search by teacher.."/>
+        <button pButton pRipple type="button" icon="pi pi-search" (click)="searchUsers()"
+                style="margin-left: 25px"
+                class="p-button-rounded p-button-success"></button>
+
 
     </div>
-
-
-<!--    <div class="p-col-6" style="text-align: right">-->
-<!--        <button pButton pRipple label="New student" type="button" icon="pi pi-user-plus" (click)="showAddUserDialog()"-->
-<!--                class="p-button-rounded  p-button-success"></button>-->
-<!--    </div>-->
 
     <div class="p-col-12">
 
@@ -27,8 +24,14 @@
                 <p-button type="button" icon="pi pi-refresh" (click)="reset()" styleClass="p-button-text"></p-button>
                 <p-button type="button" icon="pi pi-chevron-right" (click)="next()" [disabled]="isLastPage()"
                           styleClass="p-button-text"></p-button>
+
+                <button pButton pRipple type="button" label="new student" icon="pi pi-plus"
+                        (click)="showAddUserDialog()"
+                        style="float: right"
+                        class="p-button-rounded p-button-success"></button>
             </div>
-            <p-table [resizableColumns]="true" [value]="users" [paginator]="true" [rows]="rows" [showCurrentPageReport]="true"
+            <p-table [resizableColumns]="true" [value]="users" [paginator]="true" [rows]="rows"
+                     [showCurrentPageReport]="true"
                      [(first)]="first" responsiveLayout="scroll"
                      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
                      [rowsPerPageOptions]="[10,25,50]">
@@ -53,7 +56,7 @@
                         <td>{{user?.prof?.nom}} {{ user?.prof?.prenom}}</td>
                         <td>
                             <button pButton pRipple type="button" icon="pi pi-user-edit" (click)="showEditDialog(user)"
-                                      class="p-button-rounded p-button-warning"></button>
+                                    class="p-button-rounded p-button-warning"></button>
                             <button pButton pRipple type="button" icon="pi pi-times"
                                     (click)="showDeleteDialog(user,index)"
                                     class="p-button-rounded p-button-danger"></button>
@@ -87,135 +90,100 @@
 
 <p-dialog header="User information" [(visible)]="editDialog" [style]="{width: '60vw'}">
     <div class="row m-l-0 m-r-0">
-                            <div class="col-sm-4 bg-c-lite-green user-profile">
-                                <div class="card-block text-center text-white">
-                                    <div class="m-b-25"> <img [src]="userInfo?.image"class="img-radius"
-                                                              alt="User-Profile-Image"> </div>
-                                    <h6 class="f-w-600">{{userInfo?.nom}}</h6>
-                                    <p>{{userInfo?.username}} </p> <i class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
-                                </div>
-                            </div>
-                            <div class="col-sm-8">
-                                <div class="card-block">
-                                    <h6 class="m-b-20 p-b-5 b-b-default f-w-600" style="color: #f27463">Information</h6>
-                                    <div class="row">
-                                        <div class="col-sm-6">
-                                            <p class="m-b-10 f-w-600">Full name</p>
+        <div class="col-sm-4 bg-c-lite-green user-profile">
+            <div class="card-block text-center text-white">
+                <div class="m-b-25"><img [src]="userInfo?.image" class="img-radius"
+                                         alt="User-Profile-Image"></div>
+                <h6 class="f-w-600">{{userInfo?.nom}}</h6>
+                <p>{{userInfo?.username}} </p> <i
+                    class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
+            </div>
+        </div>
+        <div class="col-sm-8">
+            <div class="card-block">
+                <h6 class="m-b-20 p-b-5 b-b-default f-w-600" style="color: #f27463">Information</h6>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <p class="m-b-10 f-w-600">Full name</p>
 
-                                            <input type="text" pInputText [(ngModel)]="userInfo.nom">
-                                        </div>
-
-
-
-
-                                        <div class="col-sm-6" style="margin-top: 9px">
-                                            <p class="m-b-10 f-w-600">Email</p>
-                                            <input type="text" pInputText [(ngModel)]="userInfo.username">
-                                        </div>
-                                        <div class="col-sm-6"  style="margin-top: 9px">
-                                            <p class="m-b-10 f-w-600">Age</p>
-                                            <input type="text" pInputText [(ngModel)]="userInfo.age">
-                                        </div>
-                                        <div class="col-sm-6"  style="margin-top: 9px">
-                                            <p class="m-b-10 f-w-600">Phone</p>
-                                            <input type="text" pInputText [(ngModel)]="userInfo.numero">
-                                        </div>
-                                        <div class="col-sm-6"  style="margin-top: 9px">
-                                            <p class="m-b-10 f-w-600">City</p>
-                                            <input type="text" pInputText [(ngModel)]="userInfo.ville">
-                                        </div>
-                                        <div class="col-sm-6"  style="margin-top: 9px">
-                                            <p class="m-b-10 f-w-600">Adress</p>
-                                            <input type="text" pInputText [(ngModel)]="userInfo.addresse">
-                                        </div>
-                                        <div class="col-sm-6"  style="margin-top: 9px">
-                                            <p class="m-b-10 f-w-600">Skype</p>
-                                            <input type="text" pInputText [(ngModel)]="userInfo.skype">
-                                        </div>
+                        <input type="text" pInputText [(ngModel)]="userInfo.nom">
+                    </div>
 
 
-                                    </div>
-                                    <!--
-                                     <div  *ngIf="this.inscription.packStudent!=null" class="col-sm-6"  style="margin-top: 9px">
-                                            <div  *ngIf="this.inscription.packStudent!=null"  style="font-size: 20px"><label *ngIf="this.inscription.packStudent!=null" class="label">
-                                                <strong>Pack choosen:
-                                            </strong></label>  {{ inscription.packStudent.libelle}} : {{inscription.packStudent.nombreCours}}h | {{inscription.packStudent.prix}}$</div>
-
-                                        </div>
-                                    <div class="panel-body bio-graph-info margin" style="margin-left: 10px;">
-                                        <h6  style="  color: #f29263; font-weight: bold">Further information</h6>
-                                        <div class="row">
-                                            <div *ngIf="this.inscription.statutSocial!=null" class="bio-row">
-                                                <label > Status Social  : <strong>{{this.inscription.statutSocial.libelle}} </strong> </label>
-
-                                            </div>
-                                            <div class="bio-row">
-                                                <div  *ngIf="this.inscription.fonction!=null && this.inscription.statutSocial.libelle=='Employed'">
-                                                    <label class="status"  >Area of work :{{this.inscription.fonction.libelle}}</label>
-
-                                                </div>
-                                                <div *ngIf="this.inscription.niveauEtude!=null && this.inscription.statutSocial.libelle=='Student'">
-                                                    <label  class="status" >Study Level :{{this.inscription.niveauEtude.libelle}}</label>
-
-                                                </div>
-                                            </div>
-
-                                            <div *ngIf="this.inscription.niveauEtude!=null" class="bio-row">
-                                                <label> Main goal with learning English :{{this.inscription.interetEtudiant.libelle}}</label>
-
-                                            </div>
-                                            <div *ngIf="this.inscription.skill!=null"  class="bio-row">
-                                                <label > Skill : {{this.inscription.skill.libelle}}</label>
-
-                                            </div>
-
-                                        </div>
--->
+                    <div class="col-sm-6" style="margin-top: 9px">
+                        <p class="m-b-10 f-w-600">Email</p>
+                        <input type="text" pInputText [(ngModel)]="userInfo.username">
+                    </div>
+                    <div class="col-sm-6" style="margin-top: 9px">
+                        <p class="m-b-10 f-w-600">Age</p>
+                        <input type="text" pInputText [(ngModel)]="userInfo.age">
+                    </div>
+                    <div class="col-sm-6" style="margin-top: 9px">
+                        <p class="m-b-10 f-w-600">Phone</p>
+                        <input type="text" pInputText [(ngModel)]="userInfo.numero">
+                    </div>
+                    <div class="col-sm-6" style="margin-top: 9px">
+                        <p class="m-b-10 f-w-600">City</p>
+                        <input type="text" pInputText [(ngModel)]="userInfo.ville">
+                    </div>
+                    <div class="col-sm-6" style="margin-top: 9px">
+                        <p class="m-b-10 f-w-600">Adress</p>
+                        <input type="text" pInputText [(ngModel)]="userInfo.addresse">
+                    </div>
+                    <div class="col-sm-6" style="margin-top: 9px">
+                        <p class="m-b-10 f-w-600">Skype</p>
+                        <input type="text" pInputText [(ngModel)]="userInfo.skype">
+                    </div>
 
 
+                </div>
 
-                                    <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600" style="color: #f27463">Further information</h6>
-                                    <div class="row">
-                                        <div class="col-sm-6" *ngIf="this.userInfo.statutSocial!=null">
-                                            <p class="m-b-10 f-w-600">Social status</p>
-                                            <h6 class="text-muted f-w-400">{{this.userInfo.statutSocial.libelle}}</h6>
-                                        </div>
-                                        <div class="col-sm-6" *ngIf="this.userInfo.fonction!=null && this.userInfo.statutSocial.libelle=='Employed'">
 
-                                            <p class="m-b-10 f-w-600" >Area of work</p>
-                                            <h6 class="text-muted f-w-400">{{this.userInfo.fonction.libelle}}</h6>
+                <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600" style="color: #f27463">Further information</h6>
+                <div class="row">
+                    <div class="col-sm-6" *ngIf="this.userInfo.statutSocial!=null">
+                        <p class="m-b-10 f-w-600">Social status</p>
+                        <h6 class="text-muted f-w-400">{{this.userInfo.statutSocial.libelle}}</h6>
+                    </div>
+                    <div class="col-sm-6"
+                         *ngIf="this.userInfo.fonction!=null && this.userInfo.statutSocial.libelle=='Employed'">
 
-                                        </div>
-                                        <div  *ngIf="this.userInfo.fonction!=null && this.userInfo.statutSocial.libelle=='Student'" class="col-sm-6">
+                        <p class="m-b-10 f-w-600">Area of work</p>
+                        <h6 class="text-muted f-w-400">{{this.userInfo.fonction.libelle}}</h6>
 
-                                                <p class="m-b-10 f-w-600">Study level</p>
-                                                <h6 class="text-muted f-w-400">{{this.userInfo.niveauEtude.libelle}}</h6>
+                    </div>
+                    <div *ngIf="this.userInfo.fonction!=null && this.userInfo.statutSocial.libelle=='Student'"
+                         class="col-sm-6">
 
-                                        </div>
-                                        <div class="col-sm-6" *ngIf="this.userInfo.interetEtudiant!=null">
-                                            <p class="m-b-10 f-w-600" style="margin-top: 10px;"> Main goal with learning English </p>
-                                            <h6 class="text-muted f-w-400">{{this.userInfo.interetEtudiant.libelle}}</h6>
-                                        </div>
-                                        <div class="col-sm-6" style="margin-top: 10px;" *ngIf="this.userInfo.skill!=null">
-                                            <p class="m-b-10 f-w-600"> Skill </p>
-                                            <h6 class="text-muted f-w-400">{{this.userInfo.skill.libelle}}</h6>
-                                        </div>
+                        <p class="m-b-10 f-w-600">Study level</p>
+                        <h6 class="text-muted f-w-400">{{this.userInfo.niveauEtude.libelle}}</h6>
 
-                                        <div *ngIf="this.inscription.packStudent!=null" class="col-sm-6" style="margin-top: 10px;">
-                                            <p class="m-b-10 f-w-600">   Pack chosen </p>
-                                            <h6 class="text-muted f-w-400"> {{ inscription.packStudent.libelle}} : {{inscription.packStudent.nombreCours}}h | {{inscription.packStudent.price?.price}}$</h6>
-                                        </div>
-                                    </div>
+                    </div>
+                    <div class="col-sm-6" *ngIf="this.userInfo.interetEtudiant!=null">
+                        <p class="m-b-10 f-w-600" style="margin-top: 10px;"> Main goal with learning English </p>
+                        <h6 class="text-muted f-w-400">{{this.userInfo.interetEtudiant.libelle}}</h6>
+                    </div>
+                    <div class="col-sm-6" style="margin-top: 10px;" *ngIf="this.userInfo.skill!=null">
+                        <p class="m-b-10 f-w-600"> Skill </p>
+                        <h6 class="text-muted f-w-400">{{this.userInfo.skill.libelle}}</h6>
+                    </div>
 
-                                </div>
-                            </div>
-                            </div>
+                    <div *ngIf="this.inscription.packStudent!=null" class="col-sm-6" style="margin-top: 10px;">
+                        <p class="m-b-10 f-w-600"> Pack chosen </p>
+                        <h6 class="text-muted f-w-400"> {{ inscription.packStudent.libelle}}
+                            : {{inscription.packStudent.nombreCours}}h | {{inscription.packStudent.price?.price}}$</h6>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
 
 
     <ng-template pTemplate="footer">
-        <button pButton  type="button" icon="pi pi-save" label="Save changes"
+        <button pButton type="button" icon="pi pi-save" label="Save changes"
                 (click)="updateOtherUser(userInfo) ; editDialog=false"
-                 [style]="{background:'#f29263', border:'#f29263'}"></button>
+                [style]="{background:'#f29263', border:'#f29263'}"></button>
     </ng-template>
 </p-dialog>
 
@@ -223,71 +191,79 @@
 <!------------------------ New User Dialog -------------------------------------------------->
 
 
-<!--<p-dialog header="Student information" [(visible)]="newUserDialog"-->
-<!--          [style]="{width: '70vw'}">-->
-<!--    <div content class=" p-dialog-content">-->
-<!--        <div class="p-grid">-->
+<p-dialog header="new Student" [(visible)]="newUserDialog" [position]="'top'" [modal]="true" [style]="{width: '70vw'}"
+          [draggable]="false" [resizable]="false">
+    <div class="container p-10">
+        <div class="row">
 
-<!--            <div class="p-col-4">-->
-<!--            <span class="p-float-label">-->
-<!--                 <input type="text" pInputText [(ngModel)]="newUser.prenom"><label>First name</label>-->
-<!--            </span>-->
-<!--            </div>-->
+            <div class="col-xxl-6 col-xl-6 col-md-6">
+                <div class="contact__form-input">
+                    <input type="text" [(ngModel)]="etudiant.nom" [required]="true" placeholder="Full Name" name="nom">
+                </div>
+            </div>
 
-<!--            <div class="p-col-4">-->
-<!--            <span class="p-float-label">-->
-<!--                 <input type="text" pInputText [(ngModel)]="newUser.nom"><label>Last name</label>-->
-<!--            </span>-->
-<!--            </div>-->
+            <div class="col-xxl-6 col-xl-6 col-md-6">
+                <div class="contact__form-input">
+                    <input type="text" [(ngModel)]="etudiant.username" [required]="true" placeholder="Email"
+                           name="email">
+                </div>
+            </div>
 
-
-<!--            <div class="p-col-4">-->
-<!--            <span class="p-float-label">-->
-<!--                 <input required type="text" pInputText [(ngModel)]="newUser.username"><label-->
-<!--            >Username</label>-->
-<!--            </span>-->
-<!--            </div>-->
-
-
-<!--            <div class="p-col-4">-->
-<!--            <span class="p-float-label">-->
-<!--                 <input type="number" pInputText [(ngModel)]="newUser.age"><label-->
-<!--            >Age</label>-->
-<!--            </span>-->
-<!--            </div>-->
+            <div class="col-xxl-6 col-xl-6 col-md-6">
+                <div class="contact__form-input">
+                    <input type="tel" [(ngModel)]="etudiant.numero" [required]="true" placeholder="Phone"
+                           name="old price">
+                </div>
+            </div>
 
 
-<!--            <div class="p-col-4">-->
-<!--            <span class="p-float-label">-->
-<!--                 <input type="text" pInputText [(ngModel)]="newUser.addresse"><label>Address</label>-->
-<!--            </span>-->
-<!--            </div>-->
+            <div class="col-xxl-6 col-xl-6 col-md-6">
+                <div class="contact__form-input">
+                    <select class="form-select" [(ngModel)]="etudiant.parcours" (ngModelChange)="getPacks()"
+                            aria-label="Select level">
+                        <option [ngValue]="null" selected>Select level</option>
+                        <option *ngFor="let level of parcours" [ngValue]="level">{{level?.libelle}}</option>
+                    </select>
+                    <div style="color: red" [style.display]="levelNotValid ? 'block' :'none'"
+                         class="invalid-feedback">
+                        {{'this field is required' | translate}}
+                    </div>
+                </div>
+            </div>
 
+            <div class="col-xxl-6 col-xl-6 col-md-6">
+                <div class="contact__form-input">
+                    <select class="form-select" [(ngModel)]="etudiant.groupeEtude" aria-label="Select study group">
+                        <option [ngValue]="null" selected>Select study group</option>
+                        <option *ngFor="let group of allGroups" [ngValue]="group">{{group?.libelle}}</option>
+                    </select>
+                    <div style="color: red" [style.display]="groupNotValid ? 'block' :'none'"
+                         class="invalid-feedback">
+                        {{'this field is required' | translate}}
+                    </div>
+                </div>
+            </div>
 
-<!--            <div class="p-col-4">-->
-<!--            <span class="p-float-label">-->
-<!--                 <input type="text" pInputText [(ngModel)]="newUser.numero"><label-->
-<!--            >Phone</label>-->
-<!--            </span>-->
-<!--            </div>-->
+            <div class="col-xxl-6 col-xl-6 col-md-6">
+                <div class="contact__form-input">
+                    <select class="form-select" [(ngModel)]="selectedPack" aria-label="Select pack">
+                        <option [ngValue]="null" selected>Select pack</option>
+                        <option *ngFor="let pack of packs" [ngValue]="pack">
+                            <ng-container *ngIf="!pack?.forGroupe">{{pack?.libelle}} {{' Individual(' + pack?.price?.lib + '/' + pack?.price?.nreHours + ' hours)' }}</ng-container>
+                            <ng-container *ngIf="pack?.forGroupe">{{pack?.libelle}} {{' Group(' + pack?.price?.lib + '/' + pack?.price?.nreHours + ' hours)' }}</ng-container>
+                        </option>
+                    </select>
+                    <div style="color: red" [style.display]="packNotValid ? 'block' :'none'"
+                         class="invalid-feedback">
+                        {{'this field is required' | translate}}
+                    </div>
+                </div>
+            </div>
 
-<!--            <div class="p-col-4">-->
-<!--            <span class="p-float-label">-->
-<!--                 <input type="text" pInputText [(ngModel)]="newUser.ville"><label-->
-<!--            >City</label>-->
-<!--            </span>-->
-<!--            </div>-->
+        </div>
+    </div>
 
-<!--            <div class="p-col-4">-->
-<!--                <p-dropdown [options]="parcours" [(ngModel)]="newUser.p" placeholder="Select a City" optionLabel="name" [showClear]="true"></p-dropdown>-->
-<!--            </div>-->
-
-<!--        </div>-->
-<!--    </div>-->
-
-<!--    <ng-template pTemplate="footer">-->
-<!--        <button pButton pRipple type="button" icon="pi pi-save" label="save"-->
-<!--                (click)="addNewUser() ; newUserDialog=false"-->
-<!--                class="p-button-raised-primary"></button>-->
-<!--    </ng-template>-->
-<!--</p-dialog>-->
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-check" (click)="save()" label="ADD" styleClass="p-button-text"></p-button>
+    </ng-template>
+</p-dialog>

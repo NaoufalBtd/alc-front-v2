@@ -13,6 +13,7 @@
 
                                [(ngModel)]="selected.nom" type="text"
                                placeholder="{{'Your name * ' | translate}}">
+
                         <div style="color: white" [style.display]="nameNotValid ? 'block' :'none'"
                              class="invalid-feedback">
                             {{'Please dont use the special characters' | translate}}

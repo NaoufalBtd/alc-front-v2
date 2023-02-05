@@ -139,8 +139,7 @@ export class FormLayoutDemoComponent implements OnInit {
                         this.showAnimation = false;
                         this.messageService.add({
                             severity: 'error',
-                            summary: 'Error',
-                            detail: 'Registration Canceled',
+                            detail: error?.error?.message || 'Something went wrong, please try again.',
                             life: 4000
                         });
                         console.log(error);

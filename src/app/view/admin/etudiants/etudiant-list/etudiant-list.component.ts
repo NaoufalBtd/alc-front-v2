@@ -1,16 +1,22 @@
 import {Component, OnInit} from '@angular/core';
-import {ConfirmationService, MessageService, PrimeNGConfig} from 'primeng/api';
+import {MessageService, PrimeNGConfig} from 'primeng/api';
 import {EtudiantService} from '../../../../controller/service/etudiant.service';
 import {Etudiant} from '../../../../controller/model/etudiant.model';
-import {EtudiantVo} from '../../../../controller/model/etudiant-vo.model';
 import {MenuService} from '../../../shared/slide-bar/app.menu.service';
 import {AuthenticationService} from '../../../../controller/service/authentication.service';
 import {UserService} from '../../../../controller/service/user.service';
 import {AppComponent} from '../../../../app.component';
 import {User} from '../../../../controller/model/user.model';
-import {FileUploadStatus} from '../../../../controller/model/FileUploadStatus';
 import {Subscription} from 'rxjs';
 import {Inscription} from '../../../../controller/model/inscription.model';
+import {Role} from '../../../../enum/role.enum';
+import {PackStudentService} from '../../../../controller/service/pack-student.service';
+import {ParcoursService} from '../../../../controller/service/parcours.service';
+import {GroupeEtudeService} from '../../../../controller/service/groupe-etude.service';
+import {GroupeEtude} from '../../../../controller/model/groupe-etude.model';
+import {PackStudent} from '../../../../controller/model/pack-student.model';
+import {Parcours} from '../../../../controller/model/parcours.model';
+import {AnimationService} from '../../../../controller/service/animation.service';
 
 
 @Component({
@@ -32,18 +38,29 @@ export class EtudiantListComponent implements OnInit {
     newUserDialog: boolean;
     public index: number;
     public etudiant: Etudiant = new Etudiant();
-
+    allGroups: Array<GroupeEtude> = new Array<GroupeEtude>();
+    allPacks: Array<PackStudent> = new Array<PackStudent>();
+    packs: Array<PackStudent> = new Array<PackStudent>();
+    parcours: Array<Parcours> = new Array<Parcours>();
+    selectedPack: PackStudent = null;
+    groupNotValid: boolean;
+    packNotValid: boolean;
+    levelNotValid: boolean;
 
     constructor(private menuService: MenuService,
                 private authenticationService: AuthenticationService,
                 private userService: UserService,
                 private studentService: EtudiantService,
+                private packService: PackStudentService,
+                private parcourService: ParcoursService,
+                private messageService: MessageService,
+                private animation: AnimationService,
+                private groupService: GroupeEtudeService,
                 private primengConfig: PrimeNGConfig, public app: AppComponent) {
     }
 
 
     public searchUsers(): void {
-        console.log(this.etudiant);
         this.studentService.findByCriteria(this.etudiant).subscribe(
             data => {
                 this.users.splice(0, this.users.length);
@@ -52,27 +69,7 @@ export class EtudiantListComponent implements OnInit {
                 console.log(error);
             }
         );
-        // const results: Etudiant[] = [];
-        // for (const user of this.users) {
-        //     if (
-        //         user.nom.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1 ||
-        //         user.prenom.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1 ||
-        //         user?.prof?.nom.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1 ||
-        //         user?.parcours?.libelle.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1 ||
-        //         user?.parcours?.code.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1 ||
-        //         user?.prof?.prenom.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1 ||
-        //         user.username.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1) {
-        //         results.push(user);
-        //     }
-        // }
-        // if (results.length === 0 || !searchTerm) {
-        //     this.findAll();
-        // } else {
-        //     this.users.splice(0, this.users.length);
-        //     for (const item of results) {
-        //         this.users.push(item);
-        //     }
-        // }
+
     }
 
     findAll() {
@@ -87,11 +84,14 @@ export class EtudiantListComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        console.log(this.userInfo);
         this.findAll();
+        this.parcourService.findAllLevels().subscribe(d => this.parcours = d);
+        this.groupService.findAll().subscribe(d => this.allGroups = d);
+        this.packService.findAll().subscribe(d => this.allPacks = d);
     }
-    public findEtud(i: number){
-       console.log('hahoa');
+
+    public findEtud(i: number) {
+        console.log('hahoa');
         console.log(this.userInfo);
         this.studentService.findByEtudiantId(i).subscribe(
             data => {
@@ -100,7 +100,8 @@ export class EtudiantListComponent implements OnInit {
             }
         );
     }
-private _inscription =  new Inscription();
+
+    private _inscription = new Inscription();
 
     get inscription(): Inscription {
         return this._inscription;
@@ -143,24 +144,6 @@ private _inscription =  new Inscription();
         this.userInfo = user;
     }
 
-    // addNewUser() {
-    //     this.newUser.role = 'STUDENT';
-    //     this.userService.addUser(this.newUser).subscribe(
-    //         data => {
-    //             if (data == null) {
-    //                 alert('error to save user');
-    //             } else {
-    //                 const student: Etudiant = new Etudiant(data);
-    //                 console.log(student);
-    //                 this.users.push({...student});
-    //                 console.log(data);
-    //             }
-    //         }, error => {
-    //             console.log(error);
-    //         }
-    //     );
-    //     this.newUser = new User();
-    // }
 
     deleteUser() {
         console.log(this.userDelete);
@@ -177,10 +160,6 @@ private _inscription =  new Inscription();
             }
         }
         this.userDelete = new User();
-    }
-
-    showAddUserDialog() {
-        this.newUserDialog = true;
     }
 
 
@@ -210,5 +189,51 @@ private _inscription =  new Inscription();
         );
     }
 
+    showAddUserDialog() {
+        this.etudiant = new Etudiant();
+        this.etudiant.parcours = null;
+        this.etudiant.groupeEtude = null;
+        this.newUserDialog = true;
+    }
 
+    save() {
+        this.etudiant.role = Role.STUDENT;
+        console.log(this.etudiant);
+        if (this.etudiant.parcours === null) {
+            this.levelNotValid = true;
+            return;
+        } else if (this.etudiant.groupeEtude === null) {
+            this.groupNotValid = true;
+            return;
+        } else if (this.selectedPack === null) {
+            this.packNotValid = true;
+            return;
+        }
+        this.animation.showAnimation = true;
+        this.studentService.addStudentWithPack(this.etudiant, this.selectedPack.id).subscribe(student => {
+            this.animation.showAnimation = false;
+            this.users.push({...student});
+            this.messageService.add({
+                severity: 'success',
+                summary: 'Successful',
+                detail: 'student Created',
+                life: 3000
+            });
+            this.newUserDialog = false;
+        }, error => {
+            this.animation.showAnimation = false;
+            console.log(error);
+            this.messageService.add({
+                severity: 'error',
+                detail: error?.error?.message,
+                life: 3000
+            });
+        });
+
+    }
+
+    getPacks() {
+        console.log(this.etudiant.parcours);
+        this.packs = this.allPacks.filter(p => p.level.id === this.etudiant?.parcours?.id);
+    }
 }
