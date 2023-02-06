@@ -490,7 +490,7 @@ export class WebSocketService {
                     if (this.webSocket.readyState === this.webSocket.OPEN) {
                         this.webSocket.send(JSON.stringify(chatMessageDto));
                     }
-                }
+                };
             }
         }
     }
