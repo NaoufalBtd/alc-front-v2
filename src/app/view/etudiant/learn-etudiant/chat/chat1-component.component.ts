@@ -28,7 +28,6 @@ export class Chat1Component implements OnInit, OnDestroy {
         const chatMessageDto = new ChatMessageDto(this.servicelogin.etudiant.nom,
             this.message, true);
         chatMessageDto.prof = this.groupeEtudiant.prof;
-        chatMessageDto.grpStudent = this.groupeEtudiant;
         chatMessageDto.student = null;
         chatMessageDto.dateSent = new Date();
         chatMessageDto.quizReponse = null;

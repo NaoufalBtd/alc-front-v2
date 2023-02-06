@@ -15,6 +15,7 @@ import {LearnService} from '../../../../controller/service/learn.service';
 export class ChatComponent implements OnInit, OnDestroy {
     today = Date.now();
     message: string;
+
     constructor(public webSocketService: WebSocketService,
                 private learnService: LearnService,
                 public loginService: LoginService, public serviceprof: ProfService) {
@@ -45,7 +46,6 @@ export class ChatComponent implements OnInit, OnDestroy {
     sendMessage() {
         const chatMessageDto = new ChatMessageDto(this.loginService.prof.nom,
             this.message, false);
-        chatMessageDto.grpStudent = this.groupeEtudiant;
         chatMessageDto.student = null;
         chatMessageDto.dateSent = new Date();
         chatMessageDto.quizReponse = null;

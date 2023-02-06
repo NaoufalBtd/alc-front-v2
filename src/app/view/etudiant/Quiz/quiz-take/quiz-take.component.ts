@@ -565,7 +565,10 @@ export class QuizTakeComponent implements OnInit, OnDestroy {
         chatMessage.type = 'QUIZ';
         chatMessage.ev = ev.target.id;
         chatMessage.student = this.login.getConnectedStudent();
+        chatMessage.quizReponse = new QuizReponse();
         chatMessage.quizReponse.question = this.question;
+        chatMessage.quizReponse.question.quiz = null;
+        chatMessage.quizReponse.question.reponses = null;
         chatMessage.quizReponse.type = 'T13';
         chatMessage.quizReponse.lib = data;
         if (this.webSocketService.isInSession) {

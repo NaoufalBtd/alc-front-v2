@@ -642,7 +642,6 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
         this.showFlowMeButton = false;
         if (this.webSocketService.sessionHasStarted) {
             const chatMessageDto = new ChatMessageDto(type, String(section.id), false);
-            chatMessageDto.grpStudent = this.groupeEtudiant;
             chatMessageDto.prof = this.prof;
             chatMessageDto.type = 'SECTION';
             this.webSocketService.sendMessage(chatMessageDto, 'PROF');
@@ -960,7 +959,6 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
 
     startLesson() {
         const chatMessageDto = new ChatMessageDto('START_LESSON', 'START_LESSON', false);
-        chatMessageDto.grpStudent = this.groupeEtudiant;
         chatMessageDto.prof = this.prof;
         chatMessageDto.type = 'START_LESSON';
         this.webSocketService.sendMessage(chatMessageDto, 'PROF');

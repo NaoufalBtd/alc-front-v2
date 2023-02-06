@@ -231,8 +231,12 @@ export class WebSocketService {
             this.onOpen(prof, grpEtudiant, sender, user);
         };
         this.webSocket.onerror = (event) => {
+            console.log(event);
         };
         this.webSocket.onmessage = (event) => {
+            console.log(event);
+            console.log(this.connectedUsers);
+            console.log(prof);
             if (this.connectedUsers.filter(d => d.id === this.loginservice.getConnecteUser().id)?.length > 0 ||
                 this.loginservice.getConnecteUser().id === prof.id) {
                 this.onMessage(event);
@@ -283,6 +287,7 @@ export class WebSocketService {
 
     private onMessage(event: MessageEvent<any>) {
         const data: ChatMessageDto = JSON.parse(event.data);
+        console.log(data);
         if (data.type === 'message') {
             if (this.chatMessages.filter(c =>
                 c.user === data.user &&
@@ -389,7 +394,7 @@ export class WebSocketService {
                 } else {
                     const rpsQuiz = data.quizReponse;
                     // @ts-ignore
-                    this.grpStudentAnswers.set(data.student, rpsQuiz);
+                    this.grpStudentAnswers.set(data?.student, rpsQuiz);
                 }
             }
         } else if (data.user === 'FINISH_QUIZ' && data.type === 'FINISH_QUIZ') {
@@ -400,14 +405,9 @@ export class WebSocketService {
             const mydata: ChatMessageDto = JSON.parse(event.data);
             const studentList = this.participants.get(this.prof.id);
             for (const student of studentList) {
-                if (student.id === mydata.student.id) {
+                if (student.id === mydata?.student?.id) {
                     if (this.studentsEnLigne.get(student.id) === undefined) {
                         this.studentsEnLigne.set(student.id, student);
-                        this.messageService.add({
-                            severity: 'success',
-                            life: 3000,
-                            detail: data?.student?.nom + ' join the classroom'
-                        });
                     }
                 }
             }
@@ -459,25 +459,24 @@ export class WebSocketService {
     public sendMessage(chatMessageDto: ChatMessageDto, sender: string) {
         if (this.webSocket.readyState === this.webSocket.OPEN) {
             if (chatMessageDto.type === 'message') {
+                console.log('MESSAGE');
                 this.webSocket.send(JSON.stringify((chatMessageDto)));
             } else if (chatMessageDto?.type === 'START_LESSON') {
+                console.log('START_LESSON');
+
                 chatMessageDto.quizReponse = null;
                 chatMessageDto.dateSent = null;
                 chatMessageDto.ev = null;
                 this.webSocket.send(JSON.stringify((chatMessageDto)));
             } else if (chatMessageDto.type === 'QUIZ' && chatMessageDto.user.includes('PUT_IN_ORDER')) {
+                console.log('PUT_IN_ORDER');
                 this.webSocket.send(JSON.stringify((chatMessageDto)));
             } else {
-                chatMessageDto.quizReponse.question.quiz = null;
-                chatMessageDto.quizReponse.question.reponses = null;
+                console.log(chatMessageDto);
                 const myData = JSON.stringify((chatMessageDto));
                 this.webSocket.send(myData);
             }
         } else {
-            if (chatMessageDto.type !== 'message') {
-                chatMessageDto.quizReponse.question.quiz = null;
-                chatMessageDto.quizReponse.question.reponses = null;
-            }
             if (sender === 'PROF') {
                 this.openWebSocket(this.loginservice.getConnectedProf(), this.loginservice.getConnectedProf(),
                     this.groupeEtudiant, 'PROF');
@@ -491,7 +490,7 @@ export class WebSocketService {
                     if (this.webSocket.readyState === this.webSocket.OPEN) {
                         this.webSocket.send(JSON.stringify(chatMessageDto));
                     }
-                };
+                }
             }
         }
     }

@@ -157,7 +157,6 @@ export class VocabularySectionComponent implements OnInit {
         if (this.webSocketService.isInSession) {
             const chatMessage: ChatMessageDto = new ChatMessageDto('VOC_NEXT', 'VOC_NEXT', true);
             chatMessage.prof = this.prof;
-            chatMessage.grpStudent = this.groupeEtudiant;
             chatMessage.type = 'VOC';
             this.webSocketService.sendMessage(chatMessage, 'STUDENT');
         } else {
@@ -172,7 +171,6 @@ export class VocabularySectionComponent implements OnInit {
         if (this.webSocketService.isInSession && this.groupeEtudiant?.groupeEtude?.nombreEtudiant === 1) {
             const chatMessage: ChatMessageDto = new ChatMessageDto('VOC_FINISH', 'VOC_FINISH', true);
             chatMessage.prof = this.prof;
-            chatMessage.grpStudent = this.groupeEtudiant;
             chatMessage.type = 'VOC';
             this.webSocketService.sendMessage(chatMessage, 'STUDENT');
         } else {
@@ -184,7 +182,6 @@ export class VocabularySectionComponent implements OnInit {
         if (this.webSocketService.isInSession && this.groupeEtudiant?.groupeEtude?.nombreEtudiant === 1) {
             const chatMessage: ChatMessageDto = new ChatMessageDto('VOC_FINISH', 'VOC_FINISH', true);
             chatMessage.prof = this.prof;
-            chatMessage.grpStudent = this.groupeEtudiant;
             chatMessage.type = 'VOC';
             this.webSocketService.sendMessage(chatMessage, 'STUDENT');
         } else {
@@ -197,7 +194,6 @@ export class VocabularySectionComponent implements OnInit {
         if (this.webSocketService.isInSession && this.groupeEtudiant?.groupeEtude?.nombreEtudiant === 1) {
             const chatMessage: ChatMessageDto = new ChatMessageDto('VOC_FLIP', 'VOC_FLIP', true);
             chatMessage.prof = this.prof;
-            chatMessage.grpStudent = this.groupeEtudiant;
             chatMessage.type = 'VOC';
             this.webSocketService.sendMessage(chatMessage, 'STUDENT');
         } else {

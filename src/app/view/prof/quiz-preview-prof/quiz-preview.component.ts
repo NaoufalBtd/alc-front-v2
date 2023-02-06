@@ -448,7 +448,6 @@ export class QuizPreviewProfComponent implements OnInit, OnDestroy {
             }
         }
         reponseQuiz.type = 'FOLLOW-QUIZ';
-        reponseQuiz.prof = this.login.getConnectedProf();
         const chatMessageDto: ChatMessageDto = new ChatMessageDto(this.login.getConnectedProf().toString(), ' ', false);
         chatMessageDto.quizReponse = reponseQuiz;
         chatMessageDto.type = 'FOLLOW-QUIZ';
@@ -498,7 +497,6 @@ export class QuizPreviewProfComponent implements OnInit, OnDestroy {
         this.reponseQuiz.question.reponses = reponse.question?.reponses;
         this.reponseQuiz.numero = reponse.numero;
         this.reponseQuiz.sender = 'PROF';
-        this.reponseQuiz.prof = this.login.getConnectedProf();
         this.reponseQuiz.etatReponse = reponse.etatReponse;
         const chatMessageDto: ChatMessageDto = new ChatMessageDto(this.login.getConnectedProf().toString(), ' ', false);
         chatMessageDto.quizReponse = this.reponseQuiz;
@@ -521,7 +519,6 @@ export class QuizPreviewProfComponent implements OnInit, OnDestroy {
         this.reponseQuiz.question.reponses = reponse.question?.reponses;
         this.reponseQuiz.numero = reponse.numero;
         this.reponseQuiz.sender = 'PROF';
-        this.reponseQuiz.prof = this.login.getConnectedProf();
         this.reponseQuiz.etatReponse = reponse.etatReponse;
         const chatMessageDto: ChatMessageDto = new ChatMessageDto(this.login.getConnectedProf().id.toString(), ' ', false);
         chatMessageDto.quizReponse = this.reponseQuiz;
@@ -555,7 +552,6 @@ export class QuizPreviewProfComponent implements OnInit, OnDestroy {
             } else {
                 this.reponseQuiz.sender = 'STUDENT_CHOICE_T12_FOR_GRP';
             }
-            this.reponseQuiz.prof = this.login.getConnectedProf();
             this.reponseQuiz.etatReponse = reponse.etatReponse;
             const chatMessageDto: ChatMessageDto = new ChatMessageDto(this.login.getConnectedStudent().id.toString(),
                 'STUDENT_CHOICE_T12', false);
@@ -630,7 +626,10 @@ export class QuizPreviewProfComponent implements OnInit, OnDestroy {
         chatMessage.prof = this.login.getConnectedProf();
         chatMessage.type = 'QUIZ';
         chatMessage.ev = ev.target.id;
+        chatMessage.quizReponse = new QuizReponse();
         chatMessage.quizReponse.question = this.question;
+        chatMessage.quizReponse.question.quiz = null;
+        chatMessage.quizReponse.question.reponses = null;
         chatMessage.quizReponse.type = 'T13';
         chatMessage.quizReponse.lib = data;
         chatMessage.quizReponse.sender = 'PROF';

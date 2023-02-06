@@ -60,7 +60,7 @@
             <span class="p-float-label">
             <input *ngIf="answerSelected.lib === undefined" id="inputDashedBorder" inputId="inputDashedBorder"
                    type="text"
-                   [pTooltip]="correctAnswersList.get(question.id)[0]?.lib" tooltipPosition="top"
+                   [pTooltip]="correctAnswersList?.get(question.id)[0]?.lib" tooltipPosition="top"
                    [(ngModel)]="reponseQuiz.lib"
                    (ngModelChange)="saveAnswers(question)"
                    class="p-inputtext-sm " pInputText/>
@@ -71,7 +71,7 @@
                    class="p-inputtext-sm " pInputText/>
 
             <input *ngIf="answerSelected.lib !== undefined && !answerIsCorrect(answerSelected, question)"
-                   [pTooltip]="correctAnswersList.get(question.id)[0]?.lib" tooltipPosition="top"
+                   [pTooltip]="correctAnswersList?.get(question.id)[0]?.lib" tooltipPosition="top"
                    id="inputFalseAnswer" inputId="inputDashedBorder" type="text"
                    [(ngModel)]="answerSelected.lib"
                    class="p-inputtext-sm " pInputText/>
@@ -109,7 +109,7 @@
             </button>
 
             <input *ngIf="answerSelected.lib === undefined" id="input-answer" type="text"
-                   [pTooltip]="correctAnswersList.get(question.id)[0]?.lib" tooltipPosition="top"
+                   [pTooltip]="correctAnswersList?.get(question.id)[0]?.lib" tooltipPosition="top"
                    (focus)="showDontKnowButton = false ; showCheckButton=true"
                    [(ngModel)]="reponseQuiz.lib" pInputText>
 
@@ -119,7 +119,7 @@
 
             <input style="text-decoration: 2px line-through red;"
                    *ngIf="answerSelected.lib !== undefined && !answerIsCorrect(answerSelected, question)"
-                   [pTooltip]="correctAnswersList.get(question.id)[0]?.lib" tooltipPosition="top"
+                   [pTooltip]="correctAnswersList?.get(question.id)[0]?.lib" tooltipPosition="top"
                    id="input-answer-incorrect" type="text"
                    [(ngModel)]="answerSelected.lib" pInputText>
         </span>
@@ -148,7 +148,7 @@
             <span class="p-float-label">
                 <input style="font-weight: normal;" *ngIf="answerSelected.lib === undefined" id="inputQstT4"
                        (focus)="showDontKnowButton =false; showCheckButton=true;"
-                       [pTooltip]="correctAnswersList.get(question.id)[0]?.lib" tooltipPosition="top"
+                       [pTooltip]="correctAnswersList?.get(question.id)[0]?.lib" tooltipPosition="top"
 
                        (focusin)="hidePlaceHolder('HIDE')"
                        (focusout)="hidePlaceHolder('SHOW')"
@@ -164,7 +164,7 @@
 
             <input *ngIf="answerSelected.lib !== undefined && !answerIsCorrect(answerSelected, question)"
                    id="inputFalseAnswer" inputId="inputDashedBorder" type="text"
-                   [pTooltip]="correctAnswersList.get(question.id)[0]?.lib" tooltipPosition="top"
+                   [pTooltip]="correctAnswersList?.get(question.id)[0]?.lib" tooltipPosition="top"
                    [(ngModel)]="answerSelected.lib"
                    class="p-inputtext-sm " pInputText/>
 
@@ -194,7 +194,7 @@
                        (focus)="showDontKnowButton =false; showCheckButton=true;"
                        (focusin)="hidePlaceHolder('HIDE')"
                        (focusout)="hidePlaceHolder('SHOW')"
-                       [pTooltip]="correctAnswersList.get(question.id)[0]?.lib" tooltipPosition="top"
+                       [pTooltip]="correctAnswersList?.get(question.id)[0]?.lib" tooltipPosition="top"
                        inputId="inputDashedBorder" type="text"
                        [placeholder]="inputAnswer"
                        [(ngModel)]="reponseQuiz.lib" class="p-inputtext-sm " pInputText/>
@@ -206,7 +206,7 @@
                    class="p-inputtext-sm " pInputText/>
 
             <input *ngIf="answerSelected.lib !== undefined && !answerIsCorrect(answerSelected, question)"
-                   [pTooltip]="correctAnswersList.get(question.id)[0]?.lib" tooltipPosition="top"
+                   [pTooltip]="correctAnswersList?.get(question.id)[0]?.lib" tooltipPosition="top"
                    id="inputFalseAnswer" inputId="inputDashedBorder" type="text"
                    [(ngModel)]="answerSelected.lib"
                    class="p-inputtext-sm " pInputText/>
@@ -229,7 +229,7 @@
 
     <div *ngIf="question.typeDeQuestion.ref === 't5'" class="p-grid">
         <div class="p-col-12  question ">
-            <div [pTooltip]="correctAnswersList.get(question.id)[0]?.lib" id="trueFalse" class="p-grid trueOrFalseQst">
+            <div [pTooltip]="correctAnswersList?.get(question.id)[0]?.lib" id="trueFalse" class="p-grid trueOrFalseQst">
                 <div class="p-col-9">
                     {{  question?.libelle}}
                 </div>
