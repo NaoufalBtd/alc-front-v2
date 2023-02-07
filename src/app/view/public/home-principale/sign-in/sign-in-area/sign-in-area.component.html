@@ -20,7 +20,7 @@
         <div class="col-xxl-6 offset-xxl-3 col-xl-6 offset-xl-3 col-lg-8 offset-lg-2">
            <div class="sign__wrapper white-bg">
 
-              <div class="sign__form">
+              <div [style.direction]="translate.currentLang === 'ar' ? 'rtl': 'ltr'" class="sign__form">
                  <form action="#">
                     <div class="sign__input-wrapper mb-25">
                        <h5>{{'e-mail address'| translate}}</h5>
@@ -41,7 +41,7 @@
                     </div>
                     <div class="sign__action d-sm-flex justify-content-between mb-30">
                        <div class="sign__agree d-flex align-items-center">
-                          <input class="m-check-input" type="checkbox" id="m-agree">
+                          <input [checked]="true" class="m-check-input" type="checkbox" id="m-agree">
                           <label class="m-check-label" for="m-agree">{{'Keepmesigned'| translate}}
                              </label>
                        </div>

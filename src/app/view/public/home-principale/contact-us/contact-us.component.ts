@@ -14,7 +14,8 @@ export class ContactUsComponent implements OnInit {
     contact: Contact = new Contact();
 
     constructor(private contactService: ContactService,
-                private datepipe: DatePipe, private translate: TranslateService,
+                private datepipe: DatePipe,
+                public translate: TranslateService,
                 private messageService: MessageService) {
 
     }
@@ -24,7 +25,7 @@ export class ContactUsComponent implements OnInit {
 
     save(): void {
         this.contact.setFrom = 'ANONYMOUS';
-        let  date = new Date();
+        let date = new Date();
         this.contact.date = this.datepipe.transform(date, 'yyyy-MM-dd hh:mm:ss');
         this.contactService.save(this.contact).subscribe(
             data => {

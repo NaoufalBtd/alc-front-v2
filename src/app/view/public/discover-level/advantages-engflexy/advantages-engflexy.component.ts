@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
     selector: 'app-advantages-engflexy',
@@ -9,7 +10,7 @@ export class AdvantagesEngflexyComponent implements OnInit {
 
     sectionIndex = 1;
 
-    constructor() {
+    constructor(public translate : TranslateService) {
     }
 
     ngOnInit(): void {

@@ -94,8 +94,8 @@ export class FilterCoursesComponent implements OnInit {
         this.activeIndex = 0;
         this.levelSerivce.findAllLevels().subscribe(d => this.priceService.levels = d);
         this.priceService.getAll().subscribe(d => this.priceList = d);
-        this.priceService.getMinPrice(true).subscribe(d => this.minPriceForGroup = d.price);
-        this.priceService.getMinPrice(false).subscribe(d => this.minPriceForIndividual = d.price);
+        this.priceService.getMaxPrice(true).subscribe(d => this.minPriceForGroup = Math.floor(d.price / d.nreHours));
+        this.priceService.getMaxPrice(false).subscribe(d => this.minPriceForIndividual = Math.floor(d.price / d.nreHours));
     }
 
     chooseOption(type: string) {

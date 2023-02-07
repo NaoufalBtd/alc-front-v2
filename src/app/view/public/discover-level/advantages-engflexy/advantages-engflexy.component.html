@@ -1,4 +1,4 @@
-<section style="direction: rtl" class="py-5 header">
+<section  [style.direction]="translate.currentLang === 'ar' ? 'rtl': 'ltr'" class="py-5 header">
     <div class="container py-4">
         <header class="text-center mb-5 pb-5 text-white">
             <h1 id="discoverText">{{'Advantages of studying in EngFlexy' | translate}}</h1>
@@ -13,35 +13,35 @@
                        [class.active]="sectionIndex === 1"
                        id="v-pills-home-tab" data-toggle="pill" (click)="showSection(1)" role="tab" aria-controls="v-pills-home" aria-selected="true">
                         <i class="fa fa-check mx-2 mr-2"></i>
-                        <span  class="font-weight-bold small text-uppercase">طور مستواك في اللغة الإنجليزية</span></a>
+                        <span  class="font-weight-bold small text-uppercase">{{'Develop your level of English' | translate}}</span></a>
 
                     <a class="nav-link rtl mb-3 p-3 shadow"
                        [class.active]="sectionIndex === 2"
                        id="v-pills-profile-tab" data-toggle="pill" (click)="showSection(2)" role="tab" aria-controls="v-pills-profile" aria-selected="false">
                         <i class="fa fa-check mx-2 mr-2"></i>
-                        <span  class="font-weight-bold small text-uppercase">كم هو أفضل أن تدرس وأنت مرتاح!</span></a>
+                        <span  class="font-weight-bold small text-uppercase">{{'How better it is to study comfortably!' | translate}}</span></a>
 
                     <a class="nav-link rtl mb-3 p-3 shadow" [class.active]="sectionIndex === 3"
                        id="v-pills-messages-tab" data-toggle="pill" (click)="showSection(3)" role="tab" aria-controls="v-pills-messages" aria-selected="false">
                         <i class="fa fa-check mx-2 mr-2"></i>
-                        <span  class="font-weight-bold small text-uppercase">تدفع مرة و تتعلم مرتين!</span></a>
+                        <span  class="font-weight-bold small text-uppercase">{{'Pay once and learn twice!' | translate}}</span></a>
 
                     <a class="nav-link rtl mb-3 p-3 shadow" [class.active]="sectionIndex === 4"
                        id="v-pills-settings-tab" data-toggle="pill" (click)="showSection(4)" role="tab" aria-controls="v-pills-settings" aria-selected="false">
                         <i class="fa fa-check mx-2 mr-2"></i>
-                        <span  class="font-weight-bold small text-uppercase">اكتشف مستواك </span></a>
+                        <span  class="font-weight-bold small text-uppercase">{{'discover your level' | translate}} </span></a>
 
 
                     <a class="nav-link rtl mb-3 p-3 shadow" [class.active]="sectionIndex === 5"
                        id="v-pills-settings-tab" data-toggle="pill" (click)="showSection(5)" role="tab" aria-controls="v-pills-settings" aria-selected="false">
                         <i class="fa fa-check mx-2 mr-2"></i>
-                        <span  class="font-weight-bold small text-uppercase">خاصية إسترجاع الرسوم</span></a>
+                        <span  class="font-weight-bold small text-uppercase">{{'Fee refund feature' | translate}}</span></a>
 
 
                     <a class="nav-link rtl mb-3 p-3 shadow" [class.active]="sectionIndex === 6"
                        id="v-pills-settings-tab" data-toggle="pill" (click)="showSection(6)" role="tab" aria-controls="v-pills-settings" aria-selected="false">
                         <i class="fa fa-check mx-2 mr-2"></i>
-                        <span  class="font-weight-bold small text-uppercase">شهادة إتمام اللغة الإنجليزية</span></a>
+                        <span  class="font-weight-bold small text-uppercase">{{'English Language Completion Certificate' | translate}}</span></a>
                 </div>
             </div>
 
@@ -53,9 +53,9 @@
                          [class.active]="sectionIndex === 1"
                          [class.show]="sectionIndex === 1"
                          id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
-                        <h4  class="font-italic mb-4">هل ترغب أن تطور مستواك في اللغة الإنجليزية بطريقة فعالة وإحترافية؟</h4>
+                        <h4  class="font-italic mb-4">{{'Do you want to improve your level of English in an effective and professional way?' | translate}}</h4>
                         <p  class="font-italic text-muted mb-2">
-                            إذن أكاديمية EngFlexy هي الحل فيهي تتيح لك الفرصة في التعلم مع أستاذ معترف به مباشرة و بشكل تفاعلي حيث يمكنك التحدث، تعلم القواعد، الإستماع، القراءة و كذلك الكتابة بالإضافة إلى التمارين حتى تتمرس بشكل مكثف مع أستاذك.
+                            {{'So EngFlexy Academy is the solution in which it gives you the opportunity to learn with a recognized professor directly and interactively where you can speak, learn grammar, listen, read and write in addition to exercises until you practice intensively with your teacher' | translate}}
                         </p>
                     </div>
 
@@ -63,9 +63,9 @@
                           [class.active]="sectionIndex === 2"
                           [class.show]="sectionIndex === 2"
                           id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
-                        <h4 class="font-italic mb-4">كم هو أفضل أن تدرس وأنت مرتاح!</h4>
+                        <h4 class="font-italic mb-4">{{'How better it is to study comfortably!' | translate}}</h4>
                         <p class="font-italic text-muted mb-2">
-                            أكاديمية تمنحك الفرصة بأن تتعلم الإنجليزية من أي مكان. ما يلزمك فقط جهاز و أنترنيت. العامل النفسي يمكن أن يكون أكثر أهمية في رحلة التعلم. فبدلا من ضياع الوقت التي تقضيه ذهابا وإيابا من منزلك إلى مكان التعلم،يمكنك أن تستفيد من هذا الوقت لإنجاز التمارين أو مع أستاذك بشكل مباشر.
+                            {{'The Academy gives you the opportunity to learn English from anywhere. All you need is a device and the Internet. The psychological factor can be more important in the learning journey. Instead of wasting time going back and forth from your home to the place of learning, you can take advantage of this time to complete the exercises with your teacher directly.' | translate}}
                         </p>
                     </div>
 
@@ -73,9 +73,9 @@
                           [class.active]="sectionIndex === 3"
                           [class.show]="sectionIndex === 3"
                           id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
-                        <h4 class="font-italic mb-4">تدفع مرة و تتعلم مرتين!</h4>
+                        <h4 class="font-italic mb-4">{{'Pay once and learn twice!' | translate}}</h4>
                         <p class="font-italic text-muted mb-2">
-                            تدفع فقط لساعة واحدة ثم لديك ساعة أخرى مجانية حيث تختبر مهاراتك في مكان للواجبات. ستجد التمارين المصاحبة للدرس حيث يمكنك حلها وإعادة الحل عدد المرات التي ترغب فيها حتى تتمكن تماما من الدرس. ستجد قسما للكتابة حيث بعد إنتهاءك يمكنك إرساله لأستاذك للتصحيح و مناقشة مكان القصور والأخطاء. كلها هذا مجانا
+                            {{'You only pay for one hour and then you have another hour free as you put your skills to the test in a place of assignments. You will find exercises accompanying the lesson where you can solve and re-solve as many times as you wish until you are fully able to complete the lesson. You will find a section for writing, where after you finish, you can send it to your professor for correction and discussion of all the shortcomings and mistakes.' | translate}}
                         </p>
                     </div>
 
@@ -83,9 +83,9 @@
                           [class.active]="sectionIndex === 4"
                           [class.show]="sectionIndex === 4"
                           id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
-                        <h4 class="font-italic mb-4">هل ترغب في معرفة مستواك بالإنجليزية؟</h4>
+                        <h4 class="font-italic mb-4">{{'Do you want to know your level in English?' | translate}}</h4>
                         <p class="font-italic text-muted mb-2">
-                            أكاديمية EngFlexy تفتح لك المنصة لتختبر مدى تمكنك من الإنجليزية عبر إختبار مكون من مجموعة من الأسئلة. بعد الإجابة، ستحصل مباشرة على النتيجة و كذلك مستواك (مبتدئ، متوسط، متقدم...).
+                            {{'EngFlexy Academy opens the platform for you to test your English proficiency through a test consisting of a set of questions. After answering, you will immediately get the result as well as your level (beginner, intermediate, advanced...)' | translate}}
                         </p>
                     </div>
 
@@ -94,9 +94,9 @@
                           [class.active]="sectionIndex === 5"
                           [class.show]="sectionIndex === 5"
                           id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
-                        <h4 class="font-italic mb-4">خاصية إسترجاع الرسوم</h4>
+                        <h4 class="font-italic mb-4">{{'Fee refund feature' | translate}}</h4>
                         <p class="font-italic text-muted mb-2">
-                            هدفنا الأساسي هو تمكنك من اللغة الإنجليزية بإحتراف. لذلك خاصية إسترجاع المبلغ كاملا في حال عدم إستفادتك. جميع الجلسات المستقبلية في غضون 48 ساعة من طلب إسترداد الأموال قابلة للإسترداد
+                            {{'Our primary goal is to enable you to master the English language professionally. Therefore, the feature of refunding the full amount in the event that you do not benefit. All future sessions within 48 hours of requesting a refund are refundable' | translate}}
                         </p>
                     </div>
 
@@ -104,9 +104,9 @@
                           [class.active]="sectionIndex === 6"
                           [class.show]="sectionIndex === 6"
                           id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
-                        <h4 class="font-italic mb-4">شهادة إتمام اللغة الإنجليزية</h4>
+                        <h4 class="font-italic mb-4">{{'English Language Completion Certificate' | translate}}</h4>
                         <p class="font-italic text-muted mb-2">
-                            في نهاية إتمامك أي مستوى من المستويات وإجتياز الإمتحان ستحصل على شهادة نجاح مقدمة من أكاديمية.
+                            {{'At the end of completing any of the levels and passing the exam, you will receive a certificate of success presented by the academy' | translate}}
                         </p>
                     </div>
 
