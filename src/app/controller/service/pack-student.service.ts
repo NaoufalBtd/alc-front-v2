@@ -155,8 +155,9 @@ export class PackStudentService {
             }
         );
     }
+
     public findAll(): Observable<PackStudent[]> {
-       return  this.http.get<PackStudent[]>(this.adminUrl + 'packStudent/');
+        return this.http.get<PackStudent[]>(this.adminUrl + 'packStudent/');
     }
 
     public findByLevel(levelId: number) {
@@ -179,6 +180,7 @@ export class PackStudentService {
     savePack() {
         this.packstudentIndividial.nombreCours = this.packstudentIndividial.price.nreCourse;
         this.packstudentIndividial.oldPrice = this.packstudentIndividial.price.oldPrice.toString();
+        this.packstudentIndividial.libelle = this.packstudentIndividial.price.lib;
         this.http.post<number>(this.adminUrl + 'packStudent/', this.packstudentIndividial).subscribe(
             data => {
                 this.messageService.add({
@@ -210,6 +212,7 @@ export class PackStudentService {
     updatePack() {
         this.packstudentIndividial.nombreCours = this.packstudentIndividial.price.nreCourse;
         this.packstudentIndividial.oldPrice = this.packstudentIndividial.price.oldPrice.toString();
+        this.packstudentIndividial.libelle = this.packstudentIndividial.price.lib;
         this.http.put<PackStudent>(this.adminUrl + 'packStudent/', this.packstudentIndividial).subscribe(
             data => {
                 this.messageService.add({
@@ -267,15 +270,34 @@ export class PackStudentService {
         );
     }
 
-    findbycretira(b: boolean) {
-        this.http.post<Array<PackStudent>>(this.adminUrl + 'packStudent/criteria', this.packstudentVo).subscribe(
+    findbycretira(b: boolean, value: string) {
+
+        this.http.get<PackStudent[]>(this.adminUrl + 'packStudent/').subscribe(
             data => {
-                if (data !== null) {
-                    if (b) {
-                        this.packstudentgroupeList = data;
-                    } else {
-                        this.packstudentIndividialList = data;
-                    }
+                if (b) {
+                    data = data.filter(d => d.forGroupe === true);
+                    this.packstudentgroupeList = data.filter(d =>
+                        d.libelle?.toUpperCase()?.includes(value.toUpperCase()) ||
+                        d.level?.libelle?.toUpperCase()?.includes(value.toUpperCase()) ||
+                        d.nombreCours?.toString()?.toUpperCase()?.includes(value.toUpperCase()) ||
+                        d.price?.price?.toString()?.toUpperCase()?.includes(value.toUpperCase()) ||
+                        d.price?.lib?.toString()?.toUpperCase()?.includes(value.toUpperCase()) ||
+                        d.price?.oldPrice?.toString()?.toUpperCase()?.includes(value.toUpperCase()) ||
+                        d.price?.nreHours?.toString()?.toUpperCase()?.includes(value.toUpperCase()) ||
+                        d.price?.nreMonth?.toString()?.toUpperCase()?.includes(value.toUpperCase())
+                    );
+                } else {
+                    data = data.filter(d => d.forGroupe === false);
+                    this.packstudentIndividialList = data.filter(d =>
+                        d.libelle?.toUpperCase()?.includes(value.toUpperCase()) ||
+                        d.level?.libelle?.toUpperCase()?.includes(value.toUpperCase()) ||
+                        d.nombreCours?.toString()?.toUpperCase()?.includes(value.toUpperCase()) ||
+                        d.price?.price?.toString()?.toUpperCase()?.includes(value.toUpperCase()) ||
+                        d.price?.lib?.toString()?.toUpperCase()?.includes(value.toUpperCase()) ||
+                        d.price?.oldPrice?.toString()?.toUpperCase()?.includes(value.toUpperCase()) ||
+                        d.price?.nreHours?.toString()?.toUpperCase()?.includes(value.toUpperCase()) ||
+                        d.price?.nreMonth?.toString()?.toUpperCase()?.includes(value.toUpperCase())
+                    );
                 }
             }
         );

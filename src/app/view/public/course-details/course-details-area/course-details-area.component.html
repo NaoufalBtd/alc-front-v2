@@ -951,7 +951,10 @@
                     <div class="course__sidebar-widget-2 white-bg mb-20">
                         <div class="course__video">
                             <div class=" w-img mb-25">
-                                <img [src]="selectedCourse?.imgUrl" alt=""/>
+                                <img *ngIf="selectedCourse?.price?.lib?.toUpperCase()?.includes('PLATINUM')" src="/assets/images/Platinum.gif" alt=""/>
+                                <img *ngIf="selectedCourse?.price?.lib?.toUpperCase()?.includes('GOLD')" src="/assets/images/Gold.png" alt=""/>
+                                <img *ngIf="selectedCourse?.price?.lib?.toUpperCase()?.includes('SILVER')" src="/assets/images/Silver.png" alt=""/>
+
                             </div>
                             <div
                                     class="course__video-meta mb-25 d-flex align-items-center justify-content-between"

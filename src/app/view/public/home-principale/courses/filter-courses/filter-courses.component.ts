@@ -132,6 +132,9 @@ export class FilterCoursesComponent implements OnInit {
     getCourse(level: string) {
         if (this.groupOption === 'GROUP') {
             this.packService.findPackByGroupOption(true).subscribe(data => {
+                console.log(data);
+                console.log(level);
+                console.log(this.priceSelected);
                 const course = data.filter(d => d.price?.price === this.priceSelected &&
                     d.level.libelle.toUpperCase() === level.toUpperCase());
                 if (course.length > 0) {
@@ -146,6 +149,7 @@ export class FilterCoursesComponent implements OnInit {
             });
         } else {
             this.packService.findPackByGroupOption(false).subscribe(data => {
+                console.log(data);
                 const course = data.filter(d => d.price?.price === this.priceSelected &&
                     d.level.libelle.toUpperCase() === level.toUpperCase());
                 if (course.length > 0) {

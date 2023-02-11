@@ -110,44 +110,44 @@ export class FormLayoutDemoComponent implements OnInit {
     }
 
     private verifyEmail(username: string) {
-        // const url = 'https://emailvalidation.abstractapi.com/v1/?api_key=d928649ca44341bba9a9482419202c4c&email=' + username;
-        // return this.http.get<any>(url).subscribe(data => {
-        //     console.log(data);
-        //     if (data?.deliverability === 'UNDELIVERABLE') {
-        //         this.messageService.add({
-        //             severity: 'info',
-        //             detail: 'لم يتم العثور على بريدك الالكتروني، يرجى محاولة استخدام بريد إلكتروني حقيقي',
-        //             life: 30000
-        //         });
-        //     } else {
-        this.showAnimation = true;
-        this.etudiantService.create().subscribe(
-            st => {
-                this.showAnimation = false;
-                if (st != null) {
-                    this.showAnimation = false;
-                    this.showdialog = true;
-                    this.showConfirm();
-                } else {
-                    this.messageService.add({
-                        severity: 'info',
-                        detail: 'البريد الالكتروني موجود بالفعل، من فضلك تفقد بريدك الالكتروني للحصول على اسم المستخدم و كلمة المرور للولوج الى حسابك',
-                        life: 30000
-                    });
-                }
-            }, error => {
-                this.showAnimation = false;
+        const url = 'https://emailvalidation.abstractapi.com/v1/?api_key=d928649ca44341bba9a9482419202c4c&email=' + username;
+        return this.http.get<any>(url).subscribe(data => {
+            console.log(data);
+            if (data?.deliverability === 'UNDELIVERABLE') {
                 this.messageService.add({
-                    severity: 'error',
-                    detail: error?.error?.message || 'Something went wrong, please try again.',
-                    life: 4000
+                    severity: 'info',
+                    detail: 'لم يتم العثور على بريدك الالكتروني، يرجى محاولة استخدام بريد إلكتروني حقيقي',
+                    life: 30000
                 });
-                console.log(error);
+            } else {
+                this.showAnimation = true;
+                this.etudiantService.create().subscribe(
+                    st => {
+                        this.showAnimation = false;
+                        if (st != null) {
+                            this.showAnimation = false;
+                            this.showdialog = true;
+                            this.showConfirm();
+                        } else {
+                            this.messageService.add({
+                                severity: 'info',
+                                detail: 'البريد الالكتروني موجود بالفعل، من فضلك تفقد بريدك الالكتروني للحصول على اسم المستخدم و كلمة المرور للولوج الى حسابك',
+                                life: 30000
+                            });
+                        }
+                    }, error => {
+                        this.showAnimation = false;
+                        this.messageService.add({
+                            severity: 'error',
+                            detail: error?.error?.message || 'Something went wrong, please try again.',
+                            life: 4000
+                        });
+                        console.log(error);
+                    }
+                );
             }
-        );
-        // }
-        // }, error => {
-        //     console.log(error);
-        // });
+        }, error => {
+            console.log(error);
+        });
     }
 }

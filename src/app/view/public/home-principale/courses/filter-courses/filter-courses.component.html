@@ -67,11 +67,14 @@
             </div>
 
             <div class="course__content">
-                <div  [style.direction]="translate.currentLang === 'ar' ? 'rtl': 'ltr'" id="individual-text" class="course__meta align-items-center justify-content-between">
-                    {{'Individual' | translate}} {{"Starting from" | translate}} {{minPriceForIndividual}}DH
+                <div [style.direction]="translate.currentLang === 'ar' ? 'rtl': 'ltr'" id="individual-text"
+                     class="course__meta align-items-center justify-content-between">
+                    {{'Individual' | translate}} {{"Starting from" | translate}} <br>
+                    <div class="heartbeat">{{minPriceForIndividual}} {{'DH' | translate}}</div>
                 </div>
                 <div style="padding: 10px;text-align: center" class="course__teacher d-flex align-items-center">
-                    <h6>هو عبارة عن حصص فردية مع مدرسك الخاص، حيث يستفيد التلميذ من مجموعة من الامتيازات كتحديد الجدول
+                    <h6 style="color: #ffffffed;">هو عبارة عن حصص فردية مع مدرسك الخاص، حيث يستفيد التلميذ من مجموعة من
+                        الامتيازات كتحديد الجدول
                         الزمني الخاص به</h6>
                 </div>
             </div>
@@ -87,14 +90,18 @@
             </div>
 
             <div class="course__content">
-                <div  [style.direction]="translate.currentLang === 'ar' ? 'rtl': 'ltr'" id="individual-text" class="course__meta align-items-center justify-content-between">
-                    {{'Group' | translate}} {{"Starting from" | translate}} {{minPriceForGroup}}DH
+                <div [style.direction]="translate.currentLang === 'ar' ? 'rtl': 'ltr'" id="individual-text"
+                     class="course__meta align-items-center justify-content-between">
+                    {{'Group' | translate}} {{"Starting from" | translate}} <br>
+                    <div class="heartbeat"> {{minPriceForGroup}}  {{'DH' | translate}}</div>
                 </div>
                 <div style="padding: 10px;text-align: center" class="course__teacher d-flex align-items-center">
-                    <h6> الدراسة في مجموعة من شخصان الى خمسة اشخاص على الاكتر من نفس المستوى. تساعدك الدراسة في مجموعة
-                        على التعلم بسرعة واكتشاف أفكار جديدة مع زملائك</h6>
+                    <h6 style="color: #ffffffed;"> الدراسة في مجموعة من <strong
+                            style="text-decoration: underline">شخصان</strong> أو أكتر من نفس المستوى. تساعدك الدراسة في
+                        مجموعة على التعلم بسرعة واكتشاف أفكار جديدة مع زملائك</h6>
                 </div>
             </div>
+
         </div>
     </div>
     <div class=" col-xxl-2 col-xl-2 col-lg-2 col-md-2 col-sm-6"></div>
