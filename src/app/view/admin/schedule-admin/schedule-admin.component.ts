@@ -274,7 +274,8 @@ export class ScheduleAdminComponent implements OnInit {
     }
 
     private saveSchedule(scheduleObj: any) {
-        if (this.scheduleProf.id === 0 || this.scheduleProf.id === null) {
+        console.log(this.scheduleProf);
+        if (this.scheduleProf.id === 0 || this.scheduleProf.id === null || this.scheduleProf.id === undefined) {
             this.scheduleService.save().subscribe
             (
                 data => {
@@ -330,7 +331,8 @@ export class ScheduleAdminComponent implements OnInit {
 
 
     public onPopupOpen(args: PopupOpenEventArgs): void {
-        console.log(args.type);
+        this.scheduleProf = new ScheduleProf();
+        console.log(args);
         this.scheduleProf = new ScheduleProf();
         if (args.data?.id !== undefined) {
             this.data.subject = args.data?.subject;
@@ -353,6 +355,9 @@ export class ScheduleAdminComponent implements OnInit {
         } else if (args.type === 'Editor') {
             this.scheduleProf.startTime = args.data?.startTime;
             this.scheduleProf.endTime = args.data?.endTime;
+        }
+        if (args.data?.ref === null || args.data?.ref === undefined || args.data?.ref === '' || args.data?.ref === 0) {
+            this.scheduleProf.id = null;
         }
     }
 
