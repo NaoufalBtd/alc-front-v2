@@ -353,7 +353,7 @@ export class EtudiantProfileComponent implements OnInit {
 
     selectedPackFct(pack: PackStudent) {
         this.selectedPack = pack;
-        this.router.navigate(['/etudiant/pack']);
+        this.router.navigate(['/etudiant/pack/' + pack.id]);
     }
 
     updateInscriptionByStudent() {
@@ -461,6 +461,14 @@ export class EtudiantProfileComponent implements OnInit {
         } else {
             return 'Individual';
         }
+    }
+
+    getPercentage(pack: PackStudent): number {
+        return (100 - ((Number(pack?.price?.price) / Number(pack?.price?.oldPrice)) * 100));
+    }
+
+    filterByLevel(level: Parcours) {
+        console.log(level);
     }
 }
 

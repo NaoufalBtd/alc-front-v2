@@ -52,7 +52,7 @@
   border: none;
 }
 
-.smallTitle{
+.smallTitle {
   margin-top: -20px;
   font-size: 14px;
   color: #263238;
@@ -73,32 +73,32 @@
 }
 
 .Startnow:hover {
-  width: 100%!important;
-  background: #263238!important;
-  border: none!important;
-  color: #ff725e!important;
-  font-weight: bold!important;
-  height: 40px!important;
+  width: 100% !important;
+  background: #263238 !important;
+  border: none !important;
+  color: #ff725e !important;
+  font-weight: bold !important;
+  height: 40px !important;
 }
 
 .Startnow:active {
   width: 100%;
-  background: #ff725e!important;
-  border: 2px solid #ff725e!important;
-  color: #263238!important;
-  font-weight: bold!important;
-  height: 40px!important;
+  background: #ff725e !important;
+  border: 2px solid #ff725e !important;
+  color: #263238 !important;
+  font-weight: bold !important;
+  height: 40px !important;
 }
 
 .Startnow:focus {
-  outline: 0 none!important;
-  outline-offset: 0!important;
-  box-shadow: 0 0 0 0.2rem #707070!important;
+  outline: 0 none !important;
+  outline-offset: 0 !important;
+  box-shadow: 0 0 0 0.2rem #707070 !important;
 }
 
 /*************************************************/
 
-.select{
+.select {
   width: 100%;
   height: 45px;
   border: none;
@@ -107,3 +107,134 @@
   font-family: unset;
   color: #666666;
 }
+
+
+/**
+card css
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+
+.card {
+  width: 260px;
+  border: none;
+  border-radius: 10px;
+  background: #4E68C7;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.silver {
+  background: #8e9aaf;
+}
+
+.gold {
+  background: #f78e3c;
+}
+
+.platinum {
+  background: #4E68C7;
+}
+
+.btn-silver {
+  background: #9ca1ab;
+}
+
+.btn-gold {
+  background: #ffa763;
+}
+
+.btn-platinum {
+  background: #647EDF;
+}
+
+
+.btn-platinum:hover,
+.btn-platinum:focus {
+  background: #4E68C7;
+  border: 1px solid white;
+}
+
+.btn-gold:hover,
+.btn-gold:focus {
+  background: #f78e3c;
+  border: 1px solid white;
+}
+
+.btn-silver:hover,
+.btn-silver:focus {
+  background: #8e9aaf;
+  border: 1px solid white;
+}
+
+
+p.top {
+  font-size: 14px; //course__thumb w-img p-relative fix
+}
+
+p.top::first-letter{
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.discount {
+  background-color: #ff725e;
+  border: none;
+  border-top-left-radius: 25px;
+  border-bottom-left-radius: 25px;
+  padding: 5px 15px;
+  transform: translateX(24px);
+  height: 35px;
+}
+
+.discount span {
+  font-size: 15px;
+}
+
+h2 {
+  letter-spacing: 2px;
+}
+
+.fa-euro-sign {
+  font-size: 27px;
+  color: #B3C4FA;
+}
+
+.card-content p {
+  line-height: 18px;
+  font-size: 11px;
+  color: #abbef6;
+}
+
+.btn-primary {
+  border: none;
+  border-radius: 6px;
+  padding-top: 0;
+  height: 46px;
+  font-weight: bold;
+}
+
+.btn-primary span {
+  font-size: 13px;
+  color: #D1E2FF;
+  margin-right: 10px;
+}
+
+.fa-arrow-right {
+  font-size: 12px;
+  color: #D1E2FF;
+}
+
+.search-bar{
+  background:#263238 ;
+  border-radius: 5px;
+}
+
+
+/**
+toggle button
+ */
+

@@ -210,7 +210,7 @@ import {PaimentBackComponent} from './view/public/home-principale/paiment/paimen
                     {path: 'inviteStudent', component: InvitedStudentComponent},
                     {path: 'myPromotionList', component: MyPromotionListComponent},
                     {path: 'inviteStudent', component: InvitedStudentComponent},
-                    {path: 'pack', component: PackDetailsComponent},
+                    {path: 'pack/:id', component: PackDetailsComponent},
                     {path: '*', component: HomeStudentComponent}
 
                 ]

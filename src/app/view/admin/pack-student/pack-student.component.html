@@ -40,9 +40,9 @@
                                 <p-table responsiveLayout="scroll" [value]="packstudentIndividialList">
                                     <ng-template pTemplate="header">
                                         <tr>
+                                            <th>ID</th>
                                             <th>Level</th>
                                             <th>Name</th>
-                                            <th>Number de courses</th>
                                             <th>Price</th>
                                             <th>Total Students</th>
                                             <th>Action</th>
@@ -50,9 +50,9 @@
                                     </ng-template>
                                     <ng-template pTemplate="body" let-c>
                                         <tr>
+                                            <td>{{c.id}}</td>
                                             <td>{{c.level?.libelle}}</td>
                                             <td>{{c.libelle}}</td>
-                                            <td>{{c.nombreCours}}</td>
                                             <td>{{c.price?.price}}</td>
                                             <td>{{c.totalStudents}}</td>
                                             <td>
@@ -108,9 +108,9 @@
                                 <p-table responsiveLayout="scroll" [value]="packstudentgroupeList">
                                     <ng-template pTemplate="header">
                                         <tr>
+                                            <th>ID</th>
                                             <th>Level</th>
                                             <th>Name</th>
-                                            <th>Number of courses</th>
                                             <th>Price</th>
                                             <th>Total Students</th>
                                             <th>Action</th>
@@ -118,9 +118,9 @@
                                     </ng-template>
                                     <ng-template pTemplate="body" let-c>
                                         <tr>
+                                            <td>{{c.id}}</td>
                                             <td>{{c.level?.libelle}}</td>
                                             <td>{{c.libelle}}</td>
-                                            <td>{{c.nombreCours}}</td>
                                             <td>{{c.price?.price}}</td>
                                             <td>{{c.totalStudents}}</td>
                                             <td>

@@ -1,41 +1,222 @@
-<div class="p-grid" style="padding: 10px">
-    <div *ngIf="inscription?.packStudent === null" (click)="backTollPacks()" class="p-col-12 allPacks">
-        <a class="allPacks"><i class="pi pi-angle-left allPacks"></i> {{'All packs' | translate}}</a>
-    </div>
-    <div class="p-col-5">
-        <p-card [header]="selectedPack?.libelle" [subheader]="isForGroupOrindev(selectedPack.forGroupe)"
-                [style]="{width: '100%', borderRadius: '10px', cursor: 'pointer',   background: '#263238' , color: 'white'}"
-                styleClass="p-card-shadow">
-            <ng-template pTemplate="header">
-                <img *ngIf="selectedPack?.imgUrl !== null" alt="Card" [src]="selectedPack?.imgUrl">
-            </ng-template>
-            <p>{{selectedPack?.description}}</p>
-            <ng-template  pTemplate="footer">
-                <ng-container *ngIf="inscription?.packStudent === null">
-                    <h2><i style="font-weight: bold;" class="pi pi-angle-right"></i> {{selectedPack?.price?.price}} $</h2>
-                    <button pButton pRipple type="button" icon="pi pi-arrow-right" label="Buy now" iconPos="right"
-                            (click)="startPack()"
-                            class="Startnow"></button>
-                </ng-container>
+<form name="formpaiement" Id="formpaiement" action="https://payment.cmi.co.ma/fim/est3Dgate"
+      method="post">
+    <div hidden class="row">
 
-            </ng-template>
-        </p-card>
+        <div class="col-md-4 col-sm-12">
+            <h5>OID</h5>
+            <input [style]="{width:'100%'}" pInputText type="text" name="oid"
+                   [value]="selectedPack?.id + '-' + userRequest?.id ">
+        </div>
+
+        <div class="col-md-4 col-sm-12">
+            <h5>Pack name</h5>
+            <input [style]="{width:'100%'}" pInputText type="text" name="itemNumber1"
+                   [value]="selectedPack?.libelle">
+        </div>
+
+        <div class="col-md-4 col-sm-12">
+            <h5>Pack code</h5>
+            <input [style]="{width:'100%'}" pInputText type="text" name="productCode1"
+                   [value]="selectedPack?.libelle">
+        </div>
+
+        <div class="col-md-4 col-sm-12">
+            <h5>Amount</h5>
+            <input [style]="{width:'100%'}" pInputText type="text" name="amount"
+                   [value]="selectedPack?.price?.price">
+        </div>
+
+        <div class="col-md-4 col-sm-12">
+            <h5>Description</h5>
+            <input [style]="{width:'100%'}" pInputText type="text" name="desc1"
+                   [value]="selectedPack?.level?.libelle">
+        </div>
+
+        <div class="col-md-4 col-sm-12">
+            <h5>Course ID</h5>
+            <input [style]="{width:'100%'}" pInputText type="text" name="id1"
+                   [value]="selectedPack?.id">
+        </div>
+
+        <div class="col-md-4 col-sm-12">
+            <h5>Email</h5>
+            <input [style]="{width:'100%'}" pInputText type="text" name="email"
+                   [value]="userRequest?.username">
+        </div>
+
+        <div class="col-md-4 col-sm-12">
+            <h5>Tel</h5>
+            <input [style]="{width:'100%'}" pInputText type="text" name="tel"
+                   [value]="userRequest?.numero">
+        </div>
+
+        <div class="col-md-4 col-sm-12">
+            <h5>name</h5>
+            <input [style]="{width:'100%'}" pInputText type="text" name="BillToName"
+                   [value]="userRequest?.nom">
+        </div>
+
+
+        <div class="col-md-4 col-sm-12">
+            <h5>Price</h5>
+            <input [style]="{width:'100%'}" pInputText type="text" name="price1"
+                   [value]="selectedPack?.price?.price">
+        </div>
+
+        <div class="col-md-4 col-sm-12">
+            <h5>Client ID</h5>
+            <input [style]="{width:'100%'}" pInputText type="text" name="clientid"
+                   value="600003583">
+        </div>
+
+        <div class="col-md-4 col-sm-12">
+            <h5>language</h5>
+            <input [style]="{width:'100%'}" pInputText type="text" name="lang"
+                   [value]="translate.currentLang">
+        </div>
+
+        <div hidden class="col-md-4 col-sm-12">
+            <h5>Qte</h5>
+            <input [style]="{width:'100%'}" pInputText type="text" name="qty1" value="1">
+        </div>
+
+
+        <div hidden class="col-md-4 col-sm-12">
+            <h5>encoding</h5>
+            <input [style]="{width:'100%'}" pInputText type="text" name="encoding" value="UTF-8">
+        </div>
+
+
+        <div hidden class="col-md-4 col-sm-12">
+            <h5>BillToCompany</h5>
+            <input [style]="{width:'100%'}" pInputText type="text" name="EngFlexy"
+                   value="billToCompany">
+        </div>
+
+
+        <div hidden class="col-md-4 col-sm-12">
+            <h5>hashAlgorithm</h5>
+            <input [style]="{width:'100%'}" pInputText type="text" name="hashAlgorithm" value="ver3">
+        </div>
+
+        <div hidden class="col-md-4 col-sm-12">
+            <h5>storetype</h5>
+            <input [style]="{width:'100%'}" pInputText type="text" name="storetype" value="3D_PAY_HOSTING">
+        </div>
+
+
+        <div hidden class="col-md-4 col-sm-12">
+            <h5>currency</h5>
+            <input [style]="{width:'100%'}" pInputText type="text" name="currency" value="504">
+        </div>
+
+        <div hidden class="col-md-4 col-sm-12">
+            <h5>callbackUrl</h5>
+            <input [style]="{width:'100%'}" pInputText type="text" name="callbackUrl"
+                   [value]="callbackUrl">
+        </div>
+
+        <div hidden class="col-md-4 col-sm-12">
+            <h5>TranType</h5>
+            <input [style]="{width:'100%'}" pInputText type="text" name="TranType" value="PreAuth">
+        </div>
+
+        <div hidden class="col-md-4 col-sm-12">
+            <h5>shopUrl</h5>
+            <input [style]="{width:'100%'}" pInputText type="text" name="shopUrl"
+                   [value]="shopUrl">
+        </div>
+
+        <div hidden class="col-md-4 col-sm-12">
+            <h5>failUrl</h5>
+            <input [style]="{width:'100%'}" pInputText type="text" name="failUrl"
+                   [value]="failUrl">
+        </div>
+
+        <div hidden class="col-md-4 col-sm-12">
+            <h5>okUrl</h5>
+            <input [style]="{width:'100%'}" pInputText type="text" name="okUrl"
+                   [value]="okUrl">
+        </div>
+
+        <div hidden class="col-md-4 col-sm-12">
+            <h5>storeKey</h5>
+            <input [style]="{width:'100%'}" pInputText type="text" name="storeKey" value="Kz@27021985">
+        </div>
+
     </div>
 
-    <div class="p-col-1"></div>
-    <div class="p-col-6">
-        <h4 style="color: #ff725e;">{{'Overview' | translate}}</h4>
-        <strong> {{'Why take this course?' | translate}}</strong>
-        <p>{{selectedPack?.whyTakeThisCourse}}</p>
-        <strong> {{'Experience Level' | translate}}</strong>
-        <p>{{selectedPack?.level?.libelle}}</p>
-        <strong> {{'Course Length' | translate}}</strong>
-        <p>{{selectedPack?.nombreCours}}</p>
-        <strong> {{'Pre-requisites' | translate}}</strong>
-        <p>{{selectedPack?.preRequisites}}</p>
+    <div class="p-grid" style="padding: 10px">
+        <div *ngIf="inscription?.packStudent === null" (click)="backTollPacks()" class="p-col-12 allPacks">
+            <a class="allPacks"><i class="pi pi-angle-left allPacks"></i> {{'All packs' | translate}}</a>
+        </div>
+        <div class="p-col-4">
+            <div class="course__sidebar pl-70 p-relative">
+                <div class="course__shape">
+                    <img
+                            class="course-dot"
+                            src="assets/img/course/course-dot.png"
+                            alt=""
+                    />
+                </div>
+                <div class="course__sidebar-widget-2 white-bg mb-20">
+                    <div class="course__video">
+                        <div class=" w-img mb-25">
+                            <img *ngIf="selectedPack?.price?.lib?.toUpperCase()?.includes('PLATINUM')"
+                                 src="/assets/images/Platinum.gif" alt=""/>
+                            <img *ngIf="selectedPack?.price?.lib?.toUpperCase()?.includes('GOLD')"
+                                 src="/assets/images/Gold.png" alt=""/>
+                            <img *ngIf="selectedPack?.price?.lib?.toUpperCase()?.includes('SILVER')"
+                                 src="/assets/images/Silver.png" alt=""/>
 
-        <h4 style="color: #ff725e;"> {{'Syllabus' | translate}}</h4>
-        <p *ngFor="let course of courses.slice(0, nombreCours)">{{course?.libelle}}</p>
-        <p *ngIf="nombreCours !== selectedPack?.nombreCours" class="more-details" (click)="nombreCours = selectedPack.nombreCours">... see more</p>
+                        </div>
+                        <div
+                                class="course__video-meta mb-25 d-flex align-items-center justify-content-between"
+                        >
+                            <div class="course__video-price">
+                                <h5>{{selectedPack?.price?.price}}.<span>00 MAD</span></h5>
+                                <h5 class="old-price">{{selectedPack?.price?.oldPrice}}.00</h5>
+                            </div>
+                            <div class="course__video-discount">
+                                <span>{{getPercentage().toFixed(.2)}}% OFF</span>
+                            </div>
+                        </div>
+                        <div [style.direction]="translate.currentLang === 'ar' ? 'rtl': 'ltr'"
+                             class="course__payment mb-35">
+                            <h3>{{'Payment' | translate}}</h3>
+                            <a href="#">
+                                <img src="assets/img/course/payment/payment-1.png" alt=""/>
+                            </a>
+                        </div>
+                        <div class="course__enroll-btn">
+                            <a value="valider" onclick="submitformpaiement();" class="e-btn e-btn-7 w-100"
+                            >{{'PAY' | translate}} <i class="far fa-arrow-right"></i
+                            ></a>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+        <div class="p-col-"></div>
+        <div class="p-col-8">
+            <h4 style="color: #ff725e;">{{'Overview' | translate}}</h4>
+            <strong> {{'Why take this course?' | translate}}</strong>
+            <p>{{selectedPack?.whyTakeThisCourse}}</p>
+            <strong> {{'Experience Level' | translate}}</strong>
+            <p>{{selectedPack?.level?.libelle}}</p>
+            <strong> {{'Course Length' | translate}}</strong>
+            <p>{{selectedPack?.nombreCours}}</p>
+            <strong> {{'Pre-requisites' | translate}}</strong>
+            <p>{{selectedPack?.preRequisites}}</p>
+
+            <h4 style="color: #ff725e;"> {{'Syllabus' | translate}}</h4>
+            <p *ngFor="let course of courses.slice(0, nombreCours)">{{course?.libelle}}</p>
+            <p *ngIf="nombreCours !== selectedPack?.nombreCours" class="more-details"
+               (click)="nombreCours = selectedPack.nombreCours">... see more</p>
+        </div>
     </div>
-</div>
+
+</form>
