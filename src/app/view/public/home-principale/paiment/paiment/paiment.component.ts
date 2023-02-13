@@ -135,46 +135,46 @@ export class PaimentComponent implements OnInit {
     }
 
     public verifyEmail() {
-        const url = 'https://emailvalidation.abstractapi.com/v1/?api_key=d928649ca44341bba9a9482419202c4c&email=' + this.selected?.username;
-        return this.http.get<any>(url).subscribe(data => {
-            console.log(data);
-            if (data?.deliverability === 'UNDELIVERABLE') {
+        // const url = 'https://emailvalidation.abstractapi.com/v1/?api_key=d928649ca44341bba9a9482419202c4c&email=' + this.selected?.username;
+        // return this.http.get<any>(url).subscribe(data => {
+        //     console.log(data);
+        //     if (data?.deliverability === 'UNDELIVERABLE') {
+        //         this.messageService.add({
+        //             severity: 'info',
+        //             detail: 'لم يتم العثور على بريدك الالكتروني، يرجى محاولة استخدام بريد إلكتروني حقيقي',
+        //             life: 30000
+        //         });
+        //     } else {
+        this.animation.showAnimation = true;
+        this.etudiantService.addStudentWithPack(this.selected, this.selectedCourse.id).subscribe(
+            st => {
+                this.animation.showAnimation = false;
+                if (st != null) {
+                    this.userRequest = st;
+                    this.activeIndex = 1;
+                    this.router.navigate(['/payment/' + this.selectedCourse.id + '/' + st.id]);
+                } else {
+                    this.messageService.add({
+                        severity: 'info',
+                        detail: 'البريد الالكتروني موجود بالفعل، من فضلك تفقد بريدك الالكتروني للحصول على اسم المستخدم و كلمة المرور للولوج الى حسابك',
+                        life: 30000
+                    });
+                }
+            }, error => {
+                this.animation.showAnimation = false;
                 this.messageService.add({
-                    severity: 'info',
-                    detail: 'لم يتم العثور على بريدك الالكتروني، يرجى محاولة استخدام بريد إلكتروني حقيقي',
-                    life: 30000
+                    severity: 'error',
+                    summary: 'Error',
+                    detail: 'Registration Canceled',
+                    life: 4000
                 });
-            } else {
-                this.animation.showAnimation = true;
-                this.etudiantService.addStudentWithPack(this.selected, this.selectedCourse.id).subscribe(
-                    st => {
-                        this.animation.showAnimation = false;
-                        if (st != null) {
-                            this.userRequest = st;
-                            this.activeIndex = 1;
-                            this.router.navigate(['/payment/' + this.selectedCourse.id + '/' + st.id]);
-                        } else {
-                            this.messageService.add({
-                                severity: 'info',
-                                detail: 'البريد الالكتروني موجود بالفعل، من فضلك تفقد بريدك الالكتروني للحصول على اسم المستخدم و كلمة المرور للولوج الى حسابك',
-                                life: 30000
-                            });
-                        }
-                    }, error => {
-                        this.animation.showAnimation = false;
-                        this.messageService.add({
-                            severity: 'error',
-                            summary: 'Error',
-                            detail: 'Registration Canceled',
-                            life: 4000
-                        });
-                        console.log(error);
-                    }
-                );
+                console.log(error);
             }
-        }, error => {
-            console.log(error);
-        });
+        );
+        // }
+        // }, error => {
+        //     console.log(error);
+        // });
     }
 
     createEtudiant() {
