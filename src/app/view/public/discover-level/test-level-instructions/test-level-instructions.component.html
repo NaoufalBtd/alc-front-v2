@@ -1,6 +1,7 @@
 <main>
     <app-header-two headerShadow="header__area header__padding-2 header__shadow"></app-header-two>
-    <section [style.direction]="(translate.currentLang === 'ar') ? 'rtl': 'ltr'" class="signup__area pt-50 pb-120 po-rel-z1 ">
+    <section [style.direction]="(translate.currentLang === 'ar') ? 'rtl': 'ltr'"
+             class="signup__area pt-50 pb-120 po-rel-z1 ">
         <div class="container">
             <div class="row">
                 <p-steps [model]="items" [(activeIndex)]="activeIndex" [readonly]="true"></p-steps>
@@ -9,7 +10,8 @@
 
             <div *ngIf="activeIndex == 0" style="min-height: auto" class="row instructions shadow p-3 mb-5  rounded">
                 <div style="text-align: center" class="col-md-offset-3 col-sm-12 col-md-12">
-                    <h2 style="color: #ff725e!important;">{{'Instructions' | translate}} <i class="fa fa-solid fa-question-circle"></i></h2>
+                    <h2 style="color: #ff725e!important;">{{'Instructions' | translate}} <i
+                            class="fa fa-solid fa-question-circle"></i></h2>
                 </div>
 
                 <div class="col-md-offset-3 col-sm-12 col-md-12">
@@ -37,8 +39,8 @@
 
                 <div class="col-md-4">
                     <button
-                            pButton pRipple type="button "  [label]="'Next' | translate"
-                            (click)="activeIndex = 1" class="ngFlexyOrangeButton"></button>
+                            pButton pRipple type="button" [label]="'Next' | translate"
+                            (click)="showOption = true" class="ngFlexyOrangeButton"></button>
                 </div>
                 <div class="col-md-4"></div>
 
@@ -86,4 +88,14 @@
 
     <app-home-footer footerPadd='footer__top pt-90 pb-40'></app-home-footer>
 
+    <p-dialog [showHeader]="false" [closable]="true" [(visible)]="showOption" [modal]="true"
+              [style]="{width: '65vw'}"
+              [draggable]="true" [resizable]="true">
+
+
+    </p-dialog>
 </main>
+
+
+
+

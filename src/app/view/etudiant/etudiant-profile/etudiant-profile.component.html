@@ -309,26 +309,6 @@
                 </div>
             </ng-container>
 
-            <!--                <div *ngFor="let pack of packs" class="p-col-4">-->
-            <!--                    <p-card [header]="pack?.libelle" [subheader]="isForGroupOrindev(pack.forGroupe)"-->
-            <!--                            (click)="selectedPackFct(pack)"-->
-            <!--                            [style]="{width: '100%', borderRadius: '10px', cursor: 'pointer',   background: '#263238' , color: 'white'}"-->
-            <!--                            styleClass="p-card-shadow">-->
-            <!--                        <ng-template pTemplate="header">-->
-            <!--                            <img *ngIf="pack?.imgUrl !== null" alt="Card" [src]="pack?.imgUrl">-->
-            <!--                            <img *ngIf="pack?.imgUrl === null" alt="Card"-->
-            <!--                                 src="assets/demo/images/product/bamboo-watch.jpg">-->
-            <!--                        </ng-template>-->
-            <!--                        <p>{{pack?.description}}</p>-->
-            <!--                        <ng-template pTemplate="footer">-->
-            <!--                            <p><i style="font-weight: bold;" class="pi pi-angle-right"></i> {{pack?.nombreCours}}-->
-            <!--                                 {{'courses' | translate}}</p>-->
-            <!--                        </ng-template>-->
-            <!--                    </p-card>-->
-            <!--                </div>-->
-            <!--            </ng-container>-->
-            <!--            [style.background-image]="'url(' + pack.imgUrl + ')'" -->
-
             <ng-container *ngIf="inscription?.packStudent === null">
                 <div class="container">
                     <div class="row">

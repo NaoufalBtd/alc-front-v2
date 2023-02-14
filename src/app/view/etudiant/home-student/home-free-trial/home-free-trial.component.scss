@@ -1,12 +1,18 @@
+.upgdate {
+  padding: 5px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  align-items: center;
+}
+
 /******************* Button Join **********************/
 .takeTest {
   width: 100%;
   background: #263238;
   color: #ff725e;
   border: none;
-  height: 40px;
-
-
+  height: 45px;
+  font-size: 20px;
 }
 
 .takeTest:hover {

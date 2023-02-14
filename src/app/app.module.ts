@@ -318,6 +318,7 @@ import {CreatePriceComponent} from './view/admin/create-price/create-price.compo
 import {PayNowCoursesComponent} from './view/shared/pay-now-courses/pay-now-courses.component';
 import {PayNowCourseDetailComponent} from './view/shared/pay-now-course-detail/pay-now-course-detail.component';
 import {PayNowComponent} from './view/shared/pay-now/pay-now.component';
+import {PricingTableComponent} from './view/public/pricing-table/pricing-table.component';
 
 
 export function createTranslateLoader(http: HttpClient) {
@@ -656,7 +657,8 @@ export function createTranslateLoader(http: HttpClient) {
             CreatePriceComponent,
             PayNowCoursesComponent,
             PayNowCourseDetailComponent,
-            PayNowComponent
+            PayNowComponent,
+            PricingTableComponent
         ],
     providers: [
         {provide: LocationStrategy, useClass: PathLocationStrategy},

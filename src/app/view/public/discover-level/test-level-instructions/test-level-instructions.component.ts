@@ -41,6 +41,7 @@ import {Router} from '@angular/router';
 export class TestLevelInstructionsComponent implements OnInit {
     items: MenuItem[];
     activeIndex = 0;
+    showOption: boolean;
 
     constructor(public animation: AnimationService,
                 private etudiantService: EtudiantService,

@@ -9,6 +9,7 @@ import {MenuService} from '../../../shared/slide-bar/app.menu.service';
 import {Inscription} from '../../../../controller/model/inscription.model';
 import {InscriptionService} from '../../../../controller/service/inscription.service';
 import {AuthenticationService} from '../../../../controller/service/authentication.service';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
     selector: 'app-home-free-trial',
@@ -25,6 +26,7 @@ export class HomeFreeTrialComponent implements OnInit {
                 private webSocketService: WebSocketService,
                 private simulateSectionService: SimulateSectionService,
                 private router: Router,
+                public translate: TranslateService,
                 private login: AuthenticationService,
                 private insriptionService: InscriptionService,
                 private menuService: MenuService
