@@ -487,5 +487,11 @@
   "MONTH": "mois",
   "Individual or group": "Individuel ou Groupe",
   "Starting from": "à partir de",
-  "DH": "DH"
+  "DH": "DH",
+  "البريد الالكتروني موجود بالفعل، من فضلك تفقد بريدك الالكتروني للحصول على اسم المستخدم و كلمة المرور للولوج الى حسابك" : "L'e-mail existe déjà, veuillez vérifier votre e-mail pour obtenir le nom d'utilisateur et le mot de passe pour accéder à votre compte.",
+  "go to login": "Connexion",
+  "Reset Password": "Réinitialiser Votre Mot De Passe",
+  "RESET PASSWORD" : "REINITIALISER MOT DE PASSE",
+  "Lost your password? Please enter your Email address. You will receive your new password via Email": "Mot de passe perdu ? Veuillez entrer votre adresse E-mail. Vous recevrez votre nouveau mot de passe par e-mail."
+
 }

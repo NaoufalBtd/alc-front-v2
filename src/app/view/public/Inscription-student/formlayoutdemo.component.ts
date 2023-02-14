@@ -138,9 +138,10 @@ export class FormLayoutDemoComponent implements OnInit {
             }, error => {
                 this.showAnimation = false;
                 this.messageService.add({
-                    severity: 'error',
+                    key: 'newAccount',
+                    severity: 'info',
                     detail: error?.error?.message || 'Something went wrong, please try again.',
-                    life: 4000
+                    life: 10000
                 });
                 console.log(error);
             }

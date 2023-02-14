@@ -12,7 +12,8 @@ import {TranslateService} from '@ngx-translate/core';
 export class ResetPasswordComponent implements OnInit {
     public username: string;
 
-    constructor(private userService: UserService,private translate: TranslateService,
+    constructor(private userService: UserService,
+                public translate: TranslateService,
                 private animation: AnimationService,
                 private messageService: MessageService,
     ) {
@@ -40,20 +41,18 @@ export class ResetPasswordComponent implements OnInit {
             }, error => {
                 this.showAnimation = false;
                 console.log(error);
-                if (error?.status === 200){
+                if (error?.status === 200) {
                     this.messageService.add({
                         severity: 'success',
                         summary: 'Successful',
                         life: 3000,
                         detail: 'The new password has been sent to your email'
                     });
-                }
-                else {
+                } else {
                     this.messageService.add({
-                        severity: 'error',
-                        summary: ' ',
-                        detail: error?.error?.error,
-                        life: 3000
+                        severity: 'info',
+                        detail: error?.error?.message,
+                        life: 5000
                     });
                 }
             }
@@ -62,5 +61,10 @@ export class ResetPasswordComponent implements OnInit {
 
     sort(value: any) {
         console.log(value);
+    }
+
+    emailValidator(): { [key: string]: any } | null {
+        const valid = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(this.username);
+        return valid ? null : {invalidEmail: true};
     }
 }

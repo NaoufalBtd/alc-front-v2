@@ -97,10 +97,9 @@ export class HomeThreeComponent implements OnInit {
 
                 this.showdialog = true;
                 this.messageService.add({
-                    severity: 'error',
-                    summary: 'Error',
-                    detail: 'Registration Canceled',
-                    life: 4000
+                    severity: 'info',
+                    detail: error?.error?.message || 'Registration Canceled',
+                    life: 10000
                 });
             }
         );

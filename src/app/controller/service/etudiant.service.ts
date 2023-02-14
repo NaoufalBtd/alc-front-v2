@@ -33,6 +33,7 @@ export class EtudiantService {
 
     private etudiantUrl = environment.etudiantUrl;
     private url = environment.baseUrl + 'etudiant/';
+    private publicUrl = environment.publicUrl + 'etudiant/';
     private urlBase = environment.baseApi;
     private urlParcours = '/admin/parcours/';
     private urlGroupeEtude = '/admin/groupeEtude/';
@@ -114,6 +115,9 @@ export class EtudiantService {
     public findAllSkill(): Observable<Array<Parcours>> {
         return this.http.get<Array<Parcours>>(this.etudiantUrl + 'skill/');
 
+    }
+    public getNumberOfStudents(): Observable<number> {
+        return this.http.get<number>(this.publicUrl + 'number-of-student');
     }
 
     private _groupeEtudeList: Array<GroupeEtude>;

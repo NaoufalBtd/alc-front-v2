@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {PrimeNGConfig} from 'primeng/api';
+import {MessageService, PrimeNGConfig} from 'primeng/api';
 import {TranslateService} from '@ngx-translate/core';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-root',
@@ -9,6 +10,8 @@ import {TranslateService} from '@ngx-translate/core';
 export class AppComponent implements OnInit {
 
     constructor(private primengConfig: PrimeNGConfig,
+                private router: Router,
+                private messageService: MessageService,
                 public translate: TranslateService) {
 
         // const lang = window.navigator.language;
@@ -49,4 +52,13 @@ export class AppComponent implements OnInit {
         this.translate.use('ar');
     }
 
+    goToLogin() {
+        this.messageService.clear('newAccount');
+        this.router.navigate(['/public/login']);
+    }
+
+    onForgetPassword() {
+        this.messageService.clear('newAccount');
+        this.router.navigate(['/resetPassword']);
+    }
 }

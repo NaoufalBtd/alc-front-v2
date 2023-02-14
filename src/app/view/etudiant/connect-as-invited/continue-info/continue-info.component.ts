@@ -259,10 +259,9 @@ export class ContinueInfoComponent implements OnInit {
             }, error => {
                 this.animation.showAnimation = false;
                 this.messageService.add({
-                    severity: 'error',
-                    summary: 'Error',
-                    detail: 'Registration Canceled',
-                    life: 4000
+                    severity: 'info',
+                    detail: error?.error?.message || 'Registration Canceled',
+                    life: 10000
                 });
             }
         );
