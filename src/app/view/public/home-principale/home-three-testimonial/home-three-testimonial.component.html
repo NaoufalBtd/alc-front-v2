@@ -1,61 +1,65 @@
-<section class="testimonial__area pt-145 pb-150"
+<section class="testimonial__area pt-50 pb-15"
          [ngStyle]="{    background: 'linear-gradient(125deg, rgba(38,50,56,1) 0%, rgba(43,56,63,0.9867297260701156) 51%, rgba(255,114,94,1) 82%, rgba(255,114,94,1) 100%)'}">
     <div class="container">
         <div class="row">
-            <div class="col-xxl-8 col-xl-8 col-lg-8 col-md-12">
-                <div class="testimonial__slider-3">
-                    <h3 class="testimonial__title">{{'Community Feedback' | translate}}</h3>
-                    <div class="testimonial__slider-wrapper swiper-container testimonial-text mb-35">
-
-                        <swiper
-                                [loop]="true"
-                                [autoplay]="{ delay: 5000}"
-                        >
-
-                            <ng-template *ngFor="let testimonial of sliderData" swiperSlide>
-                                <div class="testimonial__item-3">
-                                    <p *ngIf="testimonial?.direction === 'rtl'" style="direction: rtl">
-                                        “{{testimonial?.comment}}”</p>
-                                    <p *ngIf="testimonial?.direction === 'ltr'" style="direction: ltr">
-                                        “{{testimonial?.comment}}”</p>
-
-                                    <div class="testimonial__info-2">
-                                        <h4>{{testimonial?.name}} , </h4>
-                                        <span> {{testimonial?.work}}</span>
-                                    </div>
-
-                                    <div class="testimonial__nav-thumb ">
-                                        <img src="{{testimonial.img}}" alt="">
-                                    </div>
-                                </div>
-                            </ng-template>
-
-                        </swiper>
-                    </div>
-                </div>
+            <div [style.direction]="translate.currentLang === 'ar' ? 'rtl': 'ltr'"
+                 class="col-xxl-12 text-center col-xl-12 col-lg-12 col-md-12">
+                <h2 class="section__title text-white">
+                    <span class="yellow-bg"> {{'Our Mission'| translate}} <img src="assets/img/shape/yellow-bg-2.png"
+                                                                               alt="">  </span> <br>
+                </h2>
+                <p class="sub__section__title">{{'mission text' | translate}}</p>
             </div>
+            <!--                <div class="testimonial__slider-3">-->
+            <!--                    <h3 class="testimonial__title">{{'Community Feedback' | translate}}</h3>-->
+            <!--                    <div class="testimonial__slider-wrapper swiper-container testimonial-text mb-35">-->
 
-            <!--  <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-10">-->
-            <!--     <div class="testimonial__video ml-70 fix">-->
-            <!--        <div class="testimonial__thumb-3">-->
-            <!--&lt;!&ndash;          <iframe src="https://www.youtube.com/embed/ss_sL06Cgvo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>&ndash;&gt;-->
-            <!--        </div>-->
-            <!--        <div class="testimonial__video-content d-sm-flex">-->
-            <!--           <div class="testimonial__video-icon mr-20 mb-20">-->
-            <!--              <span>-->
-            <!--                 <svg version="1.1" id="educal-youtube" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 24 24" style="enable-background:new 0 0 24 24;" xml:space="preserve">-->
-            <!--                    <path class="st0" d="M22,11.1V12c0,5.5-4.5,10-10,10C6.5,22,2,17.5,2,12C2,6.5,6.5,2,12,2c1.4,0,2.8,0.3,4.1,0.9"/>-->
-            <!--                    <polyline class="st0" points="22,4 12,14 9,11 "/>-->
-            <!--                 </svg>-->
-            <!--              </span>-->
-            <!--           </div>-->
-            <!--           <div class="testimonial__video-text">-->
-            <!--              <h4>Course Outcome</h4>-->
-            <!--              <p>Faff about A bit of how's your father getmate cack codswallop crikey argy-bargy cobblers  lost his bottle.</p>-->
-            <!--           </div>-->
-            <!--        </div>-->
-            <!--     </div>-->
-            <!--   </div>-->
+            <!--                        <swiper-->
+            <!--                                [loop]="true"-->
+            <!--                                [shortSwipes]="true"-->
+            <!--                                [autoplay]="{ delay: 15000}"-->
+            <!--                        >-->
+
+            <!--                            <ng-template *ngFor="let testimonial of sliderData" swiperSlide>-->
+            <!--                                <div class="testimonial__item-3">-->
+            <!--                                    <p *ngIf="testimonial?.direction === 'rtl'" style="direction: rtl">-->
+            <!--                                        “{{testimonial?.comment}}”</p>-->
+            <!--                                    <p *ngIf="testimonial?.direction === 'ltr'" style="direction: ltr">-->
+            <!--                                        “{{testimonial?.comment}}”</p>-->
+
+            <!--                                    <div class="testimonial__info-2">-->
+            <!--                                        <h4>{{testimonial?.name}} , </h4>-->
+            <!--                                        <span> {{testimonial?.work}}</span>-->
+            <!--                                    </div>-->
+
+            <!--                                    <div class="testimonial__nav-thumb ">-->
+            <!--                                        <img src="{{testimonial.img}}" alt="">-->
+            <!--                                    </div>-->
+            <!--                                </div>-->
+            <!--                            </ng-template>-->
+
+            <!--                        </swiper>-->
+            <!--                    </div>-->
+            <!--                </div>-->
+            <!--            </div>-->
+
+            <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12">
+                <p-galleria [(value)]="images" [responsiveOptions]="responsiveOptions"
+                            [circular]="true"
+                            [autoPlay]="true"
+                            [transitionInterval]="10000"
+                            [numVisible]="5"
+                            [showThumbnails]="false" [showIndicators]="true">
+                    <ng-template pTemplate="item" let-item>
+                        <img [src]="item.previewImageSrc" style="width: 100%; display: block;"/>
+                    </ng-template>
+                    <ng-template pTemplate="thumbnail" let-item>
+                        <div class="p-grid p-nogutter p-justify-center">
+                            <img [src]="item.previewImageSrc" style="display: block;"/>
+                        </div>
+                    </ng-template>
+                </p-galleria>
+            </div>
         </div>
     </div>
 </section>

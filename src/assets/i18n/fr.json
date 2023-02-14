@@ -488,10 +488,11 @@
   "Individual or group": "Individuel ou Groupe",
   "Starting from": "à partir de",
   "DH": "DH",
-  "البريد الالكتروني موجود بالفعل، من فضلك تفقد بريدك الالكتروني للحصول على اسم المستخدم و كلمة المرور للولوج الى حسابك" : "L'e-mail existe déjà, veuillez vérifier votre e-mail pour obtenir le nom d'utilisateur et le mot de passe pour accéder à votre compte.",
+  "البريد الالكتروني موجود بالفعل، من فضلك تفقد بريدك الالكتروني للحصول على اسم المستخدم و كلمة المرور للولوج الى حسابك": "L'e-mail existe déjà, veuillez vérifier votre e-mail pour obtenir le nom d'utilisateur et le mot de passe pour accéder à votre compte.",
   "go to login": "Connexion",
   "Reset Password": "Réinitialiser Votre Mot De Passe",
-  "RESET PASSWORD" : "REINITIALISER MOT DE PASSE",
-  "Lost your password? Please enter your Email address. You will receive your new password via Email": "Mot de passe perdu ? Veuillez entrer votre adresse E-mail. Vous recevrez votre nouveau mot de passe par e-mail."
-
+  "RESET PASSWORD": "REINITIALISER MOT DE PASSE",
+  "Lost your password? Please enter your Email address. You will receive your new password via Email": "Mot de passe perdu ? Veuillez entrer votre adresse E-mail. Vous recevrez votre nouveau mot de passe par e-mail.",
+  "mission text": "Chez EngFlexy, nous croyons que l'éducation du futur doit être accessible, pratique et efficace. C'est pourquoi nous créons aujourd'hui des produits éducatifs innovants et inspirons les gens à parler la même langue que le monde.",
+  "Our Mission" : "Notre Mission"
 }

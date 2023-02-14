@@ -61,6 +61,7 @@ import {HeaderFourComponent} from './header-four/header-four.component';
 import {PaimentOkComponent} from './paiment/paiment-ok/paiment-ok.component';
 import {PaimentFailComponent} from './paiment/paiment-fail/paiment-fail.component';
 import {PaimentBackComponent} from './paiment/paiment-back/paiment-back.component';
+import {GalleriaModule} from 'primeng/galleria';
 
 
 @NgModule({
@@ -131,7 +132,8 @@ import {PaimentBackComponent} from './paiment/paiment-back/paiment-back.componen
         StepsModule,
         TooltipModule,
         InputTextModule,
-        ClipboardModule
+        ClipboardModule,
+        GalleriaModule
 
     ],
     exports: [

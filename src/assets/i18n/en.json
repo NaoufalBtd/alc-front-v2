@@ -484,6 +484,7 @@
   "البريد الالكتروني موجود بالفعل، من فضلك تفقد بريدك الالكتروني للحصول على اسم المستخدم و كلمة المرور للولوج الى حسابك": "The email already exists, please check your email for the username and password to access your account.",
   "Reset Password": "Reset Your Password",
   "RESET PASSWORD" : "RESET PASSWORD",
-  "Lost your password? Please enter your Email address. You will receive your new password via Email": "Lost your password? Please enter your Email address. You will receive your new password via Email"
-
+  "Lost your password? Please enter your Email address. You will receive your new password via Email": "Lost your password? Please enter your Email address. You will receive your new password via Email",
+  "mission text": "At EngFlexy we believe that the education of the future should be accessible, convenient and effective. Therefore, today we are creating innovative educational products and inspiring people to speak the same language with the world.",
+  "Our Mission" : "Our Mission"
 }
