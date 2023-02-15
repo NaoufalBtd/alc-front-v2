@@ -146,11 +146,13 @@
 
     </div>
 
-    <div class="p-grid" style="padding: 10px">
-        <div *ngIf="inscription?.packStudent === null" (click)="backTollPacks()" class="p-col-12 allPacks">
+
+    <div class="row" style="padding: 10px">
+        <div *ngIf="inscription?.packStudent === null" (click)="backTollPacks()" class="col-md-12 allPacks">
             <a class="allPacks"><i class="pi pi-angle-left allPacks"></i> {{'All packs' | translate}}</a>
         </div>
-        <div class="p-col-4">
+
+        <div class="col-xxl-4 col-xl-4 col-md-6 col-sm-12">
             <div class="course__sidebar pl-70 p-relative">
                 <div class="course__shape">
                     <img
@@ -200,8 +202,8 @@
             </div>
         </div>
 
-        <div class="p-col-"></div>
-        <div class="p-col-8">
+
+        <div class="col-xxl-8 col-xl-8 col-md-6 col-sm-12">
             <h4 style="color: #ff725e;">{{'Overview' | translate}}</h4>
             <strong> {{'Why take this course?' | translate}}</strong>
             <p>{{selectedPack?.whyTakeThisCourse}}</p>
