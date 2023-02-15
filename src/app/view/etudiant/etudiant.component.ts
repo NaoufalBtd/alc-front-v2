@@ -19,7 +19,7 @@ import {TranslateService} from '@ngx-translate/core';
 })
 export class EtudiantComponent implements OnInit {
 
-    private user: User = new User();
+    private user: User = null;
     displayChatDialog: boolean = false;
 
 
@@ -368,10 +368,11 @@ export class EtudiantComponent implements OnInit {
     ngOnInit(): void {
         this.user = this.authenticationService.getUserFromLocalCache();
         if (this.user === null) {
-            this.router.navigate(['#/']);
+            this.router.navigate(['/']);
+            return;
         } else {
             // @ts-ignore
-            if (this.user.role === Role.ADMIN || this.user.role === Role.PROF
+            if (this.user?.role === Role.ADMIN || this.user?.role === Role.PROF
                 || this.user.authorities.length === 0) {
                 this.router.navigate([' ']);
             }

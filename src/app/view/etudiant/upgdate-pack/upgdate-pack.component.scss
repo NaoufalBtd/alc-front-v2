@@ -1,0 +1,98 @@
+.row__slider {
+  background: #ff725e;
+  border-radius: 5px;
+  padding: 10px 0 0 0;
+  color: #263238;
+  font-weight: 600;
+}
+
+#individual-text {
+  width: 100%;
+  text-align: center;
+  font-size: 18px;
+  color: #263238;
+  font-weight: bold;
+  font-family: 'Roboto', serif;
+  letter-spacing: 3px;
+}
+
+.w-img {
+  cursor: pointer;
+  text-align: center;
+  color: #263238;
+  font-size: 65px;
+  padding: 8px;
+}
+
+.w-img:hover {
+  cursor: pointer;
+  text-align: center;
+  color: white;
+  padding: 8px;
+}
+
+.select-course {
+  cursor: pointer !important;
+}
+
+.course-type {
+  width: 130px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.course__tag {
+  width: 100%;
+  text-align: center;
+  left: 0 !important;
+}
+
+.course__tag__hours {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+}
+
+.course__tag__hours a {
+  font-size: 14px;
+  padding: 0 10px;
+  border-radius: 4px;
+}
+
+
+.course__tag__lessons {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+}
+
+.course__tag__lessons a {
+  font-size: 14px;
+  padding: 0 10px;
+  border-radius: 4px;
+}
+
+
+.silver {
+  background: #ffffff;
+  color: #2e4052;
+}
+
+.gold {
+  background: #ffffff;
+  color: #eb9a0c;
+}
+
+.platinum {
+  background: #ffffff;
+  color: #102c45;
+}
+
+#individual-text:hover {
+  text-decoration: underline;
+  color: white;
+  .heartbeat {
+    background-image: radial-gradient( circle farthest-corner at 10% 20%,  rgba(90,92,106,1) 0%, rgba(32,45,58,1) 81.3% );
+  }
+}
+

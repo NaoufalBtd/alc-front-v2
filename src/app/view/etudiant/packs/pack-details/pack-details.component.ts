@@ -27,6 +27,7 @@ export class PackDetailsComponent implements OnInit {
     shopUrl = environment.shopUrl;
     failUrl = environment.failUrl;
     okUrl = environment.okUrl;
+
     constructor(private etudiantService: EtudiantService,
                 private inscriptionService: InscriptionService,
                 private authService: AuthenticationService,
@@ -49,6 +50,13 @@ export class PackDetailsComponent implements OnInit {
 
     ngOnInit(): void {
         this.userRequest = this.authService.getConnectedStudent();
+        if (this.userRequest === null
+            || this.userRequest?.id === undefined
+            || this.userRequest?.id === 0
+            || this.userRequest?.id === null) {
+            this.router.navigate(['/']);
+            return;
+        }
         const idCurrentPack = this._activatedRoute.snapshot.params.id;
         if (idCurrentPack === null || idCurrentPack === undefined || idCurrentPack === 0) {
             this.router.navigate(['/etudiant/dashboard']);

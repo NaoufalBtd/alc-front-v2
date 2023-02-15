@@ -35,5 +35,14 @@
 
             </ul>
         </li>
+
+        <li>
+            <p-dropdown [options]="langs" [(ngModel)]="translate.currentLang" [placeholder]="translate.currentLang"
+                        (ngModelChange)="selectedLangage($event)"
+                        [showClear]="false"></p-dropdown>
+
+        </li>
     </ul>
+
+
 </div>

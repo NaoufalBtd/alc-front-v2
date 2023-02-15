@@ -262,7 +262,6 @@ import {ReclamationProfComponent} from './view/prof/reclamation-prof/reclamation
 import {ReclamationProfCreateComponent} from './view/prof/reclamation-prof/reclamation-prof-create/reclamation-prof-create.component';
 import {ComplaintViewEtudiantComponent} from './view/admin/complaint/complaint-view/complaint-view-etudiant/complaint-view-etudiant.component';
 import {ComplaintViewProfComponent} from './view/admin/complaint/complaint-view/complaint-view-prof/complaint-view-prof.component';
-import {ProfileComponent} from './view/etudiant/profile/profile.component';
 import {WatchItComponent} from './view/etudiant/homeWork/watch-it/watch-it.component';
 import {ComplaintEditEtudiantComponent} from './view/admin/complaint/complaintEdit/complaint-edit-etudiant/complaint-edit-etudiant.component';
 import {ComplaintEditProfComponent} from './view/admin/complaint/complaintEdit/complaint-edit-prof/complaint-edit-prof.component';
@@ -320,6 +319,7 @@ import {PayNowCourseDetailComponent} from './view/shared/pay-now-course-detail/p
 import {PayNowComponent} from './view/shared/pay-now/pay-now.component';
 import {PricingTableComponent} from './view/public/pricing-table/pricing-table.component';
 import {BottomBarComponent} from './view/shared/bottom-bar/bottom-bar.component';
+import {UpgdatePackComponent} from './view/etudiant/upgdate-pack/upgdate-pack.component';
 
 
 export function createTranslateLoader(http: HttpClient) {
@@ -642,7 +642,6 @@ export function createTranslateLoader(http: HttpClient) {
             ContinueInfoComponent,
             HomeStudentComponent,
             HomeFreeTrialComponent,
-            ProfileComponent,
             QuizPreviewStudentTeacherComponent,
             SaveGoogleTokenComponent,
             PackDetailsComponent,
@@ -660,7 +659,8 @@ export function createTranslateLoader(http: HttpClient) {
             PayNowCourseDetailComponent,
             PayNowComponent,
             PricingTableComponent,
-            BottomBarComponent
+            BottomBarComponent,
+            UpgdatePackComponent
         ],
     providers: [
         {provide: LocationStrategy, useClass: PathLocationStrategy},
@@ -673,8 +673,7 @@ export function createTranslateLoader(http: HttpClient) {
         AgendaService, MonthAgendaService, TimelineViewsService,
         TimelineMonthService,
     ],
-    exports: [
-    ],
+    exports: [],
     bootstrap: [AppComponent]
 })
 export class AppModule {

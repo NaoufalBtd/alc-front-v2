@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <div class="container">
         <div class="row">
-            <div class="col-xxl-4 col-xl-4 col-md-12">
+            <div class="col-xxl-4 col-xl-4 mb-10 col-md-12">
                 <div class="card text-center">
                     <div class="title">
                         <i class="fa fa-paper-plane" aria-hidden="true"></i>
@@ -22,7 +22,7 @@
             </div>
 
             <!-- END Col one -->
-            <div class="col-xxl-4 col-xl-4 col-md-12">
+            <div class="col-xxl-4  m-b-10 col-xl-4 col-md-12">
                 <div class="card text-center">
                     <div class="title">
                         <i class="fa fa-plane" aria-hidden="true"></i>
@@ -44,11 +44,11 @@
                                    aria-hidden="true"></i> {{'Group classes with a teacher' | translate}}</li>
                         </ul>
                     </div>
-                    <a href="#">{{'Purchase Now' | translate}} </a>
+                    <a (click)="purchase(true)">{{'Purchase Now' | translate}} </a>
                 </div>
             </div>
             <!-- END Col two -->
-            <div class="col-xxl-4 col-xl-4 col-md-12">
+            <div class="col-xxl-4 mb-10 col-xl-4 col-md-12">
                 <div class="card text-center">
                     <div class="title">
                         <i class="fa fa-rocket" aria-hidden="true"></i>
@@ -71,7 +71,7 @@
                             </li>
                         </ul>
                     </div>
-                    <a href="#">{{'Purchase Now' | translate}} </a>
+                    <a (click)="purchase(false)">{{'Purchase Now' | translate}} </a>
                 </div>
             </div>
             <!-- END Col three -->

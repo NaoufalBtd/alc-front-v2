@@ -22,6 +22,7 @@ export class AppTopBarComponent implements OnInit, OnDestroy {
     role: Role;
     items: MenuItem[];
     user: User = new User();
+    langs = ['en', 'ar', 'fr'];
 
 
     constructor(public app: AppComponent,
@@ -229,8 +230,7 @@ export class AppTopBarComponent implements OnInit, OnDestroy {
     }
 
     selectedLangage(event: any) {
-        console.log(event.target.value);
-        this.translate.use(event.target.value);
+        this.translate.use(event);
     }
 
     goToProfile() {

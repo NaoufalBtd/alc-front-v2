@@ -20,10 +20,19 @@ export class PackStudentService {
     private adminUrl = environment.adminUrl;
     private _packs: Array<PackStudent> = new Array<PackStudent>();
     private _selectedBlog: any;
+    private _selectedOption: boolean = false;
 
     constructor(private http: HttpClient, private messageService: MessageService) {
     }
 
+
+    get selectedOption(): boolean {
+        return this._selectedOption;
+    }
+
+    set selectedOption(value: boolean) {
+        this._selectedOption = value;
+    }
 
     get selectedBlog(): any {
         return this._selectedBlog;
