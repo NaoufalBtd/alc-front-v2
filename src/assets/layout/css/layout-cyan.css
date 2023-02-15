@@ -99,7 +99,7 @@ body {
   left: 0px;
   width: 15px;
   height: 15px;
-  background: #ff725e;
+  background: #0772B3;
   border-radius: 50%;
 }
 .loader li.dot-a {
@@ -1047,7 +1047,7 @@ a {
   vertical-align: middle;
 }
 .layout-wrapper .layout-topbar .topbar-menu .user-profile ul {
-  width: 150px;
+  width: 250px;
 }
 .layout-wrapper .layout-topbar .topbar-menu .user-profile .layout-profile-name, .layout-wrapper .layout-topbar .topbar-menu .user-profile .layout-profile-role, .layout-wrapper .layout-topbar .topbar-menu .user-profile .layout-profile-icon {
   -moz-transition: color 0.2s;
@@ -1093,6 +1093,10 @@ a {
   font-size: 12px;
   margin-top: 2px;
   display: block;
+}
+.layout-wrapper .layout-topbar .topbar-menu > li > a > img {
+  width: 36px;
+  margin-top: 4px;
 }
 .layout-wrapper .layout-topbar .topbar-menu > li > ul {
   position: absolute;
@@ -1412,7 +1416,7 @@ a {
   padding-bottom: 120px;
 }
 .layout-wrapper.layout-menu-light .layout-menu-container {
-  background-color: #252529;
+  background-color: #ffffff;
   border: 1px solid #ebebef;
   border-left: 0;
   border-top: 0;
@@ -1473,7 +1477,6 @@ a {
   color: #1BA7AF;
 }
 .layout-wrapper.layout-menu-light .layout-menu-container .layout-menu li a.active-menuitem-routerlink .layout-menuitem-icon,
-.layout-wrapper.layout-menu-light .layout-menu-container .layout-menu li a.active-menuitem-routerlink .item-text,
 .layout-wrapper.layout-menu-light .layout-menu-container .layout-menu li a.active-menuitem-routerlink .layout-submenu-toggler {
   color: #1BA7AF;
 }
@@ -1575,7 +1578,7 @@ a {
   min-height: 100vh;
 }
 .layout-wrapper .layout-main .layout-content {
-  padding: 0px;
+  padding: 16px;
   flex: 1 1 0;
 }
 
@@ -1754,9 +1757,8 @@ a {
     border-right-color: #333333;
   }
   .layout-wrapper.layout-slim .layout-main {
-    /*margin-left: 57px;*/
+    margin-left: 57px;
   }
-
   .layout-wrapper.layout-horizontal .layout-main {
     padding-top: 0;
   }
@@ -1868,9 +1870,7 @@ a {
   }
   .layout-wrapper.layout-slim .layout-menu-container .menu-scroll-content {
     width: 100%;
-    height: 90%;
     padding: 0;
-    overflow: auto;
   }
 }
 @media screen and (max-width: 896px) {

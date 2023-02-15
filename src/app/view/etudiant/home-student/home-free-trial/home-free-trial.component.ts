@@ -88,4 +88,8 @@ export class HomeFreeTrialComponent implements OnInit {
         this.simulateSectionService.findSectionOneByCoursId(cours);
         this.router.navigate(['etudiant/simulate-sections/' + 'free-trial']);
     }
+
+    scrollToPrices() {
+        document.getElementById('pricingTableComponent').scrollIntoView();
+    }
 }

@@ -9,7 +9,7 @@ import {LearnService} from '../../controller/service/learn.service';
 import {ReclamationEtudiant} from '../../controller/model/reclamation-etudiant.model';
 import {DatePipe} from '@angular/common';
 import {ReclamationEtudiantService} from '../../controller/service/reclamation-etudiant.service';
-import {MessageService} from 'primeng/api';
+import {MessageService, PrimeNGConfig} from 'primeng/api';
 import {TranslateService} from '@ngx-translate/core';
 
 @Component({
@@ -18,78 +18,155 @@ import {TranslateService} from '@ngx-translate/core';
     styleUrls: ['./etudiant.component.scss']
 })
 export class EtudiantComponent implements OnInit {
-    overlayMenuActive: boolean;
+
     private user: User = new User();
+    displayChatDialog: boolean = false;
 
-    staticMenuDesktopInactive: boolean;
 
-    staticMenuMobileActive: boolean;
-
-    menuClick: boolean;
-
-    userMenuClick: boolean;
-
-    notificationMenuClick: boolean;
-    notificationMenuClick2: boolean;
-
-    rightMenuClick: boolean;
-
-    menuHoverActive: boolean;
-
-    topbarUserMenuActive: boolean;
-
-    topbarNotificationMenuActive: boolean;
-    topbarNotificationMenuActive2: boolean;
-
-    rightPanelMenuActive: boolean;
-
-    configActive: boolean;
-
-    configClick: boolean;
-
-    profileClick: boolean;
-
-    inlineUserMenuActive = false;
-    displayChatDialog: boolean;
-
-    get showTpBar(): boolean {
-        return this.menuService.showTpBar;
+    get itemstopBar(): string[] {
+        return this.menuService.itemstopBar;
     }
 
-    set showTpBar(value: boolean) {
-        this.menuService.showTpBar = value;
+    set itemstopBar(value: string[]) {
+        this.menuService.itemstopBar = value;
     }
 
-
-    constructor(private menuService: MenuService,
-                private router: Router,
-                private datePipe: DatePipe,
-                private authenticationService: AuthenticationService,
-                private reclamationService: ReclamationEtudiantService,
-                private messageService: MessageService,
-                private learnService: LearnService,
-                public translate: TranslateService,
-                public app: AppComponent) {
-
-        // console.log('=====================');
-        // console.log(lang);
-        // console.log('=====================');
-        // if (lang?.includes('ar')) {
-        //     translate.use('ar');
-        // } else if (lang?.includes('fr')) {
-        //     translate.use('fr');
-        // } else {
-        //     translate.use('en');
-        // }
+    get overlayMenuActive(): boolean {
+        return this.menuService.overlayMenuActive;
     }
 
-    get showAppMenu(): boolean {
-        return this.learnService.showAppMenu;
+    set overlayMenuActive(value: boolean) {
+        this.menuService.overlayMenuActive = value;
     }
 
-    set showAppMenu(value: boolean) {
-        this.learnService.showAppMenu = value;
+    get staticMenuDesktopInactive(): boolean {
+        return this.menuService.staticMenuDesktopInactive;
     }
+
+    set staticMenuDesktopInactive(value: boolean) {
+        this.menuService.staticMenuDesktopInactive = value;
+    }
+
+    get staticMenuMobileActive(): boolean {
+        return this.menuService.staticMenuMobileActive;
+    }
+
+    set staticMenuMobileActive(value: boolean) {
+        this.menuService.staticMenuMobileActive = value;
+    }
+
+    get layoutMenuScroller(): HTMLDivElement {
+        return this.menuService.layoutMenuScroller;
+    }
+
+    set layoutMenuScroller(value: HTMLDivElement) {
+        this.menuService.layoutMenuScroller = value;
+    }
+
+    get menuClick(): boolean {
+        return this.menuService.menuClick;
+    }
+
+    set menuClick(value: boolean) {
+        this.menuService.menuClick = value;
+    }
+
+    get userMenuClick(): boolean {
+        return this.menuService.userMenuClick;
+    }
+
+    set userMenuClick(value: boolean) {
+        this.menuService.userMenuClick = value;
+    }
+
+    get notificationMenuClick(): boolean {
+        return this.menuService.notificationMenuClick;
+    }
+
+    set notificationMenuClick(value: boolean) {
+        this.menuService.notificationMenuClick = value;
+    }
+
+    get rightMenuClick(): boolean {
+        return this.menuService.rightMenuClick;
+    }
+
+    set rightMenuClick(value: boolean) {
+        this.menuService.rightMenuClick = value;
+    }
+
+    get resetMenu(): boolean {
+        return this.menuService.resetMenu;
+    }
+
+    set resetMenu(value: boolean) {
+        this.menuService.resetMenu = value;
+    }
+
+    get menuHoverActive(): boolean {
+        return this.menuService.menuHoverActive;
+    }
+
+    set menuHoverActive(value: boolean) {
+        this.menuService.menuHoverActive = value;
+    }
+
+    get topbarUserMenuActive(): boolean {
+        return this.menuService.topbarUserMenuActive;
+    }
+
+    set topbarUserMenuActive(value: boolean) {
+        this.menuService.topbarUserMenuActive = value;
+    }
+
+    get topbarNotificationMenuActive(): boolean {
+        return this.menuService.topbarNotificationMenuActive;
+    }
+
+    set topbarNotificationMenuActive(value: boolean) {
+        this.menuService.topbarNotificationMenuActive = value;
+    }
+
+    get rightPanelMenuActive(): boolean {
+        return this.menuService.rightPanelMenuActive;
+    }
+
+    set rightPanelMenuActive(value: boolean) {
+        this.menuService.rightPanelMenuActive = value;
+    }
+
+    get configActive(): boolean {
+        return this.menuService.configActive;
+    }
+
+    set configActive(value: boolean) {
+        this.menuService.configActive = value;
+    }
+
+    get configClick(): boolean {
+        return this.menuService.configClick;
+    }
+
+    set configClick(value: boolean) {
+        this.menuService.configClick = value;
+    }
+
+    get profileClick(): boolean {
+        return this.menuService.profileClick;
+    }
+
+    set profileClick(value: boolean) {
+        this.menuService.profileClick = value;
+    }
+
+    get inlineUserMenuActive(): boolean {
+        return this.menuService.inlineUserMenuActive;
+    }
+
+    set inlineUserMenuActive(value: boolean) {
+        this.menuService.inlineUserMenuActive = value;
+    }
+
 
     onLayoutClick() {
         if (!this.userMenuClick) {
@@ -99,9 +176,7 @@ export class EtudiantComponent implements OnInit {
         if (!this.notificationMenuClick) {
             this.topbarNotificationMenuActive = false;
         }
-        if (!this.notificationMenuClick2) {
-            this.topbarNotificationMenuActive2 = false;
-        }
+
         if (!this.rightMenuClick) {
             this.rightPanelMenuActive = false;
         }
@@ -131,11 +206,83 @@ export class EtudiantComponent implements OnInit {
         this.userMenuClick = false;
         this.rightMenuClick = false;
         this.notificationMenuClick = false;
-        this.notificationMenuClick2 = false;
         this.menuClick = false;
         this.profileClick = false;
     }
 
+    onMenuButtonClick(event) {
+        this.menuClick = true;
+        this.topbarUserMenuActive = false;
+        this.topbarNotificationMenuActive = false;
+        this.rightPanelMenuActive = false;
+
+        if (this.isOverlay()) {
+            this.overlayMenuActive = !this.overlayMenuActive;
+        }
+
+        if (this.isDesktop()) {
+            this.staticMenuDesktopInactive = !this.staticMenuDesktopInactive;
+        } else {
+            this.staticMenuMobileActive = !this.staticMenuMobileActive;
+            if (this.staticMenuMobileActive) {
+                this.blockBodyScroll();
+            } else {
+                this.unblockBodyScroll();
+            }
+        }
+
+        event.preventDefault();
+    }
+
+    onMenuClick(event) {
+        this.menuClick = true;
+        this.resetMenu = false;
+    }
+
+    onTopbarUserMenuButtonClick(event) {
+        this.userMenuClick = true;
+        this.topbarUserMenuActive = !this.topbarUserMenuActive;
+
+        this.hideOverlayMenu();
+
+        event.preventDefault();
+    }
+
+    onTopbarNotificationMenuButtonClick(event) {
+        this.notificationMenuClick = true;
+        this.topbarNotificationMenuActive = !this.topbarNotificationMenuActive;
+
+        this.hideOverlayMenu();
+
+        event.preventDefault();
+    }
+
+    onRightMenuClick(event) {
+        this.rightMenuClick = true;
+        this.rightPanelMenuActive = !this.rightPanelMenuActive;
+
+        this.hideOverlayMenu();
+
+        event.preventDefault();
+    }
+
+    onProfileClick(event) {
+        this.profileClick = true;
+        this.inlineUserMenuActive = !this.inlineUserMenuActive;
+    }
+
+    onTopbarSubItemClick(event) {
+        event.preventDefault();
+    }
+
+    onConfigClick(event) {
+        this.configClick = true;
+    }
+
+    onRippleChange(event) {
+        this.app.ripple = event.checked;
+        this.primengConfig = event.checked;
+    }
 
     isHorizontal() {
         return this.app.layoutMode === 'horizontal';
@@ -145,12 +292,39 @@ export class EtudiantComponent implements OnInit {
         return this.app.layoutMode === 'slim';
     }
 
+    isOverlay() {
+        return this.app.layoutMode === 'overlay';
+    }
+
+    isStatic() {
+        return this.app.layoutMode === 'static';
+    }
+
+    isMobile() {
+        return window.innerWidth < 1025;
+    }
+
+    isDesktop() {
+        return window.innerWidth > 896;
+    }
+
+    isTablet() {
+        const width = window.innerWidth;
+        return width <= 1024 && width > 640;
+    }
 
     hideOverlayMenu() {
         this.overlayMenuActive = false;
         this.staticMenuMobileActive = false;
     }
 
+    blockBodyScroll(): void {
+        if (document.body.classList) {
+            document.body.classList.add('blocked-scroll');
+        } else {
+            document.body.className += ' blocked-scroll';
+        }
+    }
 
     unblockBodyScroll(): void {
         if (document.body.classList) {
@@ -160,6 +334,36 @@ export class EtudiantComponent implements OnInit {
                 'blocked-scroll'.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
         }
     }
+
+    get showTpBar(): boolean {
+        return this.menuService.showTpBar;
+    }
+
+    set showTpBar(value: boolean) {
+        this.menuService.showTpBar = value;
+    }
+
+    constructor(private menuService: MenuService,
+                private router: Router,
+                private datePipe: DatePipe,
+                private authenticationService: AuthenticationService,
+                private reclamationService: ReclamationEtudiantService,
+                private messageService: MessageService,
+                private learnService: LearnService,
+                private primengConfig: PrimeNGConfig,
+                public translate: TranslateService,
+                public app: AppComponent) {
+
+    }
+
+    get showAppMenu(): boolean {
+        return this.learnService.showAppMenu;
+    }
+
+    set showAppMenu(value: boolean) {
+        this.learnService.showAppMenu = value;
+    }
+
 
     ngOnInit(): void {
         this.user = this.authenticationService.getUserFromLocalCache();

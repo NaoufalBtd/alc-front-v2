@@ -24,7 +24,7 @@ export class AppComponent implements OnInit {
         // }
     }
 
-    layoutMode = 'slim';
+    layoutMode = 'static';
 
     languages = [
         {code: 'ar', name: 'Arabic', nativeName: 'العربية'},
@@ -32,7 +32,7 @@ export class AppComponent implements OnInit {
     ];
 
 
-    lightMenu = true;
+    lightMenu = false;
 
     topbarColor = 'layout-topbar-dark';
 

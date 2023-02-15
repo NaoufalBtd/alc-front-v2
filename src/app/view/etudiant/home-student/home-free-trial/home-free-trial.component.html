@@ -14,6 +14,7 @@
             <div class="col-md-3 col-sm-12">
                 <button
                         class="ngFlexyBlackButton" id="previous"
+                        (click)="scrollToPrices()"
                         [label]="'Upgrade' | translate" pButton pRipple
                         type="button"></button>
             </div>
@@ -93,7 +94,7 @@
     </div>
 
     <div class="col-md-12">
-        <app-pricing-table></app-pricing-table>
+        <app-pricing-table id="pricingTableComponent"></app-pricing-table>
     </div>
 
 

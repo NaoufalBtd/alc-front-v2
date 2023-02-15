@@ -21,45 +21,15 @@ import {Contact} from '../../controller/model/contact.model';
 
 export class AdminComponent implements OnInit {
     user: User = new User();
-    overlayMenuActive: boolean;
     overlayMenuActive2: boolean;
 
-    staticMenuDesktopInactive: boolean;
-
-    staticMenuMobileActive: boolean;
     staticMenuMobileActive2: boolean;
 
-    layoutMenuScroller: HTMLDivElement;
-
-    menuClick: boolean;
-
-    userMenuClick: boolean;
-
-    notificationMenuClick: boolean;
     notificationMenuClick2: boolean;
 
-    rightMenuClick: boolean;
-
-    resetMenu: boolean;
-
-    menuHoverActive: boolean;
-
-    topbarUserMenuActive: boolean;
     topbarUserMenuActive2: boolean;
-
-    topbarNotificationMenuActive: boolean;
     topbarNotificationMenuActive2: boolean;
-    topbarNotificationMenuActive3: boolean;
 
-    rightPanelMenuActive: boolean;
-
-    configActive: boolean;
-
-    configClick: boolean;
-
-    profileClick: boolean;
-
-    inlineUserMenuActive = false;
     displayDictionaryDialogAdmin: boolean;
     textSeleted: string;
     synonymes: string;
@@ -76,6 +46,151 @@ export class AdminComponent implements OnInit {
                 private messageService: MessageService,
                 private authenticationService: AuthenticationService,
                 public app: AppComponent) {
+    }
+
+
+    get itemstopBar(): string[] {
+        return this.menuService.itemstopBar;
+    }
+
+    set itemstopBar(value: string[]) {
+        this.menuService.itemstopBar = value;
+    }
+
+    get overlayMenuActive(): boolean {
+        return this.menuService.overlayMenuActive;
+    }
+
+    set overlayMenuActive(value: boolean) {
+        this.menuService.overlayMenuActive = value;
+    }
+
+    get staticMenuDesktopInactive(): boolean {
+        return this.menuService.staticMenuDesktopInactive;
+    }
+
+    set staticMenuDesktopInactive(value: boolean) {
+        this.menuService.staticMenuDesktopInactive = value;
+    }
+
+    get staticMenuMobileActive(): boolean {
+        return this.menuService.staticMenuMobileActive;
+    }
+
+    set staticMenuMobileActive(value: boolean) {
+        this.menuService.staticMenuMobileActive = value;
+    }
+
+    get layoutMenuScroller(): HTMLDivElement {
+        return this.menuService.layoutMenuScroller;
+    }
+
+    set layoutMenuScroller(value: HTMLDivElement) {
+        this.menuService.layoutMenuScroller = value;
+    }
+
+    get menuClick(): boolean {
+        return this.menuService.menuClick;
+    }
+
+    set menuClick(value: boolean) {
+        this.menuService.menuClick = value;
+    }
+
+    get userMenuClick(): boolean {
+        return this.menuService.userMenuClick;
+    }
+
+    set userMenuClick(value: boolean) {
+        this.menuService.userMenuClick = value;
+    }
+
+    get notificationMenuClick(): boolean {
+        return this.menuService.notificationMenuClick;
+    }
+
+    set notificationMenuClick(value: boolean) {
+        this.menuService.notificationMenuClick = value;
+    }
+
+    get rightMenuClick(): boolean {
+        return this.menuService.rightMenuClick;
+    }
+
+    set rightMenuClick(value: boolean) {
+        this.menuService.rightMenuClick = value;
+    }
+
+    get resetMenu(): boolean {
+        return this.menuService.resetMenu;
+    }
+
+    set resetMenu(value: boolean) {
+        this.menuService.resetMenu = value;
+    }
+
+    get menuHoverActive(): boolean {
+        return this.menuService.menuHoverActive;
+    }
+
+    set menuHoverActive(value: boolean) {
+        this.menuService.menuHoverActive = value;
+    }
+
+    get topbarUserMenuActive(): boolean {
+        return this.menuService.topbarUserMenuActive;
+    }
+
+    set topbarUserMenuActive(value: boolean) {
+        this.menuService.topbarUserMenuActive = value;
+    }
+
+    get topbarNotificationMenuActive(): boolean {
+        return this.menuService.topbarNotificationMenuActive;
+    }
+
+    set topbarNotificationMenuActive(value: boolean) {
+        this.menuService.topbarNotificationMenuActive = value;
+    }
+
+    get rightPanelMenuActive(): boolean {
+        return this.menuService.rightPanelMenuActive;
+    }
+
+    set rightPanelMenuActive(value: boolean) {
+        this.menuService.rightPanelMenuActive = value;
+    }
+
+    get configActive(): boolean {
+        return this.menuService.configActive;
+    }
+
+    set configActive(value: boolean) {
+        this.menuService.configActive = value;
+    }
+
+    get configClick(): boolean {
+        return this.menuService.configClick;
+    }
+
+    set configClick(value: boolean) {
+        this.menuService.configClick = value;
+    }
+
+    get profileClick(): boolean {
+        return this.menuService.profileClick;
+    }
+
+    set profileClick(value: boolean) {
+        this.menuService.profileClick = value;
+    }
+
+    get inlineUserMenuActive(): boolean {
+        return this.menuService.inlineUserMenuActive;
+    }
+
+    set inlineUserMenuActive(value: boolean) {
+        this.menuService.inlineUserMenuActive = value;
     }
 
 

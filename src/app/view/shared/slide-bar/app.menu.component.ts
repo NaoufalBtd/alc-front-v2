@@ -8,13 +8,11 @@ import {Etudiant} from '../../../controller/model/etudiant.model';
 import {PublicComponent} from '../../public/public.component';
 import {User} from '../../../controller/model/user.model';
 import {AuthenticationService} from '../../../controller/service/authentication.service';
-import {Role} from '../../../enum/role.enum';
 
 
 @Component({
     selector: 'app-menu',
     templateUrl: './app.menu.component.html',
-    styleUrls: ['./app.menu.component.css'],
     animations: [
         trigger('inline', [
             state('hidden', style({
@@ -43,7 +41,9 @@ export class AppMenuComponent implements OnInit {
 
     constructor(public app: AppComponent,
                 private authService: AuthenticationService,
-                public appMain: PublicComponent, private service: LoginService, public authenticationService: AuthenticationService) {
+                public appMain: PublicComponent,
+                private service: LoginService,
+                public authenticationService: AuthenticationService) {
     }
 
     get model(): any[] {
@@ -131,6 +131,8 @@ export class AppMenuComponent implements OnInit {
 
 
     onMenuClick(event) {
+        console.log(event);
+        this.appMain.onMenuClick(event);
         this.appMain.onMenuClick(event);
         this.appMain.rightPanelMenuActive = false;
     }
