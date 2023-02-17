@@ -218,7 +218,7 @@ export class WebSocketService {
             this.webSocket.send(JSON.stringify(chatMessageDto));
         }
         this.isInSession = false;
-        this.webSocket.close();
+        this.webSocket.close(46584, 'LESSON_FINISHED');
     }
 
     set dragAndDropData(value: string) {
