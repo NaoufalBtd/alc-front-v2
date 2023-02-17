@@ -8,7 +8,8 @@
         <p-progressBar [value]="progressBarValue" [showValue]=false></p-progressBar>
     </div>
     <app-vocabulary-section-item [current]="currentItem"></app-vocabulary-section-item>
-    <div *ngIf="showNext" style="margin-top: 10px;text-align: center">
+    <div [hidden]="groupeEtudiant?.groupeEtude?.nombreEtudiant > 1" *ngIf="showNext"
+         style="margin-top: 10px;text-align: center">
         <button
                 *ngIf="fliped===false"
                 (click)="flip()"
@@ -18,10 +19,11 @@
         <button
                 (click)="nextItem()"
                 *ngIf="fliped===true"
-                class="p-button-rounded" icon="pi pi-caret-right" id="next"  [label]="'Next'"
+                class="p-button-rounded" icon="pi pi-caret-right" id="next" [label]="'Next'"
                 pButton pRipple
                 type="button"></button>
     </div>
+
     <div *ngIf="showfinish" style="margin-top: 10px;text-align: center">
         <button
                 (click)="endShow()"

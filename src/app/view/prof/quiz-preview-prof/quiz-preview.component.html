@@ -27,7 +27,7 @@
                         </ng-template>
                         <ng-template pTemplate="body" let-answer>
                             <tr>
-                                <td>{{answer.key?.nom }} {{ answer.key?.prenom}}</td>
+                                <td>{{answer.key?.nom}}</td>
                                 <td>{{answer.value?.lib}}</td>
                                 <td>{{answer.value?.etatReponse}}</td>
                             </tr>
@@ -194,7 +194,7 @@
                        (focus)="showDontKnowButton =false; showCheckButton=true;"
                        (focusin)="hidePlaceHolder('HIDE')"
                        (focusout)="hidePlaceHolder('SHOW')"
-                       [pTooltip]="correctAnswersList?.get(question.id)[0]?.lib" tooltipPosition="top"
+                       [pTooltip]="correctAnswersList?.get(question?.id)[0]?.lib" tooltipPosition="top"
                        inputId="inputDashedBorder" type="text"
                        [placeholder]="inputAnswer"
                        [(ngModel)]="reponseQuiz.lib" class="p-inputtext-sm " pInputText/>
@@ -233,7 +233,7 @@
                 <div class="p-col-9">
                     {{  question?.libelle}}
                 </div>
-                <div  style="padding-top: 2%;" class="p-col-3">
+                <div style="padding-top: 2%;" class="p-col-3">
                     <button [style]="{width: '7em',
                                  height: '23px',
                                  display: 'inline-block',
@@ -374,11 +374,11 @@
                 <div [id]="item" class="example-box" (cdkDragStarted)="drag_put_in_order(item, i+1)"
                      *ngFor="let item of dragList; index as i"
                      cdkDrag>
-                    {{item}} ( sentence N° {{dragAnswersList.get(item)}})</div>
+                    {{item}} ( sentence N° {{dragAnswersList.get(item)}})
+                </div>
             </div>
         </div>
     </div>
-
 
 
     <div class="p-grid sideBar">
@@ -405,7 +405,8 @@
 
 
             <button *ngIf="question.id === questionList[questionList.length -1]?.id
-              && this.webSocketService.isInSession && question?.typeDeQuestion?.ref !== 't11' " style="float:right" pButton
+              && this.webSocketService.isInSession && question?.typeDeQuestion?.ref !== 't11' " style="float:right"
+                    pButton
                     pRipple
                     (click)="finishQuiz()"
                     type="button" icon="pi pi-question" iconPos="right"

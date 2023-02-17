@@ -36,7 +36,7 @@
                             <button id="startLessonButton"
                                     pButton pRipple type="button"
                                     routerLink="/etudiant/test-level"
-                                    [label]="'Discover your level' | translate"
+                                    [label]="'discover your level' | translate"
                                     class="takeTest"></button>
                         </div>
                     </div>
@@ -54,7 +54,7 @@
                  style="cursor:pointer;"
                  class="col-xxl-2 col-xl-2 col-lg-3 col-md-3 col-sm-4">
                 <div class="course__item white-bg mb-30 fix">
-                    <div  class="course__thumb  w-img p-relative fix">
+                    <div class="course__thumb  w-img p-relative fix">
                         <a>
                             <img *ngIf="level?.id ===1" src="/assets/images/A1.png" alt="">
                             <img *ngIf="level?.id ===5095" src="/assets/images/A2.png" alt="">
@@ -87,7 +87,8 @@
 
     <div class="col-md-12 upgdate  p-3 my-5">
         <div class="font-medium text-black">
-            <div class="text-center" [style.direction]="translate.currentLang === 'ar' ? 'rtl': 'ltr'" style=" font-size: 35px;font-weight: bold;">
+            <div class="text-center" [style.direction]="translate.currentLang === 'ar' ? 'rtl': 'ltr'"
+                 style=" font-size: 35px;font-weight: bold;">
                 {{'Explore our packs' | translate}}
             </div>
         </div>

@@ -350,7 +350,6 @@ export class QuizTakeComponent implements OnInit, OnDestroy {
 
 
     ngOnInit(): void {
-
         this.learnService.onStart(this.selectedQuiz);
         this.trueOrFalse = null;
         this.grpStudentAnswers = new Map<Etudiant, QuizReponse>();

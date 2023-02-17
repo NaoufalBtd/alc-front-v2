@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {GroupeEtudiantService} from '../../../../controller/service/groupe-etudiant-service';
 import {GroupeEtude} from '../../../../controller/model/groupe-etude.model';
 import {GroupeEtudiant} from '../../../../controller/model/groupe-etudiant.model';
 import {MessageService} from 'primeng/api';
 import {Etudiant} from '../../../../controller/model/etudiant.model';
-import { GroupeEtudiantDetail} from '../../../../controller/model/groupe-etudiant-detail.model';
+import {GroupeEtudiantDetail} from '../../../../controller/model/groupe-etudiant-detail.model';
 import {Parcours} from '../../../../controller/model/parcours.model';
 import {Prof} from '../../../../controller/model/prof.model';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
@@ -213,7 +213,7 @@ public trouver(id: number){
 
   public exit(id: number){
     for ( let i = 0 ; i < this.etudiantList.length ; i++){
-      if (id == this.etudiantList[i].id)
+      if (id === this.etudiantList[i].id)
       {
         console.log( this.etudiantList[i]);
         //this.etudiantList2.push(this.etudiantList[i]);

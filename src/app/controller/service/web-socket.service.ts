@@ -394,7 +394,7 @@ export class WebSocketService {
                 } else {
                     const rpsQuiz = data.quizReponse;
                     // @ts-ignore
-                    this.grpStudentAnswers.set(data?.student, rpsQuiz);
+                    this.grpStudentAnswers.set(data?.quizReponse?.student, rpsQuiz);
                 }
             }
         } else if (data.user === 'FINISH_QUIZ' && data.type === 'FINISH_QUIZ') {
