@@ -516,6 +516,9 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
         return this.webSocketService.groupeEtudiant;
     }
 
+    set groupeEtudiant(value: GroupeEtudiant) {
+        this.webSocketService.groupeEtudiant = value;
+    }
 
     get studentsEnLigne(): Map<number, User> {
         return this.webSocketService.studentsEnLigne;
@@ -963,6 +966,7 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
                 this.webSocketService.isInSession = true;
                 this.selectedcours = selectedMeeting.cours;
                 this.prof = selectedMeeting.prof;
+                this.groupeEtudiant = selectedMeeting.groupeEtudiant;
                 this.simulateSectionService.findSectionOneByCoursId(selectedMeeting.cours);
                 this.findhomeworkbycours(this.selectedcours);
                 if (this.webSocketService.isInSession) {

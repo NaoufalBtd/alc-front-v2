@@ -231,18 +231,19 @@ export class WebSocketService {
             this.onOpen(prof, grpEtudiant, sender, user);
         };
         this.webSocket.onerror = (event) => {
-            console.log(event);
+            console.error(event);
         };
         this.webSocket.onmessage = (event) => {
+            console.log('===================BEFORE MESSAGE =====================');
             console.log(event);
-            console.log(this.connectedUsers);
-            console.log(prof);
+            console.log('===================BEFORE MESSAGE =====================');
             if (this.connectedUsers.filter(d => d.id === this.loginservice.getConnecteUser().id)?.length > 0 ||
                 this.loginservice.getConnecteUser().id === prof.id) {
                 this.onMessage(event);
             }
         };
         this.webSocket.onclose = (event) => {
+            console.log(event);
             if (this.isInSession) {
                 if (this.loginservice.getConnectedStudent().role === 'TEACHER') {
                     this.openWebSocket(this.loginservice.getConnectedProf(), this.loginservice.getConnectedProf(),
@@ -287,7 +288,9 @@ export class WebSocketService {
 
     private onMessage(event: MessageEvent<any>) {
         const data: ChatMessageDto = JSON.parse(event.data);
+        console.log('===================ON MESSAGE =====================');
         console.log(data);
+        console.log('===================ON MESSAGE =====================');
         if (data.type === 'message') {
             if (this.chatMessages.filter(c =>
                 c.user === data.user &&
@@ -459,20 +462,15 @@ export class WebSocketService {
     public sendMessage(chatMessageDto: ChatMessageDto, sender: string) {
         if (this.webSocket.readyState === this.webSocket.OPEN) {
             if (chatMessageDto.type === 'message') {
-                console.log('MESSAGE');
                 this.webSocket.send(JSON.stringify((chatMessageDto)));
             } else if (chatMessageDto?.type === 'START_LESSON') {
-                console.log('START_LESSON');
-
                 chatMessageDto.quizReponse = null;
                 chatMessageDto.dateSent = null;
                 chatMessageDto.ev = null;
                 this.webSocket.send(JSON.stringify((chatMessageDto)));
             } else if (chatMessageDto.type === 'QUIZ' && chatMessageDto.user.includes('PUT_IN_ORDER')) {
-                console.log('PUT_IN_ORDER');
                 this.webSocket.send(JSON.stringify((chatMessageDto)));
             } else {
-                console.log(chatMessageDto);
                 const myData = JSON.stringify((chatMessageDto));
                 this.webSocket.send(myData);
             }
