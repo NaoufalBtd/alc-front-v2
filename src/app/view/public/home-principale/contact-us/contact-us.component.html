@@ -7,11 +7,11 @@
                 <h3 class="title">{{'getintouch' | translate}}</h3>
                 <p class="text">{{'Contactuswith' | translate}}</p>
                 <div class="info">
-                    <div class="social-information"><i class="fa fa-solid fa-envelope"></i>
+                    <div class="social-information"><i class="fa fa-solid  fa-envelope"></i>
                         <p>engflexy.contact@gmail.com</p>
                     </div>
-                    <div class="social-information"><i class="fa fa-solid fa-mobile"></i>
-                        <p>+212 654795800 </p>
+                    <div class="social-information"><i class="fa fa-solid  fa-mobile"></i>
+                        <p  style="direction: ltr!important;">+212 654795800 </p>
                     </div>
                 </div>
                 <div class="social-media">
@@ -66,6 +66,7 @@
                     <div class="social-input-containers textarea">
                             <textarea name="message" class="input"
                                       [(ngModel)]="contact.message"
+                                      cols="3"
                                       placeholder="{{'Message' | translate}}"></textarea>
                     </div>
                     <input type="submit" (click)="save()" value="Send" class="btn"/>
