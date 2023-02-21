@@ -218,7 +218,7 @@ export class WebSocketService {
             this.webSocket.send(JSON.stringify(chatMessageDto));
         }
         this.isInSession = false;
-        this.webSocket.close(46584, 'LESSON_FINISHED');
+        this.webSocket.close();
     }
 
     set dragAndDropData(value: string) {
@@ -234,9 +234,6 @@ export class WebSocketService {
             console.error(event);
         };
         this.webSocket.onmessage = (event) => {
-            console.log('===================BEFORE MESSAGE =====================');
-            console.log(event);
-            console.log('===================BEFORE MESSAGE =====================');
             if (this.connectedUsers.filter(d => d.id === this.loginservice.getConnecteUser().id)?.length > 0 ||
                 this.loginservice.getConnecteUser().id === prof.id) {
                 this.onMessage(event);
@@ -288,9 +285,6 @@ export class WebSocketService {
 
     private onMessage(event: MessageEvent<any>) {
         const data: ChatMessageDto = JSON.parse(event.data);
-        console.log('===================ON MESSAGE =====================');
-        console.log(data);
-        console.log('===================ON MESSAGE =====================');
         if (data.type === 'message') {
             if (this.chatMessages.filter(c =>
                 c.user === data.user &&

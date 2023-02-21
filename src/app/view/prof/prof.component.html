@@ -1,4 +1,4 @@
-<div (click)="onLayoutClick()" [class]="app.topbarColor" [ngClass]="{'layout-horizontal': app.layoutMode === 'horizontal',
+<div style="background: #eaf2fb;" (click)="onLayoutClick()" [class]="app.topbarColor" [ngClass]="{'layout-horizontal': app.layoutMode === 'horizontal',
     'layout-overlay': app.layoutMode === 'overlay',
     'layout-static': app.layoutMode === 'static',
     'layout-slim': app.layoutMode === 'slim',
@@ -39,7 +39,7 @@
                    style="font-size: 2rem; cursor: pointer; color: white;"></i>
             </div>
             <div style="color: white;" class="p-col-8">
-                <h4>engFlexy</h4>
+                <h4>EngFlexy</h4>
                 <p class="helpText"></p>
                 Ask us anything, or share your feedback.
             </div>
@@ -85,7 +85,7 @@
                        type="text" placeholder="Send a message...">
             </div>
             <div class="p-col-5">
-                <p-fileUpload mode="basic"  styleClass="sentIcons" chooseIcon="pi pi-link" name="demo[]"
+                <p-fileUpload mode="basic" styleClass="sentIcons" chooseIcon="pi pi-link" name="demo[]"
                               url="./upload.php" accept="image/*"
                               maxFileSize="100000000" (onSelect)="onBasicUpload($event)"></p-fileUpload>
 
@@ -97,9 +97,9 @@
 
 <p-dialog [showHeader]="false" [(visible)]="displayImgDialog" [position]="position" [modal]="true"
           [style]="{width: '35vw'}" [baseZIndex]="100000"
-          [draggable]="true" [resizable]="false" >
+          [draggable]="true" [resizable]="false">
     <div style="background: #263238; color: white!important; border-right: 5px;" class="p-grid">
-        <p-button icon="pi pi-times" (click)="cancel()"  styleClass="p-button-text"></p-button>
+        <p-button icon="pi pi-times" (click)="cancel()" styleClass="p-button-text"></p-button>
 
         <div style="padding: 1%" class="p-col-12">
             <img style="width: 90%; margin-left: 4%; border-radius: 5px;" src="{{reader?.result}}" alt="not found">
@@ -115,7 +115,7 @@
 <div *ngIf="showOverLayImg" id="myNav" class="overlay">
 
     <!-- Button to close the overlay navigation -->
-    <a style="cursor: pointer" (click)="showOverLayImg  = false" class="closebtn" >&times;</a>
+    <a style="cursor: pointer" (click)="showOverLayImg  = false" class="closebtn">&times;</a>
 
     <!-- Overlay content -->
     <div class="overlay-content">
