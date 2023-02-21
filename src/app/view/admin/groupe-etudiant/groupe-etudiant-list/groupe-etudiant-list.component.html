@@ -23,7 +23,7 @@
                 </ng-template>
             </p-toolbar>
 
-            <p-table #dt [(selection)]="selectes" [columns]="cols" [globalFilterFields]="['libelle','nombreEtudiant']"
+            <p-table #dt [(selection)]="selectes" [columns]="cols" [globalFilterFields]="['id','libelle','nombreEtudiant']"
                      [paginator]="true"
                      [rowHover]="true"
                      [rows]="8" [showCurrentPageReport]="true" [value]="groupeEtudiants"
@@ -60,9 +60,14 @@
                             <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                         </th>
 
+                        <th pSortableColumn="id">ID
+                            <p-sortIcon field="id"></p-sortIcon>
+                        </th>
+
                         <th pSortableColumn="libelle"> Group Label
                             <p-sortIcon field="liebelle"></p-sortIcon>
                         </th>
+
                         <th pSortableColumn="dateDebut">Start date
                             <p-sortIcon field="dateDebut"></p-sortIcon>
                         </th>
@@ -89,6 +94,7 @@
                         <td>
                             <p-tableCheckbox [value]="groupeEtudiant"></p-tableCheckbox>
                         </td>
+                        <td>{{groupeEtudiant.id}}</td>
                         <td>{{groupeEtudiant.libelle}}</td>
                         <td>{{groupeEtudiant.dateDebut}}</td>
                         <td>{{groupeEtudiant.dateFin}}</td>
