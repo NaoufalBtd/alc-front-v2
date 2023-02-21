@@ -26,17 +26,16 @@ import {WebSocketService} from '../../../../controller/service/web-socket.servic
 import {LearnService} from '../../../../controller/service/learn.service';
 import {Prof} from '../../../../controller/model/prof.model';
 import {GroupeEtudiant} from '../../../../controller/model/groupe-etudiant.model';
-import {GroupeEtudiantService} from '../../../../controller/service/groupe-etudiant-service';
 import {AppComponent} from '../../../../app.component';
 import {MenuService} from '../../../shared/slide-bar/app.menu.service';
 import {SimulateSectionService} from '../../../../controller/service/simulate-section.service';
 import {ChatMessageDto} from '../../../../controller/model/chatMessageDto';
-import {User} from '../../../../controller/model/user.model';
 import {HomeWorkEtudiantComponent} from '../../homeWork/home-work-etudiant/home-work-etudiant.component';
 import {HomeWorkSimulateService} from '../../../../controller/service/home-work-simulate.service';
 import {CategoriesSectionItemEnum} from '../../../../enum/CategoriesSectionItemEnum';
 import {ScheduleService} from '../../../../controller/service/schedule.service';
 import {AnimationService} from '../../../../controller/service/animation.service';
+import {UserVo} from '../../../../controller/vo/UserVo';
 
 @Pipe({name: 'safe'})
 export class SafePipe implements PipeTransform {
@@ -55,7 +54,7 @@ export class SafePipe implements PipeTransform {
     styleUrls: ['./student-simulate-section.component.scss']
 })
 export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
-
+    usersConnected: UserVo[];
     activeIndex = 0;
     responsiveOptions: any[] = [
         {
@@ -112,7 +111,6 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
                 private app: AppComponent,
                 private route: ActivatedRoute,
                 private simulateSectionService: SimulateSectionService,
-                private grpEtudiantService: GroupeEtudiantService,
     ) {
     }
 
@@ -136,9 +134,6 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
         return this.webSocketService.lessonStarted;
     }
 
-    set lessonStarted(value: boolean) {
-        this.webSocketService.lessonStarted = value;
-    }
 
     get vocabularySection(): Section {
         return this.simulateSectionService.vocabularySection;
@@ -185,16 +180,9 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
         return this.simulateSectionService.finishedAdditionalSection;
     }
 
-    set finishedAdditionalSection(value: number) {
-        this.simulateSectionService.finishedAdditionalSection = value;
-    }
 
     get finishedSection(): number {
         return this.simulateSectionService.finishedSection;
-    }
-
-    set finishedSection(value: number) {
-        this.simulateSectionService.finishedSection = value;
     }
 
     get showLesson(): boolean {
@@ -264,13 +252,6 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
         this.sectionItemService.showVocabulary = value;
     }
 
-    get contenuSection(): Array<string> {
-        return this.service.contenuSection;
-    }
-
-    set contenuSection(value: Array<string>) {
-        this.service.contenuSection = value;
-    }
 
     get selected(): Dictionary {
         return this.dictionnaryService.selected;
@@ -296,9 +277,6 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
         this.service.image = value;
     }
 
-    get selectedDict(): Dictionary {
-        return this.dictionnaryService.selectedDict;
-    }
 
     set selectedDict(value: Dictionary) {
         this.dictionnaryService.selectedDict = value;
@@ -312,41 +290,14 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
         this.service.selectedEtudiantCours = value;
     }
 
-    get itemsEtudiantCours(): Array<EtudiantCours> {
-        return this.service.itemsEtudiantCours;
-    }
-
-    set itemsEtudiantCours(value: Array<EtudiantCours>) {
-        this.service.itemsEtudiantCours = value;
-    }
-
-    get submittedDictEdit(): boolean {
-        return this.dictionnaryService.submittedDictEdit;
-    }
-
     set submittedDictEdit(value: boolean) {
         this.dictionnaryService.submittedDictEdit = value;
-    }
-
-    get editDialogDict(): boolean {
-        return this.dictionnaryService.editDialogDict;
     }
 
     set editDialogDict(value: boolean) {
         this.dictionnaryService.editDialogDict = value;
     }
 
-    get submittedDict(): boolean {
-        return this.dictionnaryService.submittedDict;
-    }
-
-    set submittedDict(value: boolean) {
-        this.dictionnaryService.submittedDict = value;
-    }
-
-    get createDialogDict(): boolean {
-        return this.dictionnaryService.createDialogDict;
-    }
 
     set createDialogDict(value: boolean) {
         this.dictionnaryService.createDialogDict = value;
@@ -451,10 +402,6 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
     }
 
 
-    set sectionAdditional(value: Array<Section>) {
-        this.service.sectionAdditional = value;
-    }
-
     get selectessection(): Array<Section> {
         return this.service.selectessection;
     }
@@ -464,45 +411,14 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
     }
 
 
-    get selectedReview(): EtudiantReview {
-        return this.review.selected;
-    }
-
     set selectedReview(value: EtudiantReview) {
         this.review.selected = value;
-    }
-
-    get listSynonymes(): Array<any> {
-        return this.dictionnaryService.listSynonymes;
-    }
-
-    set listSynonymes(value: Array<any>) {
-        this.dictionnaryService.listSynonymes = value;
-    }
-
-    get Synonymes(): Array<any> {
-        return this.dictionnaryService.Synonymes;
-    }
-
-    set Synonymes(value: Array<any>) {
-        this.dictionnaryService.Synonymes = value;
-    }
-
-    get TranslateSynonymeDialog(): boolean {
-        return this.dictionnaryService.TranslateSynonymeDialog;
-    }
-
-    set TranslateSynonymeDialog(value: boolean) {
-        this.dictionnaryService.TranslateSynonymeDialog = value;
     }
 
     get connectedUsers(): any[] {
         return this.webSocketService.connectedUsers;
     }
 
-    set connectedUsers(value: any[]) {
-        this.webSocketService.connectedUsers = value;
-    }
 
     get prof(): Prof {
         return this.webSocketService.prof;
@@ -520,9 +436,6 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
         this.webSocketService.groupeEtudiant = value;
     }
 
-    get studentsEnLigne(): Map<number, User> {
-        return this.webSocketService.studentsEnLigne;
-    }
 
     get images(): any[] {
         return this.simulateSectionService.images;
@@ -542,10 +455,6 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
 
     get listOfContent(): string[] {
         return this.simulateSectionService.listOfContent;
-    }
-
-    set listOfContent(value: string[]) {
-        this.simulateSectionService.listOfContent = value;
     }
 
 
@@ -654,22 +563,6 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
             });
     }
 
-    public ReviewExist() {
-        this.review.findReview(this.selectedcours.id).subscribe(
-            data => {
-                this.selectedReview = data;
-            });
-    }
-
-
-    public openCreateDict() {
-        document.getElementById('dictionnair').style.visibility = 'hidden';
-        document.getElementById('dictionnair').style.width = '0px';
-        document.getElementById('dictionnair').style.height = '0px';
-        this.submittedDict = false;
-        this.createDialogDict = true;
-        this.selectedDict = new Dictionary();
-    }
 
     filterDict(event) {
         const filtered: any[] = [];
@@ -980,6 +873,7 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
                     });
                 this.webSocketService.openWebSocket(this.loginService.getConnectedStudent(),
                     selectedMeeting.groupeEtudiant.prof,
+                    selectedMeeting.id,
                     selectedMeeting.groupeEtudiant, 'STUDENT');
             }, error => {
                 this.animationService.showAnimation = false;
@@ -1026,6 +920,16 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
 
     activeIndexChange(event: any) {
         this.activeIndex = event;
+    }
+
+    getConnectedUsers() {
+        this.webSocketService.getConnectedUsers().subscribe(
+            data => {
+                this.usersConnected = data;
+            }, error => {
+                console.log(error);
+            }
+        );
     }
 
 }

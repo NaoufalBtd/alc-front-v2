@@ -1,6 +1,6 @@
 const url = 'http://localhost:8036';
 // const url = 'https://engflexy.ma';
-const socket = 'ws://localhost:8036/chat';
+const socket = 'http://localhost:8088/';
 // const socket = 'wss://engflexy.ma/chat';
 
 export const environment = {

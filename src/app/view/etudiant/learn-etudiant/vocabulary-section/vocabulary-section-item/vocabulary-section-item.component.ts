@@ -20,9 +20,6 @@ export class VocabularySectionItemComponent implements OnInit {
                 private vocabularyService: VocabularyService) {
     }
 
-    get showfinish(): boolean {
-        return this.vocabularyService.showfinish;
-    }
 
     set showfinish(value: boolean) {
         this.vocabularyService.showfinish = value;
@@ -105,17 +102,4 @@ export class VocabularySectionItemComponent implements OnInit {
     }
 
 
-    getTranslation() {
-        if (this.selectedLanguage.code === 'ar') {
-            this.quizService.translate(this.current.response).subscribe(data => {
-                this.current.translation = data;
-                console.log(this.current.translation);
-            });
-        } else if (this.selectedLanguage.code === 'fr') {
-            this.quizService.translateEnFr(this.current.response).subscribe(data => {
-                this.current.translation = data;
-                console.log(this.current.translation);
-            });
-        }
-    }
 }

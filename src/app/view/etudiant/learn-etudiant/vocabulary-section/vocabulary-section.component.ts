@@ -153,7 +153,6 @@ export class VocabularySectionComponent implements OnInit {
     // }
 
     nextItem() {
-        console.log(this.webSocketService.isInSession);
         if (this.webSocketService.isInSession) {
             const chatMessage: ChatMessageDto = new ChatMessageDto('VOC_NEXT', 'VOC_NEXT', true);
             chatMessage.prof = this.prof;
@@ -190,7 +189,6 @@ export class VocabularySectionComponent implements OnInit {
     }
 
     flip() {
-        console.log(this.webSocketService.isInSession);
         if (this.webSocketService.isInSession && this.groupeEtudiant?.groupeEtude?.nombreEtudiant === 1) {
             const chatMessage: ChatMessageDto = new ChatMessageDto('VOC_FLIP', 'VOC_FLIP', true);
             chatMessage.prof = this.prof;

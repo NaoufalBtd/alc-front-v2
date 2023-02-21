@@ -1,5 +1,5 @@
 const url = 'https://engflexy.ma';
-const socket = 'wss://engflexy.ma/chat';
+const socket = 'https://engflexy.ma/socket-io/';
 
 export const environment = {
     production: true,

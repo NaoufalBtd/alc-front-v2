@@ -35,6 +35,7 @@ import {TypeHomeWorkEnum} from '../../../../enum/type-question.enum';
 import {GroupeEtudiantService} from '../../../../controller/service/groupe-etudiant-service';
 import {ScheduleService} from '../../../../controller/service/schedule.service';
 import {AnimationService} from '../../../../controller/service/animation.service';
+import {UserVo} from '../../../../controller/vo/UserVo';
 
 @Pipe({name: 'safe'})
 export class SafePipe1 implements PipeTransform {
@@ -54,6 +55,7 @@ export class SafePipe1 implements PipeTransform {
     styleUrls: ['./section-simulate.component.scss']
 })
 export class SectionSimulateComponent implements OnInit, OnDestroy {
+    usersConnected: UserVo[];
     images: any[];
     showGalleria: boolean;
     listOfContent: string[];
@@ -403,7 +405,7 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
             data => {
                 this.selectedDict = data;
                 document.getElementById('dictionary').style.visibility = 'visible';
-            }, error => console.log('erreeeeeeeeeeeeeeeeur'));
+            }, error => console.log(error));
         document.getElementById('dictionary').style.visibility = 'visible';
     }
 
@@ -454,7 +456,7 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
                         this.webSocketService.saveCurrentSection(this.prof.id, dataSection);
                     }
                 );
-                this.webSocketService.openWebSocket(this.prof, this.prof, this.selectedSchedule.groupeEtudiant, 'PROF');
+                this.webSocketService.openWebSocket(this.prof, this.prof, this.selectedSchedule.id, this.selectedSchedule.groupeEtudiant, 'PROF');
                 this.sessionservice._idgroup = this.selectedSchedule.groupeEtudiant.id;
             }, error => {
                 this.animation.showAnimation = false;
@@ -543,7 +545,6 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
     }
 
     private verifyImagesUrl() {
-        console.log(this.selectedsection);
         if (this.selectedsection?.urlImage && this.selectedsection?.urlImage2 && this.selectedsection?.urlImage3) {
             this.images = [
                 {
@@ -563,7 +564,6 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
                 }
             ];
             this.listOfContent = this.selectedsection.contenu?.split(/\s\s\s+/);
-            console.log(this.listOfContent);
             this.showGalleria = true;
         } else if (this.selectedsection?.urlImage && this.selectedsection?.urlImage2) {
             this.images = [
@@ -579,7 +579,6 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
                 }
             ];
             this.listOfContent = this.selectedsection.contenu?.split(/\s\s\s+/);
-            console.log(this.listOfContent);
             this.showGalleria = true;
 
         } else {
@@ -669,8 +668,14 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
         this.studentsEnLigne.clear();
     }
 
-    getData() {
-        const grp = this.participants.get(this.prof.id);
+    getConnectedUsers() {
+        this.webSocketService.getConnectedUsers().subscribe(
+            data => {
+                this.usersConnected = data;
+            }, error => {
+                console.log(error);
+            }
+        );
     }
 
     getLanguages(): Array<any> {
@@ -694,9 +699,6 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
 
 
     addToDictionary(type: string) {
-        console.log(this.connectedUsers);
-        console.log(this.participants);
-        console.log(this.studentsEnLigne);
         if (type === 'SELECT') {
             this.createDialogDict = false;
             for (const etudiant of this.connectedUsers) {
@@ -951,7 +953,6 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
     }
 
     tabViewChange() {
-        console.log(this.activeIndexForTabView);
         if (this.activeIndexForTabView === 2) { // chat
             this.badgeNrMsg = 0;
         }
