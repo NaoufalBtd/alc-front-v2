@@ -1,4 +1,4 @@
-const url = 'https://engflexy.ma/back';
+const url = 'https://engflexy.ma/backEnd';
 const socket = 'https://engflexy.ma/';
 
 export const environment = {

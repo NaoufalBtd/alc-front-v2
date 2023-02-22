@@ -1,5 +1,5 @@
 // const url = 'http://localhost:8036';
-const url = 'https://engflexy.ma/back';
+const url = 'https://engflexy.ma/backEnd';
 // const socket = 'http://localhost:8088/';
 const socket = 'https://engflexy.ma/';
 
