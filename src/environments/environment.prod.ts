@@ -1,5 +1,5 @@
-const url = 'https://engflexy.ma';
-const socket = 'https://engflexy.ma/socket-io/';
+const url = 'https://engflexy.ma/back';
+const socket = 'https://engflexy.ma/';
 
 export const environment = {
     production: true,

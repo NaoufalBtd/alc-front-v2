@@ -103,13 +103,10 @@ import {LearnComponent} from './view/admin/learn/learn.component';
 import {ParcoursListComponent} from './view/admin/learn/parcours-list/parcours-list.component';
 import {ConfirmationService, MessageService} from 'primeng/api';
 import {QuizViewComponent} from './view/prof/Classes/profclasses/quiz-view/quiz-view.component';
-import {EtudiantssViewComponent} from './view/admin/etudiants/etudiantss-view/etudiantss-view.component';
 import {ClassRoomListComponent} from './view/prof/Classes/profclasses/class-room-list/class-room-list.component';
 import {HomeComponent} from './view/prof/home/home.component';
 import {ProfclassesComponent} from './view/prof/Classes/profclasses/profclasses.component';
 import {EtudiantttViewComponent} from './view/prof/Classes/profclasses/etudianttt-view/etudianttt-view.component';
-import {EtudiantCreateComponent} from './view/admin/etudiants/etudiant-create/etudiant-create.component';
-import {EtudiantEditComponent} from './view/admin/etudiants/etudiant-edit/etudiant-edit.component';
 import {EtudiantListComponent} from './view/admin/etudiants/etudiant-list/etudiant-list.component';
 import {InscriptionCreateComponent} from './view/admin/validate-inscriptions/inscription-create/inscription-create.component';
 import {InscriptionEditComponent} from './view/admin/validate-inscriptions/inscription-edit/inscription-edit.component';
@@ -450,11 +447,8 @@ export function createTranslateLoader(http: HttpClient) {
             SectionViewComponent,
             SectionEditComponent,
             ClassRoomListComponent,
-            EtudiantssViewComponent,
             HomeComponent,
             QuizViewComponent,
-            EtudiantCreateComponent,
-            EtudiantEditComponent,
             EtudiantListComponent,
             InscriptionCreateComponent,
             InscriptionListComponent,
@@ -467,10 +461,7 @@ export function createTranslateLoader(http: HttpClient) {
             InscriptionEditComponent,
             EtudiantttViewComponent,
             EtudiantsComponent,
-            EtudiantssViewComponent,
-            EtudiantCreateComponent,
             EtudiantListComponent,
-            EtudiantEditComponent,
             InscriptionsComponent,
             ProfclassesComponent,
             QuizPreviewComponent,

@@ -35,6 +35,7 @@ import {Observable} from 'rxjs';
 // @ts-ignore
 const io = require('socket.io-client');
 
+
 @Injectable({
     providedIn: 'root'
 })
@@ -63,7 +64,7 @@ export class WebSocketService {
     private _tabViewActiveIndex = 0;
     private numerOft12Qst = -1;
     private _activeIndexForTabView: number;
-    private _reponseHomeWorkReviewComponent: ReponseEtudiantHomeWork = new ReponseEtudiantHomeWork(); // used in sync between teacher and student in HomeWorkReviewComponent
+    private _reponseHomeWorkReviewComponent: ReponseEtudiantHomeWork = new ReponseEtudiantHomeWork();
     private _lessonStarted: boolean;
     private _minute = 59;
     private _seconde = 59;
@@ -243,6 +244,7 @@ export class WebSocketService {
     private onMessage() {
         this.socket.on('message', (event) => {
             const data: ChatMessageDto = JSON.parse(event);
+            console.log(data);
             if (data.type === 'message') {
                 this.receiveMessage(data);
             } else if (data.type === 'SECTION') {
@@ -448,26 +450,19 @@ export class WebSocketService {
 
     public sendMessage(chatMessageDto: ChatMessageDto, sender: string) {
         chatMessageDto.key = this.keyOfSession;
-        if (this.socket.connected) {
-            if (chatMessageDto.type === 'message') {
-                this.socket.emit('message', JSON.stringify((chatMessageDto)));
-            } else if (chatMessageDto?.type === 'START_LESSON') {
-                chatMessageDto.quizReponse = null;
-                chatMessageDto.dateSent = null;
-                chatMessageDto.ev = null;
-                this.socket.emit('message', JSON.stringify((chatMessageDto)));
-            } else if (chatMessageDto.type === 'QUIZ' && chatMessageDto.user.includes('PUT_IN_ORDER')) {
-                this.socket.emit('message', JSON.stringify((chatMessageDto)));
-            } else {
-                this.socket.emit('message', JSON.stringify((chatMessageDto)));
-            }
+        // tslint:disable-next-line:no-console
+        console.info(this.socket.connected);
+        if (chatMessageDto.type === 'message') {
+            this.socket.emit('message', JSON.stringify((chatMessageDto)));
+        } else if (chatMessageDto?.type === 'START_LESSON') {
+            chatMessageDto.quizReponse = null;
+            chatMessageDto.dateSent = null;
+            chatMessageDto.ev = null;
+            this.socket.emit('message', JSON.stringify((chatMessageDto)));
+        } else if (chatMessageDto.type === 'QUIZ' && chatMessageDto.user.includes('PUT_IN_ORDER')) {
+            this.socket.emit('message', JSON.stringify((chatMessageDto)));
         } else {
-            // TODO: show exception to user
-            this.messageService.add({
-                severity: 'info',
-                life: 10000,
-                detail: 'socket Server is down !'
-            });
+            this.socket.emit('message', JSON.stringify((chatMessageDto)));
         }
     }
 
@@ -487,18 +482,6 @@ export class WebSocketService {
         this.serviceprof.savechatmsgs(prof).subscribe(
             data => {
             }, error => {
-            }
-        );
-    }
-
-
-    public findbynumero(num: number) {
-        this.serviceprof.findbyid(num).subscribe(
-            data => {
-                // this.loginservice.etudiant.prof.chatMessageDto = data.chatMessageDto;
-                // this.loginservice.prof = data;
-            },
-            error => {
             }
         );
     }
@@ -590,28 +573,20 @@ export class WebSocketService {
     openSession(key: number) {
         const id = this.authService.getUserFromLocalCache().id;
         const myToken = localStorage.getItem('token');
-        if (this.socket?.connected) {
-            return;
-        }
         console.log('----------------------------------OPEN SESSION ----------------------------------------');
         console.log(this.socket?.connected);
         console.log('-----------------------------------------------------------------------------------------');
-
         this.socket = io(environment.socketUrl + '?key=' + key + '&userId=' + id, {
-            transports: ['websocket'],
             autoConnect: true,
             auth: (cb) => {
                 cb({token: myToken});
-            },
-            host: 'localhost',
-            port: 8088
+            }
         });
     }
 
     private onDisconnect() {
         this.socket.on('disconnect', (reason, description) => {
             console.log(reason);
-            console.log(description);
         });
     }
 
