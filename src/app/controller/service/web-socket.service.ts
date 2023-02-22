@@ -578,6 +578,9 @@ export class WebSocketService {
         console.log('-----------------------------------------------------------------------------------------');
         this.socket = io(environment.socketUrl + '?key=' + key + '&userId=' + id, {
             autoConnect: true,
+            transports: ['websocket'],
+            pingInterval: 25000, // send a ping message every 25 seconds
+            pingTimeout: 60000, // consider the connection lost if no message received after 60 seconds
             auth: (cb) => {
                 cb({token: myToken});
             }
