@@ -267,7 +267,7 @@ export class GroupeEtudiantEditComponent implements OnInit {
             header: 'Confirm',
             icon: 'pi pi-exclamation-triangle',
             accept: () => {
-                this.groupeEtudiantService.deleteGroupeEtudiantDetailById().subscribe(data => {
+                this.groupeEtudiantService.deleteGroupeEtudiantDetailById(groupeEtudiantDetail.id).subscribe(data => {
                     //     this.groupeEtudiant.groupeEtudiantDetails = this.groupeEtudiant.groupeEtudiantDetails.filter(val => val.id !== this.groupeEtudiantDetail.id);
                     this.deleteFromView(groupeEtudiantDetail);
                     this.groupeEtudiantDetail = new GroupeEtudiantDetail();

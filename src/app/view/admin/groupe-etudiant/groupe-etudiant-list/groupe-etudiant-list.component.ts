@@ -1,8 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {ConfirmationService, MessageService} from 'primeng/api';
-import {GroupeEtudeService} from '../../../../controller/service/groupe-etude.service';
 import {GroupeEtudiantService} from '../../../../controller/service/groupe-etudiant-service';
-import {GroupeEtude} from '../../../../controller/model/groupe-etude.model';
 import {GroupeEtudiant} from '../../../../controller/model/groupe-etudiant.model';
 import {ScheduleProf} from '../../../../controller/model/calendrier-prof.model';
 import {ScheduleService} from '../../../../controller/service/schedule.service';
@@ -54,11 +52,12 @@ export class GroupeEtudiantListComponent implements OnInit {
     }
 
     public findAllGroupeEtudiantDetail(groupeEtudiant: GroupeEtudiant) {
-        console.log(this.groupeEtudiant.id);
-        console.log(this.groupeEtudiant.groupeEtudiantDetails);
         this.groupeEtudiantService.findAllGroupeEtudiantDetail(groupeEtudiant.id).subscribe(
-            data => this.groupeEtudiant.groupeEtudiantDetails = data);
-
+            data => {
+                this.selected.groupeEtudiantDetails = data;
+            }, error => {
+                console.log(error);
+            });
     }
 
     public delete(groupeEtudiant: GroupeEtudiant) {
@@ -112,17 +111,16 @@ export class GroupeEtudiantListComponent implements OnInit {
         ];
     }
 
-    public edit(groupeEtduiant1: GroupeEtudiant) {
-        this.groupeEtudiant = {...groupeEtduiant1};
-        this.editDialog = true;
-        console.log(groupeEtduiant1);
+    public edit(groupeEtduiant: GroupeEtudiant) {
+        this.groupeEtudiant = groupeEtduiant;
+        this.selected = groupeEtduiant;
+        this.createDialog = true;
     }
 
-    public openCreateEtud() {
+    public openCreateStudent() {
         this.selected = new GroupeEtudiant();
-        this.submitted = false;
         this.groupeEtudiant = new GroupeEtudiant();
-        this.createDialogEtud = true;
+        this.createDialog = true;
     }
 
     public openGroupeEtudiantDetail() {
@@ -134,7 +132,12 @@ export class GroupeEtudiantListComponent implements OnInit {
         this.groupeEtudiantService.createDialog2 = value;
     }
 
-    set createDialogEtud(value: boolean) {
+
+    get createDialog(): boolean {
+        return this.groupeEtudiantService.createDialog;
+    }
+
+    set createDialog(value: boolean) {
         this.groupeEtudiantService.createDialog = value;
     }
 
@@ -225,7 +228,7 @@ export class GroupeEtudiantListComponent implements OnInit {
 
     findByCriteria() {
         this.groupeEtudiants.splice(0, this.groupeEtudiants.length);
-        if (this.groupStudent.libelle !== undefined || this.groupStudent.parcours.libelle !== undefined ) {
+        if (this.groupStudent.libelle !== undefined || this.groupStudent.parcours.libelle !== undefined) {
             this.groupeEtudiantService.searchGroupStudent(this.groupStudent).subscribe(
                 data => {
                     this.groupeEtudiants = data;
@@ -233,8 +236,7 @@ export class GroupeEtudiantListComponent implements OnInit {
                     console.log(error);
                 }
             );
-        }
-        else if (this.groupStudentDetail.etudiant.nom !== undefined){
+        } else if (this.groupStudentDetail.etudiant.nom !== undefined) {
             this.groupeEtudiantService.searchGroupStudentDetail(this.groupStudentDetail).subscribe(
                 data => {
                     for (const item of data) {
@@ -243,7 +245,7 @@ export class GroupeEtudiantListComponent implements OnInit {
                 }, error => {
                     console.log(error);
                 });
-        } else{
+        } else {
             this.groupeEtudiantService.findAll().subscribe(data => {
                     this.groupeEtudiants = data;
                     console.log(this.groupeEtudiants);
@@ -253,6 +255,7 @@ export class GroupeEtudiantListComponent implements OnInit {
         this.groupStudentDetail = new GroupeEtudiantDetail();
         this.groupStudent = new GroupeEtudiant();
     }
+
     onActionComplete() {
         this.scheduleObj.workHours.start = '00:00';
         this.scheduleObj.workHours.end = '23:59';
