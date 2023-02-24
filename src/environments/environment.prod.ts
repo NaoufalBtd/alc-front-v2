@@ -2,7 +2,7 @@ const url = 'https://engflexy.ma/backEnd';
 const socket = 'https://engflexy.ma/';
 
 export const environment = {
-    production: true,
+    production: false,
     baseUrl: url + '/learn/',
     baseApi: url,
     sectionItemUrl: url + '/learn/sectionItem/',
