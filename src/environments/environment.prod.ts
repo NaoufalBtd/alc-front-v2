@@ -1,5 +1,5 @@
-const url = 'https://engflexy.ma/backEnd';
-const socket = 'https://engflexy.ma/';
+const url = 'https://engflexy.ma';
+const socket = 'https://engflexy.ma/socketio/';
 
 export const environment = {
     production: false,
