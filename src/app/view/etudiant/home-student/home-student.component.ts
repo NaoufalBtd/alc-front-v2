@@ -119,7 +119,7 @@ export class HomeStudentComponent implements OnInit {
                                 }
                                 this.nextLesson = this.scheduleProfs[this.lessonFinished.length];
 
-                                this.getStudentOfGroup(this.nextLesson.groupeEtudiant);
+                                this.getStudentOfGroup(this.nextLesson?.groupeEtudiant);
 
                                 console.log(this.lessonFinished);
                                 console.log(this.nextLesson);
@@ -180,7 +180,7 @@ export class HomeStudentComponent implements OnInit {
     }
 
     getDay(): string {
-        const date = new Date(this.nextLesson.startTime);
+        const date = new Date(this.nextLesson?.startTime);
         const day = date.getDay();
         for (const item of this.daysOptions) {
             if (day === item.value) {

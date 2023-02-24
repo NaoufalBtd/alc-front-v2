@@ -1,5 +1,7 @@
-const url = 'https://engflexy.ma';
-const socket = 'https://engflexy.ma/socketio/';
+// const url = 'http://localhost:8036';
+const url = 'https://engflexy.ma/app';
+// const socket = 'http://localhost:8088/';
+const socket = 'https://engflexy.ma/';
 
 export const environment = {
     production: false,
