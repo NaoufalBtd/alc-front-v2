@@ -1,29 +1,30 @@
-
 <div class="p-grid">
     <div class="p-col-12">
 
         <div class="card" style="background-color: gainsboro;">
             <p-toolbar styleClass="p-mb-4">
                 <ng-template pTemplate="left">
-                    <button   (click)="openCreateEtud()" class="p-button-success p-mr-2 p-mb-2" icon="pi pi-plus" label="New" pButton
+                    <button (click)="openCreateEtud()" class="p-button-success p-mr-2 p-mb-2" icon="pi pi-plus"
+                            label="New" pButton
                             pRipple style="width: 90px"></button>
 
-                    <button (click)="deleteMultiple()" [disabled]="!selectes || !selectes.length" class="p-button-danger p-mb-2" icon="pi pi-trash" label="Delete"
+                    <button (click)="deleteMultiple()" [disabled]="!selectes || !selectes.length"
+                            class="p-button-danger p-mb-2" icon="pi pi-trash" label="Delete"
                             pButton pRipple></button>
                 </ng-template>
 
                 <ng-template pTemplate="right">
-                    <p-fileUpload [maxFileSize]="1000000" accept="image/*" chooseLabel="Import" class="p-mr-2 p-mb-2 p-d-inline-block"
+                    <p-fileUpload [maxFileSize]="1000000" accept="image/*" chooseLabel="Import"
+                                  class="p-mr-2 p-mb-2 p-d-inline-block"
                                   label="Import" mode="basic"></p-fileUpload>
-                    <button  class="p-button-info p-mb-2" icon="pi pi-upload" label="Export" pButton
+                    <button class="p-button-info p-mb-2" icon="pi pi-upload" label="Export" pButton
                             pRipple></button>
                 </ng-template>
             </p-toolbar>
 
 
-
-
-            <p-table #dt [(selection)]="selectes" [columns]="cols" [globalFilterFields]="['libelle','nombreEtudiant']" [paginator]="true"
+            <p-table #dt [(selection)]="selectes" [columns]="cols" [globalFilterFields]="['libelle','nombreEtudiant']"
+                     [paginator]="true"
                      [rowHover]="true"
                      [rows]="8" [showCurrentPageReport]="true" [value]="items"
                      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
@@ -40,14 +41,14 @@
                         </th>
                         <th pSortableColumn="prenom"> Number of students
                             <p-sortIcon field="prenom"></p-sortIcon>
-                         </th>
+                        </th>
                         <th pSortableColumn="prenom"> Description
                             <p-sortIcon field="prenom"></p-sortIcon>
                         </th>
                         <th pSortableColumn="prenom"> Actions
                             <p-sortIcon field="prenom"></p-sortIcon>
                         </th>
-                    
+
                     </tr>
                 </ng-template>
                 <ng-template let-groupeEtude pTemplate="body">
@@ -61,32 +62,34 @@
 
                         <td>
 
-                            <button (click)="delete(groupeEtude)" class="p-button-rounded p-button-danger" icon="pi pi-trash" pButton
+                            <button (click)="delete(groupeEtude)" class="p-button-rounded p-button-danger"
+                                    icon="pi pi-trash" pButton
                                     pRipple></button>
-                        &nbsp;
-                        <button (click)="edit(groupeEtude)" class="p-button-rounded p-button-success p-mr-2" icon="pi pi-pencil" pButton
-                                pRipple></button>
+                            &nbsp;
+                            <button (click)="edit(groupeEtude)" class="p-button-rounded p-button-success p-mr-2"
+                                    icon="pi pi-pencil" pButton
+                                    pRipple></button>
                         </td>
 
-                            <!--
-                          <button  class="p-button-rounded p-button-info p-mr-2" icon="pi pi-list" pButton
-                                  pRipple></button>
-                          <button  class="p-button-rounded p-button-danger" icon="pi pi-trash" pButton
-                                  pRipple></button>
-                                  -->
+                        <!--
+                      <button  class="p-button-rounded p-button-info p-mr-2" icon="pi pi-list" pButton
+                              pRipple></button>
+                      <button  class="p-button-rounded p-button-danger" icon="pi pi-trash" pButton
+                              pRipple></button>
+                              -->
 
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="summary">
                     <div class="p-d-flex p-ai-center p-jc-between">
-                        In total there are  items.
+                        In total there are items.
                     </div>
                 </ng-template>
             </p-table>
         </div>
 
         <app-groupe-etude-create></app-groupe-etude-create>
-<app-groupe-etude-edit></app-groupe-etude-edit>
+        <app-groupe-etude-edit></app-groupe-etude-edit>
     </div>
 </div>
 

@@ -85,18 +85,20 @@ export class GroupeEtudiantCreateComponent implements OnInit {
 
     ngOnInit(): void {
         this.findAllProf();
-        this.findAllEtudiant();
         this.findAllGroupeEtude();
         this.findAllParcours();
         console.log(this.selected);
         if (this.selected?.id !== undefined && this.selected?.id !== 0 && this.selected?.id !== null) {
             this.groupeEtudiantService.findAllGroupeEtudiantDetail(this.selected.id).subscribe(
                 data => this.selected.groupeEtudiantDetails = data);
+            this.findAllEtudiant(true);
         } else {
             this.selected = new GroupeEtudiant();
             this.selected.groupeEtude = null;
             this.selected.prof = null;
             this.selected.parcours = null;
+            this.findAllEtudiant(false);
+
         }
     }
 
@@ -109,13 +111,17 @@ export class GroupeEtudiantCreateComponent implements OnInit {
         this.groupeEtudiantService.findAllParcours().subscribe(data => this.parcoursList = data);
     }
 
-    public findAllEtudiant() {
-        this.groupeEtudiantService.findAllEtudiant().subscribe(data => this.etudiantList = data);
+    public findAllEtudiant(isUpdate: boolean) {
+        this.groupeEtudiantService.findAllEtudiant().subscribe(data => {
+            this.etudiantList = data;
+            if (isUpdate) {
+                this.students = this.etudiantList.filter(s => s.parcours?.id === this.selected?.parcours?.id);
+            }
+        });
     }
 
     public findAllProf() {
         this.groupeEtudiantService.findAllProf().subscribe(data => this.profs = data);
-
     }
 
 
@@ -186,5 +192,10 @@ export class GroupeEtudiantCreateComponent implements OnInit {
             }
         }
     }
+
+    compareObjects(object1: any, object2: any) {
+        return object1 && object2 && object1.id === object2.id;
+    }
+
 }
 
