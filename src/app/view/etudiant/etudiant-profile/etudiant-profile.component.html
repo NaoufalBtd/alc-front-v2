@@ -35,14 +35,14 @@
     <h6 style="color: darkred; font-size: 20px;  text-align: center"> {{'Password must have at least 8 characters' | translate}}</h6>
     <br>
     <div class="bio-row">
-        <label for="float-input"> {{'New Password' | translate}}</label>
-        <input id="float-input" type="password" style="margin-left: 5px;" pInputText [(ngModel)]="newPassword">
+        <label> {{'New Password' | translate}}</label>
+        <input type="password" style="margin-left: 5px;" pInputText [(ngModel)]="newPassword">
     </div>
     <div class="bio-row">
-        <label for="float-input"> {{'Repeat password' | translate}}</label>
-        <input id="float-input" type="password" style="margin-left: 5px;" pInputText [(ngModel)]="newPasswordRepated">
+        <label> {{'Repeat password' | translate}}</label>
+        <input type="password" style="margin-left: 5px;" pInputText [(ngModel)]="newPasswordRepated">
     </div>
-    <button style="float: right" [disabled]="this.newPassword.length<8 || this.newPassword !== this.newPasswordRepated"
+    <button style="float: right" [disabled]="this.newPassword !== this.newPasswordRepated"
             pButton pRipple type="button " icon="pi pi-save " [label]="'Save changes' | translate"
             (click)="changePassword()" class="p-button-danger"></button>
 
@@ -70,12 +70,14 @@
              class=" menuElement p-grid"> {{'Security' | translate}}
         </div>
 
-        <div [style.background]="(selectedElement === 'INSCRIPTION')? '#d2d8fd': 'white'"
-             [style.borderLeft]="(selectedElement === 'INSCRIPTION')? '5px solid #ff725e': 'none'"
-             [style.color]="(selectedElement === 'INSCRIPTION')? 'black': '#666666'"
-             (click)="showMenuElemnt('INSCRIPTION')"
+
+        <div [style.background]="(selectedElement === 'INS_TAB')? '#d2d8fd': 'white'"
+             [style.borderLeft]="(selectedElement === 'INS_TAB')? '5px solid #ff725e': 'none'"
+             [style.color]="(selectedElement === 'INS_TAB')? 'black': '#666666'"
+             (click)="showMenuElemnt('INS_TAB')"
              class=" menuElement p-grid"> {{'Registration details' | translate}}
         </div>
+
 
         <div [style.background]="(selectedElement === 'PASS')? '#d2d8fd': 'white'"
              [style.borderLeft]="(selectedElement === 'PASS')? '5px solid #ff725e': 'none'"
@@ -97,11 +99,11 @@
 
 
                     <div class="p-col-6">
-                        <h5 style="color: #ff725e"> {{'Full name' | translate}}</h5>
+                        <h5 style="color: #ff725e"> {{'fullname' | translate}}</h5>
                         <div class="p-inputgroup">
                             <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
                             <input class="user-input-group" [(ngModel)]="user.nom" name="prenom" type="text"
-                                   pInputText [placeholder]="'Full name' | translate">
+                                   pInputText [placeholder]="'fullname' | translate">
                         </div>
                     </div>
 
@@ -228,9 +230,10 @@
                                    [placeholder]="'Repeat password' | translate">
                         </div>
                     </div>
-                    <div class="p-col-4"></div>
-                    <div class="p-col-4">
+                    <div class="p-col-3"></div>
+                    <div class="p-col-5">
                         <button pButton pRipple (click)="changePassword()"
+                                [disabled]="newPasswordRepated !== newPassword || newPassword?.length < 7"
                                 [label]="'Change password' | translate" icon="pi pi-check" iconPos="left"
                                 class="Startnow"></button>
                     </div>
@@ -245,7 +248,7 @@
     <!--  Registration  -->
 
 
-    <div *ngIf="selectedElement === 'INSCRIPTION'" class="p-col-10">
+    <div *ngIf="selectedElement === 'INS_TAB'" class="p-col-10">
         <div class="p-grid">
             <div *ngIf="this.inscription.packStudent != null && this.inscription.parcours != null"
                  class="p-col-10 grandTitle"> {{'Registration Details' | translate}}
@@ -349,7 +352,30 @@
             </ng-container>
 
             <ng-container *ngIf="inscription?.packStudent !== null">
-                <app-pack-details></app-pack-details>
+
+                <div class="container">
+
+                    <div class="row">
+
+                        <div class="col-md-12">
+                            <div class="container">
+                                <div class="card_box">
+                                    <span [attr.data-before-content]="packChossen?.libelle"></span>
+                                    <div class="row">
+                                        <div class="col-md-12 detail__title">
+                                            {{this.packChossen?.level?.libelle}}
+                                        </div>
+                                        <div class="col-md-12 detail__sous__title">
+                                            {{this.packChossen?.description}}
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </ng-container>
 
 

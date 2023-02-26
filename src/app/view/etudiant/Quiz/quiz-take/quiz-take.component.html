@@ -367,7 +367,6 @@
   height: 25px !important;
   font-weight: normal;
   color: black !important;"
-                       (click)="showToolTipsT13(item.key)"
                        *ngIf="listOfText.has(item.key+ 1)" [id]="item.key.toString()"
                        (drop)="drop($event)" (dragover)="allowDrop($event)" type="text"
                        pInputText/>
