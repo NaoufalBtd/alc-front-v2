@@ -6,7 +6,7 @@
 
 
         <div *ngIf="activeIndex == 0" id="row" class="row shadow-lg mt-5 p-3 mb-5 bg-body rounded">
-            <div class="col-md-6 col-sm-12">
+            <div class="col-md-4 col-sm-12">
                 <div class="cta__form-inner">
                     <form action="#">
                         <input (input)="checkNameInput()" [style]="{ width: '100%'}" name="nom"
@@ -23,7 +23,7 @@
             </div>
 
 
-            <div class="col-md-6 col-sm-12">
+            <div class="col-md-4 col-sm-12">
                 <div class="cta__form grey-bg-2">
                     <div class="cta__form-inner">
                         <form action="#">
@@ -36,23 +36,12 @@
             </div>
 
 
-            <div class="col-md-6 col-sm-12">
+            <div class="col-md-4 col-sm-12">
                 <div class="cta__form grey-bg-2">
                     <div class="cta__form-inner">
                         <form action="#">
                             <input [style]="{ width: '100%'}" name="numero" [(ngModel)]="selected.numero" type="tel"
                                    placeholder="{{'Phone *' | translate}}">
-                        </form>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-6 col-sm-12">
-                <div class="cta__form grey-bg-2">
-                    <div class="cta__form-inner">
-                        <form action="#">
-                            <input [style]="{ width: '100%'}" name="numero" [(ngModel)]="selected.age" type="number"
-                                   placeholder="{{'Age' | translate}}">
                         </form>
                     </div>
                 </div>
@@ -225,48 +214,40 @@
 
                 <div class="row">
                     <div class="bg-light rounded d-flex flex-column">
-                        <div class="p-2 ml-3"><h4>Payment detail</h4></div>
-                        <div class="p-2 d-flex">
-                            <div class="col-8">Company name</div>
-                            <div class="ml-auto">EngFlexy Academy</div>
-                        </div>
+                        <div class="p-2 ml-3"><h4>{{'Payment detail' | translate}}</h4></div>
 
                         <div class="p-2 d-flex">
-                            <div class="col-8">OID</div>
-                            <div class="ml-auto">{{selectedCourse?.id + '-' + userRequest?.id}}</div>
-                        </div>
-
-                        <div class="p-2 d-flex">
-                            <div class="col-8">Pack name</div>
-                            <div class="ml-auto">{{selectedCourse?.libelle}}</div>
-                        </div>
-
-                        <div class="p-2 d-flex">
-                            <div class="col-8">Pack description</div>
-                            <div class="ml-auto">{{selectedCourse?.description}}</div>
+                            <div class="col-8">{{'Pack name' | translate}}</div>
+                            <div class="ml-auto">{{selectedCourse?.libelle}}
+                                (
+                                <strong *ngIf="selectedCourse?.forGroupe">{{'Group' | translate}}</strong>
+                                <strong *ngIf="!selectedCourse?.forGroupe">{{'Individual' | translate}}</strong>
+                                )
+                            </div>
                         </div>
 
                         <div class="border-top px-4 mx-3"></div>
 
                         <div class="p-2 d-flex pt-3">
-                            <div class="col-8">Student name</div>
+                            <div class="col-8">{{'Student name' | translate}}</div>
                             <div class="ml-auto">{{userRequest?.nom}}</div>
                         </div>
 
                         <div class="p-2 d-flex">
-                            <div class="col-8">Student email</div>
+                            <div class="col-8">{{'Student email' | translate}}</div>
                             <div class="ml-auto">{{userRequest?.username}}</div>
                         </div>
 
                         <div class="border-top px-4 mx-3"></div>
 
                         <div class="p-2 d-flex pt-3">
-                            <div class="col-8">Price</div>
-                            <div class="ml-auto">{{selectedCourse?.price?.oldPrice}} DH</div>
+                            <div class="col-8">{{'Price' | translate}}</div>
+                            <div class="ml-auto">{{selectedCourse?.price?.oldPrice}}DH</div>
                         </div>
 
                         <div class="p-2 d-flex">
-                            <div class="col-8">Promo code <span class="fa fa-question-circle text-secondary"></span>
+                            <div class="col-8">{{'Promo code' | translate}} <span
+                                    class="fa fa-question-circle text-secondary"></span>
                             </div>
                             <div class="ml-auto">{{selectedCourse?.price?.oldPrice - selectedCourse?.price?.price}}DH
                             </div>
@@ -275,8 +256,8 @@
                         <div class="border-top px-4 mx-3"></div>
 
                         <div class="p-2 d-flex pt-3">
-                            <div class="col-8"><b>Total</b></div>
-                            <div class="ml-auto"><b class="green">{{selectedCourse?.price?.price}} DH</b></div>
+                            <div class="col-8"><b>{{'Total' | translate}}</b></div>
+                            <div class="ml-auto"><b class="green">{{selectedCourse?.price?.price}}DH</b></div>
                         </div>
 
                         <div class="border-top px-4 mx-3"></div>

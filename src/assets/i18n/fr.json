@@ -199,7 +199,7 @@
   "About": "À propos ",
   "Enroll": "Inscrire",
   "Payment": "Paiement:",
-  "Related": "connexes",
+  "Related": "Connexes Cours",
   "Course": "Cours",
   "...see more": "...voir plus",
   "Pre - requisites": "Conditions préalables",
@@ -505,5 +505,12 @@
   "Group classes with a teacher": "Cours collectifs avec professeur",
   "1 on 1 classes with your private teacher": "Cours 1 sur 1 avec votre professeur particulier",
   "Unlock more lessons and features!": "Débloquez plus de leçons et de fonctionnalités!",
-  "You are currently on a free plan with limited features and lessons": "Vous êtes actuellement sur un plan gratuit avec des fonctionnalités et des leçons limitées"
+  "You are currently on a free plan with limited features and lessons": "Vous êtes actuellement sur un plan gratuit avec des fonctionnalités et des leçons limitées",
+  "Payment detail": "Détails de paiement",
+  "Pack name": "nom du pack",
+  "Student name": "Nom d'étudiant",
+  "Student email" : "E-mail d'étudiant",
+  "Price": "Prix initiale",
+  "Promo code": " Prix de réduction ",
+  "Total": "Totale"
 }

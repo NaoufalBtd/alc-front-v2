@@ -190,7 +190,7 @@
   "About": "About",
   "Enroll": "Enroll",
   "Payment": "Payment:",
-  "Related": "Related",
+  "Related": "Related Course",
   "Course": "Course",
   "...see more": "...see more",
   "Pre - requisites": "Pre - requisites",
@@ -497,6 +497,13 @@
   "1 on 1 classes with your private teacher": "1 on 1 classes with your private teacher",
   "Unlock more lessons and features!": "Unlock more lessons and features!",
   "Current Plan": "Current Plan",
-  "You are currently on a free plan with limited features and lessons": "You are currently on a free plan with limited features and lessons"
+  "You are currently on a free plan with limited features and lessons": "You are currently on a free plan with limited features and lessons",
+  "Payment detail": "Payment detail",
+  "Pack name": "Pack name",
+  "Student name": "Student name",
+  "Student email" : "Student email",
+  "Price": "Price",
+  "Promo code": "Discount",
+  "Total": "Total"
 
 }

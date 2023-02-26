@@ -195,7 +195,7 @@
   "About": "حول",
   "Enroll": "اشترك الان",
   "Payment": "اداء:",
-  "Related": "ذات صلة",
+  "Related": "دورات ذات صلة",
   "Course": "دورات",
   "...see more": "...المزيد",
   "Pre - requisites": "متطلبات الدورة",
@@ -500,5 +500,12 @@
   "Group classes with a teacher": "حصص في مجموعة من شخصين أو أكتر",
   "1 on 1 classes with your private teacher": "حصص فردية مع معلمك الخاص",
   "Unlock more lessons and features!": "افتح المزيد من الدروس والميزات!",
-  "You are currently on a free plan with limited features and lessons": "أنت حاليًا في خطة مجانية ذات ميزات ودروس محدودة"
+  "You are currently on a free plan with limited features and lessons": "أنت حاليًا في خطة مجانية ذات ميزات ودروس محدودة",
+  "Payment detail": "تفاصيل الدفع",
+  "Pack name": "الدورة",
+  "Student name": "اسم المستخدم",
+  "Student email" : "البريد الالكتروني",
+  "Price": "سعر الدورة",
+  "Promo code": "تخفيض",
+  "Total": "السعر النهائى"
 }
