@@ -358,7 +358,6 @@
             <span id="span" *ngFor="let item of listOfText| keyvalue">
                 <span id="span">{{item.value}}</span>
                 <span [id]="'toolTipT13' + item.key"
-                      (click)="hideTooltipsT13(item.key)"
                       class="tooltipT13">
                     {{getCorrectAnswerForT13(item.key)}}</span>
                 <input style="

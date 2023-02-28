@@ -118,13 +118,15 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
                 private service: ParcoursService, private http: HttpClient, private review: EtudiantReviewService) {
     }
 
+    get numberResponseOfQuizQuestion(): number {
+        return this.learnService.numberResponseOfQuizQuestion;
+    }
+
+
     get lessonStarted(): boolean {
         return this.webSocketService.lessonStarted;
     }
 
-    set lessonStarted(value: boolean) {
-        this.webSocketService.lessonStarted = value;
-    }
 
     get badgeNrMsg(): number {
         return this.learnService.badgeNrMsg;
@@ -965,9 +967,6 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
         this.webSocketService.sendMessage(chatMessageDto, 'PROF');
     }
 
-    get selectedSession(): ScheduleProf {
-        return this.webSocketService.selectedSession;
-    }
 
     set selectedSession(value: ScheduleProf) {
         this.webSocketService.selectedSession = value;

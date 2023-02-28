@@ -43,23 +43,42 @@
             <!--                </div>-->
             <!--            </div>-->
 
-            <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12">
-                <p-galleria [(value)]="images" [responsiveOptions]="responsiveOptions"
-                            [circular]="true"
-                            [autoPlay]="true"
-                            [transitionInterval]="10000"
-                            [numVisible]="5"
-                            [showThumbnails]="false" [showIndicators]="true">
-                    <ng-template pTemplate="item" let-item>
-                        <img [src]="item.previewImageSrc" style="width: 100%; display: block;"/>
-                    </ng-template>
-                    <ng-template pTemplate="thumbnail" let-item>
-                        <div class="p-grid p-nogutter p-justify-center">
-                            <img [src]="item.previewImageSrc" style="display: block;"/>
+
+            <div class="col-xxl-2 col-xl-2 col-lg-2 col-md-12"></div>
+            <div class="col-xxl-8 col-xl-8 col-lg-8 col-md-12">
+                <div class="macbook">
+                    <div class="topbar">
+                        <div class="link-bar">
+                            <i class="fas fa-lock"></i>
+                            <a href="#">www.engflexy.com</a>
                         </div>
-                    </ng-template>
-                </p-galleria>
+                        <div class="buttons">
+                            <div class="button close"></div>
+                            <div class="button minimize"></div>
+                            <div class="button zoom"></div>
+                        </div>
+                    </div>
+                    <div class="content">
+                        <p-galleria [(value)]="images" [responsiveOptions]="responsiveOptions"
+                                    [circular]="true"
+                                    [autoPlay]="true"
+                                    [transitionInterval]="5000"
+                                    [numVisible]="5"
+                                    [showThumbnails]="false" [showIndicators]="true">
+                            <ng-template pTemplate="item" let-item>
+                                <img [src]="item.previewImageSrc" style="width: 100%; display: block;"/>
+                            </ng-template>
+                            <ng-template pTemplate="thumbnail" let-item>
+                                <div class="p-grid p-nogutter p-justify-center">
+                                    <img [src]="item.previewImageSrc" style="display: block;"/>
+                                </div>
+                            </ng-template>
+                        </p-galleria>
+                    </div>
+                </div>
+
             </div>
+            <div class="col-xxl-2 col-xl-2 col-lg-2 col-md-12"></div>
         </div>
     </div>
 </section>
