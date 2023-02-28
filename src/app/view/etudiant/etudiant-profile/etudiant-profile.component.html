@@ -50,7 +50,7 @@
 
 
 <div class="p-grid profileCon">
-    <div class="p-col-2 p-shadow-6 rightMenu">
+    <div class="col-12 col-md-3 col-lg-2 p-shadow-6 rightMenu mb-5" dir="auto">
         <div class=" p-grid imgContainer">
             <div style="margin-left: 17%" class="p-col-10">
                 <img [src]="user?.image" class="profileImg" alt="Profile">
@@ -86,7 +86,7 @@
 
 
     </div>
-    <div *ngIf="selectedElement === 'PROFILE'" class="p-col-10">
+    <div *ngIf="selectedElement === 'PROFILE'" class="col-12 col-md-9 col-lg-10" dir="auto">
         <div class="p-grid">
             <div class="p-col-10 grandTitle"> {{'Profile' | translate}}</div>
             <div class="p-col-10 smallTitle"> {{'Manage your public profile and private information.' | translate}}</div>
@@ -96,7 +96,7 @@
                 <div class="p-grid p-fluid">
 
 
-                    <div class="p-col-6">
+                    <div class="col-12 col-md-6 p-3">
                         <h5 style="color: #ff725e"> {{'Full name' | translate}}</h5>
                         <div class="p-inputgroup">
                             <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
@@ -105,7 +105,7 @@
                         </div>
                     </div>
 
-                    <div class="p-col-6">
+                    <div class="col-12 col-md-6 p-3">
                         <h5 style="color: #ff725e"> {{'email' | translate}}</h5>
                         <div class="p-inputgroup">
                             <span class="p-inputgroup-addon"><i class="pi pi-envelope"></i></span>
@@ -114,7 +114,7 @@
                         </div>
                     </div>
 
-                    <div class="p-col-6">
+                    <div class="col-12 col-md-6 p-3">
                         <h5 style="color: #ff725e"> {{'Country' | translate}}</h5>
                         <div class="p-inputgroup">
                             <span class="p-inputgroup-addon"><i class="pi pi-map-marker"></i></span>
@@ -123,7 +123,7 @@
                         </div>
                     </div>
 
-                    <div class="p-col-6">
+                    <div class="col-12 col-md-6 p-3">
                         <h5 style="color: #ff725e"> {{'City' | translate}}</h5>
                         <div class="p-inputgroup">
                             <span class="p-inputgroup-addon"><i class="pi pi-map-marker"></i></span>
@@ -132,7 +132,7 @@
                         </div>
                     </div>
 
-                    <div class="p-col-6">
+                    <div class="col-12 col-md-6 p-3">
                         <h5 style="color: #ff725e"> {{'Address' | translate}}</h5>
                         <div class="p-inputgroup">
                             <span class="p-inputgroup-addon"><i class="pi pi-home"></i></span>
@@ -141,7 +141,7 @@
                         </div>
                     </div>
 
-                    <div class="p-col-6">
+                    <div class="col-12 col-md-6 p-3">
                         <h5 style="color: #ff725e"> {{'Age' | translate}}</h5>
                         <div class="p-inputgroup">
                             <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
@@ -150,7 +150,7 @@
                         </div>
                     </div>
 
-                    <div class="p-col-6">
+                    <div class="col-12 col-md-6 p-3">
                         <h5 style="color: #ff725e"> {{'Skype' | translate}}</h5>
                         <div class="p-inputgroup">
                             <span class="p-inputgroup-addon"><i class="pi pi-video"></i></span>
@@ -159,7 +159,7 @@
                         </div>
                     </div>
 
-                    <div class="p-col-6">
+                    <div class="col-12 col-md-6 p-3">
                         <h5 style="color: #ff725e"> {{'Phone' | translate}}</h5>
                         <div class="p-inputgroup">
                             <span class="p-inputgroup-addon"><i class="pi pi-phone"></i></span>
@@ -175,13 +175,13 @@
             <div class="p-col-4"></div>
 
 
-            <div class="p-col-4">
+            <div class="col-12 col-md-6">
                 <button pButton pRipple (click)="updateUser(user)"
                         [label]="'Save changes' | translate" icon="pi pi-check" iconPos="left"
                         class="Startnow"></button>
             </div>
 
-            <div class="p-col-4"></div>
+            <div class="col-0 col-md-3"></div>
 
         </div>
     </div>
@@ -194,7 +194,7 @@
             <div class="p-col-10 grandTitle"> {{'Security' | translate}}</div>
             <div class="p-col-10 smallTitle"> {{'Manage your password and 2-step verification preferences' | translate}}</div>
 
-            <div class="p-col-7">
+            <div class="col-12 col-md-9 col-lg-2">
                 <div class="p-grid p-fluid">
 
 
@@ -253,7 +253,7 @@
             <div *ngIf="this.inscription.packStudent == null && this.inscription.parcours == null"
                  class="p-col-10 grandTitle"> {{'Complete your registration' | translate}}
             </div>
-            <div class="p-col-6">
+            <div class="col-12 col-md-6 p-3">
                 <h5 style="color: #ff725e">  {{'Group Option' | translate}} </h5>
                 <p-dropdown [style]="{    height: '45px',
                                                 padding: '6px',
@@ -267,7 +267,7 @@
                             optionLabel="libelle"></p-dropdown>
             </div>
 
-            <div class="p-col-6">
+            <div class="col-12 col-md-6 p-3">
                 <h5 style="color: #ff725e">  {{'English Level' | translate}} </h5>
                 <p-dropdown [style]="{    height: '45px',
                                                 width: '100%',
@@ -280,7 +280,7 @@
                             optionLabel="libelle"></p-dropdown>
             </div>
 
-            <div class="p-col-6">
+            <div class="col-12 col-md-6 p-3">
                 <h5 style="color: #ff725e">  {{'Teacher' | translate}} </h5>
                 <select class="select"
                         [disabled]="this.inscription.packStudent != null && this.inscription.parcours != null" required
@@ -364,7 +364,7 @@
                 <div class="p-grid p-fluid">
 
 
-                    <div class="p-col-6">
+                    <div class="col-12 col-md-6 p-3">
                         <h5 style="color: #ff725e"> {{'language' | translate}}</h5>
                         <p-dropdown
                                 [style]="{    height: '45px',
@@ -376,7 +376,7 @@
                     </div>
 
 
-                    <div class="p-col-6">
+                    <div class="col-12 col-md-6 p-3">
                         <h5 style="color: #ff725e"> {{'Status Social' | translate}}</h5>
                         <p-dropdown
                                 [style]="{    height: '45px',
@@ -387,7 +387,7 @@
                                 optionLabel="libelle"></p-dropdown>
                     </div>
 
-                    <div class="p-col-6">
+                    <div class="col-12 col-md-6 p-3">
                         <h5 style="color: #ff725e"> {{'Area of work' | translate}}</h5>
                         <p-dropdown [style]="{    height: '45px',
                                                 padding: '6px',
@@ -397,7 +397,7 @@
                                     optionLabel="libelle"></p-dropdown>
                     </div>
 
-                    <div class="p-col-6">
+                    <div class="col-12 col-md-6 p-3">
                         <h5 style="color: #ff725e"> {{'Study Level' | translate}}</h5>
                         <p-dropdown [style]="{    height: '45px',
                                                 padding: '6px',
@@ -408,7 +408,7 @@
                     </div>
 
 
-                    <div class="p-col-6">
+                    <div class="col-12 col-md-6 p-3">
                         <h5 style="color: #ff725e"> {{'Interests' | translate}}</h5>
                         <p-dropdown [style]="{    height: '45px',
                                                 padding: '6px',
@@ -417,7 +417,7 @@
                                     optionLabel="libelle" [showClear]="true"></p-dropdown>
                     </div>
 
-                    <div class="p-col-6">
+                    <div class="col-12 col-md-6 p-3">
                         <h5 style="color: #ff725e"> {{'Main goal with learning English' | translate}}</h5>
                         <p-dropdown [style]="{    height: '45px',
                                                 padding: '6px',
@@ -427,7 +427,7 @@
                                     optionLabel="libelle"></p-dropdown>
                     </div>
 
-                    <div class="p-col-6">
+                    <div class="col-12 col-md-6 p-3">
                         <h5 style="color: #ff725e"> {{'Skill' | translate}}</h5>
                         <p-dropdown [style]="{    height: '45px',
                                                 padding: '6px',

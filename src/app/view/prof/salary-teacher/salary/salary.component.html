@@ -8,22 +8,33 @@
                     </h5>
                 </ng-template>
                 <ng-template pTemplate="right">
-                    <p-dropdown [options]="itemsMOIS" [(ngModel)]="salarySearch.mois" placeholder="Select Month"
-                                [itemSize]="31"
-                                [showClear]="true"
-                                [filter]="false" style="margin-right: 5px"></p-dropdown>
-                    <p-dropdown [options]="itemsannee" [(ngModel)]="salarySearch.annee" placeholder="Select Year"
-                                style="margin-right: 5px"
-                                [showClear]="true"
-                                [itemSize]="31"
-                                [filter]="false"></p-dropdown>
-                    <p-dropdown [options]="etatPay" placeholder="Payment Status" [itemSize]="2"
-                                [(ngModel)]="salarySearch.payer"
-                                [showClear]="true"
-                                [filter]="false" style="margin-right: 5px"></p-dropdown>
-                    <button pButton pRipple label="Search" icon="pi pi-search" class="p-button-primary p-ml-2 "
-                            (click)="findAllByCriteria(this.serviceUser.getConnectedProf().nom)"
-                    ></button>
+                    <div class="row">
+                        <p-dropdown class="p-col-12 p-md-3 p-2" [options]="itemsMOIS" [(ngModel)]="salarySearch.mois"
+                                    placeholder="Select Month"
+                                    [itemSize]="31"
+                                    [showClear]="true"
+                                    [filter]="false"></p-dropdown>
+                        <div class="p-col-12 p-md-3 p-2">
+                            <p-dropdown [options]="itemsannee"
+                                        [(ngModel)]="salarySearch.annee"
+                                        placeholder="Select Year"
+                                        [showClear]="true"
+                                        [itemSize]="31"
+                                        [filter]="false"></p-dropdown>
+                        </div>
+                        <div class="p-col-12 p-md-3 p-2">
+                            <p-dropdown [options]="etatPay" placeholder="Payment Status"
+                                        [itemSize]="2"
+                                        [(ngModel)]="salarySearch.payer"
+                                        [showClear]="true"
+                                        [filter]="false"></p-dropdown>
+                        </div>
+                        <div class="p-col-12 p-md-3 pl-5">
+                            <button pButton pRipple class="mx-2"
+                                    (click)="findAllByCriteria(this.serviceUser.getConnectedProf().nom)">Search
+                            </button>
+                        </div>
+                    </div>
                 </ng-template>
             </p-toolbar>
             <p-tabView>
@@ -35,7 +46,8 @@
                                 <span class="pay">{{salaryMonth.totalPayment + salaryMonth.totalBonusClassAverage + salaryMonth.totalBonusWorkload}}</span>
                                 <span class="currency">DH</span>
                             </div>
-                            <p class="recommendedPayText"><i style="    font-size: 19px;font-weight: bold;" class="pi pi-info-circle"></i> Recommended Pay</p>
+                            <p class="recommendedPayText"><i style="    font-size: 19px;font-weight: bold;"
+                                                             class="pi pi-info-circle"></i> Recommended Pay</p>
                             <div class="recommendedPay">
                                 <span class="recommendedPayPay">{{getTotalOfAll()}}</span>
                                 <span class="recommendedPayCurrency">DH</span>
@@ -48,7 +60,7 @@
                     </div>
 
                     <div class="p-grid detailsSalary">
-                        <div class="p-col-4 payDetails">
+                        <div class="p-col-12 p-md-4 payDetails">
                             <div style="margin: -10px 0 20px;" class="payement">
                                 <span style="color: #ff725e" class="pay">{{salaryMonth?.totalPayment}}</span>
                                 <span style="color: #ff725e" class="currency">DH</span>
@@ -59,7 +71,7 @@
                             </div>
                         </div>
 
-                        <div class="p-col-4 payDetails">
+                        <div class="p-col-12 p-md-4 payDetails">
                             <div style="margin: -10px 0 20px;" class="payement">
                                 <span style="color: #ff725e" class="pay">{{salaryMonth?.totalBonusClassAverage}}</span>
                                 <span style="color: #ff725e" class="currency">DH</span>
@@ -71,7 +83,7 @@
                         </div>
 
 
-                        <div class="p-col-4 payDetails">
+                        <div class="p-col-12 p-md-4 payDetails">
                             <div style="margin: -10px 0 20px" class="payement">
                                 <span style="color: #ff725e" class="pay">{{salaryMonth?.totalBonusWorkload}}</span>
                                 <span style="color: #ff725e" class="currency">DH</span>
@@ -83,8 +95,6 @@
                         </div>
                     </div>
                 </p-tabPanel>
-
-
 
 
                 <p-tabPanel header="Details">
@@ -147,7 +157,8 @@
 
                                 </td>
                                 <td>
-                                    <button pButton pRipple icon="pi pi-list" class="p-button-rounded p-button-info p-mr-2"
+                                    <button pButton pRipple icon="pi pi-list"
+                                            class="p-button-rounded p-button-info p-mr-2"
                                             (click)="showDetails(this.serviceUser.getConnectedProf().id,salary.id)"
 
                                     ></button>
@@ -161,7 +172,6 @@
                 </p-tabPanel>
 
             </p-tabView>
-
 
 
         </div>

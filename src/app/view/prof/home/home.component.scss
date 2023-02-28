@@ -147,3 +147,9 @@
   animation-duration: 2s;
   animation-iteration-count: infinite;
 }
+
+@media (min-width: 576px){
+  .main-section{
+    height: 100%;
+  }
+}

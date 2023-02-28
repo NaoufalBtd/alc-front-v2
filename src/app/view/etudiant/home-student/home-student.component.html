@@ -1,9 +1,7 @@
 <div *ngIf="inscreption?.etatInscription?.libelle === 'Validated'" class="mycard">
     <div class="p-grid">
-        <div class="p-col-6 Myclasses">
+        <div class="p-1 col-12 col-md-6">
             <h1 class="title">{{'My classes'}}</h1>
-
-
             <div *ngFor="let schedule of scheduleProfs" class="p-grid lessonContainer">
                 <div style="text-align: start" class="p-col-2">
                     <img class="imgLesson" src="/assets/icons/icon-livres.png" alt=""></div>
@@ -55,7 +53,7 @@
 
         </div>
 
-        <div class="p-col-3 Statements">
+        <div class="p-1 col-12 col-md-3 Statements">
             <h4 style="text-align: start;margin: 0 0 4px 0;font-size: x-large;"
                 class="title">{{'Statements'}}</h4>
             <div class="p-grid statementsGrid">
@@ -103,7 +101,7 @@
 
         <div *ngIf="scheduleProfs?.length > 0"
              style="background: #cac3ff57; border-left: 2px solid #b5a2ed;  border-radius: 0;"
-             class="p-col-2 Nextlesson">
+             class="p-1 col-12 col-md-3 Nextlesson">
             <p class="lessonDate"> {{'Welcome back'}} {{student?.nom}}
                 ,  {{'ready for your next lesson ?'}}
                 <img style="    width: 15px; margin: 4px 0 -2px 0;"
