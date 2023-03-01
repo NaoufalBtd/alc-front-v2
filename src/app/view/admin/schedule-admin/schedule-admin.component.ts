@@ -428,8 +428,7 @@ export class ScheduleAdminComponent implements OnInit {
                     inscription => {
                         console.log(inscription);
                         this.parcourService.FindCoursByParcours(groupeEtudiant.parcours.id).subscribe(data => {
-                            this.courses = data.slice(0, inscription.packStudent.nombreCours);
-                            console.log(this.courses);
+                            this.courses = data;
                         });
                     }, error => {
                         console.log(error);
