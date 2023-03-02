@@ -173,7 +173,6 @@ export class ScheduleAdminComponent implements OnInit {
                         endTime: {name: 'endTime', title: 'endTime'}
                     }
                 };
-                console.log(this.scheduleProfs);
             }, error => {
                 console.log(error);
             }
@@ -186,7 +185,6 @@ export class ScheduleAdminComponent implements OnInit {
         this.scheduleService.getAllStudentsGroup().subscribe(data => this.groupeStudent = data);
         this.scheduleService.getProf().subscribe(data => this.professors = data);
         this.scheduleService.findEtat().subscribe(data => this.scheduleService.etatEtudiantSchedule = data);
-        console.log(this.scheduleProfs);
     }
 
 
@@ -195,7 +193,6 @@ export class ScheduleAdminComponent implements OnInit {
         scheduleObj.eventSettings.dataSource = null;
         this.scheduleService.findAllByCriteria(this.schedule).subscribe(
             data => {
-                console.log(data);
                 this.eventSettings = {
                     dataSource: data,
                     fields: {
@@ -228,7 +225,6 @@ export class ScheduleAdminComponent implements OnInit {
             this.scheduleProf.subject = this.scheduleProf.cours.libelle;
             this.scheduleProf.grpName = this.scheduleProf.groupeEtudiant.libelle;
             this.scheduleProf.profName = this.scheduleProf.prof.nom;
-            console.log(this.scheduleProf);
             if (this.optionSelected.option === 'Daily') {
                 while (this.scheduleProf.startTime < this.endDate) {
                     this.saveSchedule(scheduleObj);
@@ -237,19 +233,16 @@ export class ScheduleAdminComponent implements OnInit {
                 }
             } else if (this.optionSelected.option === 'Weekly') {
                 let firstSubject = this.scheduleProf.subject;
-                console.log(this.selectedDays);
                 while (this.scheduleProf.startTime < this.endDate) {
                     for (const day of this.selectedDays) {
                         if (this.scheduleProf.startTime.getDay() === day) {
                             this.scheduleProf.ref = fixedRef + String(this.scheduleProf.startTime.getDay());
-                            console.log(this.courses);
                             for (let i = 0; i < this.courses.length; i++) {
                                 if (this.scheduleProf.cours.libelle === this.courses[i].libelle) {
                                     if (this.scheduleProf.subject === firstSubject) {
                                         firstSubject = null;
                                         break;
                                     } else {
-                                        console.log(this.courses[i + 1]);
                                         this.scheduleProf.cours = this.courses[i + 1];
                                         this.scheduleProf.subject = this.scheduleProf.cours.libelle;
                                         break;
@@ -274,7 +267,6 @@ export class ScheduleAdminComponent implements OnInit {
     }
 
     private saveSchedule(scheduleObj: any) {
-        console.log(this.scheduleProf);
         if (this.scheduleProf.id === 0 || this.scheduleProf.id === null || this.scheduleProf.id === undefined) {
             this.scheduleService.save().subscribe
             (
@@ -309,21 +301,17 @@ export class ScheduleAdminComponent implements OnInit {
                 }
             );
         } else {
-            console.log(this.scheduleProf);
             this.scheduleService.save().subscribe(
                 data => {
                     for (let i = 0; i < this.scheduleProfs.length; i++) {
                         if (this.scheduleProfs[i].id === data.id) {
-                            console.log(data);
                             // this.scheduleProfs.splice(i, 1);
                             this.scheduleProfs[i] = data;
                         }
                     }
                 }
             );
-            console.log(this.scheduleProfs);
             scheduleObj.eventSettings.dataSource = this.scheduleProfs;
-            console.log(scheduleObj.eventSettings.dataSource);
             this.scheduleObj.eventWindow.refresh();
 
         }
@@ -332,7 +320,6 @@ export class ScheduleAdminComponent implements OnInit {
 
     public onPopupOpen(args: PopupOpenEventArgs): void {
         this.scheduleProf = new ScheduleProf();
-        console.log(args);
         this.scheduleProf = new ScheduleProf();
         if (args.data?.id !== undefined) {
             this.data.subject = args.data?.subject;
@@ -372,7 +359,6 @@ export class ScheduleAdminComponent implements OnInit {
         const scheduleObj = this.scheduleObj;
         this.scheduleObj.eventSettings.dataSource = null;
         const scheduleProf = data[0];
-        console.log(scheduleProf);
         if (this.deleteOption === false) {
             this.scheduleService.deleteScheduleProfById(scheduleProf).subscribe(
                 data => {
@@ -394,7 +380,6 @@ export class ScheduleAdminComponent implements OnInit {
             }
         }
         scheduleObj.eventSettings.dataSource = this.scheduleProfs;
-        console.log(scheduleObj.eventSettings.dataSource);
         this.hideDialog();
         this.scheduleObj.eventWindow.refresh();
         this.deleteOption = false;
@@ -422,33 +407,28 @@ export class ScheduleAdminComponent implements OnInit {
     }
 
     getCourses(groupeEtudiant: GroupeEtudiant) {
-        this.groupEtudiantService.findAllGroupeEtudiantDetail(groupeEtudiant.id).subscribe(
-            list => {
-                this.inscriptionService.findByEtudiantId(list[0].etudiant?.id).subscribe(
-                    inscription => {
-                        console.log(inscription);
-                        this.parcourService.FindCoursByParcours(groupeEtudiant.parcours.id).subscribe(data => {
-                            this.courses = data;
-                        });
-                    }, error => {
-                        console.log(error);
-                    }
-                );
-            }, error => {
-                console.log(error);
-            }
-        );
+        if (groupeEtudiant.parcours === null ||
+            groupeEtudiant.parcours === undefined ||
+            groupeEtudiant.parcours?.id === undefined ||
+            groupeEtudiant.parcours?.id === 0 ||
+            groupeEtudiant.parcours?.id === null
+        ) {
+            this.messageService.add({
+                severity: 'info',
+                detail: 'Level not found!, please link the group with the level and try again.',
+                life: 10000
+            });
+            return;
+        }
+        this.parcourService.FindCoursByParcours(groupeEtudiant.parcours.id).subscribe(data => {
+            this.courses = data;
+        });
         this.scheduleProf.prof = this.scheduleProf.groupeEtudiant.prof;
     }
 
-    getDaysSelected(data: any) {
-        console.log(this.selectedDays);
-        console.log(data);
-    }
 
 
     onActionComplete(event: any) {
-        console.log(event);
         if (event.requestType === 'eventRemoved' && event.cancel === false) {
             this.onDeleteClick(event.data);
         }
@@ -462,12 +442,10 @@ export class ScheduleAdminComponent implements OnInit {
     }
 
     setProf(prof: Prof) {
-        console.log(prof);
         this.scheduleProf.prof = prof;
     }
 
     generateRef() {
-        console.log(this.scheduleProf.cours);
         this.scheduleProf.ref = 'R-' + this.scheduleProf.cours.id;
     }
 }
