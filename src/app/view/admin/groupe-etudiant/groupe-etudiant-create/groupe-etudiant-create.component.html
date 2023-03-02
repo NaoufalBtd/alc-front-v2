@@ -35,6 +35,7 @@
                 <div class="contact__form-input">
                     <select class="form-select" [(ngModel)]="selected.groupeEtude"
                             [compareWith]="compareObjects"
+                            data-live-search="true"
                             aria-label="Select study group">
                         <option [ngValue]="null" selected>Select group option</option>
                         <option *ngFor="let group of groupeEtudeList" [ngValue]="group">{{group?.libelle}}</option>

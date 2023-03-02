@@ -78,12 +78,14 @@
                 <a>
                     <img *ngIf="price?.lib?.toUpperCase()?.includes('SILVER')" src="/assets/images/Silver.png" alt="">
                     <img *ngIf="price?.lib?.toUpperCase()?.includes('GOLD')" src="/assets/images/GoldA.png" alt="">
+                    <img *ngIf="price?.lib?.toUpperCase()?.includes('PREMIUM')" src="/assets/images/Premium.gif" alt="">
                     <img *ngIf="price?.lib?.toUpperCase()?.includes('PLATINUM')" src="/assets/images/Platinum.gif"
                          alt="">
                 </a>
                 <div class="course__tag">
                     <a [class.silver]="price?.lib?.toUpperCase()?.includes('SILVER')"
                        [class.gold]="price?.lib?.toUpperCase()?.includes('GOLD')"
+                       [class.Premium]="price?.lib?.toUpperCase()?.includes('PREMIUM')"
                        [class.platinum]="price?.lib?.toUpperCase()?.includes('PLATINUM')"
                        class="course-type">{{price?.price}} DH</a>
                 </div>
@@ -92,6 +94,7 @@
                     <a [style.direction]="translate.currentLang === 'ar' ? 'rtl': 'ltr'"
                        [class.silver]="price?.lib?.toUpperCase()?.includes('SILVER')"
                        [class.gold]="price?.lib?.toUpperCase()?.includes('GOLD')"
+                       [class.Premium]="price?.lib?.toUpperCase()?.includes('PREMIUM')"
                        [class.platinum]="price?.lib?.toUpperCase()?.includes('PLATINUM')"
                        class="course-type">{{price?.nreCourse}} {{'LESSONS' | translate}}</a>
                 </div>
@@ -100,6 +103,7 @@
                     <a [style.direction]="translate.currentLang === 'ar' ? 'rtl': 'ltr'"
                        [class.silver]="price?.lib?.toUpperCase()?.includes('SILVER')"
                        [class.gold]="price?.lib?.toUpperCase()?.includes('GOLD')"
+                       [class.Premium]="price?.lib?.toUpperCase()?.includes('PREMIUM')"
                        [class.platinum]="price?.lib?.toUpperCase()?.includes('PLATINUM')"
                        class="course-type">{{price?.nreMonth}} {{'MONTH' | translate}}</a>
                 </div>

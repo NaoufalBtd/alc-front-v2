@@ -88,11 +88,17 @@
   color: #102c45;
 }
 
+.Premium {
+  background: #ffffff;
+  color: #2B394C;
+}
+
 #individual-text:hover {
   text-decoration: underline;
   color: white;
+
   .heartbeat {
-    background-image: radial-gradient( circle farthest-corner at 10% 20%,  rgba(90,92,106,1) 0%, rgba(32,45,58,1) 81.3% );
+    background-image: radial-gradient(circle farthest-corner at 10% 20%, rgba(90, 92, 106, 1) 0%, rgba(32, 45, 58, 1) 81.3%);
   }
 }
 
@@ -150,7 +156,6 @@
 }
 
 
-
 /**
  * ----------------------------------------
  * animation heartbeat
@@ -201,6 +206,7 @@
     animation-timing-function: ease-out;
   }
 }
+
 @keyframes heartbeat {
   from {
     -webkit-transform: scale(1);
