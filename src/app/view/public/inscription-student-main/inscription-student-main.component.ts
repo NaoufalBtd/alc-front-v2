@@ -10,7 +10,7 @@ import {Router} from '@angular/router';
 })
 export class InscriptionStudentMainComponent implements OnInit {
     showCoupon = false;
-    countdownDate: Date = new Date('2023-03-08 12:00:00'); // Set the countdown date and time
+    countdownDate: Date = new Date('2023-03-09 00:00:00'); // Set the countdown date and time
     countdown: any = {};
 
     constructor(private translate: TranslateService,
