@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {MessageService} from 'primeng/api';
 import {Router} from '@angular/router';
+import {PriceService} from '../../../controller/service/price.service';
 
 @Component({
     selector: 'app-inscription-student-main',
@@ -12,9 +13,11 @@ export class InscriptionStudentMainComponent implements OnInit {
     showCoupon = false;
     countdownDate: Date = new Date('2023-03-09 00:00:00'); // Set the countdown date and time
     countdown: any = {};
+    minPriceForGroup: number;
 
     constructor(private translate: TranslateService,
                 private router: Router,
+                private priceService: PriceService,
                 private messageService: MessageService) {
     }
 
@@ -27,6 +30,9 @@ export class InscriptionStudentMainComponent implements OnInit {
         setInterval(() => {
             this.updateCountdown();
         }, 1000);
+
+        this.priceService.getMaxPrice(true).subscribe(d => this.minPriceForGroup = Math.floor(d.price / d.nreHours));
+
     }
 
 
