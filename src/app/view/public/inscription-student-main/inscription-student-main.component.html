@@ -2,8 +2,121 @@
     <app-header-two headerShadow="header__area header__padding-2 header__shadow">
     </app-header-two>
 
-    <div style="background: white">
-        <app-formlayoutdemo></app-formlayoutdemo>
+    <section class="course__area pt-10  pb-120">
+
+        <div class="container">
+            <div class="row">
+                <div class="col-xxl-12">
+                    <app-formlayoutdemo></app-formlayoutdemo>
+                </div>
+                <div class="col-xxl-12">
+                    <app-advantages></app-advantages>
+                </div>
+            </div>
+
+
+        </div>
+
+    </section>
+    <div *ngIf="showCoupon" class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card coupon">
+                    <i (click)="showCoupon=false" class="fas fa-times"></i>
+                    <div class="pack-container">
+                        <div class="header">
+                            <p class="title">
+                                عرض خاص و محدود💥
+                            </p>
+                            <div class="price-container">
+                                <span>MAD</span>35
+                                <span>/ للحصة الواحدة</span>
+                            </div>
+                        </div>
+                        <div>
+                            <ul class="lists">
+
+                                <li class="list">
+                                    <span>
+                                      <svg aria-hidden="true" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
+                                           fill="none"
+                                           xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M4.5 12.75l6 6 9-13.5" stroke-linejoin="round"
+                                              stroke-linecap="round"></path>
+                                      </svg>
+                                    </span>
+                                    <p>
+                                        24 وحدة دراسية في 3 أشهر
+                                    </p>
+                                </li>
+
+
+                                <li class="list">
+                                    <span>
+                                      <svg aria-hidden="true" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
+                                           fill="none"
+                                           xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M4.5 12.75l6 6 9-13.5" stroke-linejoin="round"
+                                              stroke-linecap="round"></path>
+                                      </svg>
+                                    </span>
+                                    <p>
+                                        2 حصص في الاسبوع
+                                    </p>
+                                </li>
+
+                                <li class="list">
+                                    <span>
+                                      <svg aria-hidden="true" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
+                                           fill="none"
+                                           xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M4.5 12.75l6 6 9-13.5" stroke-linejoin="round"
+                                              stroke-linecap="round"></path>
+                                      </svg>
+                                    </span>
+                                    <p>
+                                        شهادة بعد كل مستوى 🎓
+                                    </p>
+                                </li>
+
+
+                                <li class="timer">
+                                    <div class="row text-center text-black">
+                                        <div class="col-2">{{countdown.days}}</div>
+                                        <div class="col-1">:</div>
+                                        <div class="col-2">{{countdown.hours}}</div>
+                                        <div class="col-1">:</div>
+                                        <div class="col-2">{{countdown.minutes}}</div>
+                                        <div class="col-1">:</div>
+                                        <div class="col-2">{{countdown.seconds}}</div>
+                                    </div>
+                                </li>
+
+                            </ul>
+                        </div>
+                        <div class="button-container">
+                            <button (click)="routeToCourses()" type="button">
+                                اضغط هنا للتسجيل
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
+    <div *ngIf="!showCoupon" class="container">
+        <div class="row justify-content-end">
+            <div class="col-auto">
+                <button class="btn gift-btn"
+                        (click)="showCoupon = true"
+                        pTooltip="عرض خاص و محدود!"
+                        data-toggle="modal" data-target="#couponModal">
+                    <i class="fas fa-gift"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <app-home-footer></app-home-footer>
 </main>

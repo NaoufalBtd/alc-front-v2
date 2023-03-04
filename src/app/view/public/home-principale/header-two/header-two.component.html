@@ -1,7 +1,10 @@
 <header>
     <div id="header-sticky" [ngClass]="headerSticky ? 'header__area header__transparent header__padding-2 sticky' :
-     headerShadow ? headerShadow : 'header__area header__transparent header__padding-2' "
-    >
+     headerShadow ? headerShadow : 'header__area header__transparent header__padding-2' ">
+        <div class="coupon">
+
+        </div>
+
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-xxl-2 col-xl-2 col-lg-2 col-md-2  col-6">
@@ -18,10 +21,13 @@
                         <div class="main-menu main-menu-2 d-none d-xl-block">
                             <nav id="mobile-menu">
                                 <ul>
-                                    <li  style="margin-left: 40px!important;"><a [routerLink]="['/courses']"> {{'courses' | translate}}</a></li>
-                                    <li  style="margin-left: 40px!important;"><a [routerLink]="['/blog']"> {{'blog' | translate}}</a></li>
-                                    <li  style="margin-left: 40px!important;"><a [routerLink]="['/contact']"> {{'contact' | translate}}</a></li>
-                                    <li  style="margin-left: 40px!important;" class="has-dropdown">
+                                    <li style="margin-left: 40px!important;"><a
+                                            [routerLink]="['/courses']"> {{'courses' | translate}}</a></li>
+                                    <li style="margin-left: 40px!important;"><a
+                                            [routerLink]="['/blog']"> {{'blog' | translate}}</a></li>
+                                    <li style="margin-left: 40px!important;"><a
+                                            [routerLink]="['/contact']"> {{'contact' | translate}}</a></li>
+                                    <li style="margin-left: 40px!important;" class="has-dropdown">
                                         <a *ngIf="this.translate.currentLang === 'en'"
                                            style="cursor:pointer;">English</a>
                                         <a *ngIf="this.translate.currentLang === 'ar'"
@@ -51,7 +57,8 @@
                         </div>
 
                         <div class="header__btn header__btn-2 d-xl-block ml-30 d-none">
-                            <a [routerLink]="['/online-english-level-test']" class="e-btn">{{'discover your level' | translate}}</a>
+                            <a [routerLink]="['/online-english-level-test']"
+                               class="e-btn">{{'discover your level' | translate}}</a>
                         </div>
 
                         <div class="sidebar__menu d-xxl-none">

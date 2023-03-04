@@ -133,7 +133,7 @@
   "profs": "المدرسين الأكثر شهرة",
   "base2": " ليس عليك أن تبحث كثيرا،فنحن هنا لمساعدتك ",
   "try": "جرب الآن مجانا",
-  "book": " أحجز درسك التجريبي بالمجان ",
+  "book": " أحجز درسك التجريبي لتعلم اللغة الانجليزية بالمجان ",
   "create": "إصنع حساب",
   "about": "حولك",
   "start": "ابدأ التدريس على EngFlexy",
@@ -207,7 +207,7 @@
   "Become a tutor": "كيف اصبح استاذ ",
   "Blog news": "أخبار مدونتنا",
   "Community Feedback": "تعليقات الطلبة",
-  "Book your free trial session": " أحجز درسك التجريبي بالمجان ",
+  "Book your free trial session": "  أحجز درسك التجريبي لتعلم اللغة الانجليزية بالمجان  ",
   "We will assess your English level and also give you an opportunity to practice your English": "سنعمل معا على تطوير مستواك في اللغة الانجليزية حتى الاحتراف",
   "Ask us anything, or share your feedback.": "إسالنا أي شيئ، أو شاركنا ملاحظاتك",
   "Explanation": "توضيحات",
@@ -507,5 +507,7 @@
   "Student email" : "البريد الالكتروني",
   "Price": "سعر الدورة",
   "Promo code": "تخفيض",
-  "Total": "السعر النهائى"
+  "Total": "السعر النهائى",
+  "choose your level": "اختر مستواك في اللغة الإنجليزية *"
+
 }

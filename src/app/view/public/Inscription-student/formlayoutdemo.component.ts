@@ -9,12 +9,12 @@ import {VonPrimengFormModule} from '@von-development-studio/primeng-form-validat
 import {AuthenticationService} from '../../../controller/service/authentication.service';
 import {AnimationService} from '../../../controller/service/animation.service';
 import {TranslateService} from '@ngx-translate/core';
-import {HttpClient} from '@angular/common/http';
+import {ParcoursService} from '../../../controller/service/parcours.service';
 
 @Component({
     selector: 'app-formlayoutdemo',
     templateUrl: './formlayoutdemo.component.html',
-    styleUrls: ['./formlayoutdemo.component.css']
+    styleUrls: ['./formlayoutdemo.component.scss']
 })
 export class FormLayoutDemoComponent implements OnInit {
     @NgModule({
@@ -29,13 +29,13 @@ export class FormLayoutDemoComponent implements OnInit {
     ];
     id: number;
     showdialog = false;
-    showAccountModel: boolean;
+    selectedLevel = null;
 
     constructor(private messageService: MessageService,
                 public etudiantService: EtudiantService,
                 private animation: AnimationService,
                 private translate: TranslateService,
-                private http: HttpClient,
+                private levelService: ParcoursService,
                 private confirmationService: ConfirmationService,
                 public authenticationService: AuthenticationService,
                 public packStudentService: PackStudentService,
@@ -59,7 +59,6 @@ export class FormLayoutDemoComponent implements OnInit {
     }
 
     ngOnInit(): void {
-
     }
 
     showConfirm() {
@@ -91,6 +90,8 @@ export class FormLayoutDemoComponent implements OnInit {
             || this.selected?.username === undefined
             || this.selected?.username?.length === 0
             || this.selected?.username === null
+            || this.selectedLevel === null
+            || this.selectedLevel === undefined
             || !this.selected?.username?.includes('@')
             || !this.selected?.username?.includes('.')
             || !this.selected?.username?.includes('com')
@@ -150,5 +151,17 @@ export class FormLayoutDemoComponent implements OnInit {
         // }, error => {
         //     console.log(error);
         // });
+    }
+
+    chooseLevel(event: any) {
+        console.log(event);
+        if (event !== null && event !== undefined) {
+            this.levelService.findParcoursById(event).subscribe(level => {
+                console.log(level);
+                this.selected.parcours = level;
+            }, error => {
+                console.log(error);
+            });
+        }
     }
 }
