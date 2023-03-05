@@ -317,6 +317,7 @@ import {PayNowComponent} from './view/shared/pay-now/pay-now.component';
 import {PricingTableComponent} from './view/public/pricing-table/pricing-table.component';
 import {BottomBarComponent} from './view/shared/bottom-bar/bottom-bar.component';
 import {UpgdatePackComponent} from './view/etudiant/upgdate-pack/upgdate-pack.component';
+import { StudentPreferScheduleComponent } from './view/etudiant/student-prefer-schedule/student-prefer-schedule.component';
 
 
 export function createTranslateLoader(http: HttpClient) {
@@ -651,7 +652,8 @@ export function createTranslateLoader(http: HttpClient) {
             PayNowComponent,
             PricingTableComponent,
             BottomBarComponent,
-            UpgdatePackComponent
+            UpgdatePackComponent,
+            StudentPreferScheduleComponent
         ],
     providers: [
         {provide: LocationStrategy, useClass: PathLocationStrategy},

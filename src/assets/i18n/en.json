@@ -505,6 +505,18 @@
   "Price": "Price",
   "Promo code": "Discount",
   "Total": "Total",
-  "choose your level": "Choose your Level *"
+  "choose your level": "Choose your Level *",
+  "Your account is already validated, please try to sign in." : "Your account is already validated, please try to sign in.",
+  "please change your password before you start": "please change your password before you start",
+  "Password should be at least 8 characters long": "Password should be at least 8 characters long",
+  "Password should contain at least one special character": "Password should contain at least one special character",
+  "valid password": "valid password",
+  "Password does not match": "Password does not match",
+  "error while updating your password": "error while updating your password",
+  "Password updated Successfully": "Password updated Successfully",
+  "Email does not found! Are you sure you are already a member?": "Email does not found! Are you sure you are already a member?",
+  "Your account not found.": "Your account not found.",
+  "Your account has been validated.": "Your account has been validated.",
+
 
 }

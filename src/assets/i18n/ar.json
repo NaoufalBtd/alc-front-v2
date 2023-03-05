@@ -504,10 +504,20 @@
   "Payment detail": "تفاصيل الدفع",
   "Pack name": "الدورة",
   "Student name": "اسم المستخدم",
-  "Student email" : "البريد الالكتروني",
+  "Student email": "البريد الالكتروني",
   "Price": "سعر الدورة",
   "Promo code": "تخفيض",
   "Total": "السعر النهائى",
-  "choose your level": "اختر مستواك في اللغة الإنجليزية *"
-
+  "choose your level": "اختر مستواك في اللغة الإنجليزية *",
+  "Your account is already validated, please try to sign in.": "تم التحقق من صحة حسابك بالفعل ، يرجى محاولة تسجيل الدخول.",
+  "please change your password before you start": "الرجاء تغيير كلمة المرور الخاصة بك قبل المتابعة",
+  "Password should be at least 8 characters long": "يجب أن تتكون كلمة المرور من 8 أحرف على الأقل",
+  "Password should contain at least one special character": "يجب أن تحتوي كلمة المرور على حرف خاص واحد على الأقل",
+  "valid password": "كلمة مرور صالحة",
+  "Password does not match": "كلمة السر غير متطابقة",
+  "error while updating your password": "حدث خطأ أثناء تحديث كلمة المرور الخاصة بك",
+  "Password updated Successfully": "تم تحديث كلمة السر بنجاح",
+  "Email does not found! Are you sure you are already a member?": "لم يتم العثور على البريد الإلكتروني! هل أنت متأكد أنك بالفعل عضو؟",
+  "Your account not found.": "حسابك غير موجود.",
+  "Your account has been validated.": "تم التحقق من صحة حسابك بنجاح"
 }

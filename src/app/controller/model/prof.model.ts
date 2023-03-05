@@ -12,6 +12,8 @@ export class Prof extends User {
     public ref: string;
     public about: string;
     public token: string;
+    Color: '#bbdc00';
+    GroupId: 1;
     public classRoomList = new Array<ClassRoom>();
     public categorieProf = new CategorieProf();
     public recommendList = new Array<RecommendTeacher>();

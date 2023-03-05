@@ -509,10 +509,20 @@
   "Payment detail": "Détails de paiement",
   "Pack name": "nom du pack",
   "Student name": "Nom d'étudiant",
-  "Student email" : "E-mail d'étudiant",
+  "Student email": "E-mail d'étudiant",
   "Price": "Prix initiale",
   "Promo code": " Prix de réduction ",
   "Total": "Totale",
-  "choose your level": "Choisissez votre niveau en Anglais *"
-
+  "choose your level": "Choisissez votre niveau en Anglais *",
+  "Your account is already validated, please try to sign in.": "Votre compte est déjà validé, veuillez essayer de vous connecter.",
+  "please change your password before you start": "veuillez changer votre mot de passe avant de commencer",
+  "Password should be at least 8 characters long": "Le mot de passe doit comporter au moins 8 caractères",
+  "Password should contain at least one special character": "Le mot de passe doit contenir au moins un caractère spécial",
+  "valid password": "mot de passe valide",
+  "Password does not match": "Le mot de passe ne correspond pas",
+  "error while updating your password": "error while updating your password",
+  "Password updated Successfully": "Password updated Successfully",
+  "Email does not found! Are you sure you are already a member?": "Email does not found! Are you sure you are already a member?",
+  "Your account not found.": "Your account not found.",
+  "Your account has been validated.": "Your account has been validated."
 }

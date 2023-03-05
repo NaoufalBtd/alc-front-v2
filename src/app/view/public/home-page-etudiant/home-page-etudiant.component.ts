@@ -6,6 +6,7 @@ import {MessageService} from 'primeng/api';
 import {EtudiantService} from '../../../controller/service/etudiant.service';
 import {UserService} from '../../../controller/service/user.service';
 import {AuthenticationService} from '../../../controller/service/authentication.service';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
     selector: 'app-home-page-etudiant',
@@ -19,9 +20,15 @@ export class HomePageEtudiantComponent implements OnInit {
     index = 0;
     newPassword = '';
     newPasswordRepated = '';
+    message = {
+        showMessage: true,
+        message: 'يجب أن تتكون كلمة المرور من 8 أحرف على الأقل',
+        severity: 'warn'
+    };
 
     constructor(public router: Router,
                 private _activatedRoute: ActivatedRoute,
+                private translate: TranslateService,
                 private messageService: MessageService,
                 private authService: AuthenticationService,
                 private etudiantService: EtudiantService,
@@ -39,7 +46,7 @@ export class HomePageEtudiantComponent implements OnInit {
                         this.messageService.add({
                             severity: 'info',
                             life: 30000,
-                            detail: 'Your account is already validated, please try to sign in.'
+                            detail: this.translate.instant('Your account is already validated, please try to sign in.')
                         });
                         this.router.navigate(['/public/login']);
                     } else {
@@ -49,7 +56,7 @@ export class HomePageEtudiantComponent implements OnInit {
                                 this.messageService.add({
                                     severity: 'success',
                                     life: 8000,
-                                    detail: 'Your account has been validated.'
+                                    detail: this.translate.instant('Your account has been validated.')
                                 });
                                 this.authService.addUserToLocalCache(student);
                             }, error => {
@@ -57,7 +64,8 @@ export class HomePageEtudiantComponent implements OnInit {
                                 this.messageService.add({
                                     severity: 'warn',
                                     life: 8000,
-                                    detail: error?.error?.message || 'Email does not found! Are you sure you are already a member ?'
+                                    detail: this.translate.instant(error?.error?.message) ||
+                                        this.translate.instant('Email does not found! Are you sure you are already a member?')
                                 });
                             }
                         );
@@ -66,7 +74,7 @@ export class HomePageEtudiantComponent implements OnInit {
                     this.messageService.add({
                         severity: 'warn',
                         life: 30000,
-                        detail: 'Your account not found.'
+                        detail: this.translate.instant('Your account not found.')
                     });
                     this.router.navigate(['/free-trial']);
                 }
@@ -75,7 +83,7 @@ export class HomePageEtudiantComponent implements OnInit {
             this.messageService.add({
                 severity: 'warn',
                 life: 4000,
-                detail: 'Email does not found! Are you sure you are already a member?'
+                detail: this.translate.instant('Email does not found! Are you sure you are already a member?')
             });
         }
     }
@@ -95,41 +103,82 @@ export class HomePageEtudiantComponent implements OnInit {
     }
 
     changePassword() {
-        if (this.verify()) {
-            this.etudiantService.updatePassword(this.newPassword, this.currentUser.username).subscribe(
-                data => {
-                    if (data > 0) {
-                        this.messageService.add({
-                                severity: 'success',
-                                summary: 'Successful',
-                                detail: 'Password updated Successfully',
-                                life: 3000
-                            }
-                        );
-                        this.index = 1;
-                    }
-                }, error => {
+        this.etudiantService.updatePassword(this.newPassword, this.currentUser.username).subscribe(
+            data => {
+                if (data > 0) {
                     this.messageService.add({
-                            severity: 'Error',
-                            summary: 'error',
-                            detail: 'error while updating your password',
+                            severity: 'success',
+                            summary: 'Successful',
+                            detail: this.translate.instant('Password updated Successfully'),
                             life: 3000
                         }
                     );
+                    this.index = 1;
                 }
-            );
+            }, error => {
+                this.messageService.add({
+                        severity: 'Error',
+                        summary: 'error',
+                        detail: this.translate.instant('error while updating your password'),
+                        life: 3000
+                    }
+                );
+            }
+        );
+    }
+
+
+    onPasswordInput(password: string): boolean {
+        const minLength = 8;
+        const containsSpecialChar = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/.test(password);
+        if (password.length < minLength) {
+            this.message = {
+                showMessage: true,
+                message: this.translate.instant('Password should be at least 8 characters long'),
+                severity: 'warn'
+            };
+            return false;
+        } else if (!containsSpecialChar) {
+            this.message = {
+                showMessage: true,
+                message: this.translate.instant('Password should contain at least one special character'),
+                severity: 'warn'
+            };
+            return false;
+
+        } else if (password !== this.newPasswordRepated) {
+            this.message = {
+                showMessage: true,
+                message: this.translate.instant('Repeat password'),
+                severity: 'warn'
+            };
+            return false;
+        } else {
+            this.message = {
+                showMessage: true,
+                severity: 'success',
+                message: this.translate.instant('valid password')
+            };
+            return true;
         }
     }
 
-    private verify(): boolean {
-        if (this.newPassword === null ||
-            this.newPassword?.length < 4 ||
-            this.newPasswordRepated?.length < 4 ||
-            this.newPasswordRepated === null ||
-            this.newPasswordRepated !== this.newPassword
-        ) {
-            return false;
+    onRepatPassword() {
+        if (this.newPassword !== this.newPasswordRepated) {
+            this.message = {
+                showMessage: true,
+                message: this.translate.instant('Password does not match'),
+                severity: 'warn'
+            };
+        } else {
+            console.log('');
+            this.message = {
+                showMessage: true,
+                severity: 'success',
+                message: this.translate.instant('valid password')
+            };
         }
-        return true;
     }
 }
+
+
