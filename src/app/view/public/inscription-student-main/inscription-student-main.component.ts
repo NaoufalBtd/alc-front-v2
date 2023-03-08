@@ -11,7 +11,7 @@ import {PriceService} from '../../../controller/service/price.service';
 })
 export class InscriptionStudentMainComponent implements OnInit {
     showCoupon = false;
-    countdownDate: Date = new Date('2023-03-09 00:00:00'); // Set the countdown date and time
+    countdownDate: Date = new Date('2023-03-15 00:00:00'); // Set the countdown date and time
     countdown: any = {};
     minPriceForGroup: number;
 

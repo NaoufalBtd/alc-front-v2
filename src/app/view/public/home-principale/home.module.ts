@@ -64,6 +64,7 @@ import {PaimentBackComponent} from './paiment/paiment-back/paiment-back.componen
 import {GalleriaModule} from 'primeng/galleria';
 import { PublicFaqComponent } from './FAQ/public-faq/public-faq.component';
 import {AccordionModule} from 'primeng/accordion';
+import { CommunityFeedbackComponent } from './community-feedback/community-feedback.component';
 
 
 @NgModule({
@@ -117,6 +118,7 @@ import {AccordionModule} from 'primeng/accordion';
         PaimentFailComponent,
         PaimentBackComponent,
         PublicFaqComponent,
+        CommunityFeedbackComponent,
     ],
     providers: [
         Clipboard
