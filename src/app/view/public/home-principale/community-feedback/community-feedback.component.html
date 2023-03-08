@@ -55,8 +55,8 @@
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                 allowfullscreen></iframe>
                     </div>
-                    <div class="testimonial__video-content d-sm-flex">
-                        <div class="testimonial__video-icon mr-20 mb-20">
+                    <div   [style.direction]="translate.currentLang === 'ar' ? 'rtl': 'ltr'" class="testimonial__video-content d-sm-flex">
+                        <div class="testimonial__video-icon ml-20 mr-20 mb-20">
                           <span>
                              <svg version="1.1" id="educal-youtube" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
                                   viewBox="0 0 24 24" style="enable-background:new 0 0 24 24;" xml:space="preserve">
@@ -66,7 +66,7 @@
                              </svg>
                           </span>
                         </div>
-                        <div  [style.direction]="translate.currentLang === 'ar' ? 'rtl': 'ltr'" class="testimonial__video-text">
+                        <div class="testimonial__video-text">
                             <h4>EngFlexy</h4>
                             <p>{{'EngFlexy' | translate}}</p>
                         </div>
