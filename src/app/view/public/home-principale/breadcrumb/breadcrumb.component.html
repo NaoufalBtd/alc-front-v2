@@ -2,13 +2,13 @@
          [ngStyle]="{background:'url(assets/img/page-title/page-title.jpg)',backgroundRepeat:'no-repeat',backgroundSize:'cover',backgroundPosition:'center'}">
   <div class="container">
      <div class="row">
-        <div class="col-xxl-12">
+        <div  [style.direction]="translate.currentLang === 'ar' ? 'rtl': 'ltr'" class="col-xxl-12">
            <div class="page__title-wrapper mt-110">
               <h3 class="page__title">{{'title' | translate}}</h3>
               <nav aria-label="breadcrumb">
                  <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a [routerLink]="['/']">{{'home' | translate}}</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">{{subtitle}}</li>
+                    <li class="breadcrumb-item active" aria-current="page">{{subtitle | translate}}</li>
                  </ol>
               </nav>
            </div>

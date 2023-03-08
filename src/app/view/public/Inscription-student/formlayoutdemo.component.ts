@@ -154,7 +154,6 @@ export class FormLayoutDemoComponent implements OnInit {
     }
 
     chooseLevel(event: any) {
-        console.log(event);
         if (event !== null && event !== undefined) {
             this.levelService.findParcoursById(event).subscribe(level => {
                 console.log(level);

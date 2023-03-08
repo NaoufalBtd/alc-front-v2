@@ -1,0 +1,69 @@
+<main>
+    <app-header-one header__white="header__white"></app-header-one>
+    <app-breadcrumb title="FAQs" subtitle="Frequently asked questions"></app-breadcrumb>
+    <section class="blog__area pt-50 pb-120">
+        <div class="container">
+            <div class="row">
+                <div [style.direction]="translate.currentLang === 'ar' ? 'rtl': 'ltr'" class="col-xxl-12 col-xl-12 col-lg-12">
+                    <p-accordion>
+
+                        <p-accordionTab [header]="'What happens in a live class?' | translate" [selected]="true">
+                            <p>
+                                {{'Join online classes with students from around the world for real-time speaking, listening and reading practice with an expert EngFlexy Academy teacher. We encourage you to interact with the materials, your teacher and your fellow students. Towards the end of class, the teacher will recap, share all the learning materials and ensure everybody has understood the lesson. For more information about the courses:' | translate}}
+                            </p>
+                            <a [routerLink]="['/courses']">{{'courses' | translate}}</a>
+                        </p-accordionTab>
+
+                        <p-accordionTab [header]="'What technology do I need to join English Online?' | translate">
+                            <p>
+                                {{'To access your student portal' | translate}}
+                            </p>
+                            <a [routerLink]="['/public/login ']">{{'login' | translate}}</a>
+                            <p>{{'and attend our live online classes, you will need:' | translate}}</p>
+                            <ul>
+                                <li>{{'a desktop/laptop computer (preferred) or a mobile device (tablet, smartphone)' | translate}}</li>
+                                <li>{{'a reliable Internet connection' | translate}}</li>
+                                <li>{{'a headset or headphones with a built-in microphone' | translate}}</li>
+                                <li>{{'a working webcam' | translate}}</li>
+                            </ul>
+
+                            <p>{{'If you want to join online classes, please also note: ' | translate}}</p>
+                            <strong>{{'English Online classes take place using the Google Meet.' | translate}}</strong>
+
+                        </p-accordionTab>
+
+                        <p-accordionTab [header]="'How do I check my level?' | translate">
+                            <p>{{'You will be asked to select your English level when you log in to your account for the first time.' | translate}}</p>
+                            <p>{{'If you are unsure of your current English level, you can take our free level test before joining the online classes.' | translate}}</p>
+                            <a [routerLink]="['/online-english-level-test']">{{'take test here' | translate}}</a>
+                            <p class="d-block">{{'Our course is available at CEFR levels: Elementary (Level A1), Pre-Intermediate (Level A2), Intermediate (Level B1), Upper-Intermediate (Level B2), and Advanced (Level C1).' | translate}}</p>
+
+                        </p-accordionTab>
+
+
+                        <p-accordionTab [header]="'How do I pay?' | translate">
+                            <p>{{'You can pay for your subscription online, directly ' | translate}}</p>
+                            <a [routerLink]="['/course-details/35405']">{{'here' | translate}}</a>
+                            <p>{{'with a credit or debit card: Visa,MasterCard' | translate}}</p>
+                        </p-accordionTab>
+
+
+                        <p-accordionTab [header]="'Who are the teachers?' | translate">
+                            <p>{{'All our teachers are highly qualified and experienced EngFlexy Academy English teaching professionals. Our teachers are experienced in working with students from many different countries and are online teaching specialists. Teacher training takes place regularly and teaching quality is monitored and evaluated by a team of specialists to ensure we deliver the best learning experience possible. ' | translate}}</p>
+                        </p-accordionTab>
+
+
+                        <p-accordionTab [header]="'Will I get a certificate?' | translate">
+                            <p>{{'Yes, you will get a success certificate after passing each of the five level: Elementary, Pre Intermediate, Intermediate, Upper Intermediate, then Advanced.' | translate}}</p>
+                        </p-accordionTab>
+
+
+                    </p-accordion>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <app-cta></app-cta>
+    <app-home-footer footerPadd="footer__top pt-90 pb-40"></app-home-footer>
+</main>

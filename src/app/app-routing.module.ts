@@ -108,6 +108,7 @@ import {PaimentOkComponent} from './view/public/home-principale/paiment/paiment-
 import {PaimentFailComponent} from './view/public/home-principale/paiment/paiment-fail/paiment-fail.component';
 import {PaimentBackComponent} from './view/public/home-principale/paiment/paiment-back/paiment-back.component';
 import {UpgdatePackComponent} from './view/etudiant/upgdate-pack/upgdate-pack.component';
+import {PublicFaqComponent} from './view/public/home-principale/FAQ/public-faq/public-faq.component';
 
 
 @NgModule({
@@ -235,6 +236,10 @@ import {UpgdatePackComponent} from './view/etudiant/upgdate-pack/upgdate-pack.co
                     {
                         path: 'blog',
                         component: BlogComponent
+                    },
+                    {
+                        path: 'faqs',
+                        component: PublicFaqComponent
                     },
                     {
                         path: 'blog-details',

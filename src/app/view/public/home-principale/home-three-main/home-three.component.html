@@ -11,7 +11,7 @@
     <app-home-three-cta></app-home-three-cta>
     <app-home-footer footerPadd="footer__top pt-90 pb-40"></app-home-footer>
 
-    <p-dialog [showHeader]="false"  [closable]="true" [(visible)]="displayModal" [modal]="true"
+    <p-dialog [showHeader]="false" [closable]="true" [(visible)]="displayModal" [modal]="true"
               [style]="{width: '65vw'}"
               [draggable]="true" [resizable]="true">
         <div class="row shadow p-3 mb-5 bg-body rounded">
@@ -23,29 +23,50 @@
                 <h4><i class="fa fa-solid fa-gift"></i> {{'gift' | translate}}</h4>
             </div>
             <div class="col-md-offset-3 col-sm-12 col-md-6">
-                <div class="textInfo"> <i style="color: blue; font-size: 25px;" class="fa fa-solid fa-hand-pointer"></i> {{"We'll demonstrate our platform" | translate}}</div>
-                <div class="textInfo"><i style="color: yellow; font-size: 25px;"  class="fa fa-solid fa-star-shooting"></i>
-                    {{"We will assess your English level and also give you an opportunity to practice your English" | translate}}</div>
-                <div class="textInfo"><i style="color: red; font-size: 25px;" class="fa fa-solid fa-heart"></i>{{'Recommend a study plan' | translate}}</div>
+                <div class="textInfo"><i style="color: blue; font-size: 25px;"
+                                         class="fa fa-solid fa-hand-pointer"></i> {{"We'll demonstrate our platform" | translate}}
+                </div>
+                <div class="textInfo"><i style="color: yellow; font-size: 25px;"
+                                         class="fa fa-solid fa-star-shooting"></i>
+                    {{"We will assess your English level and also give you an opportunity to practice your English" | translate}}
+                </div>
+                <div class="textInfo"><i style="color: red; font-size: 25px;"
+                                         class="fa fa-solid fa-heart"></i>{{'Recommend a study plan' | translate}}</div>
             </div>
             <div class="col-md-offset-3 col-md-6 col-sm-12">
                 <form class="form-horizontal">
                     <div class="form-group">
-                        <input type="text" [(ngModel)]="selected.nom" name="nom" class="form-control" id="name" placeholder="{{'Your name * ' | translate}}">
+                        <input type="text" [(ngModel)]="selected.nom" name="nom" class="form-control" id="name"
+                               placeholder="{{'Your name * ' | translate}}">
                         <i class="fa fa-user"></i>
                     </div>
                     <div class="form-group">
-                        <input type="email" [(ngModel)]="selected.username" name="username"  class="form-control" id="inputEmail3"  placeholder="{{'Email *' | translate}}">
+                        <input type="email" [(ngModel)]="selected.username" name="username" class="form-control"
+                               id="inputEmail3" placeholder="{{'Email *' | translate}}">
                         <i class="fa fa-solid fa-envelope"></i>
                     </div>
                     <div class="form-group">
-                        <input type="tel" [(ngModel)]="selected.numero" name="numero"  class="form-control" id="Phone"  placeholder="{{'Phone *' | translate}}">
+                        <input type="tel" [(ngModel)]="selected.numero" name="numero" class="form-control" id="Phone"
+                               placeholder="{{'Phone *' | translate}}">
                         <i class=" fa fa-solid fa-phone"></i>
+                    </div>
+
+                    <div class="form-group">
+                        <select (ngModelChange)="chooseLevel($event)" [(ngModel)]="selectedLevel" name="level"
+                                class="form-select">
+                            <option [ngValue]="null">{{'choose your level' | translate}}</option>
+                            <option [ngValue]="'1'">مبتدئ</option>
+                            <option [ngValue]="'5095'">ما قبل المتوسط</option>
+                            <option [ngValue]="'13000'">متوسط</option>
+                            <option [ngValue]="'25000'">ما بعد المتوسط</option>
+                            <option [ngValue]="'31050'">متقم</option>
+                        </select>
                     </div>
                     <div class="form-group">
                         <button [disabled]="isDisabled()"
                                 (click)="createEtudiant()"
-                                style=" width: 100%;" type="submit" class="btn btn-default">{{'try' | translate}}</button>
+                                style=" width: 100%;" type="submit"
+                                class="btn btn-default">{{'try' | translate}}</button>
                     </div>
                 </form>
             </div>

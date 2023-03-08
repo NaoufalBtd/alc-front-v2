@@ -62,6 +62,8 @@ import {PaimentOkComponent} from './paiment/paiment-ok/paiment-ok.component';
 import {PaimentFailComponent} from './paiment/paiment-fail/paiment-fail.component';
 import {PaimentBackComponent} from './paiment/paiment-back/paiment-back.component';
 import {GalleriaModule} from 'primeng/galleria';
+import { PublicFaqComponent } from './FAQ/public-faq/public-faq.component';
+import {AccordionModule} from 'primeng/accordion';
 
 
 @NgModule({
@@ -114,6 +116,7 @@ import {GalleriaModule} from 'primeng/galleria';
         PaimentOkComponent,
         PaimentFailComponent,
         PaimentBackComponent,
+        PublicFaqComponent,
     ],
     providers: [
         Clipboard
@@ -133,7 +136,8 @@ import {GalleriaModule} from 'primeng/galleria';
         TooltipModule,
         InputTextModule,
         ClipboardModule,
-        GalleriaModule
+        GalleriaModule,
+        AccordionModule
 
     ],
     exports: [
