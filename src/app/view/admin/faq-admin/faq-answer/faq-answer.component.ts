@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FaqService} from '../../../../controller/service/faq.service';
 import {MenuItem, TreeNode} from 'primeng/api';
-import {FaqProf} from '../../../../controller/model/faq-prof.model';
 import {FaqType} from '../../../../controller/model/faq-type.model';
 import {Faq} from '../../../../controller/model/faq.model';
 import {LoginService} from '../../../../controller/service/login.service';
@@ -24,12 +23,12 @@ export class FaqAnswerComponent implements OnInit {
     constructor(private service: FaqService, private login: LoginService) {
     }
 
-    get selectedFaqProf(): FaqProf {
-        return this.service.selectedFaqProf;
+    get selectedFaq(): Faq {
+        return this.service.selected;
     }
 
-    set selectedFaqProf(value: FaqProf) {
-        this.service.selectedFaqProf = value;
+    set selectedFaq(value: Faq) {
+        this.service.selected = value;
     }
 
     get viewDialogFaqContact(): boolean {
@@ -80,178 +79,153 @@ export class FaqAnswerComponent implements OnInit {
         this.service.itemsType = value;
     }
 
-    get selectedFaqEtudiant(): FaqEtudiant {
-        return this.service.selectedFaqEtudiant;
-    }
-
-    set selectedFaqEtudiant(value: FaqEtudiant) {
-        this.service.selectedFaqEtudiant = value;
-    }
-
     public update(libelle: string) {
-        if (this.utilisateur == 'teacher') {
-            this.service.findFaqProfByLibelle(libelle).subscribe(
-                data => {
-                    this.selectedFaqProf = data;
-                    console.log(this.selectedFaqProf);
-                    this.selectedFaqProf.description = this.answer;
-                    this.selectedFaqProf.admin = this.login.admin;
-                    this.service.updateFaqrof(this.selectedFaqProf).subscribe(
-                        data => {
-                            this.menu = [
-                                {
-                                    label: 'Teacher', command: (event) => {
-                                        this.utilisateur = 'teacher';
-                                    }
-                                },
-                                {
-                                    label: 'Student', command: (event) => {
-                                        this.utilisateur = 'student';
-                                    }
-                                },
-                            ];
+        // if (this.utilisateur == 'teacher') {
+        //     this.service.findFaqEtudiant(this.utilisateur).subscribe(
+        //         data => {
+        //             this.selectedFaq = data;
+        //             console.log(this.selectedFaq);
+        //             this.selectedFaq.description = this.answer;
+        //             this.selectedFaq.admin = this.login.admin;
+        //             this.service.updateFaqrof(this.selectedFaq).subscribe(
+        //                 data => {
+        //                     this.menu = [
+        //                         {
+        //                             label: 'Teacher', command: (event) => {
+        //                                 this.utilisateur = 'teacher';
+        //                             }
+        //                         },
+        //                         {
+        //                             label: 'Student', command: (event) => {
+        //                                 this.utilisateur = 'student';
+        //                             }
+        //                         },
+        //                     ];
+        //
+        //                     this.utilisateur = 'teacher';
+        //                     if (this.utilisateur == 'teacher') {
+        //                         this.service.findFaq().subscribe(data => {
+        //                             this.items = data;
+        //                             this.nodes = [];
+        //                             // tslint:disable-next-line:prefer-for-of
+        //                             for (let i = 0; i < this.items.length; i++) {
+        //                                 this.nodes.push(
+        //                                     {
+        //                                         label: this.items[i].libelle, key: this.items[i].libelle,
+        //                                         children: [
+        //                                             {label: this.items[i].description, type: 'string'}
+        //                                         ]
+        //                                     }
+        //                                 );
+        //                             }
+        //                         });
+        //                     } else if (this.utilisateur == 'student') {
+        //                         this.service.findFaqEtudiant(this.utilisateur).subscribe(data => {
+        //                             this.items = data;
+        //                             this.nodes = [];
+        //                             // tslint:disable-next-line:prefer-for-of
+        //                             for (let i = 0; i < this.items.length; i++) {
+        //                                 this.nodes.push(
+        //                                     {
+        //                                         label: this.items[i].libelle, key: this.items[i].libelle,
+        //                                         children: [
+        //                                             {label: this.items[i].description, type: 'string'}
+        //                                         ]
+        //                                     }
+        //                                 );
+        //                             }
+        //                         });
+        //                     }
+        //                 }, error => {
+        //                     console.log('erreur');
+        //                 }
+        //             );
+        //         }
+        //     );
+        // } else if (this.utilisateur == 'student') {
+        //     this.service.findFaqEtudiantByLibelle(libelle).subscribe(
+        //         data => {
+        //             this.selectedFaqEtudiant = data;
+        //             this.selectedFaqEtudiant.description = this.answer;
+        //             this.selectedFaqEtudiant.admin = this.login.admin;
+        //             console.log(this.selectedFaqEtudiant);
+        //             this.service.updateFaqEtudiant(this.selectedFaqEtudiant).subscribe(
+        //                 data => {
+        //                     this.menu = [
+        //                         {
+        //                             label: 'Teacher', command: (event) => {
+        //                                 this.utilisateur = 'teacher';
+        //                             }
+        //                         },
+        //                         {
+        //                             label: 'Student', command: (event) => {
+        //                                 this.utilisateur = 'student';
+        //                             }
+        //                         },
+        //                     ];
+        //
+        //                     this.utilisateur = 'teacher';
+        //                     if (this.utilisateur == 'teacher') {
+        //                         this.service.findFaq().subscribe(data => {
+        //                             this.items = data;
+        //                             this.nodes = [];
+        //                             // tslint:disable-next-line:prefer-for-of
+        //                             for (let i = 0; i < this.items.length; i++) {
+        //                                 this.nodes.push(
+        //                                     {
+        //                                         label: this.items[i].libelle, key: this.items[i].libelle,
+        //                                         children: [
+        //                                             {label: this.items[i].description, type: 'string'}
+        //                                         ]
+        //                                     }
+        //                                 );
+        //                             }
+        //                         });
+        //                     } else if (this.utilisateur == 'student') {
+        //                         this.service.findFaqEtudiant(this.utilisateur).subscribe(data => {
+        //                             this.items = data;
+        //                             this.nodes = [];
+        //                             // tslint:disable-next-line:prefer-for-of
+        //                             for (let i = 0; i < this.items.length; i++) {
+        //                                 this.nodes.push(
+        //                                     {
+        //                                         label: this.items[i].libelle, key: this.items[i].libelle,
+        //                                         children: [
+        //                                             {label: this.items[i].description, type: 'string'}
+        //                                         ]
+        //                                     }
+        //                                 );
+        //                             }
+        //                         });
+        //                     }
+        //                 }, error => {
+        //                     console.log('erreur');
+        //                 }
+        //             );
+        //         }
+        //     );
+        // }
 
-                            this.utilisateur = 'teacher';
-                            if (this.utilisateur == 'teacher') {
-                                this.service.findFaqProf().subscribe(data => {
-                                    this.items = data;
-                                    this.nodes = [];
-                                    // tslint:disable-next-line:prefer-for-of
-                                    for (let i = 0; i < this.items.length; i++) {
-                                        this.nodes.push(
-                                            {
-                                                label: this.items[i].libelle, key: this.items[i].libelle,
-                                                children: [
-                                                    {label: this.items[i].description, type: 'string'}
-                                                ]
-                                            }
-                                        );
-                                    }
-                                });
-                            } else if (this.utilisateur == 'student') {
-                                this.service.findFaqEtudiant().subscribe(data => {
-                                    this.items = data;
-                                    this.nodes = [];
-                                    // tslint:disable-next-line:prefer-for-of
-                                    for (let i = 0; i < this.items.length; i++) {
-                                        this.nodes.push(
-                                            {
-                                                label: this.items[i].libelle, key: this.items[i].libelle,
-                                                children: [
-                                                    {label: this.items[i].description, type: 'string'}
-                                                ]
-                                            }
-                                        );
-                                    }
-                                });
-                            }
-                        }, error => {
-                            console.log('erreur');
-                        }
-                    );
-                }
-            );
-        } else if (this.utilisateur == 'student') {
-            this.service.findFaqEtudiantByLibelle(libelle).subscribe(
-                data => {
-                    this.selectedFaqEtudiant = data;
-                    this.selectedFaqEtudiant.description = this.answer;
-                    this.selectedFaqEtudiant.admin = this.login.admin;
-                    console.log(this.selectedFaqEtudiant);
-                    this.service.updateFaqEtudiant(this.selectedFaqEtudiant).subscribe(
-                        data => {
-                            this.menu = [
-                                {
-                                    label: 'Teacher', command: (event) => {
-                                        this.utilisateur = 'teacher';
-                                    }
-                                },
-                                {
-                                    label: 'Student', command: (event) => {
-                                        this.utilisateur = 'student';
-                                    }
-                                },
-                            ];
-
-                            this.utilisateur = 'teacher';
-                            if (this.utilisateur == 'teacher') {
-                                this.service.findFaqProf().subscribe(data => {
-                                    this.items = data;
-                                    this.nodes = [];
-                                    // tslint:disable-next-line:prefer-for-of
-                                    for (let i = 0; i < this.items.length; i++) {
-                                        this.nodes.push(
-                                            {
-                                                label: this.items[i].libelle, key: this.items[i].libelle,
-                                                children: [
-                                                    {label: this.items[i].description, type: 'string'}
-                                                ]
-                                            }
-                                        );
-                                    }
-                                });
-                            } else if (this.utilisateur == 'student') {
-                                this.service.findFaqEtudiant().subscribe(data => {
-                                    this.items = data;
-                                    this.nodes = [];
-                                    // tslint:disable-next-line:prefer-for-of
-                                    for (let i = 0; i < this.items.length; i++) {
-                                        this.nodes.push(
-                                            {
-                                                label: this.items[i].libelle, key: this.items[i].libelle,
-                                                children: [
-                                                    {label: this.items[i].description, type: 'string'}
-                                                ]
-                                            }
-                                        );
-                                    }
-                                });
-                            }
-                        }, error => {
-                            console.log('erreur');
-                        }
-                    );
-                }
-            );
-        }
-
+        alert('Update');
     }
 
     public init() {
         this.answer = '';
-        if (this.utilisateur == 'teacher') {
-            this.service.findFaqProf().subscribe(data => {
-                this.items = data;
-                this.nodes = [];
-                // tslint:disable-next-line:prefer-for-of
-                for (let i = 0; i < this.items.length; i++) {
-                    this.nodes.push(
-                        {
-                            label: this.items[i].libelle, key: this.items[i].libelle,
-                            children: [
-                                {label: this.items[i].description, type: 'string'}
-                            ]
-                        }
-                    );
-                }
-            });
-        } else if (this.utilisateur == 'student') {
-            this.service.findFaqEtudiant().subscribe(data => {
-                this.items = data;
-                this.nodes = [];
-                // tslint:disable-next-line:prefer-for-of
-                for (let i = 0; i < this.items.length; i++) {
-                    this.nodes.push(
-                        {
-                            label: this.items[i].libelle, key: this.items[i].libelle,
-                            children: [
-                                {label: this.items[i].description, type: 'string'}
-                            ]
-                        }
-                    );
-                }
-            });
-        }
+        this.service.findFaqEtudiant(/*this.utilisateur*/).subscribe(data => {
+            this.items = data;
+            this.nodes = [];
+            // tslint:disable-next-line:prefer-for-of
+            for (let i = 0; i < this.items.length; i++) {
+                this.nodes.push(
+                    {
+                        label: this.items[i].libelle, key: this.items[i].libelle,
+                        children: [
+                            {label: this.items[i].description, type: 'string'}
+                        ]
+                    }
+                );
+            }
+        });
     }
 
     public initUtilisateur() {
@@ -268,40 +242,21 @@ export class FaqAnswerComponent implements OnInit {
             },
         ];
 
-        this.utilisateur = 'teacher';
-        if (this.utilisateur == 'teacher') {
-            this.service.findFaqProf().subscribe(data => {
-                this.items = data;
-                this.nodes = [];
-                // tslint:disable-next-line:prefer-for-of
-                for (let i = 0; i < this.items.length; i++) {
-                    this.nodes.push(
-                        {
-                            label: this.items[i].libelle, key: this.items[i].libelle,
-                            children: [
-                                {label: this.items[i].description, type: 'string'}
-                            ]
-                        }
-                    );
-                }
-            });
-        } else if (this.utilisateur == 'student') {
-            this.service.findFaqEtudiant().subscribe(data => {
-                this.items = data;
-                this.nodes = [];
-                // tslint:disable-next-line:prefer-for-of
-                for (let i = 0; i < this.items.length; i++) {
-                    this.nodes.push(
-                        {
-                            label: this.items[i].libelle, key: this.items[i].libelle,
-                            children: [
-                                {label: this.items[i].description, type: 'string'}
-                            ]
-                        }
-                    );
-                }
-            });
-        }
+        this.service.findFaqEtudiant(/*this.utilisateur*/).subscribe(data => {
+            this.items = data;
+            this.nodes = [];
+            // tslint:disable-next-line:prefer-for-of
+            for (let i = 0; i < this.items.length; i++) {
+                this.nodes.push(
+                    {
+                        label: this.items[i].libelle, key: this.items[i].libelle,
+                        children: [
+                            {label: this.items[i].description, type: 'string'}
+                        ]
+                    }
+                );
+            }
+        });
     }
 
     ngOnInit(): void {

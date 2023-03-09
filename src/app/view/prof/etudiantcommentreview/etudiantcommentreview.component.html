@@ -1,37 +1,32 @@
-<p-card>
-    <p-header>
+<div class="card">
+    <div class="card-header d-block">
         <h3>Search</h3>
-        <div class="p-grid">
-
-            <div class="p-col-4"><input pInputText type="text" placeholder="Search by Student Name"
-                                        style="width: 80%" [(ngModel)]="etudiantreviewsearch.etudiant.nom">
-
-            </div>
-            <div class="p-col-4">
-                <input pInputText type="text" placeholder="Search by Course Name"
-                                        style="width: 80%" [(ngModel)]="etudiantreviewsearch.cours.libelle">
-
-            </div>
-            <div class="p-col-4">
-
-             <!--   <p-calendar [showButtonBar]="true" dateFormat="yy-mm-dd"
-                            styleClass="p-column-filter" placeholder="Search by Date" [readonlyInput]="true"
-                            style="width: 70%;" [(ngModel)]="etudiantreviewsearch.dateReview"></p-calendar>-->
-                <input pInputText type="text" placeholder="yyyy-mm-dd"
-                       style="width: 80%" [(ngModel)]="etudiantreviewsearch.dateReview">
-
-            </div>
+        <div>
             <div class="p-grid">
-                <div class="p-col-3">
-                <button pButton pRipple type="button" label="Search" class="p-button-rounded p-button-success"
-                        style="margin-left:4px;background-color: #F48C76;border-color: #F48C76;"
-                        (click)="findByCriteria()"></button>
-
-            </div>
+                <div class="p-col-12 p-md-6 p-lg-3">
+                    <input pInputText type="text" placeholder="Search by Student Name"
+                           [(ngModel)]="etudiantreviewsearch.etudiant.nom">
+                </div>
+                <div class="p-col-12 p-md-6 p-lg-3">
+                    <input pInputText type="text" placeholder="Search by Course Name"
+                           [(ngModel)]="etudiantreviewsearch.cours.libelle">
+                </div>
+                <div class="p-col-12 p-md-6 p-lg-3">
+                    <!--   <p-calendar [showButtonBar]="true" dateFormat="yy-mm-dd"
+                                   styleClass="p-column-filter" placeholder="Search by Date" [readonlyInput]="true"
+                                   style="width: 70%;" [(ngModel)]="etudiantreviewsearch.dateReview"></p-calendar>-->
+                    <input pInputText type="text" placeholder="yyyy-mm-dd"
+                           [(ngModel)]="etudiantreviewsearch.dateReview">
+                </div>
+                <div class="p-col-12 p-md-6 p-lg-3">
+                    <button pButton pRipple type="button" label="Search" class="p-button-rounded p-button-success"
+                            style="margin-left:4px;background-color: #F48C76;border-color: #F48C76; width: 100%"
+                            (click)="findByCriteria()"></button>
+                </div>
             </div>
         </div>
-    </p-header>
-</p-card>
+    </div>
+</div>
 <p-table #dt [value]="listetudiantreview" dataKey="id" styleClass="p-datatable-customers" [rowHover]="true"
          [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]"
          [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"

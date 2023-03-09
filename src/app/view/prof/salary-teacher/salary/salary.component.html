@@ -40,7 +40,7 @@
             <p-tabView>
                 <p-tabPanel header="Salary">
                     <div class="p-grid">
-                        <div class="p-col-5">
+                        <div class="p-col-12 p-md-5">
                             <p class="currentPay">Current pay</p>
                             <div class="payement">
                                 <span class="pay">{{salaryMonth.totalPayment + salaryMonth.totalBonusClassAverage + salaryMonth.totalBonusWorkload}}</span>
@@ -53,8 +53,7 @@
                                 <span class="recommendedPayCurrency">DH</span>
                             </div>
                         </div>
-                        <div class="p-col-2"></div>
-                        <div class="p-col-5">
+                        <div class="p-col-12">
                             <p-chart type="doughnut" [data]="data"></p-chart>
                         </div>
                     </div>
