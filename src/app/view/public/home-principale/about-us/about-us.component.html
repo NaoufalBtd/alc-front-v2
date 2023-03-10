@@ -1,68 +1,60 @@
 <main>
     <app-header-one header__white="header__white"></app-header-one>
     <app-breadcrumb title="{{'About' | translate}}" subtitle="{{'aboutus' | translate}}"></app-breadcrumb>
-    <div style="padding: 100px 0;" class="container">
-        <div class="row">
-            <div style="padding: 13% 0;" class="col-md-6 col-sm-12">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h1   [style.direction]="translate.currentLang === 'ar' ? 'rtl': 'ltr'" class="about page__title">{{'aboutus' | translate}}</h1>
-                    </div>
+    <section class="about__area pt-90 pb-150">
+        <div class="container">
+            <div [style.direction]="translate.currentLang === 'ar' ? 'rtl': 'ltr'" class="row">
+                <div class=" col-sm-12">
+                    <div class="card">
+                        <div class="card-img"></div>
+                        <div class="card-info">
+                            <p class="text-body">
+                                {{'EngFlexy'| translate}}
+                            </p>
+                            <p class="text-title">
+                                {{'aboutus' | translate}}
 
-
-                    <div style="margin: 40px 0" class="col-md-12">
-                        <p   [style.direction]="translate.currentLang === 'ar' ? 'rtl': 'ltr'" class="about-text ">
-                            {{'EngFlexy'| translate}}
-                        </p>
+                            </p>
+                        </div>
                     </div>
 
                 </div>
-            </div>
 
 
-            <div class="col-md-6 col-sm-12">
-                <div class="row">
+                <div class=" col-sm-12">
 
-
-                    <ng-container style="margin-bottom: 40px">
+                    <div class="row m-20">
                         <div class="col-md-3">
                             <img class="about-img" src="/assets/icons/icon-question.png" alt="">
                         </div>
                         <div class="col-md-9">
-                            <h2   [style.direction]="translate.currentLang === 'ar' ? 'rtl': 'ltr'" class="about-title">{{'DevelopersTitle' | translate}}</h2>
-                            <p   [style.direction]="translate.currentLang === 'ar' ? 'rtl': 'ltr'" class="about-title-detail">
+                            <h2
+                                    class="about-title">{{'DevelopersTitle' | translate}}</h2>
+                            <p
+                                    class="about-title-detail">
                                 {{'Developers' | translate}}
                             </p>
                         </div>
-                    </ng-container>
+                    </div>
 
+                </div>
 
-                    <ng-container >
-                        <div style="margin: 60px 0" class="col-md-3">
-                        </div>
-                        <div style="margin: 60px 0" class="col-md-9">
-                        </div>
-                    </ng-container>
-
-
-
-
-                    <ng-container>
+                <div class="col-sm-12">
+                    <div class="row m-20">
                         <div class="col-md-3">
                             <img class="about-img" src="/assets/icons/icon-developers.png" alt="">
                         </div>
                         <div class="col-md-9">
                             <h2 class="about-title">{{'wheredidTitle' | translate}}</h2>
-                            <p   [style.direction]="translate.currentLang === 'ar' ? 'rtl': 'ltr'" class="about-title-detail">
-                               {{'wheredid' | translate}}
+                            <p
+                                    class="about-title-detail">
+                                {{'wheredid' | translate}}
                             </p>
                         </div>
-                    </ng-container>
-
-
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 </main>
 

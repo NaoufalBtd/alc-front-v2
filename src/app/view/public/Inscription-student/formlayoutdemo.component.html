@@ -40,7 +40,9 @@
                     </div>
 
                     <div class="form-group">
-                        <select (ngModelChange)="chooseLevel($event)" [(ngModel)]="selectedLevel" name="level" class="form-select">
+                        <i class="fas fa-sort-amount-up"></i>
+                        <select (ngModelChange)="chooseLevel($event)" [(ngModel)]="selectedLevel" name="level"
+                                class="form-select">
                             <option [ngValue]="null">{{'choose your level' | translate}}</option>
                             <option [ngValue]="'1'">مبتدئ</option>
                             <option [ngValue]="'5095'">ما قبل المتوسط</option>

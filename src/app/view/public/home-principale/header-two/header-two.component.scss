@@ -1,0 +1,31 @@
+
+.main-menu {
+  ul {
+    li {
+      cursor: pointer;
+
+      a {
+        cursor: pointer;
+        color: black;
+      }
+      a::after {
+        color: black;
+      }
+
+      a:hover {
+        color: #ff725e;
+        text-decoration: underline;
+        a::after {
+          color: #ff725e;
+        }
+      }
+
+
+      .submenu {
+        a:hover {
+          color: white;
+        }
+      }
+    }
+  }
+}
