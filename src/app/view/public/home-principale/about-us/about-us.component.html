@@ -1,60 +1,90 @@
 <main>
     <app-header-one header__white="header__white"></app-header-one>
     <app-breadcrumb title="{{'About' | translate}}" subtitle="{{'aboutus' | translate}}"></app-breadcrumb>
-    <section class="about__area pt-90 pb-150">
+    <section style="background: #e8e8e8" class="about__area pt-90 pb-150">
         <div class="container">
             <div [style.direction]="translate.currentLang === 'ar' ? 'rtl': 'ltr'" class="row">
-                <div class=" col-sm-12">
+
+
+                <div class=" col-md-12">
                     <div class="card">
-                        <div class="card-img"></div>
+                        <div [ngStyle]="{ 'background-image': 'url(/assets/icons/icon-question.png)' }" class="card-img">
+                        </div>
                         <div class="card-info">
+                            <p class="text-title">{{'aboutus' | translate}}</p>
                             <p class="text-body">
                                 {{'EngFlexy'| translate}}
                             </p>
-                            <p class="text-title">
-                                {{'aboutus' | translate}}
 
-                            </p>
                         </div>
                     </div>
-
                 </div>
 
 
-                <div class=" col-sm-12">
-
-                    <div class="row m-20">
-                        <div class="col-md-3">
-                            <img class="about-img" src="/assets/icons/icon-question.png" alt="">
+                <div class=" col-md-12 mt-100">
+                    <div class="card">
+                        <div [ngStyle]="{ 'background-image': 'url(/assets/icons/engflexy-idee.png)' }" class="card-img">
                         </div>
-                        <div class="col-md-9">
-                            <h2
-                                    class="about-title">{{'DevelopersTitle' | translate}}</h2>
-                            <p
-                                    class="about-title-detail">
-                                {{'Developers' | translate}}
-                            </p>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="col-sm-12">
-                    <div class="row m-20">
-                        <div class="col-md-3">
-                            <img class="about-img" src="/assets/icons/icon-developers.png" alt="">
-                        </div>
-                        <div class="col-md-9">
-                            <h2 class="about-title">{{'wheredidTitle' | translate}}</h2>
-                            <p
-                                    class="about-title-detail">
-                                {{'wheredid' | translate}}
+                        <div class="card-info">
+                            <p style="direction: ltr" class="text-title">{{'wheredidTitle' | translate}}</p>
+                            <p class="text-body">
+                                {{'wheredid'| translate}}
                             </p>
                         </div>
                     </div>
                 </div>
+
+
+                <div class=" col-md-12 mt-100">
+                    <div class="card">
+                        <div [ngStyle]="{ 'background-image': 'url(/assets/icons/icon-developers.png)' }"
+                             class="card-img">
+                        </div>
+                        <div class="card-info">
+                            <p class="text-title">{{'DevelopersTitle' | translate}}</p>
+                            <p class="text-body">
+                                {{'Developers'| translate}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!--                <div class=" col-sm-12">-->
+
+                <!--                    <div class="row m-20">-->
+                <!--                        <div class="col-md-3">-->
+                <!--                            <img class="about-img" src="" alt="">-->
+                <!--                        </div>-->
+                <!--                        <div class="col-md-9">-->
+                <!--                            <h2-->
+                <!--                                    class="about-title"></h2>-->
+                <!--                            <p-->
+                <!--                                    class="about-title-detail">-->
+                <!--                                {{'' | translate}}-->
+                <!--                            </p>-->
+                <!--                        </div>-->
+                <!--                    </div>-->
+
+                <!--                </div>-->
+
+                <!--                <div class="col-sm-12">-->
+                <!--                    <div class="row m-20">-->
+                <!--                        <div class="col-md-3">-->
+                <!--                            <img class="about-img" src="" alt="">-->
+                <!--                        </div>-->
+                <!--                        <div class="col-md-9">-->
+                <!--                            <h2 class="about-title">{{'' | translate}}</h2>-->
+                <!--                            <p-->
+                <!--                                    class="about-title-detail">-->
+                <!--                                {{'' | translate}}-->
+                <!--                            </p>-->
+                <!--                        </div>-->
+                <!--                    </div>-->
+                <!--                </div>-->
             </div>
         </div>
     </section>
+    <app-home-footer></app-home-footer>
 </main>
 
