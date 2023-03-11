@@ -319,6 +319,7 @@
                             <div
                                     [class.platinum]="pack?.price?.lib?.toUpperCase()?.includes('PLATINUM')"
                                     [class.silver]="pack?.price?.lib?.toUpperCase()?.includes('SILVER')"
+                                    [class.premium]="pack?.price?.lib?.toUpperCase()?.includes('PREMIUM')"
                                     [class.gold]="pack?.price?.lib?.toUpperCase()?.includes('GOLD')"
 
                                     class="card mt-5 p-4 mr-5 text-white">
@@ -337,6 +338,7 @@
                                     <button
                                             [class.btn-platinum]="pack?.price?.lib?.toUpperCase()?.includes('PLATINUM')"
                                             [class.btn-silver]="pack?.price?.lib?.toUpperCase()?.includes('SILVER')"
+                                            [class.btn-premium]="pack?.price?.lib?.toUpperCase()?.includes('PREMIUM')"
                                             [class.btn-gold]="pack?.price?.lib?.toUpperCase()?.includes('GOLD')"
                                             (click)="selectedPackFct(pack)"
                                             class="btn btn-block btn-lg btn-primary">

@@ -124,6 +124,17 @@ export class EtudiantProfileComponent implements OnInit {
             data => {
                 this.inscription = data;
                 this.packChossen = this.inscription.packStudent;
+                if (
+                    data?.parcours === null ||
+                    data?.parcours?.id === undefined ||
+                    data?.parcours === undefined ||
+                    data?.parcours?.id === null ||
+                    data?.parcours?.id === 0
+                ) {
+                    this.packStudentService.findAllPacks();
+                } else {
+                    this.packStudentService.findByLevel(data?.parcours?.id);
+                }
             }
         );
         this.groupeEtudeService.findAll().subscribe(
@@ -131,9 +142,6 @@ export class EtudiantProfileComponent implements OnInit {
                 this.groupeEtudeList = data;
             }
         );
-        // this.packStudentService.findPackIndividualOrgroupe(true);
-        // this.packStudentService.findPackIndividualOrgroupe(false);
-        this.packStudentService.findAllPacks();
         this.userService.findAllStatutSocial().subscribe(
             data => {
                 this.statutSocials = data;

@@ -130,6 +130,9 @@ card css
 .silver {
   background: #8e9aaf;
 }
+.premium {
+  background: #8e9aaf;
+}
 
 .gold {
   background: #f78e3c;
@@ -140,6 +143,10 @@ card css
 }
 
 .btn-silver {
+  background: #9ca1ab;
+}
+
+.btn-premium {
   background: #9ca1ab;
 }
 
@@ -166,6 +173,12 @@ card css
 
 .btn-silver:hover,
 .btn-silver:focus {
+  background: #8e9aaf;
+  border: 1px solid white;
+}
+
+.btn-premium:hover,
+.btn-premium:focus {
   background: #8e9aaf;
   border: 1px solid white;
 }

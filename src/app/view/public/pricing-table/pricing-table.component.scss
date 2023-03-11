@@ -87,7 +87,15 @@ section{
 .option ul {
   margin: 0;
   padding: 0;
-
+  text-align: start;
+  li {
+    i{
+      border: 1px solid;
+      border-radius: 30px;
+      padding: 3px;
+      font-weight: 400;
+    }
+  }
 }
 .option ul li {
   margin: 0 0 10px;
