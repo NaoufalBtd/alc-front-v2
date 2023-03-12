@@ -1,170 +1,381 @@
 <section class="blog__area pt-50 pb-120">
-  <div class="container">
-     <div class="row">
-        <div class="col-xxl-8 col-xl-8 col-lg-8">
-           <div class="blog__wrapper">
-              <div class="blog__text mb-40">
-                 <p>Learning a language is a long-term commitment and sometimes it feels like we hit a
-                    wall and our motivation starts to drop or something unexpected pops up that stops us from
-                    studying as frequently as we would like to.
+    <div class="container">
+        <div class="row">
+            <div class="col-xxl-8 col-xl-8 col-lg-8">
+                <div [style.direction]="translate.currentLang === 'ar' ? 'rtl': 'ltr'" class="blog__wrapper">
 
-                    Taking a break is totally okay and necessary at times but many students do not
-                    have a plan to get back on track which can lead to major language loss that will take
-                    months to get back and staying motivated to learn English becomes more difficult.
-                    In this Blog,Engflexy shares some advice and strategies to help you identify different types
-                    of breaks and how to get motivated and back on track as soon as possible!</p>
-              </div>
-              <div class="blog__quote grey-bg mb-45 p-relative fix">
-                 <img class="quote" src="assets/img/blog/quote-1.png" alt="">
-                 <blockquote>
-                    <p>Learn how to improve your speaking and fluency with this lesson:</p>
-                    <div class="header__btn header__btn-2 ml-30 d-none d-sm-block">
-                       <a [routerLink]="['/free-trial']" class="e-btn">Free Trial Lesson</a>
+
+                    <div class="blog__text mb-40">
+                        <p *ngIf="selectedBlog?.id === 1">يعد تعلم اللغة التزامًا طويل الأمد"long-term"، وفي بعض الأحيان
+                            نشعر وكأننا اصطدمنا بجدار وبدأ
+                            دافعنا "motivation" في الانخفاض أو ينبثق شيء غير متوقع يمنعنا من الدراسة كثيرًا كما نرغب.
+                            أخذ فترات راحة أمر جيد وضروري في بعض الأحيان ولكن العديد من الطلاب ليس لديهم خطة للعودة إلى
+                            المسار الصحيح مما قد يؤدي إلى نسيان اللغة والذي سيستغرق شهورًا للعودة ويصبح البقاء متحمسًا
+                            لتعلم اللغة الإنجليزية أكثر صعوبة.
+                            في هذه المدونة ، تشارك
+                            <a class="link d-inline-block" routerLink="/">EngFlexy</a>
+                            بعض النصائح والاستراتيجيات لمساعدتك على تحديد أنواع مختلفة من فترات الراحة وكيفية التحفيز
+                            والعودة إلى المسار الصحيح في أسرع وقت ممكن!
+
+                        </p>
+                        <ng-container *ngIf="selectedBlog?.id === 2">
+                            <p>
+                                كمال ازواني ، أستاذ و مدرب نطق اللغة الإنجليزية"English pronunciation coach" ، ينضم إلى
+                                Engflexy لمعالجة مشكلات الثقة التي تأتي من وجود أهداف محددة تتعلق بمحاولة أن تتحدث اللغة
+                                الإنجليزية كما لو أنك أمريكي أو بريطاني"Native speaker"
+
+
+                            </p>
+                            <ul>
+                                <li>التركيز أكثر من اللازم على طريقة نطقك يمكن أن يؤثر سلبا على طلاقتك في اللغة
+                                    الإنجليزية.
+                                </li>
+                                <li>الهدف من تحسين نطقك هو توصيل رسالتك بوضوح ، وليس التخلص من لهجتك.</li>
+                                <li>تحديد أهداف قابلة للتحقيق.</li>
+                                <li>إذا كان الوقت قصيرًا ، فتعلم كيفية تطبيق قاعدة 80/20</li>
+                                <li>التكرار ، التعلم العميق ، والتركيز دائما على الجودة.</li>
+                                <li>تفصيل للطرق المختلفة لتحسين النطق الخاصة بك.</li>
+                            </ul>
+                            <p>
+                                كل هذه النصائح و أكثر يتم التركيز عليها في دروسنا هنا في
+                                <a class="link d-inline-block" routerLink="/">EngFlexy</a>
+                                لكي يتمكن المُتعلِّم من تحسين نُطقِه للغة الإنجليزية بكفاءة و سرعة.
+
+                            </p>
+                        </ng-container>
+
+                        <ng-container *ngIf="selectedBlog?.id === 3">
+                            <p>
+                                المقابلات الوظيفية صعبة حتى عندما يتعين عليك إجراؤها بلغتك الأم.
+                                إن فكرة إجراء مقابلة عمل باللغة الإنجليزية تأخذ هذا الضغط إلى مستوى آخر. بالإضافة إلى
+                                ذلك ، يمكن أن تختلف عملية التوظيف عما اعتدت عليه في بلدك، إذا كنت تخطط للعمل في شركة
+                                دولية.
+                                في هذه المقالة ، ستتعرف على الأخطاء النموذجية التي يرتكبها الناس أثناء التقديم ، كيفية
+                                التصرف أثناء المقابلة ونصائح لتقليل التوتر!
+
+                            </p>
+                            <h1 class="text-center"> نصيحة التقدم لوظيفة</h1>
+                            <h3>1 - فكر كصاحب عمل</h3>
+                            <p>تخيل أنك رب العمل أو المشغل. أنت شخص مشغول جدًا طوال الوقت تحاول إدارة عملك. عندما تدرك
+                                أنك بحاجة إلى توظيف شخص جديد ، فهذه مهمة أخرى يجب أن تتناسب مع يومك. عندما تقوم بمراجعة
+                                الطلبات ... ليس لديك الكثير من الوقت.
+                                بصفتك متقدمًا لوظيفة ما ، ما الذي يمكنك فعله للتأكد من أن سيرتك الذاتية مميزة؟ ما الذي
+                                تحتاجه سيرتك الذاتية للتأكد من أنه حتى أكثر رجال الأعمال انشغالا يهتمون بطلب الوظيفة
+                                الخاص بك؟
+                            </p>
+
+                            <h3>2 - السير الذاتية "CVs" لا يتم مراجعتها بالتفصيل
+                            </h3>
+                            <p>
+                                على الرغم من أنك قضيت الكثير من الوقت في كتابة سيرتك الذاتية (CV) بعناية ، فمن غير
+                                المرجح أن يقرأ الشخص الذي يتلقى سيرتك الذاتية كل التفاصيل. المشكلة هي أن معظم أصحاب
+                                العمل يتلقون المئات من السير الذاتية عندما ينشرون إعلانًا بفرصة عمل.
+                                في هذه المرحلة ، يبحث أصحاب العمل عن أسباب لإلغاء الطلبات لأنهم ببساطة ليس لديهم الوقت
+                                لمراجعة كل طلب بالتفصيل. يتم التخلص على الفور من الأخطاء الإملائية والسير الذاتية التي
+                                تبدو مملة أو يصعب قراءتها ، حتى لو كنت المرشح المثالي لشغل الوظيفة.
+
+                            </p>
+
+                            <h3>
+                                3 - يجب أن تكون متميزًا
+                            </h3>
+                            <p>
+                                يمكنك الآن معرفة سبب أهمية إبراز سيرتك الذاتية و طلب تقديمك"CV and Application" عن
+                                البقية.
+                                إذا كنت تقدم الطلب عبر البريد الإلكتروني ، فحاول استخدام اسم الشخص الذي يتلقى الطلب
+                                واذكر أهم التفاصيل التي تعتقد أنها ستجعلك مميزًا.
+                                على سبيل المثال:بالإضافة إلى إرسال سيرتك الذاتية و طلب تقديمك"CV and Application" يمكن
+                                أن ترسل رابط "Link" لمقطع فيديو قصير أنشأته خصيصًا لطلب الوظيفة وإلى تقديم نفسك أو كذلك
+                                يمكنك توفير رابط إلى موقع ويب شخصي"Website" قمت بإنشائه لجعل طلبك مختلفًا عن أي شخص آخر.
+
+                            </p>
+
+                            <h3>4 - لا تقم بإرسال مستند عادي-"Don't send Plain Document"
+                            </h3>
+                            <p>
+                                لا أحد يحب قراءة المستندات ذات النصوص العادية التي تشعر أنها مليئة بالكثير من
+                                المعلومات.مما يجعل من الصعب البحث عن المعلومات المهمة ذات الصلة. المستند النصي الممل
+                                بالأبيض والأسود ليس شيئًا جذابًا للقراءة حتى و لو كانت سيرتك الذاتية أكثر جاذبية على أرض
+                                الواقع.
+                                تأكد من استخدام عناوين لطيفة تسهل قراءتها والعثور على المعلومات التي يبحثون عنها وتضمين
+                                بعض الألوان لمحاولة إضفاء بعض الحيوية على سيرتك الذاتية وجعلها أكثر تشويقًا.
+
+                            </p>
+
+                            <h3>5 - السير الذاتية الرقمية "Digital Resumes" غيرت اللعبة
+                            </h3>
+                            <p>
+                                مع استمرار تحسن التكنولوجيا ، فإنها تتيح أيضًا للناس إنشاء سيرة ذاتية رقمية رائعة.
+                                إذا كنت ترسل سيرتك الذاتية و طلب تقديمك"CV and Application" عبر البريد الإلكتروني ،وكانت
+                                السيرة الذاتية الرقمية "Digital Resume" الخاصة بك جذابة فكن متأكد أنه سيتم قراءتها من
+                                البداية إلى النهاية.
+
+                            </p>
+                        </ng-container>
+
                     </div>
-                 </blockquote>
-              </div>
-              <div class="blog__text mb-30">
-                <p>Does it feel like your English is improving very slowly?</p>
-                <p> Or do you feel that you are not making much progress at all?</p>
 
-              </div>
-              <div class="blog__link mb-35">
-                 <p>Navigating this stage of English is complicated! With so many resources, lessons, and advice, it can feel overwhelming to know what to focus on and where to start.
-                    At Engflexy, we specialize in helping students just like you to focus on the right things, identify which activities will help you to quickly develop your skills,
-                    and give you direct access to a teacher who can help you to practice, answer your questions, and give you the corrections you need, using our online interactive platform.
-                    <a [routerLink]="'/courses'">engflexy.com/courses</a> </p>
-              </div>
-              <div class="blog__img w-img mb-45" >
-                 <img src="assets/img/blog/big/blog-big-1.jpg" alt="">
-              </div>
-              <div class="blog__text mb-40">
-                 <app-home-three-cta></app-home-three-cta>
-              </div>
-              <div class="blog__line"></div>
-              <div class="blog__meta-3 d-sm-flex justify-content-between align-items-center mb-80">
-                 <div class="blog__tag-2">
-                    <a href="#">Learning & English</a>
-                    <a href="#">Education</a>
-                    <a href="#">App</a>
-                 </div>
-                 <div class="blog__social d-flex align-items-center">
-                    <h4>Share:</h4>
-                    <ul>
-                       <li><a href="https://web.facebook.com/" class="fb" ><i class="social_facebook"></i></a></li>
-                       <li><a href="https://twitter.com" class="tw" ><i class="social_twitter"></i></a></li>
-                       <li><a href="https://www.pinterest.com/" class="pin" ><i class="social_pinterest"></i></a></li>
-                    </ul>
-                 </div>
-              </div>
 
-              <div class="latest-comments mb-95">
-                 <h3>3 Comments</h3>
-                 <ul>
-                    <li *ngIf="selectedBlog.id === 1">
-                       <div class="comments-box grey-bg">
-                          <div class="comments-info d-flex">
-                                <div class="comments-avatar mr-20">
-                                      <img src="assets/img/blog/comments/comment-2.jpg" alt="">
-                                </div>
-                                <div class="avatar-name">
-                                   <h5>Nadia Amanghour</h5>
-                                   <span class="post-meta"> July 14, 2022</span>
-                                </div>
-                          </div>
-                          <div class="comments-text ml-65">
-                             <p>I got the same problem here.Idk,the last three months I started to forget simple words.</p>
-                             <div class="comments-replay">
-                                <a >Reply</a>
-                             </div>
-                          </div>
-                       </div>
-                    </li>
-                    <li *ngIf="selectedBlog.id === 2">
-                       <div class="comments-box grey-bg">
-                          <div class="comments-info d-flex">
-                             <div class="comments-avatar mr-20">
-                                <img src="assets/img/blog/comments/comment-1.jpg" alt="">
-                             </div>
-                             <div class="avatar-name">
-                                <h5>Ahmed Dahir</h5>
-                                <span class="post-meta">April 16, 2022 </span>
-                             </div>
-                          </div>
-                          <div class="comments-text ml-65">
-                             <p  style="direction: rtl">مازال حنا المغاربة لينا الدواء.خدامين معايا شي ناس من بولاند منين كيدويو بالإنجليزية كايحساب ليا بحالا باغيين يتخاصمو معايا😂😂</p>
-                             <div class="comments-replay">
-                                <a >Reply</a>
-                             </div>
-                          </div>
-                       </div>
-                    </li>
-                    <li *ngIf="selectedBlog.id === 3">
-                       <div class="comments-box grey-bg">
-                          <div class="comments-info d-flex">
-                             <div class="comments-avatar mr-20">
-                                <img src="assets/img/blog/comments/comment-3.jpg" alt="">
-                             </div>
-                             <div class="avatar-name">
-                                <h5>Kamal zouani</h5>
-                                <span class="post-meta">April 18, 2022 </span>
-                             </div>
-                          </div>
-                          <div class="comments-text ml-65">
-                             <p style="direction: rtl">هذا هو المشكل ديال المغاربة 🇲🇦 كاملنا عندنا CV واحد،كانبدلو غير التصويرة</p>
-                             <div class="comments-replay">
-                                <a >Reply</a>
-                             </div>
-                          </div>
-                       </div>
-                    </li>
-
-                 </ul>
-              </div>
-              <div class="blog__comment">
-                 <h3>Write a Review</h3>
-                 <form action="#">
-                    <div class="row">
-                       <div class="col-xxl-6 col-xl-6 col-lg-6">
-                          <div class="blog__comment-input">
-                             <input type="text" placeholder="Your Name">
-                          </div>
-                       </div>
-                       <div class="col-xxl-6 col-xl-6 col-lg-6">
-                          <div class="blog__comment-input">
-                             <input type="email" placeholder="Your Email">
-                          </div>
-                       </div>
-                       <div class="col-xxl-12">
-                          <div class="blog__comment-input">
-                             <input type="text" placeholder="Website">
-                          </div>
-                       </div>
-                       <div class="col-xxl-12">
-                          <div class="blog__comment-input">
-                             <textarea placeholder="Enter your comment ..."></textarea>
-                          </div>
-                       </div>
-                       <div class="col-xxl-12">
-                          <div class="blog__comment-agree d-flex align-items-center mb-20">
-                             <input class="e-check-input" type="checkbox" id="e-agree">
-                             <label class="e-check-label" for="e-agree">Save my name, email, and website in this browser for the next time I comment.</label>
-                          </div>
-                       </div>
-                       <div class="col-xxl-12">
-                          <div class="blog__comment-btn">
-                             <button type="submit" class="e-btn">Post Comment</button>
-                          </div>
-                       </div>
+                    <div class="blog__quote grey-bg mb-45 p-relative fix">
+                        <img class="quote" src="assets/img/blog/quote-1.png" alt="">
+                        <blockquote>
+                            <p>{{'Learn how to improve your speaking and fluency with this lesson:' | translate}}</p>
+                            <div class="header__btn header__btn-2 ml-30 d-none d-sm-block">
+                                <a [routerLink]="['/free-trial']" class="e-btn">{{'free' | translate}}</a>
+                            </div>
+                        </blockquote>
                     </div>
-                 </form>
-              </div>
-           </div>
-        </div>
+                    
+                    <div class="blog__text mb-30">
+                        <app-home-three-cta></app-home-three-cta>
+                    </div>
 
-        <div class="col-xxl-4 col-xl-4 col-lg-4">
-           <app-blog-sidebar></app-blog-sidebar>
-        </div>
 
-     </div>
-  </div>
+                    <div *ngIf="selectedBlog?.id === 1" class="blog__text mb-30">
+                        <p>{{'Does it feel like your English is improving very slowly ?' | translate}}</p>
+                        <p> {{'Or do you feel that you are not making much progress at all ?' | translate}}</p>
+                    </div>
+
+
+                    <div *ngIf="selectedBlog?.id === 3" class="blog__link mb-35">
+                        <h3>
+                            6 - الاهتمام بمتطلبات التقديم "Application Requirements"
+                        </h3>
+
+                        <p>
+                            سيطلب منك كل صاحب عمل تقديم معلومات معينة عند التقدم لوظيفة. إذا طلبوا منك إرسال خطاب تغطية
+                            "Cover Letter"، فأرسل بريدًا صوتيًا أو بريدًا إلكترونيًا ... تأكد من القيام بكل ما طلبوه.
+                            إذا لم ترسل جميع المعلومات التي طلبوا منك إرسالها ، فهذا يوضح لهم أنه لا يمكنك اتباع
+                            التعليمات ولن يتم استدعاؤك بالتأكيد لإجراء مقابلة "Interview".
+                            تذكر ، أنهم يبحثون عن أسباب لاستبعاد المتقدمين حيثما أمكنهم ذلك.
+
+                        </p>
+
+                        <h3>
+                            7 - إضفاء الطابع الشخصي على سيرتك الذاتية لكل شركة على حدة
+                        </h3>
+
+                        <p>
+                            تبدأ معظم السير الذاتية بهدف أو بيان حول الغرض من تقديم الطلب. هذا هو أول شيء يقرأه صاحب
+                            العمل. من المهم أن تقوم بتغيير هذا البيان المختصر للوظيفة المحددة التي تتقدم لها وأن تدرج
+                            اسم الشركة.
+                            إذا لم تقم بتعديل هذا البيان ، فسيظهر كما لو كنت تتقدم بطلب واحد للعديد من الشركات المختلفة
+                            وأنك كسول جدًا لتحديثه للوظيفة المحددة التي تتقدم لها.
+
+                        </p>
+
+
+                        <h3>
+                            8 - اظهر شخصيتك-"Show Your Personality"
+
+                        </h3>
+
+                        <p>
+                            يرغب أرباب العمل في رؤية شخصيتك لمساعدتهم على تحديد ما إذا كانوا يعتقدون أنك ستكون مناسبًا
+                            تمامًا لموظفيهم الآخرين والوظيفة التي يتم تعيينك من أجلها.
+                            أعلم أنه قد يكون من الصعب أن تكون على طبيعتك "Be Yourself" عندما تكون متوترًا في مقابلة عمل
+                            ، ولكن من المهم أن تُظهر شخصيتك. إذا كنت تتصرف بطريقة مختلفة عن المعتاد ، فقد يشعر صاحب
+                            العمل أنك تخفي شيئًا ما أو أنه لا يمكنه تحديد ما إذا كنت ستكون الشخص المناسب للوظيفة.
+
+                        </p>
+
+                        <h3>
+                            9: الظهور بمظهر احترافي" Professional"
+                        </h3>
+
+                        <p>
+                            تعامل مع المقابلة التي تجريها عبر الإنترنت (عبر Skype على سبيل المثال) بنفس الطريقة التي
+                            تعامل بها مقابلة شخصية.
+                            ارتدِ ملابس أنيقة و قم بتصفيف شعرك واختر خلفية ذات مظهر احترافي تبدو نظيفة ومرتبة. تأكد من
+                            استخدام ميكروفون أو سماعة رأس للتأكد من أنك ستسمع بوضوح ، واختبر الميكروفون وسماعات الرأس
+                            قبل المكالمة أيضًا.
+
+                        </p>
+
+                        <h3>
+                            10: دروس خاصة لممارسة المقابلات
+                        </h3>
+
+                        <p>
+                            هناك العديد من مدرسي اللغة الإنجليزية الذين يمكنهم مساعدتك في التحضير للمقابلة ومساعدتك على
+                            التدرب على الإجابة على أسئلة مقابلة العمل.المدرسون في
+                            <a class="link d-inline-block" routerLink="/">EngFlexy</a>
+                            لهم خبرة واسعة في المجال لمساعدتك على تقديم إجابات أفضل في مقابلة العمل الخاصة بك ومنحك
+                            الثقة التي تحتاجها للإجابة على الأسئلة الأكثر شيوعًا من خلال دورة خاصة تم تطويرها بواسطة
+                            خبرائنا ، تحقق من ذلك
+                            <a class="link d-inline-block" routerLink="/free-trial">هنا</a>
+
+                        </p>
+                    </div>
+
+                    <div *ngIf="selectedBlog?.id === 1" class="blog__link mb-35">
+                        <p> {{'navigating_blog' | translate}}
+                            <a [routerLink]="'/courses'">{{'free' | translate}}</a>
+                        </p>
+                    </div>
+
+                    <div class="blog__text mb-40">
+                        <app-formlayoutdemo></app-formlayoutdemo>
+                    </div>
+
+                    <div class="blog__img w-img mb-45">
+                        <img src="assets/img/blog/big/blog-big-1.jpg" alt="">
+                    </div>
+
+
+                    <div class="blog__text mb-40">
+                        <app-home-three-cta></app-home-three-cta>
+                    </div>
+
+
+                    <div class="blog__line"></div>
+                    <div class="blog__meta-3 d-sm-flex justify-content-between align-items-center mb-80">
+                        <div class="blog__tag-2">
+                            <a href="#">Learning & English</a>
+                            <a href="#">Education</a>
+                            <a href="#">App</a>
+                        </div>
+                        <div class="blog__social d-flex align-items-center">
+                            <h4>Share:</h4>
+                            <ul>
+                                <li><a href="https://www.facebook.com/engflexy" target="_blank"><i
+                                        class="social_facebook"></i></a></li>
+                                <li><a href="https://www.instagram.com/engflexy/" target="_blank" class="pin"><i
+                                        class="social_instagram"></i></a></li>
+                                <li><a href="https://www.tiktok.com/@engflexy" target="_blank" class="tik">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="tik" style="width: 15px"
+                                         viewBox="0 0 448 512">
+                                        <path d="M448,209.91a210.06,210.06,0,0,1-122.77-39.25V349.38A162.55,162.55,0,1,1,185,188.31V278.2a74.62,74.62,0,1,0,52.23,71.18V0l88,0a121.18,121.18,0,0,0,1.86,22.17h0A122.18,122.18,0,0,0,381,102.39a121.43,121.43,0,0,0,67,20.14Z"/>
+                                    </svg>
+                                </a></li>
+                                <li><a href="https://wa.me/message/7ACDXXHNEB5RA1" target="_blank" class="whtsp">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="whtsp" style="width: 15px"
+                                         viewBox="0 0 448 512">
+                                        <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/>
+                                    </svg>
+                                </a></li>
+
+                            </ul>
+                        </div>
+                    </div>
+
+
+                    <div class="latest-comments mb-95">
+                        <h3>3 Comments</h3>
+                        <ul>
+                            <li>
+                                <div class="comments-box grey-bg">
+                                    <div class="comments-info d-flex">
+                                        <div class="comments-avatar mr-20">
+                                            <img src="assets/img/blog/comments/comment-2.jpg" alt="">
+                                        </div>
+                                        <div class="avatar-name">
+                                            <h5>Nadia</h5>
+                                            <span class="post-meta"> Fe 21, 2023</span>
+                                        </div>
+                                    </div>
+                                    <div class="comments-text ml-65">
+                                        <p>I got the same problem here.Idk,the last three months I started to forget
+                                            simple words.</p>
+                                        <div class="comments-replay">
+                                            <a>Reply</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="comments-box grey-bg">
+                                    <div class="comments-info d-flex">
+                                        <div class="comments-avatar mr-20">
+                                            <img src="assets/img/blog/comments/comment-1.jpg" alt="">
+                                        </div>
+                                        <div class="avatar-name">
+                                            <h5>Ahmed</h5>
+                                            <span class="post-meta">March 01, 2023 </span>
+                                        </div>
+                                    </div>
+                                    <div class="comments-text ml-65">
+                                        <p style="direction: rtl">مازال حنا المغاربة لينا الدواء.خدامين معايا شي ناس من
+                                            بولاند منين كيدويو بالإنجليزية كايحساب ليا بحالا باغيين يتخاصمو
+                                            معايا😂😂</p>
+                                        <div class="comments-replay">
+                                            <a>Reply</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="comments-box grey-bg">
+                                    <div class="comments-info d-flex">
+                                        <div class="comments-avatar mr-20">
+                                            <img src="assets/img/blog/comments/comment-3.jpg" alt="">
+                                        </div>
+                                        <div class="avatar-name">
+                                            <h5>Kamal</h5>
+                                            <span class="post-meta">Feb 18, 2023 </span>
+                                        </div>
+                                    </div>
+                                    <div class="comments-text ml-65">
+                                        <p style="direction: rtl">هذا هو المشكل ديال المغاربة 🇲🇦 كاملنا عندنا CV
+                                            واحد،كانبدلو غير التصويرة</p>
+                                        <div class="comments-replay">
+                                            <a>Reply</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+
+
+                        </ul>
+                    </div>
+                    <div class="blog__comment">
+                        <h3>Write a Review</h3>
+                        <form action="#">
+                            <div class="row">
+                                <div class="col-xxl-6 col-xl-6 col-lg-6">
+                                    <div class="blog__comment-input">
+                                        <input type="text" placeholder="Your Name">
+                                    </div>
+                                </div>
+                                <div class="col-xxl-6 col-xl-6 col-lg-6">
+                                    <div class="blog__comment-input">
+                                        <input type="email" placeholder="Your Email">
+                                    </div>
+                                </div>
+                                <div class="col-xxl-12">
+                                    <div class="blog__comment-input">
+                                        <input type="text" placeholder="Website">
+                                    </div>
+                                </div>
+                                <div class="col-xxl-12">
+                                    <div class="blog__comment-input">
+                                        <textarea placeholder="Enter your comment ..."></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-xxl-12">
+                                    <div class="blog__comment-agree d-flex align-items-center mb-20">
+                                        <input class="e-check-input" type="checkbox" id="e-agree">
+                                        <label class="e-check-label" for="e-agree">Save my name, email, and website in
+                                            this browser for the next time I comment.</label>
+                                    </div>
+                                </div>
+                                <div class="col-xxl-12">
+                                    <div class="blog__comment-btn">
+                                        <button type="submit" class="e-btn">Post Comment</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xxl-4 col-xl-4 col-lg-4">
+                <app-blog-sidebar></app-blog-sidebar>
+            </div>
+
+        </div>
+    </div>
 </section>

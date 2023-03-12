@@ -242,7 +242,7 @@ import {PublicFaqComponent} from './view/public/home-principale/FAQ/public-faq/p
                         component: PublicFaqComponent
                     },
                     {
-                        path: 'blog-details',
+                        path: 'blog-details/:id',
                         component: BlogDetailsMainComponent
                     },
                     {path: 'public/connectAsInvited', component: ConnectAsInvitedComponent},

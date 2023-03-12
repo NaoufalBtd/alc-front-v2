@@ -525,19 +525,17 @@
   "Email does not found! Are you sure you are already a member?": "Email does not found! Are you sure you are already a member?",
   "Your account not found.": "Your account not found.",
   "Your account has been validated.": "Your account has been validated.",
-
-
   "What happens in a live class?": "Que se passe-t-il dans un cours en direct ?",
   "Join online classes with students from around the world for real-time speaking, listening and reading practice with an expert EngFlexy Academy teacher. We encourage you to interact with the materials, your teacher and your fellow students. Towards the end of class, the teacher will recap, share all the learning materials and ensure everybody has understood the lesson. For more information about the courses:": "Rejoignez des cours en ligne avec des étudiants du monde entier pour des exercices d'expression orale, d'écoute et de lecture en temps réel avec un enseignant expert de l'EngFlexy Academy. Nous vous encourageons à interagir avec le matériel, votre professeur et vos camarades. Vers la fin du cours, l'enseignant récapitule, partage tout le matériel d'apprentissage et s'assure que tout le monde a compris la leçon. Pour plus d'informations sur les  ",
   "What technology do I need to join English Online?": "De quelle technologie ai-je besoin pour rejoindre English Online ?",
   "To access your student portal": "Pour accéder à votre portail étudiant",
-  "login":"login",
-  "and attend our live online classes, you will need:":"et assister à nos cours en ligne en direct, vous aurez besoin de :",
-  "a desktop/laptop computer (preferred) or a mobile device (tablet, smartphone)":"un ordinateur de bureau/portable (de préférence) ou un appareil mobile (tablette, smartphone)",
-  "a reliable Internet connection":"une connexion Internet fiable",
-  "a headset or headphones with a built-in microphone":"un casque ou des écouteurs avec un microphone intégré",
-  "a working webcam":"une webcam fonctionnelle",
-  "If you want to join online classes, please also note: ":"Si vous souhaitez rejoindre des cours en ligne, veuillez également noter: ",
+  "login": "login",
+  "and attend our live online classes, you will need:": "et assister à nos cours en ligne en direct, vous aurez besoin de :",
+  "a desktop/laptop computer (preferred) or a mobile device (tablet, smartphone)": "un ordinateur de bureau/portable (de préférence) ou un appareil mobile (tablette, smartphone)",
+  "a reliable Internet connection": "une connexion Internet fiable",
+  "a headset or headphones with a built-in microphone": "un casque ou des écouteurs avec un microphone intégré",
+  "a working webcam": "une webcam fonctionnelle",
+  "If you want to join online classes, please also note: ": "Si vous souhaitez rejoindre des cours en ligne, veuillez également noter: ",
   "English Online classes take place using the Google Meet.": "Les cours d'anglais en ligne ont lieu à l'aide de Google Meet.",
   "How do I check my level?": "Comment vérifier mon niveau ?",
   "You will be asked to select your English level when you log in to your account for the first time.": "Il vous sera demandé de sélectionner votre niveau d'anglais lorsque vous vous connecterez à votre compte pour la première fois.",
@@ -555,5 +553,6 @@
   "The possibility of repeating the lesson and exercises several times": "La possibilité de répéter la leçon et les exercices plusieurs fois",
   "Free dictionary for life": "Dictionnaire gratuit pour la vie",
   "Two classes per week": "2 cours par semaine",
-  "Get certified": "Obtenir une certification"
+  "Get certified": "Obtenir une certification",
+  "Learn how to improve your speaking and fluency with this lesson:": "Apprenez à améliorer votre expression orale et votre aisance grâce à ce cours"
 }
