@@ -168,3 +168,15 @@
   font-weight: 500;
   padding: 20px 0;
 }
+
+.form-group {
+  select {
+    background: #f0f0f0;
+    border: none;
+    border-radius: 20px;
+    box-shadow: none;
+    padding: 0 20px 0 45px;
+    height: 40px;
+    transition: all 0.3s ease 0s;
+  }
+}

@@ -130,6 +130,9 @@ card css
 .silver {
   background: #8e9aaf;
 }
+.premium {
+  background: #8e9aaf;
+}
 
 .gold {
   background: #f78e3c;
@@ -140,6 +143,10 @@ card css
 }
 
 .btn-silver {
+  background: #9ca1ab;
+}
+
+.btn-premium {
   background: #9ca1ab;
 }
 
@@ -170,12 +177,18 @@ card css
   border: 1px solid white;
 }
 
+.btn-premium:hover,
+.btn-premium:focus {
+  background: #8e9aaf;
+  border: 1px solid white;
+}
+
 
 p.top {
   font-size: 14px; //course__thumb w-img p-relative fix
 }
 
-p.top::first-letter{
+p.top::first-letter {
   text-transform: uppercase;
   font-weight: bold;
 }
@@ -228,13 +241,93 @@ h2 {
   color: #D1E2FF;
 }
 
-.search-bar{
-  background:#263238 ;
+.search-bar {
+  background: #263238;
   border-radius: 5px;
 }
 
 
 /**
-toggle button
+plan-card
  */
 
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+}
+
+.card_box {
+  width: auto;
+  height: auto;
+  border-radius: 20px;
+  background: linear-gradient(170deg, rgba(58, 56, 56, 0.623) 0%, rgb(31, 31, 31) 100%);
+  position: relative;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.55);
+  cursor: pointer;
+  transition: all .3s;
+}
+
+.card_box:hover {
+  transform: scale(0.9);
+}
+
+.card_box span {
+  position: absolute;
+  overflow: hidden;
+  width: 150px;
+  height: 150px;
+  top: -10px;
+  left: -10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card_box span::before {
+  content: attr(data-before-content);
+  position: absolute;
+  width: 150%;
+  height: 40px;
+  background-image: linear-gradient(45deg, #ff6547 0%, #ffb144 51%, #ff7053 100%);
+  transform: rotate(-45deg) translateY(-20px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.23);
+}
+
+.card_box span::after {
+  content: '';
+  position: absolute;
+  width: 10px;
+  bottom: 0;
+  left: 0;
+  height: 10px;
+  z-index: -1;
+  box-shadow: 140px -140px #cc3f47;
+  background-image: linear-gradient(45deg, #FF512F 0%, #F09819 51%, #FF512F 100%);
+}
+
+.detail__title {
+  color: white;
+  text-align: center;
+  font-size: 30px;
+  padding: 20px 0;
+  font-family: 'Inter UI';
+  font-weight: bold;
+  letter-spacing: 4px;
+}
+
+.detail__sous__title {
+  color: white;
+  text-align: center;
+  letter-spacing: 2px;
+  line-height: 40px;
+  padding: 10px 40px;
+}

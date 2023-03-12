@@ -1,0 +1,22 @@
+<div class="container">
+    <h1>Weekly Calendar</h1>
+    <table>
+        <thead>
+        <tr>
+            <th class="time-column"></th>
+            <th *ngFor="let day of days">{{ day }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Time slots from 00:00 to 23:00 -->
+        <tr *ngFor="let hour of hours" [ngClass]="{ 'current-time': isCurrentTime(hour) }">
+            <td class="time-column">{{ hour }}:00</td>
+            <td #element
+                [class.selected]="isSelected(hour, day)"
+                [class.disabled]="isDisabled(hour, day)"
+                (click)="addEvent(hour, day , element.classList)" *ngFor="let day of days"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+

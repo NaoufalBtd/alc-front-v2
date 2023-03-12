@@ -9,7 +9,6 @@ import {Quiz} from '../model/quiz.model';
 import {Etudiant} from '../model/etudiant.model';
 import {EtudiantClassRoom} from '../model/etudiant-class-room.model';
 import {QuizClassRoom} from '../model/quiz-class-room.model';
-import {ClassRoom} from '../model/class-room.model';
 import {Section} from '../model/section.model';
 import {environment} from '../../../environments/environment';
 
@@ -142,35 +141,6 @@ export class QuizEtudiantService {
         this._selectedQuizClassroom = value;
     }
 
-    get selectedClassroom(): EtudiantClassRoom {
-        if (this._selectedClassroom == null) {
-            this._selectedClassroom = new EtudiantClassRoom();
-        }
-        return this._selectedClassroom;
-    }
-
-    set selectedClassroom(value: EtudiantClassRoom) {
-        this._selectedClassroom = value;
-    }
-
-    get viewDialogQuiz(): boolean {
-        return this._viewDialogQuiz;
-    }
-
-    set viewDialogQuiz(value: boolean) {
-        this._viewDialogQuiz = value;
-    }
-
-    get quizsClassroom(): Array<QuizClassRoom> {
-        if (this._quizsClassroom == null) {
-            this._quizsClassroom = new Array<QuizClassRoom>();
-        }
-        return this._quizsClassroom;
-    }
-
-    set quizsClassroom(value: Array<QuizClassRoom>) {
-        this._quizsClassroom = value;
-    }
 
     get etudiantsClassroom(): Array<EtudiantClassRoom> {
         if (this._etudiantsClassroom == null) {
@@ -227,35 +197,6 @@ export class QuizEtudiantService {
         this._myAnswer = value;
     }
 
-    get reponseEtudiant(): ReponseEtudiant {
-        if (this._reponseEtudiant == null) {
-            this._reponseEtudiant = new ReponseEtudiant();
-        }
-        return this._reponseEtudiant;
-    }
-
-    set reponseEtudiant(value: ReponseEtudiant) {
-        this._reponseEtudiant = value;
-    }
-
-    get numCorrectAnswers(): number {
-        return this._numCorrectAnswers;
-    }
-
-    set numCorrectAnswers(value: number) {
-        this._numCorrectAnswers = value;
-    }
-
-    get correctAnswers(): Array<Reponse> {
-        if (this._correctAnswers == null) {
-            this._correctAnswers = new Array<Reponse>();
-        }
-        return this._correctAnswers;
-    }
-
-    set correctAnswers(value: Array<Reponse>) {
-        this._correctAnswers = value;
-    }
 
     get quizsEtudiant(): Array<QuizEtudiant> {
         if (this._quizsEtudiant == null) {
@@ -287,13 +228,6 @@ export class QuizEtudiantService {
         this._numQuestion = value;
     }
 
-    get numReponses(): number {
-        return this._numReponses;
-    }
-
-    set numReponses(value: number) {
-        this._numReponses = value;
-    }
 
     get reponses(): Array<Reponse> {
         if (this._reponses == null) {
@@ -369,24 +303,17 @@ export class QuizEtudiantService {
     private _reponses: Array<Reponse>;
     private _quizsEtudiant: Array<QuizEtudiant>;
     private _quizEtudiant: QuizEtudiant;
-    private _correctAnswers: Array<Reponse>;
-    private _reponseEtudiant: ReponseEtudiant;
     private _reponsesEtudiant: Array<ReponseEtudiant>;
     private _quizEtudiantList: QuizEtudiant;
     private _etudiantsClassroom: Array<EtudiantClassRoom>;
-    private _quizsClassroom: Array<QuizClassRoom>;
     private _selectedQuizClassroom: QuizClassRoom;
-    private _selectedClassroom: EtudiantClassRoom;
     private _reponsesEtudiantList: Array<ReponseEtudiant>;
     private _questionView: Question;
     private _reponsesView: Array<Reponse>;
     private _reponsesEtudiantView: Array<ReponseEtudiant>;
     private _correctAnswerView: Array<Reponse>;
-    private _viewDialogQuiz: boolean;
     private _selectedQuiz: Quiz = new Quiz();
     private _myAnswer: Reponse;
-    private _numReponses = 0;
-    private _numCorrectAnswers = 0;
     private _numQuestion: number;
     private _passerQuiz: string;
     private _quizView: boolean;
@@ -394,21 +321,9 @@ export class QuizEtudiantService {
 
     public urlStudent = environment.etudiantUrl;
 
-    public findEtudiant(): Observable<Etudiant> {
-        return this.http.get<Etudiant>(this.adminUrl + 'etudiant/ref/e1');
-    }
 
     public findQuizByReference(ref: string): Observable<Quiz> {
         return this.http.get<Quiz>(this.adminUrl + 'quiz/ref/' + ref);
-    }
-
-    public findFirstQuestion(): Observable<Question> {
-        return this.http.get<Question>(this.adminUrl + 'question/numero/1');
-    }
-
-    /////////////////////
-    public findQuestion(quiz: string, numero: number): Observable<Question> {
-        return this.http.get<Question>(this.adminUrl + 'question/quiz/ref/' + quiz + '/numero/' + numero);
     }
 
     public findAllQuestions(quiz: string): Observable<Array<Question>> {
@@ -439,11 +354,7 @@ export class QuizEtudiantService {
         return this.http.delete<QuizEtudiant>(this.adminUrl + 'quizEtudiant/id/' + quizEtudiant.id);
     }
 
-    public findMyAnswerEtudiant(quizEtudiant: QuizEtudiant, question: Question): Observable<Array<ReponseEtudiant>> {
-        return this.http.get<Array<ReponseEtudiant>>(this.adminUrl + 'reponseEtudiant/creteria/quizEtudiant/id/' + quizEtudiant.id + '/question/id/' + question.id);
-    }
 
-///////////////////
     public findAllQuizEtudiant(): Observable<Array<QuizEtudiant>> {
         return this.http.get<Array<QuizEtudiant>>(this.adminUrl + 'quizEtudiant/');
     }
@@ -456,10 +367,6 @@ export class QuizEtudiantService {
         return this.http.get<Quiz>(this.adminUrl + 'quiz/section/id/' + section.id);
     }
 
-    public insertQuizEtudiant(): Observable<QuizEtudiant> {
-        return this.http.post<QuizEtudiant>(this.adminUrl + 'quizEtudiant/', this.quizEtudiant);
-    }
-
     public insertReponseEtudiant(reponseEtudiant: ReponseEtudiant): Observable<ReponseEtudiant> {
         return this.http.post<ReponseEtudiant>(this.adminUrl + 'reponseEtudiant/', reponseEtudiant);
     }
@@ -468,24 +375,9 @@ export class QuizEtudiantService {
         return this.http.get<Array<ReponseEtudiant>>(this.adminUrl + 'reponseEtudiant/');
     }
 
-    public findFirstReponseEtudiant(): Observable<ReponseEtudiant> {
-        return this.http.get<ReponseEtudiant>(this.adminUrl + 'reponseEtudiant/ref/re1');
-    }
 
     public findMyAnswer(id: number): Observable<Reponse> {
         return this.http.get<Reponse>(this.adminUrl + 'reponse/id/' + id);
-    }
-
-    public updateQuizEtudiant(): Observable<QuizEtudiant> {
-        return this.http.put<QuizEtudiant>(this.adminUrl + 'quizEtudiant/', this.quizEtudiant);
-    }
-
-    public findEtudiantClassRoom(etudiant: Etudiant): Observable<Array<EtudiantClassRoom>> {
-        return this.http.get<Array<EtudiantClassRoom>>(this.adminUrl + 'etudiant-classRoom/etudiant/ref/' + etudiant.ref);
-    }
-
-    public findQuizClassRoom(classroom: ClassRoom): Observable<Array<QuizClassRoom>> {
-        return this.http.get<Array<QuizClassRoom>>(this.adminUrl + 'quiz-classRoom/id/' + classroom.id);
     }
 
 
@@ -501,28 +393,11 @@ export class QuizEtudiantService {
         return this.http.get<Array<ReponseEtudiant>>(this.adminUrl + 'reponseEtudiant/quizEtudiant/ref/' + quizEtudiant.ref);
     }
 
-
-    public findReponseEtudiantByQuizEtudiantId(quizEtudiant: QuizEtudiant): Observable<Array<ReponseEtudiant>> {
-        return this.http.get<Array<ReponseEtudiant>>(this.profUrl + 'reponseEtudiant/quizEtudiant/id/' + quizEtudiant.id);
-    }
-
     public findMyReponseEtudiant(quizEtudiant: QuizEtudiant, reponse: Reponse): Observable<ReponseEtudiant> {
         // tslint:disable-next-line:max-line-length
         return this.http.get<ReponseEtudiant>(this.adminUrl + 'reponseEtudiant/critere/quizEtudiant/{refQuizEtudiant}/reponse/{refReponse}?refQuizEtudiant=' + quizEtudiant.ref + '&refReponse=' + reponse.ref);
     }
 
-    public findQuestionByNumero(numero: number): Observable<Question> {
-        return this.http.get<Question>(this.adminUrl + 'question/numero/' + numero);
-    }
-
-    public findReponseByNumero(numero: number): Observable<Array<Reponse>> {
-        return this.http.get<Array<Reponse>>(this.adminUrl + 'reponse/question/numero/' + numero);
-    }
-
-    public findReponseEtudiantByNumero(quizEtudiant: QuizEtudiant, numero: number): Observable<Array<ReponseEtudiant>> {
-        // tslint:disable-next-line:max-line-length
-        return this.http.get<Array<ReponseEtudiant>>(this.adminUrl + 'reponseEtudiant/creteria/quizEtudiant/' + quizEtudiant.ref + '/question/' + numero);
-    }
 
     public findCorrectAnswersByNumero(numero: number): Observable<Array<Reponse>> {
         return this.http.get<Array<Reponse>>(this.adminUrl + 'reponse/criteria/numero/' + numero);
@@ -564,7 +439,6 @@ export class QuizEtudiantService {
     save(quizStudent: QuizEtudiant): Observable<QuizEtudiant> {
         return this.http.post<QuizEtudiant>(this.urlStudent + 'quizEtudiant/', quizStudent);
     }
-
 
     public findAllQuizByEtudiantId(id: number): Observable<Array<QuizEtudiant>> {
         return this.http.get<Array<QuizEtudiant>>(this.profUrl + 'quizEtudiant/etudiant/id/' + id);

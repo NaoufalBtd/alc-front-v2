@@ -84,6 +84,14 @@ export class WebSocketService {
     ) {
     }
 
+    set numberResponseOfQuizQuestion(value: number) {
+        this.learnService.numberResponseOfQuizQuestion = value;
+    }
+
+    get numberResponseOfQuizQuestion(): number {
+        return this.learnService.numberResponseOfQuizQuestion;
+    }
+
     get selectedQuiz(): Quiz {
         return this.quizEtudiantService.selectedQuiz;
     }
@@ -253,6 +261,8 @@ export class WebSocketService {
             } else if (data.type === 'FOLLOW-QUIZ') {
                 this.receiveFollowQuiz(data);
             } else if (data?.type === 'QUIZ') {
+                // count number of question answered by student
+                this.numberResponseOfQuizQuestion += 1;
                 this.receiveQuiz(data);
             } else if (data.user === 'FINISH_QUIZ' && data.type === 'FINISH_QUIZ') {
                 this.receiveFinishQuiz();

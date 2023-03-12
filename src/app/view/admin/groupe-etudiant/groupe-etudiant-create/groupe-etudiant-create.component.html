@@ -17,6 +17,7 @@
                 <strong class="form-label">Select teacher</strong>
                 <div class="contact__form-input">
                     <select class="form-select" [(ngModel)]="selected.prof"
+                            [compareWith]="compareObjects"
                             aria-label="Select level">
                         <option [ngValue]="null" selected>Select teacher</option>
                         <option *ngFor="let prof of  profs" [ngValue]="prof">{{prof?.nom}}</option>
@@ -32,7 +33,10 @@
             <div class="col-xxl-6 col-xl-6 col-md-6">
                 <strong class="form-label">Select group option</strong>
                 <div class="contact__form-input">
-                    <select class="form-select" [(ngModel)]="selected.groupeEtude" aria-label="Select study group">
+                    <select class="form-select" [(ngModel)]="selected.groupeEtude"
+                            [compareWith]="compareObjects"
+                            data-live-search="true"
+                            aria-label="Select study group">
                         <option [ngValue]="null" selected>Select group option</option>
                         <option *ngFor="let group of groupeEtudeList" [ngValue]="group">{{group?.libelle}}</option>
                     </select>
@@ -48,6 +52,7 @@
                 <strong class="form-label">Select level</strong>
                 <div class="contact__form-input">
                     <select class="form-select" [(ngModel)]="selected.parcours"
+                            [compareWith]="compareObjects"
                             (ngModelChange)="filterStudentByLevels()"
                             aria-label="Select level">
                         <option [ngValue]="null" selected>Select level</option>
@@ -85,7 +90,9 @@
             <div class="col-md-10">
                 <strong class="form-label">Select student</strong>
                 <div class="contact__form-input">
-                    <select class="form-select" [(ngModel)]="student" aria-label="Add student">
+                    <select class="form-select" [(ngModel)]="student"
+                            [compareWith]="compareObjects"
+                            aria-label="Add student">
                         <option [ngValue]="null" selected>Select student</option>
                         <option *ngFor="let student of students" [ngValue]="student">
                             {{student?.nom}} ({{student?.username}})

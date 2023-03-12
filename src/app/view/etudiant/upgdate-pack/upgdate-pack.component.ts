@@ -21,6 +21,7 @@ export class UpgdatePackComponent implements OnInit {
     priceList: Array<Price> = new Array<Price>();
     levels: Array<Parcours> = new Array<Parcours>();
     private priceSelected: Price;
+    showSchedule: boolean;
 
     constructor(public translate: TranslateService,
                 private router: Router,
@@ -42,6 +43,10 @@ export class UpgdatePackComponent implements OnInit {
     ngOnInit(): void {
         this.getPrices();
         this.levelSerivce.findAllLevels().subscribe(d => this.levels = d);
+        // const timer = setInterval(() => {
+        //     clearInterval(timer);
+        //     this.showSchedule = true;
+        // }, 3000);
     }
 
     private getPrices() {

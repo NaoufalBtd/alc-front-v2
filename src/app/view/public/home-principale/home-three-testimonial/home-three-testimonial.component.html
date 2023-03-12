@@ -1,65 +1,52 @@
-<section class="testimonial__area pt-50 pb-15"
-         [ngStyle]="{    background: 'linear-gradient(125deg, rgba(38,50,56,1) 0%, rgba(43,56,63,0.9867297260701156) 51%, rgba(255,114,94,1) 82%, rgba(255,114,94,1) 100%)'}">
+<section class="testimonial__area pt-50 pb-15 grey-bg">
     <div class="container">
         <div class="row">
             <div [style.direction]="translate.currentLang === 'ar' ? 'rtl': 'ltr'"
                  class="col-xxl-12 text-center col-xl-12 col-lg-12 col-md-12">
-                <h2 class="section__title text-white">
-                    <span class="yellow-bg"> {{'Our Mission'| translate}} <img src="assets/img/shape/yellow-bg-2.png"
-                                                                               alt="">  </span> <br>
+                <h2 class="section__title text-black">
+                    <span class="yellow-bg"> {{'Our Mission'| translate}}
+                        <img src="assets/img/shape/yellow-bg-2.png" alt="">
+                    </span>
+                    <br>
                 </h2>
-                <p class="sub__section__title">{{'mission text' | translate}}</p>
+                <p class="sub__section__title text-black">{{'mission text' | translate}}</p>
             </div>
-            <!--                <div class="testimonial__slider-3">-->
-            <!--                    <h3 class="testimonial__title">{{'Community Feedback' | translate}}</h3>-->
-            <!--                    <div class="testimonial__slider-wrapper swiper-container testimonial-text mb-35">-->
 
-            <!--                        <swiper-->
-            <!--                                [loop]="true"-->
-            <!--                                [shortSwipes]="true"-->
-            <!--                                [autoplay]="{ delay: 15000}"-->
-            <!--                        >-->
-
-            <!--                            <ng-template *ngFor="let testimonial of sliderData" swiperSlide>-->
-            <!--                                <div class="testimonial__item-3">-->
-            <!--                                    <p *ngIf="testimonial?.direction === 'rtl'" style="direction: rtl">-->
-            <!--                                        “{{testimonial?.comment}}”</p>-->
-            <!--                                    <p *ngIf="testimonial?.direction === 'ltr'" style="direction: ltr">-->
-            <!--                                        “{{testimonial?.comment}}”</p>-->
-
-            <!--                                    <div class="testimonial__info-2">-->
-            <!--                                        <h4>{{testimonial?.name}} , </h4>-->
-            <!--                                        <span> {{testimonial?.work}}</span>-->
-            <!--                                    </div>-->
-
-            <!--                                    <div class="testimonial__nav-thumb ">-->
-            <!--                                        <img src="{{testimonial.img}}" alt="">-->
-            <!--                                    </div>-->
-            <!--                                </div>-->
-            <!--                            </ng-template>-->
-
-            <!--                        </swiper>-->
-            <!--                    </div>-->
-            <!--                </div>-->
-            <!--            </div>-->
-
-            <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12">
-                <p-galleria [(value)]="images" [responsiveOptions]="responsiveOptions"
-                            [circular]="true"
-                            [autoPlay]="true"
-                            [transitionInterval]="10000"
-                            [numVisible]="5"
-                            [showThumbnails]="false" [showIndicators]="true">
-                    <ng-template pTemplate="item" let-item>
-                        <img [src]="item.previewImageSrc" style="width: 100%; display: block;"/>
-                    </ng-template>
-                    <ng-template pTemplate="thumbnail" let-item>
-                        <div class="p-grid p-nogutter p-justify-center">
-                            <img [src]="item.previewImageSrc" style="display: block;"/>
+            <div class="col-xxl-1 col-xl-1 col-lg-1 col-md-12"></div>
+            <div class="col-xxl-10 col-xl-10 col-lg-10 col-md-12">
+                <div class="macbook">
+                    <div class="topbar">
+                        <div class="link-bar">
+                            <i class="fas fa-lock"></i>
+                            <a href="#">www.engflexy.com</a>
                         </div>
-                    </ng-template>
-                </p-galleria>
+                        <div class="buttons">
+                            <div class="button close"></div>
+                            <div class="button minimize"></div>
+                            <div class="button zoom"></div>
+                        </div>
+                    </div>
+                    <div class="content">
+                        <p-galleria [(value)]="images" [responsiveOptions]="responsiveOptions"
+                                    [circular]="true"
+                                    [autoPlay]="true"
+                                    [transitionInterval]="3000"
+                                    [numVisible]="5"
+                                    [showThumbnails]="false" [showIndicators]="true">
+                            <ng-template pTemplate="item" let-item>
+                                <img [src]="item.previewImageSrc" style="width: 100%; display: block;"/>
+                            </ng-template>
+                            <ng-template pTemplate="thumbnail" let-item>
+                                <div class="p-grid p-nogutter p-justify-center">
+                                    <img [src]="item.previewImageSrc" style="display: block;"/>
+                                </div>
+                            </ng-template>
+                        </p-galleria>
+                    </div>
+                </div>
+
             </div>
+            <div class="col-xxl-1 col-xl-1 col-lg-1 col-md-12"></div>
         </div>
     </div>
 </section>

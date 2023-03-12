@@ -108,6 +108,7 @@ import {PaimentOkComponent} from './view/public/home-principale/paiment/paiment-
 import {PaimentFailComponent} from './view/public/home-principale/paiment/paiment-fail/paiment-fail.component';
 import {PaimentBackComponent} from './view/public/home-principale/paiment/paiment-back/paiment-back.component';
 import {UpgdatePackComponent} from './view/etudiant/upgdate-pack/upgdate-pack.component';
+import {PublicFaqComponent} from './view/public/home-principale/FAQ/public-faq/public-faq.component';
 
 
 @NgModule({
@@ -237,7 +238,11 @@ import {UpgdatePackComponent} from './view/etudiant/upgdate-pack/upgdate-pack.co
                         component: BlogComponent
                     },
                     {
-                        path: 'blog-details',
+                        path: 'faqs',
+                        component: PublicFaqComponent
+                    },
+                    {
+                        path: 'blog-details/:id',
                         component: BlogDetailsMainComponent
                     },
                     {path: 'public/connectAsInvited', component: ConnectAsInvitedComponent},
@@ -245,6 +250,9 @@ import {UpgdatePackComponent} from './view/etudiant/upgdate-pack/upgdate-pack.co
                     {path: 'resetPassword', component: ResetPasswordComponent},
                     {path: 'public/teacher', component: BecomeTeacherComponent},
                     {path: 'courses', component: CoursesPageComponent},
+                    {path: 'courses/:group', component: CoursesPageComponent},
+                    {path: 'courses/:group/:price', component: CoursesPageComponent},
+                    {path: 'courses/:group/:price/:level', component: CoursesPageComponent},
                     {path: 'Privacy', component: PrivacyPolicyComponent},
                     {path: 'user-agreement', component: TermOfServiceComponent},
                     {path: 'course-details/:id', component: CourseDetailsComponent},

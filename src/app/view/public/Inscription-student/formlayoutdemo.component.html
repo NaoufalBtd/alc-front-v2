@@ -6,9 +6,14 @@
                 <h4><i class="fa fa-solid fa-gift"></i>{{'gift' | translate}}</h4>
             </div>
             <div class="col-md-offset-3 col-md-6">
-                <div class="textInfo"> <i style="color: blue; font-size: 25px;" class="fa fa-solid fa-hand-pointer"></i>  {{"We'll demonstrate our platform" | translate}}</div>
-                <div class="textInfo"><i style="color: yellow; font-size: 25px;"  class="fa fa-solid fa-star-shooting"></i>  {{'We will assess your English level and also give you an opportunity to practice your English' | translate}} </div>
-                <div class="textInfo"><i style="color: red; font-size: 25px;" class="fa fa-solid fa-heart"></i>{{'Recommend a study plan' | translate}}</div>
+                <div class="textInfo"><i style="color: blue; font-size: 25px;"
+                                         class="fa fa-solid fa-hand-pointer"></i>  {{"We'll demonstrate our platform" | translate}}
+                </div>
+                <div class="textInfo"><i style="color: yellow; font-size: 25px;"
+                                         class="fa fa-solid fa-star-shooting"></i>  {{'We will assess your English level and also give you an opportunity to practice your English' | translate}}
+                </div>
+                <div class="textInfo"><i style="color: red; font-size: 25px;"
+                                         class="fa fa-solid fa-heart"></i>{{'Recommend a study plan' | translate}}</div>
             </div>
             <div class="col-md-offset-3 col-md-6">
                 <form class="form-horizontal">
@@ -18,20 +23,41 @@
                         >
                         <i class="fa fa-user"></i>
                     </div>
+
+
                     <div class="form-group">
-                        <input type="email" [(ngModel)]="selected.username" name="username" class="form-control" id="inputEmail3"
+                        <input type="email" [(ngModel)]="selected.username" name="username" class="form-control"
+                               id="inputEmail3"
                                placeholder="{{'Email *' | translate}}">
                         <i class="fa fa-solid fa-envelope"></i>
                     </div>
+
+
                     <div class="form-group">
-                        <input type="tel" [(ngModel)]="selected.numero"  name="numero" class="form-control" id="Phone"
+                        <input type="tel" [(ngModel)]="selected.numero" name="numero" class="form-control" id="Phone"
                                placeholder="{{'Phone *' | translate}}">
                         <i class=" fa fa-solid fa-phone"></i>
                     </div>
+
+                    <div class="form-group">
+                        <i class="fas fa-sort-amount-up"></i>
+                        <select (ngModelChange)="chooseLevel($event)" [(ngModel)]="selectedLevel" name="level"
+                                class="form-select">
+                            <option [ngValue]="null">{{'choose your level' | translate}}</option>
+                            <option [ngValue]="'1'">مبتدئ</option>
+                            <option [ngValue]="'5095'">ما قبل المتوسط</option>
+                            <option [ngValue]="'13000'">متوسط</option>
+                            <option [ngValue]="'25000'">ما بعد المتوسط</option>
+                            <option [ngValue]="'31050'">متقم</option>
+                        </select>
+                    </div>
+
+
                     <div class="form-group">
                         <button [disabled]="isDisabled()"
                                 (click)="createEtudiant()"
-                                style=" width: 100%;" type="submit" class="btn btn-default">{{'try' | translate}}</button>
+                                style=" width: 100%;" type="submit"
+                                class="btn btn-default">{{'try' | translate}}</button>
                     </div>
                 </form>
             </div>
@@ -43,9 +69,9 @@
     <ng-template let-message pTemplate="message">
         <div class="flex flex-column" style="flex: 1; width: 500px">
             <div class="text-center">
-                <i class="fas fa-badge-check"  style="font-size: 3rem"></i>
+                <i class="fas fa-badge-check" style="font-size: 3rem"></i>
                 <h4>{{message.summary}}</h4>
-                <p style="text-align: center;margin-bottom: 15px;">{{message.detail}}</p>
+                <p class="message__detail">{{message.detail}}</p>
             </div>
             <div class="p-grid p-fluid">
                 <div class="p-col-6">
@@ -53,7 +79,8 @@
                 </div>
 
                 <div class="p-col-6">
-                    <button type="button" pButton iconPos="right" icon="pi pi-envelope" (click)="openGmail()" label="Open Gmail" class="p-button-secondary"></button>
+                    <button type="button" pButton iconPos="right" icon="pi pi-envelope" (click)="openGmail()"
+                            label="Open Gmail" class="p-button-secondary"></button>
                 </div>
             </div>
         </div>

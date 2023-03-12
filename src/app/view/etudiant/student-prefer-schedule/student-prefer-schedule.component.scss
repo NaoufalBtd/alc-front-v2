@@ -1,0 +1,43 @@
+/* Style the table and its cells */
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  border: 1px solid grey;
+  padding: 8px;
+  text-align: center;
+}
+
+th {
+  background-color: #263238;
+  color: #c8c8c8;
+}
+
+/* Style the time column */
+.time-column {
+  width: 60px;
+  font-weight: bold;
+}
+
+/* Style the current time slot */
+.current-time {
+  background-color: #ddd;
+}
+
+td {
+  cursor: pointer;
+}
+
+.disabled {
+  cursor: not-allowed;
+  background-color: #263238;
+  border-color: #263238;
+}
+
+.selected {
+  color: white;
+  background: #ff725e;
+  border: 1px solid #ff725e;
+}

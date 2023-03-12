@@ -774,9 +774,12 @@ export class SimulateSectionService {
                 }
                 this.vocabularySection = this.sectionStandard.filter(s =>
                     s.categorieSection?.libelle?.toUpperCase()?.includes('VOCABULARY'))[0];
-
-                this.getToKnowSection = this.sectionStandard.filter(s =>
-                    s.categorieSection?.libelle?.toUpperCase()?.includes('Get to know'))[0];
+                this.getToKnowSection = this.itemssection2.filter(s =>
+                    s.categorieSection?.libelle?.toUpperCase()?.includes('GET TO KNOW'))[0];
+                if (this.getToKnowSection === undefined || this.getToKnowSection === null) {
+                    this.getToKnowSection = this.itemssection2.filter(s =>
+                        s.categorieSection?.libelle?.toUpperCase()?.includes('STUDY THE INFORMATION'))[0];
+                }
                 this.displayData(this.selectedsection);
             }
         );

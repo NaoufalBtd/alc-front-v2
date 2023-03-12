@@ -1,0 +1,31 @@
+
+.blog__wrapper {
+  p {
+    display: inline-block;
+    text-align: initial;
+    font-size: 25px;
+    line-height: 45px;
+    color: #53545b;
+    margin-bottom: 27px;
+    letter-spacing: 1px;
+  }
+
+  li {
+    display: inline-block;
+    text-align: initial;
+    font-size: 23px;
+    line-height: 40px;
+    color: black;
+    letter-spacing: 1px;
+    list-style: inside;
+  }
+
+  .link {
+    color: blue;
+  }
+
+  .link:hover {
+    text-decoration: underline;
+    font-weight: bold;
+  }
+}

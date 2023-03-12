@@ -19,7 +19,6 @@ export class PackStudentService {
     private _packstudentgroupeList: Array<PackStudent>;
     private adminUrl = environment.adminUrl;
     private _packs: Array<PackStudent> = new Array<PackStudent>();
-    private _selectedBlog: any;
     private _selectedOption: boolean = false;
 
     constructor(private http: HttpClient, private messageService: MessageService) {
@@ -34,13 +33,7 @@ export class PackStudentService {
         this._selectedOption = value;
     }
 
-    get selectedBlog(): any {
-        return this._selectedBlog;
-    }
 
-    set selectedBlog(value: any) {
-        this._selectedBlog = value;
-    }
 
     get selectedCourse(): PackStudent {
         return this._selectedCourse;

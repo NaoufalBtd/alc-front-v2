@@ -28,12 +28,12 @@
             <span class="p-float-label">
 
             <input *ngIf="reponse.answer === reponse?.reponse?.lib" disabled
-                   id="inputCorrectAnswer" inputId="inputDashedBorder" type="text"
+                   id="inputCorrectAnswer" type="text"
                    [(ngModel)]="reponse.answer"
                    class="p-inputtext-sm " pInputText/>
 
             <input *ngIf="reponse?.answer !== reponse?.reponse?.lib" disabled
-                   id="inputFalseAnswer" inputId="inputDashedBorder" type="text"
+                   id="inputFalseAnswer" type="text"
                    [(ngModel)]="reponse.answer"
                    class="p-inputtext-sm " pInputText/>
 
@@ -104,12 +104,12 @@
             <span class="p-float-label">
 
             <input *ngIf="reponse?.answer === reponse?.reponse?.lib" disabled
-                   id="inputCorrectAnswer" inputId="inputDashedBorder" type="text"
+                   id="inputCorrectAnswer" type="text"
                    [(ngModel)]="reponse.answer"
                    class="p-inputtext-sm " pInputText/>
 
             <input *ngIf="reponse?.answer !== reponse?.reponse?.lib" disabled
-                   id="inputFalseAnswer" inputId="inputDashedBorder" type="text"
+                   id="inputFalseAnswer" type="text"
                    [(ngModel)]="reponse.answer"
                    class="p-inputtext-sm " pInputText/>
 
@@ -135,12 +135,12 @@
             <span class="p-float-label">
 
             <input *ngIf="reponse?.answer === reponse?.reponse?.lib" disabled
-                   id="inputCorrectAnswer" inputId="inputDashedBorder" type="text"
+                   id="inputCorrectAnswer" type="text"
                    [(ngModel)]="reponse.answer"
                    class="p-inputtext-sm " pInputText/>
 
             <input *ngIf="reponse?.answer !== reponse?.reponse?.lib" disabled
-                   id="inputFalseAnswer" inputId="inputDashedBorder" type="text"
+                   id="inputFalseAnswer" type="text"
                    [(ngModel)]="reponse.answer"
                    class="p-inputtext-sm " pInputText/>
 
@@ -223,10 +223,10 @@
         </div>
 
         <div *ngIf="showFinishButton" class="p-col-6" style="text-align: center">
-            <h4 style="display:inline-block; margin-right: 7px">{{'Note final:'}} </h4>
+            <h4 style="display:inline-block; margin-right: 7px">Note final</h4>
             <h5 style="display:inline-block">{{ quizStudent?.resultat}}</h5>
-
         </div>
+
         <div *ngIf="showNextButton" class="p-col-6"></div>
 
         <div class="p-col-3">
@@ -237,11 +237,6 @@
                     [label]="'Next'" (click)="nextQuestionFct()"
                     class="p-button-rounded p-button-secondary">
             </button>
-            <!--            <button *ngIf="showFinishButton" style="float:right" pButton-->
-            <!--                    pRipple-->
-            <!--                    type="button" icon="pi pi-save" iconPos="right"-->
-            <!--                    label="Finish"-->
-            <!--                    class="p-button-rounded p-button-success"></button>-->
         </div>
     </div>
 </div>
