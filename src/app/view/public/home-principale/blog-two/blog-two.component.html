@@ -22,7 +22,7 @@
                             <a href="#" [class]="blog.color">{{blog.category}}</a>
                         </div>
                         <h3 [style.direction]="translate.currentLang === 'ar' ? 'rtl': 'ltr'" class="blog__title">
-                            <a (click)="toggleBlogDetails(blog)">{{blog.title}}</a>
+                            <a (click)="toggleBlogDetails(blog)">{{blog.title | translate}}</a>
                         </h3>
 
                         <div class="blog__meta d-flex align-items-center justify-content-between">
