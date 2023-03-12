@@ -25,7 +25,6 @@ export class SignInAreaComponent implements OnInit {
                 public translate: TranslateService,
                 private userService: UserService,
                 private service: LoginService, private router: Router) {
-
     }
 
 
@@ -49,12 +48,29 @@ export class SignInAreaComponent implements OnInit {
                     this.showLoading = false;
                 },
                 (errorResponse: HttpErrorResponse) => {
-                    this.messageService.add({
-                        severity: 'error',
-                        detail: 'bad credited for username ',
-                        life: 4000
-                    });
-                    console.log(errorResponse);
+                    console.log(errorResponse.message.indexOf('password'));
+                    if (errorResponse.error.message.indexOf('password') != -1) {
+                        this.messageService.add({
+                            severity: 'error',
+                            detail: 'It seems that you forget the password, you\'ve redirected to reset password page',
+                            life: 5000
+                        });
+                        this.router.navigateByUrl('resetPassword');
+                    } else if (errorResponse.error.message.indexOf('Lock') != -1) {
+                        this.messageService.add({
+                            summary: 'Blocked Try us soon',
+                            severity: 'error',
+                            detail: 'We are sorry it seems that you passed the authorized number of tries. \n Try us soon',
+                            life: 5000
+                        });
+                    } else {
+                        this.messageService.add({
+                            severity: 'error',
+                            detail: 'bad credited for username ',
+                            life: 4000
+                        });
+                        console.log(errorResponse);
+                    }
                 }
             )
         );
@@ -62,5 +78,5 @@ export class SignInAreaComponent implements OnInit {
 
     ngOnInit(): void {
     }
-    
+
 }

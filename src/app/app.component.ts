@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit} from '@angular/core';
 import {MessageService, PrimeNGConfig} from 'primeng/api';
 import {TranslateService} from '@ngx-translate/core';
 import {Router} from '@angular/router';
@@ -12,7 +12,8 @@ export class AppComponent implements OnInit {
     constructor(private primengConfig: PrimeNGConfig,
                 private router: Router,
                 private messageService: MessageService,
-                public translate: TranslateService) {
+                public translate: TranslateService,
+                private elRef: ElementRef) {
 
         // const lang = window.navigator.language;
         // if (lang?.includes('ar')) {
@@ -31,6 +32,7 @@ export class AppComponent implements OnInit {
         {code: 'fr', name: 'French', nativeName: 'français'},
     ];
 
+    myDiv: HTMLDivElement = this.elRef.nativeElement.querySelector('body');
 
     lightMenu = false;
 
