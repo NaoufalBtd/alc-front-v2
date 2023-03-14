@@ -54,52 +54,52 @@ export class HomeThreeTestimonialComponent implements OnInit {
     ];
     images: any = [
         {
-            previewImageSrc: 'assets/img/galeria/1.png',
+            previewImageSrc: 'assets/img/galeria/1.webp',
         },
         {
-            previewImageSrc: 'assets/img/galeria/1-1.png',
+            previewImageSrc: 'assets/img/galeria/1-1.webp',
         },
         {
-            previewImageSrc: 'assets/img/galeria/4.png',
+            previewImageSrc: 'assets/img/galeria/4.webp',
         },
         {
-            previewImageSrc: 'assets/img/galeria/5.png',
+            previewImageSrc: 'assets/img/galeria/5.webp',
         },
         {
-            previewImageSrc: 'assets/img/galeria/6.png',
+            previewImageSrc: 'assets/img/galeria/6.webp',
         },
         {
-            previewImageSrc: 'assets/img/galeria/7.png',
+            previewImageSrc: 'assets/img/galeria/7.webp',
         },
         {
-            previewImageSrc: 'assets/img/galeria/8.png',
+            previewImageSrc: 'assets/img/galeria/8.webp',
         },
         {
-            previewImageSrc: 'assets/img/galeria/9.png',
+            previewImageSrc: 'assets/img/galeria/9.webp',
         },
         {
-            previewImageSrc: 'assets/img/galeria/10.png',
+            previewImageSrc: 'assets/img/galeria/10.webp',
         },
         {
-            previewImageSrc: 'assets/img/galeria/11.png',
+            previewImageSrc: 'assets/img/galeria/11.webp',
         },
         {
-            previewImageSrc: 'assets/img/galeria/12.png',
+            previewImageSrc: 'assets/img/galeria/12.webp',
         },
         {
-            previewImageSrc: 'assets/img/galeria/13.png',
+            previewImageSrc: 'assets/img/galeria/13.webp',
         },
         {
-            previewImageSrc: 'assets/img/galeria/2.png',
+            previewImageSrc: 'assets/img/galeria/2.webp',
         },
         {
-            previewImageSrc: 'assets/img/galeria/3.png',
+            previewImageSrc: 'assets/img/galeria/3.webp',
         },
         {
-            previewImageSrc: 'assets/img/galeria/14.png',
+            previewImageSrc: 'assets/img/galeria/14.webp',
         },
         {
-            previewImageSrc: 'assets/img/galeria/15.png',
+            previewImageSrc: 'assets/img/galeria/15.webp',
         }
     ];
 
