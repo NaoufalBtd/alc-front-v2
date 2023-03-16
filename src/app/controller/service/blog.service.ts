@@ -10,7 +10,7 @@ export class BlogService {
     private _blogItems = [
         {
             id: 1,
-            blogImg: 'assets/img/blog/blog-1.jpg',
+            blogImg: 'assets/img/blog/blog-1.webp',
             title: 'Taking Breaks & Avoiding Language Loss',
             authorImg: 'assets/images/kamal-zouani.webp',
             authorName: 'Kamal Zouani',
@@ -20,7 +20,7 @@ export class BlogService {
         },
         {
             id: 2,
-            blogImg: 'assets/img/blog/blog-2.jpg',
+            blogImg: 'assets/img/blog/blog-2.webp',
             title: 'Improve English Pronunciation & Your Mindset with Kamal Zouani',
             authorImg: 'assets/images/kamal-zouani.webp',
             authorName: 'Kamal Zouani',
@@ -30,7 +30,7 @@ export class BlogService {
         },
         {
             id: 3,
-            blogImg: 'assets/img/blog/blog-2.jpg',
+            blogImg: 'assets/img/blog/blog-2.webp',
             title: '10 tips to succeed in a job interview in English',
             authorImg: 'assets/images/kamal-zouani.webp',
             authorName: 'Kamal Zouani',

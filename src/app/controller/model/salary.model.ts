@@ -13,4 +13,12 @@ export class Salary {
     public totalBonusWorkload: number;
     public prof = new Prof();
     public payer: boolean;
+
+    constructor() {
+        this.totalPayment = 0;
+        this.totalBonus = 0;
+        this.totalBonusClassAverage = 0;
+        this.totalBonusWorkload = 0;
+        this.nbrSessionMensuel = 0;
+    }
 }

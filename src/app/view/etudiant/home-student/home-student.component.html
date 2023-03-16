@@ -1,190 +1,189 @@
-<div *ngIf="inscreption?.etatInscription?.libelle === 'Validated'" class="mycard">
-    <div class="p-grid">
-        <div class="p-col-6 Myclasses">
-            <h1 class="title">{{'My classes'}}</h1>
+<!--<div *ngIf="inscreption?.etatInscription?.libelle === 'Validated'" class="mycard">-->
+<!--    <div class="p-grid">-->
+<!--        <div class="p-1 col-12 col-md-6">-->
+<!--            <h1 class="title">{{'My classes'}}</h1>-->
+<!--            <div *ngFor="let schedule of scheduleProfs" class="p-grid lessonContainer">-->
+<!--                <div style="text-align: start" class="p-col-2">-->
+<!--                    <img class="imgLesson" src="/assets/icons/icon-livres.png" alt=""></div>-->
+<!--                <div class="p-col-7 courseName">-->
+<!--                    <p class="lessonName">{{schedule?.cours?.libelle}}</p>-->
+<!--                    <p class="lessonDate">{{schedule?.startTime | date: 'EEEE, d MMMM yyyy'}}-->
+<!--                        (-->
+<!--                        {{getHours(schedule?.startTime)}}:{{getMinute(schedule?.startTime)}}  - -->
+<!--                        {{getHours(schedule?.endTime)}}:{{getMinute(schedule?.endTime)}})-->
+<!--                    </p>-->
+<!--                </div>-->
+<!--                <div class="p-col-3">-->
+<!--                    <button *ngIf="isLessonCompleted(schedule.cours) === 2" pButton pRipple type="button"-->
+<!--                            (click)="openSession(schedule, 'LESSON')"-->
+<!--                            [label]="'REVIEW COURSE'"-->
+<!--                            class="p-button-success"></button>-->
+
+<!--                    <button disabled *ngIf="isLessonCompleted(schedule.cours) === 1 && schedule.id !== nextLesson.id"-->
+<!--                            pButton pRipple type="button"-->
+<!--                            icon="pi pi-lock"-->
+<!--                            iconPos="left"-->
+<!--                            class="p-button-success"></button>-->
 
 
-            <div *ngFor="let schedule of scheduleProfs" class="p-grid lessonContainer">
-                <div style="text-align: start" class="p-col-2">
-                    <img class="imgLesson" src="/assets/icons/icon-livres.png" alt=""></div>
-                <div class="p-col-7 courseName">
-                    <p class="lessonName">{{schedule?.cours?.libelle}}</p>
-                    <p class="lessonDate">{{schedule?.startTime | date: 'EEEE, d MMMM yyyy'}}
-                        (
-                        {{getHours(schedule?.startTime)}}:{{getMinute(schedule?.startTime)}}  -
-                        {{getHours(schedule?.endTime)}}:{{getMinute(schedule?.endTime)}})
-                    </p>
-                </div>
-                <div class="p-col-3">
-                    <button *ngIf="isLessonCompleted(schedule.cours) === 2" pButton pRipple type="button"
-                            (click)="openSession(schedule, 'LESSON')"
-                            [label]="'REVIEW COURSE'"
-                            class="p-button-success"></button>
-
-                    <button disabled *ngIf="isLessonCompleted(schedule.cours) === 1 && schedule.id !== nextLesson.id"
-                            pButton pRipple type="button"
-                            icon="pi pi-lock"
-                            iconPos="left"
-                            class="p-button-success"></button>
+<!--                    <button *ngIf="isLessonCompleted(schedule.cours) === 1 && schedule.id === nextLesson.id && !showJoinNow"-->
+<!--                            pButton pRipple type="button"-->
+<!--                            [disabled]="isTimeForLesson()"-->
+<!--                            [label]="getRestOfTime"-->
+<!--                            class="p-button-success"></button>-->
 
 
-                    <button *ngIf="isLessonCompleted(schedule.cours) === 1 && schedule.id === nextLesson.id && !showJoinNow"
-                            pButton pRipple type="button"
-                            [disabled]="isTimeForLesson()"
-                            [label]="getRestOfTime"
-                            class="p-button-success"></button>
+<!--                    <button *ngIf="showJoinNow && isLessonCompleted(schedule.cours) === 1 && schedule.id === nextLesson.id"-->
+<!--                            pButton pRipple type="button"-->
+<!--                            (click)="joinSession(schedule)"-->
+<!--                            [label]="'Join now'"-->
+<!--                            class="p-button-success joinButton"></button>-->
 
 
-                    <button *ngIf="showJoinNow && isLessonCompleted(schedule.cours) === 1 && schedule.id === nextLesson.id"
-                            pButton pRipple type="button"
-                            (click)="joinSession(schedule)"
-                            [label]="'Join now'"
-                            class="p-button-success joinButton"></button>
+<!--                    <button *ngIf="isLessonCompleted(schedule.cours) === 3" pButton pRipple type="button"-->
+<!--                            (click)="openSession(schedule, 'HOMWORK')"-->
+<!--                            [label]="'HOME WORK'"-->
+
+<!--                            class="p-button-success"></button>-->
 
 
-                    <button *ngIf="isLessonCompleted(schedule.cours) === 3" pButton pRipple type="button"
-                            (click)="openSession(schedule, 'HOMWORK')"
-                            [label]="'HOME WORK'"
-
-                            class="p-button-success"></button>
+<!--                </div>-->
+<!--            </div>-->
 
 
-                </div>
-            </div>
+<!--        </div>-->
+
+<!--        <div class="py-1 px-2 col-12 col-md-3 Statements">-->
+<!--            <h4 style="text-align: start;margin: 0 0 4px 0;font-size: x-large;"-->
+<!--                class="title">{{'Statements'}}</h4>-->
+<!--            <div class="p-grid statementsGrid">-->
+<!--                <div style="text-align: center" class="p-col-12">-->
+<!--                    <img src="/assets/icons/icon-cup.gif" width="100px" alt="">-->
+<!--                </div>-->
+<!--                <div class="p-col-12 goals">{{'Goals'}}</div>-->
+<!--                <div class="p-col-12">-->
+<!--                    <p-progressBar [showValue]="true"-->
+<!--                                   [value]="getProgressValue().toFixed(.2)"></p-progressBar>-->
+<!--                </div>-->
+<!--            </div>-->
 
 
-        </div>
-
-        <div class="p-col-3 Statements">
-            <h4 style="text-align: start;margin: 0 0 4px 0;font-size: x-large;"
-                class="title">{{'Statements'}}</h4>
-            <div class="p-grid statementsGrid">
-                <div style="text-align: center" class="p-col-12">
-                    <img src="/assets/icons/icon-cup.gif" width="100px" alt="">
-                </div>
-                <div class="p-col-12 goals">{{'Goals'}}</div>
-                <div class="p-col-12">
-                    <p-progressBar [showValue]="true"
-                                   [value]="getProgressValue().toFixed(.2)"></p-progressBar>
-                </div>
-            </div>
+<!--            <div class="p-grid statementsGrid">-->
+<!--                <div class="p-col-6 statementsGrid-6 ">-->
+<!--                    <img class="imgCourse" src="/assets/icons/icon-allCourse.png" alt="">-->
+<!--                </div>-->
+<!--                <div class="p-col-6 statementsGrid-6">-->
+<!--                    <p class="NumberOfCourses">{{this.scheduleProfs?.length}}</p>-->
+<!--                    <p class="lessonDate"> {{'all lessons'}}</p>-->
+<!--                </div>-->
 
 
-            <div class="p-grid statementsGrid">
-                <div class="p-col-6 statementsGrid-6 ">
-                    <img class="imgCourse" src="/assets/icons/icon-allCourse.png" alt="">
-                </div>
-                <div class="p-col-6 statementsGrid-6">
-                    <p class="NumberOfCourses">{{this.scheduleProfs?.length}}</p>
-                    <p class="lessonDate"> {{'all lessons'}}</p>
-                </div>
+<!--                <div class="p-col-6">-->
+<!--                    <img class="imgCourse" src="/assets/icons/icons-ouvrir.png" alt="">-->
+<!--                </div>-->
+<!--                <div class="p-col-6">-->
+<!--                    <p class="NumberOfCourses">{{lessonFinished?.length}}</p>-->
+<!--                    <p class="lessonDate"> {{'Completed Lessons'}}</p>-->
+<!--                </div>-->
 
 
-                <div class="p-col-6">
-                    <img class="imgCourse" src="/assets/icons/icons-ouvrir.png" alt="">
-                </div>
-                <div class="p-col-6">
-                    <p class="NumberOfCourses">{{lessonFinished?.length}}</p>
-                    <p class="lessonDate"> {{'Completed Lessons'}}</p>
-                </div>
+<!--                <div class="p-col-6">-->
+<!--                    <img class="imgCourse" src="/assets/icons/icon-cadenas.png" alt="">-->
+<!--                </div>-->
+<!--                <div class="p-col-6">-->
+<!--                    <p class="NumberOfCourses">{{this.scheduleProfs?.length - lessonFinished?.length}}</p>-->
+<!--                    <p class="lessonDate"> {{'Lessons coming'}}</p>-->
+<!--                </div>-->
+<!--            </div>-->
+
+<!--        </div>-->
 
 
-                <div class="p-col-6">
-                    <img class="imgCourse" src="/assets/icons/icon-cadenas.png" alt="">
-                </div>
-                <div class="p-col-6">
-                    <p class="NumberOfCourses">{{this.scheduleProfs?.length - lessonFinished?.length}}</p>
-                    <p class="lessonDate"> {{'Lessons coming'}}</p>
-                </div>
-            </div>
-
-        </div>
-
-
-        <div *ngIf="scheduleProfs?.length > 0"
-             style="background: #cac3ff57; border-left: 2px solid #b5a2ed;  border-radius: 0;"
-             class="p-col-2 Nextlesson">
-            <p class="lessonDate"> {{'Welcome back'}} {{student?.nom}}
-                ,  {{'ready for your next lesson ?'}}
-                <img style="    width: 15px; margin: 4px 0 -2px 0;"
-                     src="/assets/icons/icon-fire.png" alt=""></p>
-            <div class="p-grid lessonActuel">
-                <div style="text-align: center" class="p-col-12">
-                    <p style="font-size: small; color: white; margin-bottom: -10px;" class="lessonDate">
-                        {{getDay()}}
-                    </p>
-                </div>
-                <div class="p-col-12 nextLessonTitle">
-                    {{nextLesson?.cours?.libelle}}
-                </div>
-                <div class="p-col-12">
-                    <button *ngIf="showJoinNow" pButton pRipple type="button" [label]="'Join now'"
-                            (click)="joinSession(nextLesson)"
-                            class="p-button-help joinButton"></button>
+<!--        <div *ngIf="scheduleProfs?.length > 0"-->
+<!--             style="background: #cac3ff57; border-left: 2px solid #b5a2ed;  border-radius: 10px;"-->
+<!--             class="p-2 col-12 col-md-3 Nextlesson">-->
+<!--            <p class="lessonDate"> {{'Welcome back'}} {{student?.nom}}-->
+<!--                ,  {{'ready for your next lesson ?'}}-->
+<!--                <img style="    width: 15px; margin: 4px 0 -2px 0;"-->
+<!--                     src="/assets/icons/icon-fire.png" alt=""></p>-->
+<!--            <div class="p-grid lessonActuel">-->
+<!--                <div style="text-align: center" class="p-col-12">-->
+<!--                    <p style="font-size: small; color: white; margin-bottom: -10px;" class="lessonDate">-->
+<!--                        {{getDay()}}-->
+<!--                    </p>-->
+<!--                </div>-->
+<!--                <div class="p-col-12 nextLessonTitle">-->
+<!--                    {{nextLesson?.cours?.libelle}}-->
+<!--                </div>-->
+<!--                <div class="p-col-12">-->
+<!--                    <button *ngIf="showJoinNow" pButton pRipple type="button" [label]="'Join now'"-->
+<!--                            (click)="joinSession(nextLesson)"-->
+<!--                            class="p-button-help joinButton"></button>-->
 
 
-                    <button *ngIf="!showJoinNow" pButton pRipple type="button"
-                            [label]="getRestOfTime"
-                            class="p-button-help"></button>
-                </div>
+<!--                    <button *ngIf="!showJoinNow" pButton pRipple type="button"-->
+<!--                            [label]="getRestOfTime"-->
+<!--                            class="p-button-help"></button>-->
+<!--                </div>-->
 
-            </div>
-
-
-            <p style=" border-top: 2px solid #e0d6fe;  padding-top: 8px;    color: black;font-weight: bold;font-size: small;"
-               class="lessonDate">
-                <img style="width:20px;margin: -10px 3px -4px 0;"
-                     src="/assets/icons/icon-prof.png" alt="">
-                {{'Teacher information'}}
-            </p>
-
-            <div class="p-grid profGroup">
-                <div class="p-col-12 "><img class="profImg" [src]="nextLesson?.prof?.image" alt=""></div>
-                <div class="p-col-12 profName">{{nextLesson?.prof?.nom }}</div>
-                <div class="p-col-12 p-grid profSkype">
-                    <div class="p-col-2 "><img src="/assets/icons/icon-skype-64.png" width="25px"
-                                              alt="">
-                    </div>
-
-                    <div class="p-col-10">
-                        <a target="_blank" [href]="nextLesson?.prof?.skype">https://join.skype..</a>
-                    </div>
+<!--            </div>-->
 
 
-                </div>
-            </div>
+<!--            <p style=" border-top: 2px solid #e0d6fe;  padding-top: 8px;    color: black;font-weight: bold;font-size: small;"-->
+<!--               class="lessonDate">-->
+<!--                <img style="width:20px;margin: -10px 3px -4px 0;"-->
+<!--                     src="/assets/icons/icon-prof.png" alt="">-->
+<!--                {{'Teacher information'}}-->
+<!--            </p>-->
 
-            <p style=" border-top: 2px solid #e0d6fe;  padding-top: 8px;    color: black;font-weight: bold;font-size: small;"
-               class="lessonDate">
-                <img style="width:20px;margin: -10px 3px -4px 0;"
-                     src="/assets/icons/icon-groupe-d'utilisateurs.png" alt="">
-                {{'Group members'}}
-            </p>
+<!--            <div class="p-grid profGroup">-->
+<!--                <div class="p-col-12 "><img class="profImg" [src]="nextLesson?.prof?.image" alt=""></div>-->
+<!--                <div class="p-col-12 profName">{{nextLesson?.prof?.nom }}</div>-->
+<!--                <div class="p-col-12 p-grid profSkype">-->
+<!--                    <div class="p-col-2 "><img src="/assets/icons/icon-skype-64.png" width="25px"-->
+<!--                                              alt="">-->
+<!--                    </div>-->
 
-            <div class="p-grid profGroup">
-                <div class="flex align-items-center">
-                    <p-chip *ngFor="let std of studentList"
-                            [style]="{
-                                display: 'inline-flex',
-                                width: '100%',
-                                background: 'white',
-                                height: '40px',
-                                marginBottom: '6px',
-                                borderRadius: '1px',
-                                borderTop: '1px solid rgb(223 214 254)'
-                            }"
-                            [label]="std?.nom" [image]="std?.image" styleClass="mr-2"></p-chip>
+<!--                    <div class="p-col-10">-->
+<!--                        <a target="_blank" [href]="nextLesson?.prof?.skype">https://join.skype..</a>-->
+<!--                    </div>-->
 
 
-                </div>
-            </div>
+<!--                </div>-->
+<!--            </div>-->
 
-        </div>
-    </div>
-</div>
+<!--            <p style=" border-top: 2px solid #e0d6fe;  padding-top: 8px;    color: black;font-weight: bold;font-size: small;"-->
+<!--               class="lessonDate">-->
+<!--                <img style="width:20px;margin: -10px 3px -4px 0;"-->
+<!--                     src="/assets/icons/icon-groupe-d'utilisateurs.png" alt="">-->
+<!--                {{'Group members'}}-->
+<!--            </p>-->
+
+<!--            <div class="p-grid profGroup">-->
+<!--                <div class="flex align-items-center">-->
+<!--                    <p-chip *ngFor="let std of studentList"-->
+<!--                            [style]="{-->
+<!--                                display: 'inline-flex',-->
+<!--                                width: '100%',-->
+<!--                                background: 'white',-->
+<!--                                height: '40px',-->
+<!--                                marginBottom: '6px',-->
+<!--                                borderRadius: '1px',-->
+<!--                                borderTop: '1px solid rgb(223 214 254)'-->
+<!--                            }"-->
+<!--                            [label]="std?.nom" [image]="std?.image" styleClass="mr-2"></p-chip>-->
+
+
+<!--                </div>-->
+<!--            </div>-->
+
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
 
 
 <div *ngIf="inscreption?.etatInscription?.libelle !== 'Validated'" class="mycard">
     <app-home-free-trial></app-home-free-trial>
 </div>
+<app-home-free-trial></app-home-free-trial>
 

@@ -176,7 +176,9 @@ export class HomeStudentComponent implements OnInit {
 
 
     getProgressValue(): number {
-        return (this.lessonFinished.length / this.scheduleProfs.length) * 100;
+        let progress = (this.lessonFinished.length / this.scheduleProfs.length) * 100;
+        if (progress > 0) return progress;
+        return 0;
     }
 
     getDay(): string {

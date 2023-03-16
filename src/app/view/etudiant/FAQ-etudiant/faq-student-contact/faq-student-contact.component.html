@@ -1,11 +1,12 @@
-<p-dialog [(visible)]="viewDialogFaqEtudiantContact" [modal]="true" [style]="{width: '800px', height: '400px'}"
+<p-dialog [(visible)]="viewDialogFaqEtudiantContact" [modal]="true"
+          [style]="{width: '800px', height: '400px'}"
           styleClass="p-fluid">
     <ng-template pTemplate="header">
         <h3>Question</h3>
     </ng-template>
     <ng-template pTemplate="content">
-        <p-tabMenu [activeItem]="menu[0]" [model]="menu" id="menu"></p-tabMenu>
-        <div class="box" id="new-question">
+        <p-tabMenu [activeItem]="menu[0]" [model]="menu" id="menu" style="overflow: hidden"></p-tabMenu>
+        <div class="box px-2" id="new-question">
             <p-dropdown [(ngModel)]="selectedType" [options]="types" optionLabel="libelle"></p-dropdown>
             <textarea [(ngModel)]="question" cols="30" pInputTextarea placeholder="Your Question" rows="5"></textarea>
             <button (click)="save()" class="p-button-rounded p-button-success p-mr-2" label="Send" pButton
@@ -27,7 +28,8 @@
     <ng-template pTemplate="footer">
         <button (click)="hideViewDialog()" class="p-button-text" icon="pi pi-times" label="Fermer" pButton
                 pRipple></button>
-        <button (click)="hideViewDialog()" [routerLink]="['/etudiant/faq-student-contact-list']" class="p-button-text" icon="pi pi-times" label="View My Question"
+        <button (click)="hideViewDialog()" [routerLink]="['/etudiant/faq-student-contact-list']" class="p-button-text"
+                icon="pi pi-times" label="View My Question"
                 pButton pRipple></button>
     </ng-template>
 </p-dialog>

@@ -35,14 +35,14 @@
     <h6 style="color: darkred; font-size: 20px;  text-align: center"> {{'Password must have at least 8 characters' | translate}}</h6>
     <br>
     <div class="bio-row">
-        <label> {{'New Password' | translate}}</label>
-        <input type="password" style="margin-left: 5px;" pInputText [(ngModel)]="newPassword">
+        <label for="float-input"> {{'New Password' | translate}}</label>
+        <input id="float-input" type="password" style="margin-left: 5px;" pInputText [(ngModel)]="newPassword">
     </div>
     <div class="bio-row">
-        <label> {{'Repeat password' | translate}}</label>
-        <input type="password" style="margin-left: 5px;" pInputText [(ngModel)]="newPasswordRepated">
+        <label for="float-input"> {{'Repeat password' | translate}}</label>
+        <input id="float-input" type="password" style="margin-left: 5px;" pInputText [(ngModel)]="newPasswordRepated">
     </div>
-    <button style="float: right" [disabled]="this.newPassword !== this.newPasswordRepated"
+    <button style="float: right" [disabled]="this.newPassword.length<8 || this.newPassword !== this.newPasswordRepated"
             pButton pRipple type="button " icon="pi pi-save " [label]="'Save changes' | translate"
             (click)="changePassword()" class="p-button-danger"></button>
 
@@ -50,7 +50,7 @@
 
 
 <div class="p-grid profileCon">
-    <div class="p-col-2 p-shadow-6 rightMenu">
+    <div class="col-12 col-md-3 col-lg-2 p-shadow-6 rightMenu mb-5" dir="auto">
         <div class=" p-grid imgContainer">
             <div style="margin-left: 17%" class="p-col-10">
                 <img [src]="user?.image" class="profileImg" alt="Profile">
@@ -70,14 +70,12 @@
              class=" menuElement p-grid"> {{'Security' | translate}}
         </div>
 
-
-        <div [style.background]="(selectedElement === 'INS_TAB')? '#d2d8fd': 'white'"
-             [style.borderLeft]="(selectedElement === 'INS_TAB')? '5px solid #ff725e': 'none'"
-             [style.color]="(selectedElement === 'INS_TAB')? 'black': '#666666'"
-             (click)="showMenuElemnt('INS_TAB')"
+        <div [style.background]="(selectedElement === 'INSCRIPTION')? '#d2d8fd': 'white'"
+             [style.borderLeft]="(selectedElement === 'INSCRIPTION')? '5px solid #ff725e': 'none'"
+             [style.color]="(selectedElement === 'INSCRIPTION')? 'black': '#666666'"
+             (click)="showMenuElemnt('INSCRIPTION')"
              class=" menuElement p-grid"> {{'Registration details' | translate}}
         </div>
-
 
         <div [style.background]="(selectedElement === 'PASS')? '#d2d8fd': 'white'"
              [style.borderLeft]="(selectedElement === 'PASS')? '5px solid #ff725e': 'none'"
@@ -88,7 +86,7 @@
 
 
     </div>
-    <div *ngIf="selectedElement === 'PROFILE'" class="p-col-10">
+    <div *ngIf="selectedElement === 'PROFILE'" class="col-12 col-md-9 col-lg-10" dir="auto">
         <div class="p-grid">
             <div class="p-col-10 grandTitle"> {{'Profile' | translate}}</div>
             <div class="p-col-10 smallTitle"> {{'Manage your public profile and private information.' | translate}}</div>
@@ -98,16 +96,16 @@
                 <div class="p-grid p-fluid">
 
 
-                    <div class="p-col-6">
-                        <h5 style="color: #ff725e"> {{'fullname' | translate}}</h5>
+                    <div class="col-12 col-md-6 p-3">
+                        <h5 style="color: #ff725e"> {{'Full name' | translate}}</h5>
                         <div class="p-inputgroup">
                             <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
                             <input class="user-input-group" [(ngModel)]="user.nom" name="prenom" type="text"
-                                   pInputText [placeholder]="'fullname' | translate">
+                                   pInputText [placeholder]="'Full name' | translate">
                         </div>
                     </div>
 
-                    <div class="p-col-6">
+                    <div class="col-12 col-md-6 p-3">
                         <h5 style="color: #ff725e"> {{'email' | translate}}</h5>
                         <div class="p-inputgroup">
                             <span class="p-inputgroup-addon"><i class="pi pi-envelope"></i></span>
@@ -116,7 +114,7 @@
                         </div>
                     </div>
 
-                    <div class="p-col-6">
+                    <div class="col-12 col-md-6 p-3">
                         <h5 style="color: #ff725e"> {{'Country' | translate}}</h5>
                         <div class="p-inputgroup">
                             <span class="p-inputgroup-addon"><i class="pi pi-map-marker"></i></span>
@@ -125,7 +123,7 @@
                         </div>
                     </div>
 
-                    <div class="p-col-6">
+                    <div class="col-12 col-md-6 p-3">
                         <h5 style="color: #ff725e"> {{'City' | translate}}</h5>
                         <div class="p-inputgroup">
                             <span class="p-inputgroup-addon"><i class="pi pi-map-marker"></i></span>
@@ -134,7 +132,7 @@
                         </div>
                     </div>
 
-                    <div class="p-col-6">
+                    <div class="col-12 col-md-6 p-3">
                         <h5 style="color: #ff725e"> {{'Address' | translate}}</h5>
                         <div class="p-inputgroup">
                             <span class="p-inputgroup-addon"><i class="pi pi-home"></i></span>
@@ -143,7 +141,7 @@
                         </div>
                     </div>
 
-                    <div class="p-col-6">
+                    <div class="col-12 col-md-6 p-3">
                         <h5 style="color: #ff725e"> {{'Age' | translate}}</h5>
                         <div class="p-inputgroup">
                             <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
@@ -152,7 +150,7 @@
                         </div>
                     </div>
 
-                    <div class="p-col-6">
+                    <div class="col-12 col-md-6 p-3">
                         <h5 style="color: #ff725e"> {{'Skype' | translate}}</h5>
                         <div class="p-inputgroup">
                             <span class="p-inputgroup-addon"><i class="pi pi-video"></i></span>
@@ -161,7 +159,7 @@
                         </div>
                     </div>
 
-                    <div class="p-col-6">
+                    <div class="col-12 col-md-6 p-3">
                         <h5 style="color: #ff725e"> {{'Phone' | translate}}</h5>
                         <div class="p-inputgroup">
                             <span class="p-inputgroup-addon"><i class="pi pi-phone"></i></span>
@@ -177,13 +175,13 @@
             <div class="p-col-4"></div>
 
 
-            <div class="p-col-4">
+            <div class="col-12 col-md-6">
                 <button pButton pRipple (click)="updateUser(user)"
                         [label]="'Save changes' | translate" icon="pi pi-check" iconPos="left"
                         class="Startnow"></button>
             </div>
 
-            <div class="p-col-4"></div>
+            <div class="col-0 col-md-3"></div>
 
         </div>
     </div>
@@ -196,7 +194,7 @@
             <div class="p-col-10 grandTitle"> {{'Security' | translate}}</div>
             <div class="p-col-10 smallTitle"> {{'Manage your password and 2-step verification preferences' | translate}}</div>
 
-            <div class="p-col-7">
+            <div class="col-12 col-md-9 col-lg-2">
                 <div class="p-grid p-fluid">
 
 
@@ -230,10 +228,9 @@
                                    [placeholder]="'Repeat password' | translate">
                         </div>
                     </div>
-                    <div class="p-col-3"></div>
-                    <div class="p-col-5">
+                    <div class="p-col-4"></div>
+                    <div class="p-col-4">
                         <button pButton pRipple (click)="changePassword()"
-                                [disabled]="newPasswordRepated !== newPassword || newPassword?.length < 7"
                                 [label]="'Change password' | translate" icon="pi pi-check" iconPos="left"
                                 class="Startnow"></button>
                     </div>
@@ -248,7 +245,7 @@
     <!--  Registration  -->
 
 
-    <div *ngIf="selectedElement === 'INS_TAB'" class="p-col-10">
+    <div *ngIf="selectedElement === 'INSCRIPTION'" class="p-col-10">
         <div class="p-grid">
             <div *ngIf="this.inscription.packStudent != null && this.inscription.parcours != null"
                  class="p-col-10 grandTitle"> {{'Registration Details' | translate}}
@@ -256,7 +253,7 @@
             <div *ngIf="this.inscription.packStudent == null && this.inscription.parcours == null"
                  class="p-col-10 grandTitle"> {{'Complete your registration' | translate}}
             </div>
-            <div class="p-col-6">
+            <div class="col-12 col-md-6 p-3">
                 <h5 style="color: #ff725e">  {{'Group Option' | translate}} </h5>
                 <p-dropdown [style]="{    height: '45px',
                                                 padding: '6px',
@@ -270,7 +267,7 @@
                             optionLabel="libelle"></p-dropdown>
             </div>
 
-            <div class="p-col-6">
+            <div class="col-12 col-md-6 p-3">
                 <h5 style="color: #ff725e">  {{'English Level' | translate}} </h5>
                 <p-dropdown [style]="{    height: '45px',
                                                 width: '100%',
@@ -283,7 +280,7 @@
                             optionLabel="libelle"></p-dropdown>
             </div>
 
-            <div class="p-col-6">
+            <div class="col-12 col-md-6 p-3">
                 <h5 style="color: #ff725e">  {{'Teacher' | translate}} </h5>
                 <select class="select"
                         [disabled]="this.inscription.packStudent != null && this.inscription.parcours != null" required
@@ -319,7 +316,6 @@
                             <div
                                     [class.platinum]="pack?.price?.lib?.toUpperCase()?.includes('PLATINUM')"
                                     [class.silver]="pack?.price?.lib?.toUpperCase()?.includes('SILVER')"
-                                    [class.premium]="pack?.price?.lib?.toUpperCase()?.includes('PREMIUM')"
                                     [class.gold]="pack?.price?.lib?.toUpperCase()?.includes('GOLD')"
 
                                     class="card mt-5 p-4 mr-5 text-white">
@@ -338,7 +334,6 @@
                                     <button
                                             [class.btn-platinum]="pack?.price?.lib?.toUpperCase()?.includes('PLATINUM')"
                                             [class.btn-silver]="pack?.price?.lib?.toUpperCase()?.includes('SILVER')"
-                                            [class.btn-premium]="pack?.price?.lib?.toUpperCase()?.includes('PREMIUM')"
                                             [class.btn-gold]="pack?.price?.lib?.toUpperCase()?.includes('GOLD')"
                                             (click)="selectedPackFct(pack)"
                                             class="btn btn-block btn-lg btn-primary">
@@ -354,30 +349,7 @@
             </ng-container>
 
             <ng-container *ngIf="inscription?.packStudent !== null">
-
-                <div class="container">
-
-                    <div class="row">
-
-                        <div class="col-md-12">
-                            <div class="container">
-                                <div class="card_box">
-                                    <span [attr.data-before-content]="packChossen?.libelle"></span>
-                                    <div class="row">
-                                        <div class="col-md-12 detail__title">
-                                            {{this.packChossen?.level?.libelle}}
-                                        </div>
-                                        <div class="col-md-12 detail__sous__title">
-                                            {{this.packChossen?.description}}
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
+                <app-pack-details></app-pack-details>
             </ng-container>
 
 
@@ -392,7 +364,7 @@
                 <div class="p-grid p-fluid">
 
 
-                    <div class="p-col-6">
+                    <div class="col-12 col-md-6 p-3">
                         <h5 style="color: #ff725e"> {{'language' | translate}}</h5>
                         <p-dropdown
                                 [style]="{    height: '45px',
@@ -404,7 +376,7 @@
                     </div>
 
 
-                    <div class="p-col-6">
+                    <div class="col-12 col-md-6 p-3">
                         <h5 style="color: #ff725e"> {{'Status Social' | translate}}</h5>
                         <p-dropdown
                                 [style]="{    height: '45px',
@@ -415,7 +387,7 @@
                                 optionLabel="libelle"></p-dropdown>
                     </div>
 
-                    <div class="p-col-6">
+                    <div class="col-12 col-md-6 p-3">
                         <h5 style="color: #ff725e"> {{'Area of work' | translate}}</h5>
                         <p-dropdown [style]="{    height: '45px',
                                                 padding: '6px',
@@ -425,7 +397,7 @@
                                     optionLabel="libelle"></p-dropdown>
                     </div>
 
-                    <div class="p-col-6">
+                    <div class="col-12 col-md-6 p-3">
                         <h5 style="color: #ff725e"> {{'Study Level' | translate}}</h5>
                         <p-dropdown [style]="{    height: '45px',
                                                 padding: '6px',
@@ -436,7 +408,7 @@
                     </div>
 
 
-                    <div class="p-col-6">
+                    <div class="col-12 col-md-6 p-3">
                         <h5 style="color: #ff725e"> {{'Interests' | translate}}</h5>
                         <p-dropdown [style]="{    height: '45px',
                                                 padding: '6px',
@@ -445,7 +417,7 @@
                                     optionLabel="libelle" [showClear]="true"></p-dropdown>
                     </div>
 
-                    <div class="p-col-6">
+                    <div class="col-12 col-md-6 p-3">
                         <h5 style="color: #ff725e"> {{'Main goal with learning English' | translate}}</h5>
                         <p-dropdown [style]="{    height: '45px',
                                                 padding: '6px',
@@ -455,7 +427,7 @@
                                     optionLabel="libelle"></p-dropdown>
                     </div>
 
-                    <div class="p-col-6">
+                    <div class="col-12 col-md-6 p-3">
                         <h5 style="color: #ff725e"> {{'Skill' | translate}}</h5>
                         <p-dropdown [style]="{    height: '45px',
                                                 padding: '6px',
