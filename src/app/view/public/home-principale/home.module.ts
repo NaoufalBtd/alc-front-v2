@@ -140,7 +140,6 @@ import { CommunityFeedbackComponent } from './community-feedback/community-feedb
         ClipboardModule,
         GalleriaModule,
         AccordionModule
-
     ],
     exports: [
         HeaderThreeComponent,

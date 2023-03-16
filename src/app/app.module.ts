@@ -349,7 +349,6 @@ export function createTranslateLoader(http: HttpClient) {
         ChartModule,
         CheckboxModule,
         ChipModule,
-        ChipsModule,
         CodeHighlighterModule,
         ConfirmDialogModule,
         ConfirmPopupModule,
