@@ -42,6 +42,8 @@ export class InscriptionStudentMainComponent implements OnInit {
 
         if (distance < 0) {
             this.countdown = {days: 0, hours: 0, minutes: 0, seconds: 0};
+            this.countdownDate = new Date();
+            this.countdownDate.setDate(this.countdownDate.getDate() + 1);
         } else {
             this.countdown = {
                 days: Math.floor(distance / (1000 * 60 * 60 * 24)),
