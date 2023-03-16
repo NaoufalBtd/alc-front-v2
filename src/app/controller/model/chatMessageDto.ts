@@ -6,6 +6,7 @@ export class ChatMessageDto {
     type: string;
     ev: any;
     user: string;
+    key: number;
     message: string;
     dateSent: Date;
     isStudent: boolean;

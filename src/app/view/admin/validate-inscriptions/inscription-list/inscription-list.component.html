@@ -26,6 +26,209 @@
             <div class="card">
                 <h5>Manage Inscriptions </h5>
                 <p-tabView (onChange)="handleChange($event)">
+
+                    <p-tabPanel header="All inscription">
+                        <p-table #dt [(selection)]="selectes" [columns]="cols"
+                                 [globalFilterFields]="['numeroInscription','datedebutinscription','datefininscription' , 'phone', 'nom' , 'prof' , 'etatInscription']"
+                                 [paginator]="true"
+                                 [rowHover]="true"
+                                 [rows]="6" [showCurrentPageReport]="true" [value]="this.items"
+                                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                                 dataKey="id"
+                                 styleClass="p-datatable-customers">
+                            <ng-template pTemplate="caption">
+                                <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
+                                    <div class="p-col"><br>
+                                        <span>
+                                     <input [(ngModel)]="student.nom" pInputText
+                                            placeholder="Search by FullName"
+                                            style="margin-right: 10px;width: 200px"
+                                            type="text"/>
+                                    <input [(ngModel)]="student.username " pInputText
+                                           placeholder="Search by Email"
+                                           style="margin-right: 10px;width: 200px"
+                                           type="text"/>
+
+                           <button pButton pRipple type="button" icon="pi pi-search" (click)="findByCriteria()"
+                                   style="margin-left: 25px"
+                                   class="p-button-rounded p-button-success"></button>
+                            </span>
+                                    </div>
+                                </div>
+                            </ng-template>
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th style="width: 3rem">
+                                        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                                    </th>
+                                    <th pSortableColumn="id">Phone
+                                        <p-sortIcon field="id"></p-sortIcon>
+                                    </th>
+                                    <th pSortableColumn="nom">Full Name
+                                        <p-sortIcon field="nom"></p-sortIcon>
+                                    </th>
+
+                                    <th pSortableColumn="prenom">E-mail
+                                        <p-sortIcon field="prenom"></p-sortIcon>
+                                    </th>
+                                    <th></th>
+
+                                    <th pSortableColumn="phone">Phone
+                                        <p-sortIcon field="phone"></p-sortIcon>
+                                    </th>
+                                    <th>Status</th>
+                                    <th> Action</th>
+
+                                </tr>
+                            </ng-template>
+                            <ng-template let-inscription pTemplate="body">
+                                <tr>
+                                    <td>
+                                        <p-tableCheckbox [value]="inscription"></p-tableCheckbox>
+                                    </td>
+                                    <td>{{inscription.etudiant.numero}}</td>
+                                    <td>{{inscription.etudiant.nom}} {{inscription.etudiant.prenom}}</td>
+                                    <td>{{inscription.etudiant.username}}</td>
+                                    <td></td>
+                                    <td> {{inscription?.etudiant?.numero}} </td>
+                                    <td>
+                                        <span *ngIf="inscription.etatInscription.libelle == 'Validated'"
+                                              class="badge-v">VALIDATED</span>
+                                        <span *ngIf="inscription.etatInscription.libelle !== 'Validated'"
+                                              class="badge-nv">Pending</span>
+                                    </td>
+
+                                    <td>
+                                        <button (click)="view(inscription)"
+                                                class="p-button-rounded p-button-info p-mr-2" icon="pi pi-list" pButton
+                                                pRipple></button>
+                                        <button (click)="showEditDialog(inscription)"
+                                                class="p-button-rounded p-button-success p-mr-2" icon="pi pi-pencil"
+                                                pButton
+                                                pRipple></button>
+
+                                        <button (click)="delete(inscription)" class="p-button-rounded p-button-danger"
+                                                icon="pi pi-trash" pButton
+                                                pRipple></button>
+                                    </td>
+
+                                    <!--                                    <td>-->
+                                    <!--                                        <button  class="p-button-info " label="details" pButton-->
+                                    <!--                                                pRipple></button>-->
+                                    <!--                                    </td>-->
+                                    <!--                                    <td>-->
+                                    <!--                                        <button class="p-button-danger" label="delete" pButton-->
+                                    <!--                                                pRipple></button>-->
+                                    <!--                                    </td>-->
+
+
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="summary">
+                                <div class="p-d-flex p-ai-center p-jc-between">
+                                    In total there are {{items ? items.length : 0 }} items.
+                                </div>
+                            </ng-template>
+                        </p-table>
+
+                    </p-tabPanel>
+                    <p-tabPanel header="Validated inscription">
+                        <p-table #dt [(selection)]="selectes" [columns]="cols"
+                                 [globalFilterFields]="['id','numeroInscription',
+                                 'Level',
+                                 'datedebutinscription',
+                                 'datefininscription' ,
+                                 'phone',
+                                  'nom' ,
+                                  'username' ,
+                                  'etatInscription']"
+                                 [paginator]="true"
+                                 [rowHover]="true"
+                                 [rows]="6" [showCurrentPageReport]="true" [value]="items"
+                                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                                 dataKey="id"
+                                 styleClass="p-datatable-customers">
+                            <ng-template pTemplate="caption">
+                                <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
+                                    <div class="p-col"><br>
+                                        <span>
+                                     <input [(ngModel)]="student.nom" pInputText
+                                            placeholder="Search by Full Name"
+                                            style="margin-right: 10px;width: 200px"
+                                            type="text"/>
+
+                                    <input [(ngModel)]="student.username " pInputText
+                                           placeholder="Search by Email"
+                                           style="margin-right: 10px;width: 200px"
+                                           type="text"/>
+
+                           <button pButton pRipple type="button" icon="pi pi-search" (click)="findByCriteria()"
+                                   style="margin-left: 25px"
+                                   class="p-button-rounded p-button-success"></button>
+                            </span>
+                                    </div>
+                                </div>
+                            </ng-template>
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th style="width: 3rem">
+                                        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                                    </th>
+                                    <th pSortableColumn="id">Student ID
+                                        <p-sortIcon field="id"></p-sortIcon>
+                                    </th>
+
+                                    <th pSortableColumn="nom">Full Name
+                                        <p-sortIcon field="nom"></p-sortIcon>
+                                    </th>
+
+                                    <th pSortableColumn="username">E-mail
+                                        <p-sortIcon field="username"></p-sortIcon>
+                                    </th>
+
+                                    <th pSortableColumn="Level">Level
+                                        <p-sortIcon field="Level"></p-sortIcon>
+                                    </th>
+
+                                    <th pSortableColumn="phone">Phone
+                                        <p-sortIcon field="phone"></p-sortIcon>
+                                    </th>
+                                    <th>Status</th>
+                                    <th>Edit</th>
+                                </tr>
+                            </ng-template>
+                            <ng-template let-inscription pTemplate="body">
+                                <tr>
+                                    <td>
+                                        <p-tableCheckbox [value]="inscription"></p-tableCheckbox>
+                                    </td>
+                                    <td>{{inscription.etudiant.id}}</td>
+                                    <td>{{inscription.etudiant.nom}} {{inscription.etudiant.prenom}}</td>
+                                    <td>{{inscription.etudiant.username}}</td>
+                                    <td>{{inscription.etudiant?.parcours?.libelle}}</td>
+                                    <td> {{inscription?.etudiant?.numero}} </td>
+                                    <td>
+                                        <span *ngIf="inscription.etatInscription.libelle == 'Validated'"
+                                              class="badge-v">VALIDATED</span>
+                                        <span *ngIf="inscription.etatInscription.libelle !== 'Validated'"
+                                              class="badge-nv">Pending</span>
+                                    </td>
+                                    <td>
+                                        <button (click)="showEditDialog(inscription)" class="p-button-success "
+                                                label="Edit"
+                                                pButton
+                                                pRipple></button>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="summary">
+                                <div class="p-d-flex p-ai-center p-jc-between">
+                                    In total there are {{items ? items.length : 0 }} items.
+                                </div>
+                            </ng-template>
+                        </p-table>
+
+                    </p-tabPanel>
                     <p-tabPanel header="Pending inscription">
                         <p-table #dt [(selection)]="selectes" [columns]="cols"
                                  [globalFilterFields]="['numeroInscription','datedebutinscription','datefininscription' , 'nom' , 'prof' , 'etatInscription']"
@@ -45,7 +248,7 @@
                                             type="text"/>
 
                                     <input [(ngModel)]="student.username " pInputText
-                                           placeholder="Search by UserName"
+                                           placeholder="Search by Email"
                                            style="margin-right: 10px;width: 200px"
                                            type="text"/>
 
@@ -99,7 +302,8 @@
                                               class="badge-nv">Pending</span>
                                     </td>
                                     <td>
-                                        <button (click)="showEditDialog(inscription)" class="p-button-success " label="Edit"
+                                        <button (click)="showEditDialog(inscription)" class="p-button-success "
+                                                label="Edit"
                                                 pButton
                                                 pRipple></button>
                                     </td>
@@ -118,115 +322,8 @@
                                 </div>
                             </ng-template>
                         </p-table>
-
                     </p-tabPanel>
-                    <p-tabPanel header="All inscription">
-                        <p-table #dt [(selection)]="selectes" [columns]="cols"
-                                 [globalFilterFields]="['numeroInscription','datedebutinscription','datefininscription' , 'nom' , 'prof' , 'etatInscription']"
-                                 [paginator]="true"
-                                 [rowHover]="true"
-                                 [rows]="6" [showCurrentPageReport]="true" [value]="this.items"
-                                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-                                 dataKey="id"
-                                 styleClass="p-datatable-customers">
-                            <ng-template pTemplate="caption">
-                                <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
-                                    <div class="p-col"><br>
-                                        <span>
-                                     <input [(ngModel)]="student.nom" pInputText
-                                            placeholder="Search by FullName"
-                                            style="margin-right: 10px;width: 200px"
-                                            type="text"/>
-                                    <input [(ngModel)]="student.username " pInputText
-                                           placeholder="Search by UserName"
-                                           style="margin-right: 10px;width: 200px"
-                                           type="text"/>
 
-                           <button pButton pRipple type="button" icon="pi pi-search" (click)="findByCriteria()"
-                                   style="margin-left: 25px"
-                                   class="p-button-rounded p-button-success"></button>
-                            </span>
-                                    </div>
-                                </div>
-                            </ng-template>
-                            <ng-template pTemplate="header">
-                                <tr>
-                                    <th style="width: 3rem">
-                                        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-                                    </th>
-                                    <th pSortableColumn="id">Phone
-                                        <p-sortIcon field="id"></p-sortIcon>
-                                    </th>
-                                    <th pSortableColumn="nom">Full Name
-                                        <p-sortIcon field="nom"></p-sortIcon>
-                                    </th>
-
-                                    <th pSortableColumn="prenom">E-mail
-                                        <p-sortIcon field="prenom"></p-sortIcon>
-                                    </th>
-                                    <th></th>
-
-                                    <th pSortableColumn="mail">Date
-                                        <p-sortIcon field="mail"></p-sortIcon>
-                                    </th>
-                                    <th>Status</th>
-                                    <!--                                    <th>View Details</th>-->
-                                    <!--                                    <th>Delete Registration</th>-->
-                                    <th> Action</th>
-
-                                </tr>
-                            </ng-template>
-                            <ng-template let-inscription pTemplate="body">
-                                <tr>
-                                    <td>
-                                        <p-tableCheckbox [value]="inscription"></p-tableCheckbox>
-                                    </td>
-                                    <td>{{inscription.etudiant.numero}}</td>
-                                    <td>{{inscription.etudiant.nom}} {{inscription.etudiant.prenom}}</td>
-                                    <td>{{inscription.etudiant.username}}</td>
-                                    <td></td>
-                                    <td> {{inscription.dateRegistration}} </td>
-                                    <td>
-                                        <span *ngIf="inscription.etatInscription.libelle == 'Validated'"
-                                              class="badge-v">VALIDATED</span>
-                                        <span *ngIf="inscription.etatInscription.libelle !== 'Validated'"
-                                              class="badge-nv">Pending</span>
-                                    </td>
-
-                                    <td>
-                                        <button (click)="view(inscription)"
-                                                class="p-button-rounded p-button-info p-mr-2" icon="pi pi-list" pButton
-                                                pRipple></button>
-                                        <button (click)="showEditDialog(inscription)"
-                                                class="p-button-rounded p-button-success p-mr-2" icon="pi pi-pencil"
-                                                pButton
-                                                pRipple></button>
-
-                                        <button (click)="delete(inscription)" class="p-button-rounded p-button-danger"
-                                                icon="pi pi-trash" pButton
-                                                pRipple></button>
-                                    </td>
-
-                                    <!--                                    <td>-->
-                                    <!--                                        <button  class="p-button-info " label="details" pButton-->
-                                    <!--                                                pRipple></button>-->
-                                    <!--                                    </td>-->
-                                    <!--                                    <td>-->
-                                    <!--                                        <button class="p-button-danger" label="delete" pButton-->
-                                    <!--                                                pRipple></button>-->
-                                    <!--                                    </td>-->
-
-
-                                </tr>
-                            </ng-template>
-                            <ng-template pTemplate="summary">
-                                <div class="p-d-flex p-ai-center p-jc-between">
-                                    In total there are {{items ? items.length : 0 }} items.
-                                </div>
-                            </ng-template>
-                        </p-table>
-
-                    </p-tabPanel>
 
                 </p-tabView>
             </div>
@@ -251,154 +348,142 @@
     <div style="margin-bottom: 10px;">
         <i style="color: red ; font-weight: bold">*</i> Required fields
     </div>
-        <div class="p-grid">
+    <div class="p-grid">
 
 
-            <div class="p-col-4">
-                <label> Student name</label>
+        <div class="p-col-4">
+            <label> Student name</label>
 
-                <input [style]="{width: '100%'}" name="fullName" type="text" pInputText
-                        [(ngModel)]="inscription.etudiant.nom">
-            </div>
-
-
-            <div class="p-col-4">
-                <label> Level</label>
-
-                <p-dropdown [style]="{width: '100%'}" [options]="parcours" [(ngModel)]="inscription.parcours"
-                             placeholder="Level"
-                             name="level"
-                             optionLabel="libelle"></p-dropdown>
-                <i style="color: red">*</i>
-                <small style="font-weight: bold; margin-left: 5px" *ngIf="inscription?.parcours === null"
-                       class="text-danger">Level is Required</small>
-
-            </div>
+            <input [style]="{width: '100%'}" name="fullName" type="text" pInputText
+                   [(ngModel)]="inscription.etudiant.nom">
+        </div>
 
 
-            <div class="p-col-4">
-                <label> State</label>
+        <div class="p-col-4">
+            <label> Level</label>
 
-
-                <p-dropdown [style]="{width: '100%'}" name="state" [options]="etatInsc"
-                            placeholder="State"
-                            [(ngModel)]="inscription.etatInscription"
-                            optionLabel="libelle"></p-dropdown>
-                <i style="color: red">*</i>
-                <small style="font-weight: bold; margin-left: 5px"
-                       class="text-danger">State is required</small>
-            </div>
-
-            <div class="p-col-4">
-                <label> Study group</label>
-
-                <p-dropdown [style]="{width: '100%'}" name="groupeEtude" [options]="groupEtudes"
-                            placeholder="Group option"
-                            [(ngModel)]="inscription.groupeEtude" optionLabel="libelle"></p-dropdown>
-                <i
-                        style="color: red">*</i>
-                <small style="font-weight: bold; margin-left: 5px"
-                       *ngIf="inscription?.groupeEtude === null"
-                       class="text-danger">Study group is Required</small>
-            </div>
-
-
-            <div class="p-col-4">
-                <label> Pack</label>
-
-                <p-dropdown [style]="{width: '100%'}" optionLabel="libelle" name="packOption"
-                            [options]="packs"
-                            placeholder="Pack option"
-                            [(ngModel)]="inscription.packStudent"></p-dropdown>
-                <i style="color: red">*</i>
-                <small style="font-weight: bold; margin-left: 5px"
-                       *ngIf="inscription?.packStudent === null"
-                       class="text-danger">Pack is Required</small>
-            </div>
-
-
-            <div class="p-col-4">
-                <label> Start date</label>
-
-                <input [style]="{width: '100%'}" placeholder="Start date" name="datedebutinscription" type="date" pInputText
-                       [(ngModel)]="inscription.datedebutinscription">
-            </div>
-
-            <div class="p-col-4">
-                <label> Finish date</label>
-
-                <input [style]="{width: '100%'}" placeholder="Start date" name="datefininscription" type="date" pInputText
-                       [(ngModel)]="inscription.datefininscription">
-
-            </div>
-
-
-
-
-
-            <div class="p-col-12 p-md-6 p-lg-4">
-                <label> Status Social</label>
-
-                <select   class="form-select" [(ngModel)]="inscription.statutSocial" aria-label="Status Social">
-                    <option [value]="null" selected>Status Social</option>
-                    <option *ngFor="let item of statutSocials" [ngValue]="item">{{item?.libelle}}</option>
-                </select>
-
-            </div>
-
-
-
-            <div class="p-col-12 p-md-6 p-lg-4">
-                <label>Area of work</label>
-
-                <select   class="form-select" [(ngModel)]="inscription.fonction" aria-label="Area of work">
-                    <option [value]="null" selected >Area of work</option>
-                    <option *ngFor="let item of fonctions" [ngValue]="item">{{item?.libelle}}</option>
-                </select>
-
-            </div>
-
-
-
-
-
-
-            <div class="p-col-12 p-md-6 p-lg-4">
-                <label>Study Level</label>
-
-                <select   class="form-select" [(ngModel)]="inscription.niveauEtude" aria-label="Study Level">
-                    <option [value]="null" selected>Study Level</option>
-                    <option *ngFor="let item of niveauEtudes" [ngValue]="item">{{item?.libelle}}</option>
-                </select>
-
-            </div>
-
-
-
-
-
-            <div class="p-col-12 p-md-6 p-lg-4">
-                <label>Skill</label>
-
-                <select  class="form-select"  [(ngModel)]="inscription.skill" aria-label="Skill">
-                    <option [value]="null" selected>Skill</option>
-                    <option *ngFor="let item of skills" [ngValue]="item">{{item?.libelle}}</option>
-                </select>
-            </div>
-
-
-
-
-            <div class="p-col-12 p-md-6 p-lg-4">
-                <label>Main goal with learning english</label>
-                <select  class="form-select"  [(ngModel)]="inscription.interetEtudiant" aria-label="Main goal with learning english">
-                    <option [value]="null" selected>Main goal with learning english</option>
-                    <option  *ngFor="let item of interetEtudiants" [ngValue]="item">{{item?.libelle}}</option>
-                </select>
-            </div>
-
+            <p-dropdown [style]="{width: '100%'}" [options]="parcours" [(ngModel)]="inscription.parcours"
+                        placeholder="Level"
+                        name="level"
+                        optionLabel="libelle"></p-dropdown>
+            <i style="color: red">*</i>
+            <small style="font-weight: bold; margin-left: 5px" *ngIf="inscription?.parcours === null"
+                   class="text-danger">Level is Required</small>
 
         </div>
+
+
+        <div class="p-col-4">
+            <label> State</label>
+
+
+            <p-dropdown [style]="{width: '100%'}" name="state" [options]="etatInsc"
+                        placeholder="State"
+                        [(ngModel)]="inscription.etatInscription"
+                        optionLabel="libelle"></p-dropdown>
+            <i style="color: red">*</i>
+            <small style="font-weight: bold; margin-left: 5px"
+                   class="text-danger">State is required</small>
+        </div>
+
+        <div class="p-col-4">
+            <label> Study group</label>
+
+            <p-dropdown [style]="{width: '100%'}" name="groupeEtude" [options]="groupEtudes"
+                        placeholder="Group option"
+                        [(ngModel)]="inscription.groupeEtude" optionLabel="libelle"></p-dropdown>
+            <i
+                    style="color: red">*</i>
+            <small style="font-weight: bold; margin-left: 5px"
+                   *ngIf="inscription?.groupeEtude === null"
+                   class="text-danger">Study group is Required</small>
+        </div>
+
+
+        <div class="p-col-4">
+            <label> Pack</label>
+
+            <p-dropdown [style]="{width: '100%'}" optionLabel="libelle" name="packOption"
+                        [options]="packs"
+                        placeholder="Pack option"
+                        [(ngModel)]="inscription.packStudent"></p-dropdown>
+            <i style="color: red">*</i>
+            <small style="font-weight: bold; margin-left: 5px"
+                   *ngIf="inscription?.packStudent === null"
+                   class="text-danger">Pack is Required</small>
+        </div>
+
+
+        <div class="p-col-4">
+            <label> Start date</label>
+
+            <input [style]="{width: '100%'}" placeholder="Start date" name="datedebutinscription" type="date" pInputText
+                   [(ngModel)]="inscription.datedebutinscription">
+        </div>
+
+        <div class="p-col-4">
+            <label> Finish date</label>
+
+            <input [style]="{width: '100%'}" placeholder="Start date" name="datefininscription" type="date" pInputText
+                   [(ngModel)]="inscription.datefininscription">
+
+        </div>
+
+
+        <div class="p-col-12 p-md-6 p-lg-4">
+            <label> Status Social</label>
+
+            <select class="form-select" [(ngModel)]="inscription.statutSocial" aria-label="Status Social">
+                <option [value]="null" selected>Status Social</option>
+                <option *ngFor="let item of statutSocials" [ngValue]="item">{{item?.libelle}}</option>
+            </select>
+
+        </div>
+
+
+        <div class="p-col-12 p-md-6 p-lg-4">
+            <label>Area of work</label>
+
+            <select class="form-select" [(ngModel)]="inscription.fonction" aria-label="Area of work">
+                <option [value]="null" selected>Area of work</option>
+                <option *ngFor="let item of fonctions" [ngValue]="item">{{item?.libelle}}</option>
+            </select>
+
+        </div>
+
+
+        <div class="p-col-12 p-md-6 p-lg-4">
+            <label>Study Level</label>
+
+            <select class="form-select" [(ngModel)]="inscription.niveauEtude" aria-label="Study Level">
+                <option [value]="null" selected>Study Level</option>
+                <option *ngFor="let item of niveauEtudes" [ngValue]="item">{{item?.libelle}}</option>
+            </select>
+
+        </div>
+
+
+        <div class="p-col-12 p-md-6 p-lg-4">
+            <label>Skill</label>
+
+            <select class="form-select" [(ngModel)]="inscription.skill" aria-label="Skill">
+                <option [value]="null" selected>Skill</option>
+                <option *ngFor="let item of skills" [ngValue]="item">{{item?.libelle}}</option>
+            </select>
+        </div>
+
+
+        <div class="p-col-12 p-md-6 p-lg-4">
+            <label>Main goal with learning english</label>
+            <select class="form-select" [(ngModel)]="inscription.interetEtudiant"
+                    aria-label="Main goal with learning english">
+                <option [value]="null" selected>Main goal with learning english</option>
+                <option *ngFor="let item of interetEtudiants" [ngValue]="item">{{item?.libelle}}</option>
+            </select>
+        </div>
+
+
+    </div>
     <ng-template pTemplate="footer">
         <button pButton pRipple type="button" icon="pi pi-save" label="save changes"
                 (click)="updateInsc(inscription) "

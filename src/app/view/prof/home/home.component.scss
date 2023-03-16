@@ -1,6 +1,6 @@
-.p-grid {
-  background: linear-gradient(90deg, #cddafd 0%, #e5d5ff 100%);
-}
+//.p-grid {
+//  background: #eaf2fb;
+//}
 
 .lessons {
   background: black;
@@ -146,4 +146,10 @@
   animation-name: startLesson;
   animation-duration: 2s;
   animation-iteration-count: infinite;
+}
+
+@media (min-width: 576px){
+  .main-section{
+    height: 100%;
+  }
 }

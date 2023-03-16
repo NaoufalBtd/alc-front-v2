@@ -10,7 +10,20 @@ SwiperCore.use([Autoplay]);
     styleUrls: ['./home-three-testimonial.component.scss']
 })
 export class HomeThreeTestimonialComponent implements OnInit {
-
+    responsiveOptions: any[] = [
+        {
+            breakpoint: '1024px',
+            numVisible: 5
+        },
+        {
+            breakpoint: '768px',
+            numVisible: 3
+        },
+        {
+            breakpoint: '560px',
+            numVisible: 1
+        }
+    ];
     sliderData = [
         {
             id: 1,
@@ -39,8 +52,58 @@ export class HomeThreeTestimonialComponent implements OnInit {
             work: 'Employed'
         },
     ];
+    images: any = [
+        {
+            previewImageSrc: 'assets/img/galeria/1.png',
+        },
+        {
+            previewImageSrc: 'assets/img/galeria/1-1.png',
+        },
+        {
+            previewImageSrc: 'assets/img/galeria/4.png',
+        },
+        {
+            previewImageSrc: 'assets/img/galeria/5.png',
+        },
+        {
+            previewImageSrc: 'assets/img/galeria/6.png',
+        },
+        {
+            previewImageSrc: 'assets/img/galeria/7.png',
+        },
+        {
+            previewImageSrc: 'assets/img/galeria/8.png',
+        },
+        {
+            previewImageSrc: 'assets/img/galeria/9.png',
+        },
+        {
+            previewImageSrc: 'assets/img/galeria/10.png',
+        },
+        {
+            previewImageSrc: 'assets/img/galeria/11.png',
+        },
+        {
+            previewImageSrc: 'assets/img/galeria/12.png',
+        },
+        {
+            previewImageSrc: 'assets/img/galeria/13.png',
+        },
+        {
+            previewImageSrc: 'assets/img/galeria/2.png',
+        },
+        {
+            previewImageSrc: 'assets/img/galeria/3.png',
+        },
+        {
+            previewImageSrc: 'assets/img/galeria/14.png',
+        },
+        {
+            previewImageSrc: 'assets/img/galeria/15.png',
+        }
+    ];
 
-    constructor(private translate: TranslateService) {
+    constructor(public translate: TranslateService) {
     }
 
     ngOnInit(): void {

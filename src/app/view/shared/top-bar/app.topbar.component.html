@@ -1,60 +1,48 @@
-<div class="layout-topbar" *ngIf="this.authenticationService?.getUserFromLocalCache() != null">
-
-    <img style=" cursor: pointer!important;"
-         [hidden]="this.authenticationService?.getUserFromLocalCache() == null"
-         class="logo-white"
-         src="assets/img/logo/logo-2.png" alt="logo">
+<div class="layout-topbar">
 
 
-    <ul [hidden]="this.authenticationService.getUserFromLocalCache() == null" class="topbar-menu">
-        <li [ngClass]="{'active-topmenuitem fadeInDown': appMain?.topbarUserMenuActive}" class="user-profile">
-            <a class="ng-star-inserted" (click)="appMain?.onTopbarUserMenuButtonClick($event); hidePopUp=false"
-               *ngIf="!app?.inlineUser">
-                <img class="img" [src]="this.authenticationService.getUserFromLocalCache().image">
+    <a class="layout-menu-button layout-topbar-icon" (click)="hideOrShowRightBar($event)">
+        <i class="pi pi-bars"></i>
+    </a>
+
+    <a class="layout-topbar-logo">
+        <img style="height: 55px;" id="topbar-logo" src="/assets/img/logo/eng-white.png">
+    </a>
+
+
+    <ul class="topbar-menu">
+        <li class="user-profile" [ngClass]="{'active-topmenuitem fadeInDown': topbarUserMenuActive}">
+            <a href="#" (click)="onTopbarUserMenuButtonClick($event)" *ngIf="!app.inlineUser">
+                <img [src]="user.image" class="user__profile" alt=""/>
                 <div class="layout-profile-userinfo">
-                    <span class="layout-profile-name profile-label">{{this.authenticationService?.getUserFromLocalCache()?.nom}} </span>
-                    <span *ngIf="isAdmin() == true" class="layout-profile-role">Admin</span>
-                    <span *ngIf="isProf() == true" class="layout-profile-role">Teacher</span>
-                    <span *ngIf="isStudent() == true" class="layout-profile-role">Student</span>
+                    <span class="layout-profile-name">{{user?.nom}}</span>
                 </div>
             </a>
-
-            <ul *ngIf="hidePopUp === false" class="fadeInDown">
-
-                <li class="user-profile-drop-dawn">
-                    <a style="height: 52px; cursor: pointer"
-                       (click)="appMain?.onTopbarUserMenuButtonClick($event); goToProfile()"
-                       class="user-profile-drop-dawn-text">
-                        <i class="pi pi-fw pi-user" style="margin-right:4px"></i>
-                        <span>Your profile</span>
+            <ul class="fadeInDown">
+                <li>
+                    <a (click)="goToProfile()">
+                        <i class="pi pi-fw pi-user"></i>
+                        <span>{{'Profile' | translate}}</span>
                     </a>
                 </li>
 
-
-                <li class="user-profile-drop-dawn">
-                    <a style="height: 52px">
-                        <button icon="pi pi-fw pi-sign-out" id="button" pButton class="p-button-raised
-                                     p-button-secondary p-button-rounded"
-                                (click)="logOut(); appMain?.onTopbarUserMenuButtonClick($event)" type="button"
-                                label="Log Out">
-                        </button>
+                <li>
+                    <a (click)="logOut()">
+                        <i class="pi pi-fw pi-sign-out"></i>
+                        <span>{{'Log Out' | translate}}</span>
                     </a>
                 </li>
+
             </ul>
+        </li>
+
+        <li>
+            <p-dropdown [options]="langs" [(ngModel)]="translate.currentLang" [placeholder]="translate.currentLang"
+                        (ngModelChange)="selectedLangage($event)"
+                        [showClear]="false"></p-dropdown>
 
         </li>
     </ul>
 
+
 </div>
-
-<app-header-two  *ngIf="this.authenticationService.getUserFromLocalCache() == null"
-                 headerShadow="header__area header__padding-2 header__shadow">
-</app-header-two>
-
-
-<script type="text/javascript" src="src/script.js"></script>
-<script src="https://code.jquery.com/jquery-3.2.1.js"></script>
-
-
-<script type="text/javascript" src="src/script.js"></script>
-<script src="https://code.jquery.com/jquery-3.2.1.js"></script>

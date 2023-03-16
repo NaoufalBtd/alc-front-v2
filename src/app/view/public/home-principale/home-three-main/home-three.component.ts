@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ConfirmationService, MessageService} from 'primeng/api';
+import {MessageService} from 'primeng/api';
 import {EtudiantService} from '../../../../controller/service/etudiant.service';
 import {AuthenticationService} from '../../../../controller/service/authentication.service';
 import {PackStudentService} from '../../../../controller/service/pack-student.service';
@@ -9,6 +9,7 @@ import {Etudiant} from '../../../../controller/model/etudiant.model';
 import {TranslateService} from '@ngx-translate/core';
 import {BreakpointObserver} from '@angular/cdk/layout';
 import {AnimationService} from '../../../../controller/service/animation.service';
+import {ParcoursService} from '../../../../controller/service/parcours.service';
 
 @Component({
     selector: 'app-home-three',
@@ -17,11 +18,8 @@ import {AnimationService} from '../../../../controller/service/animation.service
 })
 export class HomeThreeComponent implements OnInit {
     displayModal: boolean;
+    selectedLevel = null;
 
-    locality = [
-        {name: 'native'},
-        {name: 'non-native'},
-    ];
     id: number;
     showdialog = false;
     public isSmallScreen: boolean;
@@ -29,7 +27,7 @@ export class HomeThreeComponent implements OnInit {
     constructor(private messageService: MessageService,
                 public etudiantService: EtudiantService,
                 private animation: AnimationService,
-                private confirmationService: ConfirmationService,
+                private levelService: ParcoursService,
                 public authenticationService: AuthenticationService,
                 public packStudentService: PackStudentService,
                 public translate: TranslateService,
@@ -97,10 +95,9 @@ export class HomeThreeComponent implements OnInit {
 
                 this.showdialog = true;
                 this.messageService.add({
-                    severity: 'error',
-                    summary: 'Error',
-                    detail: 'Registration Canceled',
-                    life: 4000
+                    severity: 'info',
+                    detail: error?.error?.message || 'Registration Canceled',
+                    life: 10000
                 });
             }
         );
@@ -112,6 +109,8 @@ export class HomeThreeComponent implements OnInit {
             || this.selected?.username === undefined
             || this.selected?.username?.length === 0
             || this.selected?.username === null
+            || this.selectedLevel === null
+            || this.selectedLevel === undefined
             || !this.selected?.username?.includes('@')
             || !this.selected?.username?.includes('.')
             || !this.selected?.username?.includes('com')
@@ -125,4 +124,14 @@ export class HomeThreeComponent implements OnInit {
         }
     }
 
+    chooseLevel(event: any) {
+        if (event !== null && event !== undefined) {
+            this.levelService.findParcoursById(event).subscribe(level => {
+                console.log(level);
+                this.selected.parcours = level;
+            }, error => {
+                console.log(error);
+            });
+        }
+    }
 }

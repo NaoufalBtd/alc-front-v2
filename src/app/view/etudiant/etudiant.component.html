@@ -1,4 +1,4 @@
-<div style="background-color: #e9ecef;" (click)="onLayoutClick()" [class]="app.topbarColor" [ngClass]="{'layout-horizontal': app.layoutMode === 'horizontal',
+<div style=" background: #eaf2fb" class="layout-wrapper" [ngClass]="{'layout-horizontal': app.layoutMode === 'horizontal',
     'layout-overlay': app.layoutMode === 'overlay',
     'layout-static': app.layoutMode === 'static',
     'layout-slim': app.layoutMode === 'slim',
@@ -9,14 +9,19 @@
     'layout-static-inactive': staticMenuDesktopInactive,
     'layout-rtl': app.isRTL,
     'p-input-filled': app.inputStyle === 'filled',
-    'p-ripple-disabled': !app.ripple}" class="layout-wrapper">
+    'p-ripple-disabled': !app.ripple}" [class]="app.topbarColor" (click)="onLayoutClick()">
+
     <app-topbar *ngIf="showTpBar"></app-topbar>
+
     <app-menu *ngIf="showAppMenu"></app-menu>
+
+
     <div *ngIf="!showAppMenu" class="">
         <div class="layout-content">
             <router-outlet></router-outlet>
         </div>
     </div>
+
     <div *ngIf="showAppMenu" class="layout-main">
         <div class="layout-content">
             <img class="floatButton"
@@ -28,14 +33,6 @@
         </div>
     </div>
 </div>
-<!--<div class="dialog"></div>-->
-<!--<div *ngIf="displayChatDialog" class="p-dialog">-->
-<!--    <div class="p-dialog-header1">-->
-<!--        <p>chat</p>-->
-<!--    </div>-->
-<!--    <div class="p-dialog-content"></div>-->
-<!--    <div class="p-dialog-footer"></div>-->
-<!--</div>-->
 
 <p-dialog [showHeader]="false" position="right" [(visible)]="displayChatDialog"
           [style]="{width: '35vw', height: '75%'}">
@@ -92,7 +89,7 @@
                        type="text" placeholder="Send a message...">
             </div>
             <div class="p-col-5">
-                <p-fileUpload mode="basic"  styleClass="sentIcons" chooseIcon="pi pi-link" name="demo[]"
+                <p-fileUpload mode="basic" styleClass="sentIcons" chooseIcon="pi pi-link" name="demo[]"
                               url="./upload.php" accept="image/*"
                               maxFileSize="100000000" (onSelect)="onBasicUpload($event)"></p-fileUpload>
 
@@ -104,9 +101,9 @@
 
 <p-dialog [showHeader]="false" [(visible)]="displayImgDialog" [position]="position" [modal]="true"
           [style]="{width: '35vw'}" [baseZIndex]="100000"
-          [draggable]="true" [resizable]="false" >
+          [draggable]="true" [resizable]="false">
     <div style="background: #263238; color: white!important; border-right: 5px;" class="p-grid">
-        <p-button icon="pi pi-times" (click)="cancel()"  styleClass="p-button-text"></p-button>
+        <p-button icon="pi pi-times" (click)="cancel()" styleClass="p-button-text"></p-button>
 
         <div style="padding: 1%" class="p-col-12">
             <img style="width: 90%; margin-left: 4%; border-radius: 5px;" src="{{reader?.result}}" alt="not found">
@@ -122,7 +119,7 @@
 <div *ngIf="showOverLayImg" id="myNav" class="overlay">
 
     <!-- Button to close the overlay navigation -->
-    <a style="cursor: pointer" (click)="showOverLayImg  = false" class="closebtn" >&times;</a>
+    <a style="cursor: pointer" (click)="showOverLayImg  = false" class="closebtn">&times;</a>
 
     <!-- Overlay content -->
     <div class="overlay-content">

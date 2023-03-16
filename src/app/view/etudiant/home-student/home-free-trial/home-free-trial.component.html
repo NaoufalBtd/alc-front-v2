@@ -1,65 +1,75 @@
-<div class="p-grid">
-    <div *ngIf="!displayCourses" class="p-col-7">
-        <div class="cta-block">
-            <div class="cta-wrapper">
-
-                <div class="field field--name-field-title field--type-string field--label-hidden field--item">
-                    Discover your current English level by taking our free online test
+<div style="width: 100%;padding: 25px;"
+     [style.direction]="translate.currentLang === 'ar' ? 'rtl': 'ltr'"
+     class="row">
+    <div class="col-md-12">
+        <div class="row upgdate bg-white shadow p-3 mb-5 bg-body rounded">
+            <div class="col-md-9 col-sm-12">
+                <div class="font-medium text-black">
+                    <div style=" font-size: 15px;font-weight: bold;">{{'Unlock more lessons and features!' | translate}}</div>
+                    <div style=" font-weight: 700; color: black;opacity: 0.6;" class="text-sm ">
+                        {{'You are currently on a free plan with limited features and lessons' | translate}}
+                    </div>
                 </div>
-
-                <div class="field field--name-field-content-link field--type-link field--label-hidden field--item">
-                    <button id="startLessonButton"
-                            pButton pRipple type="button"
-                            routerLink="/etudiant/test-level"
-                            label="Discover your level"
-                            class="takeTest"></button>
-                </div>
+            </div>
+            <div class="col-md-3 col-sm-12">
+                <button
+                        class="ngFlexyBlackButton" id="previous"
+                        (click)="scrollToPrices()"
+                        [label]="'Upgrade' | translate" pButton pRipple
+                        type="button"></button>
             </div>
         </div>
 
-        <h2 style="color: #263238">{{'Choose your level to practise your reading'}}</h2>
+    </div>
+    <div *ngIf="!displayCourses" class="col-md-12">
+        <div class="row bg-white shadow p-3 mb-5 bg-body rounded">
+            <div class="col-md-12">
+                <div class="cta-block">
+                    <div class="cta-wrapper">
 
-
-        <div *ngFor="let level of freeLevelsList" class="views-row">
-            <div class="layout layout--onecol">
-                <div class="layout__region layout__region--content">
-
-                    <div class="field field--name-field-image field--type-image field--label-hidden field--items">
-                        <div (click)="showCoursesForLevel(level)" class="field--item"><a>
-
-                            <img style="cursor: pointer"
-                                 sizes="100vw"
-                                 src="https://learnenglish.britishcouncil.org/sites/podcasts/files/styles/430x261_4/public/RS8037_GettyImages-985388610-hig.jpg?itok=6esjPBYy"
-                                 alt="" typeof="foaf:Image" class="img-responsive">
-
-                        </a>
+                        <div [style.direction]="translate.currentLang === 'ar' ? 'rtl': 'ltr'"
+                             class="field field--name-field-title field--type-string field--label-hidden field--item">
+                            {{'Discover your current English level by taking our free online test' | translate}}
+                        </div>
+                        <div style="width: 200px;"
+                             class="field field--name-field-content-link field--type-link field--label-hidden field--item">
+                            <button id="startLessonButton"
+                                    pButton pRipple type="button"
+                                    routerLink="/etudiant/test-level"
+                                    [label]="'discover your level' | translate"
+                                    class="takeTest"></button>
                         </div>
                     </div>
-
-                    <div class="content-wrapper">
-
-                        <div class="field field--name-taxonomy-term-title field--type-ds field--label-hidden field--item">
-                            <h2 >
-                                <a id="levelName"
-                                   (click)="showCoursesForLevel(level)"
-                                >{{level?.libelle}}</a>
-                            </h2>
-                        </div>
-
-                        <div style="font-size: medium; line-height: 30px;color: #263238;"
-                             class="field field--name-field-text-teaser field--type-string-long field--label-hidden field--item">
-                            {{level?.description}}
-                        </div>
-
-                    </div>
-
                 </div>
             </div>
 
+            <div class="col-md-12 my-5 text-center">
+                <h2 [style.direction]="translate.currentLang === 'ar' ? 'rtl': 'ltr'"
+                    class="section__title"
+                    style="color: #263238">{{'Choose your level to practise your reading' | translate}}</h2>
+            </div>
+
+            <div *ngFor="let level of freeLevelsList"
+                 (click)="showCoursesForLevel(level)"
+                 style="cursor:pointer;"
+                 class="col-xxl-2 col-xl-2 col-lg-3 col-md-3 col-sm-4">
+                <div class="course__item white-bg mb-30 fix">
+                    <div class="course__thumb  w-img p-relative fix">
+                        <a>
+                            <img *ngIf="level?.id ===1" src="/assets/images/A1.webp" alt="">
+                            <img *ngIf="level?.id ===5095" src="/assets/images/A2.webp" alt="">
+                            <img *ngIf="level?.id ===13000" src="/assets/images/B1.webp" alt="">
+                            <img *ngIf="level?.id ===25000" src="/assets/images/B2.webp" alt="">
+                            <img *ngIf="level?.id ===31050" src="/assets/images/C1.webp" alt="">
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
-    <div *ngIf="displayCourses" class="p-col-7">
+
+    <div *ngIf="displayCourses" class=" col-xxl-6 col-xl-6 col-md-12">
         <div *ngFor="let cours of freeCourseList" class="p-grid lessonContainer">
             <div style="text-align: start" class="p-col-2">
                 <img class="imgLesson" src="/assets/icons/icon-livres.png" alt=""></div>
@@ -75,8 +85,17 @@
         </div>
     </div>
 
-    <div class="p-col-5 imgContainer">
-        <img style="width: 100%" src="/assets/images/flame-1001.png" alt="">
+    <div class="col-md-12 upgdate  p-3 my-5">
+        <div class="font-medium text-black">
+            <div class="text-center" [style.direction]="translate.currentLang === 'ar' ? 'rtl': 'ltr'"
+                 style=" font-size: 35px;font-weight: bold;">
+                {{'Explore our packs' | translate}}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-12">
+        <app-pricing-table id="pricingTableComponent"></app-pricing-table>
     </div>
 
 

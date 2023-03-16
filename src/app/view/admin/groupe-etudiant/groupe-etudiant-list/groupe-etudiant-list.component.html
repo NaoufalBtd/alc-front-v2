@@ -6,7 +6,7 @@
         <div class="card" style="background-color: gainsboro;">
             <p-toolbar styleClass="p-mb-4">
                 <ng-template pTemplate="left">
-                    <button (click)="openCreateEtud()" class="p-button-success p-mr-2 p-mb-2" icon="pi pi-plus"
+                    <button (click)="openCreateStudent()" class="p-button-success p-mr-2 p-mb-2" icon="pi pi-plus"
                             label="New" pButton
                             pRipple style="width: 90px"></button>
                     <button (click)="deleteMultiple()" [disabled]="!selectes || !selectes.length"
@@ -23,7 +23,8 @@
                 </ng-template>
             </p-toolbar>
 
-            <p-table #dt [(selection)]="selectes" [columns]="cols" [globalFilterFields]="['libelle','nombreEtudiant']"
+            <p-table #dt [(selection)]="selectes" [columns]="cols"
+                     [globalFilterFields]="['id','libelle','nombreEtudiant']"
                      [paginator]="true"
                      [rowHover]="true"
                      [rows]="8" [showCurrentPageReport]="true" [value]="groupeEtudiants"
@@ -42,12 +43,14 @@
                                style="margin-right: 10px;width: 200px"
                                type="text"/>
                         <input [(ngModel)]="groupStudentDetail.etudiant.nom  " pInputText
-                               placeholder="Search by student FullName" style="margin-right: 10px;width: 200px" type="text"/>
+                               placeholder="Search by student FullName" style="margin-right: 10px;width: 200px"
+                               type="text"/>
 
 
 
 
-                           <button pButton pRipple type="button" icon="pi pi-search" (click)="findByCriteria()" style="margin-left: 25px"
+                           <button pButton pRipple type="button" icon="pi pi-search" (click)="findByCriteria()"
+                                   style="margin-left: 25px"
                                    class="p-button-rounded p-button-success"></button>
 
                         </span>
@@ -60,9 +63,14 @@
                             <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                         </th>
 
+                        <th pSortableColumn="id">ID
+                            <p-sortIcon field="id"></p-sortIcon>
+                        </th>
+
                         <th pSortableColumn="libelle"> Group Label
                             <p-sortIcon field="liebelle"></p-sortIcon>
                         </th>
+
                         <th pSortableColumn="dateDebut">Start date
                             <p-sortIcon field="dateDebut"></p-sortIcon>
                         </th>
@@ -89,6 +97,7 @@
                         <td>
                             <p-tableCheckbox [value]="groupeEtudiant"></p-tableCheckbox>
                         </td>
+                        <td>{{groupeEtudiant.id}}</td>
                         <td>{{groupeEtudiant.libelle}}</td>
                         <td>{{groupeEtudiant.dateDebut}}</td>
                         <td>{{groupeEtudiant.dateFin}}</td>
@@ -99,7 +108,7 @@
                             <button (click)="delete(groupeEtudiant)" class="p-button-rounded p-button-danger"
                                     icon="pi pi-trash" pButton
                                     pRipple></button>&nbsp;
-                            <button (click)="edit(groupeEtudiant) ;findAllGroupeEtudiantDetail(groupeEtudiant)"
+                            <button (click)="edit(groupeEtudiant)"
                                     class="p-button-rounded p-button-success p-mr-2" icon="pi pi-pencil" pButton
                                     pRipple></button>
                             <button (click)=" findAllGroupeEtudiantDetail(groupeEtudiant); openGroupeEtudiantDetail()"
@@ -109,13 +118,6 @@
                                     (click)="showScheduleDialog(groupeEtudiant)"
                                     class="p-button-rounded p-button-secondary"></button>
                         </td>
-
-                        <!--
-                      <button  class="p-button-rounded p-button-info p-mr-2" icon="pi pi-list" pButton
-                              pRipple></button>
-                      <button  class="p-button-rounded p-button-danger" icon="pi pi-trash" pButton
-                              pRipple></button>
-                              -->
 
                     </tr>
                 </ng-template>
@@ -127,10 +129,9 @@
             </p-table>
         </div>
 
-        <app-groupe-etudiant-create></app-groupe-etudiant-create>
+        <app-groupe-etudiant-create *ngIf="createDialog"></app-groupe-etudiant-create>
         <app-groupe-etudiant-detail-list></app-groupe-etudiant-detail-list>
         <app-groupe-etudiant-edit></app-groupe-etudiant-edit>
-
 
     </div>
 </div>
@@ -160,14 +161,14 @@
         </tbody>
     </table>
 
-    <ejs-schedule width='100%'  #scheduleObj [selectedDate]="selectedDate"
+    <ejs-schedule width='100%' #scheduleObj [selectedDate]="selectedDate"
                   [timeScale]='timeScale'
                   (actionComplete)="onActionComplete()"
                   [readonly]="true"
                   [eventSettings]="eventSettings ">
         <e-views>
-            <e-view option="Week" ></e-view>
-            <e-view option="WorkWeek" ></e-view>
+            <e-view option="Week"></e-view>
+            <e-view option="WorkWeek"></e-view>
             <e-view option="Month"></e-view>
         </e-views>
     </ejs-schedule>

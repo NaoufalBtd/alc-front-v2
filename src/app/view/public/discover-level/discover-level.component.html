@@ -5,13 +5,13 @@
         <div class="container">
             <div class="row">
                 <div class=" col-md-6 col-xl-6 col-sm-12">
-                    <img src="/assets/images/Recommendation.png" width="100%" alt="image not found!">
+                    <img src="/assets/images/Recommendation.webp" width="100%" alt="image not found!">
                 </div>
 
                 <div class=" col-md-6 col-sm-12 col-xl-6">
                     <div class="row">
                         <div class="col-md-12">
-                            <h1 id="discoverText">{{"Discover your current English level" | translate}}</h1>
+                            <h1 class="section__title" id="discoverText">{{"Discover your current English level" | translate}}</h1>
                         </div>
 
                         <div class="col-md-2"><img src="/assets/icons/icons8-clock-48.png" alt=""></div>
@@ -45,7 +45,7 @@
 
     <app-advantages-engflexy></app-advantages-engflexy>
 
-    <section class="signup__area po-rel-z1">
+    <section  [style.direction]="(translate.currentLang === 'ar') ? 'rtl': 'ltr'"  class="signup__area po-rel-z1">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">

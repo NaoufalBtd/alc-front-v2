@@ -71,8 +71,6 @@
                     <select (click)="findEtudiantListByParcoursLibelle(groupeEtudiant.parcours.libelle) "
                             (change)="selectChangeHandler2($event)"
                             [(ngModel)]="groupeEtudiantDetail.etudiant.id"
-
-
                             class="btn btn-block btn-outline-light form-select" id="parcours"
                             name="Parcours" pInputText style=" background-color: gainsboro;margin-left: 5px"
                             type="text">
@@ -81,7 +79,8 @@
                     </select>
                 </div>
 
-                <button [disabled]="full"  (click)=" exit(id2)" [disabled]="!isfull()"  class="p-button-text table1" icon="pi pi-check" label="Add student" pButton
+                <button [disabled]="full"  (click)=" exit(id2)"
+                        class="p-button-text table1" icon="pi pi-check" label="Add student" pButton
                         pRipple></button>
 
                 <p-table [value]="groupeEtudiant.groupeEtudiantDetails" >

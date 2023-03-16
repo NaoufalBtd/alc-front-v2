@@ -11,44 +11,17 @@
                             [showTransitionOptions]="'0ms'" [hideTransitionOptions]="'0ms'" [dismissable]="true"
                             [showCloseIcon]="false">
                 <ng-template pTemplate>
-                    <p-table [value]="participants.get(prof.id)" [scrollable]="true" scrollHeight="400px">
-                        <ng-template pTemplate="header">
+                    <p-table [value]="usersConnected" [scrollable]="true" scrollHeight="400px">
+                        <ng-template pTemplate="body" let-etudiant>
                             <tr>
-                                <th style="min-width:200px">Full Name</th>
-                                <th style="min-width:200px">Status</th>
-                            </tr>
-
-                            <tr>
-                                <th>{{this.prof?.nom }}</th>
-                                <th>
+                                <td>{{etudiant?.nom}}</td>
+                                <td>
                                     <button
                                             style="width: 15px;height: 0" pButton pRipple
                                             type="button" icon="pi pi-circle-fill"
                                             class="p-button-rounded p-button-success">
                                     </button>
-                                </th>
-                            </tr>
-                        </ng-template>
 
-                        <ng-template pTemplate="body" let-etudiant>
-                            <tr>
-                                <td>{{etudiant?.nom}}</td>
-                                <td>
-                                    <button *ngIf=" etudiant.id === loginService.getConnectedStudent().id"
-                                            style="width: 15px;height: 0" pButton pRipple
-                                            type="button" icon="pi pi-circle-fill"
-                                            class="p-button-rounded p-button-success">
-                                    </button>
-                                    <button *ngIf="studentsEnLigne.get(etudiant.id) === undefined && etudiant.id !== loginService.getConnectedStudent().id"
-                                            style="width: 15px;height: 0" pButton pRipple
-                                            type="button" icon="pi pi-circle-fill"
-                                            class="p-button-rounded p-button-danger">
-                                    </button>
-                                    <button *ngIf="studentsEnLigne.get(etudiant.id) !== undefined && etudiant.id !== loginService.getConnectedStudent().id"
-                                            style="width: 15px;height: 0" pButton pRipple
-                                            type="button" icon="pi pi-circle-fill"
-                                            class="p-button-rounded p-button-success">
-                                    </button>
                                 </td>
                             </tr>
                         </ng-template>
@@ -57,7 +30,7 @@
             </p-overlayPanel>
 
             <button pButton pRipple type="button" icon="pi pi-users"
-                    (click)="op.toggle($event); getData()"
+                    (click)="op.toggle($event); getConnectedUsers()"
                     class="p-button-rounded  leftButton p-button-outlined">
 
             </button>
@@ -176,7 +149,7 @@
 
 
                     <div class="p-col" style="position: relative;background: #263238;"
-                         *ngIf="!this.webSocketService.isInSession">
+                         *ngIf="!this.webSocketService.isInSession && tabViewActiveIndex === 0">
 
                         <div class="p-grid">
                             <div class="p-col-4">
@@ -238,7 +211,7 @@
                             </div>
                             <div class="p-grid keys">
                                 <div class="p-col-8">Exercise completed</div>
-                                <div class="p-col-4 keysValue">8</div>
+                                <div class="p-col-4 keysValue">{{numberResponseOfQuizQuestion}}</div>
                             </div>
                             <div class="p-grid keys">
                                 <div class="p-col-8">Words added</div>

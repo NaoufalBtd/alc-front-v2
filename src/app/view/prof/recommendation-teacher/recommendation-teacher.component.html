@@ -1,110 +1,107 @@
-<button   (click)="showEditDialog()" class="p-button-success p-mr-2 p-mb-2" icon="pi pi-plus" label="All reconmendation" pButton
-          pRipple style="width: 150px ;  margin-top: 10px;"></button>
-<p-card [style]="{'width': '75%', 'margin-bottom': '10%','height': '80%','margin-left': '10%', 'backgroundColor': '#FEBF7E'}">
+<button (click)="showEditDialog()" class="p-button-success" icon="pi pi-plus" label="All reconmendation" pButton
+        pRipple style="margin: 10px 0;"></button>
+<p-card [style]="{'backgroundColor': '#FEBF7E', 'padding-top': '20px'}">
     <p-toast></p-toast>
     <ng-template pTemplate="header">
-        <span> <h2  style="color: white; text-align: center"  >Recommend a teacher to EngFlexy
+        <span> <h2 style="color: white; text-align: center">Recommend a teacher to EngFlexy
            </h2></span>
-        <span> <h2   style="color: white; text-align: center"  > and get a money reward !
+        <span> <h2 style="color: white; text-align: center"> and get a money reward !
            </h2></span>
+    </ng-template>
+    <ng-template pTemplate="body">
         <div class="p-grid p-fluid" style="margin-top: 3%">
             <div class="p-field p-col-12 p-md-4">
-                <img  style="height: 60% ; width: 60% ;
+                <img style="height: 60% ; width: 60% ;
                  margin-left: 20% ; border-radius: 60%" alt="roma-layout" src="../../../../assets/images/sent.png">
                 <p style="margin-left: 20% ; margin-top: 3% ">Step 1</p>
                 <h4 style="margin-left: 20%  ; color: white">Recommend a teacher</h4>
             </div>
-            <div class="horizontal_dotted_line"  ></div>
+            <div class="horizontal_dotted_line"></div>
             <div class="p-field p-col-12 p-md-4">
-                <img  style="height: 60% ; width: 60%  ; margin-left: 20% ; border-radius: 60%" alt="roma-layout"
-                      src="../../../../assets/images/Recommendation.png"><p  style="margin-left: 20% ; margin-top: 3%">Step 2</p>
+                <img style="height: 60% ; width: 60%  ; margin-left: 20% ; border-radius: 60%" alt="roma-layout"
+                     src="../../../../assets/images/Recommendation.png">
+                <p style="margin-left: 20% ; margin-top: 3%">Step 2</p>
                 <h4 style="margin-left: 20%  ; color: white">A teacher completes a probationary period</h4>
             </div>
 
             <div class="p-field p-col-12 p-md-4">
-                <img  style="height:65%; width:60%  ;margin-left: 20% ; border-radius: 60%" alt="roma-layout"
-                      src="../../../../assets/images/reward.png"> <p  style=" margin-left: 20% ;">Step 3</p>
+                <img style="height:65%; width:60%  ;margin-left: 20% ; border-radius: 60%" alt="roma-layout"
+                     src="../../../../assets/images/reward.png">
+                <p style=" margin-left: 20% ;">Step 3</p>
                 <h4 style=" color: white; margin-left: 20% ;">Get your reward</h4>
             </div>
 
         </div>
 
-        <h4  style="color: white; text-align: center">RECOMMEND A TEACHER</h4>
+        <h4 style="color: white; text-align: center">RECOMMEND A TEACHER</h4>
 
-        <div class="p-grid p-fluid">
-
-            <div class="p-field p-md-4  class1 ">
-
+        <div class="p-grid p-fluid ">
+            <div class="p-field p-col-12 p-md-4">
                 <input [(ngModel)]="selected.nom" id="firstname6" placeholder="Full Name" pInputText type="text">
             </div>
-
-        </div>
-        <div class="p-grid p-fluid ">
-            <div class="p-field p-md-4 class1">
+            <div class="p-field p-col-12 p-md-4">
                 <input [(ngModel)]="selected.login" id="login" placeholder="Email" pInputText type="text">
             </div>
 
             <div class="p-field p-col-12 p-md-4">
-                <input [(ngModel)]="selected.telephone" id="integeronly" placeholder="Phone number" pInputText type="text">
+                <input [(ngModel)]="selected.telephone" id="integeronly" placeholder="Phone number" pInputText
+                       type="text">
             </div>
         </div>
 
-        <div class="p-field p-col-12 p-md-4 class2" >
-            <button (click)="save()" class="p-button-help p-button-icon NG" label="Send Teachers Contact" pButton pRipple
+        <div class="d-flex justify-content-center">
+            <button (click)="save()" class="p-button-help p-button-icon NG" label="Send Teachers Contact" pButton
+                    pRipple
                     style="background-color: #FF7F00" type="button"></button>
-
         </div>
-
     </ng-template>
-
 </p-card>
 
 <p-dialog [(visible)]="dialog" [style]="{width: '60vw'}">
 
 
-<p-table #dt  [value]="items"
-         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-         dataKey="id"
-         styleClass="p-datatable-customers">
-    <ng-template pTemplate="caption">
-        <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
-            <h5 class="p-m-0">Recommendation List</h5>
-        </div>
-    </ng-template>
-    <ng-template pTemplate="header">
-        <tr>
-            <th pSortableColumn="student">Recommended Teacher Full Name
-                <p-sortIcon field="student"></p-sortIcon>
-            </th>
-            <th pSortableColumn="start at">Recommended By
-                <p-sortIcon field="dateDebut"></p-sortIcon>
-            </th>
+    <p-table #dt [value]="items"
+             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+             dataKey="id"
+             styleClass="p-datatable-customers">
+        <ng-template pTemplate="caption">
+            <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
+                <h5 class="p-m-0">Recommendation List</h5>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="student">Recommended Teacher Full Name
+                    <p-sortIcon field="student"></p-sortIcon>
+                </th>
+                <th pSortableColumn="start at">Recommended By
+                    <p-sortIcon field="dateDebut"></p-sortIcon>
+                </th>
 
-            <th pSortableColumn="duration">Phone Number
-                <p-sortIcon field="duration"></p-sortIcon>
-            </th>
-            <th pSortableColumn="duration">Email
-                <p-sortIcon field="duration"></p-sortIcon>
-            </th>
-            <th pSortableColumn="duration">Recommendation Date
-                <p-sortIcon field="duration"></p-sortIcon>
-            </th>
-        </tr>
-    </ng-template>
-    <ng-template let-recommend pTemplate="body">
-        <tr>
-            <td>{{recommend.nom}} </td>
-            <td>{{recommend.prof.nom}}  {{recommend.prof.prenom}}</td>
-            <td>{{recommend.telephone}}</td>
-            <td>{{recommend.login}}</td>
-            <td>{{recommend.dateRecommamdation | date:' yyyy-MM-dd\' Time \'HH:mm:ss'}}</td>
-        </tr>
-    </ng-template>
-    <ng-template pTemplate="summary">
-        <div class="p-d-flex p-ai-center p-jc-between">
-            In total there are {{items ? items.length : 0 }} items.
-        </div>
-    </ng-template>
-</p-table>
-
+                <th pSortableColumn="duration">Phone Number
+                    <p-sortIcon field="duration"></p-sortIcon>
+                </th>
+                <th pSortableColumn="duration">Email
+                    <p-sortIcon field="duration"></p-sortIcon>
+                </th>
+                <th pSortableColumn="duration">Recommendation Date
+                    <p-sortIcon field="duration"></p-sortIcon>
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template let-recommend pTemplate="body">
+            <tr>
+                <td>{{recommend.nom}} </td>
+                <td>{{recommend.prof.nom}}  {{recommend.prof.prenom}}</td>
+                <td>{{recommend.telephone}}</td>
+                <td>{{recommend.login}}</td>
+                <td>{{recommend.dateRecommamdation | date:' yyyy-MM-dd\' Time \'HH:mm:ss'}}</td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+            <div class="p-d-flex p-ai-center p-jc-between">
+                In total there are {{items ? items.length : 0 }} items.
+            </div>
+        </ng-template>
+    </p-table>
 </p-dialog>

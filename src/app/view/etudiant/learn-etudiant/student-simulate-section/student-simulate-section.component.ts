@@ -3,14 +3,13 @@ import {Component, OnDestroy, OnInit, Pipe, PipeTransform} from '@angular/core';
 import {DomSanitizer} from '@angular/platform-browser';
 import {Section} from '../../../../controller/model/section.model';
 import {Cours} from '../../../../controller/model/cours.model';
-import {ConfirmationService, MenuItem, MessageService, TreeNode} from 'primeng/api';
+import {ConfirmationService, MessageService} from 'primeng/api';
 import {ParcoursService} from '../../../../controller/service/parcours.service';
 import {HttpClient} from '@angular/common/http';
 import {QuizEtudiantService} from '../../../../controller/service/quiz-etudiant.service';
 import {Quiz} from '../../../../controller/model/quiz.model';
 import {LoginService} from '../../../../controller/service/login.service';
 import {Etudiant} from '../../../../controller/model/etudiant.model';
-import {QuizEtudiant} from '../../../../controller/model/quiz-etudiant.model';
 import {DictionaryService} from '../../../../controller/service/dictionary.service';
 import {Dictionary} from '../../../../controller/model/dictionary.model';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -26,17 +25,16 @@ import {WebSocketService} from '../../../../controller/service/web-socket.servic
 import {LearnService} from '../../../../controller/service/learn.service';
 import {Prof} from '../../../../controller/model/prof.model';
 import {GroupeEtudiant} from '../../../../controller/model/groupe-etudiant.model';
-import {GroupeEtudiantService} from '../../../../controller/service/groupe-etudiant-service';
 import {AppComponent} from '../../../../app.component';
 import {MenuService} from '../../../shared/slide-bar/app.menu.service';
 import {SimulateSectionService} from '../../../../controller/service/simulate-section.service';
 import {ChatMessageDto} from '../../../../controller/model/chatMessageDto';
-import {User} from '../../../../controller/model/user.model';
 import {HomeWorkEtudiantComponent} from '../../homeWork/home-work-etudiant/home-work-etudiant.component';
 import {HomeWorkSimulateService} from '../../../../controller/service/home-work-simulate.service';
 import {CategoriesSectionItemEnum} from '../../../../enum/CategoriesSectionItemEnum';
 import {ScheduleService} from '../../../../controller/service/schedule.service';
 import {AnimationService} from '../../../../controller/service/animation.service';
+import {UserVo} from '../../../../controller/vo/UserVo';
 
 @Pipe({name: 'safe'})
 export class SafePipe implements PipeTransform {
@@ -55,7 +53,7 @@ export class SafePipe implements PipeTransform {
     styleUrls: ['./student-simulate-section.component.scss']
 })
 export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
-
+    usersConnected: UserVo[];
     activeIndex = 0;
     responsiveOptions: any[] = [
         {
@@ -87,7 +85,6 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
     public CategoriesSectionItemEnum = CategoriesSectionItemEnum;
 
 
-    // tslint:disable-next-line:max-line-lengthg max-line-length
     constructor(private messageService: MessageService,
                 private router: Router,
                 public webSocketService: WebSocketService,
@@ -112,9 +109,13 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
                 private app: AppComponent,
                 private route: ActivatedRoute,
                 private simulateSectionService: SimulateSectionService,
-                private grpEtudiantService: GroupeEtudiantService,
     ) {
     }
+
+    get numberResponseOfQuizQuestion(): number {
+        return this.learnService.numberResponseOfQuizQuestion;
+    }
+
 
     get minute(): number {
         return this.webSocketService.minute;
@@ -136,9 +137,6 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
         return this.webSocketService.lessonStarted;
     }
 
-    set lessonStarted(value: boolean) {
-        this.webSocketService.lessonStarted = value;
-    }
 
     get vocabularySection(): Section {
         return this.simulateSectionService.vocabularySection;
@@ -185,16 +183,9 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
         return this.simulateSectionService.finishedAdditionalSection;
     }
 
-    set finishedAdditionalSection(value: number) {
-        this.simulateSectionService.finishedAdditionalSection = value;
-    }
 
     get finishedSection(): number {
         return this.simulateSectionService.finishedSection;
-    }
-
-    set finishedSection(value: number) {
-        this.simulateSectionService.finishedSection = value;
     }
 
     get showLesson(): boolean {
@@ -211,15 +202,6 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
 
     set showSummary(value: boolean) {
         this.simulateSectionService.showSummary = value;
-    }
-
-
-    get coursecomplited(): boolean {
-        return this.review.coursecomplited;
-    }
-
-    set coursecomplited(value: boolean) {
-        this.review.coursecomplited = value;
     }
 
 
@@ -264,13 +246,6 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
         this.sectionItemService.showVocabulary = value;
     }
 
-    get contenuSection(): Array<string> {
-        return this.service.contenuSection;
-    }
-
-    set contenuSection(value: Array<string>) {
-        this.service.contenuSection = value;
-    }
 
     get selected(): Dictionary {
         return this.dictionnaryService.selected;
@@ -296,13 +271,6 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
         this.service.image = value;
     }
 
-    get selectedDict(): Dictionary {
-        return this.dictionnaryService.selectedDict;
-    }
-
-    set selectedDict(value: Dictionary) {
-        this.dictionnaryService.selectedDict = value;
-    }
 
     get selectedEtudiantCours(): EtudiantCours {
         return this.service.selectedEtudiantCours;
@@ -312,41 +280,14 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
         this.service.selectedEtudiantCours = value;
     }
 
-    get itemsEtudiantCours(): Array<EtudiantCours> {
-        return this.service.itemsEtudiantCours;
-    }
-
-    set itemsEtudiantCours(value: Array<EtudiantCours>) {
-        this.service.itemsEtudiantCours = value;
-    }
-
-    get submittedDictEdit(): boolean {
-        return this.dictionnaryService.submittedDictEdit;
-    }
-
     set submittedDictEdit(value: boolean) {
         this.dictionnaryService.submittedDictEdit = value;
-    }
-
-    get editDialogDict(): boolean {
-        return this.dictionnaryService.editDialogDict;
     }
 
     set editDialogDict(value: boolean) {
         this.dictionnaryService.editDialogDict = value;
     }
 
-    get submittedDict(): boolean {
-        return this.dictionnaryService.submittedDict;
-    }
-
-    set submittedDict(value: boolean) {
-        this.dictionnaryService.submittedDict = value;
-    }
-
-    get createDialogDict(): boolean {
-        return this.dictionnaryService.createDialogDict;
-    }
 
     set createDialogDict(value: boolean) {
         this.dictionnaryService.createDialogDict = value;
@@ -369,41 +310,9 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
         this.service.selectedsection = value;
     }
 
-    get section(): Section {
-        return this.quizService.section;
-    }
-
-    set section(value: Section) {
-        this.quizService.section = value;
-    }
 
     get selectedQuiz(): Quiz {
         return this.quizService.selectedQuiz;
-    }
-
-    set selectedQuiz(value: Quiz) {
-        this.quizService.selectedQuiz = value;
-    }
-
-    get etudiant(): Etudiant {
-        return this.loginService.etudiant;
-    }
-
-
-    get quizEtudiantList(): QuizEtudiant {
-        return this.quizService.quizEtudiantList;
-    }
-
-    set quizEtudiantList(value: QuizEtudiant) {
-        this.quizService.quizEtudiantList = value;
-    }
-
-    get passerQuiz(): string {
-        return this.quizService.passerQuiz;
-    }
-
-    set passerQuiz(value: string) {
-        this.quizService.passerQuiz = value;
     }
 
     get quizView(): boolean {
@@ -434,9 +343,6 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
         return this.service.sectionStandard;
     }
 
-    set sectionStandard(value: Array<Section>) {
-        this.service.sectionStandard = value;
-    }
 
     get sectionAdditional(): Array<Section> {
         return this.service.sectionAdditional;
@@ -451,10 +357,6 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
     }
 
 
-    set sectionAdditional(value: Array<Section>) {
-        this.service.sectionAdditional = value;
-    }
-
     get selectessection(): Array<Section> {
         return this.service.selectessection;
     }
@@ -464,45 +366,14 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
     }
 
 
-    get selectedReview(): EtudiantReview {
-        return this.review.selected;
-    }
-
     set selectedReview(value: EtudiantReview) {
         this.review.selected = value;
-    }
-
-    get listSynonymes(): Array<any> {
-        return this.dictionnaryService.listSynonymes;
-    }
-
-    set listSynonymes(value: Array<any>) {
-        this.dictionnaryService.listSynonymes = value;
-    }
-
-    get Synonymes(): Array<any> {
-        return this.dictionnaryService.Synonymes;
-    }
-
-    set Synonymes(value: Array<any>) {
-        this.dictionnaryService.Synonymes = value;
-    }
-
-    get TranslateSynonymeDialog(): boolean {
-        return this.dictionnaryService.TranslateSynonymeDialog;
-    }
-
-    set TranslateSynonymeDialog(value: boolean) {
-        this.dictionnaryService.TranslateSynonymeDialog = value;
     }
 
     get connectedUsers(): any[] {
         return this.webSocketService.connectedUsers;
     }
 
-    set connectedUsers(value: any[]) {
-        this.webSocketService.connectedUsers = value;
-    }
 
     get prof(): Prof {
         return this.webSocketService.prof;
@@ -516,49 +387,27 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
         return this.webSocketService.groupeEtudiant;
     }
 
-
-    get studentsEnLigne(): Map<number, User> {
-        return this.webSocketService.studentsEnLigne;
+    set groupeEtudiant(value: GroupeEtudiant) {
+        this.webSocketService.groupeEtudiant = value;
     }
+
 
     get images(): any[] {
         return this.simulateSectionService.images;
-    }
-
-    set images(value: any[]) {
-        this.simulateSectionService.images = value;
     }
 
     get showGalleria(): boolean {
         return this.simulateSectionService.showGalleria;
     }
 
-    set showGalleria(value: boolean) {
-        this.simulateSectionService.showGalleria = value;
-    }
 
     get listOfContent(): string[] {
         return this.simulateSectionService.listOfContent;
     }
 
-    set listOfContent(value: string[]) {
-        this.simulateSectionService.listOfContent = value;
-    }
 
-
-    showTakeQuiz = false;
-    showViewQuiz = false;
-    nodes: TreeNode[];
-    menu: MenuItem[];
     srcImg: string;
-    translate: any;
-    textSeleted: string;
-    filteredDict: any[];
-    synonym: any[];
     value = 0;
-    word: string;
-    wordDict: any;
-    j: number;
     searchInput: string;
 
     get selectedLanguage(): any {
@@ -582,107 +431,6 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
         this.router.navigate(['etudiant/dashboard']);
     }
 
-    public findByWord() {
-        this.dictionnaryService.FindByWord(this.word).subscribe(
-            data => {
-                this.selectedDict = data;
-                document.getElementById('dictionnair').style.visibility = 'visible';
-                document.getElementById('dictionnair').style.width = '90%';
-                document.getElementById('dictionnair').style.height = '100%';
-                this.word = '';
-            }, error => {
-                console.log(error);
-            });
-        document.getElementById('dictionnair').style.visibility = 'hidden';
-        document.getElementById('dictionnair').style.width = '0px';
-        document.getElementById('dictionnair').style.height = '0px';
-    }
-
-    public Section(libelle: string) {
-        this.service.afficheSection(libelle).subscribe(
-            data => {
-                this.selectedsection = data;
-                if (data.categorieSection.libelle === 'Vocabulary') {
-                    this.Vocab(data);
-                } else {
-                    this.showVocabulary = false;
-                }
-                this.quizService.findQuizBySectionId(this.selectedsection).subscribe(
-                    dataQuiz => {
-                        this.selectedQuiz = dataQuiz;
-                        if (dataQuiz !== null) {
-                            this.quizService.findQuizEtudanitByEtudiantIdAndQuizId(this.loginService.etudiant,
-                                this.selectedQuiz).subscribe(
-                                (data) => {
-                                    this.quizEtudiantList = data;
-                                    this.quizService.findAllQuestions(this.selectedQuiz.ref).subscribe(
-                                        dataQuestions => {
-                                            if (data === null || data?.id === undefined || data?.id === null) {
-                                                this.showTakeQuiz = true;
-                                                this.showViewQuiz = false;
-                                            } else {
-                                                if (data.questionCurrent > dataQuestions.length) {
-                                                    this.showViewQuiz = true;
-                                                    this.showTakeQuiz = false;
-                                                    // this.passerQuiz = 'View Quiz';
-                                                    // this.quizView = true;
-                                                } else {
-                                                    this.showTakeQuiz = true;
-                                                    this.showViewQuiz = false;
-                                                    // this.quizView = false;
-                                                }
-                                            }
-
-                                        }
-                                    );
-                                }, error => {
-                                    this.passerQuiz = 'Take Quiz';
-                                    this.quizView = false;
-                                }
-                            );
-                        } else {
-                            this.passerQuiz = 'Take Quiz';
-                            this.quizView = false;
-                        }
-                    },
-                );
-            }, error => {
-
-            });
-    }
-
-    public ReviewExist() {
-        this.review.findReview(this.selectedcours.id).subscribe(
-            data => {
-                this.selectedReview = data;
-            });
-    }
-
-
-    public openCreateDict() {
-        document.getElementById('dictionnair').style.visibility = 'hidden';
-        document.getElementById('dictionnair').style.width = '0px';
-        document.getElementById('dictionnair').style.height = '0px';
-        this.submittedDict = false;
-        this.createDialogDict = true;
-        this.selectedDict = new Dictionary();
-    }
-
-    filterDict(event) {
-        const filtered: any[] = [];
-        const query = event.query;
-
-        // tslint:disable-next-line:prefer-for-of
-        for (let i = 0; i < this.itemsDict.length; i++) {
-            const dict = this.itemsDict[i];
-            // tslint:disable-next-line:triple-equals
-            if (dict.word.toLowerCase().indexOf(query.toLowerCase()) == 0) {
-                filtered.push(dict);
-            }
-        }
-
-        this.filteredDict = filtered;
-    }
 
     ngOnInit(): void {
         const idCurrentDoc: string = this.route.snapshot.params.id;
@@ -769,27 +517,10 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
     }
 
     photoURL() {
-        // this.service.image = '';
-        //  for (let j = 0; j < 76 ; j++)
-        //  {
-        // this.service.image = this.selectedsection.urlImage;
-        //  }
-        //  this.service.image += 'preview';
-        //  console.log(this.selectedsection.id);
-        // const blob = UrlFetch(this.image,{headers})
-        //  return this.sanitizer.bypassSecurityTrustResourceUrl(this.service.image);
-        // return this.service.image;
         this.service.image = '';
-        //  for (let j = 0; j < 76 ; j++)
-        //  {
         this.service.image = this.selectedsection.urlImage;
-        //  }
-        //  this.service.image += 'preview';
-        //  console.log(this.service.image);
         this.srcImg = this.service.image;
         return this.srcImg;
-
-        //   return this.sanitizer.bypassSecurityTrustResourceUrl(this.service.image);
     }
 
     URLVideo(urlVideo: string): string {
@@ -854,9 +585,6 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
         this.connectedUsers.splice(0, this.connectedUsers.length);
     }
 
-    getData() {
-        const grp = this.participants.get(this.prof.id);
-    }
 
     getLanguages(): Array<any> {
         return this.app.languages;
@@ -963,6 +691,7 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
                 this.webSocketService.isInSession = true;
                 this.selectedcours = selectedMeeting.cours;
                 this.prof = selectedMeeting.prof;
+                this.groupeEtudiant = selectedMeeting.groupeEtudiant;
                 this.simulateSectionService.findSectionOneByCoursId(selectedMeeting.cours);
                 this.findhomeworkbycours(this.selectedcours);
                 if (this.webSocketService.isInSession) {
@@ -976,6 +705,7 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
                     });
                 this.webSocketService.openWebSocket(this.loginService.getConnectedStudent(),
                     selectedMeeting.groupeEtudiant.prof,
+                    selectedMeeting.id,
                     selectedMeeting.groupeEtudiant, 'STUDENT');
             }, error => {
                 this.animationService.showAnimation = false;
@@ -1022,6 +752,16 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
 
     activeIndexChange(event: any) {
         this.activeIndex = event;
+    }
+
+    getConnectedUsers() {
+        this.webSocketService.getConnectedUsers().subscribe(
+            data => {
+                this.usersConnected = data;
+            }, error => {
+                console.log(error);
+            }
+        );
     }
 
 }

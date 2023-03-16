@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {User} from '../../../controller/model/user.model';
 import {FileUploadStatus} from '../../../controller/model/FileUploadStatus';
 import {Subscription} from 'rxjs';
@@ -31,6 +31,7 @@ import {Skill} from '../../../controller/model/skill.model';
     styleUrls: ['./etudiant-profile.component.scss']
 })
 export class EtudiantProfileComponent implements OnInit {
+    @ViewChild('mySpan', {static: true}) mySpan: ElementRef;
 
     user: User = new User();
     public users: User[];
@@ -53,13 +54,15 @@ export class EtudiantProfileComponent implements OnInit {
     changePass = false;
     newPassword = '';
     newPasswordRepated = '';
-    selectedElement = 'PROFILE' || 'SET' || 'PASS' || 'INSCRIPTION';
+    selectedElement = 'PROFILE' || 'SET' || 'PASS' || 'INS_TAB';
     languages = [
         {code: 'ar', libelle: 'Arabic'},
         {code: 'fr', libelle: 'French'},
         {code: 'en', libelle: 'English'}
     ];
     selectedLanguage: any;
+    public showPassNotValidMessage: string;
+    public showPassNotValid: boolean;
 
 
     constructor(private menuService: MenuService,
@@ -70,6 +73,7 @@ export class EtudiantProfileComponent implements OnInit {
                 public packStudentService: PackStudentService, private messageService: MessageService,
                 public groupeEtudeService: GroupeEtudeService, public router: Router) {
     }
+
 
     get selectedPack(): PackStudent {
         return this.etudiantService.selectedPack;
@@ -95,6 +99,7 @@ export class EtudiantProfileComponent implements OnInit {
 
         });
     }
+
     get packs(): Array<PackStudent> {
         return this.packStudentService.packs;
     }
@@ -119,6 +124,17 @@ export class EtudiantProfileComponent implements OnInit {
             data => {
                 this.inscription = data;
                 this.packChossen = this.inscription.packStudent;
+                if (
+                    data?.parcours === null ||
+                    data?.parcours?.id === undefined ||
+                    data?.parcours === undefined ||
+                    data?.parcours?.id === null ||
+                    data?.parcours?.id === 0
+                ) {
+                    this.packStudentService.findAllPacks();
+                } else {
+                    this.packStudentService.findByLevel(data?.parcours?.id);
+                }
             }
         );
         this.groupeEtudeService.findAll().subscribe(
@@ -126,9 +142,6 @@ export class EtudiantProfileComponent implements OnInit {
                 this.groupeEtudeList = data;
             }
         );
-        // this.packStudentService.findPackIndividualOrgroupe(true);
-        // this.packStudentService.findPackIndividualOrgroupe(false);
-        this.packStudentService.findAllPacks();
         this.userService.findAllStatutSocial().subscribe(
             data => {
                 this.statutSocials = data;
@@ -353,7 +366,7 @@ export class EtudiantProfileComponent implements OnInit {
 
     selectedPackFct(pack: PackStudent) {
         this.selectedPack = pack;
-        this.router.navigate(['/etudiant/pack']);
+        this.router.navigate(['/etudiant/pack/' + pack.id]);
     }
 
     updateInscriptionByStudent() {
@@ -419,28 +432,37 @@ export class EtudiantProfileComponent implements OnInit {
     }
 
     changePassword() {
-        this.etudiantService.updatePassword(this.newPassword, this.loginService.getConnectedStudent().username).subscribe(
-            data => {
-                if (data > 0) {
-                    this.changePass = false;
+        if (this.newPassword !== this.newPasswordRepated) {
+            this.showPassNotValid = true;
+            this.showPassNotValidMessage = 'true';
+        }
+        if (this.newPassword !== null &&
+            this.newPassword !== undefined &&
+            this.newPassword?.length > 7 &&
+            this.newPassword === this.newPasswordRepated
+        ) {
+            this.etudiantService.updatePassword(this.newPassword, this.loginService.getConnectedStudent().username).subscribe(
+                data => {
+                    if (data > 0) {
+                        this.changePass = false;
+                        this.messageService.add({
+                                severity: 'success',
+                                summary: 'Successful',
+                                detail: 'Password updated Successfully',
+                                life: 3000
+                            }
+                        );
+                    }
+                }, error => {
                     this.messageService.add({
-                            severity: 'success',
-                            summary: 'Successful',
-                            detail: 'Password updated Successfully',
+                            severity: 'Error',
+                            detail: error?.error?.message || 'error while updating your password',
                             life: 3000
                         }
                     );
                 }
-            }, error => {
-                this.messageService.add({
-                        severity: 'Error',
-                        summary: 'error',
-                        detail: 'error while updating your password',
-                        life: 3000
-                    }
-                );
-            }
-        );
+            );
+        }
     }
 
     showMenuElemnt(elemnent: string) {
@@ -456,11 +478,19 @@ export class EtudiantProfileComponent implements OnInit {
     }
 
     isForGroupOrindev(forGroupe: boolean): string {
-        if (forGroupe){
+        if (forGroupe) {
             return 'Group';
         } else {
             return 'Individual';
         }
+    }
+
+    getPercentage(pack: PackStudent): number {
+        return (100 - ((Number(pack?.price?.price) / Number(pack?.price?.oldPrice)) * 100));
+    }
+
+    filterByLevel(level: Parcours) {
+        console.log(level);
     }
 }
 

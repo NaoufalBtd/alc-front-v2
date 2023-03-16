@@ -926,6 +926,9 @@ export class ParcoursService {
 
     findParcoursByCode(free: string): Observable<Array<Parcours>> {
         return this.http.get<Array<Parcours>>(this.profUrl + 'parcours/code/' + free);
-
     }
+    findParcoursById(id: number): Observable<Parcours> {
+        return this.http.get<Parcours>(environment.publicUrl + 'parcours/id/' + id);
+    }
+
 }

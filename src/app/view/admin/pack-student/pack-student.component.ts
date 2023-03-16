@@ -13,7 +13,11 @@ import {PriceService} from '../../../controller/service/price.service';
     styleUrls: ['./pack-student.component.scss']
 })
 export class PackStudentComponent implements OnInit {
-
+     public images = [
+        {name: 'SILVER', url: 'https://drive.google.com/uc?export=view&id=1SpwvuKUPqEcDcElhxauFBdd3kD1BRWIV'},
+        {name: 'GOLD', url: 'https://drive.google.com/uc?export=view&id=175fGvbb5RdWYJibWG2AuDwPF2lLK8PBa'},
+        {name: 'PLATINUM', url: 'https://drive.google.com/uc?export=view&id=1h2G4UJqu71F_OHbTDB1n4DJUXj6w1RM8'},
+    ];
     public displayPackIndividual = false;
     public displayPackgroupe = false;
     public displayPackIndividualforUpdate = false;
@@ -33,7 +37,9 @@ export class PackStudentComponent implements OnInit {
         return this.packStudentServie.packstudentIndividial;
     }
 
-
+    set packstudentIndividial(value: PackStudent) {
+        this.packStudentServie.packstudentIndividial = value;
+    }
     get packstudentgroupe(): PackStudent {
 
         return this.packStudentServie.packstudentgroupe;
@@ -59,6 +65,7 @@ export class PackStudentComponent implements OnInit {
     }
 
     showindividual() {
+        this.packstudentIndividial = new PackStudent();
         if (this.displayPackgroupe === true) {
             this.displayPackgroupe = false;
         }
@@ -67,24 +74,27 @@ export class PackStudentComponent implements OnInit {
     }
 
     showgroupeforUpdate(c: PackStudent) {
+        this.packstudentIndividial = new PackStudent();
         if (this.displayPackIndividualforUpdate === true) {
             this.displayPackIndividualforUpdate = false;
         }
         this.displayPackgroupeforUpdate = true;
         this.priceList = this.prices.filter(p => p.forGroup === true);
-        this.packStudentServie.packstudentIndividial = c;
+        this.packstudentIndividial = c;
     }
 
     showindividualforupdate(c: PackStudent) {
+        this.packstudentIndividial = new PackStudent();
         if (this.displayPackgroupeforUpdate === true) {
             this.displayPackgroupeforUpdate = false;
         }
         this.displayPackIndividualforUpdate = true;
         this.priceList = this.prices.filter(p => p.forGroup === false);
-        this.packStudentServie.packstudentIndividial = c;
+        this.packstudentIndividial = c;
     }
 
     showgroupe() {
+        this.packstudentIndividial = new PackStudent();
         if (this.displayPackIndividual === true) {
             this.displayPackIndividual = false;
         }
@@ -136,9 +146,11 @@ export class PackStudentComponent implements OnInit {
         });
     }
 
-    findBycreteria(b: boolean) {
+    findBycreteria(b: boolean, value: string) {
         this.packStudentServie.packstudentVo.forGroupe = b;
-        this.packStudentServie.findbycretira(b);
+        console.log(value);
+        console.log(b);
+        this.packStudentServie.findbycretira(b, value);
     }
 
 }

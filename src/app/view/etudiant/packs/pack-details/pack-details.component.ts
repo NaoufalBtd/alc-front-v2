@@ -1,13 +1,17 @@
 import {Component, OnInit} from '@angular/core';
 import {PackStudent} from '../../../../controller/model/pack-student.model';
 import {EtudiantService} from '../../../../controller/service/etudiant.service';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {ParcoursService} from '../../../../controller/service/parcours.service';
 import {Cours} from '../../../../controller/model/cours.model';
 import {AuthenticationService} from '../../../../controller/service/authentication.service';
 import {InscriptionService} from '../../../../controller/service/inscription.service';
 import {Inscription} from '../../../../controller/model/inscription.model';
 import {MessageService} from 'primeng/api';
+import {PackStudentService} from '../../../../controller/service/pack-student.service';
+import {TranslateService} from '@ngx-translate/core';
+import {Etudiant} from '../../../../controller/model/etudiant.model';
+import {environment} from '../../../../../environments/environment';
 
 @Component({
     selector: 'app-pack-details',
@@ -18,12 +22,20 @@ export class PackDetailsComponent implements OnInit {
     courses: Array<Cours> = new Array<Cours>();
     inscription: Inscription = new Inscription();
     nombreCours = 5;
+    userRequest: Etudiant;
+    callbackUrl = environment.callbackUrl;
+    shopUrl = environment.shopUrl;
+    failUrl = environment.failUrl;
+    okUrl = environment.okUrl;
 
     constructor(private etudiantService: EtudiantService,
                 private inscriptionService: InscriptionService,
                 private authService: AuthenticationService,
+                public translate: TranslateService,
+                private _activatedRoute: ActivatedRoute,
                 private messageService: MessageService,
                 private parcoursService: ParcoursService,
+                private packService: PackStudentService,
                 private router: Router) {
     }
 
@@ -37,17 +49,36 @@ export class PackDetailsComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.inscriptionService.findByEtudiantId(this.authService.getConnectedStudent().id).subscribe(
-            data => {
-                this.inscription = data;
-                if (this.inscription.packStudent !== null) {
-                    this.selectedPack = this.inscription.packStudent;
-                    this.findCoursesByLevel(this.selectedPack);
-                } else {
-                    this.findCourses();
-                }
-            }
-        );
+        this.userRequest = this.authService.getConnectedStudent();
+        console.log(this.userRequest);
+        if (this.userRequest === null
+            || this.userRequest?.id === undefined
+            || this.userRequest?.id === 0
+            || this.userRequest?.id === null) {
+            this.router.navigate(['/']);
+            return;
+        }
+
+        const idCurrentPack = this._activatedRoute.snapshot.params.id;
+        if (idCurrentPack === null || idCurrentPack === undefined || idCurrentPack === 0) {
+            this.router.navigate(['/etudiant/dashboard']);
+        } else {
+            this.packService.findById(idCurrentPack).subscribe(pack => {
+                this.selectedPack = pack;
+                this.inscriptionService.findByEtudiantId(this.authService.getConnectedStudent().id).subscribe(
+                    data => {
+                        this.inscription = data;
+                        if (this.inscription.packStudent !== null) {
+                            this.selectedPack = this.inscription.packStudent;
+                            this.findCoursesByLevel(this.selectedPack);
+                        } else {
+                            this.findCourses();
+                        }
+                    }
+                );
+            });
+        }
+
     }
 
     private findCoursesByLevel(selected: PackStudent) {
@@ -105,5 +136,9 @@ export class PackDetailsComponent implements OnInit {
                 });
             }
         );
+    }
+
+    getPercentage(): number {
+        return (100 - ((Number(this.selectedPack?.price?.price) / Number(this.selectedPack?.price?.oldPrice)) * 100));
     }
 }

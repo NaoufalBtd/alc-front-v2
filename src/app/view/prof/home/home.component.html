@@ -1,5 +1,5 @@
 <div class="p-grid">
-    <div class="p-col-3 ">
+    <div class="p-1 col-12 col-md-6 col-lg-3">
         <p-card [style]="{width: '100%', background: '#263238', color: 'white'}" header="Lessons"
                 styleClass="p-card-shadow lessons">
             <i class="pi pi-book" style="font-size: 2rem; float: right; margin: -40px 0 0 0;"></i>
@@ -19,9 +19,7 @@
 
         </p-card>
     </div>
-
-
-    <div class="p-col-3">
+    <div class="p-1 col-12 col-md-6 col-lg-3">
         <p-card [style]="{width: '100%', background: '#ff725e', color: 'white'}" header="Hours"
                 styleClass="p-card-shadow lessons">
             <i class="pi pi-clock" style="font-size: 2rem; float: right; margin: -40px 0 0 0;"></i>
@@ -41,8 +39,7 @@
 
         </p-card>
     </div>
-
-    <div class="p-col-3 student">
+    <div class="p-1 col-12 col-md-6 col-lg-3">
         <p-card [style]="{width: '100%', background: '#f34b63', color: 'white'}" header="Groups"
                 styleClass="p-card-shadow lessons">
             <i class="pi pi-users" style="font-size: 2rem; float: right; margin: -40px 0 0 0;"></i>
@@ -53,8 +50,7 @@
             </div>
         </p-card>
     </div>
-
-    <div class="p-col-3 student">
+    <div class="p-1 col-12 col-md-6 col-lg-3">
         <p-card [style]="{width: '100%', background: 'white', color: '#263238'}" header="Current pay"
                 styleClass="p-card-shadow lessons">
             <i class="pi pi-wallet" style="font-size: 2rem; float: right; margin: -40px 0 0 0;"></i>
@@ -65,13 +61,11 @@
             </div>
         </p-card>
     </div>
-
-
 </div>
 
 
-<div style="  height: 100%;" class="p-grid">
-    <div class="p-col-8">
+<div style="main-section" class="p-grid">
+    <div class="p-2 col-12 col-md-8">
         <p-card [style]="{width: '100%'}" header="Professor" styleClass="p-card-shadow">
 
             <ng-template pTemplate="header">
@@ -88,7 +82,7 @@
                                 <div style="text-align: start" class="p-col-3">
                                     <img style="width: 100%!important;background: white;"
                                          alt="Card"
-                                         src="../../../../assets/images/imgHome2.png">
+                                         src="../../../../assets/images/imgHome2.webp">
                                 </div>
                                 <div class="p-col-6 courseName">
                                     <p class="lessonName">{{item?.value?.subject}}</p>
@@ -146,7 +140,7 @@
     </div>
 
 
-    <div class=" p-col-4">
+    <div class="p-2 col-12 col-md-4">
         <p-card [style]="{width: '100%', marginBottom: '2em',backgroundColor:'white'}"
                 header="What's News">
 

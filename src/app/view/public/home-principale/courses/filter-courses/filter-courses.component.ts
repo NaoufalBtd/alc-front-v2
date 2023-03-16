@@ -1,9 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {MessageService} from 'primeng/api';
 import {TranslateService} from '@ngx-translate/core';
 import {PackStudentService} from '../../../../../controller/service/pack-student.service';
 import {PackStudent} from '../../../../../controller/model/pack-student.model';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {PriceService} from '../../../../../controller/service/price.service';
 import {Price} from '../../../../../controller/model/price.model';
 import {LoginService} from '../../../../../controller/service/login.service';
@@ -15,7 +15,7 @@ import {Parcours} from '../../../../../controller/model/parcours.model';
     templateUrl: './filter-courses.component.html',
     styleUrls: ['./filter-courses.component.scss']
 })
-export class FilterCoursesComponent implements OnInit {
+export class FilterCoursesComponent implements OnInit, AfterViewInit {
 
     steps: Map<number, string> = new Map<number, string>();
     minPriceForGroup: number;
@@ -25,6 +25,7 @@ export class FilterCoursesComponent implements OnInit {
                 private router: Router,
                 private login: LoginService,
                 private levelSerivce: ParcoursService,
+                private _activatedRoute: ActivatedRoute,
                 private priceService: PriceService,
                 private messageService: MessageService,
                 private packService: PackStudentService) {
@@ -93,9 +94,22 @@ export class FilterCoursesComponent implements OnInit {
     ngOnInit(): void {
         this.activeIndex = 0;
         this.levelSerivce.findAllLevels().subscribe(d => this.priceService.levels = d);
-        this.priceService.getAll().subscribe(d => this.priceList = d);
-        this.priceService.getMinPrice(true).subscribe(d => this.minPriceForGroup = d.price);
-        this.priceService.getMinPrice(false).subscribe(d => this.minPriceForIndividual = d.price);
+
+        this.priceService.getMaxPrice(true).subscribe(d => this.minPriceForGroup = Math.floor(d.price / d.nreHours));
+        this.priceService.getMaxPrice(false).subscribe(d => this.minPriceForIndividual = Math.floor(d.price / d.nreHours));
+    }
+
+    ngAfterViewInit(): void {
+        const group = this._activatedRoute.snapshot.params.group;
+        const price = this._activatedRoute.snapshot.params.price;
+        const level = this._activatedRoute.snapshot.params.level;
+        if (group === 'Group' || 'Individual') {
+            this.chooseOption(group.toString()?.toUpperCase());
+        }
+        console.log(group);
+        console.log(price);
+        console.log(level);
+
     }
 
     chooseOption(type: string) {
@@ -103,14 +117,19 @@ export class FilterCoursesComponent implements OnInit {
         this.groupOption = type;
         if (type === 'GROUP') {
             this.steps.set(this.activeIndex, 'Group');
-            this.prices = this.priceService.priceList.filter(p => p.forGroup === true);
+            this.priceService.getAll().subscribe(d => {
+                this.priceList = d;
+                this.prices = this.priceService.priceList.filter(p => p.forGroup === true);
+            });
+            this.router.navigate(['/courses/Group']);
         } else {
-            this.prices = this.priceService.priceList.filter(p => p.forGroup === false);
+            this.priceService.getAll().subscribe(d => {
+                this.priceList = d;
+                this.prices = this.priceService.priceList.filter(p => p.forGroup === false);
+            });
             this.steps.set(this.activeIndex, 'Individual');
+            this.router.navigate(['/courses/Individual']);
         }
-
-        console.log(this.priceList);
-        console.log(this.prices);
     }
 
     chooseType(type: string, price: number) {
@@ -132,6 +151,9 @@ export class FilterCoursesComponent implements OnInit {
     getCourse(level: string) {
         if (this.groupOption === 'GROUP') {
             this.packService.findPackByGroupOption(true).subscribe(data => {
+                console.log(data);
+                console.log(level);
+                console.log(this.priceSelected);
                 const course = data.filter(d => d.price?.price === this.priceSelected &&
                     d.level.libelle.toUpperCase() === level.toUpperCase());
                 if (course.length > 0) {
@@ -146,6 +168,7 @@ export class FilterCoursesComponent implements OnInit {
             });
         } else {
             this.packService.findPackByGroupOption(false).subscribe(data => {
+                console.log(data);
                 const course = data.filter(d => d.price?.price === this.priceSelected &&
                     d.level.libelle.toUpperCase() === level.toUpperCase());
                 if (course.length > 0) {
@@ -174,4 +197,6 @@ export class FilterCoursesComponent implements OnInit {
     goTo(key: number) {
         this.activeIndex = key;
     }
+
+
 }

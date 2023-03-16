@@ -1,7 +1,10 @@
 <header>
     <div id="header-sticky" [ngClass]="headerSticky ? 'header__area header__transparent header__padding-2 sticky' :
-     headerShadow ? headerShadow : 'header__area header__transparent header__padding-2' "
-    >
+     headerShadow ? headerShadow : 'header__area header__transparent header__padding-2' ">
+        <div class="coupon">
+
+        </div>
+
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-xxl-2 col-xl-2 col-lg-2 col-md-2  col-6">
@@ -18,23 +21,35 @@
                         <div class="main-menu main-menu-2 d-none d-xl-block">
                             <nav id="mobile-menu">
                                 <ul>
-                                    <li  style="margin-left: 40px!important;"><a [routerLink]="['/courses']"> {{'courses' | translate}}</a></li>
-                                    <li  style="margin-left: 40px!important;"><a [routerLink]="['/blog']"> {{'blog' | translate}}</a></li>
-                                    <li  style="margin-left: 40px!important;"><a [routerLink]="['/contact']"> {{'contact' | translate}}</a></li>
-                                    <li  style="margin-left: 40px!important;" class="has-dropdown">
-                                        <a *ngIf="this.translate.currentLang === 'en'"
-                                           style="cursor:pointer;">English</a>
-                                        <a *ngIf="this.translate.currentLang === 'ar'"
-                                           style="cursor:pointer;">العربية</a>
-                                        <a *ngIf="this.translate.currentLang === 'fr'"
-                                           style="cursor:pointer;">Français</a>
+                                    <li>
+                                        <a [routerLink]="['/courses']"> {{'courses' | translate}}</a>
+                                    </li>
+
+                                    <li class="has-dropdown">
+                                        <a [routerLink]="['/blog']"> {{'blog' | translate}}</a>
 
                                         <ul class="submenu">
-                                            <li (click)="selectedLangage('en')" style="cursor:pointer;" value="en"><a>English</a>
+                                            <li><a [routerLink]="['/blog']"> {{'blog' | translate}}</a></li>
+                                            <li><a [routerLink]="['/contact']"> {{'contact' | translate}}</a></li>
+                                            <li><a [routerLink]="'/about-us'">{{'aboutus' | translate}}</a></li>
+                                            <li><a [routerLink]="['/faqs']">{{'FAQs' | translate}}</a></li>
+                                        </ul>
+                                    </li>
+
+                                    <li class="has-dropdown">
+                                        <a *ngIf="this.translate.currentLang === 'en'"
+                                        >English</a>
+                                        <a *ngIf="this.translate.currentLang === 'ar'"
+                                        >العربية</a>
+                                        <a *ngIf="this.translate.currentLang === 'fr'"
+                                        >Français</a>
+
+                                        <ul class="submenu">
+                                            <li (click)="selectedLangage('en')" value="en"><a>English</a>
                                             </li>
-                                            <li (click)="selectedLangage('ar')" style="cursor:pointer;" value="ar"><a>العربية</a>
+                                            <li (click)="selectedLangage('ar')" value="ar"><a>العربية</a>
                                             </li>
-                                            <li (click)="selectedLangage('fr')" style="cursor:pointer;" value="fr"><a>Français</a>
+                                            <li (click)="selectedLangage('fr')" value="fr"><a>Français</a>
                                             </li>
                                         </ul>
                                     </li>
@@ -51,10 +66,11 @@
                         </div>
 
                         <div class="header__btn header__btn-2 d-xl-block ml-30 d-none">
-                            <a [routerLink]="['/online-english-level-test']" class="e-btn">{{'discover your level' | translate}}</a>
+                            <a [routerLink]="['/online-english-level-test']"
+                               class="e-btn">{{'discover your level' | translate}}</a>
                         </div>
 
-                        <div class="sidebar__menu d-xxl-none">
+                        <div class="sidebar__menu d-xl-none">
                             <div (click)="handleSidebar()" class="sidebar-toggle-btn ml-30" id="sidebar-toggle">
                                 <span class="line"></span>
                                 <span class="line"></span>
@@ -96,14 +112,14 @@
                     <li><a [routerLink]="['/blog']"> {{'blog' | translate}}</a></li>
                     <li><a [routerLink]="['/contact']"> {{'Contact' | translate}}</a></li>
                     <li class="has-dropdown">
-                        <a *ngIf="this.translate.currentLang === 'en'" style="cursor:pointer;">English</a>
-                        <a *ngIf="this.translate.currentLang === 'ar'" style="cursor:pointer;">العربية</a>
-                        <a *ngIf="this.translate.currentLang === 'fr'" style="cursor:pointer;">Français</a>
+                        <a *ngIf="this.translate.currentLang === 'en'">English</a>
+                        <a *ngIf="this.translate.currentLang === 'ar'">العربية</a>
+                        <a *ngIf="this.translate.currentLang === 'fr'">Français</a>
 
                         <ul class="submenu">
-                            <li (click)="selectedLangage('en')" style="cursor:pointer;" value="en"><a>English</a></li>
-                            <li (click)="selectedLangage('ar')" style="cursor:pointer;" value="ar"><a>العربية</a></li>
-                            <li (click)="selectedLangage('fr')" style="cursor:pointer;" value="fr"><a>Français</a></li>
+                            <li (click)="selectedLangage('en')" value="en"><a>English</a></li>
+                            <li (click)="selectedLangage('ar')" value="ar"><a>العربية</a></li>
+                            <li (click)="selectedLangage('fr')" value="fr"><a>Français</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -116,6 +132,7 @@
                 <a style="width: 100%;" [routerLink]="['/free-trial']"
                    class="e-btn"> {{'treetrialLesson' | translate}}</a>
             </div>
+
             <div class="header__btn header__btn-2 mt-10 ">
                 <a style="width: 100%;" [routerLink]="['/online-english-level-test']"
                    class="e-btn">{{'discover your level' | translate}}</a>

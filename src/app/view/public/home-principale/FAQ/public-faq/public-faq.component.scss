@@ -1,0 +1,38 @@
+p-accordionTab {
+  line-height: 45px;
+
+  p {
+    display: inline;
+    line-height: 45px;
+  }
+
+  a {
+    font-weight: bold;
+    margin: 0 7px;
+    text-decoration: underline;
+    color: blue;
+  }
+
+  ul {
+    li {
+      list-style: inside;
+    }
+  }
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+  float: left;
+  padding-right: 0.5rem;
+  color: white;
+  content: "/";
+  content: var(--bs-breadcrumb-divider, "/") /* rtl: var(--bs-breadcrumb-divider, "/") */
+;
+}
+
+.breadcrumb-item + .breadcrumb-item::after {
+  float: left;
+  padding-right: 0.5rem;
+  color: white;
+  content: "/";
+  content: var(--bs-breadcrumb-divider, "/") /* rtl: var(--bs-breadcrumb-divider, "/") */
+}

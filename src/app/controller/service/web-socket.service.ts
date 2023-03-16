@@ -28,21 +28,28 @@ import {VocabularyService} from './vocabulary.service';
 import {ReponseEtudiantHomeWork} from '../model/reponse-etudiant-home-work.model';
 import {Quiz} from '../model/quiz.model';
 import {QuizEtudiantService} from './quiz-etudiant.service';
+import {Socket} from 'socket.io-client';
+import {UserVo} from '../vo/UserVo';
+import {Observable} from 'rxjs';
+// CommonJS
+// @ts-ignore
+const io = require('socket.io-client');
+
 
 @Injectable({
     providedIn: 'root'
 })
 export class WebSocketService {
+    socket: Socket;
+    keyOfSession: number;
 
     publicUrl = environment.publicUrl;
     private _prof: Prof = new Prof();
     private _studentsEnLigne: Map<number, User> = new Map<number, User>();
-    private socketUrl = environment.socketUrl;
     private baseUrl = environment.baseUrl;
     private profUrl = environment.profUrl;
     private synchronizationUrl = 'synchronization';
     index = 0;
-    webSocket: WebSocket;
     chatMessages: ChatMessageDto[] = [];
     private _connectedUsers: any[] = [];
     actionType: Array<string> = new Array<string>();
@@ -57,7 +64,7 @@ export class WebSocketService {
     private _tabViewActiveIndex = 0;
     private numerOft12Qst = -1;
     private _activeIndexForTabView: number;
-    private _reponseHomeWorkReviewComponent: ReponseEtudiantHomeWork = new ReponseEtudiantHomeWork(); // used in sync between teacher and student in HomeWorkReviewComponent
+    private _reponseHomeWorkReviewComponent: ReponseEtudiantHomeWork = new ReponseEtudiantHomeWork();
     private _lessonStarted: boolean;
     private _minute = 59;
     private _seconde = 59;
@@ -75,6 +82,14 @@ export class WebSocketService {
                 private groupeEtudiantService: GroupeEtudiantService,
                 private learnService: LearnService
     ) {
+    }
+
+    set numberResponseOfQuizQuestion(value: number) {
+        this.learnService.numberResponseOfQuizQuestion = value;
+    }
+
+    get numberResponseOfQuizQuestion(): number {
+        return this.learnService.numberResponseOfQuizQuestion;
     }
 
     get selectedQuiz(): Quiz {
@@ -214,225 +229,212 @@ export class WebSocketService {
 
     public closeWebSocket(chatMessageDto: ChatMessageDto) {
         this.chatMessages = [];
-        if (this.webSocket.readyState === this.webSocket.OPEN) {
-            this.webSocket.send(JSON.stringify(chatMessageDto));
-        }
         this.isInSession = false;
-        this.webSocket.close();
+        this.disconnect();
     }
 
     set dragAndDropData(value: string) {
         this.learnService.dragAndDropData = value;
     }
 
-    public openWebSocket(user: User, prof: Prof, grpEtudiant: GroupeEtudiant, sender: string) {
-        this.openSession();
-        this.webSocket.onopen = (event) => {
-            this.onOpen(prof, grpEtudiant, sender, user);
-        };
-        this.webSocket.onerror = (event) => {
-            console.log(event);
-        };
-        this.webSocket.onmessage = (event) => {
-            console.log(event);
-            console.log(this.connectedUsers);
-            console.log(prof);
-            if (this.connectedUsers.filter(d => d.id === this.loginservice.getConnecteUser().id)?.length > 0 ||
-                this.loginservice.getConnecteUser().id === prof.id) {
-                this.onMessage(event);
-            }
-        };
-        this.webSocket.onclose = (event) => {
-            if (this.isInSession) {
-                if (this.loginservice.getConnectedStudent().role === 'TEACHER') {
-                    this.openWebSocket(this.loginservice.getConnectedProf(), this.loginservice.getConnectedProf(),
-                        this.groupeEtudiant, 'PROF');
-                } else {
-                    this.openWebSocket(this.loginservice.getConnectedStudent(), this.groupeEtudiant.prof,
-                        this.groupeEtudiant, 'STUDENT');
-                }
-            }
-        };
+
+    public openWebSocket(user: User, prof: Prof, key: number, grpEtudiant: GroupeEtudiant, sender: string) {
+        this.keyOfSession = key;
+        this.openSession(key);
+        this.onConnect(prof, grpEtudiant, sender, user);
+        this.onConnection(prof, grpEtudiant, sender, user);
+        this.onDisconnect();
+        this.onConnectError();
+        this.onMessage();
     }
 
-    private onOpen(prof: Prof, grpEtudiant: GroupeEtudiant, sender: string, user: User) {
-        this.isInSession = true;
-        this.prof = prof;
-        this.groupeEtudiant = grpEtudiant;
-        if (sender === 'PROF') {
-            this.participants.set(prof.id, this.connectedUsers);
-            if (this.studentsEnLigne.get(prof.id) === undefined) {
-                this.studentsEnLigne.set(prof.id, prof);
+
+    private onMessage() {
+        this.socket.on('message', (event) => {
+            const data: ChatMessageDto = JSON.parse(event);
+            console.log(data);
+            if (data.type === 'message') {
+                this.receiveMessage(data);
+            } else if (data.type === 'SECTION') {
+                this.receiveSection(data);
+
+            } else if (data.type === 'FOLLOW-QUIZ') {
+                this.receiveFollowQuiz(data);
+            } else if (data?.type === 'QUIZ') {
+                // count number of question answered by student
+                this.numberResponseOfQuizQuestion += 1;
+                this.receiveQuiz(data);
+            } else if (data.user === 'FINISH_QUIZ' && data.type === 'FINISH_QUIZ') {
+                this.receiveFinishQuiz();
+            } else if (data?.type === 'CONNECT') {
+                this.receiveConnect(event);
+            } else if (data?.type === 'DISCONNECT') {
+                this.receiveDisconnect(data);
+            } else if (data.type === 'VOC') {
+                this.receiveVoc(data);
+
+            } else if (data.type === 'HOME_WORK_REVIEW_NOTES') {
+                this.reponseHomeWorkReviewComponent.profNote = data.message;
+            } else if (data?.type === 'START_LESSON') {
+                this.startLesson();
             }
-        } else {
-            if (this.connectedUsers.filter(s => s.id === user.id).length === 0) {
-                this.connectedUsers.push({...user});
-            }
-            this.participants.set(prof.id, this.connectedUsers);
-            if (this.studentsEnLigne.get(prof.id) === undefined) {
-                this.studentsEnLigne.set(prof.id, prof);
-            }
-            const chatMessage: ChatMessageDto = new ChatMessageDto(user.nom, 'join session', true);
-            chatMessage.prof = prof;
-            chatMessage.student = user;
-            chatMessage.type = 'CONNECT';
-            chatMessage.quizReponse = null;
-            chatMessage.ev = null;
-            chatMessage.dateSent = null;
-            if (this.webSocket.readyState === this.webSocket.OPEN) {
-                this.webSocket.send(JSON.stringify(chatMessage));
+        });
+    }
+
+    private receiveVoc(data: ChatMessageDto) {
+        if (data?.user === 'VOC_FLIP' && data?.message === 'VOC_FLIP') {
+            this.vocabularyService.flip();
+        } else if (data?.user === 'VOC_NEXT' && data?.message === 'VOC_NEXT') {
+            this.vocabularyService.nextItem();
+        } else if (data?.user === 'VOC_FINISH' && data?.message === 'VOC_FINISH') {
+            this.vocabularyService.endShow();
+        }
+    }
+
+    private receiveDisconnect(data: ChatMessageDto) {
+        if (this.studentsEnLigne.get(data?.student?.id) !== undefined) {
+            this.studentsEnLigne.delete(data?.student?.id);
+            this.messageService.add({
+                severity: 'warn',
+                life: 4000,
+                detail: data?.student?.nom + ' is out of the classroom'
+            });
+        }
+    }
+
+    private receiveConnect(event) {
+        const mydata: ChatMessageDto = JSON.parse(event);
+        const studentList = this.participants.get(this.prof.id);
+        for (const student of studentList) {
+            if (student.id === mydata?.student?.id) {
+                if (this.studentsEnLigne.get(student.id) === undefined) {
+                    this.studentsEnLigne.set(student.id, student);
+                }
             }
         }
     }
 
-    private onMessage(event: MessageEvent<any>) {
-        const data: ChatMessageDto = JSON.parse(event.data);
-        console.log(data);
-        if (data.type === 'message') {
-            if (this.chatMessages.filter(c =>
-                c.user === data.user &&
-                c.message === data.message &&
-                c.dateSent === data.dateSent).length === 0) {
-                this.chatMessages.push({...data});
-                if (this.loginservice.getConnecteUser().role === Role.PROF) {
-                    if (this.activeIndexForTabView === 2) { // chat Prof
-                        this.badgeNrMsg = 0;
-                    } else {
-                        this.badgeNrMsg = this.chatMessages.length;
-                        this.notificationMessageSound();
-                    }
+    private receiveFinishQuiz() {
+        if (this.loginservice.getConnectedStudent()?.role === Role.STUDENT) {
+            this.learnService.finishQuiz();
+        }
+    }
+
+    private receiveQuiz(data: ChatMessageDto) {
+        if (data?.user === 'PUT_IN_ORDER_DRAG') {
+            this.learnService.drag_put_in_order(data?.message, data?.ev);
+            return;
+        } else if (data?.user === 'PUT_IN_ORDER_DROP') {
+            this.learnService.drop_put_in_order(data?.ev);
+            return;
+        }
+        if (this.groupeEtudiant?.groupeEtude?.nombreEtudiant === 1 ||
+            data.quizReponse.sender === 'PROF' || data.isStudent === false) {
+            this.reponseQuiz = data.quizReponse;
+            if (this.reponseQuiz?.question?.typeDeQuestion?.ref === 't5') {
+                this.trueOrFalse = this.reponseQuiz.lib !== 'false';
+            } else if (this.reponseQuiz?.question?.typeDeQuestion?.ref === 't12') {
+                const reponse: Reponse = new Reponse();
+                reponse.lib = this.reponseQuiz.lib;
+                reponse.etatReponse = this.reponseQuiz.etatReponse;
+                reponse.id = this.reponseQuiz.id;
+                reponse.question = this.reponseQuiz.question;
+                reponse.numero = this.reponseQuiz.numero;
+
+                if (data.message === 'STUDENT_CHOICE_T12' && this.reponseQuiz.sender === 'STUDENT_CHOICE_T12') {
+                    this.showCheckButton = this.learnService.onClickT12(reponse);
                 } else {
-                    if (this.tabViewActiveIndex === 3) { // chat student
-                        this.badgeNrMsg = 0;
-                    } else {
-                        this.badgeNrMsg = this.chatMessages.length;
-                        this.notificationMessageSound();
-                    }
+                    this.learnService.checkT12Answer(reponse.question);
+                }
+            } else if (this.reponseQuiz?.question?.typeDeQuestion?.ref === 't13' && data.user === 'T13') {
+                this.dragAndDropData = data.quizReponse.lib;
+                this.learnService.dropSynch(Number(data.ev));
+            }
+            if (data?.message !== 'QUESTION_T13') {
+                if (this.reponseQuiz.sender === 'PROF') {
+                    this.learnService.saveAnswers(this.question, 'TEACHER_ANSWER');
+                } else if (this.reponseQuiz.sender === 'STUDENT') {
+                    this.learnService.saveAnswers(this.question, 'STUDENT_ANSWER');
+                } else if (this.reponseQuiz.sender === 'STUDENT_DONT_KNOW') {
+                    this.learnService.saveAnswers(this.question, 'STUDENT_DONT_KNOW');
                 }
             }
-        } else if (data.type === 'SECTION') {
-            if (data?.user === 'SUMMARY' && data?.message === 'SUMMARY') {
-                this.simulatesectionService.goToSummary();
-            } else if (data?.user === 'FINISHLESSON' && data?.message === 'FINISHLESSON') {
-                this.simulatesectionService.finishLesson();
-            } else {
-                this.grpStudentAnswers = new Map<Etudiant, QuizReponse>();
-                const sectionId = Number(data.message);
-                this.simulatesectionService.nextSection(sectionId, data?.user);
-            }
-
-        } else if (data.type === 'FOLLOW-QUIZ') {
-            this.reponseQuiz = data.quizReponse;
-            this.question = this.reponseQuiz?.question;
-            this.learnService.nextQuestionFct();
-            if (this.question.typeDeQuestion.ref === 't5') {
-                document.getElementById('trueFalse').className = 'p-grid trueOrFalseQst';
-            }
-        } else if (data?.type === 'QUIZ') {
-            if (data?.user === 'PUT_IN_ORDER_DRAG') {
-                this.learnService.drag_put_in_order(data?.message, data?.ev);
-                return;
-            } else if (data?.user === 'PUT_IN_ORDER_DROP') {
-                this.learnService.drop_put_in_order(data?.ev);
-                return;
-            }
-            if (this.groupeEtudiant?.groupeEtude?.nombreEtudiant === 1 ||
-                data.quizReponse.sender === 'PROF' || data.isStudent === false) {
+        } else {
+            if (data.message === 'STUDENT_CHOICE_T12') {
                 this.reponseQuiz = data.quizReponse;
-                if (this.reponseQuiz?.question?.typeDeQuestion?.ref === 't5') {
-                    this.trueOrFalse = this.reponseQuiz.lib !== 'false';
-                } else if (this.reponseQuiz?.question?.typeDeQuestion?.ref === 't12') {
+                if (data.quizReponse.sender === 'STUDENT_CHOICE_T12_FOR_GRP') {
                     const reponse: Reponse = new Reponse();
                     reponse.lib = this.reponseQuiz.lib;
                     reponse.etatReponse = this.reponseQuiz.etatReponse;
                     reponse.id = this.reponseQuiz.id;
                     reponse.question = this.reponseQuiz.question;
                     reponse.numero = this.reponseQuiz.numero;
-
-                    if (data.message === 'STUDENT_CHOICE_T12' && this.reponseQuiz.sender === 'STUDENT_CHOICE_T12') {
-                        this.showCheckButton = this.learnService.onClickT12(reponse);
-                    } else {
-                        this.learnService.checkT12Answer(reponse.question);
-                    }
-                } else if (this.reponseQuiz?.question?.typeDeQuestion?.ref === 't13' && data.user === 'T13') {
-                    this.dragAndDropData = data.quizReponse.lib;
-                    this.learnService.dropSynch(Number(data.ev));
-                }
-                if (data?.message !== 'QUESTION_T13') {
-                    if (this.reponseQuiz.sender === 'PROF') {
-                        this.learnService.saveAnswers(this.question, 'TEACHER_ANSWER');
-                    } else if (this.reponseQuiz.sender === 'STUDENT') {
-                        this.learnService.saveAnswers(this.question, 'STUDENT_ANSWER');
-                    } else if (this.reponseQuiz.sender === 'STUDENT_DONT_KNOW') {
-                        this.learnService.saveAnswers(this.question, 'STUDENT_DONT_KNOW');
+                    this.numerOft12Qst = reponse.numero;
+                    this.showCheckButton = this.learnService.onClickT12(reponse);
+                } else if (Number(data.user) > this.numerOft12Qst) {
+                    this.numerOft12Qst = Number(data.user);
+                    if (data.prof.id === this.loginservice.getConnectedProf().id) {
+                        let reponse: Reponse = new Reponse();
+                        for (const rep of this.quizT12AnswersList.filter(t => t.numero === Number(data.user))) {
+                            if (rep.etatReponse === 'true') {
+                                reponse = rep;
+                            }
+                        }
+                        this.learnService.onClickT12(reponse);
                     }
                 }
             } else {
-                if (data.message === 'STUDENT_CHOICE_T12') {
-                    this.reponseQuiz = data.quizReponse;
-                    if (data.quizReponse.sender === 'STUDENT_CHOICE_T12_FOR_GRP') {
-                        const reponse: Reponse = new Reponse();
-                        reponse.lib = this.reponseQuiz.lib;
-                        reponse.etatReponse = this.reponseQuiz.etatReponse;
-                        reponse.id = this.reponseQuiz.id;
-                        reponse.question = this.reponseQuiz.question;
-                        reponse.numero = this.reponseQuiz.numero;
-                        this.numerOft12Qst = reponse.numero;
-                        this.showCheckButton = this.learnService.onClickT12(reponse);
-                    } else if (Number(data.user) > this.numerOft12Qst) {
-                        this.numerOft12Qst = Number(data.user);
-                        if (data.prof.id === this.loginservice.getConnectedProf().id) {
-                            let reponse: Reponse = new Reponse();
-                            for (const rep of this.quizT12AnswersList.filter(t => t.numero === Number(data.user))) {
-                                if (rep.etatReponse === 'true') {
-                                    reponse = rep;
-                                }
-                            }
-                            this.learnService.onClickT12(reponse);
-                        }
-                    }
-                } else {
-                    const rpsQuiz = data.quizReponse;
-                    // @ts-ignore
-                    this.grpStudentAnswers.set(data?.student, rpsQuiz);
-                }
+                const rpsQuiz = data.quizReponse;
+                // @ts-ignore
+                this.grpStudentAnswers.set(data?.quizReponse?.student, rpsQuiz);
             }
-        } else if (data.user === 'FINISH_QUIZ' && data.type === 'FINISH_QUIZ') {
-            if (this.loginservice.getConnectedStudent()?.role === Role.STUDENT) {
-                this.learnService.finishQuiz();
-            }
-        } else if (data?.type === 'CONNECT') {
-            const mydata: ChatMessageDto = JSON.parse(event.data);
-            const studentList = this.participants.get(this.prof.id);
-            for (const student of studentList) {
-                if (student.id === mydata?.student?.id) {
-                    if (this.studentsEnLigne.get(student.id) === undefined) {
-                        this.studentsEnLigne.set(student.id, student);
-                    }
-                }
-            }
-        } else if (data?.type === 'DISCONNECT') {
-            if (this.studentsEnLigne.get(data?.student?.id) !== undefined) {
-                this.studentsEnLigne.delete(data?.student?.id);
-                this.messageService.add({
-                    severity: 'warn',
-                    life: 4000,
-                    detail: data?.student?.nom + ' is out of the classroom'
-                });
-            }
-        } else if (data.type === 'VOC') {
-            if (data?.user === 'VOC_FLIP' && data?.message === 'VOC_FLIP') {
-                this.vocabularyService.flip();
-            } else if (data?.user === 'VOC_NEXT' && data?.message === 'VOC_NEXT') {
-                this.vocabularyService.nextItem();
-            } else if (data?.user === 'VOC_FINISH' && data?.message === 'VOC_FINISH') {
-                this.vocabularyService.endShow();
-            }
+        }
+    }
 
-        } else if (data.type === 'HOME_WORK_REVIEW_NOTES') {
-            this.reponseHomeWorkReviewComponent.profNote = data.message;
-        } else if (data?.type === 'START_LESSON') {
-            this.startLesson();
+    private receiveFollowQuiz(data: ChatMessageDto) {
+        this.reponseQuiz = data.quizReponse;
+        this.question = this.reponseQuiz?.question;
+        this.learnService.nextQuestionFct();
+        if (this.question.typeDeQuestion.ref === 't5') {
+            document.getElementById('trueFalse').className = 'p-grid trueOrFalseQst';
+        }
+    }
+
+    private receiveSection(data: ChatMessageDto) {
+        if (data?.user === 'SUMMARY' && data?.message === 'SUMMARY') {
+            this.simulatesectionService.goToSummary();
+        } else if (data?.user === 'FINISHLESSON' && data?.message === 'FINISHLESSON') {
+            this.simulatesectionService.finishLesson();
+        } else {
+            this.grpStudentAnswers = new Map<Etudiant, QuizReponse>();
+            const sectionId = Number(data.message);
+            this.simulatesectionService.nextSection(sectionId, data?.user);
+        }
+    }
+
+    private receiveMessage(data: ChatMessageDto) {
+        console.log('------------------CHAT-------------------------');
+        console.log(data);
+        if (this.chatMessages.filter(c =>
+            c.user === data.user &&
+            c.message === data.message &&
+            c.dateSent === data.dateSent).length === 0) {
+            this.chatMessages.push({...data});
+            if (this.loginservice.getConnecteUser().role === Role.PROF) {
+                if (this.activeIndexForTabView === 2) { // chat Prof
+                    this.badgeNrMsg = 0;
+                } else {
+                    this.badgeNrMsg = this.chatMessages.length;
+                    this.notificationMessageSound();
+                }
+            } else {
+                if (this.tabViewActiveIndex === 3) { // chat student
+                    this.badgeNrMsg = 0;
+                } else {
+                    this.badgeNrMsg = this.chatMessages.length;
+                    this.notificationMessageSound();
+                }
+            }
         }
     }
 
@@ -457,41 +459,20 @@ export class WebSocketService {
     }
 
     public sendMessage(chatMessageDto: ChatMessageDto, sender: string) {
-        if (this.webSocket.readyState === this.webSocket.OPEN) {
-            if (chatMessageDto.type === 'message') {
-                console.log('MESSAGE');
-                this.webSocket.send(JSON.stringify((chatMessageDto)));
-            } else if (chatMessageDto?.type === 'START_LESSON') {
-                console.log('START_LESSON');
-
-                chatMessageDto.quizReponse = null;
-                chatMessageDto.dateSent = null;
-                chatMessageDto.ev = null;
-                this.webSocket.send(JSON.stringify((chatMessageDto)));
-            } else if (chatMessageDto.type === 'QUIZ' && chatMessageDto.user.includes('PUT_IN_ORDER')) {
-                console.log('PUT_IN_ORDER');
-                this.webSocket.send(JSON.stringify((chatMessageDto)));
-            } else {
-                console.log(chatMessageDto);
-                const myData = JSON.stringify((chatMessageDto));
-                this.webSocket.send(myData);
-            }
+        chatMessageDto.key = this.keyOfSession;
+        // tslint:disable-next-line:no-console
+        console.info(this.socket.connected);
+        if (chatMessageDto.type === 'message') {
+            this.socket.emit('message', JSON.stringify((chatMessageDto)));
+        } else if (chatMessageDto?.type === 'START_LESSON') {
+            chatMessageDto.quizReponse = null;
+            chatMessageDto.dateSent = null;
+            chatMessageDto.ev = null;
+            this.socket.emit('message', JSON.stringify((chatMessageDto)));
+        } else if (chatMessageDto.type === 'QUIZ' && chatMessageDto.user.includes('PUT_IN_ORDER')) {
+            this.socket.emit('message', JSON.stringify((chatMessageDto)));
         } else {
-            if (sender === 'PROF') {
-                this.openWebSocket(this.loginservice.getConnectedProf(), this.loginservice.getConnectedProf(),
-                    this.groupeEtudiant, 'PROF');
-                this.webSocket.onopen = (event) => {
-                    this.webSocket.send(JSON.stringify(chatMessageDto));
-                };
-            } else {
-                this.openWebSocket(this.loginservice.getConnectedStudent(), this.groupeEtudiant.prof,
-                    this.groupeEtudiant, 'STUDENT');
-                this.webSocket.onopen = (event) => {
-                    if (this.webSocket.readyState === this.webSocket.OPEN) {
-                        this.webSocket.send(JSON.stringify(chatMessageDto));
-                    }
-                };
-            }
+            this.socket.emit('message', JSON.stringify((chatMessageDto)));
         }
     }
 
@@ -515,21 +496,6 @@ export class WebSocketService {
         );
     }
 
-
-    public findbynumero(num: number) {
-        this.serviceprof.findbyid(num).subscribe(
-            data => {
-                // this.loginservice.etudiant.prof.chatMessageDto = data.chatMessageDto;
-                // this.loginservice.prof = data;
-            },
-            error => {
-            }
-        );
-    }
-
-    get selectedsection(): Section {
-        return this.parcoursService.selectedsection;
-    }
 
     public saveCurrentSection(id: number, section: Section) {
         this.http.post<number>(this.profUrl + this.synchronizationUrl + '/id/' + id, section).subscribe(
@@ -596,16 +562,6 @@ export class WebSocketService {
     }
 
 
-    private groupeEtudiantForThisStudent(prof: Prof): boolean {
-        const studentList = this.participants.get(prof.id);
-        for (const student of studentList) {
-            if (student.id === this.loginservice.getConnecteUser().id) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     notificationMessageSound() {
         const audio = new Audio();
         audio.src = './assets/Notification/message-pop-alert.mp3';
@@ -624,8 +580,86 @@ export class WebSocketService {
         }, 1000);
     }
 
-    openSession() {
-        const token = localStorage.getItem('token');
-        this.webSocket = new WebSocket(this.socketUrl + '?token=' + token);
+    openSession(key: number) {
+        const id = this.authService.getUserFromLocalCache().id;
+        const myToken = localStorage.getItem('token');
+        console.log('----------------------------------OPEN SESSION ----------------------------------------');
+        console.log(this.socket?.connected);
+        console.log('-----------------------------------------------------------------------------------------');
+        this.socket = io(environment.socketUrl + '?key=' + key + '&userId=' + id, {
+            autoConnect: true,
+            transports: ['websocket'],
+            pingInterval: 25000, // send a ping message every 25 seconds
+            pingTimeout: 60000, // consider the connection lost if no message received after 60 seconds
+            auth: (cb) => {
+                cb({token: myToken});
+            }
+        });
+    }
+
+    private onDisconnect() {
+        this.socket.on('disconnect', (reason, description) => {
+            console.log(reason);
+        });
+    }
+
+    private onConnectError() {
+        this.socket.on('connect_error', (error) => {
+            console.log(this.socket.connected);
+            console.log(error);
+        });
+    }
+
+    private onConnect(prof: Prof, grpEtudiant: GroupeEtudiant, sender: string, user: User) {
+        this.socket.on('connect', () => {
+            this.isInSession = true;
+            this.prof = prof;
+            this.groupeEtudiant = grpEtudiant;
+            if (sender === 'PROF') {
+                this.participants.set(prof.id, this.connectedUsers);
+                if (this.studentsEnLigne.get(prof.id) === undefined) {
+                    this.studentsEnLigne.set(prof.id, prof);
+                }
+            } else {
+                if (this.connectedUsers.filter(s => s.id === user.id).length === 0) {
+                    this.connectedUsers.push({...user});
+                }
+                this.participants.set(prof.id, this.connectedUsers);
+                if (this.studentsEnLigne.get(prof.id) === undefined) {
+                    this.studentsEnLigne.set(prof.id, prof);
+                }
+            }
+        });
+    }
+
+    private onConnection(prof: Prof, grpEtudiant: GroupeEtudiant, sender: string, user: User) {
+        this.socket.on('connection', (socket) => {
+            console.log(socket);
+            this.isInSession = true;
+            this.prof = prof;
+            this.groupeEtudiant = grpEtudiant;
+            if (sender === 'PROF') {
+                this.participants.set(prof.id, this.connectedUsers);
+                if (this.studentsEnLigne.get(prof.id) === undefined) {
+                    this.studentsEnLigne.set(prof.id, prof);
+                }
+            } else {
+                if (this.connectedUsers.filter(s => s.id === user.id).length === 0) {
+                    this.connectedUsers.push({...user});
+                }
+                this.participants.set(prof.id, this.connectedUsers);
+                if (this.studentsEnLigne.get(prof.id) === undefined) {
+                    this.studentsEnLigne.set(prof.id, prof);
+                }
+            }
+        });
+    }
+
+    public disconnect() {
+        this.socket.disconnect();
+    }
+
+    getConnectedUsers(): Observable<UserVo[]> {
+        return this.http.get<Array<UserVo>>(environment.baseApi + '/socket/connected-user/' + this.keyOfSession);
     }
 }

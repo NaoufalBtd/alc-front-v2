@@ -1,4 +1,4 @@
-<section class="page__title-area pt-120 pb-90">
+<section class="page__title-area pt-50 pb-90">
     <div class="page__title-shape">
         <img
                 class="page-title-shape-5 d-none d-sm-block"
@@ -18,6 +18,55 @@
     </div>
     <div class="container">
         <div class="row">
+            <div class="col-xxl-4 d-block d-sm-none col-xl-4 col-lg-4">
+                <div class="course__sidebar pl-70 p-relative">
+                    <div class="course__shape">
+                        <img
+                                class="course-dot"
+                                src="assets/img/course/course-dot.png"
+                                alt=""
+                        />
+                    </div>
+                    <div class="course__sidebar-widget-2 white-bg mb-20">
+                        <div class="course__video">
+                            <div class=" w-img mb-25">
+                                <img *ngIf="selectedCourse?.price?.lib?.toUpperCase()?.includes('PLATINUM')"
+                                     src="/assets/images/Platinum.webp" alt=""/>
+                                <img *ngIf="selectedCourse?.price?.lib?.toUpperCase()?.includes('GOLD')"
+                                     src="/assets/images/Gold.webp" alt=""/>
+                                <img *ngIf="selectedCourse?.price?.lib?.toUpperCase()?.includes('SILVER')"
+                                     src="/assets/images/Silver.webp" alt=""/>
+
+                            </div>
+                            <div
+                                    class="course__video-meta mb-25 d-flex align-items-center justify-content-between"
+                            >
+                                <div class="course__video-price">
+                                    <h5>{{selectedCourse?.price?.price}}.<span>00 MAD</span></h5>
+                                    <h5 class="old-price">{{selectedCourse?.price?.oldPrice}}.00</h5>
+                                </div>
+                                <div class="course__video-discount">
+                                    <span>{{getPercentage().toFixed(.2)}}% OFF</span>
+                                </div>
+                            </div>
+                            <div [style.direction]="translate.currentLang === 'ar' ? 'rtl': 'ltr'"
+                                 class="course__payment mb-35">
+                                <h3>{{'Payment' | translate}}</h3>
+                                <a href="#">
+                                    <img src="assets/img/course/payment/payment-1.png" alt=""/>
+                                </a>
+                            </div>
+                            <div class="course__enroll-btn">
+                                <a (click)="pay()" class="e-btn e-btn-7 w-100"
+                                >{{'Enroll' | translate}} <i class="far fa-arrow-right"></i
+                                ></a>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
             <div class="col-xxl-8 col-xl-8 col-lg-8">
                 <div class="course__wrapper">
                     <div class="page__title-content mb-30">
@@ -34,7 +83,8 @@
                                 </ol>
                             </nav>
                         </div>
-                        <span *ngIf="!selectedCourse.forGroupe" class="page__title-pre">{{'Individual' | translate}}</span>
+                        <span *ngIf="!selectedCourse.forGroupe"
+                              class="page__title-pre">{{'Individual' | translate}}</span>
                         <span *ngIf="selectedCourse.forGroupe" class="page__title-pre">{{'Group' | translate}}</span>
                         <h5 class="page__title-3">{{selectedCourse?.libelle}}</h5>
                         <div class="course__tag-2">
@@ -71,7 +121,8 @@
                                                 <i class="icon_check"></i> {{course?.libelle}}</li>
 
 
-                                            <li  *ngIf="nombreCours !== selectedCourse?.nombreCours" class="more-details" (click)="nombreCours = selectedCourse.nombreCours">
+                                            <li *ngIf="nombreCours !== selectedCourse?.nombreCours" class="more-details"
+                                                (click)="nombreCours = selectedCourse.nombreCours">
                                                 {{'...see more' | translate}}
                                             </li>
 
@@ -81,9 +132,9 @@
                             </div>
 
                             <div class="tab-pane fade"
-                                    id="curriculum"
-                                    role="tabpanel"
-                                    aria-labelledby="curriculum-tab">
+                                 id="curriculum"
+                                 role="tabpanel"
+                                 aria-labelledby="curriculum-tab">
                                 <div class="course__curriculum">
                                     <div class="accordion" id="course__accordion">
                                         <div class="accordion-item mb-50">
@@ -837,11 +888,11 @@
                         <div class="row">
                             <div class="col-xxl-12">
                                 <div class="section__title-wrapper mb-40">
-                                    <h2 class="section__title">
-                                        {{'Related' | translate}}
-                                        <span class="yellow-bg yellow-bg-big"
-                                        >{{'Course' | translate}}<img src="assets/img/shape/yellow-bg.png" alt=""
-                                        /></span>
+                                    <h2 [style.direction]="translate.currentLang === 'ar' ? 'rtl': 'ltr'"  class="section__title">
+                                        <span class="yellow-bg yellow-bg-big">
+                                            {{'Related' | translate}}
+                                            <img src="assets/img/shape/yellow-bg.png" alt=""/>
+                                        </span>
                                     </h2>
                                     <p>
                                         {{'base2' | translate}}
@@ -889,8 +940,8 @@
                                                             <img src="{{course.imgUrl}}" alt="">
                                                         </a>
                                                         <div class="course__tag">
-                                                            <a *ngIf="!course.forGroupe" [style.background]="'#7b2cbf'" >Individual</a>
-                                                            <a *ngIf="course.forGroupe" [style.background]="'#800f2f'" >Group</a>
+                                                            <a *ngIf="!course.forGroupe" [style.background]="'#7b2cbf'">Individual</a>
+                                                            <a *ngIf="course.forGroupe" [style.background]="'#800f2f'">Group</a>
                                                         </div>
                                                     </div>
                                                     <div class="course__content">
@@ -898,7 +949,8 @@
                                                                 class="course__meta d-flex align-items-center justify-content-between"
                                                         >
                                                             <div class="course__lesson">
-                                                                <span><i class="far fa-book-alt"></i>{{course.nombreCours}}
+                                                                <span><i
+                                                                        class="far fa-book-alt"></i>{{course.nombreCours}}
                                                                     Lesson</span>
                                                             </div>
                                                             <div class="course__rating">
@@ -915,7 +967,8 @@
                                                     >
                                                         <div class="course__status d-flex align-items-center">
                                                             <span>{{course.price?.price}} MAD</span>
-                                                            <span class="old-price">{{course?.price?.oldPrice}} MAD</span>
+                                                            <span class="old-price">{{course?.price?.oldPrice}}
+                                                                MAD</span>
                                                         </div>
                                                         <div class="course__btn">
                                                             <a (click)="selectedCourse = course" class="link-btn">
@@ -938,7 +991,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="col-xxl-4 col-xl-4 col-lg-4">
                 <div class="course__sidebar pl-70 p-relative">
                     <div class="course__shape">
@@ -951,7 +1003,13 @@
                     <div class="course__sidebar-widget-2 white-bg mb-20">
                         <div class="course__video">
                             <div class=" w-img mb-25">
-                                <img [src]="selectedCourse?.imgUrl" alt=""/>
+                                <img *ngIf="selectedCourse?.price?.lib?.toUpperCase()?.includes('PLATINUM')"
+                                     src="/assets/images/Platinum.webp" alt=""/>
+                                <img *ngIf="selectedCourse?.price?.lib?.toUpperCase()?.includes('GOLD')"
+                                     src="/assets/images/Gold.webp" alt=""/>
+                                <img *ngIf="selectedCourse?.price?.lib?.toUpperCase()?.includes('SILVER')"
+                                     src="/assets/images/Silver.webp" alt=""/>
+
                             </div>
                             <div
                                     class="course__video-meta mb-25 d-flex align-items-center justify-content-between"
@@ -964,8 +1022,9 @@
                                     <span>{{getPercentage().toFixed(.2)}}% OFF</span>
                                 </div>
                             </div>
-                            <div [style.direction]="translate.currentLang === 'ar' ? 'rtl': 'ltr'" class="course__payment mb-35">
-                                <h3  >{{'Payment' | translate}}</h3>
+                            <div [style.direction]="translate.currentLang === 'ar' ? 'rtl': 'ltr'"
+                                 class="course__payment mb-35">
+                                <h3>{{'Payment' | translate}}</h3>
                                 <a href="#">
                                     <img src="assets/img/course/payment/payment-1.png" alt=""/>
                                 </a>

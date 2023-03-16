@@ -24,6 +24,7 @@ import {Section} from '../model/section.model';
 import {environment} from '../../../environments/environment';
 import {LearnService} from './learn.service';
 import {SessionCours} from '../model/session-cours.model';
+import {SectionEnum} from '../../enum/SectionEnum';
 
 @Injectable({
     providedIn: 'root'
@@ -550,30 +551,14 @@ export class SimulateSectionService {
             this.Vocab(this.selectedsection);
         } else {
             this.showVocabulary = false;
-            this.quizService.findQuizBySectionId(this.selectedsection).subscribe(
-                data => {
-                    this.selectedQuiz = data;
-                    if (data !== null) {
-                        this.quizService.findQuizEtudanitByEtudiantIdAndQuizId(this.loginService.etudiant, data).subscribe(
-                            data1 => {
-                                this.quizEtudiantList = data1;
-                                if (this.quizEtudiantList?.id === 0 || this.quizEtudiantList === null
-                                    || this.quizEtudiantList?.id === undefined) {
-                                    this.quizView = false;
-                                } else {
-                                    this.quizView = true;
-                                }
-                            }, error => {
-                                console.log(error);
-                                this.passerQuiz = 'Take Quiz';
-                                this.quizView = false;
-                            }
-                        );
-                    } else {
-                        this.quizView = false;
-                    }
-                },
-            );
+            if (
+                this.selectedsection.categorieSection.libelle?.toUpperCase()?.includes(SectionEnum.LETS_PRACTICE.toUpperCase()) ||
+                this.selectedsection.categorieSection.libelle?.toUpperCase()?.includes(SectionEnum.LIFE_STORY.toUpperCase())
+            ) {
+                this.findQuiz(this.selectedsection);
+            } else {
+                this.quizView = false;
+            }
         }
     }
 
@@ -748,30 +733,14 @@ export class SimulateSectionService {
                 } else {
                     this.showVocabulary = false;
                 }
-                this.quizService.findQuizBySectionId(this.selectedsection).subscribe(
-                    dataQuiz => {
-                        this.selectedQuiz = dataQuiz;
-                        if (dataQuiz !== null) {
-                            this.quizService.findQuizEtudanitByEtudiantIdAndQuizId(this.loginService.etudiant, this.selectedQuiz).subscribe(
-                                data1 => {
-                                    this.quizEtudiantList = data1;
-                                    if (this.quizEtudiantList?.id === 0 || this.quizEtudiantList === null
-                                        || this.quizEtudiantList?.id === undefined) {
-                                        this.quizView = false;
-                                    } else {
-                                        this.quizView = true;
-                                    }
-                                }, error => {
-                                    this.passerQuiz = 'Take Quiz';
-                                    console.log(error);
-                                    this.quizView = false;
-                                }
-                            );
-                        } else {
-                            this.quizView = false;
-                        }
-                    },
-                );
+                if (
+                    this.selectedsection.categorieSection.libelle?.toUpperCase()?.includes(SectionEnum.LETS_PRACTICE.toUpperCase()) ||
+                    this.selectedsection.categorieSection.libelle?.toUpperCase()?.includes(SectionEnum.LIFE_STORY.toUpperCase())
+                ) {
+                    this.findQuiz(this.selectedsection);
+                } else {
+                    this.quizView = false;
+                }
             }, error => console.log(error));
     }
 
@@ -780,32 +749,15 @@ export class SimulateSectionService {
             data => {
                 this.itemssection2 = data;
                 this.selectedsection = this.itemssection2[0];
-                this.quizService.findQuizBySectionId(this.selectedsection).subscribe(data12 => {
-                    this.quizExist = true;
-                    this.selectedQuiz = data12;
-                    if (data12 !== null) {
-                        this.quizService.findQuizEtudanitByEtudiantIdAndQuizId(this.loginService.etudiant, this.selectedQuiz).subscribe(
-                            data1 => {
-                                this.quizEtudiantList = data1;
-                                if (this.quizEtudiantList?.id === 0 || this.quizEtudiantList === null
-                                    || this.quizEtudiantList?.id === undefined) {
-                                    this.quizView = false;
-                                } else {
-                                    this.quizView = true;
-                                }
-                            }, error => {
-                                this.passerQuiz = 'Take Quiz';
-                                console.log(error);
-                                this.quizView = false;
-                            }
-                        );
-                    } else {
-                        this.quizView = false;
-                    }
-                }, error => {
-                    console.log(error);
-                    this.quizExist = false;
-                });
+                if (
+                    this.selectedsection.categorieSection.libelle?.toUpperCase()?.includes(SectionEnum.LETS_PRACTICE.toUpperCase()) ||
+                    this.selectedsection.categorieSection.libelle?.toUpperCase()?.includes(SectionEnum.LIFE_STORY.toUpperCase())
+                ) {
+                    this.findQuiz(this.selectedsection);
+                } else {
+                    this.quizView = false;
+                }
+
                 if (this.selectedsection.categorieSection.libelle?.toUpperCase()?.includes('VOCABULARY')) {
                     this.Vocab(this.selectedsection);
                 } else {
@@ -820,51 +772,59 @@ export class SimulateSectionService {
                         this.sectionAdditional.push({...data[_i]});
                     }
                 }
-                this.vocabularySection = this.sectionStandard.filter(s => s.categorieSection?.libelle?.toUpperCase()?.includes('VOCABULARY'))[0];
-                this.getToKnowSection = this.sectionStandard.filter(s => s.categorieSection?.libelle?.toUpperCase()?.includes('Get to know'))[0];
+                this.vocabularySection = this.sectionStandard.filter(s =>
+                    s.categorieSection?.libelle?.toUpperCase()?.includes('VOCABULARY'))[0];
+                this.getToKnowSection = this.itemssection2.filter(s =>
+                    s.categorieSection?.libelle?.toUpperCase()?.includes('GET TO KNOW'))[0];
+                if (this.getToKnowSection === undefined || this.getToKnowSection === null) {
+                    this.getToKnowSection = this.itemssection2.filter(s =>
+                        s.categorieSection?.libelle?.toUpperCase()?.includes('STUDY THE INFORMATION'))[0];
+                }
                 this.displayData(this.selectedsection);
             }
         );
     }
 
+    private findQuiz(section1: Section) {
+        this.quizService.findQuizBySectionId(section1).subscribe(data12 => {
+            this.quizExist = true;
+            this.selectedQuiz = data12;
+            if (data12 !== null) {
+                this.quizService.findQuizEtudanitByEtudiantIdAndQuizId(this.loginService.etudiant, this.selectedQuiz).subscribe(
+                    data1 => {
+                        this.quizEtudiantList = data1;
+                        if (this.quizEtudiantList?.id === 0 || this.quizEtudiantList === null
+                            || this.quizEtudiantList?.id === undefined) {
+                            this.quizView = false;
+                        } else {
+                            this.quizView = true;
+                        }
+                    }, error => {
+                        this.passerQuiz = 'Take Quiz';
+                        console.log(error);
+                        this.quizView = false;
+                    }
+                );
+            } else {
+                this.quizView = false;
+            }
+        }, error => {
+            console.log(error);
+            this.quizExist = false;
+        });
+    }
+
     private displayData(section: Section) {
         this.selectedsection = section;
         this.quizService.section.id = this.selectedsection.id;
-        this.quizService.findQuizBySectionId(this.selectedsection).subscribe(
-            data => {
-                this.selectedQuiz = data;
-                if (data !== null) {
-                    this.quizService.findQuizEtudanitByEtudiantIdAndQuizId(this.loginService.etudiant, this.selectedQuiz).subscribe(
-                        data1 => {
-                            this.quizEtudiantList = data1;
-                            this.quizService.findAllQuestions(this.selectedQuiz.ref).subscribe(
-                                dataQuestions => {
-                                    if (data1 === null || data1?.id === undefined || data1?.id === null) {
-                                        this.showTakeQuiz = true;
-                                        this._showViewQuiz = false;
-                                    } else {
-                                        if (data1.questionCurrent === dataQuestions.length) {
-                                            // this.passerQuiz = 'View Quiz';
-                                            // this.quizView = true;
-                                            this.showTakeQuiz = false;
-                                            this._showViewQuiz = true;
-                                        } else {
-                                            this.showTakeQuiz = true;
-                                            this._showViewQuiz = false;
-                                        }
-                                    }
-                                }
-                            );
-                        }, error => {
-                            this.passerQuiz = 'Take Quiz';
-                            this.quizView = false;
-                        }
-                    );
-                } else {
-                    this.passerQuiz = 'Take Quiz';
-                    this.quizView = false;
-                }
-            });
+        if (
+            this.selectedsection?.categorieSection?.libelle?.toUpperCase()?.includes(SectionEnum.LETS_PRACTICE.toUpperCase()) ||
+            this.selectedsection?.categorieSection?.libelle?.toUpperCase()?.includes(SectionEnum.LIFE_STORY.toUpperCase())
+        ) {
+            this.findQuiz(this.selectedsection);
+        } else {
+            this.quizView = false;
+        }
         this.vocab.findAllVocabSection(section).subscribe(data => {
             this.vocab.nombreVocab = data.length;
         }, error => {

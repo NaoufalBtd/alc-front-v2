@@ -30,7 +30,6 @@ export class ChatComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        this.webSocketService.findbynumero(this.loginService.prof.id);
         this.webSocketService.findstudentlist(this.loginService.prof.id);
 
     }

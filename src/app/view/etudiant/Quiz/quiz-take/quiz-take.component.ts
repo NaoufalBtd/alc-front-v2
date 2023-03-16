@@ -5,10 +5,6 @@ import {Reponse} from '../../../../controller/model/reponse.model';
 import {Etudiant} from '../../../../controller/model/etudiant.model';
 import {Quiz} from '../../../../controller/model/quiz.model';
 import {Question} from '../../../../controller/model/question.model';
-import {ConfirmationService, MessageService} from 'primeng/api';
-import {Router} from '@angular/router';
-import {DictionaryService} from '../../../../controller/service/dictionary.service';
-import {DomSanitizer} from '@angular/platform-browser';
 import {ReponseEtudiantService} from '../../../../controller/service/reponse-etudiant.service';
 import {WebSocketService} from '../../../../controller/service/web-socket.service';
 import {QuizReponse} from '../../../../controller/model/quiz-reponse';
@@ -29,28 +25,15 @@ export class QuizTakeComponent implements OnInit, OnDestroy {
                 private learnService: LearnService,
                 private reponseEtudiantService: ReponseEtudiantService,
                 private login: LoginService,
-                private messageService: MessageService,
-                private router: Router,
-                private dictionnaryService: DictionaryService,
-                private sanitizer: DomSanitizer,
-                private confirmationService: ConfirmationService,
                 public webSocketService: WebSocketService) {
     }
 
-    get questionOptions(): ({ label: string; value: string } | { label: string; value: string })[] {
-        return this.learnService.questionOptions;
+    get numberResponseOfQuizQuestion(): number {
+        return this.learnService.numberResponseOfQuizQuestion;
     }
 
-    set questionOptions(value: ({ label: string; value: string } | { label: string; value: string })[]) {
-        this.learnService.questionOptions = value;
-    }
-
-    get selectedT12Reponse(): Reponse {
-        return this.learnService.selectedT12Reponse;
-    }
-
-    set selectedT12Reponse(value: Reponse) {
-        this.learnService.selectedT12Reponse = value;
+    set numberResponseOfQuizQuestion(value: number) {
+        this.learnService.numberResponseOfQuizQuestion = value;
     }
 
     get dernierSelected(): Reponse {
@@ -70,9 +53,6 @@ export class QuizTakeComponent implements OnInit, OnDestroy {
         return this.learnService.t12AnswersList;
     }
 
-    set t12AnswersList(value: Array<Reponse>) {
-        this.learnService.t12AnswersList = value;
-    }
 
     get correctAnswerT12(): Map<number, string> {
         return this.learnService.studenta_answersT12;
@@ -94,21 +74,9 @@ export class QuizTakeComponent implements OnInit, OnDestroy {
         return this.learnService.dragAnswersList;
     }
 
-    get quizT12AnswersList(): Array<Reponse> {
-        return this.learnService.quizT12AnswersList;
-    }
-
-    set quizT12AnswersList(value: Array<Reponse>) {
-        this.learnService.quizT12AnswersList = value;
-    }
-
 
     get answersT12List(): Map<number, string> {
         return this.learnService.answersT12List;
-    }
-
-    set answersT12List(value: Map<number, string>) {
-        this.learnService.answersT12List = value;
     }
 
     get dragList(): Array<string> {
@@ -125,22 +93,6 @@ export class QuizTakeComponent implements OnInit, OnDestroy {
 
     set dragIndex(value: number) {
         this.learnService.dragIndex = value;
-    }
-
-    get dragData(): string {
-        return this.learnService.dragData;
-    }
-
-    set dragData(value: string) {
-        this.learnService.dragData = value;
-    }
-
-    get nextIndex(): number {
-        return this.learnService.nextIndex;
-    }
-
-    set nextIndex(value: number) {
-        this.learnService.nextIndex = value;
     }
 
 
@@ -350,7 +302,6 @@ export class QuizTakeComponent implements OnInit, OnDestroy {
 
 
     ngOnInit(): void {
-
         this.learnService.onStart(this.selectedQuiz);
         this.trueOrFalse = null;
         this.grpStudentAnswers = new Map<Etudiant, QuizReponse>();

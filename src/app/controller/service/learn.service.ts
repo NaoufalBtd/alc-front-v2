@@ -69,6 +69,7 @@ export class LearnService {
     private _synonymes: string = String();
     private _textSeleted: string;
     private _dictionaryList: Array<Dictionary> = new Array<Dictionary>();
+    private _numberResponseOfQuizQuestion = 0;
 
 
     private _dragAnswersList: Map<string, number> = new Map<string, number>();
@@ -97,6 +98,14 @@ export class LearnService {
     private _dragAndDropStudentAnswersList: Map<number, string> = new Map<number, string>();
     private _showToolTipForT13: boolean;
 
+
+    get numberResponseOfQuizQuestion(): number {
+        return this._numberResponseOfQuizQuestion;
+    }
+
+    set numberResponseOfQuizQuestion(value: number) {
+        this._numberResponseOfQuizQuestion = value;
+    }
 
     get reponseQuizList(): Array<QuizEtudiant> {
         return this._reponseQuizList;
@@ -1193,7 +1202,6 @@ export class LearnService {
     }
 
     private extractDataForDragAndDrop(qstLibelle: string) {
-        console.log(qstLibelle);
         let libelle = qstLibelle;
         let index = 1;
         let test = '@';

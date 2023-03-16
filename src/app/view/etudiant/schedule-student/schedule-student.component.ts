@@ -105,14 +105,11 @@ export class ScheduleStudentComponent implements OnInit {
         this.scheduleProfs.splice(0, this.scheduleProfs.length);
         const scheduleObj = this.scheduleObj;
         this.etudiant = this.authenticationService.getConnectedStudent();
-        console.log(this.etudiant);
         this.groupeEtudiantService.findGroupeEtudiantDetailByEtudiantId(this.etudiant.id).subscribe(
             data => {
-                console.log(data);
                 for (const item of data) {
                     this.scheduleService.findByGroupStudentId(item.groupeEtudiant).subscribe(
                         scheduleData => {
-                            console.log(this.scheduleProfs);
                             for (const item1 of scheduleData) {
                                 this.scheduleProfs.push({...item1});
                                 this.eventSettings = {
@@ -125,7 +122,6 @@ export class ScheduleStudentComponent implements OnInit {
                                     }
                                 };
                             }
-                            console.log(this.scheduleProfs);
                         }
                     );
                 }
@@ -154,7 +150,6 @@ export class ScheduleStudentComponent implements OnInit {
         this.selectedMeeting.subject = args.data.subject;
         this.selectedMeeting.startTime = args.data.startTime;
         this.selectedMeeting.endTime = args.data.endTime;
-        console.log(this.selectedMeeting);
         this.parcoursService.selectedcours = args.data.cours;
     }
 

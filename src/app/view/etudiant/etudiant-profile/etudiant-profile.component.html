@@ -1,4 +1,3 @@
-
 <p-dialog header="packs and prices" [(visible)]="this.showdialog">
     <div class="row" *ngIf="this.etudiantService.groupeEtude.nombreEtudiant == 1">
         <div class="card-1" *ngFor="let p of this.packStudentService.packstudentIndividialList">
@@ -8,7 +7,7 @@
             <div class="card-body-1">
                 <p>
                     <strong>{{p.totalStudents}} {{'Students' | translate}}</strong><br>
-                     {{'have bought this pack' | translate}}
+                    {{'have bought this pack' | translate}}
                 </p>
                 <a class="btn-1" (click)="selectedPackFct(p)">{{p.nombreCours}}h | {{p.price?.price}}$</a>
             </div>
@@ -22,7 +21,7 @@
             <div class="card-body-1">
                 <p>
                     <strong>{{p.totalStudents}} {{'Students' | translate}}</strong><br>
-                     {{'have bought this pack' | translate}}
+                    {{'have bought this pack' | translate}}
                 </p>
                 <a class="btn-1" (click)="selectedPackFct(p)">{{p.nombreCours}}h | {{p.price?.price}}$</a>
             </div>
@@ -33,7 +32,8 @@
 
 <p-dialog header="Password Settings" [(visible)]="this.changePass">
     <h1 style="color: #0c6439; font-size: 20px;  text-align: center"> {{'Change Password' | translate}}</h1><br>
-    <h6 style="color: darkred; font-size: 20px;  text-align: center"> {{'Password must have at least 8 characters' | translate}}</h6><br>
+    <h6 style="color: darkred; font-size: 20px;  text-align: center"> {{'Password must have at least 8 characters' | translate}}</h6>
+    <br>
     <div class="bio-row">
         <label for="float-input"> {{'New Password' | translate}}</label>
         <input id="float-input" type="password" style="margin-left: 5px;" pInputText [(ngModel)]="newPassword">
@@ -49,9 +49,8 @@
 </p-dialog>
 
 
-
 <div class="p-grid profileCon">
-    <div class="p-col-2 p-shadow-6 rightMenu">
+    <div class="col-12 col-md-3 col-lg-2 p-shadow-6 rightMenu mb-5" dir="auto">
         <div class=" p-grid imgContainer">
             <div style="margin-left: 17%" class="p-col-10">
                 <img [src]="user?.image" class="profileImg" alt="Profile">
@@ -87,7 +86,7 @@
 
 
     </div>
-    <div *ngIf="selectedElement === 'PROFILE'" class="p-col-10">
+    <div *ngIf="selectedElement === 'PROFILE'" class="col-12 col-md-9 col-lg-10" dir="auto">
         <div class="p-grid">
             <div class="p-col-10 grandTitle"> {{'Profile' | translate}}</div>
             <div class="p-col-10 smallTitle"> {{'Manage your public profile and private information.' | translate}}</div>
@@ -97,16 +96,16 @@
                 <div class="p-grid p-fluid">
 
 
-                    <div class="p-col-6">
+                    <div class="col-12 col-md-6 p-3">
                         <h5 style="color: #ff725e"> {{'Full name' | translate}}</h5>
                         <div class="p-inputgroup">
                             <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
                             <input class="user-input-group" [(ngModel)]="user.nom" name="prenom" type="text"
-                                   pInputText  [placeholder]="'Full name' | translate">
+                                   pInputText [placeholder]="'Full name' | translate">
                         </div>
                     </div>
 
-                    <div class="p-col-6">
+                    <div class="col-12 col-md-6 p-3">
                         <h5 style="color: #ff725e"> {{'email' | translate}}</h5>
                         <div class="p-inputgroup">
                             <span class="p-inputgroup-addon"><i class="pi pi-envelope"></i></span>
@@ -115,7 +114,7 @@
                         </div>
                     </div>
 
-                    <div class="p-col-6">
+                    <div class="col-12 col-md-6 p-3">
                         <h5 style="color: #ff725e"> {{'Country' | translate}}</h5>
                         <div class="p-inputgroup">
                             <span class="p-inputgroup-addon"><i class="pi pi-map-marker"></i></span>
@@ -124,7 +123,7 @@
                         </div>
                     </div>
 
-                    <div class="p-col-6">
+                    <div class="col-12 col-md-6 p-3">
                         <h5 style="color: #ff725e"> {{'City' | translate}}</h5>
                         <div class="p-inputgroup">
                             <span class="p-inputgroup-addon"><i class="pi pi-map-marker"></i></span>
@@ -133,7 +132,7 @@
                         </div>
                     </div>
 
-                    <div class="p-col-6">
+                    <div class="col-12 col-md-6 p-3">
                         <h5 style="color: #ff725e"> {{'Address' | translate}}</h5>
                         <div class="p-inputgroup">
                             <span class="p-inputgroup-addon"><i class="pi pi-home"></i></span>
@@ -142,7 +141,7 @@
                         </div>
                     </div>
 
-                    <div class="p-col-6">
+                    <div class="col-12 col-md-6 p-3">
                         <h5 style="color: #ff725e"> {{'Age' | translate}}</h5>
                         <div class="p-inputgroup">
                             <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
@@ -151,7 +150,7 @@
                         </div>
                     </div>
 
-                    <div class="p-col-6">
+                    <div class="col-12 col-md-6 p-3">
                         <h5 style="color: #ff725e"> {{'Skype' | translate}}</h5>
                         <div class="p-inputgroup">
                             <span class="p-inputgroup-addon"><i class="pi pi-video"></i></span>
@@ -160,7 +159,7 @@
                         </div>
                     </div>
 
-                    <div class="p-col-6">
+                    <div class="col-12 col-md-6 p-3">
                         <h5 style="color: #ff725e"> {{'Phone' | translate}}</h5>
                         <div class="p-inputgroup">
                             <span class="p-inputgroup-addon"><i class="pi pi-phone"></i></span>
@@ -176,13 +175,13 @@
             <div class="p-col-4"></div>
 
 
-            <div class="p-col-4">
+            <div class="col-12 col-md-6">
                 <button pButton pRipple (click)="updateUser(user)"
                         [label]="'Save changes' | translate" icon="pi pi-check" iconPos="left"
                         class="Startnow"></button>
             </div>
 
-                <div class="p-col-4"></div>
+            <div class="col-0 col-md-3"></div>
 
         </div>
     </div>
@@ -195,7 +194,7 @@
             <div class="p-col-10 grandTitle"> {{'Security' | translate}}</div>
             <div class="p-col-10 smallTitle"> {{'Manage your password and 2-step verification preferences' | translate}}</div>
 
-            <div class="p-col-7">
+            <div class="col-12 col-md-9 col-lg-2">
                 <div class="p-grid p-fluid">
 
 
@@ -254,7 +253,7 @@
             <div *ngIf="this.inscription.packStudent == null && this.inscription.parcours == null"
                  class="p-col-10 grandTitle"> {{'Complete your registration' | translate}}
             </div>
-            <div class="p-col-6">
+            <div class="col-12 col-md-6 p-3">
                 <h5 style="color: #ff725e">  {{'Group Option' | translate}} </h5>
                 <p-dropdown [style]="{    height: '45px',
                                                 padding: '6px',
@@ -262,24 +261,26 @@
                                                 border: 'none'}"
                             (onClick)="getgroupechosen(inscription.groupeEtude.id)"
                             [disabled]="this.inscription.packStudent != null && this.inscription.parcours != null"
-                            (click)="findAllGroupeEtude() ; " [options]="groupeEtudeList" [placeholder]="'Select group' | translate"
+                            (click)="findAllGroupeEtude() ; " [options]="groupeEtudeList"
+                            [placeholder]="'Select group' | translate"
                             [(ngModel)]="etudiant.groupeEtude"
                             optionLabel="libelle"></p-dropdown>
             </div>
 
-            <div class="p-col-6">
+            <div class="col-12 col-md-6 p-3">
                 <h5 style="color: #ff725e">  {{'English Level' | translate}} </h5>
                 <p-dropdown [style]="{    height: '45px',
                                                 width: '100%',
                                                 padding: '6px',
                                                 border: 'none'}"
                             [disabled]="this.inscription.packStudent != null && this.inscription.parcours != null"
-                            (click)="findAllParcoursList() ; " [options]="parcoursList" [placeholder]="'Select Level' | translate"
+                            (click)="findAllParcoursList() ; " [options]="parcoursList"
+                            [placeholder]="'Select Level' | translate"
                             [(ngModel)]="etudiant.parcours"
                             optionLabel="libelle"></p-dropdown>
             </div>
 
-            <div class="p-col-6">
+            <div class="col-12 col-md-6 p-3">
                 <h5 style="color: #ff725e">  {{'Teacher' | translate}} </h5>
                 <select class="select"
                         [disabled]="this.inscription.packStudent != null && this.inscription.parcours != null" required
@@ -306,23 +307,44 @@
                 <div class="p-col-12">
                     <h3> {{'Explore our packs' | translate}}</h3>
                 </div>
+            </ng-container>
 
-                <div *ngFor="let pack of packs" class="p-col-4">
-                    <p-card [header]="pack?.libelle" [subheader]="isForGroupOrindev(pack.forGroupe)"
-                            (click)="selectedPackFct(pack)"
-                            [style]="{width: '100%', borderRadius: '10px', cursor: 'pointer',   background: '#263238' , color: 'white'}"
-                            styleClass="p-card-shadow">
-                        <ng-template pTemplate="header">
-                            <img *ngIf="pack?.imgUrl !== null" alt="Card" [src]="pack?.imgUrl">
-                            <img *ngIf="pack?.imgUrl === null" alt="Card"
-                                 src="assets/demo/images/product/bamboo-watch.jpg">
-                        </ng-template>
-                        <p>{{pack?.description}}</p>
-                        <ng-template pTemplate="footer">
-                            <p><i style="font-weight: bold;" class="pi pi-angle-right"></i> {{pack?.nombreCours}}
-                                 {{'courses' | translate}}</p>
-                        </ng-template>
-                    </p-card>
+            <ng-container *ngIf="inscription?.packStudent === null">
+                <div class="container">
+                    <div class="row">
+                        <div *ngFor="let pack of packs" class="col-md-6 col-xl-4 col-sm-12">
+                            <div
+                                    [class.platinum]="pack?.price?.lib?.toUpperCase()?.includes('PLATINUM')"
+                                    [class.silver]="pack?.price?.lib?.toUpperCase()?.includes('SILVER')"
+                                    [class.gold]="pack?.price?.lib?.toUpperCase()?.includes('GOLD')"
+
+                                    class="card mt-5 p-4 mr-5 text-white">
+                                <p class="top mb-1">{{pack?.libelle?.toLowerCase()}} for
+                                    <strong style="display: inline-block" *ngIf="pack?.forGroupe"> Group</strong>
+                                    <strong style="display: inline-block" *ngIf="!pack?.forGroupe"> Individual</strong>
+                                </p>
+                                <div class="d-flex flex-row justify-content-between text-align-center xyz">
+                                    <h3>{{pack?.price?.price}} DH</h3>
+                                    <div class="discount"><span>{{getPercentage(pack).toFixed(.2)}}% OFF</span></div>
+                                </div>
+                                <div class="card-content mt-4">
+                                    <p>{{pack?.level?.libelle}}</p>
+                                </div>
+                                <div class="mt-2">
+                                    <button
+                                            [class.btn-platinum]="pack?.price?.lib?.toUpperCase()?.includes('PLATINUM')"
+                                            [class.btn-silver]="pack?.price?.lib?.toUpperCase()?.includes('SILVER')"
+                                            [class.btn-gold]="pack?.price?.lib?.toUpperCase()?.includes('GOLD')"
+                                            (click)="selectedPackFct(pack)"
+                                            class="btn btn-block btn-lg btn-primary">
+                                        <span>{{'Enroll' | translate}}</span><i
+                                            class="fas fa-arrow-right"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
                 </div>
             </ng-container>
 
@@ -342,7 +364,7 @@
                 <div class="p-grid p-fluid">
 
 
-                    <div class="p-col-6">
+                    <div class="col-12 col-md-6 p-3">
                         <h5 style="color: #ff725e"> {{'language' | translate}}</h5>
                         <p-dropdown
                                 [style]="{    height: '45px',
@@ -354,7 +376,7 @@
                     </div>
 
 
-                    <div class="p-col-6">
+                    <div class="col-12 col-md-6 p-3">
                         <h5 style="color: #ff725e"> {{'Status Social' | translate}}</h5>
                         <p-dropdown
                                 [style]="{    height: '45px',
@@ -365,17 +387,17 @@
                                 optionLabel="libelle"></p-dropdown>
                     </div>
 
-                    <div class="p-col-6">
+                    <div class="col-12 col-md-6 p-3">
                         <h5 style="color: #ff725e"> {{'Area of work' | translate}}</h5>
                         <p-dropdown [style]="{    height: '45px',
                                                 padding: '6px',
                                                 border: 'none'}"
-                                    [options]="fonctions"  [placeholder]="'List of areas of work' | translate"
+                                    [options]="fonctions" [placeholder]="'List of areas of work' | translate"
                                     [(ngModel)]="etudiant.fonction"
                                     optionLabel="libelle"></p-dropdown>
                     </div>
 
-                    <div class="p-col-6">
+                    <div class="col-12 col-md-6 p-3">
                         <h5 style="color: #ff725e"> {{'Study Level' | translate}}</h5>
                         <p-dropdown [style]="{    height: '45px',
                                                 padding: '6px',
@@ -386,7 +408,7 @@
                     </div>
 
 
-                    <div class="p-col-6">
+                    <div class="col-12 col-md-6 p-3">
                         <h5 style="color: #ff725e"> {{'Interests' | translate}}</h5>
                         <p-dropdown [style]="{    height: '45px',
                                                 padding: '6px',
@@ -395,7 +417,7 @@
                                     optionLabel="libelle" [showClear]="true"></p-dropdown>
                     </div>
 
-                    <div class="p-col-6">
+                    <div class="col-12 col-md-6 p-3">
                         <h5 style="color: #ff725e"> {{'Main goal with learning English' | translate}}</h5>
                         <p-dropdown [style]="{    height: '45px',
                                                 padding: '6px',
@@ -405,7 +427,7 @@
                                     optionLabel="libelle"></p-dropdown>
                     </div>
 
-                    <div class="p-col-6">
+                    <div class="col-12 col-md-6 p-3">
                         <h5 style="color: #ff725e"> {{'Skill' | translate}}</h5>
                         <p-dropdown [style]="{    height: '45px',
                                                 padding: '6px',

@@ -113,7 +113,7 @@ form {
 
 textarea.input {
   padding: 0.8rem 1.2rem;
-  min-height: 150px;
+  min-height: 100px;
   border-radius: 4px;
   resize: none;
   overflow-y: auto
@@ -239,7 +239,6 @@ textarea.input {
 }
 
 
-
 .contact-info:before {
   content: "";
   position: absolute;
@@ -358,7 +357,6 @@ textarea.input {
   }
 
 
-
   .icon {
     width: 23px
   }
@@ -370,4 +368,8 @@ textarea.input {
   .btn {
     padding: 0.45rem 1.2rem
   }
+}
+
+.whtsp {
+  margin-right: 10px;
 }

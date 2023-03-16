@@ -25,7 +25,7 @@
   "contactus": "تواصل معنا",
   "Connectwithus": "اتصل بنا",
   "Send": "أرسل",
-  "apply": "قدم الآن ",
+  "apply": "إشترك الآن ",
   "name": "اسمك",
   "email": "البريد الإلكتروني ",
   "Phone": "الهاتف",
@@ -34,8 +34,8 @@
   "EngFlexy": "EngFlexy هي أول منصة تعليمية تفاعلية للغة الإنجليزية في العالم العربي (100٪ عبر الإنترنت). تتمثل مهمة EngFlexy في تبسيط وتسهيل الوصول إلى تعلم اللغة الإنجليزية وبناء مؤسسة تعليمية ملهمة.\n ",
   "Developers": "المؤسسون:\nشباب متحمسون لتحقيق أهدافهم لدفع منطقتنا إلى الأمام من خلال الاستفادة من التكنولوجيا المتطورة لتبسيط التعلم وتحسينه\n",
   "wheredid": "من أين جاء اسم “EngFlexy”؟\nالإسم يدل على نفسه،EngFlexy هي كلمة مركبة من كلمتين  Eng و Flexy .Flexy-إختصار لEnglish(اللغة الإنجليزية )،أما Flexy-إختصار لكلمة flexible (مرن).\nفالفكرة الأساسية هنا أنه لابد أن تكون منصتنا بعيدة كل البعد عن المراكز اللغوية التقليدية (بناية بها أساتذة+أقسام مكدسة+سبورة )،باستخدام التكنولوجيا المتطورة قمنا بتطوير منصة تفاعلية 100% Online مرنة،أي المتعلم هو من يختار التوقيت و المكان المناسب له بالإضافة إلى ذلك هناك إمكانية الإختيار بين الحصص الفردية أو الجماعية\n",
-  "getintouch": "دعونا نحصل على اتصال",
-  "Contactuswith": "اتصل بنا مع التفاصيل التالية. واملأ النموذج بالتفاصيل\n\n",
+  "getintouch": "دعنا نحصل على اتصال",
+  "Contactuswith": "تواصل معنا الان!",
   "signinto": "تسجيل الدخول الى حسابك",
   "account": "إذا لم يكن لديك حساب يمكنك التسجيل هنا!",
   "Workemail": "البريد الإلكتروني",
@@ -133,7 +133,7 @@
   "profs": "المدرسين الأكثر شهرة",
   "base2": " ليس عليك أن تبحث كثيرا،فنحن هنا لمساعدتك ",
   "try": "جرب الآن مجانا",
-  "book": " أحجز درسك التجريبي بالمجان ",
+  "book": " أحجز درسك التجريبي لتعلم اللغة الانجليزية بالمجان ",
   "create": "إصنع حساب",
   "about": "حولك",
   "start": "ابدأ التدريس على EngFlexy",
@@ -142,7 +142,7 @@
   "emailyour": "بريدك  الإلكتروني",
   "partners": "عرض جميع الشركاء",
   "trusted": "موثوق به من قبل أفضل 100 شركة في العالم",
-  "guid": "يمكنك أن تكون نجمك الإرشادي بمساعدتنا",
+  "guid": " تعلم الإنجليزية و حقق أهدافك مع EngFlexy",
   "foranyone": "دورات عبر منصتنا التفاعلية لأي شخص و في أي مكان",
   "view": "عرض كل الدورات",
   "vocabulary": "زيادة معرفة المفردات",
@@ -173,29 +173,29 @@
   "Our": "",
   "Phone *": "الهاتف *",
   "Recharge Direct": "إعادة الشحن المباشر",
-  "it you don't have an account you can": "ليس لديك حساب ! بامكانك ",
-  "Register here!": "التسجيل هنا!",
+  "it you don't have an account you can": "ليس لديك حساب! بامكانك ",
+  "Register here!": "التسجيل هنا.",
   "e-mail address": "البريد الالكتروني",
   "Teaching experience": "الخبرة التدريسية",
   "Student": "التلميذ",
   "We share": "نشارك",
   "START LEARNING": "إبدا التعلم الان",
-  "Take a free trial lesson": "نقدم دروس تجربية بالمجان !",
+  "Take a free trial lesson": "نقدم دروس تجربية بالمجان",
   "close": "اغلاق",
   "DevelopersTitle": "المطورون",
-  "wheredidTitle": " « EngFlexy » من اين جاء اسم",
+  "wheredidTitle": " «EngFlexy» من اين جاء اسم",
   "Tutor": "المدرس",
   "students": "تلاميذ",
   "student": "تلميذ",
-  "Goals": "الأهدافك",
+  "Goals": "أهدافك",
   "Acquire practical grammar skills": "نساعدك على تطوير مهارتك في النحو",
   "Increase vocabulary knowledge": "طور من مهاراتك في النطق، وتعلم كل يوم مفردات جديدة مع قاموسك الخاص!",
-  "with EngFlexy": " EngFlexy ",
+  "with EngFlexy": " مع EngFlexy ",
   "Achieve your": "حقق",
   "About": "حول",
   "Enroll": "اشترك الان",
   "Payment": "اداء:",
-  "Related": "ذات صلة",
+  "Related": "دورات ذات صلة",
   "Course": "دورات",
   "...see more": "...المزيد",
   "Pre - requisites": "متطلبات الدورة",
@@ -207,7 +207,7 @@
   "Become a tutor": "كيف اصبح استاذ ",
   "Blog news": "أخبار مدونتنا",
   "Community Feedback": "تعليقات الطلبة",
-  "Book your free trial session": " أحجز درسك التجريبي بالمجان ",
+  "Book your free trial session": "  أحجز درسك التجريبي لتعلم اللغة الانجليزية بالمجان  ",
   "We will assess your English level and also give you an opportunity to practice your English": "سنعمل معا على تطوير مستواك في اللغة الانجليزية حتى الاحتراف",
   "Ask us anything, or share your feedback.": "إسالنا أي شيئ، أو شاركنا ملاحظاتك",
   "Explanation": "توضيحات",
@@ -227,9 +227,9 @@
   "join skype": "انضم الى سكايب",
   "Teacher information": "معلومات عن الاستاذ",
   "ready for your next lesson ?": "هل انت جاهز لدرسك القادم ؟",
-  "Discover your current English level by taking our free online test": "Discover your current English level by taking our free online test",
+  "Discover your current English level by taking our free online test": "اكتشف مستواك الحالي في اللغة الإنجليزية من خلال إجراء اختبارنا المجاني عبر الإنترنت",
   "Your Teacher will Determine your Level of English, and show you the INTERACTIVE DIGITAL PLATFORM": "بمساعدة معلمك، ستتمكن من تحديد مستواك في اللغة الانجليزية، وتتعلم كل ما تحتاج لبدء دروسك في منصتنا الرقمية التفاعلية",
-  "Choose your level to practise your reading": "😍 قم باختيار المستوى الخاص بك، وابدأ في التعلم",
+  "Choose your level to practise your reading": "أو قم باختيار المستوى الخاص بك، وابدأ في التعلم",
   "Your application has been successfully sent!": "لقد تم التسجيل بنجاح، ستردك التعليمات عبر بريدك الالكتروني خلال دقائق",
   "Already know about our school? Don't want to waste time on a trial lesson? Then pay immediately and get bonus lessons!": "قم بالدفع الان للحصول على عدة مكافآت و امتيازات محدودة 😎، والبدء في التعلم من معلم باختيارك",
   "Continue to purchase": "دفع",
@@ -463,23 +463,98 @@
   "recommended intensity": "عدد الحصص في الأسبوع",
   "local or native speaker": "local أو native speaker",
   "You only pay for one hour and then you have another hour free as you put your skills to the test in a place of assignments. You will find exercises accompanying the lesson where you can solve and re-solve as many times as you wish until you are fully able to complete the lesson. You will find a section for writing, where after you finish, you can send it to your professor for correction and discussion of all the shortcomings and mistakes.": "تدفع فقط لساعة واحدة ثم لديك ساعة أخرى مجانية حيث تختبر مهاراتك في مكان للواجبات. ستجد التمارين المصاحبة للدرس حيث يمكنك حلها وإعادة الحل عدد المرات التي ترغب فيها حتى تتمكن تماما من الدرس. ستجد قسما للكتابة حيث بعد إنتهاءك يمكنك إرساله لأستاذك للتصحيح و مناقشة مكان القصور والأخطاء. كلها هذا مجانا",
-  "Find out your level": "اكتشف مستواك",
-  "Do you want to know your level in English?": "هل ترغب في معرفة مستواك بالإنجليزية؟",
+  "Find out your level": "اكتشف مستواك ",
+  "Do you want to know your level in English?": "هل ترغب في معرفة مستواك بالإنجليزية؟ ",
   "EngFlexy Academy opens the platform for you to test your English proficiency through a test consisting of a set of questions. After answering, you will immediately get the result as well as your level (beginner, intermediate, advanced...)": "أكاديمية EngFlexy تفتح لك المنصة لتختبر مدى تمكنك من الإنجليزية عبر إختبار مكون من مجموعة من الأسئلة. بعد الإجابة، ستحصل مباشرة على النتيجة و كذلك مستواك (مبتدئ، متوسط، متقدم...).",
   "Fee refund feature": "خاصية إسترجاع الرسوم",
   "Our primary goal is to enable you to master the English language professionally. Therefore, the feature of refunding the full amount in the event that you do not benefit. All future sessions within 48 hours of requesting a refund are refundable": "هدفنا الأساسي هو تمكنك من اللغة الإنجليزية بإحتراف. لذلك خاصية إسترجاع المبلغ كاملا في حال عدم إستفادتك. جميع الجلسات المستقبلية في غضون 48 ساعة من طلب إسترداد الأموال قابلة للإسترداد",
   "English Language Completion Certificate": "شهادة إتمام اللغة الإنجليزية",
   "At the end of completing any of the levels and passing the exam, you will receive a certificate of success presented by the academy": "في نهاية إتمامك أي مستوى من المستويات وإجتياز الإمتحان ستحصل على شهادة نجاح مقدمة من الأكاديمية.",
-  "Develop your level of English": "طور مستواك في اللغة الإنجليزية",
+  "Develop your level of English": "طور مستواك في اللغة الإنجليزية ",
   "Do you want to improve your level of English in an effective and professional way?": "هل ترغب أن تطور مستواك في اللغة الإنجليزية بطريقة فعالة وإحترافية؟",
   "So EngFlexy Academy is the solution in which it gives you the opportunity to learn with a recognized professor directly and interactively where you can speak, learn grammar, listen, read and write in addition to exercises until you practice intensively with your teacher": "إذن أكاديمية EngFlexy هي الحل فهي تتيح لك الفرصة في التعلم مع أستاذ معترف به مباشرة و بشكل تفاعلي حيث يمكنك التحدث، تعلم القواعد، الإستماع، القراءة و كذلك الكتابة بالإضافة إلى التمارين حتى تتمرس بشكل مكثف مع أستاذك.",
-  "How better it is to study comfortably!": "كم هو أفضل أن تدرس وأنت مرتاح!",
+  "How better it is to study comfortably!": "كم هو أفضل أن تدرس وأنت مرتاح! ",
   "The Academy gives you the opportunity to learn English from anywhere. All you need is a device and the Internet. The psychological factor can be more important in the learning journey. Instead of wasting time going back and forth from your home to the place of learning, you can take advantage of this time to complete the exercises with your teacher directly.": "الأكاديمية تمنحك الفرصة بأن تتعلم الإنجليزية من أي مكان. ما يلزمك فقط جهاز و أنترنيت. العامل النفسي يمكن أن يكون أكثر أهمية في رحلة التعلم. فبدلا من ضياع الوقت التي تقضيه ذهابا وإيابا من منزلك إلى مكان التعلم،يمكنك أن تستفيد من هذا الوقت لإنجاز التمارين أو مع أستاذك بشكل مباشر.",
   "Pay once and learn twice!": "تدفع مرة و تتعلم مرتين!",
   "Please dont use the special characters": "من فضلك لا تستخدم الأحرف الخاصة",
   "HOURS": ":عدد الساعات",
   "LESSONS": ":عدد الدروس",
+  "Log Out": "تسجيل الخروج",
   "MONTH": ":عدد الاشهر",
   "Individual or group": "حصص فردية أو جماعية",
-  "Starting from": "إبتداءً من"
+  "Starting from": "إبتداءً من",
+  "DH": "درهم",
+  "go to login": "تسجيل الدخول",
+  "البريد الالكتروني موجود بالفعل، من فضلك تفقد بريدك الالكتروني للحصول على اسم المستخدم و كلمة المرور للولوج الى حسابك": "البريد الالكتروني موجود بالفعل، من فضلك تفقد بريدك الالكتروني للحصول على اسم المستخدم و كلمة المرور للولوج الى حسابك",
+  "Reset Password": "إعادة تعيين كلمة المرور",
+  "RESET PASSWORD": " تعيين كلمة السر",
+  "Lost your password? Please enter your Email address. You will receive your new password via Email": "هل فقدتَ كلمة السر الخاصة بك؟ يُرجى إدخال عنوان بريدك الإلكتروني. ستتلقى كلمة السر الجديدة عبر البريد الإلكتروني الخاص بك.",
+  "mission text": "يتيح لك EngFlexy الجمع بين أحدث تقنيات التعلم في العالم مع مدرسينا ذوي الخبرة لتقديم دورات حصرية و تقديم أفضل تجربة لدورة اللغة الانجليزية عبر الانترنيت في المغرب، لتلبية توقعاتك دائماً.",
+  "Our Mission": "مهِمَّتنا",
+  "Upgrade": "تحديث الآن",
+  "3 Free Lessons": "3 دروس مجانية",
+  "Discover Your Level": "اكتشف مستواك",
+  "Purchase Now": "شراء الآن",
+  "Free Trial": "مجاني",
+  "Current Plan": "الخطة الحالية",
+  "Group classes with a teacher": "حصص في مجموعة من شخصين أو أكتر",
+  "1 on 1 classes with your private teacher": "حصص فردية مع معلمك الخاص",
+  "Unlock more lessons and features!": "افتح المزيد من الدروس والميزات!",
+  "You are currently on a free plan with limited features and lessons": "أنت حاليًا في خطة مجانية ذات ميزات ودروس محدودة",
+  "Payment detail": "تفاصيل الدفع",
+  "Pack name": "الدورة",
+  "Student name": "اسم المستخدم",
+  "Student email": "البريد الالكتروني",
+  "Price": "سعر الدورة",
+  "Promo code": "تخفيض",
+  "Total": "السعر النهائى",
+  "choose your level": "اختر مستواك في اللغة الإنجليزية *",
+  "Your account is already validated, please try to sign in.": "تم التحقق من صحة حسابك بالفعل ، يرجى محاولة تسجيل الدخول.",
+  "please change your password before you start": "الرجاء تغيير كلمة المرور الخاصة بك قبل المتابعة",
+  "Password should be at least 8 characters long": "يجب أن تتكون كلمة المرور من 8 أحرف على الأقل",
+  "Password should contain at least one special character": "يجب أن تحتوي كلمة المرور على حرف خاص واحد على الأقل",
+  "valid password": "كلمة مرور صالحة",
+  "Password does not match": "كلمة السر غير متطابقة",
+  "error while updating your password": "حدث خطأ أثناء تحديث كلمة المرور الخاصة بك",
+  "Password updated Successfully": "تم تحديث كلمة السر بنجاح",
+  "Email does not found! Are you sure you are already a member?": "لم يتم العثور على البريد الإلكتروني! هل أنت متأكد أنك بالفعل عضو؟",
+  "Your account not found.": "حسابك غير موجود.",
+  "Your account has been validated.": "تم التحقق من صحة حسابك بنجاح",
+  "What happens in a live class?": "ماذا يحدث في الفصل المباشر؟",
+  "Join online classes with students from around the world for real-time speaking, listening and reading practice with an expert EngFlexy Academy teacher. We encourage you to interact with the materials, your teacher and your fellow students. Towards the end of class, the teacher will recap, share all the learning materials and ensure everybody has understood the lesson. For more information about the courses:": "انضم إلى الفصول الدراسية عبر الإنترنت مع طلاب من جميع أنحاء العالم لممارسة التحدث والاستماع والقراءة في الوقت الفعلي مع مدرس خبير في أكاديمية EngFlexy. نحن نشجعك على التفاعل مع المواد ومعلمك وزملائك الطلاب. قرب نهاية الفصل ، سيقوم المعلم بتلخيص ومشاركة جميع المواد التعليمية والتأكد من أن الجميع قد فهموا الدرس.  لمزيد من المعلومات عن ",
+  "What technology do I need to join English Online?": "ما التكنولوجيا التي أحتاجها للانضمام إلى اللغة الإنجليزية عبر الإنترنت؟",
+  "To access your student portal": "للوصول إلى بوابة الطالب الخاصة بك قم بتسجيل الدخول ",
+  "login": "من هنا",
+  "and attend our live online classes, you will need:": " و لحضور فصولنا المباشرة عبر الإنترنت ، ستحتاج إلى: ",
+  "a desktop/laptop computer (preferred) or a mobile device (tablet, smartphone)": "جهاز كمبيوتر مكتبي / محمول (مفضل) أو جهاز محمول (جهاز لوحي ، هاتف ذكي)",
+  "a reliable Internet connection": "اتصال إنترنت موثوق",
+  "a headset or headphones with a built-in microphone": "سماعة رأس أو سماعات مع ميكروفون مدمج",
+  "a working webcam": "كاميرا ويب ",
+  "If you want to join online classes, please also note: ": "يرجى الاخد بعين الاعتبار أنه ",
+  "English Online classes take place using the Google Meet.": " يتم الاستعانة ب Google Meet للتواصل  الصوتي بين المعلم و الثلاميذ. ",
+  "How do I check my level?": "كيف أتحقق من مستواي؟ ",
+  "You will be asked to select your English level when you log in to your account for the first time.": "سيُطلب منك تحديد مستواك في اللغة الإنجليزية عند تسجيل الدخول إلى حسابك لأول مرة. ",
+  "If you are unsure of your current English level, you can take our free level test before joining the online classes.": "إذا لم تكن متأكدًا من مستواك الحالي في اللغة الإنجليزية ، فيمكنك إجراء اختبار المستوى المجاني قبل الانضمام إلى الفصول الدراسية عبر الإنترنت ",
+  "take test here": "اكتشف مستواك هنا ",
+  "Our course is available at CEFR levels: Elementary (Level A1), Pre-Intermediate (Level A2), Intermediate (Level B1), Upper-Intermediate (Level B2), and Advanced (Level C1).": "دورتنا متاحة في مستويات CEFR: الابتدائية (المستوى A1) ، ما قبل المتوسط (المستوى A2) ، المتوسط (المستوى B1) ، فوق المتوسط (المستوى B2) ، والمتقدم (المستوى C1).",
+  "How do I pay?": "كيف أدفع؟ ",
+  "You can pay for your subscription online, directly ": "يمكنك الدفع مقابل اشتراكك عبر الإنترنت ",
+  "here": " هنا ",
+  "with a credit or debit card: Visa,MasterCard": "، مباشرةً باستخدام بطاقة ائتمان أو بطاقة خصم: Visa و MasterCard",
+  "Who are the teachers?": "من هم المدرسون؟ ",
+  "All our teachers are highly qualified and experienced EngFlexy Academy English teaching professionals. Our teachers are experienced in working with students from many different countries and are online teaching specialists. Teacher training takes place regularly and teaching quality is monitored and evaluated by a team of specialists to ensure we deliver the best learning experience possible. ": "جميع مدرسينا مؤهلين تأهيلاً عالياً وذوي خبرة متخصصين في تدريس اللغة الإنجليزية في أكاديمية EngFlexy. يتمتع مدرسونا بالخبرة في العمل مع طلاب من العديد من البلدان المختلفة وهم متخصصون في التدريس عبر الإنترنت. يتم تدريب المعلمين بانتظام ويتم مراقبة جودة التدريس وتقييمها من قبل فريق من المتخصصين لضمان تقديم أفضل تجربة تعليمية ممكنة.",
+  "Will I get a certificate?": "هل سأحصل على شهادة؟ ",
+  "Yes, you will get a success certificate after passing each of the five level: Elementary, Pre Intermediate, Intermediate, Upper Intermediate, then Advanced.": " نعم، ستحصل على شهادة نجاح بعد إجتياز كل مستوى من المستويات الخمس: مبتدىء، ماقبل متوسط، متوسط، مابعد متوسط ثم متقدم",
+  "Frequently asked questions": "الاسئلة المتداولة",
+  "The possibility of repeating the lesson and exercises several times": "إمكانية إعادة الدرس والتمارين عدة مرات",
+  "Free dictionary for life": "قاموس مجاني مدى الحياة",
+  "Two classes per week": "2 حصص في الاسبوع",
+  "Get certified": "الحصول على شهادة",
+  "Taking Breaks & Avoiding Language Loss": "أخذ فترات راحة وتجنب نسيان اللغة الإنجليزية",
+  "Improve English Pronunciation & Your Mindset with Kamal Zouani": "كيف تحسن نطق اللغة الإنجليزية\"English Pronunciation\"",
+  "10 tips to succeed in a job interview in English": "10 نصائح لتحقيق النجاح في مقابلة عمل باللغة الإنجليزية\"Job interview in English\"",
+  "Learn how to improve your speaking and fluency with this lesson:": "تعرف كيف تحسن مهارة النطق والانسيابية في التحدث في هذه الدورة",
+  "Does it feel like your English is improving very slowly ?": "هل تشعر أن لغتك الإنجليزية\"English\" تتحسن لكن ببطء شديد؟",
+  "Or do you feel that you are not making much progress at all ?": "أم تشعر أنك لا تحرز تقدمًا كبيرًا على الإطلاق؟",
+  "navigating_blog": "في هذه المرحلة من تعلم اللغة الإنجليزية ومع وجود الكثير من الموارد والدروس والنصائح ، قد يكون من الصعب معرفة ما يجب التركيز عليه ومن أين تبدأ مما يزيد الأمر تعقيدا!\nفي Engflexy ، اختصاصنا هو مساعدة الطلاب مثلك تمامًا على التركيز على الأشياء الصحيحة ، وتحديد الأنشطة التي ستساعدك على تطوير مهاراتك في إتقان اللغة الإنجليزية بسرعة ، ومنحك وصولاً مباشرًا إلى مدرس يمكنه مساعدتك في الممارسة ، عن طريق منصتنا التفاعلية عبر الإنترنت."
 }

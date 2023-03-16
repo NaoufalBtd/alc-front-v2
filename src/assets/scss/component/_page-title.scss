@@ -67,14 +67,6 @@
                     &.active{
                         font-size: 15px;
                         color: $white;
-                        &::before{
-                            content: '.';
-                            font-family: $hind;
-                            font-size: 30px;
-                            color: $white;
-                            line-height: 18px;
-                            padding-right: 13px;
-                        }
                     }
                     & a{
                         font-size: 15px;
@@ -83,14 +75,7 @@
                     }
                     & + .breadcrumb-item{
                         padding-left: 13px;
-                        &::before{
-                            content: '.';
-                            font-family: $hind;
-                            font-size: 30px;
-                            color: $white;
-                            line-height: 18px;
-                            padding-right: 13px;
-                        }
+                        padding-right: 13px;
                     }
                 }
             }

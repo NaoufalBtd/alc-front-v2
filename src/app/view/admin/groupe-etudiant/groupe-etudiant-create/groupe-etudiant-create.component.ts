@@ -1,254 +1,201 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {GroupeEtudiantService} from '../../../../controller/service/groupe-etudiant-service';
 import {GroupeEtude} from '../../../../controller/model/groupe-etude.model';
 import {GroupeEtudiant} from '../../../../controller/model/groupe-etudiant.model';
-import {MessageService} from 'primeng/api';
+import {ConfirmationService, MessageService} from 'primeng/api';
 import {Etudiant} from '../../../../controller/model/etudiant.model';
-import { GroupeEtudiantDetail} from '../../../../controller/model/groupe-etudiant-detail.model';
 import {Parcours} from '../../../../controller/model/parcours.model';
 import {Prof} from '../../../../controller/model/prof.model';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {GroupeEtudiantDetail} from '../../../../controller/model/groupe-etudiant-detail.model';
 
 @Component({
-  selector: 'app-groupe-etudiant-create',
-  templateUrl: './groupe-etudiant-create.component.html',
-  styleUrls: ['./groupe-etudiant-create.component.scss']
+    selector: 'app-groupe-etudiant-create',
+    templateUrl: './groupe-etudiant-create.component.html',
+    styleUrls: ['./groupe-etudiant-create.component.scss']
 })
 export class GroupeEtudiantCreateComponent implements OnInit {
-  constructor( private groupeEtudiantService: GroupeEtudiantService, private messageService: MessageService) { }
-  prof2 = new Prof();
-  exform: FormGroup;
-  ngOnInit(): void {
-    this.exform = new FormGroup({
-      'groupe': new FormControl(null, Validators.required),
-      'groupLabel': new FormControl(null, Validators.required),
-      'prof': new FormControl(null, Validators.required),
-      'level': new FormControl(null, Validators.required)});
-    this.findAllProf();
-  }
-  get createDialogEtud(): boolean {
-    return this.groupeEtudiantService.createDialog;
-  }
-  set createDialogEtud(value: boolean) {
-    this.groupeEtudiantService.createDialog = value;
-  }
-
-  get groupeEtudeList(): Array<GroupeEtude> {
-    return this.groupeEtudiantService.groupeEtudeList;
-  }
-  set groupeEtudeList(value: Array<GroupeEtude>) {
-    this.groupeEtudiantService.groupeEtudeList = value;
-  }
-
-  get parcoursList(): Array<Parcours> {
-    return this.groupeEtudiantService.parcoursList;
-  }
-  set parcoursList(value: Array<Parcours>) {
-    this.groupeEtudiantService.parcoursList = value;
-  }
-  set groupeEtudiantDetails(value: Array<GroupeEtudiantDetail>) {
-    this.groupeEtudiantService.groupeEtudiantDetails = value;
-  }
-
-  get groupeEtudiantDetails(): Array<GroupeEtudiantDetail> {
-    return this.groupeEtudiantService.groupeEtudiantDetails;
-  }
-  set groupeEtudiantDetail(value: GroupeEtudiantDetail) {
-    this.groupeEtudiantService.groupeEtudiantDetail = value;
-  }
- get prof(): Prof{
-    return this.groupeEtudiantService.prof;
-}
- set prof( value: Prof){
-    this.groupeEtudiantService.prof = value;
-}
-get profs(): Array<Prof>{
-    return  this.groupeEtudiantService.profs;
-
-}
-set profs( value: Array<Prof>){
-     this.groupeEtudiantService.profs = value;
-}
-  get groupeEtudiantDetail(): GroupeEtudiantDetail {
-    return this.groupeEtudiantService.groupeEtudiantDetail;
-  }
-  get etudiantList(): Array<Etudiant> {
-    return this.groupeEtudiantService.etudiantList;
-  }
-
-  set etudiantList(value: Array<Etudiant>) {
-    this.groupeEtudiantService.etudiantList = value;
-  }
-  get etudiantList2(): Array<Etudiant> {
-    return this.groupeEtudiantService.etudiantList2;
-  }
-
-  set etudiantList2(value: Array<Etudiant>) {
-    this.groupeEtudiantService.etudiantList2 = value;
-  }
-  get createDialog(): boolean {
-    return this._createDialog;
-  }
-
-  set createDialog(value: boolean) {
-    this._createDialog = value;
-  }
-
-  get selected(): GroupeEtudiant {
-    return this.groupeEtudiantService.groupeEtudiant;
-  }
-  set selected(value: GroupeEtudiant) {
-    this.groupeEtudiantService.groupeEtudiant = value;
-  }
-  get parcours(): Parcours {
-    return this.groupeEtudiantService.parcours;
-  }
-  set parcours(value: Parcours) {
-    this.groupeEtudiantService.parcours = value;
-  }
-  get groupeEtudiants(): Array<GroupeEtudiant> {
-    return this.groupeEtudiantService.groupeEtudiants;
-  }
-  set groupeEtudiants(value: Array<GroupeEtudiant>) {
-    this.groupeEtudiantService.groupeEtudiants = value;
-  }
-  get groupeEtudiant(): GroupeEtudiant {
-    return this.groupeEtudiantService.groupeEtudiant;
-  }
-  set groupeEtudiant(value: GroupeEtudiant) {
-    this.groupeEtudiantService.groupeEtudiant = value;
-  }
-  get etudiant(): Etudiant {
-    return this.groupeEtudiantService.etudiant;
-  }
-
-  set etudiant(value: Etudiant) {
-    this.groupeEtudiantService.etudiant = value;
-  }
-  private submitted: boolean;
-  private _createDialog: boolean;
-  public  libelle1 = '';
-  public  libelle2 = '';
-  public id1 = '';
-  public id2 = Number(this.id1);
-  public id3 = Number(this.libelle2);
-  cols: any[];
-  public full:boolean = false;
-
-  public findAllGroupeEtude() {
-    this.groupeEtudiantService.findAllGroupeEtude().subscribe(data => this.groupeEtudeList = data);
-  }
-  public findAllParcours() {
-    this.groupeEtudiantService.findAllParcours().subscribe(data => this.parcoursList = data);
-  }
-  public findAllEtudiant() {
-    this.groupeEtudiantService.findAllEtudiant().subscribe(data => this.etudiantList = data);
-  }
-public  findAllProf(){
-    this.groupeEtudiantService.findAllProf().subscribe(data => this.profs = data);
-
-}
-  public findEtudiantListByParcoursLibelle(libelle2) {
-    console.log(libelle2);
-    console.log(this.etudiantList);
-    this.groupeEtudiantService.findEtudiantListByParcoursLibelle(libelle2)
-        .subscribe(data => this.etudiantList = data);
-  }
-
-  public hideCreateDialog() {
-    this.createDialogEtud = false;
-    this.submitted = false;
-  }
-  public save() {
-    console.log(this.selected.prof);
-    console.log(this.groupeEtudiant);
-    this.submitted = true;
-    this.groupeEtudiantService.save().subscribe(data => {
-      this.groupeEtudiants.push({...this.groupeEtudiant});
-      // tslint:disable-next-line:no-shadowed-variable
-      this.groupeEtudiantService.findAll().subscribe(data => this.groupeEtudiants = data);
-      this.messageService.add({
-        severity: 'success',
-        summary: 'Successful',
-        detail: 'group Created',
-        life: 3000
-      });
-    });
-    this.createDialogEtud = false;
-    this.selected = new GroupeEtudiant();
-
-  }
-
-  selectChangeHandler(event) {
-    this.libelle1 = event.target.value;
-
-  }
-  selectChangeHandler2(event) {
-    this.id2 = event.target.value.split(': ')[1];
-
-  }
-  selectChangeGroupeEtude(event) {
-    this.id3 = event.target.value.split(': ')[1];
-  }
-  selectProf() {
-   console.log(this.selected.prof);
-  }
-
- public addEtudiant(){
-    this.groupeEtudiant.groupeEtudiantDetails.push({...this.groupeEtudiantDetail});
-    this.groupeEtudiantDetail = null ;
-  }
-public trouver(id: number){
-    for (let i = 0 ; i<this.groupeEtudeList.length ; i++){
-      if( id == this.groupeEtudeList[i].id){
-
-        console.log('ha l groupe etude ' + this.groupeEtudeList[i].nombreEtudiant);
-        this.selected.groupeEtude.nombreEtudiant = this.groupeEtudeList[i].nombreEtudiant;
-        console.log('ha le nombre ' +this.selected.groupeEtude.nombreEtudiant );
-        this.selected.nombrePlacevide =   this.selected.groupeEtude.nombreEtudiant ;
-        this.selected.nombrePlaceNonVide=0;
-      }
+    constructor(private groupeEtudiantService: GroupeEtudiantService,
+                private confirmation: ConfirmationService,
+                private messageService: MessageService) {
     }
-}
 
-  public exit(id: number){
-    for ( let i = 0 ; i < this.etudiantList.length ; i++){
-      if (id == this.etudiantList[i].id)
-      {
-        console.log( this.etudiantList[i]);
-        //this.etudiantList2.push(this.etudiantList[i]);
-        this.groupeEtudiantDetail.etudiant = this.etudiantList[i];
-        this.selected.nombrePlacevide =    this.selected.nombrePlacevide - 1;
-        this.selected.nombrePlaceNonVide =  this.selected.groupeEtude.nombreEtudiant - this.selected.nombrePlacevide;
-        this.groupeEtudiant.groupeEtudiantDetails.push({...this.groupeEtudiantDetail});
-        this.groupeEtudiantDetail = null;
-        this.isfull();
-        return 0;
-      }
-    }
-    this.etudiantList = null ;
-  }
-  public deleteFromView(groupeEtudiantDetail: GroupeEtudiantDetail ) {
-    const index = this.groupeEtudiant.groupeEtudiantDetails.findIndex(c => c.etudiant.nom === groupeEtudiantDetail.etudiant.nom);
-    if (index !== -1 ) {
-      this.groupeEtudiant.groupeEtudiantDetails.splice(index, 1);
-      this.selected.nombrePlaceNonVide --;
-      this.selected.nombrePlacevide++;
-      this.isfull();
-    }
-  }
-  public validateSave(): boolean {
-    return this.selected.libelle != null &&   this.groupeEtudiant.groupeEtudiantDetails.length > 0;
+    students: Array<Etudiant> = new Array<Etudiant>();
+    student: Etudiant = null;
+    groupNotValid: boolean;
+    profNotValid: boolean;
+    levelNotValid: boolean;
 
-  }
-  public isfull(){
-    if ((this.groupeEtudiant.groupeEtudiantDetails.length - this.selected.groupeEtude.nombreEtudiant)=== 0){
-      this.full = true;
+    set groupeEtudiants(value: Array<GroupeEtudiant>) {
+        this.groupeEtudiantService.groupeEtudiants = value;
+    }
+
+
+    get createDialogEtud(): boolean {
+        return this.groupeEtudiantService.createDialog;
+    }
+
+    set createDialogEtud(value: boolean) {
+        this.groupeEtudiantService.createDialog = value;
+    }
+
+    get groupeEtudeList(): Array<GroupeEtude> {
+        return this.groupeEtudiantService.groupeEtudeList;
+    }
+
+    set groupeEtudeList(value: Array<GroupeEtude>) {
+        this.groupeEtudiantService.groupeEtudeList = value;
+    }
+
+    get parcoursList(): Array<Parcours> {
+        return this.groupeEtudiantService.parcoursList;
+    }
+
+    set parcoursList(value: Array<Parcours>) {
+        this.groupeEtudiantService.parcoursList = value;
+    }
+
+
+    get profs(): Array<Prof> {
+        return this.groupeEtudiantService.profs;
 
     }
-    else {
-      this.full = false ;
+
+    set profs(value: Array<Prof>) {
+        this.groupeEtudiantService.profs = value;
     }
-  }
+
+
+    get etudiantList(): Array<Etudiant> {
+        return this.groupeEtudiantService.etudiantList;
+    }
+
+    set etudiantList(value: Array<Etudiant>) {
+        this.groupeEtudiantService.etudiantList = value;
+    }
+
+
+    get selected(): GroupeEtudiant {
+        return this.groupeEtudiantService.groupeEtudiant;
+    }
+
+    set selected(value: GroupeEtudiant) {
+        this.groupeEtudiantService.groupeEtudiant = value;
+    }
+
+
+    ngOnInit(): void {
+        this.findAllProf();
+        this.findAllGroupeEtude();
+        this.findAllParcours();
+        console.log(this.selected);
+        if (this.selected?.id !== undefined && this.selected?.id !== 0 && this.selected?.id !== null) {
+            this.groupeEtudiantService.findAllGroupeEtudiantDetail(this.selected.id).subscribe(
+                data => this.selected.groupeEtudiantDetails = data);
+            this.findAllEtudiant(true);
+        } else {
+            this.selected = new GroupeEtudiant();
+            this.selected.groupeEtude = null;
+            this.selected.prof = null;
+            this.selected.parcours = null;
+            this.findAllEtudiant(false);
+
+        }
+    }
+
+
+    public findAllGroupeEtude() {
+        this.groupeEtudiantService.findAllGroupeEtude().subscribe(data => this.groupeEtudeList = data);
+    }
+
+    public findAllParcours() {
+        this.groupeEtudiantService.findAllParcours().subscribe(data => this.parcoursList = data);
+    }
+
+    public findAllEtudiant(isUpdate: boolean) {
+        this.groupeEtudiantService.findAllEtudiant().subscribe(data => {
+            this.etudiantList = data;
+            if (isUpdate) {
+                this.students = this.etudiantList.filter(s => s.parcours?.id === this.selected?.parcours?.id);
+            }
+        });
+    }
+
+    public findAllProf() {
+        this.groupeEtudiantService.findAllProf().subscribe(data => this.profs = data);
+    }
+
+
+    public save() {
+        console.log(this.selected);
+        this.selected.nombrePlacevide = this.selected.groupeEtude.nombreEtudiant - this.selected.groupeEtudiantDetails.length;
+        this.selected.nombrePlaceNonVide = this.selected.groupeEtudiantDetails.length;
+        this.groupeEtudiantService.save().subscribe(data => {
+            this.groupeEtudiants?.push({...data});
+            this.messageService.add({
+                severity: 'success',
+                summary: 'Successful',
+                detail: 'group Created',
+                life: 3000
+            });
+        });
+        this.createDialogEtud = false;
+        this.selected = new GroupeEtudiant();
+    }
+
+
+    public addEtudiant() {
+        for (const groupeEtudiantDetail of this.selected.groupeEtudiantDetails) {
+            if (groupeEtudiantDetail?.etudiant?.id === this.student?.id) {
+                this.messageService.add({
+                    severity: 'info',
+                    detail: 'Student already exist !',
+                    life: 10000
+                });
+                return;
+            }
+        }
+        console.log(this.student);
+        const grp: GroupeEtudiantDetail = new GroupeEtudiantDetail();
+        grp.etudiant = this.student;
+        grp.groupeEtudiant = null;
+        this.selected.groupeEtudiantDetails.push(grp);
+        this.student = null;
+    }
+
+
+    filterStudentByLevels() {
+        console.log(this.selected.parcours);
+        this.students = this.etudiantList.filter(s => s.parcours?.id === this.selected?.parcours?.id);
+    }
+
+    removeGrouEtudiantDetail(item: GroupeEtudiantDetail) {
+        if (item?.id !== undefined && item?.id !== null && item?.id !== 0) {
+            this.confirmation.confirm({
+                message: 'Are you sure you want to delete ' + item?.etudiant.nom + ' ?',
+                header: 'Confirm',
+                icon: 'pi pi-exclamation-triangle',
+                accept: () => {
+                    this.groupeEtudiantService.deleteGroupeEtudiantDetailById(item.id).subscribe(
+                        data => {
+
+                        }, error => {
+                            console.log(error);
+                        }
+                    );
+                }
+            });
+        }
+
+        for (let i = 0; i < this.selected?.groupeEtudiantDetails?.length; i++) {
+            if (item?.etudiant?.id === this.selected?.groupeEtudiantDetails[i]?.etudiant?.id) {
+                this.selected?.groupeEtudiantDetails.splice(i, 1);
+            }
+        }
+    }
+
+    compareObjects(object1: any, object2: any) {
+        return object1 && object2 && object1.id === object2.id;
+    }
+
 }
 

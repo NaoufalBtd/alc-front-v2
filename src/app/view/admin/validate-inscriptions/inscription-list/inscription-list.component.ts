@@ -20,7 +20,6 @@ import {InteretEtudiant} from '../../../../controller/model/interet-etudiant.mod
 import {Fonction} from '../../../../controller/model/fonction.model';
 import {StatutSocial} from '../../../../controller/model/statut-social.model';
 import {Skill} from '../../../../controller/model/skill.model';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
     selector: 'app-inscription-list',
@@ -214,7 +213,6 @@ export class InscriptionListComponent implements OnInit {
     ngOnInit(): void {
 
 
-
         this.packStudentService.findAllPacks();
         console.log(this.packStudentService.packstudentIndividialList);
         console.log(this.packStudentService.packstudentgroupeList);
@@ -384,8 +382,10 @@ export class InscriptionListComponent implements OnInit {
 
     handleChange(e) {
         const index = e.index;
-        if (index === 0) {
+        if (index === 2) {
             this.findPendingInscriptions();
+        } else if (index === 1) {
+            this.findValidateInscriptions();
         } else {
             this.findAll();
         }
@@ -393,6 +393,16 @@ export class InscriptionListComponent implements OnInit {
 
     private findPendingInscriptions() {
         this.service.findByEtatInscription('Pending').subscribe(
+            data => {
+                this.items = data;
+            }, error => {
+                console.log(error);
+            }
+        );
+    }
+
+    private findValidateInscriptions() {
+        this.service.findByEtatInscription('Validated').subscribe(
             data => {
                 this.items = data;
             }, error => {

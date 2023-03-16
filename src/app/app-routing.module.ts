@@ -68,7 +68,6 @@ import {ComplaintComponent} from './view/admin/complaint/complaint.component';
 import {ReclamationProfComponent} from './view/prof/reclamation-prof/reclamation-prof.component';
 import {ReclamationEtudiantComponent} from './view/etudiant/reclamation-etudiant/reclamation-etudiant.component';
 import {TypeReclamationComponent} from './view/admin/type-reclamation/type-reclamation.component';
-import {ProfileComponent} from './view/etudiant/profile/profile.component';
 import {DragHomeWorkComponent} from './view/etudiant/homeWork/drag-home-work/drag-home-work.component';
 import {InvitedStudentComponent} from './view/etudiant/invited-student/invited-student.component';
 import {HomePageEtudiantComponent} from './view/public/home-page-etudiant/home-page-etudiant.component';
@@ -108,6 +107,8 @@ import {PayNowComponent} from './view/shared/pay-now/pay-now.component';
 import {PaimentOkComponent} from './view/public/home-principale/paiment/paiment-ok/paiment-ok.component';
 import {PaimentFailComponent} from './view/public/home-principale/paiment/paiment-fail/paiment-fail.component';
 import {PaimentBackComponent} from './view/public/home-principale/paiment/paiment-back/paiment-back.component';
+import {UpgdatePackComponent} from './view/etudiant/upgdate-pack/upgdate-pack.component';
+import {PublicFaqComponent} from './view/public/home-principale/FAQ/public-faq/public-faq.component';
 
 
 @NgModule({
@@ -205,12 +206,12 @@ import {PaimentBackComponent} from './view/public/home-principale/paiment/paimen
                     {path: 'profile', component: EtudiantProfileComponent},
                     {path: 'reclamation-etudiant', component: ReclamationEtudiantComponent},
                     {path: 'profile', component: EtudiantProfileComponent},
-                    {path: 'profileEdit', component: ProfileComponent},
                     {path: 'test-level', component: TestLevelComponent},
+                    {path: 'purchase', component: UpgdatePackComponent},
                     {path: 'inviteStudent', component: InvitedStudentComponent},
                     {path: 'myPromotionList', component: MyPromotionListComponent},
                     {path: 'inviteStudent', component: InvitedStudentComponent},
-                    {path: 'pack', component: PackDetailsComponent},
+                    {path: 'pack/:id', component: PackDetailsComponent},
                     {path: '*', component: HomeStudentComponent}
 
                 ]
@@ -237,7 +238,11 @@ import {PaimentBackComponent} from './view/public/home-principale/paiment/paimen
                         component: BlogComponent
                     },
                     {
-                        path: 'blog-details',
+                        path: 'faqs',
+                        component: PublicFaqComponent
+                    },
+                    {
+                        path: 'blog-details/:id',
                         component: BlogDetailsMainComponent
                     },
                     {path: 'public/connectAsInvited', component: ConnectAsInvitedComponent},
@@ -245,6 +250,9 @@ import {PaimentBackComponent} from './view/public/home-principale/paiment/paimen
                     {path: 'resetPassword', component: ResetPasswordComponent},
                     {path: 'public/teacher', component: BecomeTeacherComponent},
                     {path: 'courses', component: CoursesPageComponent},
+                    {path: 'courses/:group', component: CoursesPageComponent},
+                    {path: 'courses/:group/:price', component: CoursesPageComponent},
+                    {path: 'courses/:group/:price/:level', component: CoursesPageComponent},
                     {path: 'Privacy', component: PrivacyPolicyComponent},
                     {path: 'user-agreement', component: TermOfServiceComponent},
                     {path: 'course-details/:id', component: CourseDetailsComponent},

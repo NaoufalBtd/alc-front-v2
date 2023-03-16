@@ -2,3 +2,25 @@
 <router-outlet></router-outlet>
 <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
 <app-loading-animation></app-loading-animation>
+
+<p-toast position="top-center" key="newAccount" [baseZIndex]="5000">
+    <ng-template let-message pTemplate="message">
+        <div class="p-flex p-flex-column" style="flex: 1">
+            <div class="p-text-center">
+                <i class="pi pi-bell" style="font-size: 3rem"></i>
+                <h4>{{message.summary | translate}}</h4>
+                <p>{{message.detail | translate}}</p>
+            </div>
+            <div class="p-grid p-fluid">
+                <div class="p-col-12">
+                    <button type="button" pButton (click)="goToLogin()" [label]="'go to login' | translate"
+                            class="p-button-success"></button>
+                </div>
+                <div class="p-col-12">
+                    <button type="button" pButton (click)="onForgetPassword()" [label]="'forgetpassword' | translate"
+                            class="p-button-secondary"></button>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</p-toast>

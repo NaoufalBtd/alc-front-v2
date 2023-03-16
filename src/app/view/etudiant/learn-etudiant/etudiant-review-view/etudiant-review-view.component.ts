@@ -84,7 +84,6 @@ export class EtudiantReviewViewComponent implements OnInit {
     }
 
     public emoji(review: number) {
-        console.log(review);
         this.selected.review = review;
         // tslint:disable-next-line:triple-equals
         if (review == 1) {

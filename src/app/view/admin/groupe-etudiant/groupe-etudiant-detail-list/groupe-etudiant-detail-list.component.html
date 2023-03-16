@@ -1,4 +1,4 @@
-<p-dialog [(visible)]="createDialogGroupeEtudiantDetail" [modal]="true" [style]="{width: '450px'}"
+<p-dialog [(visible)]="createDialogGroupeEtudiantDetail" [modal]="true" [style]="{width: '800px'}"
           header="Group Create" styleClass="p-fluid">
 
     <div class="p-grid">
@@ -25,19 +25,27 @@
                             <th pSortableColumn="libelle"> First name
                                 <p-sortIcon field="liebelle"></p-sortIcon>
                             </th>
-                            <th pSortableColumn="dateDebut">Last name
+                            <th pSortableColumn="dateDebut">Email
                                 <p-sortIcon field="dateDebut"> </p-sortIcon>
                             </th>
                             <th pSortableColumn="dateDebut">Level
                                 <p-sortIcon field="dateDebut"> </p-sortIcon>
                             </th>
+                            <th>
+                                Action
+                            </th>
                         </tr>
                     </ng-template>
                     <ng-template let-groupeEtudiantDetail pTemplate="body">
                         <tr>
-                            <td>{{groupeEtudiantDetail.etudiant.nom}}</td>
-                            <td>{{groupeEtudiantDetail.etudiant.prenom}}</td>
-                            <td>{{groupeEtudiantDetail.etudiant.parcours.libelle}}</td>
+                            <td>{{groupeEtudiantDetail.etudiant?.nom}}</td>
+                            <td>{{groupeEtudiantDetail.etudiant?.username}}</td>
+                            <td>{{groupeEtudiantDetail.etudiant?.parcours?.libelle}}</td>
+                            <td>
+                                <button type="button" (click)="removeGrouEtudiantDetail(groupeEtudiantDetail)" class="btn btn-danger">
+                                    remove
+                                </button>
+                            </td>
                         </tr>
                     </ng-template>
                 </p-table>

@@ -22,39 +22,27 @@
                                 </div>
                             </div>
                             <div class="p-grid">
-                                <div class="p-col-3">
-                                    <input [style]="{width: '100%'}"
-                                           [(ngModel)]="this.packStudentServie.packstudentVo.code"
+                                <div class="p-col-5">
+                                    <input #individual
+                                           [style]="{width: '100%'}"
+                                           placeholder="search by price, name, level..."
                                            type="text" pInputText>
                                 </div>
-                                <div class="p-col-3">
-                                    <input [style]="{width: '100%'}"
-                                           [(ngModel)]="this.packStudentServie.packstudentVo.nombreCours" type="number"
-                                           pInputText>
-                                </div>
-                                <div class="p-col-3">
-                                    <input [style]="{width: '100%'}"
-                                           [(ngModel)]="this.packStudentServie.packstudentVo.libelle"
-                                           type="text" pInputText>
-                                </div>
-                                <div class="p-col-3">
-                                    <input [style]="{width: '100%'}"
-                                           [(ngModel)]="this.packStudentServie.packstudentVo.totalStudents"
-                                           type="number"
-                                           pInputText>
-                                </div>
-                                <div class="p-col-1">
+
+
+                                <div class="p-col-2">
                                     <p-button [style]="{width: '100%'}" icon="pi pi-search"
-                                              (click)="findBycreteria(false)"></p-button>
+                                              label="search"
+                                              (click)="findBycreteria(false, individual.value)"></p-button>
                                 </div>
                             </div>
                             <div class="p-grid">
                                 <p-table responsiveLayout="scroll" [value]="packstudentIndividialList">
                                     <ng-template pTemplate="header">
                                         <tr>
-                                            <th>Code</th>
+                                            <th>ID</th>
+                                            <th>Level</th>
                                             <th>Name</th>
-                                            <th>Number de courses</th>
                                             <th>Price</th>
                                             <th>Total Students</th>
                                             <th>Action</th>
@@ -62,9 +50,9 @@
                                     </ng-template>
                                     <ng-template pTemplate="body" let-c>
                                         <tr>
-                                            <td>{{c.code}}</td>
+                                            <td>{{c.id}}</td>
+                                            <td>{{c.level?.libelle}}</td>
                                             <td>{{c.libelle}}</td>
-                                            <td>{{c.nombreCours}}</td>
                                             <td>{{c.price?.price}}</td>
                                             <td>{{c.totalStudents}}</td>
                                             <td>
@@ -103,41 +91,26 @@
                                 </div>
                             </div>
                             <div class="p-grid">
-                                <div class="p-col-3">
-                                    <input [(ngModel)]="this.packStudentServie.packstudentVo.code"
+                                <div class="p-col-5">
+                                    <input #group
                                            [style]="{width: '100%'}"
+                                           placeholder="search by price, name, level..."
                                            type="text" pInputText>
                                 </div>
 
-
-                                <div class="p-col-3">
-                                    <input [(ngModel)]="this.packStudentServie.packstudentVo.nombreCours"
-                                           [style]="{width: '100%'}"
-                                           type="number" pInputText>
-                                </div>
-
-
-                                <div class="p-col-3">
-                                    <input [(ngModel)]="this.packStudentServie.packstudentVo.libelle"
-                                           [style]="{width: '100%'}"
-                                           type="text" pInputText>
-                                </div>
-                                <div class="p-col-3">
-                                    <input [(ngModel)]="this.packStudentServie.packstudentVo.totalStudents"
-                                           [style]="{width: '100%'}"
-                                           type="number" pInputText>
-                                </div>
-                                <div class="p-col-1">
-                                    <p-button icon="pi pi-search" (click)="findBycreteria(true)"></p-button>
+                                <div class="p-col-2">
+                                    <p-button [style]="{width: '100%'}" icon="pi pi-search"
+                                              label="search"
+                                              (click)="findBycreteria(true, group.value)"></p-button>
                                 </div>
                             </div>
                             <div class="p-grid">
                                 <p-table responsiveLayout="scroll" [value]="packstudentgroupeList">
                                     <ng-template pTemplate="header">
                                         <tr>
-                                            <th>Code</th>
+                                            <th>ID</th>
+                                            <th>Level</th>
                                             <th>Name</th>
-                                            <th>Number of courses</th>
                                             <th>Price</th>
                                             <th>Total Students</th>
                                             <th>Action</th>
@@ -145,9 +118,9 @@
                                     </ng-template>
                                     <ng-template pTemplate="body" let-c>
                                         <tr>
-                                            <td>{{c.code}}</td>
+                                            <td>{{c.id}}</td>
+                                            <td>{{c.level?.libelle}}</td>
                                             <td>{{c.libelle}}</td>
-                                            <td>{{c.nombreCours}}</td>
                                             <td>{{c.price?.price}}</td>
                                             <td>{{c.totalStudents}}</td>
                                             <td>
@@ -191,20 +164,20 @@
 <p-dialog header="Add pack for one student" [style]="{width: '70vw'}" [(visible)]="displayPackIndividual">
     <div class="p-grid" style="padding: 10px">
         <div class="p-col-4">
-            <label ><strong>code</strong></label>
+            <label><strong>code</strong></label>
             <input [style]="{width: '100%'}" class="p-mb-2 p-mr-2" type="text" pInputText
                    [(ngModel)]="this.packStudentServie.packstudentIndividial.code" required autofocus>
         </div>
 
 
         <div class="p-col-4">
-            <label ><strong>libelle</strong></label>
+            <label><strong>libelle</strong></label>
             <input [style]="{width: '100%'}" class="p-mb-2 p-mr-2" type="text" pInputText
                    [(ngModel)]="this.packStudentServie.packstudentIndividial.libelle" required autofocus>
         </div>
 
         <div class="p-col-4">
-            <label ><strong>Levels</strong></label>
+            <label><strong>Levels</strong></label>
             <p-dropdown [options]="parcours" [(ngModel)]="packstudentIndividial.level"
                         [style]="{'width': '100%'}"
                         optionLabel="libelle" [filter]="true" filterBy="libelle" [showClear]="true"
@@ -224,23 +197,22 @@
         </div>
 
         <div class="p-col-4">
-            <label ><strong>Url image</strong></label>
-            <input [style]="{width: '100%'}" class="p-mb-2 p-mr-2" type="text" pInputText
-                   [(ngModel)]="this.packStudentServie.packstudentIndividial.imgUrl" required autofocus>
+            <label><strong>Url image</strong></label>
+
+            <p-dropdown [options]="images" [(ngModel)]="this.packStudentServie.packstudentIndividial.imgUrl"
+                        [style]="{'width': '100%'}"
+                        optionLabel="name" [filter]="false" optionValue="url" filterBy="name" [showClear]="false"
+                        placeholder="Select a image">
+            </p-dropdown>
         </div>
 
 
         <div class="p-col-4">
-            <label ><strong>Description</strong></label>
+            <label><strong>Description</strong></label>
             <textarea [style]="{width: '100%'}" rows="2" cols="30" name="description"
                       [(ngModel)]="packstudentIndividial.description"
                       pInputTextarea [autoResize]="false"></textarea>
         </div>
-
-
-      
-
-
 
 
         <div class="p-col-4">
@@ -250,21 +222,21 @@
         </div>
 
         <div class="p-col-4">
-            <label ><strong>Why take this course?</strong></label>
+            <label><strong>Why take this course?</strong></label>
             <textarea [style]="{width: '100%'}" rows="2" cols="30" name="description"
                       [(ngModel)]="packstudentIndividial.whyTakeThisCourse"
                       pInputTextarea [autoResize]="false"></textarea>
         </div>
 
         <div class="p-col-4">
-            <label ><strong>What will you be able to do ?</strong></label>
+            <label><strong>What will you be able to do ?</strong></label>
             <textarea [style]="{width: '100%'}" rows="2" cols="30" name="description"
                       [(ngModel)]="packstudentIndividial.expectations"
                       pInputTextarea [autoResize]="false"></textarea>
         </div>
 
         <div class="p-col-4">
-            <label ><strong>Pre-requisites</strong></label>
+            <label><strong>Pre-requisites</strong></label>
             <textarea [style]="{width: '100%'}" rows="2" cols="30" name="description"
                       [(ngModel)]="packstudentIndividial.preRequisites"
                       pInputTextarea [autoResize]="false"></textarea>
@@ -285,13 +257,13 @@
 
 
         <div class="p-col-4">
-            <label ><strong>libelle</strong></label>
+            <label><strong>libelle</strong></label>
             <input [style]="{width: '100%'}" class="p-mb-2 p-mr-2" type="text" pInputText
                    [(ngModel)]="this.packStudentServie.packstudentIndividial.libelle" required autofocus>
         </div>
 
         <div class="p-col-4">
-            <label ><strong>Levels</strong></label>
+            <label><strong>Levels</strong></label>
             <p-dropdown [options]="parcours" [(ngModel)]="packstudentIndividial.level"
                         [style]="{'width': '100%'}"
                         optionLabel="libelle" [filter]="true" filterBy="libelle" [showClear]="true"
@@ -302,30 +274,31 @@
 
         <div class="p-col-4">
             <label><strong>Price</strong></label>
-                        <p-dropdown [options]="priceList" [(ngModel)]="this.packStudentServie.packstudentIndividial.price"
-                                    [style]="{'width': '100%'}"
-                                    optionLabel="lib" [filter]="true" filterBy="lib" [showClear]="true"
-                                    placeholder="Select a price">
-                        </p-dropdown>
+            <p-dropdown [options]="priceList" [(ngModel)]="this.packStudentServie.packstudentIndividial.price"
+                        [style]="{'width': '100%'}"
+                        optionLabel="lib" [filter]="true" filterBy="lib" [showClear]="false"
+                        placeholder="Select a price">
+            </p-dropdown>
 
         </div>
 
 
         <div class="p-col-4">
-            <label ><strong>Url image</strong></label>
-            <input [style]="{width: '100%'}" class="p-mb-2 p-mr-2" type="text" pInputText
-                   [(ngModel)]="packstudentIndividial.imgUrl" required autofocus>
+            <label><strong>Url image</strong></label>
+            <p-dropdown [options]="images" [(ngModel)]="packstudentIndividial.imgUrl"
+                        [style]="{'width': '100%'}"
+                        optionLabel="name" [filter]="true" optionValue="url" filterBy="name" [showClear]="false"
+                        placeholder="Select a image">
+            </p-dropdown>
         </div>
 
 
         <div class="p-col-4">
-            <label ><strong>Description</strong></label>
+            <label><strong>Description</strong></label>
             <textarea [style]="{width: '100%'}" rows="2" cols="30" name="description"
                       [(ngModel)]="packstudentIndividial.description"
                       pInputTextarea [autoResize]="false"></textarea>
         </div>
-
-
 
 
         <div class="p-col-4">
@@ -333,24 +306,24 @@
             <input [style]="{width: '100%'}" class="p-mb-2 p-mr-2" type="number" pInputText
                    [(ngModel)]="this.packStudentServie.packstudentIndividial.rating" required autofocus>
         </div>
-        
+
 
         <div class="p-col-4">
-            <label ><strong>Why take this course?</strong></label>
+            <label><strong>Why take this course?</strong></label>
             <textarea [style]="{width: '100%'}" rows="2" cols="30" name="description"
                       [(ngModel)]="packstudentIndividial.whyTakeThisCourse"
                       pInputTextarea [autoResize]="false"></textarea>
         </div>
 
         <div class="p-col-4">
-            <label ><strong>What will you be able to do ?</strong></label>
+            <label><strong>What will you be able to do ?</strong></label>
             <textarea [style]="{width: '100%'}" rows="2" cols="30" name="description"
                       [(ngModel)]="packstudentIndividial.expectations"
                       pInputTextarea [autoResize]="false"></textarea>
         </div>
 
         <div class="p-col-4">
-            <label ><strong>Pre-requisites</strong></label>
+            <label><strong>Pre-requisites</strong></label>
             <textarea [style]="{width: '100%'}" rows="2" cols="30" name="description"
                       [(ngModel)]="packstudentIndividial.preRequisites"
                       pInputTextarea [autoResize]="false"></textarea>
@@ -368,19 +341,19 @@
 <p-dialog header="Add pack for group of student" [style]="{width: '70vw'}" [(visible)]="displayPackgroupe">
     <div class="p-grid" style="padding: 10px">
         <div class="p-col-4">
-            <label ><strong>code</strong></label>
+            <label><strong>code</strong></label>
             <input [style]="{width: '100%'}" class="p-mb-2 p-mr-2" type="text" pInputText id="0"
                    [(ngModel)]="this.packStudentServie.packstudentIndividial.code" required autofocus>
         </div>
         <div class="p-col-4">
-            <label ><strong>libelle</strong></label>
+            <label><strong>libelle</strong></label>
             <input [style]="{width: '100%'}" class="p-mb-2 p-mr-2" type="text" pInputText
                    [(ngModel)]="this.packStudentServie.packstudentIndividial.libelle" required autofocus>
         </div>
 
 
         <div class="p-col-4">
-            <label ><strong>Levels</strong></label>
+            <label><strong>Levels</strong></label>
             <p-dropdown [options]="parcours" [(ngModel)]="packstudentIndividial.level"
                         [style]="{'width': '100%'}"
                         optionLabel="libelle" [filter]="true" filterBy="libelle" [showClear]="true"
@@ -399,20 +372,21 @@
         </div>
 
         <div class="p-col-4">
-            <label ><strong>Url image</strong></label>
-            <input [style]="{width: '100%'}" class="p-mb-2 p-mr-2" type="text" pInputText
-                   [(ngModel)]="packstudentIndividial.imgUrl" required autofocus>
+            <label><strong>Url image</strong></label>
+            <p-dropdown [options]="images" [(ngModel)]="packstudentIndividial.imgUrl"
+                        [style]="{'width': '100%'}"
+                        optionLabel="name" [filter]="true" optionValue="url" filterBy="name" [showClear]="false"
+                        placeholder="Select a image">
+            </p-dropdown>
         </div>
 
 
         <div class="p-col-4">
-            <label ><strong>Description</strong></label>
+            <label><strong>Description</strong></label>
             <textarea [style]="{width: '100%'}" rows="2" cols="30" name="description"
                       [(ngModel)]="packstudentIndividial.description"
                       pInputTextarea [autoResize]="false"></textarea>
         </div>
-
-        
 
 
         <div class="p-col-4">
@@ -423,21 +397,21 @@
 
 
         <div class="p-col-4">
-            <label ><strong>Why take this course?</strong></label>
+            <label><strong>Why take this course?</strong></label>
             <textarea [style]="{width: '100%'}" rows="2" cols="30" name="description"
                       [(ngModel)]="packstudentIndividial.whyTakeThisCourse"
                       pInputTextarea [autoResize]="false"></textarea>
         </div>
 
         <div class="p-col-4">
-            <label ><strong>What will you be able to do ?</strong></label>
+            <label><strong>What will you be able to do ?</strong></label>
             <textarea [style]="{width: '100%'}" rows="2" cols="30" name="description"
                       [(ngModel)]="packstudentIndividial.expectations"
                       pInputTextarea [autoResize]="false"></textarea>
         </div>
 
         <div class="p-col-4">
-            <label ><strong>Pre-requisites</strong></label>
+            <label><strong>Pre-requisites</strong></label>
             <textarea [style]="{width: '100%'}" rows="2" cols="30" name="description"
                       [(ngModel)]="packstudentIndividial.preRequisites"
                       pInputTextarea [autoResize]="false"></textarea>
@@ -457,19 +431,22 @@
 <p-dialog header="Update pack for group of student" [style]="{width: '70vw'}" [(visible)]="displayPackgroupeforUpdate">
     <div class="p-grid">
         <div class="p-col-4">
-            <label ><strong>libelle</strong></label>
+            <label><strong>libelle</strong></label>
             <input [style]="{width: '100%'}" class="p-mb-2 p-mr-2" type="text" pInputText
                    [(ngModel)]="this.packStudentServie.packstudentIndividial.libelle" required autofocus>
         </div>
 
         <div class="p-col-4">
-            <label ><strong>Url image</strong></label>
-            <input [style]="{width: '100%'}" class="p-mb-2 p-mr-2" type="text" pInputText
-                   [(ngModel)]="packstudentIndividial.imgUrl" required autofocus>
+            <label><strong>Url image</strong></label>
+            <p-dropdown [options]="images" [(ngModel)]="this.packStudentServie.packstudentIndividial.imgUrl"
+                        [style]="{'width': '100%'}"
+                        optionLabel="name" [filter]="false" optionValue="url" filterBy="name" [showClear]="false"
+                        placeholder="Select a image">
+            </p-dropdown>
         </div>
 
         <div class="p-col-4">
-            <label ><strong>Levels</strong></label>
+            <label><strong>Levels</strong></label>
             <p-dropdown [options]="parcours" [(ngModel)]="packstudentIndividial.level"
                         [style]="{'width': '100%'}"
                         optionLabel="libelle" [filter]="true" filterBy="libelle" [showClear]="true"
@@ -488,12 +465,11 @@
 
 
         <div class="p-col-4">
-            <label ><strong>Description</strong></label>
+            <label><strong>Description</strong></label>
             <textarea [style]="{width: '100%'}" rows="2" cols="30" name="description"
                       [(ngModel)]="packstudentIndividial.description"
                       pInputTextarea [autoResize]="false"></textarea>
         </div>
-
 
 
         <div class="p-col-4">
@@ -502,24 +478,23 @@
                    [(ngModel)]="this.packStudentServie.packstudentIndividial.rating" required autofocus>
         </div>
 
-        
 
         <div class="p-col-4">
-            <label ><strong>Why take this course?</strong></label>
+            <label><strong>Why take this course?</strong></label>
             <textarea [style]="{width: '100%'}" rows="2" cols="30" name="description"
                       [(ngModel)]="packstudentIndividial.whyTakeThisCourse"
                       pInputTextarea [autoResize]="false"></textarea>
         </div>
 
         <div class="p-col-4">
-            <label ><strong>What will you be able to do ?</strong></label>
+            <label><strong>What will you be able to do ?</strong></label>
             <textarea [style]="{width: '100%'}" rows="2" cols="30" name="description"
                       [(ngModel)]="packstudentIndividial.expectations"
                       pInputTextarea [autoResize]="false"></textarea>
         </div>
 
         <div class="p-col-4">
-            <label ><strong>Pre-requisites</strong></label>
+            <label><strong>Pre-requisites</strong></label>
             <textarea [style]="{width: '100%'}" rows="2" cols="30" name="description"
                       [(ngModel)]="packstudentIndividial.preRequisites"
                       pInputTextarea [autoResize]="false"></textarea>

@@ -154,7 +154,5 @@ export class ClassRoomListComponent implements OnInit {
         ];
     }
 
-    testOpen() {
-        this.webSocketService.openSession();
-    }
+
 }

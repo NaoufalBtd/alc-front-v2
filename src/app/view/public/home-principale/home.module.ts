@@ -61,6 +61,10 @@ import {HeaderFourComponent} from './header-four/header-four.component';
 import {PaimentOkComponent} from './paiment/paiment-ok/paiment-ok.component';
 import {PaimentFailComponent} from './paiment/paiment-fail/paiment-fail.component';
 import {PaimentBackComponent} from './paiment/paiment-back/paiment-back.component';
+import {GalleriaModule} from 'primeng/galleria';
+import { PublicFaqComponent } from './FAQ/public-faq/public-faq.component';
+import {AccordionModule} from 'primeng/accordion';
+import { CommunityFeedbackComponent } from './community-feedback/community-feedback.component';
 
 
 @NgModule({
@@ -113,6 +117,8 @@ import {PaimentBackComponent} from './paiment/paiment-back/paiment-back.componen
         PaimentOkComponent,
         PaimentFailComponent,
         PaimentBackComponent,
+        PublicFaqComponent,
+        CommunityFeedbackComponent,
     ],
     providers: [
         Clipboard
@@ -131,7 +137,9 @@ import {PaimentBackComponent} from './paiment/paiment-back/paiment-back.componen
         StepsModule,
         TooltipModule,
         InputTextModule,
-        ClipboardModule
+        ClipboardModule,
+        GalleriaModule,
+        AccordionModule
 
     ],
     exports: [

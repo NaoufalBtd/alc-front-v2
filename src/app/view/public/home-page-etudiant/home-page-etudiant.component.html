@@ -1,6 +1,6 @@
 <app-header-four></app-header-four>
 
-<div id="Mycontainer" class="container pt-50">
+<div id="Mycontainer" class="container pb-50 pt-50">
 
     <div id="con0" class="row  rounded-3 p-3 mb-4">
         <div class="col-md-3"></div>
@@ -35,22 +35,29 @@
             <div class="col-md-6">
                 <div class="p-grid p-fluid">
 
+                    <div class="p-col-12">
+                        <p-message *ngIf="message.showMessage" class="ml-10" [severity]="message.severity"
+                                   [text]="message.message"></p-message>
+                    </div>
 
                     <div class="p-col-12">
                         <h5 style="color: #263238"> {{'New Password' | translate}}</h5>
                         <div class="p-inputgroup">
                             <span style="cursor: pointer" *ngIf="newPass.type === 'password'"
-                                  (click)="showPass(newPass)" class="p-inputgroup-addon"><i
-                                    class="pi pi-eye"></i></span>
+                                  (click)="showPass(newPass)" class="p-inputgroup-addon">
+                                <i class="pi pi-eye"></i></span>
+
                             <span style="cursor: pointer" *ngIf="newPass.type === 'text'" (click)="showPass(newPass)"
                                   class="p-inputgroup-addon"><i class="pi pi-eye-slash"></i></span>
 
                             <input #newPass class="user-input-group" [(ngModel)]="newPassword" name="newPassword"
                                    type="password"
+                                   (input)="onPasswordInput(newPassword)"
                                    pPassword
                                    [placeholder]="'New Password' | translate">
                         </div>
                     </div>
+
 
                     <div class="p-col-12">
                         <h5 style="color: #263238"> {{'Repeat password' | translate}}</h5>
@@ -62,14 +69,15 @@
 
                             <input #Rep class="user-input-group" [(ngModel)]="newPasswordRepated"
                                    name="newPasswordRepated" type="password"
+                                   (input)="onRepatPassword()"
                                    pPassword
                                    [placeholder]="'Repeat password' | translate">
                         </div>
                     </div>
                     <div class="p-col-3"></div>
                     <div class="p-col-6">
-                        <button pButton pRipple (click)="changePassword()"
-                                [label]="'Change password' | translate" icon="pi pi-check" iconPos="left"
+                        <button [disabled]="!onPasswordInput(newPassword)" pButton pRipple (click)="changePassword()"
+                                [label]="'Change Password' | translate" icon="pi pi-check" iconPos="left"
                                 class="ngFlexyBlackButton"></button>
                     </div>
                     <div class="p-col-3"></div>
@@ -77,7 +85,6 @@
                 </div>
             </div>
             <div class="col-md-3"></div>
-
         </div>
     </div>
 
@@ -184,3 +191,5 @@
     </div>
 
 </div>
+
+<app-home-footer></app-home-footer>

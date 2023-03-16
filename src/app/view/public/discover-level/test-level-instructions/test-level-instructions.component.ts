@@ -41,6 +41,7 @@ import {Router} from '@angular/router';
 export class TestLevelInstructionsComponent implements OnInit {
     items: MenuItem[];
     activeIndex = 0;
+    showOption: boolean;
 
     constructor(public animation: AnimationService,
                 private etudiantService: EtudiantService,
@@ -137,10 +138,9 @@ export class TestLevelInstructionsComponent implements OnInit {
             }, error => {
                 this.animation.showAnimation = false;
                 this.messageService.add({
-                    severity: 'error',
-                    summary: 'Error',
-                    detail: 'Registration Canceled',
-                    life: 4000
+                    severity: 'info',
+                    detail: error?.error?.message || 'Registration Canceled',
+                    life: 10000
                 });
                 console.log(error);
             }

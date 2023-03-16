@@ -1,5 +1,6 @@
 <div class="card toopBar">
     <div class="p-grid">
+
         <div class="p-col-4">
             <h4 class="title"> {{selectedcours?.libelle}}</h4>
         </div>
@@ -20,7 +21,7 @@
                             [showTransitionOptions]="'0ms'" [hideTransitionOptions]="'0ms'" [dismissable]="true"
                             [showCloseIcon]="false">
                 <ng-template pTemplate>
-                    <p-table [value]="participants.get(prof.id)" [scrollable]="true" scrollHeight="400px">
+                    <p-table [value]="usersConnected" [scrollable]="true" scrollHeight="400px">
                         <ng-template pTemplate="header">
                             <tr>
                                 <th style="min-width:200px">Full Name</th>
@@ -31,22 +32,13 @@
                             <tr>
                                 <td>{{etudiant?.nom}}</td>
                                 <td>
-                                    <button *ngIf=" etudiant.id === loginService.getConnectedStudent().id"
-                                            style="width: 15px;height: 0" pButton pRipple
-                                            type="button" icon="pi pi-circle-fill"
-                                            class="p-button-rounded p-button-success">
-                                    </button>
-                                    <button *ngIf="studentsEnLigne.get(etudiant.id) === undefined && etudiant.id !== loginService.getConnectedStudent().id"
-                                            style="width: 15px;height: 0" pButton pRipple
-                                            type="button" icon="pi pi-circle-fill"
-                                            class="p-button-rounded p-button-danger">
-                                    </button>
-                                    <button *ngIf="studentsEnLigne.get(etudiant.id) !== undefined && etudiant.id !== loginService.getConnectedStudent().id"
+                                    <button
                                             style="width: 15px;height: 0" pButton pRipple
                                             type="button" icon="pi pi-circle-fill"
                                             class="p-button-rounded p-button-success">
                                     </button>
                                 </td>
+
                             </tr>
                         </ng-template>
                     </p-table>
@@ -54,7 +46,7 @@
             </p-overlayPanel>
 
             <button pButton pRipple type="button" icon="pi pi-users"
-                    (click)="op.toggle($event); getData()"
+                    (click)="op.toggle($event); getConnectedUsers()"
                     class="p-button-rounded  leftButton p-button-outlined">
 
             </button>
@@ -86,14 +78,18 @@
 
             </button>
         </div>
+
+
     </div>
 </div>
+
+
 <div class=" card" style="background-color: transparent">
     <div class="p-grid" style=" padding:10px">
         <div class="p-col-12 middleBar">
             <div class="p-grid">
 
-                <div *ngIf="showLesson " class="p-col-9"
+                <div *ngIf="showLesson " class="p-xl-9 p-md-9 p-sm-12"
                      (mouseup)="dict()">
                     <div class="p-grid sectionLibelle">
                         {{this.selectedsection?.libelle}}
@@ -218,7 +214,7 @@
                 </div>
 
 
-                <div *ngIf="showSummary" class="p-col-9">
+                <div *ngIf="showSummary" class="p-xl-9 p-md-9 p-sm-12">
                     <div class="p-grid" style="background-color: white!important;">
                         <div style="text-align: center" class="p-col-12"><h5 class="LessonSummary">Lesson summary</h5>
                         </div>
@@ -246,7 +242,7 @@
                             </div>
                             <div class="p-grid keys">
                                 <div class="p-col-8">Exercise completed</div>
-                                <div class="p-col-4 keysValue">8</div>
+                                <div class="p-col-4 keysValue">{{numberResponseOfQuizQuestion}}</div>
                             </div>
                             <div class="p-grid keys">
                                 <div class="p-col-8">Words added</div>
@@ -277,7 +273,7 @@
                 </div>
 
 
-                <div class="p-col-3 product-grid-item">
+                <div class="p-xl-3 p-md-3 p-sm-12 product-grid-item">
                     <div class="skipeContainer">
                         <img *ngIf="webSocketService.isInSession" src="./assets/icons/icon-book.png"
                              alt="">
@@ -428,7 +424,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 
 
@@ -436,6 +431,7 @@
     <app-dictionary-edit></app-dictionary-edit>
     <app-translate></app-translate>
 </div>
+
 
 <p-toast position="bottom-center" key="c" (onClose)="onReject()" [baseZIndex]="5000">
     <ng-template let-message pTemplate="message">
