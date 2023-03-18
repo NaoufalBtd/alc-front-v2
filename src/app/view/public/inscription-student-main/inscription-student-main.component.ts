@@ -22,17 +22,10 @@ export class InscriptionStudentMainComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        const timer = setInterval(() => {
-            clearInterval(timer);
-            this.showCoupon = true;
-        }, 3000);
-
         setInterval(() => {
             this.updateCountdown();
         }, 1000);
-
         this.priceService.getMaxPrice(true).subscribe(d => this.minPriceForGroup = Math.floor(d.price / d.nreHours));
-
     }
 
 
