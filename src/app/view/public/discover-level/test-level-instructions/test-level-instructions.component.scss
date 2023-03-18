@@ -2,9 +2,9 @@
   background: transparent;
 }
 
-.row1{
+.row1 {
   border-radius: 5px;
-  background: #ff725e!important;
+  background: #ff725e !important;
   color: #263238;
   padding: 20px;
 }
@@ -153,7 +153,7 @@
   }
 }
 
-.textInfo{
+.textInfo {
   font-size: 20px;
   text-align: start;
   font-weight: 500;
@@ -161,14 +161,27 @@
 }
 
 
-.instructions{
+.instructions {
   min-height: auto;
   line-height: 3;
   font-size: 20px;
   color: white;
   background: #263238;
 }
-.li-test{
-  list-style: inside!important;
+
+.li-test {
+  list-style: inside !important;
 }
+
+p-dialog {
+  .container {
+    background: #ff725e;
+    padding: 10px;
+    text-align: center;
+    h3{
+      color: white;
+    }
+  }
+}
+
 

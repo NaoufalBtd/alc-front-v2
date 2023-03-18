@@ -41,7 +41,10 @@ import {Router} from '@angular/router';
 export class TestLevelInstructionsComponent implements OnInit {
     items: MenuItem[];
     activeIndex = 0;
-    showOption: boolean;
+    showValidateDialog: boolean = false;
+    code: string;
+    clear_code: string;
+    isValid: boolean = true;
 
     constructor(public animation: AnimationService,
                 private etudiantService: EtudiantService,
@@ -118,23 +121,16 @@ export class TestLevelInstructionsComponent implements OnInit {
 
     createEtudiant() {
         this.animation.showAnimation = true;
-        this.etudiantService.create().subscribe(
-            data => {
-                if (data != null) {
-                    this.animation.showAnimation = false;
-                    this.messageService.add({
-                        severity: 'success',
-                        detail: 'تم التسجيل بنجاح 😍،  يرجى التحقق من بريدك الإلكتروني  لتفعيل الحساب الخاص بك',
-                        life: 8000
-                    });
-                    this.router.navigate(['etudiant/test-level']);
-                } else {
-                    this.messageService.add({
-                        severity: 'info',
-                        detail: 'البريد الالكتروني موجود بالفعل، من فضلك تفقد بريدك الالكتروني للحصول على اسم المستخدم و كلمة المرور للولوج الى حسابك',
-                        life: 9000
-                    });
-                }
+        this.etudiantService.startLevelTestForStudent(this.selected).subscribe(
+            (data) => {
+                this.animation.showAnimation = false;
+                this.messageService.add({
+                    severity: 'success',
+                    detail: ' يرجى التحقق من صحة بريدك الإلكتروني من خلال الرمز الذي تلقيته في بريدك الالكتروني',
+                    life: 8000
+                });
+                this.selected = data;
+                this.showValidateDialog = true;
             }, error => {
                 this.animation.showAnimation = false;
                 this.messageService.add({
@@ -147,4 +143,47 @@ export class TestLevelInstructionsComponent implements OnInit {
         );
     }
 
+    verifyCode(): boolean {
+        this.clear_code = this.code?.toString()?.replace(/\s/g, '');
+        const pattern = /^[0-9]*$/; // regular expression to match only numbers
+        this.isValid = pattern.test(this.clear_code);
+        console.log(this.isValid);
+        console.log(this.clear_code);
+        return this.isValid;
+    }
+
+    verifyEmail() {
+        console.log(this.code);
+        if (this.verifyCode()) {
+            this.animation.showAnimation = true;
+            this.etudiantService.verifyEmail(this.selected, this.clear_code).subscribe(
+                data => {
+                    this.animation.showAnimation = false;
+                    if (data === 1) {
+                        this.messageService.add({
+                            severity: 'success',
+                            detail: ' تم التأكد من بريدك الالكتروني بنجاح',
+                            life: 8000
+                        });
+                        this.authenticationService.addUserToLocalCache(this.selected);
+                        this.router.navigate(['/etudiant/test-level']);
+                    } else {
+                        this.messageService.add({
+                            severity: 'warn',
+                            detail: 'الرمز الذي أدخلتموه غير صحيح ',
+                            life: 15000
+                        });
+                    }
+                }, error => {
+                    this.animation.showAnimation = false;
+                    this.messageService.add({
+                        severity: 'info',
+                        detail: error?.error?.message || 'Registration Canceled',
+                        life: 10000
+                    });
+                    console.log(error);
+                }
+            );
+        }
+    }
 }

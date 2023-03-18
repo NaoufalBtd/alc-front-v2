@@ -40,7 +40,7 @@
                 <div class="col-md-4">
                     <button
                             pButton pRipple type="button" [label]="'Next' | translate"
-                            (click)="showOption = true" class="ngFlexyOrangeButton"></button>
+                            (click)="activeIndex = 1" class="ngFlexyOrangeButton"></button>
                 </div>
                 <div class="col-md-4"></div>
 
@@ -88,11 +88,37 @@
 
     <app-home-footer footerPadd='footer__top pt-90 pb-40'></app-home-footer>
 
-    <p-dialog [showHeader]="false" [closable]="true" [(visible)]="showOption" [modal]="true"
-              [style]="{width: '65vw'}"
+    <p-dialog [showHeader]="false" [closable]="true" [(visible)]="showValidateDialog" [modal]="true"
+              [style]="{width: '50vw'}"
               [draggable]="true" [resizable]="true">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h3>ستستلم بعد بضع ثوان رمزا في صندوق بريدك الالكتروني لتأكيد حسابك</h3>
+                </div>
+                <div class="col-md-12">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <input type="number" [(ngModel)]="code" name="code"
+                                   class="form-control"
+                                   placeholder="{{'Put your code here..' | translate}}">
+                            <i class="fas fa-lock"></i>
+                            <div *ngIf="!isValid" class="invalid-feedback d-block white">
+                                Please provide a valid code.
+                            </div>
+                        </div>
 
+                        <div class="form-group">
+                            <button
+                                    (click)="verifyEmail()"
+                                    style=" width: 100%;" type="submit"
+                                    class="btn btn-default">{{'VERIFY YOUR EMAIL' | translate}}</button>
+                        </div>
+                    </form>
+                </div>
 
+            </div>
+        </div>
     </p-dialog>
 </main>
 

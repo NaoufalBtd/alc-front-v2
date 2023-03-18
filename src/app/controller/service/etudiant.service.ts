@@ -4,7 +4,7 @@ import {Etudiant} from '../model/etudiant.model';
 
 import {Observable} from 'rxjs';
 import {environment} from '../../../environments/environment';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {EtudiantVo} from '../model/etudiant-vo.model';
 import {Prof} from '../model/prof.model';
 import {Centre} from '../model/centre.model';
@@ -116,6 +116,7 @@ export class EtudiantService {
         return this.http.get<Array<Parcours>>(this.etudiantUrl + 'skill/');
 
     }
+
     public getNumberOfStudents(): Observable<number> {
         return this.http.get<number>(this.publicUrl + 'number-of-student');
     }
@@ -176,11 +177,6 @@ export class EtudiantService {
         return this.http.get<number>(this.etudiantUrl + 'etudiant/username/' +
             username + '/newpass/' + newPassword);
     }
-
-    public deleteMultipleByNom(): Observable<number> {
-        return this.http.post<number>(this.adminUrl + 'delete-multiple-by-id', this.selectes);
-    }
-
 
     public deleteById(id: number): Observable<number> {
         console.log(id);
@@ -276,18 +272,6 @@ export class EtudiantService {
         this._items = value;
     }
 
-
-    get etudiantByProf(): Array<Etudiant> {
-        if (this._etudiantByProf == null) {
-            this._etudiantByProf = new Array<Etudiant>();
-        }
-        return this._etudiantByProf;
-    }
-
-    set etudiantByProf(value: Array<Etudiant>) {
-        this._etudiantByProf = value;
-    }
-
     private _itemsprof: Array<Prof>;
 
     get itemsprof(): Array<Prof> {
@@ -330,17 +314,6 @@ export class EtudiantService {
         this._viewDialog = value;
     }
 
-    get etudiantVo(): EtudiantVo {
-        if (this._etudiantVo == null) {
-            this._etudiantVo = new EtudiantVo();
-        }
-        return this._etudiantVo;
-    }
-
-    set etudiantVo(value: EtudiantVo) {
-        this._etudiantVo = value;
-    }
-
     private _prof: Array<Prof>;
 
     get prof(): Array<Prof> {
@@ -352,26 +325,6 @@ export class EtudiantService {
 
     set prof(value: Array<Prof>) {
         this._prof = value;
-    }
-
-
-    get selecteetudiant(): Array<Etudiant> {
-        if (this._selecteetudiant == null) {
-            this._selecteetudiant = new Array<Etudiant>();
-        }
-        return this._selecteetudiant;
-    }
-
-    set selecteetudiant(value: Array<Etudiant>) {
-        this._selecteetudiant = value;
-    }
-
-    get submittedetudiant(): Etudiant {
-        return this._submittedetudiant;
-    }
-
-    set submittedetudiant(value: Etudiant) {
-        this._submittedetudiant = value;
     }
 
     get centreList(): Array<Centre> {
@@ -554,11 +507,12 @@ export class EtudiantService {
         return this.http.get<Etudiant>(this.etudiantUrl + 'etudiant/id/' + idCurrentUser);
     }
 
-    verifyEmail(username: string): Observable<any> {
-        const headers = new HttpHeaders({
-            'X-RapidAPI-Key': 'SIGN-UP-FOR-KEY',
-            'X-RapidAPI-Host': 'email-checker.p.rapidapi.com'
-        });
-        return this.http.get<any>('https://email-checker.p.rapidapi.com/verify/v1?email=' + username, {headers});
+    public startLevelTestForStudent(student: Etudiant): Observable<Etudiant> {
+        return this.http.post<Etudiant>(this.publicUrl + 'start/test', student);
     }
+
+    public verifyEmail(student: Etudiant, code: string): Observable<number> {
+        return this.http.post<number>(this.publicUrl + 'verify/email/' + code, student);
+    }
+
 }
