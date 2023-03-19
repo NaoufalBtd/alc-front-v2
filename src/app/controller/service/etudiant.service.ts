@@ -4,7 +4,7 @@ import {Etudiant} from '../model/etudiant.model';
 
 import {Observable} from 'rxjs';
 import {environment} from '../../../environments/environment';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpResponse} from '@angular/common/http';
 import {EtudiantVo} from '../model/etudiant-vo.model';
 import {Prof} from '../model/prof.model';
 import {Centre} from '../model/centre.model';
@@ -507,8 +507,8 @@ export class EtudiantService {
         return this.http.get<Etudiant>(this.etudiantUrl + 'etudiant/id/' + idCurrentUser);
     }
 
-    public startLevelTestForStudent(student: Etudiant): Observable<Etudiant> {
-        return this.http.post<Etudiant>(this.publicUrl + 'start/test', student);
+    public startLevelTestForStudent(student: Etudiant): Observable<HttpResponse<Etudiant>> {
+        return this.http.post<Etudiant>(this.publicUrl + 'start/test', student, {observe: 'response'});
     }
 
     public verifyEmail(student: Etudiant, code: string): Observable<number> {

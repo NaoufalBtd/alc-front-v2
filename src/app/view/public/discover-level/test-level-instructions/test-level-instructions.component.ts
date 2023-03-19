@@ -122,15 +122,19 @@ export class TestLevelInstructionsComponent implements OnInit {
     createEtudiant() {
         this.animation.showAnimation = true;
         this.etudiantService.startLevelTestForStudent(this.selected).subscribe(
-            (data) => {
+            (response) => {
                 this.animation.showAnimation = false;
-                this.messageService.add({
-                    severity: 'success',
-                    detail: ' يرجى التحقق من صحة بريدك الإلكتروني من خلال الرمز الذي تلقيته في بريدك الالكتروني',
-                    life: 8000
-                });
-                this.selected = data;
-                this.showValidateDialog = true;
+                this.selected = response.body;
+                if (response?.status === 201) {
+                    this.messageService.add({
+                        severity: 'success',
+                        detail: ' يرجى التحقق من صحة بريدك الإلكتروني من خلال الرمز الذي تلقيته في بريدك الالكتروني',
+                        life: 8000
+                    });
+                    this.showValidateDialog = true;
+                } else {
+                    this.startTest(this.selected);
+                }
             }, error => {
                 this.animation.showAnimation = false;
                 this.messageService.add({
@@ -165,8 +169,7 @@ export class TestLevelInstructionsComponent implements OnInit {
                             detail: ' تم التأكد من بريدك الالكتروني بنجاح',
                             life: 8000
                         });
-                        this.authenticationService.addUserToLocalCache(this.selected);
-                        this.router.navigate(['/etudiant/test-level']);
+                        this.startTest(this.selected);
                     } else {
                         this.messageService.add({
                             severity: 'warn',
@@ -185,5 +188,10 @@ export class TestLevelInstructionsComponent implements OnInit {
                 }
             );
         }
+    }
+
+    private startTest(selected: Etudiant) {
+        this.authenticationService.addUserToLocalCache(selected);
+        this.router.navigate(['/etudiant/test-level']);
     }
 }
