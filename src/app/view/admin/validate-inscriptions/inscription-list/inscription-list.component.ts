@@ -214,8 +214,6 @@ export class InscriptionListComponent implements OnInit {
 
 
         this.packStudentService.findAllPacks();
-        console.log(this.packStudentService.packstudentIndividialList);
-        console.log(this.packStudentService.packstudentgroupeList);
         this.initCol();
         this.findPendingInscriptions();
         this.parcourService.FindAllParcours().subscribe(
@@ -226,7 +224,6 @@ export class InscriptionListComponent implements OnInit {
         this.service.findAllNiveauEtude().subscribe(
             data => {
                 this.niveauEtudes = data;
-                console.log(data);
             }, error => {
                 console.log(error);
             }
@@ -234,7 +231,6 @@ export class InscriptionListComponent implements OnInit {
         this.service.findAllSkill().subscribe(
             data => {
                 this.skills = data;
-                console.log(data);
             }, error => {
                 console.log(error);
             }
@@ -242,7 +238,6 @@ export class InscriptionListComponent implements OnInit {
         this.service.findAllStatutSocial().subscribe(
             data => {
                 this.statutSocials = data;
-                console.log(data);
             }, error => {
                 console.log(error);
             }
@@ -250,7 +245,6 @@ export class InscriptionListComponent implements OnInit {
         this.service.findAllFonction().subscribe(
             data => {
                 this.fonctions = data;
-                console.log(data);
             }, error => {
                 console.log(error);
             }
@@ -258,7 +252,6 @@ export class InscriptionListComponent implements OnInit {
         this.service.findAllInteretEtudiant().subscribe(
             data => {
                 this.interetEtudiants = data;
-                console.log(data);
             }, error => {
                 console.log(error);
             }
@@ -286,7 +279,6 @@ export class InscriptionListComponent implements OnInit {
     findAll() {
         this.service.findAll().subscribe(data => {
             this.items = data;
-            console.log(this.items);
         });
     }
 
@@ -314,7 +306,6 @@ export class InscriptionListComponent implements OnInit {
     public findByCriteria() {
         return this.service.findByCriteria(this.student).subscribe(data => {
             this.items = data;
-            console.log(data);
         });
     }
 
@@ -370,13 +361,13 @@ export class InscriptionListComponent implements OnInit {
 
     private initCol() {
         this.cols = [
-            {field: 'id', header: 'Id'},
-            {field: 'numeroInscription', header: 'NumeroInscription'},
-            {field: 'datedebutinscription', header: 'Datedebutinscription'},
-            {field: 'datefininscription', header: 'Datefininscription'},
-            {field: 'nom', header: 'Nom'},
-            {field: 'prof', header: 'Prof'},
-            {field: 'etatInscription', header: 'EtatInscription'}
+            {field: 'id', header: 'id'},
+            {field: 'nom', header: 'nom'},
+            {field: 'username', header: 'username'},
+            {field: 'level', header: 'level'},
+            {field: 'phone', header: 'phone'},
+            {field: 'date', header: 'date'},
+            {field: 'email', header: 'email'}
         ];
     }
 
@@ -412,9 +403,7 @@ export class InscriptionListComponent implements OnInit {
     }
 
     updateInsc(inscription: Inscription) {
-        console.log(inscription);
         this.service.edit(inscription).subscribe(data => {
-            console.log(data);
             this.messageService.add({severity: 'success', summary: 'success ', detail: 'Inscription updated', life: 3000, sticky: true});
         }, error => {
             console.log(error);
@@ -429,7 +418,6 @@ export class InscriptionListComponent implements OnInit {
         this.editInscDialog = true;
         this.inscription = inscription;
         this.findTypeOfPack(this.inscription);
-        console.log(inscription);
     }
 
     public findTypeOfPack(inscription: Inscription) {
@@ -438,7 +426,6 @@ export class InscriptionListComponent implements OnInit {
         } else {
             this.packStudents = this.packStudentService.packstudentIndividialList;
         }
-        console.log(this.packStudents);
 
     }
 

@@ -26,16 +26,19 @@ export class InscriptionEditComponent implements OnInit {
     sel = ' ';
     packStudents = new Array<PackStudent>();
     allgroupes: Array<GroupeEtude>;
+
     constructor(private messageService: MessageService,
                 private service: InscriptionService,
                 private confirmationService: ConfirmationService,
                 public packStudentService: PackStudentService,
                 public groupeEtudeService: GroupeEtudeService) {
     }
+
     public view(inscription: Inscription) {
         this.selected = {...inscription};
         this.viewDialog = true;
     }
+
     get viewDialog(): boolean {
         return this.service.viewDialog;
     }
@@ -99,6 +102,7 @@ export class InscriptionEditComponent implements OnInit {
     set items(value: Array<Inscription>) {
         this.service.items = value;
     }
+
     get prof(): Array<Prof> {
         return this.service.prof;
     }
@@ -106,11 +110,11 @@ export class InscriptionEditComponent implements OnInit {
     set prof(value: Array<Prof>) {
         this.service.prof = value;
     }
+
     ngOnInit(): void {
         this.service.findAllProf().subscribe(
             data => {
                 this.profList = data;
-                console.log(data);
             }, error => {
                 console.log(error);
             }
@@ -118,7 +122,6 @@ export class InscriptionEditComponent implements OnInit {
         this.service.findAllSkill().subscribe(
             data => {
                 this.skills = data;
-                console.log(data);
             }, error => {
                 console.log(error);
             }
@@ -126,7 +129,6 @@ export class InscriptionEditComponent implements OnInit {
         this.service.findAllStatutSocial().subscribe(
             data => {
                 this.statutSocials = data;
-                console.log(data);
             }, error => {
                 console.log(error);
             }
@@ -134,7 +136,6 @@ export class InscriptionEditComponent implements OnInit {
         this.service.findAllFonction().subscribe(
             data => {
                 this.fonctions = data;
-                console.log(data);
             }, error => {
                 console.log(error);
             }
@@ -142,7 +143,6 @@ export class InscriptionEditComponent implements OnInit {
         this.service.findAllInteretEtudiant().subscribe(
             data => {
                 this.interetEtudiants = data;
-                console.log(data);
             }, error => {
                 console.log(error);
             }
@@ -150,7 +150,6 @@ export class InscriptionEditComponent implements OnInit {
         this.service.findAllNiveauEtude().subscribe(
             data => {
                 this.niveauEtudes = data;
-                console.log(data);
             }, error => {
                 console.log(error);
             }
@@ -158,8 +157,6 @@ export class InscriptionEditComponent implements OnInit {
         this.service.findAllEtat().subscribe(
             data => {
                 this.etatinscriptionslist = data;
-                console.log(data);
-
             }, error => {
                 console.log(error);
             }
@@ -167,10 +164,9 @@ export class InscriptionEditComponent implements OnInit {
 
         this.service.findAllParcours().subscribe(
             data => {
-                console.log(data);
                 this.parcoursList = data;
-            },error => {
-                 console.log(error);
+            }, error => {
+                console.log(error);
             }
         );
         this.groupeEtudeService.findAll().subscribe(
@@ -194,13 +190,10 @@ export class InscriptionEditComponent implements OnInit {
                 console.log(error);
             }
         );
-        console.log(this.etatinscriptionslist);
-        console.log(this.selected.etatInscription.libelle);
     }
 
     public edit() {
         this.service.findAll().subscribe(data => this.items = data);
-        console.log(this.selected);
         this.submitted = true;
         this.items[this.service.findIndexById(this.service.selected.id)] = this.selected;
         this.service.valider().subscribe(data => {
@@ -213,7 +206,7 @@ export class InscriptionEditComponent implements OnInit {
                 detail: 'Inscription Updated',
                 life: 3000
             });
-            this.service.findAll().subscribe(  data => this.items = data);
+            this.service.findAll().subscribe(data => this.items = data);
         });
         this.editDialog = false;
         this.selected = new Inscription();
@@ -244,13 +237,15 @@ export class InscriptionEditComponent implements OnInit {
     public hideEditDialog() {
         this.editDialog = false;
     }
-    public findTypeOfPack(){
-        if (this.selected.groupeEtude.nombreEtudiant > 1){
+
+    public findTypeOfPack() {
+        if (this.selected.groupeEtude.nombreEtudiant > 1) {
             this.packStudents = this.packStudentService.packstudentgroupeList;
-        }else {
+        } else {
             this.packStudents = this.packStudentService.packstudentIndividialList;
         }
     }
+
     get interetEtudiant(): InteretEtudiant {
         return this.service.interetEtudiant;
     }
@@ -266,36 +261,47 @@ export class InscriptionEditComponent implements OnInit {
     set interetEtudiants(value: Array<InteretEtudiant>) {
         this.service.interetEtudiants = value;
     }
+
     get fonctions(): Array<Fonction> {
         return this.service.fonctions;
     }
+
     set fonctions(value: Array<Fonction>) {
         this.service.fonctions = value;
     }
+
     get fonction(): Fonction {
         return this.service.fonction;
     }
+
     set fonction(value: Fonction) {
         this.service.fonction = value;
     }
+
     get statutSocial(): StatutSocial {
         return this.service.statutSocial;
     }
+
     set statutSocial(value: StatutSocial) {
         this.service.statutSocial = value;
     }
+
     get statutSocials(): Array<StatutSocial> {
         return this.service.statutSocials;
     }
+
     set statutSocials(value: Array<StatutSocial>) {
         this.service.statutSocials = value;
     }
+
     get niveauEtudes(): Array<NiveauEtude> {
         return this.service.niveauEtudes;
     }
+
     set niveauEtudes(value: Array<NiveauEtude>) {
         this.service.niveauEtudes = value;
     }
+
     get niveauEtude(): NiveauEtude {
         return this.service.niveauEtude;
     }
@@ -303,10 +309,12 @@ export class InscriptionEditComponent implements OnInit {
     set niveauEtude(value: NiveauEtude) {
         this.service.niveauEtude = value;
     }
+
     get skills(): Array<Skill> {
 
         return this.service.skills;
     }
+
     set skill(value: Skill) {
         this.service.skill = value;
     }
@@ -314,6 +322,7 @@ export class InscriptionEditComponent implements OnInit {
     set skills(value: Array<Skill>) {
         this.service.skills = value;
     }
+
     get skill(): Skill {
         return this.service.skill;
     }

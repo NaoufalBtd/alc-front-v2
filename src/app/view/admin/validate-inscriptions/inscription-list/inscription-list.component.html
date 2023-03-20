@@ -29,7 +29,7 @@
 
                     <p-tabPanel header="All inscription">
                         <p-table #dt [(selection)]="selectes" [columns]="cols"
-                                 [globalFilterFields]="['numeroInscription','datedebutinscription','datefininscription' , 'phone', 'nom' , 'prof' , 'etatInscription']"
+                                 [globalFilterFields]="['id' , 'phone', 'nom' , 'date' , 'email']"
                                  [paginator]="true"
                                  [rowHover]="true"
                                  [rows]="6" [showCurrentPageReport]="true" [value]="this.items"
@@ -68,13 +68,12 @@
                                         <p-sortIcon field="nom"></p-sortIcon>
                                     </th>
 
-                                    <th pSortableColumn="prenom">E-mail
-                                        <p-sortIcon field="prenom"></p-sortIcon>
+                                    <th pSortableColumn="email">E-mail
+                                        <p-sortIcon field="email"></p-sortIcon>
                                     </th>
-                                    <th></th>
 
-                                    <th pSortableColumn="phone">Phone
-                                        <p-sortIcon field="phone"></p-sortIcon>
+                                    <th pSortableColumn="date">Date
+                                        <p-sortIcon field="date"></p-sortIcon>
                                     </th>
                                     <th>Status</th>
                                     <th> Action</th>
@@ -89,8 +88,7 @@
                                     <td>{{inscription.etudiant.numero}}</td>
                                     <td>{{inscription.etudiant.nom}} {{inscription.etudiant.prenom}}</td>
                                     <td>{{inscription.etudiant.username}}</td>
-                                    <td></td>
-                                    <td> {{inscription?.etudiant?.numero}} </td>
+                                    <td> {{inscription.dateRegistration | date: 'MMM dd YYYY hh:mm'}} </td>
                                     <td>
                                         <span *ngIf="inscription.etatInscription.libelle == 'Validated'"
                                               class="badge-v">VALIDATED</span>
@@ -112,15 +110,6 @@
                                                 pRipple></button>
                                     </td>
 
-                                    <!--                                    <td>-->
-                                    <!--                                        <button  class="p-button-info " label="details" pButton-->
-                                    <!--                                                pRipple></button>-->
-                                    <!--                                    </td>-->
-                                    <!--                                    <td>-->
-                                    <!--                                        <button class="p-button-danger" label="delete" pButton-->
-                                    <!--                                                pRipple></button>-->
-                                    <!--                                    </td>-->
-
 
                                 </tr>
                             </ng-template>
@@ -134,14 +123,12 @@
                     </p-tabPanel>
                     <p-tabPanel header="Validated inscription">
                         <p-table #dt [(selection)]="selectes" [columns]="cols"
-                                 [globalFilterFields]="['id','numeroInscription',
-                                 'Level',
-                                 'datedebutinscription',
-                                 'datefininscription' ,
-                                 'phone',
-                                  'nom' ,
-                                  'username' ,
-                                  'etatInscription']"
+                                 [globalFilterFields]="
+                                 ['id',
+                                 'nom',
+                                 'username',
+                                 'level',
+                                 'phone']"
                                  [paginator]="true"
                                  [rowHover]="true"
                                  [rows]="6" [showCurrentPageReport]="true" [value]="items"
@@ -186,8 +173,8 @@
                                         <p-sortIcon field="username"></p-sortIcon>
                                     </th>
 
-                                    <th pSortableColumn="Level">Level
-                                        <p-sortIcon field="Level"></p-sortIcon>
+                                    <th pSortableColumn="level">Level
+                                        <p-sortIcon field="level"></p-sortIcon>
                                     </th>
 
                                     <th pSortableColumn="phone">Phone
@@ -231,7 +218,10 @@
                     </p-tabPanel>
                     <p-tabPanel header="Pending inscription">
                         <p-table #dt [(selection)]="selectes" [columns]="cols"
-                                 [globalFilterFields]="['numeroInscription','datedebutinscription','datefininscription' , 'nom' , 'prof' , 'etatInscription']"
+                                 [globalFilterFields]="['id',
+                                 'nom',
+                                  'date' ,
+                                    'email']"
                                  [paginator]="true"
                                  [rowHover]="true"
                                  [rows]="6" [showCurrentPageReport]="true" [value]="this.items"
@@ -271,13 +261,12 @@
                                         <p-sortIcon field="nom"></p-sortIcon>
                                     </th>
 
-                                    <th pSortableColumn="prenom">E-mail
-                                        <p-sortIcon field="prenom"></p-sortIcon>
+                                    <th pSortableColumn="email">E-mail
+                                        <p-sortIcon field="email"></p-sortIcon>
                                     </th>
-                                    <th></th>
 
-                                    <th pSortableColumn="mail">Date
-                                        <p-sortIcon field="mail"></p-sortIcon>
+                                    <th pSortableColumn="date">Date
+                                        <p-sortIcon field="date"></p-sortIcon>
                                     </th>
                                     <th>Status</th>
                                     <th>Edit</th>
@@ -293,8 +282,7 @@
                                     <td>{{inscription.etudiant.numero}}</td>
                                     <td>{{inscription.etudiant.nom}} {{inscription.etudiant.prenom}}</td>
                                     <td>{{inscription.etudiant.username}}</td>
-                                    <td></td>
-                                    <td> {{inscription.dateRegistration}} </td>
+                                    <td> {{inscription.dateRegistration | date: 'MMM dd YYYY hh:mm'}} </td>
                                     <td>
                                         <span *ngIf="inscription.etatInscription.libelle == 'Validated'"
                                               class="badge-v">VALIDATED</span>

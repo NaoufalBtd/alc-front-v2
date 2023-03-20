@@ -1,10 +1,9 @@
 import {EtatInscription} from './etat-inscription.model';
-import {Prof} from './prof.model';
 import {Parcours} from './parcours.model';
 import {QuizEtudiant} from './quiz-etudiant.model';
 import {Etudiant} from './etudiant.model';
 import {GroupeEtude} from './groupe-etude.model';
-import {PackStudent} from "./pack-student.model";
+import {PackStudent} from './pack-student.model';
 import {InteretEtudiant} from './interet-etudiant.model';
 import {NiveauEtude} from './niveau-etude.model';
 import {Fonction} from './fonction.model';
@@ -26,10 +25,10 @@ export class Inscription {
     public interetEtudiant = new InteretEtudiant();
     public niveauEtude = new NiveauEtude();
     public fonction = new Fonction();
-    public statutSocial =  new StatutSocial();
-    public skill =  new Skill();
+    public statutSocial = new StatutSocial();
+    public skill = new Skill();
     public dateRegistration: string;
-    public  quizNiveau: Quiz ;
-    public  noteQuizNiveau: number ;
-    public  quizFinished: boolean ;
+    public quizNiveau: Quiz;
+    public noteQuizNiveau: number;
+    public quizFinished: boolean;
 }

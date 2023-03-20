@@ -318,6 +318,7 @@ import {PricingTableComponent} from './view/public/pricing-table/pricing-table.c
 import {BottomBarComponent} from './view/shared/bottom-bar/bottom-bar.component';
 import {UpgdatePackComponent} from './view/etudiant/upgdate-pack/upgdate-pack.component';
 import { StudentPreferScheduleComponent } from './view/etudiant/student-prefer-schedule/student-prefer-schedule.component';
+import { HomeValidatedComponent } from './view/etudiant/home-student/home-validated/home-validated.component';
 
 
 export function createTranslateLoader(http: HttpClient) {
@@ -652,7 +653,8 @@ export function createTranslateLoader(http: HttpClient) {
             PricingTableComponent,
             BottomBarComponent,
             UpgdatePackComponent,
-            StudentPreferScheduleComponent
+            StudentPreferScheduleComponent,
+            HomeValidatedComponent
         ],
     providers: [
         {provide: LocationStrategy, useClass: PathLocationStrategy},

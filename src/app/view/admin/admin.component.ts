@@ -22,20 +22,32 @@ import {Contact} from '../../controller/model/contact.model';
 export class AdminComponent implements OnInit {
     user: User = new User();
     overlayMenuActive2: boolean;
-
+    items: MenuItem[];
     staticMenuMobileActive2: boolean;
-
     notificationMenuClick2: boolean;
-
     topbarUserMenuActive2: boolean;
     topbarNotificationMenuActive2: boolean;
-
     displayDictionaryDialogAdmin: boolean;
     textSeleted: string;
     synonymes: string;
     contactMessage: Array<Contact> = new Array<Contact>();
     nreNonLueContact = 0;
     nreNonLueReclamation = 0;
+    // Reclamation
+    displayChatDialog: boolean;
+    reclamation: ReclamationEtudiant = new ReclamationEtudiant();
+    reclamationList: Array<ReclamationEtudiant> = new Array<ReclamationEtudiant>();
+    allReclamation: Array<ReclamationEtudiant> = new Array<ReclamationEtudiant>();
+    public role = Role;
+    showButtons: boolean;
+    selectedUser: User = new User();
+    map: Map<number, ReclamationEtudiant[]> = new Map<number, ReclamationEtudiant[]>();
+    img: null | File;
+    displayImgDialog: boolean;
+    position: string;
+    reader = new FileReader();
+    selectedImgUrl: string;
+    showOverLayImg: boolean;
 
     constructor(private menuService: MenuService, private primengConfig: PrimeNGConfig,
                 private router: Router,
@@ -321,9 +333,6 @@ export class AdminComponent implements OnInit {
         return this.app.layoutMode === 'static';
     }
 
-    isMobile() {
-        return window.innerWidth < 1025;
-    }
 
     isDesktop() {
         return window.innerWidth > 896;
@@ -361,7 +370,6 @@ export class AdminComponent implements OnInit {
         }
     }
 
-    items: MenuItem[];
 
     ngOnInit(): void {
         this.user = this.authenticationService.getUserFromLocalCache();
@@ -384,7 +392,6 @@ export class AdminComponent implements OnInit {
             data => {
                 this.contactMessage = data;
                 this.nreNonLueContact = this.contactMessage.filter(c => c.replied === false).length;
-                console.log(data);
             }
         );
     }
@@ -393,7 +400,6 @@ export class AdminComponent implements OnInit {
         this.map.clear();
         this.reclamationService.getAll().subscribe(
             data => {
-                console.log(data);
                 this.allReclamation = data;
                 this.nreNonLueReclamation = this.allReclamation.filter(c => c.traite === false).length;
                 if (data != null) {
@@ -410,26 +416,10 @@ export class AdminComponent implements OnInit {
 
     getTranslation() {
         this.quizEtudiantService.translate(this.textSeleted).subscribe(data => {
-            console.log(data);
             this.synonymes = data;
         });
     }
 
-    // Reclamation
-    displayChatDialog: boolean;
-    reclamation: ReclamationEtudiant = new ReclamationEtudiant();
-    reclamationList: Array<ReclamationEtudiant> = new Array<ReclamationEtudiant>();
-    allReclamation: Array<ReclamationEtudiant> = new Array<ReclamationEtudiant>();
-    public role = Role;
-    showButtons: boolean;
-    selectedUser: User = new User();
-    map: Map<number, ReclamationEtudiant[]> = new Map<number, ReclamationEtudiant[]>();
-    img: null | File;
-    displayImgDialog: boolean;
-    position: string;
-    reader = new FileReader();
-    selectedImgUrl: string;
-    showOverLayImg: boolean;
 
     sendReclamation() {
         this.displayImgDialog = false;
@@ -441,7 +431,6 @@ export class AdminComponent implements OnInit {
         this.reclamation.file = this.img;
         this.reclamation.typeReclamationEtudiant = null;
         this.reclamationService.send(this.reclamation).subscribe(data => {
-            console.log(this.img);
             if (this.img === undefined || this.img === null) {
                 this.reclamationList.push({...data});
             } else {
@@ -450,7 +439,6 @@ export class AdminComponent implements OnInit {
                 formData.append('img', this.img);
                 this.reclamationService.updateImg(formData).subscribe(
                     dataFinal => {
-                        console.log(dataFinal);
                         this.reclamationList.push({...dataFinal});
                     }
                 );
@@ -509,9 +497,6 @@ export class AdminComponent implements OnInit {
         this.img = undefined;
     }
 
-    onSend(event: any) {
-        console.log(event);
-    }
 
     showImage(img: string) {
         this.selectedImgUrl = img;
