@@ -7,6 +7,7 @@ import {EtudiantService} from '../../../controller/service/etudiant.service';
 import {UserService} from '../../../controller/service/user.service';
 import {AuthenticationService} from '../../../controller/service/authentication.service';
 import {TranslateService} from '@ngx-translate/core';
+import {AnimationService} from '../../../controller/service/animation.service';
 
 @Component({
     selector: 'app-home-page-etudiant',
@@ -28,6 +29,7 @@ export class HomePageEtudiantComponent implements OnInit {
 
     constructor(public router: Router,
                 private _activatedRoute: ActivatedRoute,
+                private animationService: AnimationService,
                 private translate: TranslateService,
                 private messageService: MessageService,
                 private authService: AuthenticationService,
@@ -50,8 +52,10 @@ export class HomePageEtudiantComponent implements OnInit {
                         });
                         this.router.navigate(['/public/login']);
                     } else {
+                        this.animationService.showAnimation = true;
                         this.etudiantService.validateStudent(this.token).subscribe(
                             student => {
+                                this.animationService.showAnimation = false;
                                 this.currentUser = student;
                                 this.messageService.add({
                                     severity: 'success',
@@ -60,6 +64,7 @@ export class HomePageEtudiantComponent implements OnInit {
                                 });
                                 this.authService.addUserToLocalCache(student);
                             }, error => {
+                                this.animationService.showAnimation = false;
                                 console.log(error);
                                 this.messageService.add({
                                     severity: 'warn',

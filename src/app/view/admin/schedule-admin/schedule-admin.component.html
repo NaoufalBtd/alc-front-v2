@@ -161,6 +161,18 @@
                     </tr>
 
                     <tr>
+                        <td style="padding-bottom: 35px!important;" class="e-textlabel">Meet link</td>
+                        <td colspan="4">
+                            <input pInputText [style]="{width: '100%',marginBottom: '35px'}"
+                                   [(ngModel)]="scheduleProf.meet"
+                                   name="meet"
+                                   class="e-field"
+                                   placeholder="https://meet.google.com/abc"
+                                   data-name="meet">
+                        </td>
+                    </tr>
+
+                    <tr>
                         <td style="padding-bottom: 35px!important;" class="e-textlabel">Repeat</td>
                         <td colspan="4">
                             <p-dropdown [style]="{width: '100%',marginBottom: '35px'}" [(ngModel)]="optionSelected"

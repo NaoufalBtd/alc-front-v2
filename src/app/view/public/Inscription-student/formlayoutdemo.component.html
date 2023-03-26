@@ -1,9 +1,9 @@
-<div class="form-bg">
+<div [style.direction]="translate.currentLang === 'ar' ? 'rtl': 'ltr'" class="form-bg">
     <div style="padding: 20px" class="container">
         <div class="row shadow p-3 mb-5 bg-body rounded">
             <div style="text-align: center" class="col-md-offset-3 col-md-12">
                 <h2 class="section__title">{{'Book your free trial session' | translate}}</h2>
-                <h4><i class="fa fa-solid fa-gift"></i>{{'gift' | translate}}</h4>
+                <h4> {{'gift' | translate}} <i class="fa fa-solid m-10 fa-gift"></i></h4>
             </div>
             <div class="col-md-offset-3 col-md-6">
                 <div class="textInfo"><i style="color: blue; font-size: 25px;"
@@ -45,10 +45,7 @@
                                 class="form-select">
                             <option [ngValue]="null">{{'choose your level' | translate}}</option>
                             <option [ngValue]="'1'">مبتدئ</option>
-                            <option [ngValue]="'5095'">ما قبل المتوسط</option>
                             <option [ngValue]="'13000'">متوسط</option>
-                            <option [ngValue]="'25000'">ما بعد المتوسط</option>
-                            <option [ngValue]="'31050'">متقم</option>
                         </select>
                     </div>
 

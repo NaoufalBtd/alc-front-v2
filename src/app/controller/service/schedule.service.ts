@@ -304,13 +304,6 @@ export class ScheduleService {
         return this.http.post<ScheduleProf>(this.profUrl + 'scheduleProf/', this.scheduleProf);
     }
 
-    saveByStudent(): Observable<ScheduleProf> {
-        return this.http.post<ScheduleProf>(this.studentUrl + 'scheduleProf/', this.scheduleProf);
-    }
-
-    saveScheduleProf(): Observable<number> {
-        return this.http.post<number>(this.profUrl + 'scheduleProf/', this.scheduleProf);
-    }
 
     findById(id: number): Observable<ScheduleProf> {
         return this.http.get<ScheduleProf>(this.profUrl + 'scheduleProf/id/' + id);
@@ -342,9 +335,6 @@ export class ScheduleService {
         return this.http.post<CalendrierProf>(this.adminUrl + 'calendrierProf/', this.selected);
     }
 
-    public getStudents(): Observable<Array<Etudiant>> {
-        return this.http.get<Array<Etudiant>>(this.adminUrl + 'etudiant/prof/id/' + this.selected.prof.id);
-    }
 
     public getAllStudentsGroup(): Observable<Array<GroupeEtudiant>> {
         return this.http.get<Array<GroupeEtudiant>>(this.adminUrl + 'groupeEtudiant/');

@@ -1,8 +1,6 @@
 import {Component, NgModule, OnInit} from '@angular/core';
-import {ConfirmationService, MessageService} from 'primeng/api';
-import {InscriptionService} from '../../../controller/service/inscription.service';
+import {MessageService} from 'primeng/api';
 import {Etudiant} from '../../../controller/model/etudiant.model';
-import {Router} from '@angular/router';
 import {EtudiantService} from '../../../controller/service/etudiant.service';
 import {PackStudentService} from '../../../controller/service/pack-student.service';
 import {VonPrimengFormModule} from '@von-development-studio/primeng-form-validation';
@@ -10,6 +8,7 @@ import {AuthenticationService} from '../../../controller/service/authentication.
 import {AnimationService} from '../../../controller/service/animation.service';
 import {TranslateService} from '@ngx-translate/core';
 import {ParcoursService} from '../../../controller/service/parcours.service';
+import {Location} from '@angular/common';
 
 @Component({
     selector: 'app-formlayoutdemo',
@@ -17,6 +16,7 @@ import {ParcoursService} from '../../../controller/service/parcours.service';
     styleUrls: ['./formlayoutdemo.component.scss']
 })
 export class FormLayoutDemoComponent implements OnInit {
+    label = null;
     @NgModule({
         imports: [
             VonPrimengFormModule,
@@ -34,12 +34,11 @@ export class FormLayoutDemoComponent implements OnInit {
     constructor(private messageService: MessageService,
                 public etudiantService: EtudiantService,
                 private animation: AnimationService,
-                private translate: TranslateService,
+                public translate: TranslateService,
                 private levelService: ParcoursService,
-                private confirmationService: ConfirmationService,
                 public authenticationService: AuthenticationService,
                 public packStudentService: PackStudentService,
-                private service: InscriptionService, private router: Router) {
+                private location: Location) {
     }
 
     get showAnimation(): boolean {
@@ -59,6 +58,9 @@ export class FormLayoutDemoComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        if (this.location.path()?.includes('book-your-free-trial-session')) {
+            this.label = 'FREE';
+        }
     }
 
     showConfirm() {
@@ -81,7 +83,7 @@ export class FormLayoutDemoComponent implements OnInit {
     }
 
     createEtudiant() {
-        this.verifyEmail(this.selected.username);
+        this.verifyEmail();
     }
 
 
@@ -110,17 +112,7 @@ export class FormLayoutDemoComponent implements OnInit {
         window.open('https://mail.google.com/mail/u/0/#inbox', '_blank');
     }
 
-    private verifyEmail(username: string) {
-        // const url = 'https://emailvalidation.abstractapi.com/v1/?api_key=d928649ca44341bba9a9482419202c4c&email=' + username;
-        // return this.http.get<any>(url).subscribe(data => {
-        //     console.log(data);
-        //     if (data?.deliverability === 'UNDELIVERABLE') {
-        //         this.messageService.add({
-        //             severity: 'info',
-        //             detail: 'لم يتم العثور على بريدك الالكتروني، يرجى محاولة استخدام بريد إلكتروني حقيقي',
-        //             life: 30000
-        //         });
-        //     } else {
+    private verifyEmail() {
         this.showAnimation = true;
         this.etudiantService.create().subscribe(
             st => {
@@ -147,10 +139,6 @@ export class FormLayoutDemoComponent implements OnInit {
                 console.log(error);
             }
         );
-        //     }
-        // }, error => {
-        //     console.log(error);
-        // });
     }
 
     chooseLevel(event: any) {
@@ -163,4 +151,5 @@ export class FormLayoutDemoComponent implements OnInit {
             });
         }
     }
+
 }

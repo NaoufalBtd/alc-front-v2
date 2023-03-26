@@ -226,6 +226,7 @@ import {PublicFaqComponent} from './view/public/home-principale/FAQ/public-faq/p
                     {path: 'public/login', component: SignInMainComponent},
                     {path: 'public/inscriptionEtudiant', component: FormLayoutDemoComponent},
                     {path: 'free-trial', component: InscriptionStudentMainComponent},
+                    {path: 'book-your-free-trial-session', component: InscriptionStudentMainComponent},
                     {path: 'contact', component: ContactUsMainComponent},
                     {path: 'online-english-level-test', component: DiscoverLevelComponent},
                     {path: 'start-test-level', component: TestLevelInstructionsComponent},

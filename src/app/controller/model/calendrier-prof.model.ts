@@ -7,6 +7,7 @@ export class ScheduleProf {
     public id = Number(0);
     public subject: string;
     public ref: string;
+    public meet: string;
     public startTime: Date = new Date();
     public endTime: Date = new Date();
     public groupeEtudiant = new GroupeEtudiant();

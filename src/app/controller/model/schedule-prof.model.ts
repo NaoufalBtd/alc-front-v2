@@ -5,6 +5,7 @@ export class CalendrierProf {
     public id: number;
     public ref: string;
     public color: string;
+    public meet: string;
     public startTime: string;
     public endTime: string;
     public startRecur: Date = new Date();

@@ -353,6 +353,10 @@ export class EtudiantService {
         return this.http.post<User>(this.etudiantUrl + 'etudiant/save/', this.selected);
     }
 
+    public startFreeTrialLesson(student: Etudiant): Observable<HttpResponse<User>> {
+        return this.http.post<User>(environment.publicUrl + 'etudiant/start/free-trial/' + 'Free', student, {observe: 'response'});
+    }
+
     public addStudentWithPack(selected: Etudiant, packId: number): Observable<any> {
         return this.http.post<User>(this.etudiantUrl + 'etudiant/save/pack/' + packId, selected);
     }

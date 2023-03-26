@@ -14,6 +14,7 @@ import timezones from 'timezones-list';
 import {GroupeEtudiantService} from '../../../controller/service/groupe-etudiant-service';
 import {PackStudentService} from '../../../controller/service/pack-student.service';
 import {InscriptionService} from '../../../controller/service/inscription.service';
+import {AnimationService} from '../../../controller/service/animation.service';
 
 
 @Component({
@@ -26,6 +27,7 @@ export class ScheduleAdminComponent implements OnInit {
     constructor(private scheduleService: ScheduleService,
                 private parcourService: ParcoursService,
                 private packService: PackStudentService,
+                private animation: AnimationService,
                 private inscriptionService: InscriptionService,
                 private groupEtudiantService: GroupeEtudiantService,
                 private messageService: MessageService) {
@@ -267,10 +269,12 @@ export class ScheduleAdminComponent implements OnInit {
     }
 
     private saveSchedule(scheduleObj: any) {
+        this.animation.showAnimation = true;
         if (this.scheduleProf.id === 0 || this.scheduleProf.id === null || this.scheduleProf.id === undefined) {
             this.scheduleService.save().subscribe
             (
                 data => {
+                    this.animation.showAnimation = false;
                     if (data === null) {
                         this.messageService.add({
                             severity: 'error',
@@ -290,6 +294,7 @@ export class ScheduleAdminComponent implements OnInit {
                     }
 
                 }, error => {
+                    this.animation.showAnimation = false;
                     console.log(error);
                     this.messageService.add({
                         severity: 'error',
@@ -303,12 +308,28 @@ export class ScheduleAdminComponent implements OnInit {
         } else {
             this.scheduleService.save().subscribe(
                 data => {
+                    this.messageService.add({
+                        severity: 'info',
+                        summary: 'Successful',
+                        detail: 'Schedule updated.',
+                        life: 3000
+                    });
+                    this.animation.showAnimation = false;
                     for (let i = 0; i < this.scheduleProfs.length; i++) {
                         if (this.scheduleProfs[i].id === data.id) {
                             // this.scheduleProfs.splice(i, 1);
                             this.scheduleProfs[i] = data;
                         }
                     }
+                }, error => {
+                    this.animation.showAnimation = false;
+                    console.log(error);
+                    this.messageService.add({
+                        severity: 'error',
+                        summary: 'Warning',
+                        detail: error?.error?.message || 'Schedule canceled',
+                        life: 5000
+                    });
                 }
             );
             scheduleObj.eventSettings.dataSource = this.scheduleProfs;
@@ -425,7 +446,6 @@ export class ScheduleAdminComponent implements OnInit {
         });
         this.scheduleProf.prof = this.scheduleProf.groupeEtudiant.prof;
     }
-
 
 
     onActionComplete(event: any) {

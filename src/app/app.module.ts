@@ -19,7 +19,6 @@ import {CascadeSelectModule} from 'primeng/cascadeselect';
 import {ChartModule} from 'primeng/chart';
 import {CheckboxModule} from 'primeng/checkbox';
 import {ChipModule} from 'primeng/chip';
-import {ChipsModule} from 'primeng/chips';
 import {CodeHighlighterModule} from 'primeng/codehighlighter';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {ConfirmPopupModule} from 'primeng/confirmpopup';
@@ -317,8 +316,8 @@ import {PayNowComponent} from './view/shared/pay-now/pay-now.component';
 import {PricingTableComponent} from './view/public/pricing-table/pricing-table.component';
 import {BottomBarComponent} from './view/shared/bottom-bar/bottom-bar.component';
 import {UpgdatePackComponent} from './view/etudiant/upgdate-pack/upgdate-pack.component';
-import { StudentPreferScheduleComponent } from './view/etudiant/student-prefer-schedule/student-prefer-schedule.component';
-import { HomeValidatedComponent } from './view/etudiant/home-student/home-validated/home-validated.component';
+import {StudentPreferScheduleComponent} from './view/etudiant/student-prefer-schedule/student-prefer-schedule.component';
+import {HomeValidatedComponent} from './view/etudiant/home-student/home-validated/home-validated.component';
 
 
 export function createTranslateLoader(http: HttpClient) {
@@ -663,6 +662,7 @@ export function createTranslateLoader(http: HttpClient) {
         // { provide: HTTP_INTERCEPTORS, useClass: CustomErrorHandlerInterceptor, multi: true },
         AppComponent, DatePipe,
         HomeWorkEtudiantComponent,
+        Location,
         WeekService, MonthService, DayService, WeekService, WorkWeekService, MonthService,
         AgendaService, MonthAgendaService, TimelineViewsService,
         TimelineMonthService,
