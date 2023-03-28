@@ -355,6 +355,7 @@ export class ScheduleAdminComponent implements OnInit {
             this.scheduleProf.ref = args.data?.ref;
             this.scheduleProf.prof = args.data?.prof;
             this.scheduleProf.id = args.data.id;
+            this.scheduleProf.meet = args.data.meet;
             this.scheduleProf.groupeEtudiant = args.data?.groupeEtudiant;
             this.grpEtudiant = this.scheduleProf?.groupeEtudiant;
             this.selectionTarget = null;
@@ -363,6 +364,11 @@ export class ScheduleAdminComponent implements OnInit {
         } else if (args.type === 'Editor') {
             this.scheduleProf.startTime = args.data?.startTime;
             this.scheduleProf.endTime = args.data?.endTime;
+            this.scheduleProf.meet = args.data.meet;
+            this.scheduleProf.groupeEtudiant = args.data?.groupeEtudiant;
+            this.getCourses(this.scheduleProf.groupeEtudiant);
+            this.scheduleProf.cours = args.data?.cours;
+            this.scheduleProf.subject = args.data?.subject;
         }
         if (args.data?.ref === null || args.data?.ref === undefined || args.data?.ref === '' || args.data?.ref === 0) {
             this.scheduleProf.id = null;
