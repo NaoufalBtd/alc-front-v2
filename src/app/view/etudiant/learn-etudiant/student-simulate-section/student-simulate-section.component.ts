@@ -83,7 +83,7 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
         },
     };
     public CategoriesSectionItemEnum = CategoriesSectionItemEnum;
-
+    showSidBar: boolean;
 
     constructor(private messageService: MessageService,
                 private router: Router,

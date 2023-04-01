@@ -2,7 +2,9 @@
     <div class="container-fluid">
         <a class="navbar-brand"> {{selectedcours?.libelle}}
         </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        <button class="navbar-toggler"
+                type="button" data-bs-toggle="collapse" (click)="showSidBar=true ; getConnectedUsers()"
+                data-bs-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -474,3 +476,44 @@
         </div>
     </div>
 </p-dialog>
+
+
+<p-sidebar [(visible)]="showSidBar" position="right" [baseZIndex]="10000">
+    <div class="p-grid">
+        <div class="p-col-12">
+            <strong>connected students </strong>
+            <p-table [value]="usersConnected">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>name</th>
+                        <th>status</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-student>
+                    <tr>
+                        <td>{{student?.nom}}</td>
+                        <td>
+                            <button
+                                    style="width: 15px;height: 0" pButton pRipple
+                                    type="button" icon="pi pi-circle-fill"
+                                    class="p-button-rounded p-button-success">
+                            </button>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+        <div class="p-col-12">
+            <strong>Choose your native language</strong>
+            <p-dropdown [style]="{width: '100%'}" [options]="getLanguages()" [(ngModel)]="selectedLanguage"
+                        placeholder="Choose your native language" optionLabel="name" [showClear]="false"></p-dropdown>
+        </div>
+        <div class="p-col-12">
+            <button [style]="{width: '100%'}" pButton pRipple type="button" icon="pi pi-fw pi-power-off" label="Quit"
+                    (click)="closeSession()" [routerLink]="['/']"
+                    class="p-button-rounded  leftButton  p-button-outlined">
+
+            </button>
+        </div>
+    </div>
+</p-sidebar>

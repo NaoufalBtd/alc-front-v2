@@ -279,6 +279,11 @@ export class ScheduleService {
         return this.http.get<Array<ScheduleProf>>(this.studentUrl + 'scheduleProf/groupe/etudiant/id/' + groupeEtudiant.id);
     }
 
+
+    public findNearestClassForGroup(groupeEtudiant: GroupeEtudiant): Observable<ScheduleProf> {
+        return this.http.get<ScheduleProf>(this.studentUrl + 'scheduleProf/nearest-class/group/id/' + groupeEtudiant.id);
+    }
+
     public findByProf(prof: Prof): Observable<Array<ScheduleProf>> {
         return this.http.get<Array<ScheduleProf>>(this.profUrl + 'scheduleProf/prof/id/' + prof.id);
     }

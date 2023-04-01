@@ -62,15 +62,17 @@ export class HomeFreeTrialComponent implements OnInit {
         this.groupeEtudiantService.findGroupeEtudiantDetailByEtudiantId(this.login.getUserFromLocalCache().id).subscribe(
             data => {
                 console.log(data);
-                for (const item of data) {
-                    this.scheduleService.findByGroupStudentId(item.groupeEtudiant).subscribe(
+                if (data?.length > 0) {
+                    this.scheduleService.findNearestClassForGroup(data[0].groupeEtudiant).subscribe(
                         scheduleData => {
-                            if (scheduleData?.length > 0) {
-                                this.nextLesson = scheduleData[scheduleData.length - 1];
+                            if (scheduleData !== null) {
+                                this.nextLesson = scheduleData;
                                 setInterval(() => {
                                     this.updateCountdown();
                                 }, 1000);
                             }
+                        }, error => {
+                            console.log(error);
                         });
                 }
             });
