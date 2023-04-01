@@ -33,17 +33,25 @@
                 <div *ngIf="nextLesson?.groupeEtudiant?.groupeEtude?.nombreEtudiant === 1"
                      class="col-md-12 lesson__type">individual class
                 </div>
+
                 <div style="background: #ff667f"
                      *ngIf="nextLesson?.groupeEtudiant?.groupeEtude?.nombreEtudiant > 1" class="col-md-12 lesson__type">
                     group class
                 </div>
+
                 <div class="col-md-12">
                     <h3>{{nextLesson?.subject}} </h3>
                 </div>
+
                 <div class="col-md-12 lesson__date">
                     <h5>
                         {{nextLesson.startTime | date: "dd MMMM 'at' hh:mm"}}
                     </h5>
+                </div>
+
+                <div style="font-size: 15px; color: #ff725e;" class="col-md-12 align-items-center flex-row d-flex">
+                    <i class="pi pi-google px-1"></i>
+                    <a [href]="nextLesson?.meet" target="_blank">meet link</a>
                 </div>
             </div>
 

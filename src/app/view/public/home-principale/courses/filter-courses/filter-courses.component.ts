@@ -133,11 +133,8 @@ export class FilterCoursesComponent implements OnInit, AfterViewInit {
     }
 
     chooseType(type: string, price: number) {
-        this.activeIndex = 2;
         this.priceSelected = price;
-        this.steps.set(this.activeIndex, type);
-
-        console.log(this.priceSelected);
+        this.getCourse('1 ELEMENTARY');
     }
 
     indexChange(index: number) {
@@ -151,9 +148,6 @@ export class FilterCoursesComponent implements OnInit, AfterViewInit {
     getCourse(level: string) {
         if (this.groupOption === 'GROUP') {
             this.packService.findPackByGroupOption(true).subscribe(data => {
-                console.log(data);
-                console.log(level);
-                console.log(this.priceSelected);
                 const course = data.filter(d => d.price?.price === this.priceSelected &&
                     d.level.libelle.toUpperCase() === level.toUpperCase());
                 if (course.length > 0) {
@@ -168,7 +162,6 @@ export class FilterCoursesComponent implements OnInit, AfterViewInit {
             });
         } else {
             this.packService.findPackByGroupOption(false).subscribe(data => {
-                console.log(data);
                 const course = data.filter(d => d.price?.price === this.priceSelected &&
                     d.level.libelle.toUpperCase() === level.toUpperCase());
                 if (course.length > 0) {

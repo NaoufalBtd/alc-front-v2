@@ -21,20 +21,22 @@
                         <div class="main-menu main-menu-2 d-none d-xl-block">
                             <nav id="mobile-menu">
                                 <ul>
-                                    <li>
-                                        <a [routerLink]="['/courses']"> {{'courses' | translate}}</a>
-                                    </li>
 
                                     <li class="has-dropdown">
-                                        <a [routerLink]="['/blog']"> {{'blog' | translate}}</a>
+                                        <a [routerLink]="['/contact']"> {{'contact' | translate}}</a>
 
                                         <ul class="submenu">
-                                            <li><a [routerLink]="['/blog']"> {{'blog' | translate}}</a></li>
                                             <li><a [routerLink]="['/contact']"> {{'contact' | translate}}</a></li>
+                                            <li><a [routerLink]="['/blog']"> {{'blog' | translate}}</a></li>
                                             <li><a [routerLink]="'/about-us'">{{'aboutus' | translate}}</a></li>
                                             <li><a [routerLink]="['/faqs']">{{'FAQs' | translate}}</a></li>
                                         </ul>
                                     </li>
+
+                                    <li>
+                                        <a [routerLink]="['/online-english-level-test']"> {{'discover your level' | translate}}</a>
+                                    </li>
+
 
                                     <li class="has-dropdown">
                                         <a *ngIf="this.translate.currentLang === 'en'"
@@ -57,18 +59,19 @@
                             </nav>
                         </div>
 
-                        <div class="header__btn ml-20 d-none d-xl-block">
-                            <a [routerLink]="['/public/login']" class="e-btn"> {{'signin' | translate}}</a>
+                        <div class="header__btn header__btn-2 d-xl-block ml-30 d-none">
+                            <a [routerLink]="['/courses']"
+                               class="e-btn">{{'courses' | translate}}</a>
                         </div>
 
                         <div class="header__btn header__btn-2 d-xl-block ml-30 d-none">
                             <a [routerLink]="['/free-trial']" class="e-btn">{{'treetrialLesson' | translate}}</a>
                         </div>
 
-                        <div class="header__btn header__btn-2 d-xl-block ml-30 d-none">
-                            <a [routerLink]="['/online-english-level-test']"
-                               class="e-btn">{{'discover your level' | translate}}</a>
+                        <div class="header__btn ml-20 d-none d-xl-block">
+                            <a [routerLink]="['/public/login']" class="e-btn"> {{'signin' | translate}}</a>
                         </div>
+
 
                         <div class="sidebar__menu d-xl-none">
                             <div (click)="handleSidebar()" class="sidebar-toggle-btn ml-30" id="sidebar-toggle">

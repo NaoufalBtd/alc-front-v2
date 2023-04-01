@@ -71,13 +71,9 @@
                 <p class="message__detail">{{message.detail}}</p>
             </div>
             <div class="p-grid p-fluid">
-                <div class="p-col-6">
-                    <button type="button" pButton (click)="clear()" label="OK" class="p-button-success"></button>
-                </div>
-
-                <div class="p-col-6">
+                <div class="p-col-12">
                     <button type="button" pButton iconPos="right" icon="pi pi-envelope" (click)="openGmail()"
-                            label="Open Gmail" class="p-button-secondary"></button>
+                            [label]="'Open Gmail' | translate" class="p-button-secondary"></button>
                 </div>
             </div>
         </div>
