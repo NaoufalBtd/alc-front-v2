@@ -1,5 +1,5 @@
 <div class="p-grid">
-    <div class="p-col-4">
+    <div class="p-md-4 p-sm-12">
         <h6>Students</h6>
         <p-dropdown [options]="studentList" [(ngModel)]="selectedStudent"
                     (ngModelChange)="getStudentHomeWork(selectedStudent)"
@@ -21,7 +21,7 @@
                 <p>{{reponse?.answer}}</p>
             </div>
 
-            <div class="p-col-6">
+            <div class="p-md-6 p-sm-12">
                 <h6>notes</h6>
                 <textarea [disabled]="loginService.getConnecteUser().role === ROLE.STUDENT" required
                           [style]="{width:'100%', padding: '10px'}" rows="2"
@@ -30,13 +30,13 @@
                           (input)="syncWithStudent()"
                           autoResize="autoResize"></textarea>
             </div>
-            <div class="p-col-3">
+            <div class="p-md-3 p-sm-12">
                 <h6>Rating</h6>
                 <p-rating [readonly]="loginService.getConnecteUser().role === ROLE.STUDENT" [(ngModel)]="reponse.note"
                           stars="10" [cancel]="false"></p-rating>
             </div>
 
-            <div class="p-col-3 subDiv">
+            <div class="p-md-3 p-sm-12 subDiv">
                 <button *ngIf="loginService.getConnecteUser().role === ROLE.PROF" pButton pRipple type="button"
                         (click)="saveNotes()"
                         label="Send" class="p-button-outlined p-button-success"></button>

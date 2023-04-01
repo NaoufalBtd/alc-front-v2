@@ -24,7 +24,6 @@ import {GroupeEtudiant} from '../../../../controller/model/groupe-etudiant.model
     styleUrls: ['./home-validated.component.scss']
 })
 export class HomeValidatedComponent implements OnInit {
-
     getRestOfTime: string;
     getRestOfDay: number;
     getRestOfHour: number;
@@ -96,7 +95,6 @@ export class HomeValidatedComponent implements OnInit {
             data => {
                 console.log(data);
                 for (const item of data) {
-
                     this.scheduleService.findByGroupStudentId(item.groupeEtudiant).subscribe(
                         scheduleData => {
                             this.scheduleProfs = scheduleData;
@@ -109,12 +107,9 @@ export class HomeValidatedComponent implements OnInit {
                                         }
                                     }
                                 }
-                                this.nextLesson = this.scheduleProfs[this.lessonFinished.length];
-
-                                this.getStudentOfGroup(this.nextLesson?.groupeEtudiant);
-
-                                console.log(this.lessonFinished);
+                                this.nextLesson = this.scheduleProfs[this.lessonFinished?.length];
                                 console.log(this.nextLesson);
+                                this.getStudentOfGroup(this.nextLesson?.groupeEtudiant);
                                 setInterval(() => {
                                     this.updateRestOfTime();
                                 }, 1000);

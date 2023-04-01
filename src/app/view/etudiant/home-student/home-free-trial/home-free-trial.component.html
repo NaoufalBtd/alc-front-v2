@@ -19,8 +19,55 @@
                         type="button"></button>
             </div>
         </div>
-
     </div>
+
+    <div *ngIf="nextLesson!== null" class="col-md-12 bg-white shadow p-3 mb-5 bg-body rounded" style="direction: ltr">
+        <h1 [style.direction]="translate.currentLang === 'ar' ? 'rtl': 'ltr'">{{'My classes' | translate}}</h1>
+        <div class="d-flex flex-xxl-row flex-xl-row flex-lg-row flex-md-column flex-sm-column
+         justify-content-xxl-between ">
+            <div class="img__container my-3">
+                <img width="100%" src="/assets/icons/icon-livres.png" alt="image">
+            </div>
+
+            <div class="row px-3  my-3 flex-fill">
+                <div *ngIf="nextLesson?.groupeEtudiant?.groupeEtude?.nombreEtudiant === 1"
+                     class="col-md-12 lesson__type">individual class
+                </div>
+                <div style="background: #ff667f"
+                     *ngIf="nextLesson?.groupeEtudiant?.groupeEtude?.nombreEtudiant > 1" class="col-md-12 lesson__type">
+                    group class
+                </div>
+                <div class="col-md-12">
+                    <h3>{{nextLesson?.subject}} </h3>
+                </div>
+                <div class="col-md-12 lesson__date">
+                    <h5>
+                        {{nextLesson.startTime | date: "dd MMMM 'at' hh:mm"}}
+                    </h5>
+                </div>
+            </div>
+
+            <div class=" rest__time px-3 d-flex my-3 flex-row">
+                <div>{{countdown.days}}</div>
+                <span>:</span>
+                <div>{{countdown.hours}}</div>
+                <span>:</span>
+                <div>{{countdown.minutes}}</div>
+                <span>:</span>
+                <div>{{countdown.seconds}}</div>
+            </div>
+
+            <div class="lesson__button px-3 my-3">
+                <button [disabled]="!timeForLesson" style="width: 150px!important;"
+                        class="ngFlexyOrangeButton"
+                        (click)="joinSession()"
+                        [label]="'go to class' | translate" pButton pRipple
+                        type="button"></button>
+            </div>
+
+        </div>
+    </div>
+
     <div *ngIf="!displayCourses" class="col-md-12">
         <div class="row bg-white shadow p-3 mb-5 bg-body rounded">
             <div class="col-md-12">

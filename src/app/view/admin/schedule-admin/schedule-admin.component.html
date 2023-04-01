@@ -140,6 +140,8 @@
                             <p-dropdown [style]="{width: '100%',marginBottom: '35px'}"
                                         [(ngModel)]="scheduleProf.groupeEtudiant" [options]="groupeStudent"
                                         optionLabel="libelle"
+                                        [filter]="true"
+                                        filterBy="libelle"
                                         class="e-field"
                                         data-name="groupeEtudiant"
                                         (ngModelChange)="getCourses(scheduleProf.groupeEtudiant)"
@@ -154,6 +156,8 @@
                             <p-dropdown [style]="{width: '100%',marginBottom: '35px'}" [(ngModel)]="scheduleProf.cours"
                                         (ngModelChange)="generateRef()"
                                         [options]="courses" optionLabel="libelle"
+                                        [filter]="true"
+                                        filterBy="libelle"
                                         class="e-field"
                                         data-name="cours"
                                         placeholder="subject"></p-dropdown>

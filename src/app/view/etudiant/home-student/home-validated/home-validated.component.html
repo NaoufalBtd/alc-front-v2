@@ -52,8 +52,6 @@
 
             </div>
         </div>
-
-
     </div>
 
     <div class="py-1 px-2 col-12 col-md-3 Statements">
@@ -105,32 +103,38 @@
     <div *ngIf="scheduleProfs?.length > 0"
          style="background: white; border-left: 2px solid #263238;  border-radius: 10px;"
          class="p-2 col-12 col-md-3 Nextlesson">
-        <p class="lessonDate"> {{'Welcome back'}} {{student?.nom}}
-            ,  {{'ready for your next lesson ?'}}
-            <img style="    width: 15px; margin: 4px 0 -2px 0;"
-                 src="/assets/icons/icon-fire.png" alt=""></p>
-        <div class="p-grid lessonActuel">
-            <div style="text-align: center" class="p-col-12">
-                <p style="font-size: small; color: white; margin-bottom: -10px;" class="lessonDate">
-                    {{getDay()}}
-                </p>
+
+        <ng-container *ngIf="
+        nextLesson?.id !== undefined &&
+        nextLesson === null &&
+         nextLesson?.id !== null ">
+
+            <p class="lessonDate"> {{'Welcome back'}} {{student?.nom}}
+                ,  {{'ready for your next lesson ?'}}
+                <img style="    width: 15px; margin: 4px 0 -2px 0;"
+                     src="/assets/icons/icon-fire.png" alt=""></p>
+
+            <div class="p-grid lessonActuel">
+                <div style="text-align: center" class="p-col-12">
+                    <p style="font-size: small; color: white; margin-bottom: -10px;" class="lessonDate">
+                        {{getDay()}}
+                    </p>
+                </div>
+                <div class="p-col-12 nextLessonTitle">
+                    {{nextLesson?.cours?.libelle}}
+                </div>
+                <div class="p-col-12">
+                    <button *ngIf="showJoinNow" pButton pRipple type="button" [label]="'Join now'"
+                            (click)="joinSession(nextLesson)"
+                            class="p-button-help joinButton"></button>
+
+
+                    <button *ngIf="!showJoinNow" pButton pRipple type="button"
+                            [label]="getRestOfTime"
+                            class="p-button-help"></button>
+                </div>
             </div>
-            <div class="p-col-12 nextLessonTitle">
-                {{nextLesson?.cours?.libelle}}
-            </div>
-            <div class="p-col-12">
-                <button *ngIf="showJoinNow" pButton pRipple type="button" [label]="'Join now'"
-                        (click)="joinSession(nextLesson)"
-                        class="p-button-help joinButton"></button>
-
-
-                <button *ngIf="!showJoinNow" pButton pRipple type="button"
-                        [label]="getRestOfTime"
-                        class="p-button-help"></button>
-            </div>
-
-        </div>
-
+        </ng-container>
 
         <p style=" border-top: 2px solid #263238;  padding-top: 8px;    color: black;font-weight: bold;font-size: small;"
            class="lessonDate">

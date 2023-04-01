@@ -1,42 +1,43 @@
-<div class="card toopBar">
-    <div class="p-grid">
-        <div class="p-col-4">
-            <h4 class="title"> {{selectedcours?.libelle}}</h4>
-        </div>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand"> {{selectedcours?.libelle}}
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <p-overlayPanel #op [style]="{width: '400px'}"
+                                    [showTransitionOptions]="'0ms'" [hideTransitionOptions]="'0ms'" [dismissable]="true"
+                                    [showCloseIcon]="false">
+                        <ng-template pTemplate>
+                            <p-table [value]="usersConnected" [scrollable]="true" scrollHeight="400px">
+                                <ng-template pTemplate="body" let-etudiant>
+                                    <tr>
+                                        <td>{{etudiant?.nom}}</td>
+                                        <td>
+                                            <button
+                                                    style="width: 15px;height: 0" pButton pRipple
+                                                    type="button" icon="pi pi-circle-fill"
+                                                    class="p-button-rounded p-button-success">
+                                            </button>
 
-        <div class="p-col-4"></div>
-
-        <div class="p-col-1">
-            <p-overlayPanel #op [style]="{width: '400px'}"
-                            [showTransitionOptions]="'0ms'" [hideTransitionOptions]="'0ms'" [dismissable]="true"
-                            [showCloseIcon]="false">
-                <ng-template pTemplate>
-                    <p-table [value]="usersConnected" [scrollable]="true" scrollHeight="400px">
-                        <ng-template pTemplate="body" let-etudiant>
-                            <tr>
-                                <td>{{etudiant?.nom}}</td>
-                                <td>
-                                    <button
-                                            style="width: 15px;height: 0" pButton pRipple
-                                            type="button" icon="pi pi-circle-fill"
-                                            class="p-button-rounded p-button-success">
-                                    </button>
-
-                                </td>
-                            </tr>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
                         </ng-template>
-                    </p-table>
-                </ng-template>
-            </p-overlayPanel>
+                    </p-overlayPanel>
 
-            <button pButton pRipple type="button" icon="pi pi-users"
-                    (click)="op.toggle($event); getConnectedUsers()"
-                    class="p-button-rounded  leftButton p-button-outlined">
+                    <button pButton pRipple type="button" icon="pi pi-users"
+                            (click)="op.toggle($event); getConnectedUsers()"
+                            class="p-button-rounded p-button-outlined">
+                    </button>
+                </li>
+            </ul>
 
-            </button>
-        </div>
-
-        <div class="p-col-1">
             <button pButton pRipple type="button" (click)="getLanguages();op1.toggle($event);" iconPos="left"
                     pTooltip="Choose your native language" tooltipPosition="top"
                     icon="pi pi-globe"
@@ -53,24 +54,25 @@
 
                 </ng-template>
             </p-overlayPanel>
-        </div>
 
-        <div class="p-col-1">
-            <button pButton pRipple type="button" icon="pi pi-fw pi-power-off" label="Quit"
-                    (click)="closeSession()" [routerLink]="['/']"
-                    class="p-button-rounded  leftButton  p-button-outlined">
+            <form class="d-flex mx-5">
+                <button pButton pRipple type="button" icon="pi pi-fw pi-power-off" label="Quit"
+                        (click)="closeSession()" [routerLink]="['/']"
+                        class="p-button-rounded  leftButton  p-button-outlined">
 
-            </button>
+                </button>
+            </form>
         </div>
     </div>
-</div>
+</nav>
 
-<div class=" card" style="background-color: transparent">
+
+<div class="card" style="background-color: transparent">
     <div class="p-grid" style=" padding:10px">
         <div class="p-col-12 middleBar">
             <div class="p-grid">
 
-                <div *ngIf="showLesson" class="p-col-9">
+                <div *ngIf="showLesson" class="p-xxl-9 p-xl-9 p-lg-9 p-md-9 p-sm-12">
                     <div class="p-grid sectionLibelle">
                         {{this.selectedsection.libelle}}
                     </div>
@@ -152,7 +154,7 @@
                          *ngIf="!this.webSocketService.isInSession && tabViewActiveIndex === 0">
 
                         <div class="p-grid">
-                            <div class="p-col-4">
+                            <div class="p-xxl-4 p-xl-4 p-lg-4 p-md-4 p-sm-12">
                                 <button (click)="PreviousSection()"
                                         *ngIf="this.selectedsection?.numeroOrder !== 1"
                                         class="ngFlexyOrangeButton" icon="pi pi-caret-left" id="previous"
@@ -162,11 +164,11 @@
                             </div>
 
 
-                            <div class="p-col-4">
+                            <div class="p-xxl-4 p-xl-4 p-lg-4 p-md-4 p-sm-12">
                             </div>
 
 
-                            <div class="p-col-4">
+                            <div class="p-xxl-4 p-xl-4 p-lg-4 p-md-4 p-sm-12">
                                 <button (click)="NextSection()"
                                         *ngIf="selectedsection?.id !== itemssection2[itemssection2?.length - 1]?.id"
                                         class="ngFlexyOrangeButton" icon="pi pi-caret-right" id="next"
@@ -179,16 +181,16 @@
                     </div>
                 </div>
 
-                <div *ngIf="!showLesson && !showSummary" class="p-col-9">
+                <div *ngIf="!showLesson && !showSummary" class="p-xxl-9 p-xl-9 p-lg-9 p-md-9 p-sm-12">
                     <app-home-work-etudiant></app-home-work-etudiant>
                 </div>
 
-                <div *ngIf="showSummary" class="p-col-9">
+                <div *ngIf="showSummary" class="p-xxl-9 p-xl-9 p-lg-9 p-md-9 p-sm-12">
                     <div class="p-grid" style="background-color: white!important;">
                         <div style="text-align: center" class="p-col-12"><h5 class="LessonSummary">Lesson summary</h5>
                         </div>
 
-                        <div class="p-col-6">
+                        <div class="p-md-6 p-sm-12">
                             <div class="p-grid keys">
                                 <div class="p-col-8"><i style="background: #ff6384;  width: 20px; height: 20px;
                                  margin: 1px 0 -5px 0; border-radius: 36px;" class="pi pi-circle-fill"></i>
@@ -222,14 +224,14 @@
                         </div>
 
 
-                        <div class="p-col-6">
+                        <div class="p-md-6 p-sm-12">
                             <p-chart type="doughnut" [options]="options" [data]="data"
                                      [style]="{width: '100%'}"></p-chart>
                         </div>
                     </div>
                 </div>
 
-                <div class="p-col-3 product-grid-item">
+                <div class="p-xxl-3 p-xl-3 p-lg-3 p-md-3 p-sm-12 product-grid-item">
                     <div class="skipeContainer">
                         <img src="./assets/icons/icon-book.png" alt="">
                         <h4 *ngIf="!lessonStarted" id="startText">Let's Start</h4>

@@ -240,3 +240,61 @@
   color: #263238 !important;
   text-decoration: underline;
 }
+
+
+.lesson__type {
+  padding: 0 4px;
+  font-family: Ubuntu;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: normal;
+  text-align: left;
+  color: #ffffff;
+  border-radius: 4px;
+  width: max-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 16px;
+  background: #16d977;
+}
+
+.lesson__date {
+  color: #686876;
+}
+
+.lesson__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: end;
+}
+
+@media only screen and (min-width: 500px) {
+  .d-flex {
+    flex-direction: column;
+  }
+}
+
+
+@media only screen and (min-width: 300px) {
+  .d-flex {
+    flex-direction: column;
+  }
+}
+
+.rest__time {
+  align-items: center;
+
+  div {
+    padding: 10px;
+    color: black;
+    width: 40px;
+    height: 40px;
+    border-radius: 2px;
+    text-align: center;
+    margin: 0 3px;
+    border: 1px solid;
+    font-weight: 600;
+  }
+}

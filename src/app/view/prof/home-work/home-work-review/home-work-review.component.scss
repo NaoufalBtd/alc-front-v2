@@ -22,3 +22,13 @@ h5 {
   padding: 47px 7px;
   text-align: end;
 }
+
+@media only screen and (max-width: 500px) {
+  .div {
+    font-size: 10px;
+  }
+
+  p {
+    font-size: 10px;
+  }
+}
