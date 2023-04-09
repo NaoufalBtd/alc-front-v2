@@ -1,0 +1,60 @@
+<div class="p-grid">
+    <div class="p-col-12">
+        <strong><i class="pi pi-pencil"></i> new message</strong>
+    </div>
+    <div class="p-col-3">
+        <strong>From</strong>
+    </div>
+    <div class="p-col-9">
+        <p-dropdown [style]="{width: '100%'}" [options]="froms" [(ngModel)]="email.from" placeholder="from"
+                    [showClear]="false"></p-dropdown>
+    </div>
+
+
+    <div class="p-col-3">
+        <strong>To</strong>
+    </div>
+    <div class="p-col-9">
+        <p-multiSelect [style]="{width: '100%'}" [options]="students" [(ngModel)]="to"
+                       optionLabel="username" filterBy="username" optionValue="username"
+                       [filter]="true"
+                       defaultLabel="Select students"
+                       display="chip"></p-multiSelect>
+
+
+        <p-dropdown [style]="{width: '100%'}" [options]="groups" [(ngModel)]="toGroup" placeholder="from"
+                    optionLabel="libelle" filterBy="libelle" optionValue="id"
+                    [filter]="true"
+                    [showClear]="false"></p-dropdown>
+
+
+    </div>
+
+
+    <div class="p-col-3">
+        <strong>Subject</strong>
+    </div>
+    <div class="p-col-9">
+        <input [style]="{width: '100%'}" type="text" pInputText [(ngModel)]="email.subject" name="subject">
+
+    </div>
+
+
+    <div class="p-col-3">
+        <strong>Content</strong>
+    </div>
+    <div class="p-col-11">
+        <p-editor [(ngModel)]="email.content" [style]="{'height':'320px'}"></p-editor>
+    </div>
+
+    <div class="p-col-4"></div>
+    <div class="p-col-4"></div>
+    <div class="p-col-4">
+        <button style="width: 100%!important;"
+                class="ngFlexyOrangeButton"
+                (click)="sent()"
+                [label]="'sent email' | translate" pButton pRipple
+                type="button"></button>
+    </div>
+
+</div>

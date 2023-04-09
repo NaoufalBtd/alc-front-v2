@@ -109,6 +109,7 @@ import {PaimentFailComponent} from './view/public/home-principale/paiment/paimen
 import {PaimentBackComponent} from './view/public/home-principale/paiment/paiment-back/paiment-back.component';
 import {UpgdatePackComponent} from './view/etudiant/upgdate-pack/upgdate-pack.component';
 import {PublicFaqComponent} from './view/public/home-principale/FAQ/public-faq/public-faq.component';
+import {EmailsComponent} from './view/admin/emails/emails.component';
 
 
 @NgModule({
@@ -154,7 +155,8 @@ import {PublicFaqComponent} from './view/public/home-principale/FAQ/public-faq/p
                     {path: 'moreInformation', component: MoreInformationComponent},
                     {path: 'infoEtudiant', component: InfoEtudiantComponent},
                     {path: 'invitedList', component: InvitedListeComponent},
-                    {path: 'promotion', component: PromotionComponent}
+                    {path: 'promotion', component: PromotionComponent},
+                    {path: 'emails', component: EmailsComponent}
                 ]
             },
             {

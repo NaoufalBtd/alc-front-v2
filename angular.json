@@ -31,10 +31,13 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "node_modules/quill/dist/quill.core.css",
+              "node_modules/quill/dist/quill.snow.css"
             ],
             "scripts": [
               "node_modules/prismjs/prism.js",
+              "node_modules/quill/dist/quill.js",
               "node_modules/prismjs/components/prism-typescript.js"
             ],
             "allowedCommonJsDependencies": [
@@ -49,7 +52,6 @@
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.prod.ts"
                 }
-
               ],
               "sourceMap": false,
               "optimization": true,
@@ -101,9 +103,15 @@
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "node_modules/quill/dist/quill.core.css",
+              "node_modules/quill/dist/quill.snow.css"
             ],
-            "scripts": [],
+            "scripts": [
+              "node_modules/prismjs/prism.js",
+              "node_modules/quill/dist/quill.js",
+              "node_modules/prismjs/components/prism-typescript.js"
+            ],
             "assets": [
               "src/favicon.ico",
               "src/upload.php",

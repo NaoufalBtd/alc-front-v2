@@ -318,6 +318,12 @@ import {BottomBarComponent} from './view/shared/bottom-bar/bottom-bar.component'
 import {UpgdatePackComponent} from './view/etudiant/upgdate-pack/upgdate-pack.component';
 import {StudentPreferScheduleComponent} from './view/etudiant/student-prefer-schedule/student-prefer-schedule.component';
 import {HomeValidatedComponent} from './view/etudiant/home-student/home-validated/home-validated.component';
+import {EmailInboxComponent} from './view/admin/emails/email-inbox/email-inbox.component';
+import {EmailsComponent} from './view/admin/emails/emails.component';
+import {EmailRightSlidComponent} from './view/admin/emails/email-right-slid/email-right-slid.component';
+import {MailComposeComponent} from './view/admin/emails/mail-compose/mail-compose.component';
+import {EditorModule} from 'primeng/editor';
+import {EmailDetailComponent} from './view/admin/emails/email-detail/email-detail.component';
 
 
 export function createTranslateLoader(http: HttpClient) {
@@ -430,7 +436,8 @@ export function createTranslateLoader(http: HttpClient) {
                 deps: [HttpClient]
             }
         }),
-        DragDropModule
+        DragDropModule,
+        EditorModule
     ],
     declarations:
         [
@@ -653,7 +660,12 @@ export function createTranslateLoader(http: HttpClient) {
             BottomBarComponent,
             UpgdatePackComponent,
             StudentPreferScheduleComponent,
-            HomeValidatedComponent
+            HomeValidatedComponent,
+            EmailInboxComponent,
+            EmailsComponent,
+            EmailRightSlidComponent,
+            MailComposeComponent,
+            EmailDetailComponent
         ],
     providers: [
         {provide: LocationStrategy, useClass: PathLocationStrategy},
@@ -672,4 +684,3 @@ export function createTranslateLoader(http: HttpClient) {
 })
 export class AppModule {
 }
-

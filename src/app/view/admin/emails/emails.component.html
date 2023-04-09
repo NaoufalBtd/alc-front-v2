@@ -1,0 +1,13 @@
+<div class="p-grid">
+    <div class="email-sidebar p-col-3">
+        <app-email-right-slid></app-email-right-slid>
+    </div>
+    <div *ngIf="!showCompose" class="p-col-9">
+        <app-email-inbox *ngIf="!showDetail"></app-email-inbox>
+        <app-email-detail *ngIf="showDetail"></app-email-detail>
+    </div>
+    <div *ngIf="showCompose" class="p-col-9">
+        <app-mail-compose></app-mail-compose>
+    </div>
+
+</div>

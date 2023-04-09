@@ -85,21 +85,21 @@ export class AppMenuComponent implements OnInit {
                     {label: 'Groups Option', icon: 'pi pi-fw pi-user-edit', routerLink: ['/admin/groups-List']},
                     {label: 'Students Group List', icon: 'pi pi-fw pi-list', routerLink: ['/admin/groups-students']},
                     {label: 'Professors', icon: 'pi pi-fw pi-user', routerLink: ['/admin/teacher-lists']},
-                    {label: 'Recommendation', icon: 'pi pi-fw pi-user-plus', routerLink: ['/admin/recommend-admin']},
                     {label: 'Home Work', icon: 'pi pi-question-circle', routerLink: ['/admin/home-work-review']},
                     {label: 'Sessions List ', icon: 'pi pi-fw pi-paperclip', routerLink: ['/admin/sessioncours']},
                     {label: 'FAQ ANSWER', icon: 'pi pi-fw pi-reply', routerLink: ['/admin/faq-admin']},
                     {label: 'FAQ List', icon: 'pi pi-fw pi-info-circle', routerLink: ['/admin/faq-admin-list']},
                     {label: 'CREATE NEWS', icon: 'pi pi-fw pi-calendar-times', routerLink: ['/admin/news-admin']},
                     {label: 'Schedule', icon: 'pi pi-calendar', routerLink: ['/admin/schedule']},
+                    {label: 'Emails', icon: 'pi pi-envelope', routerLink: ['/admin/emails']},
                     {label: 'Promotion', icon: 'pi pi-slack', routerLink: ['/admin/promotion']},
                     {label: 'Bonus', icon: 'pi pi-fw pi-wallet', routerLink: ['/admin/bonus']},
                     {label: 'Packs', icon: 'pi pi-briefcase', routerLink: ['/admin/PackStudent']},
-                    {label: 'Cloud', icon: 'pi pi-cloud', routerLink: ['/admin/driveApi']},
                     {label: 'Complaint', icon: 'pi pi-bell', routerLink: ['/admin/complaint']},
                     {label: 'Type of Complaint', icon: 'pi pi-bell', routerLink: ['/admin/typeofcomplaint']},
                     {label: 'Invited List', icon: 'pi pi-share-alt', routerLink: ['/admin/invitedList']},
                     {label: 'More information', icon: 'pi pi-plus', routerLink: ['/admin/infoEtudiant']},
+                    {label: 'Recommendation', icon: 'pi pi-fw pi-user-plus', routerLink: ['/admin/recommend-admin']},
 
 
                 ];

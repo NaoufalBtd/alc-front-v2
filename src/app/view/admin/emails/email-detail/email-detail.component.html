@@ -1,0 +1,23 @@
+<div class="p-grid">
+    <div class="p-col-11 subject">
+        {{selectedEmail?.subject}}
+    </div>
+    <div class="p-col-12">
+        <p-avatar image="assets/img/logo/eng-black.webp" styleClass="p-mr-2" size="large" shape="circle"></p-avatar>
+        <div>{{selectedEmail?.from}}</div>
+        <strong> To</strong>
+        <div>
+            <select>
+                <option *ngFor="let item of mailList(selectedEmail?.to)">{{item}}</option>
+            </select>
+        </div>
+
+        <div class="date">
+            {{selectedEmail?.date | date: 'MMM dd YYYY, hh:mm'}}
+        </div>
+    </div>
+
+    <div class="p-col-11" [innerHTML]="selectedEmail?.content">
+
+    </div>
+</div>
