@@ -67,10 +67,14 @@ export class CourseGridComponent implements OnInit {
         this.selectedPriceForIndividual = value;
     }
 
-    subscribe(price: Price) {
+    subscribe(price: Price, type: string) {
         const pack: PackStudent = this.packs.filter(p => p.price?.id === price?.id)[0];
         if (pack !== null) {
-            this.router.navigate(['/course-details/' + pack?.id]);
+            if (type === 'MORE') {
+                this.router.navigate(['/course-details/' + pack?.id]);
+            } else {
+                this.router.navigate(['/payment/' + this.selectedCourse.id]);
+            }
         }
     }
 
@@ -81,4 +85,5 @@ export class CourseGridComponent implements OnInit {
         console.log(this.prices);
         this.selectedPriceForIndividual = this.prices.filter(p => p.nreCourse === this.numberOfClasses)[0];
     }
+
 }

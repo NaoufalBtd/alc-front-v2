@@ -37,8 +37,14 @@
 
 
                     <div class="btn__container">
-                        <button (click)="subscribe(selectedPriceForIndividual)" class="btn btn-outline-light">إشترك
+                        <button (click)="subscribe(selectedPriceForIndividual, 'SUBSCRIBE')"
+                                class="btn btn-outline-light">
+                            إشترك الآن
                         </button>
+                        <button (click)="subscribe(selectedPriceForIndividual, 'MORE')" class="btn btn-outline-dark">المزيد
+                            من المعلومات
+                        </button>
+
                     </div>
 
                     <div class="line"></div>
@@ -51,7 +57,18 @@
                                name="numberOfClasses"
                                step="16"
                                value="24">
-                        <div id="slider__value">{{numberOfClasses}}</div>
+
+                        <div id="slider__value" class="row ">
+                            <div [class.active]="numberOfClasses === 8" (click)="numberOfClasses=8"
+                                 class="col-md-4 text-end ">8
+                            </div>
+                            <div [class.active]="numberOfClasses === 24" (click)="numberOfClasses=24"
+                                 class="col-md-4 text-center">24
+                            </div>
+                            <div [class.active]="numberOfClasses === 48" (click)="numberOfClasses=48"
+                                 class="col-md-4 text-start">48
+                            </div>
+                        </div>
 
                     </div>
 
@@ -63,25 +80,38 @@
 
                         <ul>
                             <li><i class="fa fa-check"
-                                   aria-hidden="true"></i> {{"Get certified" | translate}}</li>
-                            <li><i class="fa fa-check" aria-hidden="true"></i> {{'Two classes per week' | translate}}
+                                   aria-hidden="true"></i> {{'All the time is for you alone with a recognized English teacher.' | translate}}
                             </li>
-                            <li><i class="fa fa-check"
-                                   aria-hidden="true"></i> {{'Free dictionary for life' | translate}}</li>
-                            <li><i class="fa fa-check"
-                                   aria-hidden="true"></i> {{'The possibility of repeating the lesson and exercises several times' | translate}}
+
+                            <li><i class="fa fa-check" aria-hidden="true"></i>
+                                {{'Two classes per week' | translate}}
+                            </li>
+
                             <li><i class="fa fa-check"
                                    aria-hidden="true"></i> {{"Greater flexibility in choosing the time and day." | translate}}
                             </li>
+
+                            <li><i class="fa fa-check" aria-hidden="true"></i> {{"Get certified" | translate}}</li>
                             <li><i class="fa fa-check"
-                                   aria-hidden="true"></i> {{'All the time is for you alone with a recognized English teacher.' | translate}}
-                            </li>
-                            <li><i class="fa fa-check"
-                                   aria-hidden="true"></i> {{'Availability 24 hours a day, 7 days a week.' | translate}}
-                            </li>
+                                   aria-hidden="true"></i> {{"Learning is interactive, as the learner writes, corrects mistakes, and arranges sentences on the platform" | translate}}</li>
+
                             <li><i class="fa fa-check"
                                    aria-hidden="true"></i> {{'Professional pedagogy so that the student speaks 70% and the teacher only 30% of the time.' | translate}}
                             </li>
+
+                            <li><i class="fa fa-check"
+                                   aria-hidden="true"></i> {{'Free dictionary for life' | translate}}</li>
+
+
+                            <li><i class="fa fa-check"
+                                   aria-hidden="true"></i> {{'The possibility of repeating the lesson and exercises several times' | translate}}
+
+
+                            <li><i class="fa fa-check"
+                                   aria-hidden="true"></i> {{'Availability 24 hours a day, 7 days a week.' | translate}}
+                            </li>
+
+
                             <li><i class="fa fa-check"
                                    aria-hidden="true"></i> {{'Development of the four skills: listening, reading, writing and speaking.' | translate}}
                             </li>
@@ -92,7 +122,7 @@
         </div>
 
         <div class="select-course  col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-12">
-            <div (click)="subscribe(selectedPriceForGroup)" class="course__item mb-30 fix">
+            <div class="course__item mb-30 fix">
                 <div class="course__thumb w-img p-relative fix">
                     <h2>{{'Group' | translate}}</h2>
                     <p> الدراسة في مجموعة من <strong
@@ -114,18 +144,25 @@
 
 
                     <div class="btn__container">
-                        <button (click)="subscribe(selectedPriceForGroup)" class="btn btn-outline-light">إشترك</button>
+                        <button (click)="subscribe(selectedPriceForIndividual, 'SUBSCRIBE')"
+                                class="btn btn-outline-light">
+                            إشترك الآن
+                        </button>
+                        <button (click)="subscribe(selectedPriceForGroup, 'MORE')" class="btn btn-outline-dark">المزيد
+                            من المعلومات
+                        </button>
+
                     </div>
                     <div class="line"></div>
 
                     <div [style.direction]="translate.currentLang === 'ar' ? 'rtl': 'ltr'" class="slider__container">
                         <h3>{{'Number of classes' | translate}}</h3>
-                        <input class="slider" type="range" min="8" max="40"
+                        <input class="slider" type="range" min="0" [max]="selectedPriceForGroup?.nreCourse * 2"
                                name="numberOfClasses"
                                disabled
-                               step="16"
-                               value="24">
-                        <div id="slider__value">{{24}}</div>
+                               [step]="selectedPriceForGroup?.nreCourse"
+                               [value]="selectedPriceForGroup?.nreCourse">
+                        <div style="color: #04AA6D" id="slider__value">{{selectedPriceForGroup?.nreCourse}}</div>
 
                     </div>
 
@@ -134,19 +171,35 @@
                     <div [style.direction]="translate.currentLang === 'ar' ? 'rtl': 'ltr'" class="option">
                         <h3>{{'Benefits of group learning' | translate}}</h3>
                         <ul>
+
                             <li><i class="fa fa-check"
-                                   aria-hidden="true"></i> {{"Get certified" | translate}}</li>
+                                   aria-hidden="true"></i> {{'Exchange group ideas with the teacher.' | translate}}</li>
+
                             <li><i class="fa fa-check" aria-hidden="true"></i> {{'Two classes per week' | translate}}
                             </li>
+
+
+
                             <li><i class="fa fa-check"
-                                   aria-hidden="true"></i> {{'Free dictionary for life' | translate}}</li>
-                            <li><i class="fa fa-check"
-                                   aria-hidden="true"></i> {{'The possibility of repeating the lesson and exercises several times' | translate}}
+                                   aria-hidden="true"></i> {{"Get certified" | translate}}</li>
+
                             <li><i class="fa fa-check"
                                    aria-hidden="true"></i> {{"The number of learners does not exceed 6 people in each group." | translate}}
                             </li>
+
                             <li><i class="fa fa-check"
-                                   aria-hidden="true"></i> {{'Exchange group ideas with the teacher.' | translate}}</li>
+                                   aria-hidden="true"></i> {{"Learning is interactive, as the learner writes, corrects mistakes, and arranges sentences on the platform" | translate}}</li>
+
+
+                            <li><i class="fa fa-check"
+                                   aria-hidden="true"></i> {{'Free dictionary for life' | translate}}</li>
+
+
+                            <li><i class="fa fa-check"
+                                   aria-hidden="true"></i> {{'The possibility of repeating the lesson and exercises several times' | translate}}
+
+
+
                             <li><i class="fa fa-check"
                                    aria-hidden="true"></i> {{'Bilateral exercises under the guidance of the teacher.' | translate}}
                             </li>
