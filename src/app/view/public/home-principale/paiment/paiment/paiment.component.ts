@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {ConfirmationService, MenuItem, MessageService} from 'primeng/api';
 import {Etudiant} from '../../../../../controller/model/etudiant.model';
 import {EtudiantService} from '../../../../../controller/service/etudiant.service';
@@ -13,6 +13,7 @@ import {LoginService} from '../../../../../controller/service/login.service';
 import {HttpClient} from '@angular/common/http';
 import {User} from '../../../../../controller/model/user.model';
 import {environment} from '../../../../../../environments/environment';
+import {NgForm} from '@angular/forms';
 
 @Component({
     selector: 'app-paiment',
@@ -45,7 +46,9 @@ import {environment} from '../../../../../../environments/environment';
     `],
     encapsulation: ViewEncapsulation.None
 })
+
 export class PaimentComponent implements OnInit {
+    @ViewChild('myForm') myForm: NgForm;
     callbackUrl = environment.callbackUrl;
     shopUrl = environment.shopUrl;
     failUrl = environment.failUrl;
@@ -77,9 +80,16 @@ export class PaimentComponent implements OnInit {
         this.packService.selectedCourse = value;
     }
 
+    submitFormPayment() {
+        const button = document.getElementById('submitButton');
+        button.click();
+    }
+
     ngOnInit(): void {
         const packId = this._activatedRoute.snapshot.params.id;
         const studentId = this._activatedRoute.snapshot.params.studentId;
+
+
         if (packId !== null && packId !== undefined) {
             this.packService.findById(packId).subscribe(pack => {
                 this.selectedCourse = pack;
@@ -90,6 +100,11 @@ export class PaimentComponent implements OnInit {
                     this.selected = user;
                 });
                 this.activeIndex = 1;
+                this.animation.showAnimation = true;
+                const timer = setInterval(() => {
+                    clearInterval(timer);
+                    this.submitFormPayment();
+                }, 1000);
             }
         } else {
             this.router.navigate(['/courses']);

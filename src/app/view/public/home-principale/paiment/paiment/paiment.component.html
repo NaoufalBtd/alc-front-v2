@@ -63,7 +63,8 @@
         </div>
 
         <div *ngIf="activeIndex === 1" style="background: #ff725e;border-radius: 5px;" class="row">
-            <form name="formpaiement" Id="formpaiement" action="https://payment.cmi.co.ma/fim/est3Dgate"
+            <form #myForm="ngForm" name="formpaiement"
+                  Id="formpaiement" action="https://payment.cmi.co.ma/fim/est3Dgate"
                   method="post">
                 <div hidden class="row">
 
@@ -212,7 +213,7 @@
                 </div>
 
 
-                <div class="row">
+                <div style="visibility: hidden" class="row">
                     <div class="bg-light rounded d-flex flex-column">
                         <div class="p-2 ml-3"><h4>{{'Payment detail' | translate}}</h4></div>
 
@@ -265,13 +266,13 @@
                     </div>
                 </div>
 
-                <div class="row bg-light">
+                <div style="visibility: hidden" class="row bg-light">
 
                     <div class="col-md-4 col-sm-12"></div>
                     <div class="col-md-4 col-sm-12"></div>
 
                     <div class="col-md-4 col-sm-12">
-                        <button style="height: 50px!important;" pButton pRipple
+                        <button id="submitButton" style="height: 50px!important;" pButton pRipple
                                 value="valider" onclick="submitformpaiement();"
                                 type="button" label="{{'PAY' | translate}}"
                                 class="ngFlexyBlackButton">
