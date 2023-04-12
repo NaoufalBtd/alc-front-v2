@@ -8,6 +8,7 @@ import {ParcoursService} from '../../../../controller/service/parcours.service';
 import {TranslateService} from '@ngx-translate/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {LoginService} from '../../../../controller/service/login.service';
+import {Price} from '../../../../controller/model/price.model';
 
 // install Swiper modules
 SwiperCore.use([Pagination, Autoplay]);
@@ -70,5 +71,9 @@ export class CourseDetailsAreaComponent implements OnInit {
 
     pay() {
         this.router.navigate(['/payment/' + this.selectedCourse.id]);
+    }
+
+    getPrice(price: Price) {
+        return Math.floor(price?.price / price?.nreCourse);
     }
 }

@@ -21,6 +21,12 @@ $gutter: 1rem; //for primeflex grid system
 @import '../src/assets/scss/main.scss';
 @import 'swiper/swiper-bundle.css';
 
+.line {
+  height: 1px;
+  background: white;
+  margin: 30px 0;
+}
+
 .ck-editor__editable_inline {
   min-height: 500px;
 }

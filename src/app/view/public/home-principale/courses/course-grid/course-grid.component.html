@@ -1,45 +1,166 @@
-<div class="row">
-  <div *ngFor="let course of packs" class="col-xxl-4 col-xl-4 col-lg-4 col-md-6">
-    <div class="course__item white-bg mb-30 fix">
-       <div class="course__thumb w-img p-relative fix">
-          <a (click)="courseDetail(course)">
-             <img src="{{course?.imgUrl}}" alt="">
-          </a>
-          <div class="course__tag">
-             <a *ngIf="!course.forGroupe" [style.background]="'#7b2cbf'" >{{'Individual' | translate}}</a>
-             <a *ngIf="course.forGroupe" [style.background]="'#800f2f'" >{{'Group'| translate}}</a>
-          </div>
-       </div>
+<div [style.direction]="translate.currentLang === 'ar' ? 'rtl': 'ltr'" class="container">
+    <div class="row">
+        <div class="col-md-12 text-center p-5">
+            <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
 
-       <div class="course__content">
-          <div class="course__meta d-flex align-items-center justify-content-between">
-             <div class="course__lesson">
-                <span><i class="far fa-book-alt"></i>
-                    {{course?.nombreCours}} {{'Lesson'| translate}}</span>
-             </div>
-             <div class="course__rating">
-                <span><i class="icon_star"></i>{{course?.rating}}</span>
-             </div>
-          </div>
-          <h3 class="course__title"><a (click)="courseDetail(course)">
-              {{course?.libelle}}</a></h3>
-           <div class="course__teacher d-flex align-items-center">
-               <h6><a>{{course?.level?.libelle}}</a></h6>
-           </div>
-       </div>
-       <div class="course__more d-flex justify-content-between align-items-center">
-        <div class="course__status d-flex align-items-center">
-            <span> {{course.price?.price}} {{'MAD'| translate}} </span>
-            <span class="old-price">{{course?.oldPrice}}</span>
-         </div>
-          <div class="course__btn">
-             <a (click)="courseDetail(course)" class="link-btn">
-                 {{'Knowdetails' | translate}}
-                <i class="far fa-arrow-right"></i>
-                <i class="far fa-arrow-right"></i>
-             </a>
-          </div>
-       </div>
+                <!--                <button *ngFor="let price of prices"-->
+                <!--                        [class.selected]="selectedPriceForIndividual?.id === price?.id"-->
+                <!--                        (click)="passValue(price)"-->
+                <!--                        class="btn d-inline-block btn-outline-light">{{ price?.nreCourse }} {{'classes'  | translate}} </button>-->
+                <h2>{{'Learn to speak English with confidence and achieve your success' | translate}}</h2>
+
+            </div>
+        </div>
+
     </div>
- </div>
+
+    <div class="row">
+        <div class=" select-course  col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-12">
+            <div class="course__item mb-30 fix">
+                <div class="course__thumb w-img p-relative fix">
+                    <h2>{{'Individual' | translate}}</h2>
+                    <p> حصص فردية مع مدرسك الخاص، حيث تستفيد من مجموعة من
+                        الامتيازات كتحديد الجدول
+                        الزمني الخاص بك</p>
+                </div>
+
+                <div class="course__content">
+                    <div [style.direction]="translate.currentLang === 'ar' ? 'rtl': 'ltr'" id="individual-text"
+                         class="course__meta align-items-center justify-content-between">
+                        <div class="heartbeat text-centre">
+                            <p>{{getOldPrice(selectedPriceForIndividual)}} {{'DH' | translate}}</p>
+                            <div> SAVE {{getPercentage(selectedPriceForIndividual).toFixed(.2) + '%'}}</div>
+                        </div>
+                        <div class="price">{{getPrice(selectedPriceForIndividual)}} </div>
+                        {{'DH' | translate}}
+                    </div>
+
+
+                    <div class="btn__container">
+                        <button (click)="subscribe(selectedPriceForIndividual)" class="btn btn-outline-light">إشترك
+                        </button>
+                    </div>
+
+                    <div class="line"></div>
+
+                    <div [style.direction]="translate.currentLang === 'ar' ? 'rtl': 'ltr'" class="slider__container">
+                        <h3>{{'Number of classes' | translate}}</h3>
+                        <input class="slider" type="range" min="8" max="40"
+                               [(ngModel)]="numberOfClasses"
+                               (ngModelChange)="changeValueOfRange()"
+                               name="numberOfClasses"
+                               step="16"
+                               value="24">
+                        <div id="slider__value">{{numberOfClasses}}</div>
+
+                    </div>
+
+                    <div class="line"></div>
+
+
+                    <div [style.direction]="translate.currentLang === 'ar' ? 'rtl': 'ltr'" class="option">
+                        <h3>{{'Benefits of individual learning' | translate}}</h3>
+
+                        <ul>
+                            <li><i class="fa fa-check"
+                                   aria-hidden="true"></i> {{"Get certified" | translate}}</li>
+                            <li><i class="fa fa-check" aria-hidden="true"></i> {{'Two classes per week' | translate}}
+                            </li>
+                            <li><i class="fa fa-check"
+                                   aria-hidden="true"></i> {{'Free dictionary for life' | translate}}</li>
+                            <li><i class="fa fa-check"
+                                   aria-hidden="true"></i> {{'The possibility of repeating the lesson and exercises several times' | translate}}
+                            <li><i class="fa fa-check"
+                                   aria-hidden="true"></i> {{"Greater flexibility in choosing the time and day." | translate}}
+                            </li>
+                            <li><i class="fa fa-check"
+                                   aria-hidden="true"></i> {{'All the time is for you alone with a recognized English teacher.' | translate}}
+                            </li>
+                            <li><i class="fa fa-check"
+                                   aria-hidden="true"></i> {{'Availability 24 hours a day, 7 days a week.' | translate}}
+                            </li>
+                            <li><i class="fa fa-check"
+                                   aria-hidden="true"></i> {{'Professional pedagogy so that the student speaks 70% and the teacher only 30% of the time.' | translate}}
+                            </li>
+                            <li><i class="fa fa-check"
+                                   aria-hidden="true"></i> {{'Development of the four skills: listening, reading, writing and speaking.' | translate}}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="select-course  col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-12">
+            <div (click)="subscribe(selectedPriceForGroup)" class="course__item mb-30 fix">
+                <div class="course__thumb w-img p-relative fix">
+                    <h2>{{'Group' | translate}}</h2>
+                    <p> الدراسة في مجموعة من <strong
+                            style="text-decoration: underline">شخصين</strong> أو أكتر من نفس المستوى. تساعدك الدراسة
+                        في
+                        مجموعة على التعلم بسرعة واكتشاف أفكار جديدة مع زملائك</p>
+                </div>
+
+                <div class="course__content">
+                    <div [style.direction]="translate.currentLang === 'ar' ? 'rtl': 'ltr'" id="individual-text"
+                         class="course__meta align-items-center justify-content-between">
+                        <div class="heartbeat text-centre">
+                            <p>{{getOldPrice(selectedPriceForGroup)}} {{'DH' | translate}}</p>
+                            <div> SAVE {{getPercentage(selectedPriceForGroup).toFixed(.2) + '%'}}</div>
+                        </div>
+                        <div class="price">{{getPrice(selectedPriceForGroup)}} </div>
+                        {{'DH' | translate}} / {{''}}
+                    </div>
+
+
+                    <div class="btn__container">
+                        <button (click)="subscribe(selectedPriceForGroup)" class="btn btn-outline-light">إشترك</button>
+                    </div>
+                    <div class="line"></div>
+
+                    <div [style.direction]="translate.currentLang === 'ar' ? 'rtl': 'ltr'" class="slider__container">
+                        <h3>{{'Number of classes' | translate}}</h3>
+                        <input class="slider" type="range" min="8" max="40"
+                               name="numberOfClasses"
+                               disabled
+                               step="16"
+                               value="24">
+                        <div id="slider__value">{{24}}</div>
+
+                    </div>
+
+                    <div class="line"></div>
+
+                    <div [style.direction]="translate.currentLang === 'ar' ? 'rtl': 'ltr'" class="option">
+                        <h3>{{'Benefits of group learning' | translate}}</h3>
+                        <ul>
+                            <li><i class="fa fa-check"
+                                   aria-hidden="true"></i> {{"Get certified" | translate}}</li>
+                            <li><i class="fa fa-check" aria-hidden="true"></i> {{'Two classes per week' | translate}}
+                            </li>
+                            <li><i class="fa fa-check"
+                                   aria-hidden="true"></i> {{'Free dictionary for life' | translate}}</li>
+                            <li><i class="fa fa-check"
+                                   aria-hidden="true"></i> {{'The possibility of repeating the lesson and exercises several times' | translate}}
+                            <li><i class="fa fa-check"
+                                   aria-hidden="true"></i> {{"The number of learners does not exceed 6 people in each group." | translate}}
+                            </li>
+                            <li><i class="fa fa-check"
+                                   aria-hidden="true"></i> {{'Exchange group ideas with the teacher.' | translate}}</li>
+                            <li><i class="fa fa-check"
+                                   aria-hidden="true"></i> {{'Bilateral exercises under the guidance of the teacher.' | translate}}
+                            </li>
+                            <li><i class="fa fa-check"
+                                   aria-hidden="true"></i> {{'Availability 24 hours a day, 7 days a week.' | translate}}
+                            </li>
+                            <li><i class="fa fa-check"
+                                   aria-hidden="true"></i> {{'Development of the four skills: listening, reading, writing and speaking.' | translate}}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
 </div>
