@@ -16,7 +16,7 @@ export class CourseGridComponent implements OnInit {
     prices: Price[];
     selectedPriceForIndividual: Price;
     selectedPriceForGroup: Price;
-    numberOfClasses = 48;
+    numberOfClasses = 8;
 
 
     constructor(private packService: PackStudentService,
@@ -46,7 +46,7 @@ export class CourseGridComponent implements OnInit {
         this.priceService.getAll().subscribe(prices => {
             this.selectedPriceForGroup = prices.filter(d => d.forGroup)[0];
             this.prices = prices.filter(d => d.forGroup === false);
-            this.selectedPriceForIndividual = this.prices[this.prices.length - 1];
+            this.selectedPriceForIndividual = this.prices.filter(p => p?.nreCourse === this.numberOfClasses)[0];
         });
     }
 

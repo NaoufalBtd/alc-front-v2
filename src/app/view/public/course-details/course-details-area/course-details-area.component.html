@@ -34,8 +34,10 @@
                                 <p>{{selectedCourse?.price?.oldPrice}} {{'DH' | translate}}</p>
                                 <div> SAVE {{getPercentage().toFixed(.2) + '%'}}</div>
                             </div>
-                            <div class="price">{{getPrice(selectedCourse?.price)}} </div>
+                            <div class="price">{{selectedCourse?.price?.price}} </div>
                             {{'DH' | translate}}
+                            <p class="price__per__class">( {{ getPrice(selectedCourse?.price) }} {{ 'DH' | translate }}
+                                / {{ 'PER CLASS' | translate }} )</p>
                         </div>
 
 
@@ -137,8 +139,10 @@
                                 <p>{{selectedCourse?.price?.oldPrice}} {{'DH' | translate}}</p>
                                 <div> SAVE {{getPercentage().toFixed(.2) + '%'}}</div>
                             </div>
-                            <div class="price">{{getPrice(selectedCourse?.price)}} </div>
+                            <div class="price">{{selectedCourse?.price?.price}} </div>
                             {{'DH' | translate}}
+                            <p class="price__per__class">( {{ getPrice(selectedCourse?.price) }} {{ 'DH' | translate }}
+                                / {{ 'PER CLASS' | translate }} )</p>
                         </div>
 
 
@@ -309,8 +313,10 @@
                                 <p>{{selectedCourse?.price?.oldPrice}} {{'DH' | translate}}</p>
                                 <div> SAVE {{getPercentage().toFixed(.2) + '%'}}</div>
                             </div>
-                            <div class="price">{{getPrice(selectedCourse?.price)}} </div>
+                            <div class="price">{{selectedCourse?.price?.price}} </div>
                             {{'DH' | translate}}
+                            <p class="price__per__class">( {{ getPrice(selectedCourse?.price) }} {{ 'DH' | translate }}
+                                / {{ 'PER CLASS' | translate }} )</p>
                         </div>
 
 
@@ -412,8 +418,10 @@
                                 <p>{{selectedCourse?.price?.oldPrice}} {{'DH' | translate}}</p>
                                 <div> SAVE {{getPercentage().toFixed(.2) + '%'}}</div>
                             </div>
-                            <div class="price">{{getPrice(selectedCourse?.price)}} </div>
+                            <div class="price">{{selectedCourse?.price?.price}} </div>
                             {{'DH' | translate}}
+                            <p class="price__per__class">( {{ getPrice(selectedCourse?.price) }} {{ 'DH' | translate }}
+                                / {{ 'PER CLASS' | translate }} )</p>
                         </div>
 
 

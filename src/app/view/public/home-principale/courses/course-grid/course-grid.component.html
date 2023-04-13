@@ -41,7 +41,8 @@
                                 class="btn btn-outline-light">
                             إشترك الآن
                         </button>
-                        <button (click)="subscribe(selectedPriceForIndividual, 'MORE')" class="btn btn-outline-dark">المزيد
+                        <button (click)="subscribe(selectedPriceForIndividual, 'MORE')" class="btn btn-outline-dark">
+                            المزيد
                             من المعلومات
                         </button>
 
@@ -59,13 +60,16 @@
                                value="24">
 
                         <div id="slider__value" class="row ">
-                            <div [class.active]="numberOfClasses === 8" (click)="numberOfClasses=8"
+                            <div [class.active]="numberOfClasses === 8"
+                                 (click)="numberOfClasses=8 ; changeValueOfRange()"
                                  class="col-md-4 text-end ">8
                             </div>
-                            <div [class.active]="numberOfClasses === 24" (click)="numberOfClasses=24"
+                            <div [class.active]="numberOfClasses === 24"
+                                 (click)="numberOfClasses=24 ; changeValueOfRange()"
                                  class="col-md-4 text-center">24
                             </div>
-                            <div [class.active]="numberOfClasses === 48" (click)="numberOfClasses=48"
+                            <div [class.active]="numberOfClasses === 48"
+                                 (click)="numberOfClasses=48 ;  changeValueOfRange()"
                                  class="col-md-4 text-start">48
                             </div>
                         </div>
@@ -93,7 +97,8 @@
 
                             <li><i class="fa fa-check" aria-hidden="true"></i> {{"Get certified" | translate}}</li>
                             <li><i class="fa fa-check"
-                                   aria-hidden="true"></i> {{"Learning is interactive, as the learner writes, corrects mistakes, and arranges sentences on the platform" | translate}}</li>
+                                   aria-hidden="true"></i> {{"Learning is interactive, as the learner writes, corrects mistakes, and arranges sentences on the platform" | translate}}
+                            </li>
 
                             <li><i class="fa fa-check"
                                    aria-hidden="true"></i> {{'Professional pedagogy so that the student speaks 70% and the teacher only 30% of the time.' | translate}}
@@ -179,7 +184,6 @@
                             </li>
 
 
-
                             <li><i class="fa fa-check"
                                    aria-hidden="true"></i> {{"Get certified" | translate}}</li>
 
@@ -188,7 +192,8 @@
                             </li>
 
                             <li><i class="fa fa-check"
-                                   aria-hidden="true"></i> {{"Learning is interactive, as the learner writes, corrects mistakes, and arranges sentences on the platform" | translate}}</li>
+                                   aria-hidden="true"></i> {{"Learning is interactive, as the learner writes, corrects mistakes, and arranges sentences on the platform" | translate}}
+                            </li>
 
 
                             <li><i class="fa fa-check"
@@ -197,7 +202,6 @@
 
                             <li><i class="fa fa-check"
                                    aria-hidden="true"></i> {{'The possibility of repeating the lesson and exercises several times' | translate}}
-
 
 
                             <li><i class="fa fa-check"
