@@ -59,7 +59,7 @@
                                step="16"
                                value="24">
 
-                        <div id="slider__value" class="row ">
+                        <div id="" class="row slider__value">
                             <div [class.active]="numberOfClasses === 8"
                                  (click)="numberOfClasses=8 ; changeValueOfRange()"
                                  class="col-md-4 text-end ">8
@@ -71,6 +71,21 @@
                             <div [class.active]="numberOfClasses === 48"
                                  (click)="numberOfClasses=48 ;  changeValueOfRange()"
                                  class="col-md-4 text-start">48
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div [class.active]="numberOfClasses === 8"
+                                 class="col-md-4 text-end ">
+                                ( 1 {{'month'|translate}} )
+                            </div>
+                            <div [class.active]="numberOfClasses === 24"
+                                 class="col-md-4 text-center">
+                                ( 3 {{'month'|translate}} )
+                            </div>
+                            <div [class.active]="numberOfClasses === 48"
+                                 class="col-md-4 text-start">
+                                ( 6 {{'month'|translate}} )
                             </div>
                         </div>
 
@@ -167,7 +182,9 @@
                                disabled
                                [step]="selectedPriceForGroup?.nreCourse"
                                [value]="selectedPriceForGroup?.nreCourse">
-                        <div style="color: #04AA6D" id="slider__value">{{selectedPriceForGroup?.nreCourse}}</div>
+                        <div style="color: #04AA6D" class="slider__value">{{selectedPriceForGroup?.nreCourse}}</div>
+                        <div style="color: #04AA6D">( {{selectedPriceForGroup?.nreMonth}} {{'month' | translate}} )
+                        </div>
 
                     </div>
 

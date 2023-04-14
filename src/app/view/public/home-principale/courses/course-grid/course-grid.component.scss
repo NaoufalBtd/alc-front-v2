@@ -112,7 +112,7 @@
       width: 100%;
     }
 
-    #slider__value {
+    .slider__value {
       .col-md-4 {
         width: 33.33% !important;
       }
@@ -121,7 +121,7 @@
 
   .slider__container {
 
-    #slider__value {
+    .slider__value {
       font-size: 35px;
       font-weight: bold;
       padding: 10px;
@@ -163,10 +163,12 @@
     }
   }
 
-  #slider__value {
+  .slider__value, .row {
 
     .col-md-4.active {
       color: #04AA6D;
     }
   }
+
+
 }

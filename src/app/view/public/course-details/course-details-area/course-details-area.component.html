@@ -1,4 +1,10 @@
 <section class="page__title-area pt-50 pb-90">
+    <div class="fixed-bottom p-5 d-md-none">
+        <a class="btn btn-primary  p-3">
+            إشترك الآن
+        </a>
+    </div>
+
     <div class="page__title-shape">
         <img
                 class="page-title-shape-5 d-none d-sm-block"
@@ -60,7 +66,7 @@
                                    disabled
                                    [value]="selectedCourse?.price.nreCourse">
 
-                            <div id="slider__value" class="row ">
+                            <div class="row slider__value">
                                 <div [class.active]="selectedCourse?.price?.nreCourse === 8"
                                      class="col-md-4 text-end ">8
                                 </div>
@@ -71,6 +77,22 @@
                                      class="col-md-4 text-start">48
                                 </div>
                             </div>
+
+                            <div class="row">
+                                <div [class.active]="selectedCourse?.price?.nreCourse === 8"
+                                     class="col-md-4 text-end ">
+                                    ( 1 {{'month'|translate}} )
+                                </div>
+                                <div [class.active]="selectedCourse?.price?.nreCourse === 24"
+                                     class="col-md-4 text-center">
+                                    ( 3 {{'month'|translate}} )
+                                </div>
+                                <div [class.active]="selectedCourse?.price?.nreCourse === 48"
+                                     class="col-md-4 text-start">
+                                    ( 6 {{'month'|translate}} )
+                                </div>
+                            </div>
+
 
                         </div>
 
@@ -151,9 +173,8 @@
                                     class="btn btn-outline-light">
                                 إشترك الآن
                             </button>
-
-
                         </div>
+
                         <div class="line"></div>
 
                         <div [style.direction]="translate.currentLang === 'ar' ? 'rtl': 'ltr'"
@@ -164,57 +185,60 @@
                                    disabled
                                    [step]="selectedCourse?.price?.nreCourse"
                                    [value]="selectedCourse?.price?.nreCourse">
-                            <div style="color: #04AA6D" id="slider__value">{{selectedCourse?.price?.nreCourse}}</div>
+                            <div style="color: #04AA6D" class="slider__value">{{selectedCourse?.price?.nreCourse}}</div>
+                            <div style="color: #04AA6D">( {{selectedCourse?.price?.nreMonth}} {{'month' | translate}}
+                                )
+                            </div>
+
+                            <div class="line"></div>
+
+                            <div [style.direction]="translate.currentLang === 'ar' ? 'rtl': 'ltr'" class="option">
+                                <h3>{{'Benefits of group learning' | translate}}</h3>
+                                <ul>
+
+                                    <li><i class="fa fa-check"
+                                           aria-hidden="true"></i> {{'Exchange group ideas with the teacher.' | translate}}
+                                    </li>
+
+                                    <li><i class="fa fa-check"
+                                           aria-hidden="true"></i> {{'Two classes per week' | translate}}
+                                    </li>
+
+
+                                    <li><i class="fa fa-check"
+                                           aria-hidden="true"></i> {{"Get certified" | translate}}</li>
+
+                                    <li><i class="fa fa-check"
+                                           aria-hidden="true"></i> {{"The number of learners does not exceed 6 people in each group." | translate}}
+                                    </li>
+
+                                    <li><i class="fa fa-check"
+                                           aria-hidden="true"></i> {{"Learning is interactive, as the learner writes, corrects mistakes, and arranges sentences on the platform" | translate}}
+                                    </li>
+
+
+                                    <li><i class="fa fa-check"
+                                           aria-hidden="true"></i> {{'Free dictionary for life' | translate}}</li>
+
+
+                                    <li><i class="fa fa-check"
+                                           aria-hidden="true"></i> {{'The possibility of repeating the lesson and exercises several times' | translate}}
+
+
+                                    <li><i class="fa fa-check"
+                                           aria-hidden="true"></i> {{'Bilateral exercises under the guidance of the teacher.' | translate}}
+                                    </li>
+                                    <li><i class="fa fa-check"
+                                           aria-hidden="true"></i> {{'Availability 24 hours a day, 7 days a week.' | translate}}
+                                    </li>
+                                    <li><i class="fa fa-check"
+                                           aria-hidden="true"></i> {{'Development of the four skills: listening, reading, writing and speaking.' | translate}}
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
 
-                        <div class="line"></div>
-
-                        <div [style.direction]="translate.currentLang === 'ar' ? 'rtl': 'ltr'" class="option">
-                            <h3>{{'Benefits of group learning' | translate}}</h3>
-                            <ul>
-
-                                <li><i class="fa fa-check"
-                                       aria-hidden="true"></i> {{'Exchange group ideas with the teacher.' | translate}}
-                                </li>
-
-                                <li><i class="fa fa-check"
-                                       aria-hidden="true"></i> {{'Two classes per week' | translate}}
-                                </li>
-
-
-                                <li><i class="fa fa-check"
-                                       aria-hidden="true"></i> {{"Get certified" | translate}}</li>
-
-                                <li><i class="fa fa-check"
-                                       aria-hidden="true"></i> {{"The number of learners does not exceed 6 people in each group." | translate}}
-                                </li>
-
-                                <li><i class="fa fa-check"
-                                       aria-hidden="true"></i> {{"Learning is interactive, as the learner writes, corrects mistakes, and arranges sentences on the platform" | translate}}
-                                </li>
-
-
-                                <li><i class="fa fa-check"
-                                       aria-hidden="true"></i> {{'Free dictionary for life' | translate}}</li>
-
-
-                                <li><i class="fa fa-check"
-                                       aria-hidden="true"></i> {{'The possibility of repeating the lesson and exercises several times' | translate}}
-
-
-                                <li><i class="fa fa-check"
-                                       aria-hidden="true"></i> {{'Bilateral exercises under the guidance of the teacher.' | translate}}
-                                </li>
-                                <li><i class="fa fa-check"
-                                       aria-hidden="true"></i> {{'Availability 24 hours a day, 7 days a week.' | translate}}
-                                </li>
-                                <li><i class="fa fa-check"
-                                       aria-hidden="true"></i> {{'Development of the four skills: listening, reading, writing and speaking.' | translate}}
-                                </li>
-                            </ul>
-                        </div>
                     </div>
-
                 </div>
             </div>
             <div class="col-xxl-8 col-xl-8 col-lg-8">
@@ -222,7 +246,8 @@
                     <div class="page__title-content mb-30">
                         <span *ngIf="!selectedCourse.forGroupe"
                               class="page__title-pre">{{'Individual' | translate}}</span>
-                        <span *ngIf="selectedCourse.forGroupe" class="page__title-pre">{{'Group' | translate}}</span>
+                        <span *ngIf="selectedCourse.forGroupe"
+                              class="page__title-pre">{{'Group' | translate}}</span>
                         <h5 class="page__title-3">{{selectedCourse?.libelle}}</h5>
                     </div>
                     <div class="course__tab-content mb-95">
@@ -266,7 +291,8 @@
                                             <li>
                                                 <i class="icon_check"></i> {{'Let’s practice (Exercices à pratiquer)' | translate}}
                                             </li>
-                                            <li><i class="icon_check"></i> {{'Discussion (Communication)' | translate}}
+                                            <li>
+                                                <i class="icon_check"></i> {{'Discussion (Communication)' | translate}}
                                             </li>
                                             <li><i class="icon_check"></i> {{'Life story' | translate}}</li>
                                             <li><i class="icon_check"></i> {{'Role play' | translate}}</li>
@@ -280,9 +306,11 @@
                                             <li>
                                                 <i class="icon_check"></i> {{'Let’s practice (Exercices à pratiquer)' | translate}}
                                             </li>
-                                            <li><i class="icon_check"></i> {{'Phrasebook (Phrases à lire)' | translate}}
+                                            <li>
+                                                <i class="icon_check"></i> {{'Phrasebook (Phrases à lire)' | translate}}
                                             </li>
-                                            <li><i class="icon_check"></i> {{'Reading (Texte à lire)' | translate}}</li>
+                                            <li><i class="icon_check"></i> {{'Reading (Texte à lire)' | translate}}
+                                            </li>
                                             <li>
                                                 <i class="icon_check"></i> {{'Write it up (Expression écrite)' | translate}}
                                             </li>
@@ -315,7 +343,8 @@
                             </div>
                             <div class="price">{{selectedCourse?.price?.price}} </div>
                             {{'DH' | translate}}
-                            <p class="price__per__class">( {{ getPrice(selectedCourse?.price) }} {{ 'DH' | translate }}
+                            <p class="price__per__class">
+                                ( {{ getPrice(selectedCourse?.price) }} {{ 'DH' | translate }}
                                 / {{ 'PER CLASS' | translate }} )</p>
                         </div>
 
@@ -325,7 +354,6 @@
                                     class="btn btn-outline-light">
                                 إشترك الآن
                             </button>
-
                         </div>
 
                         <div class="line"></div>
@@ -339,7 +367,7 @@
                                    disabled
                                    [value]="selectedCourse?.price.nreCourse">
 
-                            <div id="slider__value" class="row ">
+                            <div class="row slider__value">
                                 <div [class.active]="selectedCourse?.price?.nreCourse === 8"
                                      class="col-md-4 text-end ">8
                                 </div>
@@ -348,6 +376,20 @@
                                 </div>
                                 <div [class.active]="selectedCourse?.price?.nreCourse === 48"
                                      class="col-md-4 text-start">48
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div [class.active]="selectedCourse?.price?.nreCourse === 8"
+                                     class="col-md-4 text-end ">
+                                    ( 1 {{'month'|translate}} )
+                                </div>
+                                <div [class.active]="selectedCourse?.price?.nreCourse === 24"
+                                     class="col-md-4 text-center">
+                                    ( 3 {{'month'|translate}} )
+                                </div>
+                                <div [class.active]="selectedCourse?.price?.nreCourse === 48"
+                                     class="col-md-4 text-start">
+                                    ( 6 {{'month'|translate}} )
                                 </div>
                             </div>
 
@@ -372,7 +414,8 @@
                                        aria-hidden="true"></i> {{"Greater flexibility in choosing the time and day." | translate}}
                                 </li>
 
-                                <li><i class="fa fa-check" aria-hidden="true"></i> {{"Get certified" | translate}}</li>
+                                <li><i class="fa fa-check" aria-hidden="true"></i> {{"Get certified" | translate}}
+                                </li>
                                 <li><i class="fa fa-check"
                                        aria-hidden="true"></i> {{"Learning is interactive, as the learner writes, corrects mistakes, and arranges sentences on the platform" | translate}}
                                 </li>
@@ -406,7 +449,8 @@
                     <div class="course__thumb w-img p-relative fix">
                         <h2>{{'Group' | translate}}</h2>
                         <p> الدراسة في مجموعة من <strong
-                                style="text-decoration: underline">شخصين</strong> أو أكتر من نفس المستوى. تساعدك الدراسة
+                                style="text-decoration: underline">شخصين</strong> أو أكتر من نفس المستوى. تساعدك
+                            الدراسة
                             في
                             مجموعة على التعلم بسرعة واكتشاف أفكار جديدة مع زملائك</p>
                     </div>
@@ -420,7 +464,8 @@
                             </div>
                             <div class="price">{{selectedCourse?.price?.price}} </div>
                             {{'DH' | translate}}
-                            <p class="price__per__class">( {{ getPrice(selectedCourse?.price) }} {{ 'DH' | translate }}
+                            <p class="price__per__class">
+                                ( {{ getPrice(selectedCourse?.price) }} {{ 'DH' | translate }}
                                 / {{ 'PER CLASS' | translate }} )</p>
                         </div>
 
@@ -443,7 +488,12 @@
                                    disabled
                                    [step]="selectedCourse?.price?.nreCourse"
                                    [value]="selectedCourse?.price?.nreCourse">
-                            <div style="color: #04AA6D" id="slider__value">{{selectedCourse?.price?.nreCourse}}</div>
+                            <div style="color: #04AA6D"
+                                 class="slider__value">{{selectedCourse?.price?.nreCourse}}</div>
+                            <div style="color: #04AA6D">
+                                ( {{selectedCourse?.price?.nreMonth}} {{'month' | translate}} )
+                            </div>
+
                         </div>
 
                         <div class="line"></div>
