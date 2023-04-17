@@ -415,6 +415,10 @@ export class QuizEtudiantService {
         // @ts-ignore
         return this.http.get<string>(this.adminUrl + 'TranslateEnAr/text/' + word, {responseType: 'text'});
     }
+    public translate_from_en_to_russian(word: string): Observable<any> {
+        // @ts-ignore
+        return this.http.get<string>(this.urlStudent + 'TranslateEnAr/en/russian/' + word, {responseType: 'text'});
+    }
 
     public translateArToFrForProf(word: string): Observable<any> {
         // @ts-ignore
@@ -429,6 +433,10 @@ export class QuizEtudiantService {
     public translateArToFrForStudent(word: string): Observable<any> {
         // @ts-ignore
         return this.http.get<string>(this.adminUrl + 'TranslateEnAr/ar/fr/' + word, {responseType: 'text'});
+    }
+    public translateArToRussianForStudent(word: string): Observable<any> {
+        // @ts-ignore
+        return this.http.get<string>(this.adminUrl + 'TranslateEnAr/ar/russian/' + word, {responseType: 'text'});
     }
 
     public translateEnFr(word: string): Observable<any> {

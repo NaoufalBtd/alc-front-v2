@@ -23,18 +23,6 @@ export class TranslateComponent implements OnInit {
         return this.dictionnaryService.listSynonymes;
     }
 
-    set listSynonymes(value: Array<any>) {
-        this.dictionnaryService.listSynonymes = value;
-    }
-
-    get Synonymes(): Array<any> {
-        return this.dictionnaryService.Synonymes;
-    }
-
-    set Synonymes(value: Array<any>) {
-        this.dictionnaryService.Synonymes = value;
-    }
-
     public hideTranslateDialog() {
         this.TranslateSynonymeDialog = false;
         this.submittedDict = false;

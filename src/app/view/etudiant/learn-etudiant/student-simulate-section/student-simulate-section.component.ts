@@ -501,6 +501,10 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
                 this.quizService.translateEnFr(this.selectedNow.word).subscribe(data => {
                     this.selectedNow.definition = data;
                 });
+            } else if (this.selectedLanguage.code === 'ru'){
+                this.quizService.translate_from_en_to_russian(this.selectedNow.word).subscribe(data => {
+                    this.selectedNow.definition = data;
+                });
             }
             this.createDialogDict = true;
         }
@@ -590,8 +594,7 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
         return this.app.languages;
     }
 
-    getSelectedLanguage() {
-    }
+
 
     findAllSynonimes(word: string) {
         if (this.selectedLanguage.code === 'ar') {
@@ -603,6 +606,10 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
             this.quizService.translateEnFr(word).subscribe(data => {
                 this.synonymes = data;
 
+            });
+        } else if (this.selectedLanguage.code === 'ru'){
+            this.quizService.translate_from_en_to_russian(this.selectedNow.word).subscribe(data => {
+                this.synonymes = data;
             });
         }
     }

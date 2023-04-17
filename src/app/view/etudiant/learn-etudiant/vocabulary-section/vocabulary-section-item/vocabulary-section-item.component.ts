@@ -66,9 +66,6 @@ export class VocabularySectionItemComponent implements OnInit {
         this.vocabularySectionItemService.cureentResponse = value;
     }
 
-    get selectedLanguage(): any {
-        return this.learnService.selectedLanguage;
-    }
 
 
     ngOnInit(): void {

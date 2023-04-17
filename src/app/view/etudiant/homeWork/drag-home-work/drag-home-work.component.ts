@@ -33,9 +33,6 @@ export class DragHomeWorkComponent implements OnInit {
                 private dictionnaryService: DictionaryService,
                 private homeWorkEtudiantService: HomeWorkEtudiantServiceService,
     ) {
-        console.log('=================================================');
-        console.log('constructor');
-        console.log('=================================================');
     }
 
     get selectedLanguage(): any {
@@ -49,6 +46,7 @@ export class DragHomeWorkComponent implements OnInit {
     set selectedHomeWork(value: HomeWork) {
         this.learnService.selectedHomeWork = value;
     }
+
     set displayDictionaryDialog(value: boolean) {
         this.learnService.displayDictionaryDialog = value;
     }
@@ -56,6 +54,7 @@ export class DragHomeWorkComponent implements OnInit {
     get displayDictionaryDialog(): boolean {
         return this.learnService.displayDictionaryDialog;
     }
+
     get synonymes(): string {
         return this.learnService.synonymes;
     }
@@ -159,7 +158,6 @@ export class DragHomeWorkComponent implements OnInit {
         this.textSeleted = selection.toString();
         console.log(this.textSeleted.length);
         if (this.textSeleted.length > 3) {
-            console.log(this.selectedLanguage.code);
             if (this.selectedLanguage.code === 'ar') {
                 this.quizEtudiantService.translate(this.textSeleted).subscribe(data => {
                     console.log(data);
@@ -170,11 +168,17 @@ export class DragHomeWorkComponent implements OnInit {
                     this.synonymes = data;
                     console.log(data);
                 });
+            } else if (this.selectedLanguage.code === 'ru') {
+                this.quizEtudiantService.translate_from_en_to_russian(this.textSeleted).subscribe(data => {
+                    this.synonymes = data;
+                });
             }
+
             this.displayDictionaryDialog = true;
             this.getDictionaryList();
         }
     }
+
     getDictionaryList() {
         this.dictionnaryService.FindAllWord().subscribe(data => {
             this.dictionaryList = data;

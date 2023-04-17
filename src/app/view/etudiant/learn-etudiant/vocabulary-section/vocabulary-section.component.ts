@@ -135,23 +135,6 @@ export class VocabularySectionComponent implements OnInit {
         this.fliped = false;
     }
 
-
-    // previousItem() {
-    //     const index = this.listItems.indexOf(this.currentItem);
-    //     if (index > 0) {
-    //         if (index - 1 >= 0) {
-    //             this.showNext = true;
-    //             this.currentItem = this.listItems[index - 1];
-    //             this.childStudent.reloadComponent();
-    //             this.showPrevious = true;
-    //             this.showfinish = false;
-    //         }
-    //         if (index - 1 === 0) {
-    //             this.showPrevious = false;
-    //         }
-    //     }
-    // }
-
     nextItem() {
         if (this.webSocketService.isInSession) {
             const chatMessage: ChatMessageDto = new ChatMessageDto('VOC_NEXT', 'VOC_NEXT', true);

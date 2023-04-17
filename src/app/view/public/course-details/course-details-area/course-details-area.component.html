@@ -1,7 +1,7 @@
 <section class="page__title-area pt-50 pb-90">
     <div class="fixed-bottom p-5 d-md-none">
         <a (click)="pay()" class="btn btn-primary  p-3">
-            إشترك الآن
+            {{'subscribe now' | translate}}
         </a>
     </div>
 
@@ -28,9 +28,7 @@
                 <div *ngIf="!selectedCourse?.forGroupe" class="course__item course___card mb-30 fix">
                     <div class="course__thumb w-img p-relative fix">
                         <h2>{{'Individual' | translate}}</h2>
-                        <p> حصص فردية مع مدرسك الخاص، حيث تستفيد من مجموعة من
-                            الامتيازات كتحديد الجدول
-                            الزمني الخاص بك</p>
+                        <p>{{'Individual lessons with a private tutor, where you benefit from a range of privileges such as setting your own schedule' | translate}}</p>
                     </div>
 
                     <div class="course__content">
@@ -50,7 +48,7 @@
                         <div class="btn__container">
                             <button (click)="pay()"
                                     class="btn btn-outline-light">
-                                إشترك الآن
+                                {{'subscribe now' | translate}}
                             </button>
 
                         </div>
@@ -68,19 +66,25 @@
 
                             <div class="row slider__value">
                                 <div [class.active]="selectedCourse?.price?.nreCourse === 8"
-                                     class="col-md-4 text-end ">8
+                                     [class.text-end]="translate?.currentLang === 'ar'"
+                                     [class.text-start]="translate?.currentLang !== 'ar'"
+                                     class="col-md-4 ">8
                                 </div>
                                 <div [class.active]="selectedCourse?.price?.nreCourse === 24"
                                      class="col-md-4 text-center">24
                                 </div>
                                 <div [class.active]="selectedCourse?.price?.nreCourse === 48"
-                                     class="col-md-4 text-start">48
+                                     [class.text-end]="translate?.currentLang !== 'ar'"
+                                     [class.text-start]="translate?.currentLang === 'ar'"
+                                     class="col-md-4">48
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div [class.active]="selectedCourse?.price?.nreCourse === 8"
-                                     class="col-md-4 text-end ">
+                                     [class.text-end]="translate?.currentLang === 'ar'"
+                                     [class.text-start]="translate?.currentLang !== 'ar'"
+                                     class="col-md-4 ">
                                     ( 1 {{'month'|translate}} )
                                 </div>
                                 <div [class.active]="selectedCourse?.price?.nreCourse === 24"
@@ -88,7 +92,9 @@
                                     ( 3 {{'month'|translate}} )
                                 </div>
                                 <div [class.active]="selectedCourse?.price?.nreCourse === 48"
-                                     class="col-md-4 text-start">
+                                     [class.text-end]="translate?.currentLang !== 'ar'"
+                                     [class.text-start]="translate?.currentLang === 'ar'"
+                                     class="col-md-4">
                                     ( 6 {{'month'|translate}} )
                                 </div>
                             </div>
@@ -148,10 +154,7 @@
                 <div *ngIf="selectedCourse?.forGroupe" class="course__item course___card mb-30 fix">
                     <div class="course__thumb w-img p-relative fix">
                         <h2>{{'Group' | translate}}</h2>
-                        <p> الدراسة في مجموعة من <strong
-                                style="text-decoration: underline">شخصين</strong> أو أكتر من نفس المستوى. تساعدك الدراسة
-                            في
-                            مجموعة على التعلم بسرعة واكتشاف أفكار جديدة مع زملائك</p>
+                        <p>{{'Study in a group of two or more people of the same level. Studying in a group helps you learn quickly and discover new ideas with your classmates' | translate}}</p>
                     </div>
 
                     <div class="course__content">
@@ -171,7 +174,7 @@
                         <div class="btn__container">
                             <button (click)="pay()"
                                     class="btn btn-outline-light">
-                                إشترك الآن
+                                {{'subscribe now' | translate}}
                             </button>
                         </div>
 
@@ -329,9 +332,7 @@
                 <div *ngIf="!selectedCourse?.forGroupe" class="course__item course___card mb-30 fix">
                     <div class="course__thumb w-img p-relative fix">
                         <h2>{{'Individual' | translate}}</h2>
-                        <p> حصص فردية مع مدرسك الخاص، حيث تستفيد من مجموعة من
-                            الامتيازات كتحديد الجدول
-                            الزمني الخاص بك</p>
+                        <p>{{'Individual lessons with a private tutor, where you benefit from a range of privileges such as setting your own schedule' | translate}}</p>
                     </div>
 
                     <div class="course__content">
@@ -352,7 +353,7 @@
                         <div class="btn__container">
                             <button (click)="pay()"
                                     class="btn btn-outline-light">
-                                إشترك الآن
+                                {{'subscribe now' | translate}}
                             </button>
                         </div>
 
@@ -369,18 +370,25 @@
 
                             <div class="row slider__value">
                                 <div [class.active]="selectedCourse?.price?.nreCourse === 8"
-                                     class="col-md-4 text-end ">8
+                                     [class.text-end]="translate?.currentLang === 'ar'"
+                                     [class.text-start]="translate?.currentLang !== 'ar'"
+                                     class="col-md-4 ">8
                                 </div>
                                 <div [class.active]="selectedCourse?.price?.nreCourse === 24"
                                      class="col-md-4 text-center">24
                                 </div>
                                 <div [class.active]="selectedCourse?.price?.nreCourse === 48"
-                                     class="col-md-4 text-start">48
+                                     [class.text-end]="translate?.currentLang !== 'ar'"
+                                     [class.text-start]="translate?.currentLang === 'ar'"
+                                     class="col-md-4">48
                                 </div>
                             </div>
+
                             <div class="row">
                                 <div [class.active]="selectedCourse?.price?.nreCourse === 8"
-                                     class="col-md-4 text-end ">
+                                     [class.text-end]="translate?.currentLang === 'ar'"
+                                     [class.text-start]="translate?.currentLang !== 'ar'"
+                                     class="col-md-4 ">
                                     ( 1 {{'month'|translate}} )
                                 </div>
                                 <div [class.active]="selectedCourse?.price?.nreCourse === 24"
@@ -388,10 +396,13 @@
                                     ( 3 {{'month'|translate}} )
                                 </div>
                                 <div [class.active]="selectedCourse?.price?.nreCourse === 48"
-                                     class="col-md-4 text-start">
+                                     [class.text-end]="translate?.currentLang !== 'ar'"
+                                     [class.text-start]="translate?.currentLang === 'ar'"
+                                     class="col-md-4">
                                     ( 6 {{'month'|translate}} )
                                 </div>
                             </div>
+
 
                         </div>
 
@@ -448,11 +459,8 @@
                 <div *ngIf="selectedCourse?.forGroupe" class="course__item course___card mb-30 fix">
                     <div class="course__thumb w-img p-relative fix">
                         <h2>{{'Group' | translate}}</h2>
-                        <p> الدراسة في مجموعة من <strong
-                                style="text-decoration: underline">شخصين</strong> أو أكتر من نفس المستوى. تساعدك
-                            الدراسة
-                            في
-                            مجموعة على التعلم بسرعة واكتشاف أفكار جديدة مع زملائك</p>
+                        <p>{{'Study in a group of two or more people of the same level. Studying in a group helps you learn quickly and discover new ideas with your classmates' | translate}}</p>
+
                     </div>
 
                     <div class="course__content">
@@ -473,7 +481,7 @@
                         <div class="btn__container">
                             <button (click)="pay()"
                                     class="btn btn-outline-light">
-                                إشترك الآن
+                                {{'subscribe now' | translate}}
                             </button>
 
 

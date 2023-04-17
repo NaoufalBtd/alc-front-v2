@@ -816,16 +816,17 @@ export class HomeWorkEtudiantComponent implements OnInit {
         this.textSeleted = selection.toString();
         console.log(this.textSeleted.length);
         if (this.textSeleted.length > 3) {
-            console.log(this.selectedLanguage.code);
             if (this.selectedLanguage.code === 'ar') {
                 this.quizEtudiantService.translate(this.textSeleted).subscribe(data => {
-                    console.log(data);
                     this.synonymes = data;
                 });
             } else if (this.selectedLanguage.code === 'fr') {
                 this.quizEtudiantService.translateEnFr(this.textSeleted).subscribe(data => {
                     this.synonymes = data;
-                    console.log(data);
+                });
+            } else if (this.selectedLanguage.code === 'ru') {
+                this.quizEtudiantService.translate_from_en_to_russian(this.textSeleted).subscribe(data => {
+                    this.synonymes = data;
                 });
             }
             this.displayDictionaryDialog = true;

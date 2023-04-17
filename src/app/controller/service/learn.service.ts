@@ -730,6 +730,10 @@ export class LearnService {
                     this.translateWord = data;
                 }
             );
+        } else if (this.selectedLanguage.code === 'ru') {
+            this.quizEtudiantService.translate_from_en_to_russian(this.wordDictionnary).subscribe(data => {
+                this.translateWord = data;
+            });
         }
     }
 

@@ -50,7 +50,7 @@
                             [showTransitionOptions]="'0ms'" [hideTransitionOptions]="'0ms'" [dismissable]="true"
                             [showCloseIcon]="false">
                 <ng-template pTemplate>
-                    <p-listbox [options]="getLanguages()" (onChange)="getSelectedLanguage()"
+                    <p-listbox [options]="getLanguages()"
                                [(ngModel)]="selectedLanguage" optionLabel="name"
                                [style]="{border:'none', width: '10rem'}"></p-listbox>
 

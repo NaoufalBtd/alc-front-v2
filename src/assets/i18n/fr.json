@@ -8,8 +8,8 @@
   "home": "Aceuil",
   "study": "Study English Whenever you want,Wherever you like😊",
   "prices": "Nos prix",
-  "Individual": "Individuel",
-  "Group": "Étudier En Groupe",
+  "Individual": "Individuel👨‍🎓",
+  "Group": "Étudier En Groupe👩‍🎓👨‍🎓",
   "Individual or Group": "Individuel ou Groupe",
   "Lesson": "Leçons",
   "Knowdetails": "Connaître les détails",
@@ -17,6 +17,7 @@
   "getstarted": "Commencer",
   "becometeacher": "Devenir professeur\n",
   "subscribe": "S'abonner:",
+  "subscribe now": "Abonnez-Vous Maintenant",
   "Recentposts": "Messages récents",
   "Category": "Categorie",
   "Levels": "Niveaux",
@@ -590,5 +591,7 @@
   "What do I profit from?": "What do I profit from?",
   "What do I profit from text": "Vous ne perdrez pas votre temps à faire des allers-retours dans les instituts de langues.\nChoisissez le jour et l'heure pour votre apprentissage.\nObtenez un certificat de réussite après avoir passé chaque niveau.\n80% du contenu est appliqué pour que vous puissiez parler et écrire le plus rapidement possible.",
   "Learning is interactive, as the learner writes, corrects mistakes, and arranges sentences on the platform": "L'apprentissage est interactif, car l'apprenant écrit, corrige les erreurs et organise les phrases sur la plateforme",
-  "month": "mois"
+  "month": "mois",
+  "Study in a group of two or more people of the same level. Studying in a group helps you learn quickly and discover new ideas with your classmates": "Étudiez en groupe de deux personnes ou plus de même niveau. Étudier en groupe vous aide à apprendre rapidement et à découvrir de nouvelles idées avec vos camarades de classe",
+  "Individual lessons with a private tutor, where you benefit from a range of privileges such as setting your own schedule": "Cours particuliers avec votre tuteur privé, où vous bénéficiez d'une gamme de privilèges tels que la définition de votre propre horaire"
 }

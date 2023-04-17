@@ -246,39 +246,11 @@ export class VocabularyService {
         return this.http.get<Array<Vocabulary>>(this.adminUrl + 'vocabulary/section/id/' + section.id);
     }
 
-    public findVocabularybySection(): Observable<Array<Vocabulary>> {
-        // tslint:disable-next-line:max-line-length
-        return this.http.get<Array<Vocabulary>>(this.adminUrl + 'vocabulary/numero/' + this.numVocabulary + '/section/id/' + this.idSection);
-    }
-
-    public findByFirstNumero(): Observable<Vocabulary> {
-        return this.http.get<Vocabulary>(this.adminUrl + 'vocabulary/numero/1');
-    }
-
-    public findByNextNumero(): Observable<Vocabulary> {
-        this.numVocabulary = this.numVocabulary + 1;
-        return this.http.get<Vocabulary>(this.adminUrl + 'vocabulary/numero/' + this.numVocabulary);
-
-    }
-
-    public findByNextNumeroSection(): Observable<Array<Vocabulary>> {
-        this.numVocabulary = this.numVocabulary + 1;
-        // tslint:disable-next-line:max-line-length
-        return this.http.get<Array<Vocabulary>>(this.adminUrl + 'vocabulary/numero/' + this.numVocabulary + '/section/id/' + this.idSection);
-    }
-
-    public findByRef(selected: Vocabulary): Observable<Vocabulary> {
-        return this.http.get<Vocabulary>(this.adminUrl + 'vocabulary/ref/' + selected.ref);
-    }
-
 
     public edit(): Observable<Vocabulary> {
         return this.http.put<Vocabulary>(this.adminUrl + 'vocabulary/', this.selected);
     }
 
-    public deleteByReference(): Observable<number> {
-        return this.http.delete<number>(this.adminUrl + 'vocabulary/ref/' + this.selected.ref);
-    }
 
     public findIndexById(id: number): number {
         let index = -1;
@@ -341,6 +313,10 @@ export class VocabularyService {
                 this.currentItem.translation = data;
             }, error => {
                 console.log(error);
+            });
+        } else if (this.selectedLanguage.code === 'ru') {
+            this.quizService.translateArToRussianForStudent(this.currentItem.translation).subscribe(data => {
+                this.currentItem.translation = data;
             });
         }
     }

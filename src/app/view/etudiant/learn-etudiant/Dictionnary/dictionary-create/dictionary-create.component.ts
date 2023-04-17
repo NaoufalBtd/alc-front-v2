@@ -111,10 +111,11 @@ export class DictionaryCreateComponent implements OnInit {
                 life: 3000
             });
         }, error => {
+            console.log(error);
             this.messageService.add({
                 severity: 'warn',
                 summary: 'Warning',
-                detail: 'Error',
+                detail: error?.error?.message || 'Error',
                 life: 3000
             });
         });

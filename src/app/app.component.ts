@@ -30,6 +30,7 @@ export class AppComponent implements OnInit {
     languages = [
         {code: 'ar', name: 'Arabic', nativeName: 'العربية'},
         {code: 'fr', name: 'French', nativeName: 'français'},
+        {code: 'ru', name: 'русский', nativeName: 'русский'},
     ];
 
     myDiv: HTMLDivElement = this.elRef.nativeElement.querySelector('body');
@@ -40,7 +41,6 @@ export class AppComponent implements OnInit {
 
     inlineUser = false;
     inlineUser2 = false;
-    inlineUser3 = false;
 
     isRTL = false;
 

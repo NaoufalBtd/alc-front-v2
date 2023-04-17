@@ -6,14 +6,15 @@
   "treetrialLesson": "Free Trial Lesson",
   "title": "EngFlexy-Academy",
   "home": "Home",
-  "Individual": "Individual",
-  "Group": "Study In Group",
+  "Individual": "Individual👨‍🎓",
+  "Group": "Study In Group 👩‍🎓👨‍🎓",
   "Lesson": "Lessons",
   "Knowdetails": "Know details",
   "Guide": "Achieve your goals by learning English with EngFlexy",
   "getstarted": "Get started",
   "becometeacher": "Become a teacher",
   "subscribe": "Subscribe",
+  "subscribe now": "Subscribe Now",
   "Recentposts": "Recent posts",
   "Category": "Category",
   "Levels": "Levels",
@@ -588,5 +589,7 @@
   "What do I profit from?": "What do I profit from?",
   "What do I profit from text": "You won't waste your time going back and forth to language institutes.\nChoose the day and time for your learning.\nGet a certificate of achievement after passing each level.\n80% of the content is applied so that you can speak and write as quickly as possible.",
   "Learning is interactive, as the learner writes, corrects mistakes, and arranges sentences on the platform": "Learning is interactive, as the learner writes, corrects mistakes, and arranges sentences on the platform",
-  "month": "month"
+  "month": "month",
+  "Study in a group of two or more people of the same level. Studying in a group helps you learn quickly and discover new ideas with your classmates": "Study in a group of two or more people of the same level. Studying in a group helps you learn quickly and discover new ideas with your classmates",
+  "Individual lessons with a private tutor, where you benefit from a range of privileges such as setting your own schedule": "Individual lessons with a private tutor, where you benefit from a range of privileges such as setting your own schedule"
 }

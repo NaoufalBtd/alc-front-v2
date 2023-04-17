@@ -696,6 +696,10 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
             this.quizService.translateEnFr(word).subscribe(data => {
                 this.synonymes = data;
             });
+        } else if (this.selectedLanguage.code === 'ru') {
+            this.quizService.translate_from_en_to_russian(word).subscribe(data => {
+                this.synonymes = data;
+            });
         }
     }
 
@@ -804,6 +808,10 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
                 });
             } else if (this.selectedLanguage.code === 'fr') {
                 this.quizService.translateEnFr(this.selectedNow.word).subscribe(data => {
+                    this.selectedNow.definition = data;
+                });
+            } else if (this.selectedLanguage.code === 'ru') {
+                this.quizService.translate_from_en_to_russian(this.selectedNow.word).subscribe(data => {
                     this.selectedNow.definition = data;
                 });
             }
