@@ -73,7 +73,7 @@ export class CourseGridComponent implements OnInit {
             if (type === 'MORE') {
                 this.router.navigate(['/course-details/' + pack?.id]);
             } else {
-                this.router.navigate(['/payment/' + this.selectedCourse.id]);
+                this.router.navigate(['/payment/' + pack?.id]);
             }
         }
     }

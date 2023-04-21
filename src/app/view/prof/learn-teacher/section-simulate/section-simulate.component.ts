@@ -426,6 +426,7 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
     startReview(id: number) {
         this.scheduleService.findById(id).subscribe(
             nextLesson => {
+                this.selectedSession = nextLesson;
                 this.showTpBar = false;
                 this.webSocketService.sessionHasStarted = false;
                 this.webSocketService.isInSession = false;
@@ -980,7 +981,17 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
         this.webSocketService.selectedSession = value;
     }
 
+    get selectedSession(): ScheduleProf {
+        return this.webSocketService.selectedSession;
+    }
+
     activeIndexChange(event: any) {
         this.activeIndex = event;
+    }
+
+    joinMeet() {
+        if (this.selectedSession?.meet !== null) {
+            window.open(this.selectedSession?.meet, '_blank');
+        }
     }
 }

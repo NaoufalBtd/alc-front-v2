@@ -71,6 +71,18 @@
 
 <div class="card" style="background-color: transparent">
     <div class="p-grid" style=" padding:10px">
+        <div *ngIf="!lessonStarted && webSocketService.isInSession && selectedLesson?.meet !== null"
+             class="p-col-12 join__meet__container">
+            <h3>{{'المرجو الإنضمام  للمحادثة الصوتية على   "Google Meet"   قبل بدأ الفصل الدراسي '  | translate}}</h3>
+
+            <button pButton pRipple type="button"
+                    [label]="'Join the voice conversation now' | translate"
+                    (click)="joinMeet()"
+                    class="p-button-raised">
+                <i class="pi pi-video"></i>
+            </button>
+        </div>
+
         <div class="p-col-12 middleBar">
             <div class="p-grid">
 
@@ -237,6 +249,8 @@
                     <div class="skipeContainer">
                         <img src="./assets/icons/icon-book.png" alt="">
                         <h4 *ngIf="!lessonStarted" id="startText">Let's Start</h4>
+
+
                         <h4 *ngIf="webSocketService.isInSession && lessonStarted" id="startText">Lesson started</h4>
                         <h4 *ngIf="webSocketService.isInSession && lessonStarted" id="startText">{{minute}}
                             m: {{seconde}}s</h4>

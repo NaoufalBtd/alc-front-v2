@@ -329,11 +329,29 @@ div.keysValue {
 }
 
 
-
 .list-unstyled li {
   cursor: pointer;
 }
 
+.join__meet__container {
+  text-align: center;
+  direction: rtl;
+  padding: 15px !important;
 
+  h3 {
+    padding: 20px 0;
+    color: #263238;
+  }
 
+  button {
+    height: 70px;
+    font-size: 20px;
+    font-weight: 500;
+    padding: 25px;
 
+    i {
+      font-size: 25px;
+      padding: 10px;
+    }
+  }
+}

@@ -88,6 +88,17 @@
     <div class="p-grid" style=" padding:10px">
         <div class="p-col-12 middleBar">
             <div class="p-grid">
+                <div *ngIf="!lessonStarted && webSocketService.isInSession && selectedSession?.meet !== null"
+                     class="p-col-12 join__meet__container">
+                    <h3>{{'المرجو الإنضمام  للمحادثة الصوتية على   "Google Meet"   قبل بدأ الفصل الدراسي '  | translate}}</h3>
+
+                    <button pButton pRipple type="button"
+                            [label]="'Join the voice conversation now' | translate"
+                            (click)="joinMeet()"
+                            class="p-button-raised">
+                        <i class="pi pi-video"></i>
+                    </button>
+                </div>
 
                 <div *ngIf="showLesson " class="p-xl-9 p-md-9 p-sm-12"
                      (mouseup)="dict()">

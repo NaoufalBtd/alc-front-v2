@@ -35,6 +35,7 @@ import {CategoriesSectionItemEnum} from '../../../../enum/CategoriesSectionItemE
 import {ScheduleService} from '../../../../controller/service/schedule.service';
 import {AnimationService} from '../../../../controller/service/animation.service';
 import {UserVo} from '../../../../controller/vo/UserVo';
+import {ScheduleProf} from '../../../../controller/model/calendrier-prof.model';
 
 @Pipe({name: 'safe'})
 export class SafePipe implements PipeTransform {
@@ -53,6 +54,7 @@ export class SafePipe implements PipeTransform {
     styleUrls: ['./student-simulate-section.component.scss']
 })
 export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
+    selectedLesson: ScheduleProf;
     usersConnected: UserVo[];
     activeIndex = 0;
     responsiveOptions: any[] = [
@@ -501,7 +503,7 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
                 this.quizService.translateEnFr(this.selectedNow.word).subscribe(data => {
                     this.selectedNow.definition = data;
                 });
-            } else if (this.selectedLanguage.code === 'ru'){
+            } else if (this.selectedLanguage.code === 'ru') {
                 this.quizService.translate_from_en_to_russian(this.selectedNow.word).subscribe(data => {
                     this.selectedNow.definition = data;
                 });
@@ -595,7 +597,6 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
     }
 
 
-
     findAllSynonimes(word: string) {
         if (this.selectedLanguage.code === 'ar') {
             this.quizService.translate(word).subscribe(data => {
@@ -607,7 +608,7 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
                 this.synonymes = data;
 
             });
-        } else if (this.selectedLanguage.code === 'ru'){
+        } else if (this.selectedLanguage.code === 'ru') {
             this.quizService.translate_from_en_to_russian(this.selectedNow.word).subscribe(data => {
                 this.synonymes = data;
             });
@@ -693,6 +694,7 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
         this.animationService.showAnimation = true;
         this.scheduleService.findById(id).subscribe(
             selectedMeeting => {
+                this.selectedLesson = selectedMeeting;
                 this.animationService.showAnimation = false;
                 this.showTpBar = false;
                 this.webSocketService.isInSession = true;
@@ -724,6 +726,7 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
         this.animationService.showAnimation = true;
         this.scheduleService.findById(id).subscribe(
             selectedMeeting => {
+                this.selectedLesson = selectedMeeting;
                 this.animationService.showAnimation = false;
                 this.showTpBar = false;
                 this.webSocketService.isInSession = false;
@@ -771,4 +774,9 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
         );
     }
 
+    joinMeet() {
+        if (this.selectedLesson?.meet !== null) {
+            window.open(this.selectedLesson?.meet, '_blank');
+        }
+    }
 }
