@@ -21,6 +21,27 @@ $gutter: 1rem; //for primeflex grid system
 @import '../src/assets/scss/main.scss';
 @import 'swiper/swiper-bundle.css';
 
+
+.scalein {
+  animation-name: scale__animation;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes scale__animation {
+  0% {
+    background-color: #ff725e;
+  }
+  50% {
+    background-color: #263238;
+    border-color: #263238;
+    color: #ff725e;
+  }
+  100% {
+    background-color: #ff725e;
+  }
+}
+
 .line {
   height: 1px;
   background: white;

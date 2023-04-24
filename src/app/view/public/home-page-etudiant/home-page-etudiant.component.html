@@ -91,7 +91,8 @@
 
     <div id="con2" *ngIf="index === 1" class="container">
         <div class="p-grid">
-            <div style="text-align: center" class="p-col-12">
+            <div   [style.direction]="translate.currentLang === 'ar' ? 'rtl': 'ltr'"
+                    style="text-align: center" class="p-col-12">
                 <h1 style="    font-family: system-ui; letter-spacing: 1px;">{{'Your account has been successfully validated!' | translate}}</h1>
             </div>
             <div class="p-col-2"></div>
@@ -178,7 +179,7 @@
 
                     <div class="p-col-2"></div>
                     <div class="p-col-8">
-                        <button pButton pRipple (click)="router.navigate(['public/etudiantTrialLesson'])"
+                        <button pButton pRipple (click)="router.navigate(['etudiant/dashboard'])"
                                 [label]="'Start now' | translate" icon="pi pi-check"
                                 class="Startnow"></button>
                     </div>

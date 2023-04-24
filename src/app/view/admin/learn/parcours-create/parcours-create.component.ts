@@ -11,50 +11,51 @@ import {Centre} from '../../../../controller/model/centre.model';
 })
 export class ParcoursCreateComponent implements OnInit {
     // tslint:disable-next-line:max-line-length
-    constructor(private messageService: MessageService, private confirmationService: ConfirmationService, private service: ParcoursService) {
+    constructor(private messageService: MessageService, private confirmationService: ConfirmationService,
+                private parcoursService: ParcoursService) {
     }
 
     get itemsscentre(): Array<Centre> {
-        return this.service.itemsscentre;
+        return this.parcoursService.itemsscentre;
     }
 
     // tslint:disable-next-line:adjacent-overload-signatures
     set itemsscentre(value: Array<Centre>) {
-        this.service.itemsscentre = value;
+        this.parcoursService.itemsscentre = value;
     }
 
     get selecteddparcours(): Parcours {
-        return this.service.selecteddparcours;
+        return this.parcoursService.selecteddparcours;
     }
 
     set selecteddparcours(value: Parcours) {
-        this.service.selecteddparcours = value;
+        this.parcoursService.selecteddparcours = value;
     }
 
     get itemsparcours(): Array<Parcours> {
-        return this.service.itemsparcours;
+        return this.parcoursService.itemsparcours;
     }
 
     // tslint:disable-next-line:adjacent-overload-signatures
     set itemsparcours(value: Array<Parcours>) {
-        this.service.itemsparcours = value;
+        this.parcoursService.itemsparcours = value;
     }
 
     get createDialog(): boolean {
-        return this.service.createDialog;
+        return this.parcoursService.createDialog;
     }
 
     // tslint:disable-next-line:adjacent-overload-signatures
     set createDialog(value: boolean) {
-        this.service.createDialog = value;
+        this.parcoursService.createDialog = value;
     }
 
     get submitted(): boolean {
-        return this.service.submitted;
+        return this.parcoursService.submitted;
     }
 
     set submitted(value: boolean) {
-        this.service.submitted = value;
+        this.parcoursService.submitted = value;
     }
 
     ngOnInit(): void {
@@ -68,33 +69,30 @@ export class ParcoursCreateComponent implements OnInit {
 
     public save() {
         console.log(this.selecteddparcours);
-        console.log('hani kandkhl lhnaya');
         this.submitted = true;
-        this.service.save().subscribe(data => {
-            console.log('hani kandkhl lsubscribe');
-            if ( data === 1){
-                console.log('hani kandkhl l data positive');
-                // tslint:disable-next-line:no-shadowed-variable
-                this.service.findAllLevels().subscribe(data => {
-                    this.itemsparcours = data;
-                    this.messageService.add({
-                        severity: 'success',
-                        summary: 'Successful',
-                        detail: 'Parcours Created',
-                        life: 3000
-                    });
+        this.parcoursService.save().subscribe(data => {
+            this.parcoursService.findAllLevels().subscribe((levels) => {
+                this.itemsparcours = levels;
+                this.messageService.add({
+                    severity: 'success',
+                    summary: 'Successful',
+                    detail: 'Level Created',
+                    life: 3000
                 });
-            }else if (data === -2){
-                console.log('l courses makaytcreyawch kamlin');
-            }else if (data === -1){
-                console.log('centre kaydouz null');
-            }
+            });
+        }, error => {
+            console.log(error);
+            this.messageService.add({
+                severity: 'error',
+                detail: error?.error?.message,
+                life: 5000
+            });
         });
         this.createDialog = false;
     }
 
     findAllCentre() {
-        this.service.findAllCentre().subscribe(data => {
+        this.parcoursService.findAllCentre().subscribe(data => {
             this.itemsscentre = data;
         });
     }

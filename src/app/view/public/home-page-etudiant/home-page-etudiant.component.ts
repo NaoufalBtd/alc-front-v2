@@ -30,7 +30,7 @@ export class HomePageEtudiantComponent implements OnInit {
     constructor(public router: Router,
                 private _activatedRoute: ActivatedRoute,
                 private animationService: AnimationService,
-                private translate: TranslateService,
+                public translate: TranslateService,
                 private messageService: MessageService,
                 private authService: AuthenticationService,
                 private etudiantService: EtudiantService,

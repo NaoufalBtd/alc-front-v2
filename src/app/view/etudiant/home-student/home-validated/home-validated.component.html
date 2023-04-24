@@ -8,7 +8,7 @@
                 <img class="imgLesson" src="/assets/icons/icon-livres.png" alt="">
             </div>
 
-            <div class="p-xxl-8 p-xl-8 p-md-6 p-sm-12 courseName">
+            <div class="p-xxl-7 p-xl-7 p-md-6 p-sm-12 courseName">
                 <p class="lessonName">{{schedule?.cours?.libelle}}</p>
                 <p class="lessonDate">{{schedule?.startTime | date: 'EEEE, d MMMM yyyy'}}
                     (
@@ -17,7 +17,7 @@
                 </p>
             </div>
 
-            <div class="p-xxl-2 p-xl-2 courseName p-md-12 p-sm-12">
+            <div class="p-xxl-3 p-xl-3 courseName p-md-12 p-sm-12">
                 <button *ngIf="isLessonCompleted(schedule.cours) === 2" pButton pRipple type="button"
                         (click)="openSession(schedule, 'LESSON')"
                         [label]="'REVIEW COURSE'"
@@ -40,8 +40,9 @@
                 <button *ngIf="showJoinNow && isLessonCompleted(schedule.cours) === 1 && schedule.id === nextLesson.id"
                         pButton pRipple type="button"
                         (click)="joinSession(schedule)"
-                        [label]="'Join now'"
-                        class="p-button-success joinButton"></button>
+                        class="p-button-success joinButton">
+                    JOIN NOW <br> انضم الان
+                </button>
 
 
                 <button *ngIf="isLessonCompleted(schedule.cours) === 3" pButton pRipple type="button"
@@ -101,7 +102,7 @@
 
 
     <div *ngIf="scheduleProfs?.length > 0"
-         style="background: white; border-left: 2px solid #263238;  border-radius: 10px;"
+         style="background: white;border-radius: 10px;"
          class="p-2 col-12 col-md-3 Nextlesson">
 
         <ng-container *ngIf="
@@ -120,23 +121,26 @@
                         {{getDay()}}
                     </p>
                 </div>
+
                 <div class="p-col-12 nextLessonTitle">
                     {{nextLesson?.cours?.libelle}}
                 </div>
+
                 <div class="p-col-12">
-                    <button *ngIf="showJoinNow" pButton pRipple type="button" [label]="'Join now'"
+                    <button *ngIf="!showJoinNow" pButton pRipple type="button"
+                            [label]="'Join now | انضم الان'"
                             (click)="joinSession(nextLesson)"
                             class="p-button-help joinButton"></button>
 
 
-                    <button *ngIf="!showJoinNow" pButton pRipple type="button"
+                    <button *ngIf="showJoinNow" pButton pRipple type="button"
                             [label]="getRestOfTime"
                             class="p-button-help"></button>
                 </div>
             </div>
         </ng-container>
 
-        <p style=" border-top: 2px solid #263238;  padding-top: 8px;    color: black;font-weight: bold;font-size: small;"
+        <p style=" padding-top: 8px;    color: black;font-weight: bold;font-size: small;"
            class="lessonDate">
             <img style="width:20px;margin: -10px 3px -4px 0;"
                  src="/assets/icons/icon-prof.png" alt="">
@@ -144,7 +148,10 @@
         </p>
 
         <div class="p-grid profGroup">
-            <div class="p-col-12 "><img class="profImg" [src]="nextLesson?.prof?.image" alt=""></div>
+            <div class="p-col-12 ">
+                <img class="profImg" [src]="nextLesson?.prof?.image" alt="">
+            </div>
+
             <div class="p-col-12 profName">{{nextLesson?.prof?.nom }}</div>
             <div class="p-col-12 p-grid profSkype">
                 <div class="p-col-2 "><img src="/assets/icons/icon-skype-64.png" width="25px"
@@ -159,11 +166,11 @@
             </div>
         </div>
 
-        <p style=" border-top: 2px solid #263238;  padding-top: 8px; color: black;font-weight: bold;font-size: small;"
+        <p style=" border-top: 2px solid #eaf2fb;  padding-top: 8px; color: black;font-weight: bold;font-size: small;"
            class="lessonDate">
             <img style="width:20px;margin: -10px 3px -4px 0;"
                  src="/assets/icons/icon-groupe-d'utilisateurs.png" alt="">
-            {{'Group members'}}
+            {{'Group members'}} ( {{this.selectedGroup?.groupeEtudiant?.libelle}} )
         </p>
 
         <div class="p-grid profGroup">

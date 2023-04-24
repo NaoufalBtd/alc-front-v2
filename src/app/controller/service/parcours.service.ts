@@ -660,9 +660,9 @@ export class ParcoursService {
         return this.http.put<Parcours>(this.adminUrl + 'parcours/', this.selectedparcours);
     }
 
-    public save(): Observable<number> {
+    public save(): Observable<Parcours> {
         if (this.selecteddparcours.id == null) {
-            return this.http.post<number>(this.adminUrl + 'parcours/', this.selecteddparcours);
+            return this.http.post<Parcours>(this.adminUrl + 'parcours/', this.selecteddparcours);
         }
     }
 
