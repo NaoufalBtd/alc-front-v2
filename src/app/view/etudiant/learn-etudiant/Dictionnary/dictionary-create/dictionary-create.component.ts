@@ -97,7 +97,6 @@ export class DictionaryCreateComponent implements OnInit {
         this.dictionnaryService.save().subscribe(data => {
             this.dictionnaryService.FindAllWord().subscribe(
                 data => {
-                    console.log(data);
                     this.itemsDict = data;
                 });
 

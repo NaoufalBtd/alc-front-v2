@@ -15,14 +15,18 @@ import {MenuService} from '../slide-bar/app.menu.service';
 @Component({
     selector: 'app-topbar',
     templateUrl: './app.topbar.component.html',
-    styleUrls: ['./app-topbar.component.css'],
+    styleUrls: ['./app-topbar.component.scss'],
 })
 export class AppTopBarComponent implements OnInit, OnDestroy {
     subscriptions: Subscription[] = [];
     role: Role;
     items: MenuItem[];
     user: User = new User();
-    langs = ['en', 'ar', 'fr'];
+    langs = [
+        {code: 'en', lab: 'English', img: '/assets/images/united-states-of-america-flag.png'},
+        {code: 'fr', lab: 'Francais', img: '/assets/images/france-flag.png'},
+        {code: 'ar', lab: 'العربية', img: '/assets/images/morocco-flag.png'}
+    ];
 
 
     constructor(public app: AppComponent,
@@ -165,9 +169,7 @@ export class AppTopBarComponent implements OnInit, OnDestroy {
         this.menuService.configClick = value;
     }
 
-    get profileClick(): boolean {
-        return this.menuService.profileClick;
-    }
+
 
     set profileClick(value: boolean) {
         this.menuService.profileClick = value;
@@ -230,6 +232,7 @@ export class AppTopBarComponent implements OnInit, OnDestroy {
     }
 
     selectedLangage(event: any) {
+        console.log(event);
         this.translate.use(event);
     }
 
@@ -376,22 +379,11 @@ export class AppTopBarComponent implements OnInit, OnDestroy {
         return this.app.layoutMode === 'overlay';
     }
 
-    isStatic() {
-        return this.app.layoutMode === 'static';
-    }
-
-    isMobile() {
-        return window.innerWidth < 1025;
-    }
 
     isDesktop() {
         return window.innerWidth > 896;
     }
 
-    isTablet() {
-        const width = window.innerWidth;
-        return width <= 1024 && width > 640;
-    }
 
     hideOverlayMenu() {
         this.overlayMenuActive = false;

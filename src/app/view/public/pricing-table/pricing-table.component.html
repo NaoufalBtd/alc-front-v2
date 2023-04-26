@@ -29,17 +29,21 @@
                         <h2>{{'Group' | translate}}</h2>
                     </div>
                     <div class="price">
-                        <h4>20<sup style="font-size: 25px!important;">DH</sup></h4>
+                        <h4>{{minPriceForGroup}}<sup style="font-size: 25px!important;">DH</sup></h4>
                     </div>
                     <div class="option">
                         <ul>
                             <li><i class="fa fa-check"
                                    aria-hidden="true"></i> {{"Get certified" | translate}}</li>
-                            <li><i class="fa fa-check" aria-hidden="true"></i> {{'Two classes per week' | translate}}</li>
-                            <li><i class="fa fa-check" aria-hidden="true"></i> {{'Free dictionary for life' | translate}}</li>
-                            <li><i class="fa fa-check" aria-hidden="true"></i> {{'The possibility of repeating the lesson and exercises several times' | translate}}
+                            <li><i class="fa fa-check" aria-hidden="true"></i> {{'Two classes per week' | translate}}
                             </li>
-                            <li><i class="fa fa-check" aria-hidden="true"></i> {{'Group classes with a teacher' | translate}}</li>
+                            <li><i class="fa fa-check"
+                                   aria-hidden="true"></i> {{'Free dictionary for life' | translate}}</li>
+                            <li><i class="fa fa-check"
+                                   aria-hidden="true"></i> {{'The possibility of repeating the lesson and exercises several times' | translate}}
+                            </li>
+                            <li><i class="fa fa-check"
+                                   aria-hidden="true"></i> {{'Group classes with a teacher' | translate}}</li>
                         </ul>
                     </div>
                     <a (click)="purchase(true)">{{'Purchase Now' | translate}} </a>
@@ -53,16 +57,21 @@
                         <h2>{{'Individual' | translate}}</h2>
                     </div>
                     <div class="price">
-                        <h4>99<sup style="font-size: 25px!important;">DH</sup></h4>
+                        <h4>{{minPriceForIndividual}}<sup style="font-size: 25px!important;">DH</sup></h4>
                     </div>
                     <div class="option">
                         <ul>
                             <li><i class="fa fa-check" aria-hidden="true"></i> {{"Get certified" | translate}}</li>
-                            <li><i class="fa fa-check" aria-hidden="true"></i> {{'Two classes per week' | translate}}</li>
-                            <li><i class="fa fa-check" aria-hidden="true"></i> {{'Free dictionary for life' | translate}}</li>
-                            <li><i class="fa fa-check" aria-hidden="true"></i> {{'The possibility of repeating the lesson and exercises several times' | translate}}
+                            <li><i class="fa fa-check" aria-hidden="true"></i> {{'Two classes per week' | translate}}
                             </li>
-                            <li><i class="fa fa-check" aria-hidden="true"></i> {{'We will immediately coordinate the schedule of classes with the teacher' | translate}}</li>
+                            <li><i class="fa fa-check"
+                                   aria-hidden="true"></i> {{'Free dictionary for life' | translate}}</li>
+                            <li><i class="fa fa-check"
+                                   aria-hidden="true"></i> {{'The possibility of repeating the lesson and exercises several times' | translate}}
+                            </li>
+                            <li><i class="fa fa-check"
+                                   aria-hidden="true"></i> {{'We will immediately coordinate the schedule of classes with the teacher' | translate}}
+                            </li>
                             <li><i class="fa fa-check"
                                    aria-hidden="true"></i> {{'1 on 1 classes with your private teacher' | translate}}
                             </li>

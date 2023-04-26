@@ -8,11 +8,14 @@ import {Etudiant} from '../../../controller/model/etudiant.model';
 import {PublicComponent} from '../../public/public.component';
 import {User} from '../../../controller/model/user.model';
 import {AuthenticationService} from '../../../controller/service/authentication.service';
+import {Router} from '@angular/router';
+import {Role} from '../../../enum/role.enum';
 
 
 @Component({
     selector: 'app-menu',
     templateUrl: './app.menu.component.html',
+    styleUrls: ['./app.menu.component.scss'],
     animations: [
         trigger('inline', [
             state('hidden', style({
@@ -43,6 +46,7 @@ export class AppMenuComponent implements OnInit {
                 private authService: AuthenticationService,
                 public appMain: PublicComponent,
                 private service: LoginService,
+                private router: Router,
                 public authenticationService: AuthenticationService) {
     }
 
@@ -135,5 +139,24 @@ export class AppMenuComponent implements OnInit {
         this.appMain.onMenuClick(event);
         this.appMain.onMenuClick(event);
         this.appMain.rightPanelMenuActive = false;
+    }
+
+    logout() {
+        this.authService.logOut();
+        this.router.navigate(['']);
+    }
+
+    goToProfile() {
+        if (this.authenticationService.getUserFromLocalCache() == null) {
+            return;
+        } else {
+            if (this.authenticationService.getUserFromLocalCache().role === Role.STUDENT) {
+                this.router.navigate(['etudiant/profile']);
+            } else if (this.authenticationService.getUserFromLocalCache().role === Role.PROF) {
+                this.router.navigate(['prof/profile']);
+            } else {
+                this.router.navigate(['admin/profile']);
+            }
+        }
     }
 }

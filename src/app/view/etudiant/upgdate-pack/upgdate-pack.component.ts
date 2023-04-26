@@ -16,10 +16,9 @@ import {Parcours} from '../../../controller/model/parcours.model';
 })
 export class UpgdatePackComponent implements OnInit {
 
-    activeIndex = 0;
     prices: Array<Price> = new Array<Price>();
     priceList: Array<Price> = new Array<Price>();
-    levels: Array<Parcours> = new Array<Parcours>();
+    level: Parcours;
     private priceSelected: Price;
     showSchedule: boolean;
 
@@ -42,7 +41,7 @@ export class UpgdatePackComponent implements OnInit {
 
     ngOnInit(): void {
         this.getPrices();
-        this.levelSerivce.findAllLevels().subscribe(d => this.levels = d);
+        this.levelSerivce.findParcoursById(1).subscribe(d => this.level = d);
         // const timer = setInterval(() => {
         //     clearInterval(timer);
         //     this.showSchedule = true;
@@ -59,12 +58,11 @@ export class UpgdatePackComponent implements OnInit {
 
     chooseType(price: Price) {
         this.priceSelected = price;
-        this.activeIndex = 1;
+        this.getCourse(this.level);
     }
 
     optionChange(isGroup: boolean) {
         this.selectedOption = isGroup;
-        this.activeIndex = 0;
         this.getPrices();
     }
 

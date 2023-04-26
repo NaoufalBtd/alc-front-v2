@@ -12,5 +12,24 @@
         <ul class="layout-menu">
             <li app-menuitem *ngFor="let item of model; let i = index;" [item]="item" [index]="i" [root]="false"></li>
         </ul>
+
+        <div class="user__profile">
+            <div class="p-grid">
+                <div class="p-col-12">
+                    <p-avatar [label]="user?.nom?.substr(0,2)?.toUpperCase()" styleClass="p-mr-2" size="xlarge"
+                              shape="circle"></p-avatar>
+                </div>
+                <div class="p-col-12">
+                    <h3>{{user?.nom}}</h3>
+                </div>
+                <div class="p-col-6">
+                    <div (click)="goToProfile()" class="logout__div"><i class="pi pi-user"></i> profile</div>
+                </div>
+                <div class="p-col-6">
+                    <div (click)="logout()" class="logout__div"><i class="pi pi-sign-out"></i> logout</div>
+                </div>
+            </div>
+
+        </div>
     </div>
 </div>

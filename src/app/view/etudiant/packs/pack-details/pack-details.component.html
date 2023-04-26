@@ -148,77 +148,27 @@
 
 
     <div class="row" style="padding: 10px">
-        <div *ngIf="inscription?.packStudent === null" (click)="backTollPacks()" class="col-md-12 allPacks">
-            <a class="allPacks"><i class="pi pi-angle-left allPacks"></i> {{'All packs' | translate}}</a>
+        <div id="loader__con" class="col-md-12 ">
+            <div class="loader">
+                <span>Loading...</span>
+            </div>
+
         </div>
 
-        <div class="col-xxl-4 col-xl-4 col-md-6 col-sm-12">
+        <div style="visibility: hidden" class=" col-md-12">
             <div class="course__sidebar pl-70 p-relative">
-                <div class="course__shape">
-                    <img
-                            class="course-dot"
-                            src="assets/img/course/course-dot.png"
-                            alt=""
-                    />
-                </div>
                 <div class="course__sidebar-widget-2 white-bg mb-20">
                     <div class="course__video">
-                        <div class=" w-img mb-25">
-                            <img *ngIf="selectedPack?.price?.lib?.toUpperCase()?.includes('PLATINUM')"
-                                 src="/assets/images/Platinum.webp" alt=""/>
-                            <img *ngIf="selectedPack?.price?.lib?.toUpperCase()?.includes('GOLD')"
-                                 src="/assets/images/Gold.webp" alt=""/>
-                            <img *ngIf="selectedPack?.price?.lib?.toUpperCase()?.includes('SILVER')"
-                                 src="/assets/images/Silver.webp" alt=""/>
-
-                        </div>
-                        <div
-                                class="course__video-meta mb-25 d-flex align-items-center justify-content-between"
-                        >
-                            <div class="course__video-price">
-                                <h5>{{selectedPack?.price?.price}}.<span>00 MAD</span></h5>
-                                <h5 class="old-price">{{selectedPack?.price?.oldPrice}}.00</h5>
-                            </div>
-                            <div class="course__video-discount">
-                                <span>{{getPercentage().toFixed(.2)}}% OFF</span>
-                            </div>
-                        </div>
-                        <div [style.direction]="translate.currentLang === 'ar' ? 'rtl': 'ltr'"
-                             class="course__payment mb-35">
-                            <h3>{{'Payment' | translate}}</h3>
-                            <a href="#">
-                                <img src="assets/img/course/payment/payment-1.webp" alt=""/>
-                            </a>
-                        </div>
                         <div class="course__enroll-btn">
-                            <a value="valider" onclick="submitformpaiement();" class="e-btn e-btn-7 w-100"
+                            <a  id="submitButton" value="valider" onclick="submitformpaiement();" class="e-btn e-btn-7 w-100"
                             >{{'PAY' | translate}} <i class="far fa-arrow-right"></i
                             ></a>
                         </div>
                     </div>
                 </div>
-
-
             </div>
         </div>
 
-
-        <div class="col-xxl-8 col-xl-8 col-md-6 col-sm-12">
-            <h4 style="color: #ff725e;">{{'Overview' | translate}}</h4>
-            <strong> {{'Why take this course?' | translate}}</strong>
-            <p>{{selectedPack?.whyTakeThisCourse}}</p>
-            <strong> {{'Experience Level' | translate}}</strong>
-            <p>{{selectedPack?.level?.libelle}}</p>
-            <strong> {{'Course Length' | translate}}</strong>
-            <p>{{selectedPack?.nombreCours}}</p>
-            <strong> {{'Pre-requisites' | translate}}</strong>
-            <p>{{selectedPack?.preRequisites}}</p>
-
-            <h4 style="color: #ff725e;"> {{'Syllabus' | translate}}</h4>
-            <p *ngFor="let course of courses.slice(0, nombreCours)">{{course?.libelle}}</p>
-            <p *ngIf="nombreCours !== selectedPack?.nombreCours" class="more-details"
-               (click)="nombreCours = selectedPack.nombreCours">... see more</p>
-        </div>
     </div>
 
 </form>

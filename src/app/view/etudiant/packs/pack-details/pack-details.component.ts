@@ -12,6 +12,7 @@ import {PackStudentService} from '../../../../controller/service/pack-student.se
 import {TranslateService} from '@ngx-translate/core';
 import {Etudiant} from '../../../../controller/model/etudiant.model';
 import {environment} from '../../../../../environments/environment';
+import {AnimationService} from '../../../../controller/service/animation.service';
 
 @Component({
     selector: 'app-pack-details',
@@ -21,7 +22,6 @@ import {environment} from '../../../../../environments/environment';
 export class PackDetailsComponent implements OnInit {
     courses: Array<Cours> = new Array<Cours>();
     inscription: Inscription = new Inscription();
-    nombreCours = 5;
     userRequest: Etudiant;
     callbackUrl = environment.callbackUrl;
     shopUrl = environment.shopUrl;
@@ -34,6 +34,7 @@ export class PackDetailsComponent implements OnInit {
                 public translate: TranslateService,
                 private _activatedRoute: ActivatedRoute,
                 private messageService: MessageService,
+                private animation: AnimationService,
                 private parcoursService: ParcoursService,
                 private packService: PackStudentService,
                 private router: Router) {
@@ -79,6 +80,15 @@ export class PackDetailsComponent implements OnInit {
             });
         }
 
+        const timer = setInterval(() => {
+            this.submitFormPayment();
+            clearInterval(timer);
+        }, 2000);
+    }
+
+    submitFormPayment() {
+        const button = document.getElementById('submitButton');
+        button.click();
     }
 
     private findCoursesByLevel(selected: PackStudent) {
@@ -94,51 +104,9 @@ export class PackDetailsComponent implements OnInit {
         this.parcoursService.FindCoursByParcours(this.selectedPack.level.id).subscribe(
             data => {
                 this.courses = data;
-                console.log(this.courses);
             }
         );
     }
 
-    isForGroupOrindev(forGroupe: boolean): string {
-        if (forGroupe) {
-            return 'Group';
-        } else {
-            return 'Individual';
-        }
-    }
 
-
-    backTollPacks() {
-        this.router.navigate(['/etudiant/profile']);
-    }
-
-    startPack() {
-        this.inscription.packStudent = this.selectedPack;
-        this.inscription.parcours = this.selectedPack.level;
-        this.inscription.datedebutinscription = new Date();
-        this.inscriptionService.updateInsc(this.inscription).subscribe(
-            data => {
-                this.inscription = data;
-                this.messageService.add({
-                    severity: 'success',
-                    summary: 'Successful',
-                    detail: 'Operation success',
-                    life: 3000,
-
-                });
-                this.backTollPacks();
-            }, error => {
-                this.messageService.add({
-                    severity: 'error',
-                    summary: 'error',
-                    detail: error?.error?.message,
-                    life: 3000,
-                });
-            }
-        );
-    }
-
-    getPercentage(): number {
-        return (100 - ((Number(this.selectedPack?.price?.price) / Number(this.selectedPack?.price?.oldPrice)) * 100));
-    }
 }

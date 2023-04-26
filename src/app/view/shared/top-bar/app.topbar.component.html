@@ -11,35 +11,14 @@
 
 
     <ul class="topbar-menu">
-        <li class="user-profile" [ngClass]="{'active-topmenuitem fadeInDown': topbarUserMenuActive}">
-            <a href="#" (click)="onTopbarUserMenuButtonClick($event)" *ngIf="!app.inlineUser">
-                <img [src]="user.image" class="user__profile" alt=""/>
-                <div class="layout-profile-userinfo">
-                    <span class="layout-profile-name">{{user?.nom}}</span>
-                </div>
-            </a>
-            <ul class="fadeInDown">
-                <li>
-                    <a (click)="goToProfile()">
-                        <i class="pi pi-fw pi-user"></i>
-                        <span>{{'Profile' | translate}}</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a (click)="logOut()">
-                        <i class="pi pi-fw pi-sign-out"></i>
-                        <span>{{'Log Out' | translate}}</span>
-                    </a>
-                </li>
-
-            </ul>
-        </li>
-
         <li>
-            <p-dropdown [options]="langs" [(ngModel)]="translate.currentLang" [placeholder]="translate.currentLang"
-                        (ngModelChange)="selectedLangage($event)"
-                        [showClear]="false"></p-dropdown>
+
+            <select class="lang__select" (ngModelChange)="selectedLangage($event)" [(ngModel)]="translate.currentLang"
+                    aria-label="Select level">
+                <option [class]="lang?.code" *ngFor="let lang of langs" [ngValue]="lang.code">
+                    {{lang?.lab}}
+                </option>
+            </select>
 
         </li>
     </ul>

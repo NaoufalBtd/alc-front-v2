@@ -21,5 +21,4 @@ export const environment = {
     callbackUrl: 'https://engflexy.ma/back',
     shopUrl: 'https://engflexy.com',
     payFailedReasonUrl: url + '/pay-error-reason/'
-
 };
