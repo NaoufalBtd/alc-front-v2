@@ -97,8 +97,36 @@
 #individual-text:hover {
   text-decoration: underline;
   color: white;
+
   .heartbeat {
-    background-image: radial-gradient( circle farthest-corner at 10% 20%,  rgba(90,92,106,1) 0%, rgba(32,45,58,1) 81.3% );
+    background-image: radial-gradient(circle farthest-corner at 10% 20%, rgba(90, 92, 106, 1) 0%, rgba(32, 45, 58, 1) 81.3%);
   }
 }
 
+#pay__now {
+  font-size: 20px;
+  font-weight: bold;
+  text-transform: uppercase;
+  border-radius: 0;
+}
+
+
+.Premium_btn {
+  color: #2B394C !important;
+  background: #d1eefe !important;
+}
+
+.gold_btn {
+  color: #102c45 !important;
+  background: #f9c109 !important;
+}
+
+.platinum_btn {
+  color: #ffffff !important;
+  background: #102c45 !important;
+}
+
+.silver_btn {
+  color: #2e4052 !important;
+  background: #8f9bb0 !important;
+}

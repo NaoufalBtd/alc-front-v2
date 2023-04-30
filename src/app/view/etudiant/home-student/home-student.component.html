@@ -1,9 +1,9 @@
-<div *ngIf="inscreption?.etatInscription?.libelle === 'Validated'" class="mycard">
+<div *ngIf="inscreption?.etatInscription?.libelle !== 'Pending'" class="mycard">
     <app-home-validated></app-home-validated>
 </div>
 
 
-<div *ngIf="inscreption?.etatInscription?.libelle !== 'Validated'" class="mycard">
+<div *ngIf="inscreption?.etatInscription?.libelle === 'Pending'" class="mycard">
     <app-home-free-trial></app-home-free-trial>
 </div>
 

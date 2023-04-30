@@ -1,4 +1,33 @@
 <header>
+    <div class="siteheader__sec">
+        <div class="container">
+            <div class="siteheader__sec__inner">
+
+                <div class="siteheader__login">
+                    <a [routerLink]="['/public/login']" class="login-btn">
+                        <i class="fas fa-sign-in-alt"></i>
+                        {{'signin' | translate}}
+                    </a>
+                </div>
+
+                <select
+                        [class.ar]="translate.currentLang === 'ar'"
+                        [class.fr]="translate.currentLang === 'fr'"
+                        [class.en]="translate.currentLang === 'en'"
+                        class="lang__select" (ngModelChange)="selectedLangage($event)"
+                        [(ngModel)]="translate.currentLang"
+                        aria-label="Select level">
+
+                    <option *ngFor="let lang of langs" [ngValue]="lang.code">
+                        <img [src]="lang?.img" alt="not found!">
+                        {{lang?.lab}}
+                    </option>
+                </select>
+
+            </div>
+        </div>
+    </div>
+
     <div id="header-sticky"
          [ngClass]="headerSticky ? 'header__area header__transparent header__padding-2 sticky' : 'header__area header__transparent header__padding-2' ">
         <div class="container">
@@ -34,23 +63,6 @@
                                         <a [routerLink]="['/online-english-level-test']"> {{'discover your level' | translate}}</a>
                                     </li>
 
-                                    <li class="has-dropdown">
-                                        <a *ngIf="this.translate.currentLang === 'en'"
-                                        >English</a>
-                                        <a *ngIf="this.translate.currentLang === 'ar'"
-                                        >العربية</a>
-                                        <a *ngIf="this.translate.currentLang === 'fr'"
-                                        >Français</a>
-
-                                        <ul class="submenu">
-                                            <li (click)="selectedLangage('en')" value="en"><a>English</a>
-                                            </li>
-                                            <li (click)="selectedLangage('ar')" value="ar"><a>العربية</a>
-                                            </li>
-                                            <li (click)="selectedLangage('fr')" value="fr"><a>Français</a>
-                                            </li>
-                                        </ul>
-                                    </li>
                                 </ul>
                             </nav>
                         </div>
@@ -67,9 +79,9 @@
                         </div>
 
 
-                        <div class="header__btn ml-20 d-none d-xl-block">
-                            <a [routerLink]="['/public/login']" class="e-btn"> {{'signin' | translate}}</a>
-                        </div>
+<!--                        <div class="header__btn ml-20 d-none d-xl-block">-->
+<!--                            <a [routerLink]="['/public/login']" class="e-btn"> {{'For Businesses' | translate}}</a>-->
+<!--                        </div>-->
 
                         <div class="sidebar__menu d-xl-none">
                             <div (click)="handleSidebar()" class="sidebar-toggle-btn ml-30" id="sidebar-toggle">
@@ -83,6 +95,7 @@
             </div>
         </div>
     </div>
+
 </header>
 
 
@@ -110,27 +123,23 @@
                     <li><a [routerLink]="['/courses']"> {{'courses' | translate}}</a></li>
                     <li><a [routerLink]="['/blog']"> {{'blog' | translate}}</a></li>
                     <li><a [routerLink]="['/contact']"> {{'contact' | translate}}</a></li>
-                    <li class="has-dropdown">
-                        <ul class="submenu">
-                            <li (click)="selectedLangage('en')" style="cursor:pointer;" value="en"><a>English</a></li>
-                            <li (click)="selectedLangage('ar')" style="cursor:pointer;" value="ar"><a>العربية</a></li>
-                            <li (click)="selectedLangage('fr')" style="cursor:pointer;" value="fr"><a>Français</a></li>
-                        </ul>
-                    </li>
                 </ul>
-            </div>
-            <div class="header__btn header__btn-2 mt-10 ">
-                <a style="width: 100%;" [routerLink]="['/public/login']" class="e-btn"> {{'signin' | translate}}</a>
             </div>
 
             <div class="header__btn header__btn-2 mt-10 ">
                 <a style="width: 100%;" [routerLink]="['/free-trial']"
                    class="e-btn"> {{'treetrialLesson' | translate}}</a>
             </div>
+
             <div class="header__btn header__btn-2 mt-10 ">
                 <a style="width: 100%;" [routerLink]="['/online-english-level-test']"
                    class="e-btn">{{'discover your level' | translate}}</a>
             </div>
+
+<!--            <div class="header__btn header__btn-2 mt-10 ">-->
+<!--                <a style="width: 100%;" [routerLink]="['/']"-->
+<!--                   class="e-btn">{{'For Businesses' | translate}}</a>-->
+<!--            </div>-->
 
         </div>
     </div>

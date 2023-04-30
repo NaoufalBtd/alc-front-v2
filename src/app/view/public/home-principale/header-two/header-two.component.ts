@@ -9,7 +9,11 @@ import {TranslateService} from '@ngx-translate/core';
 export class HeaderTwoComponent implements OnInit {
 
     @Input() headerShadow: string | undefined;
-
+    langs = [
+        {code: 'en', lab: 'English', img: '/assets/images/united-states-of-america-flag.png'},
+        {code: 'fr', lab: 'Francais', img: '/assets/images/france-flag.png'},
+        {code: 'ar', lab: 'العربية', img: '/assets/images/morocco-flag.png'}
+    ];
     headerSticky: boolean = false;
     showSidebar: boolean = false;
     showHomeDropdown: boolean = false;
@@ -59,6 +63,7 @@ export class HeaderTwoComponent implements OnInit {
 
     ngOnInit(): void {
     }
+
     selectedLangage(value: any) {
         console.log(value);
         this.translate.use(value);

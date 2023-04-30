@@ -184,7 +184,6 @@ import {EmailsComponent} from './view/admin/emails/emails.component';
                     {path: 'paiementlist', component: PaiementlistComponent},
                     {path: 'connected-student', component: ConnectedStudentComponent},
                     {path: 'reclamation-prof', component: ReclamationProfComponent}
-
                 ]
             },
             {
@@ -215,7 +214,6 @@ import {EmailsComponent} from './view/admin/emails/emails.component';
                     {path: 'inviteStudent', component: InvitedStudentComponent},
                     {path: 'pack/:id', component: PackDetailsComponent},
                     {path: '*', component: HomeStudentComponent}
-
                 ]
             },
             {

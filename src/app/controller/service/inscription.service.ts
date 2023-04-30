@@ -23,8 +23,9 @@ import {Skill} from '../model/skill.model';
 export class InscriptionService {
     constructor(private http: HttpClient) {
     }
+
     private adminUrl = environment.adminUrl;
-   private  etudiantUrl = environment.etudiantUrl;
+    private etudiantUrl = environment.etudiantUrl;
     private _items: Array<Inscription>;
     private _selected: Inscription;
     private _etatInscription: EtatInscription;
@@ -58,12 +59,15 @@ export class InscriptionService {
     public findAllNiveauEtude(): Observable<Array<NiveauEtude>> {
         return this.http.get<Array<NiveauEtude>>(this.etudiantUrl + 'niveauEtude/');
     }
+
     public findAllFonction(): Observable<Array<Fonction>> {
         return this.http.get<Array<Fonction>>(this.etudiantUrl + 'fonction/');
     }
+
     public findAllInteretEtudiant(): Observable<Array<StatutSocial>> {
         return this.http.get<Array<StatutSocial>>(this.etudiantUrl + 'interetEtudiant/');
     }
+
     public findAllStatutSocial(): Observable<Array<Parcours>> {
         return this.http.get<Array<Parcours>>(this.etudiantUrl + 'statutSocial/');
 
@@ -162,7 +166,8 @@ export class InscriptionService {
     set items(value: Array<Inscription>) {
         this._items = value;
     }
-  get selected(): Inscription {
+
+    get selected(): Inscription {
         if (this._selected == null) {
             this._selected = new Inscription();
         }
@@ -172,15 +177,18 @@ export class InscriptionService {
     set selected(value: Inscription) {
         this._selected = value;
     }
+
     get selectes(): Array<Inscription> {
         if (this._selectes == null) {
             this._selectes = new Array<Inscription>();
         }
         return this._selectes;
     }
+
     set selectes(value: Array<Inscription>) {
         this._selectes = value;
     }
+
     get etatInscription(): EtatInscription {
         if (this._etatInscription == null) {
             this._etatInscription = new EtatInscription();
@@ -191,6 +199,7 @@ export class InscriptionService {
     set etatInscription(value: EtatInscription) {
         this._etatInscription = value;
     }
+
     get etudiant(): Etudiant {
         if (this._etudiant == null) {
             this._etudiant = new Etudiant();
@@ -201,6 +210,7 @@ export class InscriptionService {
     set etudiant(value: Etudiant) {
         this._etudiant = value;
     }
+
     get selectedetudiant(): Etudiant {
         if (this._selectedetudiant == null) {
             this._selectedetudiant = new Etudiant();
@@ -214,6 +224,7 @@ export class InscriptionService {
     set selectedetudiant(value: Etudiant) {
         this._selectedetudiant = value;
     }
+
     get createDialog(): boolean {
         return this._createDialog;
     }
@@ -221,6 +232,7 @@ export class InscriptionService {
     set createDialog(value: boolean) {
         this._createDialog = value;
     }
+
     get editDialog(): boolean {
         return this._editDialog;
     }
@@ -252,6 +264,7 @@ export class InscriptionService {
     set index(value: number) {
         this._index = value;
     }
+
     get etudiantVo(): EtudiantVo {
         if (this._etudiantVo == null) {
             this._etudiantVo = new EtudiantVo();
@@ -262,6 +275,7 @@ export class InscriptionService {
     set etudiantVo(value: EtudiantVo) {
         this._etudiantVo = value;
     }
+
     get inscription(): Inscription {
         if (this._inscription == null) {
             this._inscription = new Inscription();
@@ -273,6 +287,7 @@ export class InscriptionService {
     set inscription(value: Inscription) {
         this._inscription = value;
     }
+
     get valideDialog(): boolean {
         return this._valideDialog;
     }
@@ -315,6 +330,7 @@ export class InscriptionService {
     set centreList(value: Array<Centre>) {
         this._centreList = value;
     }
+
     get parcoursList(): Array<Parcours> {
         if (this._parcoursList == null) {
             this._parcoursList = new Array<Parcours>();
@@ -328,8 +344,7 @@ export class InscriptionService {
 
 
     get groupeEtudeList(): Array<GroupeEtude> {
-        if (this._groupeEtudeList == null)
-        {
+        if (this._groupeEtudeList == null) {
             this._groupeEtudeList = new Array<GroupeEtude>();
         }
         return this._groupeEtudeList;
@@ -340,11 +355,12 @@ export class InscriptionService {
         this._groupeEtudeList = value;
     }
 
-    findByEtatInscription(pending: string): Observable<Array<Inscription>> {
-        return this.http.get<Array<Inscription>>(this.adminUrl + 'inscription/etat/libelle/' + pending);
+    findByEtatInscription(status: string): Observable<Array<Inscription>> {
+        return this.http.get<Array<Inscription>>(this.adminUrl + 'inscription/etat/libelle/' + status);
     }
+
     get interetEtudiant(): InteretEtudiant {
-        if (this._interetEtudiant == null ){
+        if (this._interetEtudiant == null) {
             this._interetEtudiant = new InteretEtudiant();
         }
         return this._interetEtudiant;
@@ -355,7 +371,7 @@ export class InscriptionService {
     }
 
     get interetEtudiants(): Array<InteretEtudiant> {
-        if (this._interetEtudiants == null ){
+        if (this._interetEtudiants == null) {
             this._interetEtudiants = new Array<InteretEtudiant>();
         }
         return this._interetEtudiants;
@@ -366,7 +382,7 @@ export class InscriptionService {
     }
 
     get fonctions(): Array<Fonction> {
-        if (this._fonctions == null){
+        if (this._fonctions == null) {
             this._fonctions = new Array<Fonction>();
         }
         return this._fonctions;
@@ -377,7 +393,7 @@ export class InscriptionService {
     }
 
     get fonction(): Fonction {
-        if (this._fonction == null){
+        if (this._fonction == null) {
             this._fonction = new Fonction();
         }
         return this._fonction;
@@ -388,7 +404,7 @@ export class InscriptionService {
     }
 
     get statutSocial(): StatutSocial {
-        if (this._statutSocial == null ){
+        if (this._statutSocial == null) {
             this._statutSocial = new StatutSocial();
         }
         return this._statutSocial;
@@ -399,7 +415,7 @@ export class InscriptionService {
     }
 
     get statutSocials(): Array<StatutSocial> {
-        if (this._statutSocials == null ){
+        if (this._statutSocials == null) {
             this._statutSocials = new Array<StatutSocial>();
         }
         return this._statutSocials;
@@ -410,8 +426,7 @@ export class InscriptionService {
     }
 
     get niveauEtudes(): Array<NiveauEtude> {
-        if (this._niveauEtudes == null)
-        {
+        if (this._niveauEtudes == null) {
             this._niveauEtudes = new Array<NiveauEtude>();
         }
         return this._niveauEtudes;
@@ -422,8 +437,7 @@ export class InscriptionService {
     }
 
     get niveauEtude(): NiveauEtude {
-        if (this._niveauEtude == null)
-        {
+        if (this._niveauEtude == null) {
             this._niveauEtude = new NiveauEtude();
         }
         return this._niveauEtude;
@@ -432,17 +446,18 @@ export class InscriptionService {
     set niveauEtude(value: NiveauEtude) {
         this._niveauEtude = value;
     }
-    public findByEtudiantId(id: number): Observable<Inscription>{
-        return this.http.get<Inscription>(this.etudiantUrl + 'inscription/id/' + id );
+
+    public findByEtudiantId(id: number): Observable<Inscription> {
+        return this.http.get<Inscription>(this.etudiantUrl + 'inscription/id/' + id);
     }
 
     get skills(): Array<Skill> {
-        if (this._skills == null)
-        {
+        if (this._skills == null) {
             this._skills = new Array<Skill>();
         }
         return this._skills;
     }
+
     set skill(value: Skill) {
         this._skill = value;
     }
@@ -452,13 +467,11 @@ export class InscriptionService {
     }
 
     get skill(): Skill {
-        if (this._skills == null)
-        {
+        if (this._skills == null) {
             this._skill = new Skill();
         }
         return this._skill;
     }
-
 
 
 }

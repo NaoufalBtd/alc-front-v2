@@ -3,7 +3,6 @@ import {Etudiant} from '../../../../controller/model/etudiant.model';
 import {ScheduleProf} from '../../../../controller/model/calendrier-prof.model';
 import {SessionCours} from '../../../../controller/model/session-cours.model';
 import {HomeWOrkEtudiant} from '../../../../controller/model/home-work-etudiant.model';
-import {Inscription} from '../../../../controller/model/inscription.model';
 import {LoginService} from '../../../../controller/service/login.service';
 import {ScheduleService} from '../../../../controller/service/schedule.service';
 import {GroupeEtudiantService} from '../../../../controller/service/groupe-etudiant-service';
@@ -49,13 +48,6 @@ export class HomeValidatedComponent implements OnInit {
         {name: 'Saturday', value: 6},
     ];
 
-    get inscreption(): Inscription {
-        return this.loginService.inscreption;
-    }
-
-    set inscreption(value: Inscription) {
-        this.loginService.inscreption = value;
-    }
 
     constructor(private loginService: LoginService,
                 private scheduleService: ScheduleService,

@@ -35,11 +35,12 @@ $gutter: 1rem; //for primeflex grid system
   font-weight: bold;
 }
 
-.logout__div:hover{
+.logout__div:hover {
   background-color: #2e2e33;
-  color: #1e99a2!important;
+  color: #1e99a2 !important;
+
   i {
-    color: #1e99a2!important;
+    color: #1e99a2 !important;
   }
 }
 
@@ -371,3 +372,61 @@ div.p-grid {
   box-shadow: 0 0 0 0.2rem #ff9e90 !important;
 }
 
+
+.siteheader__sec {
+  background: #f2f2f2;
+  color: #ff725e;
+  height: 40px;
+  position: relative;
+  z-index: 1010;
+  padding: 0;
+  min-width: 100%;
+
+  div {
+    height: 100%;
+    padding-top: 2px;
+  }
+}
+
+.siteheader__sec__inner {
+  display: flex;
+  justify-content: flex-end;
+  align-items: stretch;
+}
+
+.login-btn {
+  font-size: 15px;
+  font-weight: 600;
+  border: 1px solid;
+  padding: 3px 10px;
+  border-radius: 5px;
+}
+
+.login-btn:hover {
+  color: white;
+  background: #ff725e;
+}
+
+.lang__select {
+  background: transparent;
+  border: none;
+  color: black;
+  margin: 0 30px;
+  padding-left: 30px;
+
+  option {
+    color: black;
+  }
+}
+
+select.ar {
+  background: url("/assets/images/morocco-flag.png") no-repeat left;
+}
+
+select.fr {
+  background: url("/assets/images/france-flag.png") no-repeat left;
+}
+
+select.en {
+  background: url("/assets/images/united-states-of-america-flag.png") no-repeat left;
+}

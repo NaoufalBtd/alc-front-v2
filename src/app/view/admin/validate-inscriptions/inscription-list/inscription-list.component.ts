@@ -373,11 +373,14 @@ export class InscriptionListComponent implements OnInit {
 
     handleChange(e) {
         const index = e.index;
-        if (index === 2) {
+        alert(index);
+        if (index === 3) {
+            this.findPaidInscriptions();
+        } else if (index === 2) {
             this.findPendingInscriptions();
         } else if (index === 1) {
             this.findValidateInscriptions();
-        } else {
+        } else if (index === 0) {
             this.findAll();
         }
     }
@@ -386,6 +389,19 @@ export class InscriptionListComponent implements OnInit {
         this.service.findByEtatInscription('Pending').subscribe(
             data => {
                 this.items = data;
+            }, error => {
+                console.log(error);
+            }
+        );
+    }
+
+    private findPaidInscriptions() {
+        this.items = new Array<Inscription>();
+        this.service.findByEtatInscription('PAID').subscribe(
+            data => {
+                this.items = data;
+                console.log(data);
+                console.log(this.items);
             }, error => {
                 console.log(error);
             }

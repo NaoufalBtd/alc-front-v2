@@ -20,9 +20,7 @@
 
     </div>
     <div class="row">
-        <div *ngFor="let price of prices"
-             (click)="chooseType(price)"
-             class="col-xxl-4 col-xl-4 col-lg-4 col-md-6">
+        <div *ngFor="let price of prices" (click)="chooseType(price)" class="col-xxl-4 col-xl-4 col-lg-4 col-md-6">
             <div class="course__item white-bg mb-30 fix">
                 <div class="course__thumb w-img p-relative fix">
                     <a>
@@ -60,6 +58,17 @@
                            [class.Premium]="price?.lib?.toUpperCase()?.includes('PREMIUM')"
                            class="course-type">{{price?.nreMonth}} {{'MONTH' | translate}}</a>
                     </div>
+                </div>
+                <div>
+
+                    <button
+                            [class.silver_btn]="price?.lib?.toUpperCase()?.includes('SILVER')"
+                            [class.gold_btn]="price?.lib?.toUpperCase()?.includes('GOLD')"
+                            [class.platinum_btn]="price?.lib?.toUpperCase()?.includes('PLATINUM')"
+                            [class.Premium_btn]="price?.lib?.toUpperCase()?.includes('PREMIUM')"
+                            class="ngFlexyOrangeButton" id="pay__now"
+                            [label]="'Pay now' | translate" pButton pRipple
+                            type="button"></button>
                 </div>
             </div>
         </div>
