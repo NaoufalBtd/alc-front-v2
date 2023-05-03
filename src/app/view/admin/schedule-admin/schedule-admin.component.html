@@ -135,7 +135,15 @@
                     </tr>
 
                     <tr>
-                        <td style="padding-bottom: 35px!important;" class="e-textlabel">Group</td>
+                        <td style="padding-bottom: 35px!important;" class="e-textlabel">
+                            Group
+                            <button pButton pRipple type="button"
+                                    icon="pi pi-info"
+                                    (click)="op.toggle($event); getStudentOfGroup(scheduleProf.groupeEtudiant)"
+                                    pTooltip="show students"
+                                    class="p-button-rounded p-button-info"></button>
+
+                        </td>
                         <td colspan="4">
                             <p-dropdown [style]="{width: '100%',marginBottom: '35px'}"
                                         [(ngModel)]="scheduleProf.groupeEtudiant" [options]="groupeStudent"
@@ -146,6 +154,30 @@
                                         data-name="groupeEtudiant"
                                         (ngModelChange)="getCourses(scheduleProf.groupeEtudiant)"
                                         placeholder="Name of group"></p-dropdown>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="padding-bottom: 35px!important;" class="e-textlabel">Teacher</td>
+                        <td colspan="4">
+                            <input pInputText [style]="{width: '100%',marginBottom: '35px'}"
+                                   [ngModel]="scheduleProf.groupeEtudiant?.prof?.nom"
+                                   name="prof"
+                                   disabled
+                                   class="e-field"
+                                   data-name="prof">
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="padding-bottom: 35px!important;" class="e-textlabel">Level</td>
+                        <td colspan="4">
+                            <input pInputText [style]="{width: '100%',marginBottom: '35px'}"
+                                   [ngModel]="scheduleProf.groupeEtudiant?.parcours?.libelle"
+                                   name="level"
+                                   disabled
+                                   class="e-field"
+                                   data-name="level">
                         </td>
                     </tr>
 
@@ -242,6 +274,29 @@
 
         </ejs-schedule>
     </div>
+
+    <p-overlayPanel #op [showCloseIcon]="true" [style]="{width: '450px'}">
+        <ng-template pTemplate>
+            <p-table [value]="students" selectionMode="single" [paginator]="true" [rows]="5">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pSortableColumn="name">Name
+                            <p-sortIcon field="name"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="price">Level
+                            <p-sortIcon field="price"></p-sortIcon>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-rowData let-student>
+                    <tr [pSelectableRow]="rowData">
+                        <td>{{student?.nom}}</td>
+                        <td>{{student?.parcours?.libelle}}</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </ng-template>
+    </p-overlayPanel>
 </div>
 
 

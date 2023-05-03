@@ -35,7 +35,7 @@ export class ScheduleAdminComponent implements OnInit {
 
     @ViewChild('timezoneDropdown') public timezoneDropdownObj: DropDownListComponent;
     public dropDownValue = 'Africa/Casablanca';
-    public fields: Record<string, any> = {text: 'label', value: 'tzCode'};
+    public fields: any = {text: 'label', value: 'tzCode'};
     public timezoneData: Record<string, any>[] = timezones;
 
     get scheduleProfs(): Array<ScheduleProf> {
@@ -473,5 +473,18 @@ export class ScheduleAdminComponent implements OnInit {
 
     generateRef() {
         this.scheduleProf.ref = 'R-' + this.scheduleProf.cours.id;
+    }
+
+    getStudentOfGroup(groupeEtudiant: GroupeEtudiant) {
+        this.students = new Array<Etudiant>();
+        this.groupEtudiantService.findAllGroupeEtudiantDetail(groupeEtudiant?.id).subscribe(
+            details => {
+                for (const d of details) {
+                    this.students.push({...d.etudiant});
+                }
+            }, error => {
+                console.log(error);
+            }
+        );
     }
 }
