@@ -47,13 +47,6 @@ export class EmailsComponent implements OnInit {
         return this.emailService.showCompose;
     }
 
-    get loading(): boolean {
-        return this.emailService.loading;
-    }
-
-    set loading(value: boolean) {
-        this.emailService.loading = value;
-    }
 
     ngOnInit(): void {
         this.emailService.findAll();
@@ -61,7 +54,6 @@ export class EmailsComponent implements OnInit {
         this.etudiantService.findAll().subscribe(customers => {
             this.students = customers;
             this.students.forEach(student => student.dateNaissance = (new Date()).toString());
-            this.loading = false;
         });
     }
 

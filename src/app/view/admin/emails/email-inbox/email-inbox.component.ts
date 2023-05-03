@@ -16,13 +16,6 @@ export class EmailInboxComponent implements OnInit {
     constructor(private emailService: EmailService) {
     }
 
-    get loading(): boolean {
-        return this.emailService.loading;
-    }
-
-    set loading(value: boolean) {
-        this.emailService.loading = value;
-    }
 
     get students(): Array<Etudiant> {
         return this.emailService.students;

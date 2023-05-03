@@ -18,7 +18,6 @@ export class EmailService {
     private _showDetail = false;
     private _students: Array<Etudiant> = new Array<Etudiant>();
     private _groups: Array<GroupeEtudiant> = new Array<GroupeEtudiant>();
-    private _loading: boolean = true;
 
     constructor(private http: HttpClient) {
     }
@@ -48,13 +47,6 @@ export class EmailService {
         this._groups = value;
     }
 
-    get loading(): boolean {
-        return this._loading;
-    }
-
-    set loading(value: boolean) {
-        this._loading = value;
-    }
 
     get students(): Array<Etudiant> {
         return this._students;
