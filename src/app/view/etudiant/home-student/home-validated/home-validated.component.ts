@@ -92,24 +92,25 @@ export class HomeValidatedComponent implements OnInit {
                 this.scheduleService.findByGroupStudentId(this.selectedGroup?.groupeEtudiant).subscribe(
                     scheduleData => {
                         this.scheduleProfs = scheduleData;
-                        this.sessionCourService.findSessionCoursByGroupeEtudiantId(this.selectedGroup?.groupeEtudiant).subscribe(sessionData => {
-                            this.sessionCours = sessionData;
-                            for (const schedule of this.scheduleProfs) {
-                                for (const session of this.sessionCours) {
-                                    if (schedule.cours.id === session.cours.id) {
-                                        this.lessonFinished.push({...schedule});
+                        this.sessionCourService.findSessionCoursByGroupeEtudiantId(this.selectedGroup?.groupeEtudiant)
+                            .subscribe(sessionData => {
+                                this.sessionCours = sessionData;
+                                for (const schedule of this.scheduleProfs) {
+                                    for (const session of this.sessionCours) {
+                                        if (schedule.cours.id === session.cours.id) {
+                                            this.lessonFinished.push({...schedule});
+                                        }
                                     }
                                 }
-                            }
-                            this.nextLesson = this.scheduleProfs[this.lessonFinished?.length];
-                            console.log(this.nextLesson);
-                            this.getStudentOfGroup(this.nextLesson?.groupeEtudiant);
-                            setInterval(() => {
-                                this.updateRestOfTime();
-                            }, 1000);
-                        }, err => {
-                            console.log(err);
-                        });
+                                this.nextLesson = this.scheduleProfs[this.lessonFinished?.length];
+                                console.log(this.nextLesson);
+                                this.getStudentOfGroup(this.nextLesson?.groupeEtudiant);
+                                setInterval(() => {
+                                    this.updateRestOfTime();
+                                }, 1000);
+                            }, err => {
+                                console.log(err);
+                            });
                     }
                 );
             }

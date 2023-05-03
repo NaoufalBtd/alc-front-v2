@@ -6,15 +6,22 @@
 }
 
 
-.e-btn1{
+.e-btn1 {
   float: right;
 }
 
-.e-popup-content{
+.e-popup-content {
   background-color: white;
   margin-bottom: -36px;
 }
-.p-button-text{
+
+.p-button-text {
   color: white;
   font-weight: bold;
+}
+
+
+.e-schedule .e-table-container {
+  overflow-x: auto!important;
+  -webkit-overflow-scrolling: touch!important;
 }

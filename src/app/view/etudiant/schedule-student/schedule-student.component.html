@@ -1,104 +1,109 @@
-<p-toast></p-toast>
-<div class="p-col">
+<div class="p-field">
 
-    <p-dialog [(visible)]="displayBasic" [baseZIndex]="10000" [style]="{width: '30vw'}">
-        <p> {{'This is the schedule of your part of teaching , the students how are in color green are the students that they are just start the courses, the others how are in color orange are the students active in your courses.' | translate}}</p>
-        <ng-template pTemplate="footer">
-            <p-button (click)="displayBasic=false" icon="pi pi-check" label="Ok" styleClass="p-button-text"></p-button>
-        </ng-template>
-    </p-dialog>
-</div>
+    <div class="p-col">
 
-<div class="control-section">
-    <div class="p-grid" style="background-color: #ff725e; border-radius: 5px;">
-        <div style="text-align: start" class="p-col-2">
-            <button class="instruction-button p-button-text  " (click)="showBasicDialog()" icon="pi pi-question" label="Instruction"
-                    iconPos="right"
-                    pButton
-                    pRipple></button>
-        </div>
-
-        <div class="p-col-10" >
-            <table style="float: right" class="property-table">
-                <tbody>
-                <tr>
-                    <td style="width: 80%;">
-                        <div>
-                            <ejs-dropdownlist style="color: white;font-weight: 500;" width='250px' id='scheduletimezone' #timezoneDropdown
-                                              [dataSource]='timezoneData'
-                                              (change)='onTimezoneDropDownChange($event)' [value]='dropDownValue'
-                                              [allowFiltering]="true"
-                                              [fields]='fields'
-                                              popupWidth='250'></ejs-dropdownlist>
-                        </div>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-
-
-
-
-        <ejs-schedule #scheduleObj width='100%' [selectedDate]="selectedDate" [readonly]="true"
-                      [eventSettings]="eventSettings "
-                      (actionComplete)="onActionComplete()"
-                      (popupOpen)="onPopupOpen($event)">
-            <e-views>
-                <e-view option="Day"></e-view>
-                <e-view option="Week" [timeScale]='timeScale'></e-view>
-                <e-view option="WorkWeek" [timeScale]='timeScale'></e-view>
-                <e-view option="Month" [timeScale]='timeScale' [showWeekend]="showWeekend"></e-view>
-            </e-views>
-
-
-            <!--            <e-resources>-->
-            <!--                <e-resource field='id' title='subject' name='subject' [dataSource]='scheduleProfs'-->
-            <!--                            textField='subject'-->
-            <!--                            idField='id' colorField='#68c671'>-->
-            <!--                </e-resource>-->
-            <!--            </e-resources>-->
-
-
-            <ng-template #quickInfoTemplatesHeader>
-                <div>
-                    <div class="e-popup-header">
-
-                        <div class="e-header-icon-wrapper">
-                            <button disabled class="e-edit e-control e-btn e-lib e-flat e-round e-small e-icon-btn"
-                                    title="Edit">
-                            </button>
-                            <button [disabled]="true"
-                                    class=" e-control e-btn e-lib e-flat e-round delete-btn e-small e-icon-btn"
-                                    title="Delete">
-                                <span class="e-btn-icon e-icons e-delete-icon"></span>
-                            </button>
-                            <button class="e-close e-control e-btn e-lib e-flat e-round e-small e-icon-btn"
-                                    title="Close">
-                            </button>
-                        </div>
-                        <div class="e-subject-wrap">
-                            <div class="e-subject e-text-ellipsis"
-                                 title="Blue Moon Eclipse">{{selectedMeeting.subject}}</div>
-                            <button (click)="joinSession()"
-                                    style="float: right;background-color: #3f51b5;border-color: white;
-                                     color: white;margin: -29px -18px 0 0"
-                                    pButton
-                                    pRipple type="button" label="Participate"
-                                    class="p-button-rounded p-button-lg "></button>
-                        </div>
-                    </div>
-
-                    <div class="e-popup-content">
-                        <div class="e-resource">
-                            <div class="e-resource-icon e-icons"></div>
-                            <div class="e-resource-details e-text-ellipsis">{{selectedMeeting.prof.nom }}
-                                {{ selectedMeeting.prof.nom}}</div>
-                        </div>
-                    </div>
-
-                </div>
+        <p-dialog [(visible)]="displayBasic" [baseZIndex]="10000" [style]="{width: '30vw'}">
+            <p> {{'This is the schedule of your part of teaching , the students how are in color green are the students that they are just start the courses, the others how are in color orange are the students active in your courses.' | translate}}</p>
+            <ng-template pTemplate="footer">
+                <p-button (click)="displayBasic=false" icon="pi pi-check" label="Ok"
+                          styleClass="p-button-text"></p-button>
             </ng-template>
-        </ejs-schedule>
+        </p-dialog>
+    </div>
+
+    <div class="control-section">
+        <div class="p-grid" style="background-color: #ff725e; border-radius: 5px;">
+            <div style="text-align: start" class="p-col-2">
+                <button class="instruction-button p-button-text  " (click)="showBasicDialog()" icon="pi pi-question"
+                        label="Instruction"
+                        iconPos="right"
+                        pButton
+                        pRipple></button>
+            </div>
+
+            <div class="p-col-10">
+                <table style="float: right" class="property-table">
+                    <tbody>
+                    <tr>
+                        <td style="width: 80%;">
+                            <div>
+                                <ejs-dropdownlist style="color: white;font-weight: 500;" width='250px'
+                                                  id='scheduletimezone' #timezoneDropdown
+                                                  [dataSource]='timezoneData'
+                                                  (change)='onTimezoneDropDownChange($event)' [value]='dropDownValue'
+                                                  [allowFiltering]="true"
+                                                  [fields]='fields'
+                                                  popupWidth='250'></ejs-dropdownlist>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+
+            <ejs-schedule #scheduleObj width='100%' [selectedDate]="selectedDate" [readonly]="true"
+                          [eventSettings]="eventSettings "
+                          (actionComplete)="onActionComplete()"
+                          [enableAllDayScroll]="true"
+                          currentView="Month"
+                          (popupOpen)="onPopupOpen($event)">
+                <e-views>
+                    <e-view option="Day"></e-view>
+                    <e-view option="Week" [timeScale]='timeScale'></e-view>
+                    <e-view option="WorkWeek" [timeScale]='timeScale'></e-view>
+                    <e-view option="Month" [timeScale]='timeScale' [showWeekend]="showWeekend"></e-view>
+                </e-views>
+
+
+                <!--            <e-resources>-->
+                <!--                <e-resource field='id' title='subject' name='subject' [dataSource]='scheduleProfs'-->
+                <!--                            textField='subject'-->
+                <!--                            idField='id' colorField='#68c671'>-->
+                <!--                </e-resource>-->
+                <!--            </e-resources>-->
+
+
+                <ng-template #quickInfoTemplatesHeader>
+                    <div>
+                        <div class="e-popup-header">
+
+                            <div class="e-header-icon-wrapper">
+                                <button disabled class="e-edit e-control e-btn e-lib e-flat e-round e-small e-icon-btn"
+                                        title="Edit">
+                                </button>
+                                <button [disabled]="true"
+                                        class=" e-control e-btn e-lib e-flat e-round delete-btn e-small e-icon-btn"
+                                        title="Delete">
+                                    <span class="e-btn-icon e-icons e-delete-icon"></span>
+                                </button>
+                                <button class="e-close e-control e-btn e-lib e-flat e-round e-small e-icon-btn"
+                                        title="Close">
+                                </button>
+                            </div>
+                            <div class="e-subject-wrap">
+                                <div class="e-subject e-text-ellipsis"
+                                     title="Blue Moon Eclipse">{{selectedMeeting.subject}}</div>
+                                <button (click)="joinSession()"
+                                        style="float: right;background-color: #3f51b5;border-color: white;
+                                     color: white;margin: -29px -18px 0 0"
+                                        pButton
+                                        pRipple type="button" label="Participate"
+                                        class="p-button-rounded p-button-lg "></button>
+                            </div>
+                        </div>
+
+                        <div class="e-popup-content">
+                            <div class="e-resource">
+                                <div class="e-resource-icon e-icons"></div>
+                                <div class="e-resource-details e-text-ellipsis">{{selectedMeeting.prof.nom }}
+                                    {{ selectedMeeting.prof.nom}}</div>
+                            </div>
+                        </div>
+
+                    </div>
+                </ng-template>
+            </ejs-schedule>
+        </div>
     </div>
 </div>

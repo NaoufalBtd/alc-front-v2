@@ -26,4 +26,5 @@ export class Etudiant extends User {
     public statutSocial = new StatutSocial();
     public langue = String('ar');
     public skill = new Skill();
+    public subscribe: boolean = true;
 }
