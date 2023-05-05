@@ -51,7 +51,6 @@ export class DiscoverLevelComponent implements OnInit {
             || this.selected?.username === null
             || !this.selected?.username?.includes('@')
             || !this.selected?.username?.includes('.')
-            || !this.selected?.username?.includes('com')
             || this.selected?.numero === null
             || this.selected?.numero === undefined
             || this.selected?.numero?.length < 4

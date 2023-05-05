@@ -373,7 +373,6 @@ export class InscriptionListComponent implements OnInit {
 
     handleChange(e) {
         const index = e.index;
-        alert(index);
         if (index === 3) {
             this.findPaidInscriptions();
         } else if (index === 2) {
