@@ -418,7 +418,7 @@ export class TestLevelComponent implements OnInit {
         this.quizEtudiant = this.learnService.finishQuiz();
         console.log(this.quizEtudiant);
         for (const item of this.testLevels) {
-            if (this.quizEtudiant.note <= item.noteMax && this.quizEtudiant.note > item.noteMin) {
+            if (this.quizEtudiant.note <= item.noteMax && this.quizEtudiant.note >= item.noteMin) {
                 this.inscription.parcours = item.parcours;
                 this.inscription.noteQuizNiveau = this.quizEtudiant.note;
                 this.inscription.quizNiveau = this.selectedQuiz;
@@ -536,7 +536,6 @@ export class TestLevelComponent implements OnInit {
         this.selectedPack = pack;
         this.router.navigate(['/etudiant/pack']);
     }
-
 
 
     hidePlaceHolder(type: string) {
