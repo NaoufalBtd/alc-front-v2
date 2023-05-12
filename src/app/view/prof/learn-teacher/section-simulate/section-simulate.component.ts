@@ -127,6 +127,9 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
         return this.webSocketService.lessonStarted;
     }
 
+    set lessonStarted(value: boolean) {
+        this.webSocketService.lessonStarted = value;
+    }
 
     get badgeNrMsg(): number {
         return this.learnService.badgeNrMsg;
@@ -396,22 +399,9 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
     }
 
 
-    public openCreateDict() {
-        this.selectedDict = new Dictionary();
-        this.submittedDict = false;
-        this.createDialogDict = true;
-    }
-
-    public findByWord() {
-        this.dictionnaryService.FindByWord(this.word).subscribe(
-            data => {
-                this.selectedDict = data;
-                document.getElementById('dictionary').style.visibility = 'visible';
-            }, error => console.log(error));
-        document.getElementById('dictionary').style.visibility = 'visible';
-    }
-
     ngOnInit(): void {
+        this.minute = 59;
+        this.seconde = 59;
         const idCurrentDoc: string = this.route.snapshot.params.id;
         if (idCurrentDoc.includes('view')) {
             const id = idCurrentDoc.substring('view-'.length);
@@ -449,6 +439,7 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
                 this.selectedSession = data;
                 this.prof = data?.prof;
                 this.webSocketService.isInSession = true;
+                this.lessonStarted = false;
                 this.showTpBar = false;
                 this.webSocketService.sessionHasStarted = true;
                 this.findAllGroupeEtudiantDetail(this.selectedSchedule.groupeEtudiant.id);

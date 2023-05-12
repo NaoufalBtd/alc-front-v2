@@ -570,6 +570,8 @@ export class WebSocketService {
     }
 
     private startLesson() {
+        this.seconde = 59;
+        this.minute = 59;
         this.lessonStarted = true;
         setInterval(() => {
             this.seconde -= 1;
