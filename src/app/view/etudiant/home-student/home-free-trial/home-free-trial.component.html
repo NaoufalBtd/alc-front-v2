@@ -1,28 +1,9 @@
 <div style="width: 100%;padding: 25px;"
      [style.direction]="translate.currentLang === 'ar' ? 'rtl': 'ltr'"
      class="row">
-    <div class="col-md-12">
-        <div class="row upgdate bg-white shadow p-3 mb-5 bg-body rounded">
-            <div class="col-md-9 col-sm-12">
-                <div class="font-medium text-black">
-                    <div style=" font-size: 15px;font-weight: bold;">{{'Unlock more lessons and features!' | translate}}</div>
-                    <div style=" font-weight: 700; color: black;opacity: 0.6;" class="text-sm ">
-                        {{'You are currently on a free plan with limited features and lessons' | translate}}
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-12">
-                <button
-                        class="ngFlexyBlackButton" id="previous"
-                        (click)="scrollToPrices()"
-                        [label]="'Upgrade' | translate" pButton pRipple
-                        type="button"></button>
-            </div>
-        </div>
-    </div>
 
     <div *ngIf="nextLesson!== null" class="col-md-12 bg-white shadow p-3 mb-5 bg-body rounded" style="direction: ltr">
-        <h1 [style.direction]="translate.currentLang === 'ar' ? 'rtl': 'ltr'">{{'My classes' | translate}}</h1>
+        <h1 [style.direction]="translate.currentLang === 'ar' ? 'rtl': 'ltr'">{{'next course' | translate}}</h1>
         <div class="d-flex flex-xxl-row flex-xl-row flex-lg-row flex-md-column flex-sm-column
          justify-content-xxl-between ">
             <div class="img__container my-3">
@@ -55,19 +36,28 @@
                 </div>
             </div>
 
-            <div class=" rest__time px-3 d-flex my-3 flex-row">
-                <div>{{countdown.days}}</div>
-                <span>:</span>
-                <div>{{countdown.hours}}</div>
-                <span>:</span>
-                <div>{{countdown.minutes}}</div>
-                <span>:</span>
-                <div>{{countdown.seconds}}</div>
+            <div class="d-flex flex-column">
+                <h4 [style.direction]="translate.currentLang === 'ar' ? 'rtl': 'ltr'"
+                    style="text-align: center;
+                    text-transform: uppercase;
+                    color: dimgray;
+                    text-decoration: underline;">
+                    {{'course starts in' | translate}}</h4>
+                <div class=" rest__time px-3 d-flex my-3 flex-row">
+                    <div>{{countdown.days}}d</div>
+                    <span>:</span>
+                    <div>{{countdown.hours}}h</div>
+                    <span>:</span>
+                    <div>{{countdown.minutes}}m</div>
+                    <span>:</span>
+                    <div>{{countdown.seconds}}s</div>
+                </div>
             </div>
 
+
             <div class="lesson__button px-3 my-3">
-                <button [disabled]="!timeForLesson" style="width: 150px!important;"
-                        class="ngFlexyOrangeButton"
+                <button [disabled]="!timeForLesson" style="width: 150px!important;font-size: large;"
+                        [class.scalein]="timeForLesson"
                         (click)="joinSession()"
                         [label]="'go to class' | translate" pButton pRipple
                         type="button"></button>
@@ -75,6 +65,27 @@
 
         </div>
     </div>
+
+    <div class="col-md-12">
+        <div class="row upgdate bg-white shadow p-3 mb-5 bg-body rounded">
+            <div class="col-md-9 col-sm-12">
+                <div class="font-medium text-black">
+                    <div style=" font-size: 15px;font-weight: bold;">{{'Unlock more lessons and features!' | translate}}</div>
+                    <div style=" font-weight: 700; color: black;opacity: 0.6;" class="text-sm ">
+                        {{'You are currently on a free plan with limited features and lessons' | translate}}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-12">
+                <button
+                        class="ngFlexyBlackButton" id="previous"
+                        (click)="scrollToPrices()"
+                        [label]="'Upgrade' | translate" pButton pRipple
+                        type="button"></button>
+            </div>
+        </div>
+    </div>
+
 
     <div *ngIf="!displayCourses" class="col-md-12">
         <div class="row bg-white shadow p-3 mb-5 bg-body rounded">

@@ -218,7 +218,9 @@
   "Invitation Status": "حالة الدعوة",
   "Date Sent Invitation": "تاريخ ارسال الدعوة",
   "E-mail Invited": "بربد المدعو ",
-  "My classes": "فصولي",
+  "My classes": "الدرس القادم",
+  "next course": "الدرس القادم",
+  "course starts in": "الدرس سيبدأ بعد : ",
   "REVIEW COURSE": "مراجعة الدورة",
   "Join now": "انضم الان",
   "HOME WORK": "التمارين",
@@ -600,10 +602,4 @@
   "For Businesses": "للشركات",
   "Your account has been successfully validated!": "تم التحقق من صحة حسابك بنجاح!",
   "go to class": "انضم الى الدرس"
-
-
-
-
-
-
 }
