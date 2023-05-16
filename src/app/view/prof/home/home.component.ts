@@ -208,7 +208,7 @@ export class HomeComponent implements OnInit {
 
     isTimeForLesson(group: GroupeEtudiant) {
         if (this.getRestOfDay.get(group) === 0 && this.getRestOfHour.get(group) === 0 && 0 >= this.getRestOfMinutes.get(group)
-            && this.getRestOfMinutes.get(group) >= -30) {
+            && this.getRestOfMinutes.get(group) >= -40) {
             this.showStartCourseNow.set(group, true);
         } else {
             this.showStartCourseNow.set(group, false);
@@ -274,10 +274,10 @@ export class HomeComponent implements OnInit {
     private getNearestLessonForEveryGroup(groupeEtudiantList: Array<GroupeEtudiant>, scheduleProfs: Array<ScheduleProf>) {
         this.nearestLesson.clear();
         this.sessionCourService.findSessionByProfId(this.prof.id).subscribe(
-            data => {
+            sessions => {
                 for (const group of groupeEtudiantList) {
                     const courseList = scheduleProfs.filter(s => s.groupeEtudiant.id === group.id);
-                    const sessionList = data.filter(s => s.groupeEtudiant.id === group.id);
+                    const sessionList = sessions.filter(s => s.groupeEtudiant.id === group.id);
                     for (let i = 0; i < courseList.length - 1; i++) {
                         for (const item of sessionList) {
                             if (courseList[i].cours.id === item.cours.id) {
@@ -296,5 +296,16 @@ export class HomeComponent implements OnInit {
                 }, 1000);
             }
         );
+    }
+
+    coursePass(item: ScheduleProf): boolean {
+        // Get the current date
+        const currentDate: Date = new Date();
+        // Calculate the difference in milliseconds between the current date and the date to check
+        const timeDiff: number = new Date(item.startTime).getTime() - currentDate.getTime();
+
+        // Convert the time difference to hours
+        const hoursDiff: number = timeDiff / (1000 * 60 * 60);
+        return hoursDiff >= -24;
     }
 }

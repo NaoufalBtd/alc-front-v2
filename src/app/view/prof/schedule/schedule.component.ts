@@ -236,7 +236,6 @@ export class ScheduleLocalComponent implements OnInit {
         this.findByProf();
         // this.scheduleService.getAllStudentsGroup().subscribe(data => this.students = data);
         this.scheduleService.getProf().subscribe(data => this.professors = data);
-        this.scheduleService.findEtat().subscribe(data => this.scheduleService.etatEtudiantSchedule = data);
         this.showTranche();
     }
 
@@ -331,7 +330,6 @@ export class ScheduleLocalComponent implements OnInit {
         this.selectionTarget = null;
         this.selectionTarget = args.target;
         this.selectedSchedule.groupeEtudiant = args.data.groupeEtudiant;
-        console.log(this.selectedSchedule);
     }
 
     public onDetailsClick(event: any): void {
@@ -398,8 +396,6 @@ export class ScheduleLocalComponent implements OnInit {
     hideDialog() {
         this.display = false;
     }
-
-
 
 
     public findAllGroupeEtudiantDetail(id: number) {
@@ -539,13 +535,4 @@ export class ScheduleLocalComponent implements OnInit {
         this.dateDebut = undefined;
     }
 
-    hideTrancheDialog() {
-        this.displayModal = false;
-        this.trancheEdit = new TrancheHoraireProf();
-    }
-
-    displayDeleteDialogFct(e: TrancheHoraireProf) {
-        this.displayDeleteDialog = true;
-        this.deletedTranche = e;
-    }
 }
