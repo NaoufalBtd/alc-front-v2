@@ -275,12 +275,14 @@
         </ejs-schedule>
     </div>
 
-    <p-overlayPanel #op [showCloseIcon]="true" [style]="{width: '500px'}">
+    <p-overlayPanel #op [showCloseIcon]="true"
+                    baseZIndex="10000"
+                    [style]="{width: '500px', zIndex : '10000'}">
         <ng-template pTemplate>
             <p-table [value]="students" selectionMode="single"
                      [globalFilterFields]="['name' , 'email' , 'price']"
                      [rowHover]="true"
-                      dataKey="id"
+                     dataKey="id"
                      [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]"
                      styleClass="p-datatable-customers"
                      [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} students"

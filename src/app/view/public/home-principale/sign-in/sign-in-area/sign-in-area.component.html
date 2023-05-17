@@ -49,7 +49,9 @@
                                     </label>
                                 </div>
                                 <div class="sign__forgot">
-                                    <a [routerLink]="['/resetPassword']">{{'forgetpassword'| translate}}</a>
+                                    <h4>
+                                        <a style="color: blue!important;" [routerLink]="['/resetPassword']">{{'forgetpassword'| translate}}</a>
+                                    </h4>
                                 </div>
                             </div>
                             <button class="e-btn  w-100" (click)="onLogin(user)"><span></span> {{'signin' | translate}}

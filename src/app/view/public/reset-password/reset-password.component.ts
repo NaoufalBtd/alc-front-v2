@@ -3,6 +3,7 @@ import {UserService} from '../../../controller/service/user.service';
 import {MessageService} from 'primeng/api';
 import {AnimationService} from '../../../controller/service/animation.service';
 import {TranslateService} from '@ngx-translate/core';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-reset-password',
@@ -14,6 +15,7 @@ export class ResetPasswordComponent implements OnInit {
 
     constructor(private userService: UserService,
                 public translate: TranslateService,
+                private  router: Router,
                 private animation: AnimationService,
                 private messageService: MessageService,
     ) {

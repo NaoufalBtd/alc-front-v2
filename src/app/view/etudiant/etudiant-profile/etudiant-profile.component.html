@@ -89,7 +89,7 @@
     <div *ngIf="selectedElement === 'PROFILE'" class="col-12 col-md-9 col-lg-10" dir="auto">
         <div class="p-grid">
             <div class="p-col-10 grandTitle"> {{'Profile' | translate}}</div>
-            <div class="p-col-10 smallTitle"> {{'Manage your public profile and private information.' | translate}}</div>
+            <div class="p-col-12 smallTitle"> {{'Manage your public profile and private information.' | translate}}</div>
 
 
             <div class="p-col-12">
@@ -194,7 +194,7 @@
             <div class="p-col-10 grandTitle"> {{'Security' | translate}}</div>
             <div class="p-col-10 smallTitle"> {{'Manage your password and 2-step verification preferences' | translate}}</div>
 
-            <div class="col-12 col-md-9 col-lg-2">
+            <div class="col-12 col-md-12">
                 <div class="p-grid p-fluid">
 
 
@@ -246,6 +246,8 @@
 
 
     <div *ngIf="selectedElement === 'INSCRIPTION'" class="p-col-10">
+
+
         <div class="p-grid">
             <div *ngIf="this.inscription.packStudent != null && this.inscription.parcours != null"
                  class="p-col-10 grandTitle"> {{'Registration Details' | translate}}
@@ -349,9 +351,8 @@
             </ng-container>
 
             <ng-container *ngIf="inscription?.packStudent !== null">
-                <app-pack-details></app-pack-details>
+                <app-pack-details [selectedPack]="inscription.packStudent"></app-pack-details>
             </ng-container>
-
 
         </div>
     </div>

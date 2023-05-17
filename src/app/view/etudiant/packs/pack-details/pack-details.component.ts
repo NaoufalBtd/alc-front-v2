@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {PackStudent} from '../../../../controller/model/pack-student.model';
 import {EtudiantService} from '../../../../controller/service/etudiant.service';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -41,6 +41,7 @@ export class PackDetailsComponent implements OnInit {
     }
 
 
+    @Input()
     get selectedPack(): PackStudent {
         return this.etudiantService.selectedPack;
     }
@@ -59,26 +60,20 @@ export class PackDetailsComponent implements OnInit {
             this.router.navigate(['/']);
             return;
         }
-
-        const idCurrentPack = this._activatedRoute.snapshot.params.id;
-        if (idCurrentPack === null || idCurrentPack === undefined || idCurrentPack === 0) {
-            this.router.navigate(['/etudiant/dashboard']);
-        } else {
-            this.packService.findById(idCurrentPack).subscribe(pack => {
-                this.selectedPack = pack;
-                this.inscriptionService.findByEtudiantId(this.authService.getConnectedStudent().id).subscribe(
-                    data => {
-                        this.inscription = data;
-                        if (this.inscription.packStudent !== null) {
-                            this.selectedPack = this.inscription.packStudent;
-                            this.findCoursesByLevel(this.selectedPack);
-                        } else {
-                            this.findCourses();
-                        }
+        this.packService.findById(this.selectedPack.id).subscribe(pack => {
+            this.selectedPack = pack;
+            this.inscriptionService.findByEtudiantId(this.authService.getConnectedStudent().id).subscribe(
+                data => {
+                    this.inscription = data;
+                    if (this.inscription.packStudent !== null) {
+                        this.selectedPack = this.inscription.packStudent;
+                        this.findCoursesByLevel(this.selectedPack);
+                    } else {
+                        this.findCourses();
                     }
-                );
-            });
-        }
+                }
+            );
+        });
 
         const timer = setInterval(() => {
             this.submitFormPayment();

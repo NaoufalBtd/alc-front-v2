@@ -395,10 +395,6 @@ export class EtudiantProfileComponent implements OnInit {
 
     }
 
-    navigateToProfilEdit() {
-        this.router.navigate(['etudiant/profileEdit']);
-
-    }
 
     getValue() {
         if (this.etudiant?.statutSocial?.libelle == 'Student') {

@@ -982,6 +982,7 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
 
     joinMeet() {
         if (this.selectedSession?.meet !== null) {
+            console.log(this.selectedSession.meet);
             window.open(this.selectedSession?.meet, '_blank');
         }
     }
