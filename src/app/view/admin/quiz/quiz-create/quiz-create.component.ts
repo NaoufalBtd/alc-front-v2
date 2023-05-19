@@ -191,6 +191,7 @@ export class QuizCreateComponent implements OnInit {
     set homeWork(homeWork1) {
         this.service.HomeWork = homeWork1;
     }
+
     part: number;
 
     cols: any[];
@@ -425,10 +426,11 @@ export class QuizCreateComponent implements OnInit {
                     });
                     this.router.navigate(['/admin/manage-section']);
                 }, error => {
+                    console.log(error);
                     this.messageService.add({
                         severity: 'error',
                         summary: 'Error',
-                        detail: 'Quiz not created, please try again.',
+                        detail: error?.error?.message || 'Quiz not created, please try again.',
                         life: 3000
                     });
                 });
@@ -465,8 +467,6 @@ export class QuizCreateComponent implements OnInit {
     public openConfig() {
         this.createDialog = true;
     }
-
-
 
 
     openPreview() {

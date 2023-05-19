@@ -292,6 +292,7 @@
                     <option class="option" value="non-native"> {{'Non-native' | translate}}</option>
                 </select>
             </div>
+
             <div class="p-col-1"></div>
             <div style="padding-top: 50px;" class="p-col-4">
                 <button *ngIf="this.inscription.packStudent == null || this.inscription.parcours == null" pButton
@@ -304,6 +305,35 @@
 
             <!------------------------Packs------------------------------------------------------>
 
+
+            <!--            <ng-container *ngIf="inscription?.packStudent !== null">-->
+            <!--                <div class="row">-->
+            <!--                    <div class="col-md-8">-->
+            <!--                        <div-->
+            <!--                                [class.platinum]="inscription?.packStudent?.price?.lib?.toUpperCase()?.includes('PLATINUM')"-->
+            <!--                                [class.silver]="inscription?.packStudent?.price?.lib?.toUpperCase()?.includes('SILVER')"-->
+            <!--                                [class.gold]="inscription?.packStudent?.price?.lib?.toUpperCase()?.includes('GOLD')"-->
+            <!--                                class="card mt-5 p-4 mr-5 text-white">-->
+            <!--                            <p class="top mb-1">{{inscription?.packStudent?.libelle?.toLowerCase()}} for-->
+            <!--                                <strong style="display: inline-block" *ngIf="inscription?.packStudent?.forGroupe">-->
+            <!--                                    Group</strong>-->
+            <!--                                <strong style="display: inline-block" *ngIf="!inscription?.packStudent?.forGroupe">-->
+            <!--                                    Individual</strong>-->
+            <!--                            </p>-->
+            <!--                            <div class="d-flex flex-row justify-content-between text-align-center xyz">-->
+            <!--                                <h3>{{inscription?.packStudent?.price?.price}} DH</h3>-->
+            <!--                                <div class="discount"><span>{{getPercentage(inscription?.packStudent).toFixed(.2)}}-->
+            <!--                                    % OFF</span></div>-->
+            <!--                            </div>-->
+            <!--                            <div class="card-content mt-4">-->
+            <!--                                <p>{{inscription?.packStudent?.level?.libelle}}</p>-->
+            <!--                            </div>-->
+            <!--                            <div class="mt-2">-->
+            <!--                            </div>-->
+            <!--                        </div>-->
+            <!--                    </div>-->
+            <!--                </div>-->
+            <!--            </ng-container>-->
 
             <ng-container *ngIf="inscription?.packStudent === null">
                 <div class="p-col-12">
@@ -348,10 +378,6 @@
 
 
                 </div>
-            </ng-container>
-
-            <ng-container *ngIf="inscription?.packStudent !== null">
-                <app-pack-details [selectedPack]="inscription.packStudent"></app-pack-details>
             </ng-container>
 
         </div>
