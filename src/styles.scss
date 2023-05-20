@@ -21,6 +21,24 @@ $gutter: 1rem; //for primeflex grid system
 @import '../src/assets/scss/main.scss';
 @import 'swiper/swiper-bundle.css';
 
+
+.reading-text::first-line {
+  color: white;
+  font-weight: bold;
+  font-size: large;
+  text-decoration: underline;
+}
+
+.reading-text {
+  font-size: medium;
+  line-height: 44px;
+  line-break: auto;
+  letter-spacing: 1px;
+  font-family: cursive;
+  white-space: pre-wrap;
+}
+
+
 .logout__div {
   text-align: start;
   padding: 0.75em 1em;

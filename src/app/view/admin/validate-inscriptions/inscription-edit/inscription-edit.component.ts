@@ -240,9 +240,9 @@ export class InscriptionEditComponent implements OnInit {
 
     public findTypeOfPack() {
         if (this.selected.groupeEtude.nombreEtudiant > 1) {
-            this.packStudents = this.packStudentService.packstudentgroupeList;
+            this.packStudents = this.packStudentService.packstudentgroupeList.filter(p => p?.level?.id === this.selected?.parcours?.id);
         } else {
-            this.packStudents = this.packStudentService.packstudentIndividialList;
+            this.packStudents = this.packStudentService.packstudentIndividialList.filter(p => p?.level?.id === this.selected?.parcours?.id);
         }
     }
 

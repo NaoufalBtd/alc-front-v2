@@ -286,7 +286,7 @@ export class HomeComponent implements OnInit {
                             }
                         }
                     }
-                    if (this.nearestLesson.has(group) === false) {
+                    if (this.nearestLesson.has(group) === false && courseList?.length > 0) {
                         this.nearestLesson.set(group, courseList[0]);
                     }
                 }
@@ -299,10 +299,11 @@ export class HomeComponent implements OnInit {
     }
 
     coursePass(item: ScheduleProf): boolean {
+        console.log(item);
         // Get the current date
         const currentDate: Date = new Date();
         // Calculate the difference in milliseconds between the current date and the date to check
-        const timeDiff: number = new Date(item.startTime).getTime() - currentDate.getTime();
+        const timeDiff: number = new Date(item?.startTime)?.getTime() - currentDate.getTime();
 
         // Convert the time difference to hours
         const hoursDiff: number = timeDiff / (1000 * 60 * 60);

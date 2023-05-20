@@ -60,6 +60,11 @@
       animation: 300ms ease-in-out 0s normal none 1 running fadeInDown;
       -webkit-animation: 300ms ease-in-out 0s normal none 1 running fadeInDown;
       display: block;
+      @media (max-width: 600px) {
+        &.sticky {
+          display: none !important;
+        }
+      }
       @include box-shadow(0px 10px 20px 0px rgba(8, 0, 42, 0.08));
 
       & .header__search {

@@ -42,6 +42,7 @@ const io = require('socket.io-client');
 export class WebSocketService {
     socket: Socket;
     keyOfSession: number;
+    timer = null;
 
     publicUrl = environment.publicUrl;
     private _prof: Prof = new Prof();
@@ -570,16 +571,27 @@ export class WebSocketService {
     }
 
     private startLesson() {
-        this.seconde = 59;
-        this.minute = 59;
         this.lessonStarted = true;
-        setInterval(() => {
-            this.seconde -= 1;
-            if (this.seconde === 0) {
-                this.minute -= 1;
-                this.seconde = 60;
-            }
-        }, 1000);
+        if (this.timer == null) {
+            this.seconde = 10;
+            this.minute = 0;
+            this.timer = setInterval(() => {
+                if (this.seconde === 1 && this.minute === 0) {
+                    this.minute = 0;
+                    this.seconde = 0;
+                    clearInterval(this.timer);
+                    this.timer = null;
+                    return;
+                } else {
+                    this.seconde -= 1;
+                    if (this.seconde === 0) {
+                        this.minute -= 1;
+                        this.seconde = 60;
+                    }
+                }
+
+            }, 1000);
+        }
     }
 
     openSession(key: number) {

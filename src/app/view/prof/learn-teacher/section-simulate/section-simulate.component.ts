@@ -825,73 +825,80 @@ export class SectionSimulateComponent implements OnInit, OnDestroy {
     }
 
     showSummaryFct() {
-        const chatMessage: ChatMessageDto = new ChatMessageDto('SUMMARY',
-            'SUMMARY', false);
-        chatMessage.prof = this.loginService.getConnectedProf();
-        chatMessage.type = 'SECTION';
-        this.webSocketService.sendMessage(chatMessage, 'PROF');
+        this.confirmationService.confirm({
+            message: 'Are you sure to quit lesson, this action cannot be undone!',
+            header: 'Confirm',
+            icon: 'pi pi-exclamation-triangle',
+            accept: () => {
+                const chatMessage: ChatMessageDto = new ChatMessageDto('SUMMARY',
+                    'SUMMARY', false);
+                chatMessage.prof = this.loginService.getConnectedProf();
+                chatMessage.type = 'SECTION';
+                this.webSocketService.sendMessage(chatMessage, 'PROF');
 
-        let index = 0;
-        for (const item of this.sessionCour.sections) {
-            if (item.id === this.selectedsection.id) {
-                index = -2;
-            }
-        }
-        if (index === 0) {
-            this.sessionCour.sections.push({...this.selectedsection});
-        }
-
-        this.showLesson = false;
-        this.showSummary = true;
-
-        for (const item of this.sessionCour.sections) {
-            for (const sec of this.sectionAdditional) {
-                if (item.id === sec.id) {
-                    this.finishedAdditionalSection += 1;
+                let index = 0;
+                for (const item of this.sessionCour.sections) {
+                    if (item.id === this.selectedsection.id) {
+                        index = -2;
+                    }
                 }
-            }
-        }
-        for (const item of this.sessionCour.sections) {
-            for (const sec of this.sectionStandard) {
-                if (item.id === sec.id) {
-                    this.finishedSection += 1;
+                if (index === 0) {
+                    this.sessionCour.sections.push({...this.selectedsection});
                 }
-            }
-        }
-        const keySections = (this.finishedSection / this.sectionStandard?.length) * 100;
-        const keySectionsRest = 100 - keySections;
-        const keySectionsAdditional = (this.finishedAdditionalSection / this.sectionAdditional?.length) * 100;
-        const keySectionsRestAdditional = 100 - keySectionsAdditional;
+
+                this.showLesson = false;
+                this.showSummary = true;
+
+                for (const item of this.sessionCour.sections) {
+                    for (const sec of this.sectionAdditional) {
+                        if (item.id === sec.id) {
+                            this.finishedAdditionalSection += 1;
+                        }
+                    }
+                }
+                for (const item of this.sessionCour.sections) {
+                    for (const sec of this.sectionStandard) {
+                        if (item.id === sec.id) {
+                            this.finishedSection += 1;
+                        }
+                    }
+                }
+                const keySections = (this.finishedSection / this.sectionStandard?.length) * 100;
+                const keySectionsRest = 100 - keySections;
+                const keySectionsAdditional = (this.finishedAdditionalSection / this.sectionAdditional?.length) * 100;
+                const keySectionsRestAdditional = 100 - keySectionsAdditional;
 
 
-        this.data = {
-            labels: ['Finished', 'Not Finished'],
-            datasets: [
-                {
-                    data: [keySections, keySectionsRest],
-                    backgroundColor: [
-                        '#FF6384',
-                        '#f4f4f4'
-                    ],
-                    hoverBackgroundColor: [
-                        '#FF6384',
-                        '#f4f4f4'
+                this.data = {
+                    labels: ['Finished', 'Not Finished'],
+                    datasets: [
+                        {
+                            data: [keySections, keySectionsRest],
+                            backgroundColor: [
+                                '#FF6384',
+                                '#f4f4f4'
+                            ],
+                            hoverBackgroundColor: [
+                                '#FF6384',
+                                '#f4f4f4'
+                            ]
+                        },
+                        {
+                            data: [keySectionsAdditional, keySectionsRestAdditional],
+                            backgroundColor: [
+                                '#FFCE56',
+                                '#f4f4f4'
+                            ],
+                            hoverBackgroundColor: [
+                                '#FFCE56',
+                                '#f4f4f4'
+                            ],
+
+                        }
                     ]
-                },
-                {
-                    data: [keySectionsAdditional, keySectionsRestAdditional],
-                    backgroundColor: [
-                        '#FFCE56',
-                        '#f4f4f4'
-                    ],
-                    hoverBackgroundColor: [
-                        '#FFCE56',
-                        '#f4f4f4'
-                    ],
-
-                }
-            ]
-        };
+                };
+            }
+        });
     }
 
     get selectedSchedule(): ScheduleProf {

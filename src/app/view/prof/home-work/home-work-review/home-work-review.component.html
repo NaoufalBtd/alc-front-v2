@@ -49,6 +49,21 @@
         <app-teacher-home-wrok-review [homeWorkEtudiantList]="item.value"></app-teacher-home-wrok-review>
     </p-tabPanel>
 
+    <ng-container *ngIf="reading?.lib !== null">
+        <p-tabPanel [header]="reading?.lib">
+            <div class="p-grid">
+                <div class="p-col-12">
+                    <img [src]="reading.img" alt="Image Not Found !" width="100%">
+                </div>
+
+                <div class="p-col-12 readingContainer">
+                    <pre aria-colspan="100" class="reading-text">{{reading?.text}}</pre>
+                </div>
+            </div>
+        </p-tabPanel>
+    </ng-container>
+
+
 </p-tabView>
 
 

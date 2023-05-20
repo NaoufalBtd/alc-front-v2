@@ -42,10 +42,6 @@ export class InscriptionListComponent implements OnInit {
     teachers: Array<Prof> = new Array<Prof>();
     groupEtudes: Array<GroupeEtude> = new Array<GroupeEtude>();
     packStudents = new Array<PackStudent>();
-    isRequired22 = false;
-    errorMessage = '';
-    isSuccessful = false;
-    isSignUpFailed = false;
 
     constructor(private messageService: MessageService,
                 private profService: ProfService,
@@ -54,10 +50,6 @@ export class InscriptionListComponent implements OnInit {
                 private confirmationService: ConfirmationService,
                 private service: InscriptionService,
                 private packStudentService: PackStudentService) {
-    }
-
-    get packs(): Array<PackStudent> {
-        return this.packStudentService.packs;
     }
 
 
@@ -436,12 +428,7 @@ export class InscriptionListComponent implements OnInit {
     }
 
     public findTypeOfPack(inscription: Inscription) {
-        if (inscription?.groupeEtude?.nombreEtudiant > 1) {
-            this.packStudents = this.packStudentService.packstudentgroupeList;
-        } else {
-            this.packStudents = this.packStudentService.packstudentIndividialList;
-        }
-
+        this.packStudents = this.packStudentService.packs.filter(p => p?.level?.id === inscription?.parcours?.id);
     }
 
     get skills(): Array<Skill> {

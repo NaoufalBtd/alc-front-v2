@@ -284,22 +284,6 @@ div.p-col-2 {
   margin: 0 !important;
 }
 
-.reading-text::first-line {
-  color: white;
-  font-weight: bold;
-  font-size: large;
-  text-decoration: underline;
-}
-
-.reading-text {
-  font-size: medium;
-  line-height: 44px;
-  line-break: auto;
-  letter-spacing: 1px;
-  font-family: cursive;
-  white-space: pre-wrap;
-}
-
 .readingContainer {
   border-radius: 3px;
   background-color: hsl(49deg 45% 50%);

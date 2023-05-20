@@ -78,7 +78,7 @@
                 <p-tabView>
                     <p-tabPanel *ngFor="let item of nearestLesson | keyvalue" [header]="item?.key?.libelle">
 
-                        <div *ngIf="coursePass(item.value)" style=" padding: 5px " class="p-field">
+                        <div style=" padding: 5px " class="p-field">
                             <div class="p-grid lessonContainer">
                                 <div style="text-align: start" class="p-col-3">
                                     <img style="width: 100%!important;background: white;"
@@ -115,12 +115,12 @@
                             </div>
                         </div>
 
-                        <p-messages *ngIf="!coursePass(item.value)" severity="info">
-                            <ng-template pTemplate>
-                                <i class="pi pi-info-circle" style="font-size: 2rem"></i>
-                                <div class="p-ml-2">There is no upcoming lesson</div>
-                            </ng-template>
-                        </p-messages>
+<!--                        <p-messages *ngIf="!coursePass(item.value)" severity="info">-->
+<!--                            <ng-template pTemplate>-->
+<!--                                <i class="pi pi-info-circle" style="font-size: 2rem"></i>-->
+<!--                                <div class="p-ml-2">There is no upcoming lesson</div>-->
+<!--                            </ng-template>-->
+<!--                        </p-messages>-->
                     </p-tabPanel>
 
                 </p-tabView>

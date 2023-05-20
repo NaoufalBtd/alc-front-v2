@@ -471,6 +471,7 @@
 
             <p-dropdown [style]="{width: '100%'}" [options]="parcours" [(ngModel)]="inscription.parcours"
                         placeholder="Level"
+                        (ngModelChange)="findTypeOfPack(inscription)"
                         name="level"
                         optionLabel="libelle"></p-dropdown>
             <i style="color: red">*</i>
@@ -510,10 +511,19 @@
         <div class="p-col-4">
             <label> Pack</label>
 
-            <p-dropdown [style]="{width: '100%'}" optionLabel="libelle" name="packOption"
-                        [options]="packs"
-                        placeholder="Pack option"
-                        [(ngModel)]="inscription.packStudent"></p-dropdown>
+            <p-dropdown [style]="{width: '100%'}" name="packOption"
+                        [options]="packStudents" placeholder="Pack option" [(ngModel)]="inscription.packStudent">
+                <ng-template let-option pTemplate="selectedItem">
+                    <div>{{ option.libelle }} ( {{ option?.level?.libelle }} - {{option?.price?.nreHours}}h
+                        - {{option?.price?.price}}DH )
+                    </div>
+                </ng-template>
+                <ng-template let-option pTemplate="item">
+                    <div>{{ option.libelle }} ( {{ option?.level?.libelle }} - {{option?.price?.nreHours}}h
+                        - {{option?.price?.price}}DH )
+                    </div>
+                </ng-template>
+            </p-dropdown>
             <i style="color: red">*</i>
             <small style="font-weight: bold; margin-left: 5px"
                    *ngIf="inscription?.packStudent === null"

@@ -9,7 +9,6 @@ import {LearnService} from '../../../../controller/service/learn.service';
 import {LoginService} from '../../../../controller/service/login.service';
 import {HomeWOrkEtudiant} from '../../../../controller/model/home-work-etudiant.model';
 import {ReponseEtudiantHomeWork} from '../../../../controller/model/reponse-etudiant-home-work.model';
-import {HomeWorkReponse} from '../../../../controller/model/home-work-reponse.model';
 import {HomeWorkQST} from '../../../../controller/model/home-work-qst.model';
 import {MessageService} from 'primeng/api';
 import {GroupeEtudiant} from '../../../../controller/model/groupe-etudiant.model';
@@ -36,7 +35,11 @@ export class HomeWorkReviewComponent implements OnInit {
     question: HomeWorkQST = new HomeWorkQST();
     homeWorkEtudiantList: Array<HomeWOrkEtudiant> = new Array<HomeWOrkEtudiant>();
     homeWorkEtudiantSelected: HomeWOrkEtudiant = new HomeWOrkEtudiant();
-    noteProf: HomeWorkReponse = new HomeWorkReponse();
+    reading = {
+        lib: null,
+        img: '',
+        text: ''
+    };
     showResult: boolean;
     homeWorkMap: Map<HomeWork, Array<HomeWOrkEtudiant>> = new Map<HomeWork, Array<HomeWOrkEtudiant>>();
     previousCourse: Cours = new Cours();
@@ -158,9 +161,17 @@ export class HomeWorkReviewComponent implements OnInit {
 
                     } else if (h.libelle.toUpperCase() === TypeHomeWorkEnum.LET_S_PRACTICE.toUpperCase()) {
                         this.homeWorkService.findHomeWorkEtudiantByHomeWorkId(h).subscribe(homeWorkEtudiantData => {
-                            console.log(h);
-                            console.log(homeWorkEtudiantData);
                             this.homeWorkMap.set(h, homeWorkEtudiantData);
+                        }, error => {
+                            console.log(error);
+                        });
+                    } else if (h.libelle.toUpperCase() === TypeHomeWorkEnum.READING.toUpperCase()) {
+                        console.log(h);
+                        this.homeWorkEtudiantService.findQuestions(h).subscribe(questions => {
+                            this.reading.lib = h.typeHomeWork.lib;
+                            this.reading.img = h.urlImage;
+                            this.reading.text = questions[0]?.libelle;
+                            console.log(this.reading);
                         }, error => {
                             console.log(error);
                         });
