@@ -83,7 +83,16 @@ export class FormLayoutDemoComponent implements OnInit {
     }
 
     createEtudiant() {
-        this.verifyEmail();
+        if (this.isDisabled() === false) {
+            this.verifyEmail();
+        } else {
+            this.messageService.add({
+                severity: 'info',
+                detail: 'المرجو ملأ جميع الحقول المطلوبة',
+                life: 50000
+            });
+        }
+
     }
 
 
@@ -97,6 +106,9 @@ export class FormLayoutDemoComponent implements OnInit {
             || !this.selected?.username?.includes('@')
             || !this.selected?.username?.includes('.')
             || this.selected?.numero === null
+            || this.selected?.password === null
+            || this.selected?.password === undefined
+            || this.selected?.password?.length < 8
             || this.selected?.numero === undefined
             || this.selected?.numero?.length < 4
         ) {
@@ -148,6 +160,16 @@ export class FormLayoutDemoComponent implements OnInit {
             }, error => {
                 console.log(error);
             });
+        }
+    }
+
+    showPassword(pass: HTMLInputElement): string {
+        if (pass?.type === 'password') {
+            pass.type = 'text';
+            return 'text';
+        } else {
+            pass.type = 'password';
+            return 'password';
         }
     }
 

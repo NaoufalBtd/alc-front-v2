@@ -2,98 +2,74 @@
 
 <div id="Mycontainer" class="container pb-150 pt-50">
 
-    <div id="con0" class="row  rounded-3 p-3 mb-4">
-        <div class="col-md-3"></div>
-        <div class="col-md-6">
-            <ul id="myTab1" role="tablist"
-                class="nav nav-tabs nav-pills with-arrow flex-column flex-sm-row text-center">
-                <li class="nav-item flex-sm-fill">
-                    <a id="home1-tab" data-toggle="tab" role="tab" aria-controls="home1"
-                       [class.active]="index === 0"
-                       [attr.aria-selected]="index === 0"
-                       class="nav-link text-uppercase font-weight-bold mr-sm-3
-                        rounded-0 border">Password</a>
-                </li>
 
-                <li class="nav-item flex-sm-fill">
-                    <a id="profile1-tab" data-toggle="tab" role="tab" aria-controls="profile1"
-                       [class.active]="index === 1"
-                       [attr.aria-selected]="index === 1"
-                       class="nav-link text-uppercase font-weight-bold mr-sm-3 rounded-0 border">Start</a>
-                </li>
+    <!--    <div id="con1" *ngIf="index === 0" class="container">-->
+    <!--        <div class="row">-->
+    <!--            <div class="col-md-12 smallTitle"> {{'please change your password before you start' | translate}}</div>-->
 
-            </ul>
-        </div>
-        <div class="col-md-3"></div>
-    </div>
+    <!--            <div class="col-md-3"></div>-->
+    <!--            <div class="col-md-6">-->
+    <!--                <div class="p-grid p-fluid">-->
 
-    <div id="con1" *ngIf="index === 0" class="container">
-        <div class="row">
-            <div class="col-md-12 smallTitle"> {{'please change your password before you start' | translate}}</div>
+    <!--                    <div class="p-col-12">-->
+    <!--                        <p-message *ngIf="message.showMessage" class="ml-10" [severity]="message.severity"-->
+    <!--                                   [text]="message.message"></p-message>-->
+    <!--                    </div>-->
 
-            <div class="col-md-3"></div>
-            <div class="col-md-6">
-                <div class="p-grid p-fluid">
+    <!--                    <div class="p-col-12">-->
+    <!--                        <h5 style="color: #263238"> {{'New Password' | translate}}</h5>-->
+    <!--                        <div class="p-inputgroup">-->
+    <!--                            <span style="cursor: pointer" *ngIf="newPass.type === 'password'"-->
+    <!--                                  (click)="showPass(newPass)" class="p-inputgroup-addon">-->
+    <!--                                <i class="pi pi-eye"></i></span>-->
 
-                    <div class="p-col-12">
-                        <p-message *ngIf="message.showMessage" class="ml-10" [severity]="message.severity"
-                                   [text]="message.message"></p-message>
-                    </div>
+    <!--                            <span style="cursor: pointer" *ngIf="newPass.type === 'text'" (click)="showPass(newPass)"-->
+    <!--                                  class="p-inputgroup-addon"><i class="pi pi-eye-slash"></i></span>-->
 
-                    <div class="p-col-12">
-                        <h5 style="color: #263238"> {{'New Password' | translate}}</h5>
-                        <div class="p-inputgroup">
-                            <span style="cursor: pointer" *ngIf="newPass.type === 'password'"
-                                  (click)="showPass(newPass)" class="p-inputgroup-addon">
-                                <i class="pi pi-eye"></i></span>
-
-                            <span style="cursor: pointer" *ngIf="newPass.type === 'text'" (click)="showPass(newPass)"
-                                  class="p-inputgroup-addon"><i class="pi pi-eye-slash"></i></span>
-
-                            <input #newPass class="user-input-group" [(ngModel)]="newPassword" name="newPassword"
-                                   type="password"
-                                   (input)="onPasswordInput(newPassword)"
-                                   pPassword
-                                   [placeholder]="'New Password' | translate">
-                        </div>
-                    </div>
+    <!--                            <input #newPass class="user-input-group" [(ngModel)]="newPassword" name="newPassword"-->
+    <!--                                   type="password"-->
+    <!--                                   (input)="onPasswordInput(newPassword)"-->
+    <!--                                   pPassword-->
+    <!--                                   [placeholder]="'New Password' | translate">-->
+    <!--                        </div>-->
+    <!--                    </div>-->
 
 
-                    <div class="p-col-12">
-                        <h5 style="color: #263238"> {{'Repeat password' | translate}}</h5>
-                        <div class="p-inputgroup">
-                            <span style="cursor: pointer" *ngIf="Rep.type === 'password'" (click)="showPass(Rep)"
-                                  class="p-inputgroup-addon"><i class="pi pi-eye"></i></span>
-                            <span style="cursor: pointer" *ngIf="Rep.type === 'text'" (click)="showPass(Rep)"
-                                  class="p-inputgroup-addon"><i class="pi pi-eye-slash"></i></span>
+    <!--                    <div class="p-col-12">-->
+    <!--                        <h5 style="color: #263238"> {{'Repeat password' | translate}}</h5>-->
+    <!--                        <div class="p-inputgroup">-->
+    <!--                            <span style="cursor: pointer" *ngIf="Rep.type === 'password'" (click)="showPass(Rep)"-->
+    <!--                                  class="p-inputgroup-addon"><i class="pi pi-eye"></i></span>-->
+    <!--                            <span style="cursor: pointer" *ngIf="Rep.type === 'text'" (click)="showPass(Rep)"-->
+    <!--                                  class="p-inputgroup-addon"><i class="pi pi-eye-slash"></i></span>-->
 
-                            <input #Rep class="user-input-group" [(ngModel)]="newPasswordRepated"
-                                   name="newPasswordRepated" type="password"
-                                   (input)="onRepatPassword()"
-                                   pPassword
-                                   [placeholder]="'Repeat password' | translate">
-                        </div>
-                    </div>
-                    <div class="p-col-3"></div>
-                    <div class="p-col-6">
-                        <button [disabled]="!onPasswordInput(newPassword)" pButton pRipple (click)="changePassword()"
-                                [label]="'Change Password' | translate" icon="pi pi-check" iconPos="left"
-                                class="ngFlexyBlackButton"></button>
-                    </div>
-                    <div class="p-col-3"></div>
+    <!--                            <input #Rep class="user-input-group" [(ngModel)]="newPasswordRepated"-->
+    <!--                                   name="newPasswordRepated" type="password"-->
+    <!--                                   (input)="onRepatPassword()"-->
+    <!--                                   pPassword-->
+    <!--                                   [placeholder]="'Repeat password' | translate">-->
+    <!--                        </div>-->
+    <!--                    </div>-->
+    <!--                    <div class="p-col-3"></div>-->
+    <!--                    <div class="p-col-6">-->
+    <!--                        <button [disabled]="!onPasswordInput(newPassword)" pButton pRipple (click)="changePassword()"-->
+    <!--                                [label]="'Change Password' | translate" icon="pi pi-check" iconPos="left"-->
+    <!--                                class="ngFlexyBlackButton"></button>-->
+    <!--                    </div>-->
+    <!--                    <div class="p-col-3"></div>-->
 
-                </div>
-            </div>
-            <div class="col-md-3"></div>
-        </div>
-    </div>
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--            <div class="col-md-3"></div>-->
+    <!--        </div>-->
+    <!--    </div>-->
 
 
-    <div id="con2" *ngIf="index === 1" class="container">
+    <div id="con2" class="container">
         <div class="p-grid">
             <div [style.direction]="translate.currentLang === 'ar' ? 'rtl': 'ltr'"
                  style="text-align: center" class="p-col-12">
-                <h1 style="    font-family: system-ui; letter-spacing: 1px;">{{'Your account has been successfully validated!' | translate}}</h1>
+                <h1 style="color: black;font-family: system-ui; letter-spacing: 1px;">{{'Your account has been successfully validated!' | translate}}</h1>
             </div>
 
             <div class="p-col-2"></div>

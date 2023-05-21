@@ -32,6 +32,17 @@
                         <i class="fa fa-solid fa-envelope"></i>
                     </div>
 
+                    <div class="form-group">
+                        <input #pass required type="password" [(ngModel)]="selected.password" name="password"
+                               class="form-control"
+                               id="password"
+                               placeholder="{{'Password' | translate}}">
+                        <i (click)="showPassword(pass)"
+                           [class.fa-eye-slash]="pass?.type === 'text'"
+                           [class.fa-eye]="pass?.type === 'password'"
+                           class="fa fa-solid  "></i>
+                    </div>
+
 
                     <div class="form-group">
                         <input type="tel" [(ngModel)]="selected.numero" name="numero" class="form-control" id="Phone"

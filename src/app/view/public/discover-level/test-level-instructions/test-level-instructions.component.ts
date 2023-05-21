@@ -111,6 +111,9 @@ export class TestLevelInstructionsComponent implements OnInit {
             || !this.selected?.username?.includes('com')
             || this.selected?.numero === null
             || this.selected?.numero === undefined
+            || this.selected?.password === null
+            || this.selected?.password === undefined
+            || this.selected?.password?.length < 8
             || this.selected?.numero?.length < 4
         ) {
             return true;
@@ -193,5 +196,15 @@ export class TestLevelInstructionsComponent implements OnInit {
     private startTest(selected: Etudiant) {
         this.authenticationService.addUserToLocalCache(selected);
         this.router.navigate(['/etudiant/test-level']);
+    }
+
+    showPassword(pass: HTMLInputElement): string {
+        if (pass?.type === 'password') {
+            pass.type = 'text';
+            return 'text';
+        } else {
+            pass.type = 'password';
+            return 'password';
+        }
     }
 }

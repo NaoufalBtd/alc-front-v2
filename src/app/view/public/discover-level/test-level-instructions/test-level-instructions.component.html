@@ -61,11 +61,24 @@
                                        placeholder="{{'Your name * ' | translate}}">
                                 <i class="fa fa-user"></i>
                             </div>
+
                             <div class="form-group">
                                 <input type="email" [(ngModel)]="selected.username" name="username" class="form-control"
                                        id="inputEmail3" placeholder="{{'Email *' | translate}}">
                                 <i class="fa fa-solid fa-envelope"></i>
                             </div>
+
+                            <div class="form-group">
+                                <input #pass required type="password" [(ngModel)]="selected.password" name="password"
+                                       class="form-control"
+                                       id="password"
+                                       placeholder="{{'Password' | translate}}">
+                                <i (click)="showPassword(pass)"
+                                   [class.fa-eye-slash]="pass?.type === 'text'"
+                                   [class.fa-eye]="pass?.type === 'password'"
+                                   class="fa fa-solid "></i>
+                            </div>
+
                             <div class="form-group">
                                 <input type="tel" [(ngModel)]="selected.numero" name="numero" class="form-control"
                                        id="Phone" placeholder="{{'Phone *' | translate}}">

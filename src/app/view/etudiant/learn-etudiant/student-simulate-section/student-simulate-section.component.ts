@@ -450,7 +450,12 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
             this.selectedLanguage = {code: 'fr', name: 'French', nativeName: 'français'};
         }
         this.showAppMenu = false;
-        this.onTabViewChange();
+        this.animationService.showAnimation = true;
+        const timer = setInterval(() => {
+            this.animationService.showAnimation = false;
+            this.onTabViewChange();
+            clearInterval(timer);
+        }, 2000);
     }
 
     onTabViewChange() {
@@ -461,8 +466,9 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
                 });
         } else if (this.tabViewActiveIndex === 3) { // chat
             this.badgeNrMsg = 0;
+        } else if (this.tabViewActiveIndex === 1) { // voc
+            this.showLessonFct(this.vocabularySection);
         }
-
     }
 
     public findhomeworkbycours(cours: Cours) {
@@ -740,6 +746,7 @@ export class StudentSimulateSectionComponent implements OnInit, OnDestroy {
                         this.selectedReview = data;
                     });
             }, error => {
+                console.error(error);
                 this.animationService.showAnimation = false;
             }
         );

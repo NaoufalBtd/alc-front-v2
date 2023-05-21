@@ -634,6 +634,7 @@ export class HomeWorkSimulateService {
             this.homeWorkList = homeWorkData;
             this.homeWorkSelectedFct(this.homeWorkList[0]);
         }, error => {
+            console.error(error);
         });
     }
 
