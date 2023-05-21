@@ -34,10 +34,10 @@
                                 </div>
                             </div>
                             <div class="sign__input-wrapper mb-10">
-                                <h5>{{'Password'| translate}}</h5>
+                                <h5>{{'password'| translate}}</h5>
                                 <div class="sign__input">
                                     <input type="password" [(ngModel)]="user.password" name="password"
-                                           placeholder="{{'Password'| translate}}"
+                                           placeholder="{{'password'| translate}}"
                                     >
                                     <i class="fal fa-lock"></i>
                                 </div>
@@ -50,7 +50,8 @@
                                 </div>
                                 <div class="sign__forgot">
                                     <h4>
-                                        <a style="color: blue!important;" [routerLink]="['/resetPassword']">{{'forgetpassword'| translate}}</a>
+                                        <a style="color: blue!important;"
+                                           [routerLink]="['/resetPassword']">{{'forgetpassword'| translate}}</a>
                                     </h4>
                                 </div>
                             </div>
